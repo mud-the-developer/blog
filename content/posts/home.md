@@ -8,5 +8,5 @@ dg-home: true
 ---
 
 Hi there 😃
-I'm [[About_me|Jin-Hyuk]], Kim from South Korea 🇰🇷
+I'm [[About_me|Jinhyuk]], Kim from South Korea 🇰🇷
 
