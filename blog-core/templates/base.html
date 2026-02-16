@@ -59,8 +59,15 @@
         <div class="site-actions">
           <div class="site-search">
             <label class="sr-only" for="global-search-input">Search notes</label>
-            <input id="global-search-input" type="search" placeholder="Search notes..." autocomplete="off" />
-            <div id="global-search-results" class="search-results" hidden></div>
+            <input
+              id="global-search-input"
+              type="search"
+              placeholder="Search notes..."
+              autocomplete="off"
+              aria-autocomplete="list"
+              aria-controls="global-search-results"
+            />
+            <div id="global-search-results" class="search-results" role="listbox" hidden></div>
           </div>
           <nav class="site-nav" aria-label="Main navigation">
             <a href="/">Home</a>
@@ -153,6 +160,8 @@
         }
 
         if (searchInput && searchResults) {
+          searchInput.setAttribute("aria-expanded", "false");
+
           const escapeHtml = (value) =>
             String(value || "")
               .replace(/&/g, "&amp;")
@@ -160,6 +169,8 @@
               .replace(/>/g, "&gt;")
               .replace(/"/g, "&quot;")
               .replace(/'/g, "&#39;");
+
+          const escapeRegExp = (value) => String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
           const summarize = (value) => {
             const text = String(value || "").replace(/\s+/g, " ").trim();
@@ -169,8 +180,45 @@
             return text.slice(0, 92).trimEnd() + "...";
           };
 
+          const getQueryTerms = (query) =>
+            query
+              .toLowerCase()
+              .split(/\s+/)
+              .filter((term) => term.length > 0)
+              .slice(0, 6);
+
+          const highlight = (value, terms) => {
+            let rendered = escapeHtml(value || "");
+            terms
+              .filter((term) => term.length >= 2)
+              .forEach((term) => {
+                const pattern = new RegExp("(" + escapeRegExp(term) + ")", "ig");
+                rendered = rendered.replace(pattern, "<mark>$1</mark>");
+              });
+            return rendered;
+          };
+
           let fallbackRecords = null;
           let requestToken = 0;
+          let currentResults = [];
+          let activeIndex = -1;
+
+          const hideResults = () => {
+            searchResults.hidden = true;
+            searchInput.setAttribute("aria-expanded", "false");
+          };
+
+          const showResults = () => {
+            searchResults.hidden = false;
+            searchInput.setAttribute("aria-expanded", "true");
+          };
+
+          const applyActiveResult = () => {
+            const rows = searchResults.querySelectorAll(".search-result");
+            rows.forEach((row, idx) => {
+              row.classList.toggle("is-active", idx === activeIndex);
+            });
+          };
 
           const loadFallbackRecords = async () => {
             if (fallbackRecords) {
@@ -189,10 +237,7 @@
 
           const fallbackSearch = async (query) => {
             const records = await loadFallbackRecords();
-            const terms = query
-              .toLowerCase()
-              .split(/\s+/)
-              .filter((term) => term.length > 0);
+            const terms = getQueryTerms(query);
 
             if (terms.length === 0) {
               return records.slice(0, 8);
@@ -239,19 +284,30 @@
             return Array.isArray(payload) ? payload : [];
           };
 
-          const renderResults = (items) => {
+          const renderResults = (items, query) => {
+            currentResults = items;
+            activeIndex = -1;
+            const terms = getQueryTerms(query);
+
             if (!items.length) {
-              searchResults.hidden = false;
+              showResults();
               searchResults.innerHTML = '<p class="search-empty">No matching notes.</p>';
               return;
             }
 
-            searchResults.hidden = false;
+            showResults();
             searchResults.innerHTML = items
               .map((item) => {
-                const title = escapeHtml(item.title || item.slug || "Untitled");
+                const title = highlight(item.title || item.slug || "Untitled", terms);
                 const url = escapeHtml(item.url || "/");
-                const excerpt = escapeHtml(summarize(item.excerpt));
+                const excerpt = highlight(summarize(item.excerpt), terms);
+                const tags = Array.isArray(item.tags) ? item.tags.slice(0, 3) : [];
+                const tagHtml = tags.length
+                  ? '<span class="search-result-tags">' +
+                    tags.map((tag) => '<span class="search-result-tag">#' + highlight(tag, terms) + "</span>").join("") +
+                    "</span>"
+                  : "";
+
                 return (
                   '<a class="search-result" href="' +
                   url +
@@ -262,6 +318,7 @@
                   '<span class="search-result-excerpt">' +
                   excerpt +
                   "</span>" +
+                  tagHtml +
                   "</a>"
                 );
               })
@@ -273,7 +330,8 @@
             const query = searchInput.value.trim();
 
             if (query.length === 0) {
-              searchResults.hidden = true;
+              currentResults = [];
+              hideResults();
               searchResults.innerHTML = "";
               return;
             }
@@ -281,17 +339,17 @@
             try {
               const results = await apiSearch(query);
               if (token === requestToken) {
-                renderResults(results);
+                renderResults(results, query);
               }
             } catch (_) {
               try {
                 const results = await fallbackSearch(query);
                 if (token === requestToken) {
-                  renderResults(results);
+                  renderResults(results, query);
                 }
               } catch (_) {
                 if (token === requestToken) {
-                  searchResults.hidden = false;
+                  showResults();
                   searchResults.innerHTML = '<p class="search-empty">Search is not available.</p>';
                 }
               }
@@ -304,11 +362,60 @@
             debounceTimer = window.setTimeout(runSearch, 120);
           });
 
-          searchInput.addEventListener("focus", runSearch);
+          searchInput.addEventListener("focus", () => {
+            if (searchInput.value.trim().length > 0) {
+              runSearch();
+            }
+          });
 
           searchInput.addEventListener("keydown", (event) => {
             if (event.key === "Escape") {
-              searchResults.hidden = true;
+              hideResults();
+              return;
+            }
+
+            if (!currentResults.length) {
+              return;
+            }
+
+            if (event.key === "ArrowDown") {
+              event.preventDefault();
+              activeIndex = (activeIndex + 1) % currentResults.length;
+              applyActiveResult();
+              return;
+            }
+
+            if (event.key === "ArrowUp") {
+              event.preventDefault();
+              activeIndex = activeIndex <= 0 ? currentResults.length - 1 : activeIndex - 1;
+              applyActiveResult();
+              return;
+            }
+
+            if (event.key === "Enter" && activeIndex >= 0) {
+              event.preventDefault();
+              const target = currentResults[activeIndex];
+              if (target && typeof target.url === "string") {
+                window.location.href = target.url;
+              }
+            }
+          });
+
+          searchResults.addEventListener("mousemove", (event) => {
+            const target = event.target;
+            if (!(target instanceof Element)) {
+              return;
+            }
+            const row = target.closest(".search-result");
+            if (!row) {
+              return;
+            }
+
+            const rows = Array.from(searchResults.querySelectorAll(".search-result"));
+            const next = rows.indexOf(row);
+            if (next >= 0 && next !== activeIndex) {
+              activeIndex = next;
+              applyActiveResult();
             }
           });
 
@@ -319,7 +426,7 @@
             }
 
             if (!target.closest(".site-search")) {
-              searchResults.hidden = true;
+              hideResults();
             }
           });
         }

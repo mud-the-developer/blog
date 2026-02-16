@@ -30,6 +30,9 @@
     const minZoom = opts.minZoom || 0.45;
     const maxZoom = opts.maxZoom || 3.1;
     const zoomStep = opts.zoomStep || 0.0017;
+    const autoFreeze = opts.autoFreeze !== false;
+    const freezeVelocity = opts.freezeVelocity || 0.095;
+    const freezeStableFrames = opts.freezeStableFrames || 55;
     const idleText =
       typeof opts.idleText === "string" ? opts.idleText : "Hover nodes to inspect relationships.";
     const emptyText =
@@ -49,6 +52,8 @@
       links: [],
       nodesById: new Map(),
       running: true,
+      manuallyPaused: false,
+      stableFrames: 0,
       dragging: "",
       dragPointerId: -1,
       dragMoved: false,
@@ -66,6 +71,8 @@
         panOriginTy: 0
       }
     };
+
+    let rafId = 0;
 
     const pointInSvg = (event) => {
       const rect = svg.getBoundingClientRect();
@@ -108,6 +115,48 @@
         node.vx = 0;
         node.vy = 0;
       });
+    };
+
+    const renderScene = () => {
+      graphState.links.forEach((link) => {
+        const source = graphState.nodesById.get(link.source);
+        const target = graphState.nodesById.get(link.target);
+        if (!source || !target) {
+          return;
+        }
+
+        link.el.setAttribute("x1", String(source.x));
+        link.el.setAttribute("y1", String(source.y));
+        link.el.setAttribute("x2", String(target.x));
+        link.el.setAttribute("y2", String(target.y));
+      });
+
+      graphState.nodes.forEach((node) => {
+        node.el.setAttribute("transform", "translate(" + node.x + "," + node.y + ")");
+      });
+    };
+
+    const scheduleTick = () => {
+      if (rafId !== 0 || !graphState.running) {
+        return;
+      }
+      rafId = window.requestAnimationFrame(tick);
+    };
+
+    const stopTicking = () => {
+      if (rafId !== 0) {
+        window.cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+    };
+
+    const wakeSimulation = () => {
+      graphState.stableFrames = 0;
+      if (graphState.manuallyPaused) {
+        return;
+      }
+      graphState.running = true;
+      scheduleTick();
     };
 
     const updateDetail = (node) => {
@@ -177,8 +226,8 @@
     };
 
     const tick = () => {
+      rafId = 0;
       if (!graphState.running) {
-        requestAnimationFrame(tick);
         return;
       }
 
@@ -186,6 +235,7 @@
       const spring = 0.018;
       const damping = 0.86;
       const centerPull = 0.003;
+      let totalVelocity = 0;
 
       for (let i = 0; i < graphState.nodes.length; i += 1) {
         const a = graphState.nodes[i];
@@ -244,26 +294,31 @@
         node.vy *= damping;
         node.x += node.vx;
         node.y += node.vy;
+        totalVelocity += Math.abs(node.vx) + Math.abs(node.vy);
       });
 
-      graphState.links.forEach((link) => {
-        const source = graphState.nodesById.get(link.source);
-        const target = graphState.nodesById.get(link.target);
-        if (!source || !target) {
-          return;
+      renderScene();
+
+      const avgVelocity =
+        graphState.nodes.length > 0 ? totalVelocity / graphState.nodes.length : 0;
+
+      if (autoFreeze && !graphState.dragging && !graphState.viewport.panning) {
+        if (avgVelocity < freezeVelocity) {
+          graphState.stableFrames += 1;
+        } else {
+          graphState.stableFrames = 0;
         }
 
-        link.el.setAttribute("x1", String(source.x));
-        link.el.setAttribute("y1", String(source.y));
-        link.el.setAttribute("x2", String(target.x));
-        link.el.setAttribute("y2", String(target.y));
-      });
+        if (graphState.stableFrames >= freezeStableFrames) {
+          graphState.running = false;
+          if (toggleButton && !graphState.manuallyPaused) {
+            toggleButton.textContent = "Resume";
+          }
+          return;
+        }
+      }
 
-      graphState.nodes.forEach((node) => {
-        node.el.setAttribute("transform", "translate(" + node.x + "," + node.y + ")");
-      });
-
-      requestAnimationFrame(tick);
+      scheduleTick();
     };
 
     const finishPointerAction = (event) => {
@@ -284,6 +339,8 @@
       if (pointerId >= 0 && typeof svg.hasPointerCapture === "function" && svg.hasPointerCapture(pointerId)) {
         svg.releasePointerCapture(pointerId);
       }
+
+      wakeSimulation();
     };
 
     const attachInteractionEvents = () => {
@@ -304,6 +361,7 @@
           }
           node.x = point.x;
           node.y = point.y;
+          renderScene();
           return;
         }
 
@@ -315,6 +373,7 @@
         graphState.viewport.tx = graphState.viewport.panOriginTx + (point.x - graphState.viewport.panStartX);
         graphState.viewport.ty = graphState.viewport.panOriginTy + (point.y - graphState.viewport.panStartY);
         applyViewportTransform();
+        wakeSimulation();
       });
 
       svg.addEventListener("pointerdown", (event) => {
@@ -331,6 +390,7 @@
         graphState.viewport.panOriginTx = graphState.viewport.tx;
         graphState.viewport.panOriginTy = graphState.viewport.ty;
         svg.classList.add("is-panning");
+        wakeSimulation();
         if (typeof svg.setPointerCapture === "function") {
           svg.setPointerCapture(event.pointerId);
         }
@@ -364,6 +424,7 @@
           view.tx = pointer.x - origin.x * nextScale;
           view.ty = pointer.y - origin.y * nextScale;
           applyViewportTransform();
+          wakeSimulation();
         },
         { passive: false }
       );
@@ -460,6 +521,7 @@
             graphState.dragPointerId = event.pointerId;
             graphState.dragMoved = false;
             svg.classList.add("is-dragging");
+            wakeSimulation();
             if (typeof svg.setPointerCapture === "function") {
               svg.setPointerCapture(event.pointerId);
             }
@@ -483,19 +545,50 @@
           resetButton.addEventListener("click", () => {
             resetLayout();
             resetViewport();
+            wakeSimulation();
             applyVisualState();
           });
         }
 
         if (toggleButton) {
           toggleButton.addEventListener("click", () => {
-            graphState.running = !graphState.running;
-            toggleButton.textContent = graphState.running ? "Pause" : "Resume";
+            if (graphState.manuallyPaused) {
+              graphState.manuallyPaused = false;
+              graphState.running = true;
+              graphState.stableFrames = 0;
+              toggleButton.textContent = "Pause";
+              scheduleTick();
+              return;
+            }
+
+            if (!graphState.running) {
+              graphState.running = true;
+              graphState.stableFrames = 0;
+              toggleButton.textContent = "Pause";
+              scheduleTick();
+              return;
+            }
+
+            graphState.manuallyPaused = true;
+            if (graphState.manuallyPaused) {
+              graphState.running = false;
+              stopTicking();
+              toggleButton.textContent = "Resume";
+            }
           });
         }
 
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) {
+            stopTicking();
+            return;
+          }
+          wakeSimulation();
+        });
+
         applyVisualState();
-        requestAnimationFrame(tick);
+        renderScene();
+        scheduleTick();
       })
       .catch(() => {
         if (detail) {
