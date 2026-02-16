@@ -7,12 +7,6 @@ dg-publish: true
 dg-home: true
 ---
 
-# My Digital Garden
+Hi there 😃
+I'm [[About_me|Jin-Hyuk]], Kim from South Korea 🇰🇷
 
-Obsidian notes are published as static pages with backlinks, tags, and SEO metadata.
-
-Start with [[second-brain|Second Brain]] for the architecture note.
-
-- Wikilink example: [[seo-performance-guide]]
-- Tag pages: `/tags/<tag>/`
-- Graph data source: `/graph.json`

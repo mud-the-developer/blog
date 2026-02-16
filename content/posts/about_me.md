@@ -21,5 +21,7 @@ Recent research focus:
 
 ## Links
 
-- GitHub: [mud-the-developer](https://github.com/mud-the-developer)
-- LinkedIn: [Jinhyuk Kim](https://www.linkedin.com/in/jinhyuk-kim-a97b42242/)
+- Github : <a href="https://github.com/mud-the-developer"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/></a>
+
+- Linkedin : <a href="https://www.linkedin.com/in/jinhyuk-kim-a97b42242/"><img src="https://img.shields.io/badge/Linkedin-0A66C2?style=flat-square&logo=Linkedin&logoColor=white"/></a>
+
