@@ -161,6 +161,128 @@ a:hover {
   padding: 0.7rem;
 }
 
+.graph-panel {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.graph-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.graph-toolbar label {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.graph-toolbar input {
+  flex: 1 1 220px;
+  min-width: 210px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.45rem 0.6rem;
+  font: inherit;
+}
+
+.graph-toolbar button,
+.graph-data-link {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #f8fbff;
+  color: #1b3b62;
+  padding: 0.42rem 0.65rem;
+  font: inherit;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.graph-toolbar button:hover,
+.graph-data-link:hover {
+  background: #edf4ff;
+}
+
+.graph-stage {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 8% 15%, #eaf3ff 0, transparent 55%),
+    radial-gradient(circle at 90% 85%, #eff8ff 0, transparent 45%),
+    #f8fbff;
+}
+
+.graph-stage svg {
+  width: 100%;
+  height: 560px;
+  display: block;
+  cursor: grab;
+}
+
+.graph-stage svg.is-dragging {
+  cursor: grabbing;
+}
+
+.graph-link {
+  stroke: #98a8bf;
+  stroke-width: 1.4;
+  stroke-opacity: 0.58;
+}
+
+.graph-link.is-active {
+  stroke: #0057b8;
+  stroke-width: 2.1;
+  stroke-opacity: 0.92;
+}
+
+.graph-link.is-dim {
+  stroke-opacity: 0.12;
+}
+
+.graph-node {
+  transition: opacity 130ms ease;
+}
+
+.graph-node circle {
+  fill: #ffffff;
+  stroke: #3a7bc7;
+  stroke-width: 1.5;
+}
+
+.graph-node text {
+  font-size: 12px;
+  fill: #163a66;
+  stroke: #f8fbff;
+  stroke-width: 2.6;
+  paint-order: stroke fill;
+}
+
+.graph-node:hover {
+  cursor: pointer;
+}
+
+.graph-node.is-active circle {
+  fill: #dbeafe;
+  stroke: #0057b8;
+  stroke-width: 2.2;
+}
+
+.graph-node.is-dim {
+  opacity: 0.22;
+}
+
+.graph-detail {
+  min-height: 3rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  background: #fbfdff;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
 .site-footer {
   margin-top: 2rem;
   color: var(--muted);
@@ -177,5 +299,9 @@ a:hover {
 
   .panel {
     padding: 0.9rem;
+  }
+
+  .graph-stage svg {
+    height: 460px;
   }
 }

@@ -205,6 +205,14 @@ struct TagTemplate {
     posts: Vec<PostCard>,
 }
 
+#[derive(Template)]
+#[template(path = "graph.html")]
+struct GraphTemplate {
+    layout: LayoutContext,
+    node_count: usize,
+    link_count: usize,
+}
+
 pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
     let seeds = collect_post_seeds(config)?;
     let slug_map = build_slug_map(&seeds);
@@ -238,6 +246,7 @@ pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
     render_tag_pages(config, &tags, &posts)?;
     write_search_index(config, &posts)?;
     write_graph(config, &posts)?;
+    render_graph_page(config, &posts)?;
     write_sitemap(config, &posts, &tags)?;
     write_rss(config, &posts)?;
     write_robots_txt(config)?;
@@ -388,8 +397,8 @@ fn render_posts_pages(
             post.description.clone(),
             &page_path,
             "article",
-            &format_datetime(post.date.clone()),
-            &format_datetime(post.updated.clone()),
+            &format_datetime(post.date),
+            &format_datetime(post.updated),
             json_ld,
         );
 
@@ -456,6 +465,31 @@ fn render_tag_pages(config: &BuildConfig, tags: &[TagEntry], posts: &[Post]) -> 
     Ok(())
 }
 
+fn render_graph_page(config: &BuildConfig, posts: &[Post]) -> Result<()> {
+    let (nodes, links) = build_graph_data(posts);
+    let layout = website_layout(
+        config,
+        format!("Graph | {}", config.site.title),
+        "Interactive graph view of linked notes.".to_string(),
+        "/graph/",
+        "website",
+        "",
+        "",
+        website_json_ld(config),
+    );
+
+    let template = GraphTemplate {
+        layout,
+        node_count: nodes.len(),
+        link_count: links.len(),
+    };
+
+    write_file(
+        config.output_dir.join("graph").join("index.html"),
+        template.render()?,
+    )
+}
+
 fn write_search_index(config: &BuildConfig, posts: &[Post]) -> Result<()> {
     let entries = posts
         .iter()
@@ -473,6 +507,16 @@ fn write_search_index(config: &BuildConfig, posts: &[Post]) -> Result<()> {
 }
 
 fn write_graph(config: &BuildConfig, posts: &[Post]) -> Result<()> {
+    let (nodes, links) = build_graph_data(posts);
+
+    let graph = json!({ "nodes": nodes, "links": links });
+    write_file(
+        config.output_dir.join("graph.json"),
+        serde_json::to_string_pretty(&graph)?,
+    )
+}
+
+fn build_graph_data(posts: &[Post]) -> (Vec<GraphNode>, Vec<GraphLink>) {
     let nodes = posts
         .iter()
         .map(|post| GraphNode {
@@ -496,11 +540,7 @@ fn write_graph(config: &BuildConfig, posts: &[Post]) -> Result<()> {
         }
     }
 
-    let graph = json!({ "nodes": nodes, "links": links });
-    write_file(
-        config.output_dir.join("graph.json"),
-        serde_json::to_string_pretty(&graph)?,
-    )
+    (nodes, links)
 }
 
 fn write_sitemap(config: &BuildConfig, posts: &[Post], tags: &[TagEntry]) -> Result<()> {
@@ -514,7 +554,7 @@ fn write_sitemap(config: &BuildConfig, posts: &[Post], tags: &[TagEntry]) -> Res
         append_sitemap_url(
             &mut xml,
             &absolute_url(&config.site.base_url, &format!("/notes/{}/", post.slug)),
-            post.updated.clone().or(post.date.clone()),
+            post.updated.or(post.date),
         );
     }
 
@@ -567,7 +607,7 @@ fn write_rss(config: &BuildConfig, posts: &[Post]) -> Result<()> {
         writeln!(
             xml,
             "<pubDate>{}</pubDate>",
-            post.date.clone().unwrap_or_else(Utc::now).to_rfc2822()
+            post.date.unwrap_or_else(Utc::now).to_rfc2822()
         )?;
         xml.push_str("</item>\n");
     }
@@ -858,7 +898,7 @@ fn website_layout(
     LayoutContext {
         site_title: config.site.title.clone(),
         site_description: config.site.description.clone(),
-        site_url: config.site.base_url.clone(),
+        site_url: normalize_base_url(&config.site.base_url),
         lang: config.site.language.clone(),
         page_title,
         page_description,
@@ -888,8 +928,8 @@ fn article_json_ld(config: &BuildConfig, post: &Post) -> String {
         "@type": "BlogPosting",
         "headline": &post.title,
         "description": &post.description,
-        "datePublished": format_datetime(post.date.clone()),
-        "dateModified": format_datetime(post.updated.clone().or(post.date.clone())),
+        "datePublished": format_datetime(post.date),
+        "dateModified": format_datetime(post.updated.or(post.date)),
         "author": {
             "@type": "Person",
             "name": &config.site.author,
@@ -1114,6 +1154,128 @@ a:hover {
   padding: 0.7rem;
 }
 
+.graph-panel {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.graph-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.graph-toolbar label {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.graph-toolbar input {
+  flex: 1 1 220px;
+  min-width: 210px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.45rem 0.6rem;
+  font: inherit;
+}
+
+.graph-toolbar button,
+.graph-data-link {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #f8fbff;
+  color: #1b3b62;
+  padding: 0.42rem 0.65rem;
+  font: inherit;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.graph-toolbar button:hover,
+.graph-data-link:hover {
+  background: #edf4ff;
+}
+
+.graph-stage {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 8% 15%, #eaf3ff 0, transparent 55%),
+    radial-gradient(circle at 90% 85%, #eff8ff 0, transparent 45%),
+    #f8fbff;
+}
+
+.graph-stage svg {
+  width: 100%;
+  height: 560px;
+  display: block;
+  cursor: grab;
+}
+
+.graph-stage svg.is-dragging {
+  cursor: grabbing;
+}
+
+.graph-link {
+  stroke: #98a8bf;
+  stroke-width: 1.4;
+  stroke-opacity: 0.58;
+}
+
+.graph-link.is-active {
+  stroke: #0057b8;
+  stroke-width: 2.1;
+  stroke-opacity: 0.92;
+}
+
+.graph-link.is-dim {
+  stroke-opacity: 0.12;
+}
+
+.graph-node {
+  transition: opacity 130ms ease;
+}
+
+.graph-node circle {
+  fill: #ffffff;
+  stroke: #3a7bc7;
+  stroke-width: 1.5;
+}
+
+.graph-node text {
+  font-size: 12px;
+  fill: #163a66;
+  stroke: #f8fbff;
+  stroke-width: 2.6;
+  paint-order: stroke fill;
+}
+
+.graph-node:hover {
+  cursor: pointer;
+}
+
+.graph-node.is-active circle {
+  fill: #dbeafe;
+  stroke: #0057b8;
+  stroke-width: 2.2;
+}
+
+.graph-node.is-dim {
+  opacity: 0.22;
+}
+
+.graph-detail {
+  min-height: 3rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  background: #fbfdff;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
 .site-footer {
   margin-top: 2rem;
   color: var(--muted);
@@ -1131,6 +1293,10 @@ a:hover {
   .panel {
     padding: 0.9rem;
   }
+
+  .graph-stage svg {
+    height: 460px;
+  }
 }
 "#;
 
@@ -1145,7 +1311,6 @@ a:hover {
 
 fn build_post_sort_key(post: &Post) -> i64 {
     post.date
-        .clone()
         .map(|date| date.timestamp())
         .unwrap_or(i64::MIN / 2)
 }
@@ -1278,13 +1443,26 @@ fn append_sitemap_url(xml: &mut String, url: &str, lastmod: Option<DateTime<Utc>
 }
 
 fn absolute_url(base_url: &str, path: &str) -> String {
-    let base = base_url.trim_end_matches('/');
+    let base = normalize_base_url(base_url);
     let path = if path.starts_with('/') {
         path.to_string()
     } else {
         format!("/{}", path)
     };
     format!("{}{}", base, path)
+}
+
+fn normalize_base_url(base_url: &str) -> String {
+    let trimmed = base_url.trim().trim_end_matches('/');
+    if trimmed.is_empty() {
+        return "https://example.com".to_string();
+    }
+
+    if trimmed.contains("://") {
+        trimmed.to_string()
+    } else {
+        format!("https://{}", trimmed.trim_start_matches('/'))
+    }
 }
 
 fn escape_xml(value: &str) -> String {
@@ -1450,7 +1628,7 @@ Not published.
             output_dir: output_dir.clone(),
             static_dir,
             site: SiteConfig {
-                base_url: "https://example.test".to_string(),
+                base_url: "example.test".to_string(),
                 title: "Test Garden".to_string(),
                 description: "Test description".to_string(),
                 author: "Tester".to_string(),
@@ -1465,9 +1643,13 @@ Not published.
         assert!(output_dir.join("notes/home/index.html").exists());
         assert!(output_dir.join("notes/second-brain/index.html").exists());
         assert!(output_dir.join("notes/seo/index.html").exists());
+        assert!(output_dir.join("graph/index.html").exists());
         assert!(output_dir.join("tags/architecture/index.html").exists());
         assert!(!output_dir.join("notes/draft-note/index.html").exists());
         assert!(!output_dir.join("notes/hidden-note/index.html").exists());
+
+        let index_html = fs::read_to_string(output_dir.join("index.html"))?;
+        assert!(index_html.contains(r#"rel="canonical" href="https://example.test/""#));
 
         let home_html = fs::read_to_string(output_dir.join("notes/home/index.html"))?;
         assert!(home_html.contains("/notes/second-brain/#architecture-overview"));
@@ -1476,6 +1658,9 @@ Not published.
         assert!(second_html.contains(r#"id="architecture-overview""#));
         assert!(second_html.contains("Linked Mentions"));
         assert!(second_html.contains("/notes/home/"));
+
+        let graph_html = fs::read_to_string(output_dir.join("graph/index.html"))?;
+        assert!(graph_html.contains(r#"fetch("/graph.json")"#));
 
         let graph: serde_json::Value =
             serde_json::from_str(&fs::read_to_string(output_dir.join("graph.json"))?)?;
@@ -1493,6 +1678,9 @@ Not published.
         let search_index = fs::read_to_string(output_dir.join("search-index.json"))?;
         assert!(!search_index.contains("draft-note"));
         assert!(!search_index.contains("hidden-note"));
+
+        let robots_txt = fs::read_to_string(output_dir.join("robots.txt"))?;
+        assert!(robots_txt.contains("Sitemap: https://example.test/sitemap.xml"));
 
         Ok(())
     }
