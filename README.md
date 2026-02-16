@@ -82,27 +82,36 @@ If you prefer HTTPS remote:
 git remote add origin https://github.com/<your-username>/<your-repo>.git
 ```
 
-## Cloudflare Pages (Auto Deploy from GitHub Actions)
+## Cloudflare Pages (GitHub Actions Deploy)
 
-1. Create a Cloudflare Pages project in the dashboard once (project name only; this workflow deploys via API).
-2. In GitHub repo settings, add secrets:
+Use GitHub Actions to build Rust artifacts, then deploy `dist/` to Cloudflare Pages.
 
-- `CLOUDFLARE_API_TOKEN`: API token with Pages edit permissions
-- `CLOUDFLARE_ACCOUNT_ID`: Cloudflare account ID
+1. Create a Cloudflare Pages project once in the dashboard (project name only).
+2. In GitHub repository settings, add secrets:
 
-3. In GitHub repo settings, add variables:
+- `CLOUDFLARE_API_TOKEN`: token with Cloudflare Pages edit permissions
+- `CLOUDFLARE_ACCOUNT_ID`: account ID
+
+3. In GitHub repository settings, add variables:
 
 - `CF_PAGES_PROJECT`: Cloudflare Pages project name
-- `SITE_URL`: production URL (for canonical/sitemap), e.g. `https://<project>.pages.dev`
+- `SITE_URL`: `https://mud-blog.pages.dev` (or your custom domain)
 - `SITE_TITLE` (optional)
 - `SITE_DESCRIPTION` (optional)
 - `SITE_AUTHOR` (optional)
-- `SITE_LANGUAGE` (optional, e.g. `en` or `ko`)
+- `SITE_LANGUAGE` (optional, e.g. `ko`)
 
-4. Push to `main`. Workflow `.github/workflows/deploy-cloudflare-pages.yml` will:
+4. Push to `main`.
 
-- build static files with `cargo run -p blog-build`
-- deploy `dist/` using `wrangler pages deploy`
+- Workflow: `.github/workflows/deploy-cloudflare-pages.yml`
+- Action:
+  - build with `cargo run -p blog-build`
+  - deploy `dist/` with `wrangler pages deploy`
+
+## Deployment Mode
+
+- This repository is configured for GitHub Actions deploy to Cloudflare Pages.
+- Disable Cloudflare Pages Git direct deploy to avoid duplicate deployments.
 
 ## Notes
 

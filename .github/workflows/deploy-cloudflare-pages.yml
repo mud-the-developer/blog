@@ -6,6 +6,9 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 concurrency:
   group: cloudflare-pages-${{ github.ref }}
   cancel-in-progress: true
@@ -29,6 +32,9 @@ jobs:
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
 
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@v2
+
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
@@ -39,8 +45,7 @@ jobs:
           set -euo pipefail
 
           if [[ -z "${SITE_URL:-}" ]]; then
-            echo "Repository variable SITE_URL is required."
-            exit 1
+            SITE_URL="https://mud-blog.pages.dev"
           fi
 
           build_args=(--site-url "$SITE_URL")
@@ -72,5 +77,9 @@ jobs:
             exit 1
           fi
 
-          npm install --global wrangler
-          wrangler pages deploy dist --project-name "$CF_PAGES_PROJECT"
+          if [[ -z "${CLOUDFLARE_API_TOKEN:-}" || -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]]; then
+            echo "GitHub secrets CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID are required."
+            exit 1
+          fi
+
+          npx wrangler@4 pages deploy dist --project-name "$CF_PAGES_PROJECT"
