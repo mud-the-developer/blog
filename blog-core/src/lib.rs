@@ -16,10 +16,15 @@ use std::path::{Path, PathBuf};
 use walkdir::WalkDir;
 
 static WIKILINK_RE: Lazy<Regex> = Lazy::new(|| {
-    Regex::new(r"(!?)\[\[([^\]|#]+)(?:#([^\]|]+))?(?:\|([^\]]+))?\]\]").expect("invalid wikilink regex")
+    Regex::new(r"(!?)\[\[([^\]|#]+)(?:#([^\]|]+))?(?:\|([^\]]+))?\]\]")
+        .expect("invalid wikilink regex")
 });
 
 static IMG_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"<img\s").expect("invalid img regex"));
+static HEADING_RE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r#"(?s)<h([1-6])>(.*?)</h[1-6]>"#).expect("invalid heading regex"));
+static HTML_TAG_RE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r"(?s)<[^>]+>").expect("invalid html tag regex"));
 
 #[derive(Debug, Clone)]
 pub struct SiteConfig {
@@ -270,9 +275,7 @@ fn collect_post_seeds(config: &BuildConfig) -> Result<Vec<PostSeed>> {
             .to_string();
 
         let title = frontmatter.title.unwrap_or_else(|| file_stem.clone());
-        let base_slug = frontmatter
-            .slug
-            .unwrap_or_else(|| slugify(&file_stem));
+        let base_slug = frontmatter.slug.unwrap_or_else(|| slugify(&file_stem));
 
         let slug = ensure_unique_slug(base_slug, &mut used_slugs);
 
@@ -324,10 +327,7 @@ fn render_posts(seeds: &[PostSeed], slug_map: &HashMap<String, String>) -> Resul
         let markdown_html = markdown_to_html(&rewritten);
 
         let excerpt = extract_excerpt(body, 200);
-        let description = seed
-            .description
-            .clone()
-            .unwrap_or_else(|| excerpt.clone());
+        let description = seed.description.clone().unwrap_or_else(|| excerpt.clone());
 
         posts.push(Post {
             slug: seed.slug.clone(),
@@ -547,7 +547,11 @@ fn write_rss(config: &BuildConfig, posts: &[Post]) -> Result<()> {
         "<description>{}</description>",
         escape_xml(&config.site.description)
     )?;
-    writeln!(xml, "<language>{}</language>", escape_xml(&config.site.language))?;
+    writeln!(
+        xml,
+        "<language>{}</language>",
+        escape_xml(&config.site.language)
+    )?;
 
     for post in posts.iter().take(30) {
         xml.push_str("<item>\n");
@@ -555,7 +559,11 @@ fn write_rss(config: &BuildConfig, posts: &[Post]) -> Result<()> {
         let link = absolute_url(&config.site.base_url, &format!("/notes/{}/", post.slug));
         writeln!(xml, "<link>{}</link>", escape_xml(&link))?;
         writeln!(xml, "<guid>{}</guid>", escape_xml(&link))?;
-        writeln!(xml, "<description>{}</description>", escape_xml(&post.excerpt))?;
+        writeln!(
+            xml,
+            "<description>{}</description>",
+            escape_xml(&post.excerpt)
+        )?;
         writeln!(
             xml,
             "<pubDate>{}</pubDate>",
@@ -706,8 +714,43 @@ fn markdown_to_html(markdown: &str) -> String {
     let mut html = String::new();
     push_html(&mut html, parser);
 
-    IMG_RE
+    let html = IMG_RE
         .replace_all(&html, "<img loading=\"lazy\" decoding=\"async\" ")
+        .to_string();
+
+    add_heading_ids(&html)
+}
+
+fn add_heading_ids(html: &str) -> String {
+    let mut seen: HashMap<String, usize> = HashMap::new();
+
+    HEADING_RE
+        .replace_all(html, |caps: &Captures| {
+            let level = caps.get(1).map(|m| m.as_str()).unwrap_or("2");
+            let inner_html = caps.get(2).map(|m| m.as_str()).unwrap_or_default();
+            let text = HTML_TAG_RE.replace_all(inner_html, "");
+            let base = slugify(text.trim());
+
+            if base.is_empty() {
+                return caps
+                    .get(0)
+                    .map(|m| m.as_str().to_string())
+                    .unwrap_or_default();
+            }
+
+            let count = seen
+                .entry(base.clone())
+                .and_modify(|count| *count += 1)
+                .or_insert(1);
+
+            let id = if *count == 1 {
+                base
+            } else {
+                format!("{}-{}", base, count)
+            };
+
+            format!("<h{level} id=\"{id}\">{inner_html}</h{level}>")
+        })
         .to_string()
 }
 
@@ -733,7 +776,10 @@ fn render_post_body_with_maud(markdown_html: &str, backlinks: &[Backlink]) -> St
     .into_string()
 }
 
-fn build_backlinks(posts: &[Post], known_posts: &HashMap<String, &Post>) -> HashMap<String, Vec<Backlink>> {
+fn build_backlinks(
+    posts: &[Post],
+    known_posts: &HashMap<String, &Post>,
+) -> HashMap<String, Vec<Backlink>> {
     let mut backlinks: HashMap<String, Vec<Backlink>> = HashMap::new();
 
     for source in posts {
@@ -1155,7 +1201,18 @@ fn clean_tag(tag: &str) -> String {
 }
 
 fn extract_excerpt(markdown: &str, max_chars: usize) -> String {
-    let stripped = markdown
+    let rewritten = WIKILINK_RE
+        .replace_all(markdown, |caps: &Captures| {
+            caps.get(4)
+                .map(|m| m.as_str().trim())
+                .filter(|label| !label.is_empty())
+                .or_else(|| caps.get(2).map(|m| m.as_str().trim()))
+                .unwrap_or_default()
+                .to_string()
+        })
+        .to_string();
+
+    let stripped = rewritten
         .lines()
         .map(|line| line.trim())
         .filter(|line| !line.is_empty())
@@ -1165,13 +1222,7 @@ fn extract_excerpt(markdown: &str, max_chars: usize) -> String {
 
     let normalized = stripped
         .replace("**", "")
-        .replace('*', "")
-        .replace('`', "")
-        .replace('[', "")
-        .replace(']', "")
-        .replace('(', "")
-        .replace(')', "")
-        .replace('>', "")
+        .replace(['*', '`', '[', ']', '(', ')', '>'], "")
         .replace('-', " ");
 
     if normalized.chars().count() <= max_chars {
@@ -1243,4 +1294,206 @@ fn escape_xml(value: &str) -> String {
         .replace('>', "&gt;")
         .replace('"', "&quot;")
         .replace('\'', "&apos;")
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::sync::atomic::{AtomicU64, Ordering as AtomicOrdering};
+    use std::time::{SystemTime, UNIX_EPOCH};
+
+    static TEST_DIR_COUNTER: AtomicU64 = AtomicU64::new(0);
+
+    struct TestDir {
+        path: PathBuf,
+    }
+
+    impl TestDir {
+        fn new(prefix: &str) -> Self {
+            let tick = TEST_DIR_COUNTER.fetch_add(1, AtomicOrdering::Relaxed);
+            let nanos = SystemTime::now()
+                .duration_since(UNIX_EPOCH)
+                .unwrap_or_default()
+                .as_nanos();
+            let path = std::env::temp_dir().join(format!("blog-core-{prefix}-{nanos}-{tick}"));
+            fs::create_dir_all(&path).expect("failed to create test temp dir");
+            Self { path }
+        }
+    }
+
+    impl Drop for TestDir {
+        fn drop(&mut self) {
+            let _ = fs::remove_dir_all(&self.path);
+        }
+    }
+
+    fn write_text(path: &Path, contents: &str) {
+        if let Some(parent) = path.parent() {
+            fs::create_dir_all(parent).expect("failed to create parent dir for test file");
+        }
+        fs::write(path, contents).expect("failed to write test file");
+    }
+
+    #[test]
+    fn markdown_to_html_adds_unique_heading_ids() {
+        let html = markdown_to_html(
+            r#"
+# Intro
+## Important Section
+## Important Section
+"#,
+        );
+
+        assert!(html.contains(r#"<h1 id="intro">Intro</h1>"#));
+        assert!(html.contains(r#"<h2 id="important-section">Important Section</h2>"#));
+        assert!(html.contains(r#"<h2 id="important-section-2">Important Section</h2>"#));
+    }
+
+    #[test]
+    fn extract_excerpt_uses_wikilink_labels() {
+        let excerpt = extract_excerpt(
+            "Start with [[second-brain|Second Brain]] and [[seo-performance-guide#checklist]].",
+            180,
+        );
+
+        assert!(excerpt.contains("Second Brain"));
+        assert!(excerpt.contains("seo performance guide"));
+        assert!(!excerpt.contains('|'));
+        assert!(!excerpt.contains("[["));
+    }
+
+    #[test]
+    fn build_site_generates_outputs_and_filters_unpublished_notes() -> Result<()> {
+        let tmp = TestDir::new("build");
+        let content_dir = tmp.path.join("content/posts");
+        let static_dir = tmp.path.join("static");
+        let output_dir = tmp.path.join("dist");
+
+        write_text(
+            &content_dir.join("home.md"),
+            r#"---
+title: Home
+date: 2026-02-16
+tags: [intro]
+dg-publish: true
+dg-home: true
+---
+
+# Home
+
+Start with [[second-brain#Architecture Overview|architecture]].
+"#,
+        );
+
+        write_text(
+            &content_dir.join("second-brain.md"),
+            r#"---
+title: Second Brain
+aliases: [brain]
+date: 2026-02-15
+tags: [rust, architecture]
+dg-publish: true
+---
+
+# Second Brain
+
+## Architecture Overview
+
+See [[home]] and [[brain|self alias]].
+"#,
+        );
+
+        write_text(
+            &content_dir.join("seo.md"),
+            r#"---
+title: SEO Notes
+date: 2026-02-14
+tags: [seo]
+dg-publish: true
+---
+
+# SEO Notes
+
+Linked from [[second-brain]].
+"#,
+        );
+
+        write_text(
+            &content_dir.join("draft-note.md"),
+            r#"---
+title: Draft
+draft: true
+---
+
+Not published.
+"#,
+        );
+
+        write_text(
+            &content_dir.join("hidden-note.md"),
+            r#"---
+title: Hidden
+dg-publish: false
+---
+
+Not published.
+"#,
+        );
+
+        write_text(
+            &static_dir.join("assets/style.css"),
+            "body { color: #222; }\n",
+        );
+
+        let config = BuildConfig {
+            content_dir,
+            output_dir: output_dir.clone(),
+            static_dir,
+            site: SiteConfig {
+                base_url: "https://example.test".to_string(),
+                title: "Test Garden".to_string(),
+                description: "Test description".to_string(),
+                author: "Tester".to_string(),
+                language: "en".to_string(),
+            },
+        };
+
+        let summary = build_site(&config)?;
+        assert_eq!(summary.posts, 3);
+
+        assert!(output_dir.join("index.html").exists());
+        assert!(output_dir.join("notes/home/index.html").exists());
+        assert!(output_dir.join("notes/second-brain/index.html").exists());
+        assert!(output_dir.join("notes/seo/index.html").exists());
+        assert!(output_dir.join("tags/architecture/index.html").exists());
+        assert!(!output_dir.join("notes/draft-note/index.html").exists());
+        assert!(!output_dir.join("notes/hidden-note/index.html").exists());
+
+        let home_html = fs::read_to_string(output_dir.join("notes/home/index.html"))?;
+        assert!(home_html.contains("/notes/second-brain/#architecture-overview"));
+
+        let second_html = fs::read_to_string(output_dir.join("notes/second-brain/index.html"))?;
+        assert!(second_html.contains(r#"id="architecture-overview""#));
+        assert!(second_html.contains("Linked Mentions"));
+        assert!(second_html.contains("/notes/home/"));
+
+        let graph: serde_json::Value =
+            serde_json::from_str(&fs::read_to_string(output_dir.join("graph.json"))?)?;
+        let has_home_to_second =
+            graph["links"]
+                .as_array()
+                .unwrap_or(&Vec::new())
+                .iter()
+                .any(|entry| {
+                    entry.get("source").and_then(|v| v.as_str()) == Some("home")
+                        && entry.get("target").and_then(|v| v.as_str()) == Some("second-brain")
+                });
+        assert!(has_home_to_second);
+
+        let search_index = fs::read_to_string(output_dir.join("search-index.json"))?;
+        assert!(!search_index.contains("draft-note"));
+        assert!(!search_index.contains("hidden-note"));
+
+        Ok(())
+    }
 }
