@@ -9,7 +9,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::json;
 use slug::slugify;
 use std::cmp::Ordering;
-use std::collections::{BTreeMap, HashMap, HashSet};
+use std::collections::{BTreeMap, HashMap, HashSet, VecDeque};
 use std::fmt::Write as _;
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -92,6 +92,10 @@ struct FrontMatter {
     dg_publish: Option<bool>,
     #[serde(rename = "dg-home")]
     dg_home: Option<bool>,
+    #[serde(rename = "dg-enable-search")]
+    dg_enable_search: Option<bool>,
+    #[serde(rename = "dg-show-local-graph")]
+    dg_show_local_graph: Option<bool>,
 }
 
 #[derive(Debug, Clone)]
@@ -106,6 +110,8 @@ struct PostSeed {
     date: Option<DateTime<Utc>>,
     updated: Option<DateTime<Utc>>,
     is_home: bool,
+    enable_search: bool,
+    show_local_graph: bool,
 }
 
 #[derive(Debug, Clone)]
@@ -123,6 +129,8 @@ struct Post {
     outgoing_links: Vec<String>,
     reading_time_min: usize,
     is_home: bool,
+    enable_search: bool,
+    show_local_graph: bool,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -188,6 +196,11 @@ struct LayoutContext {
     json_ld: String,
     page_tabs: Vec<PageTab>,
     toc_items: Vec<TocItem>,
+    show_search: bool,
+    show_graph_module: bool,
+    graph_data_url: String,
+    graph_center_id: String,
+    show_side_graph: bool,
 }
 
 #[derive(Debug, Clone)]
@@ -234,6 +247,8 @@ struct Backlink {
     title: String,
     url: String,
     excerpt: String,
+    date_display: String,
+    sort_timestamp: i64,
 }
 
 #[derive(Template)]
@@ -259,6 +274,14 @@ struct TagTemplate {
     layout: LayoutContext,
     tag_name: String,
     posts: Vec<PostCard>,
+}
+
+#[derive(Template)]
+#[template(path = "graph.html")]
+struct GraphTemplate {
+    layout: LayoutContext,
+    total_nodes: usize,
+    total_links: usize,
 }
 
 pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
@@ -292,9 +315,11 @@ pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
     render_index(config, &posts, &tags, &home_intro_html)?;
     render_posts_pages(config, &posts, &backlinks)?;
     render_tag_pages(config, &tags, &posts)?;
+    render_graph_page(config, &posts)?;
     write_search_index(config, &posts)?;
     write_file_tree(config, &posts)?;
     write_graph(config, &posts)?;
+    write_local_graphs(config, &posts)?;
     write_sitemap(config, &posts, &tags)?;
     write_rss(config, &posts)?;
     write_robots_txt(config)?;
@@ -373,6 +398,8 @@ fn collect_post_seeds(config: &BuildConfig) -> Result<Vec<PostSeed>> {
             date: frontmatter.date.as_deref().and_then(parse_datetime),
             updated: frontmatter.updated.as_deref().and_then(parse_datetime),
             is_home: frontmatter.dg_home.unwrap_or(false),
+            enable_search: frontmatter.dg_enable_search.unwrap_or(true),
+            show_local_graph: frontmatter.dg_show_local_graph.unwrap_or(true),
         });
     }
 
@@ -408,6 +435,8 @@ fn render_posts(seeds: &[PostSeed], slug_map: &HashMap<String, String>) -> Resul
             outgoing_links,
             reading_time_min: estimate_reading_time_minutes(body),
             is_home: seed.is_home,
+            enable_search: seed.enable_search,
+            show_local_graph: seed.show_local_graph,
         });
     }
 
@@ -431,6 +460,11 @@ fn render_index(
         "",
         website_json_ld(config),
         Vec::new(),
+        true,
+        true,
+        "/graph.json".to_string(),
+        String::new(),
+        true,
     );
 
     let template = IndexTemplate {
@@ -451,6 +485,8 @@ fn render_posts_pages(
     for post in posts {
         let page_path = format!("/notes/{}/", post.slug);
         let json_ld = article_json_ld(config, post);
+        let toc_items = toc_items_for_post(post);
+        let show_side_graph = post.show_local_graph || !toc_items.is_empty();
         let layout = website_layout(
             config,
             posts,
@@ -461,7 +497,12 @@ fn render_posts_pages(
             &format_datetime(post.date),
             &format_datetime(post.updated),
             json_ld,
-            toc_items_for_post(post),
+            toc_items,
+            post.enable_search,
+            post.show_local_graph,
+            format!("/local-graph/{}.json", post.slug),
+            post.slug.clone(),
+            show_side_graph,
         );
 
         let backlink_list = backlinks.get(&post.slug).cloned().unwrap_or_default();
@@ -509,6 +550,11 @@ fn render_tag_pages(config: &BuildConfig, tags: &[TagEntry], posts: &[Post]) -> 
             "",
             website_json_ld(config),
             Vec::new(),
+            true,
+            true,
+            "/graph.json".to_string(),
+            String::new(),
+            true,
         );
 
         let template = TagTemplate {
@@ -527,6 +573,38 @@ fn render_tag_pages(config: &BuildConfig, tags: &[TagEntry], posts: &[Post]) -> 
     }
 
     Ok(())
+}
+
+fn render_graph_page(config: &BuildConfig, posts: &[Post]) -> Result<()> {
+    let (nodes, links) = build_graph_data(posts);
+    let layout = website_layout(
+        config,
+        posts,
+        format!("Graph | {}", config.site.title),
+        "Interactive graph view of connected notes.".to_string(),
+        "/graph/",
+        "website",
+        "",
+        "",
+        website_json_ld(config),
+        Vec::new(),
+        true,
+        false,
+        "/graph.json".to_string(),
+        String::new(),
+        false,
+    );
+
+    let template = GraphTemplate {
+        layout,
+        total_nodes: nodes.len(),
+        total_links: links.len(),
+    };
+
+    write_file(
+        config.output_dir.join("graph").join("index.html"),
+        template.render()?,
+    )
 }
 
 fn write_search_index(config: &BuildConfig, posts: &[Post]) -> Result<()> {
@@ -664,12 +742,154 @@ fn build_graph_data(posts: &[Post]) -> (Vec<GraphNode>, Vec<GraphLink>) {
     (nodes, links)
 }
 
+fn write_local_graphs(config: &BuildConfig, posts: &[Post]) -> Result<()> {
+    for post in posts {
+        let (nodes, links) = build_local_graph_data(posts, &post.slug, 2, 72);
+        let payload = json!({
+            "center": post.slug,
+            "nodes": nodes,
+            "links": links,
+        });
+
+        write_file(
+            config
+                .output_dir
+                .join("local-graph")
+                .join(format!("{}.json", post.slug)),
+            serde_json::to_string_pretty(&payload)?,
+        )?;
+    }
+
+    Ok(())
+}
+
+fn build_local_graph_data(
+    posts: &[Post],
+    center_slug: &str,
+    hops: usize,
+    max_nodes: usize,
+) -> (Vec<GraphNode>, Vec<GraphLink>) {
+    let post_by_slug = posts
+        .iter()
+        .map(|post| (post.slug.as_str(), post))
+        .collect::<HashMap<_, _>>();
+    if !post_by_slug.contains_key(center_slug) {
+        return (Vec::new(), Vec::new());
+    }
+
+    let known = post_by_slug.keys().copied().collect::<HashSet<_>>();
+
+    let mut outgoing: HashMap<&str, Vec<&str>> = HashMap::new();
+    let mut incoming: HashMap<&str, Vec<&str>> = HashMap::new();
+
+    for post in posts {
+        let source = post.slug.as_str();
+        for target in &post.outgoing_links {
+            let target = target.as_str();
+            if !known.contains(target) {
+                continue;
+            }
+            outgoing.entry(source).or_default().push(target);
+            incoming.entry(target).or_default().push(source);
+        }
+    }
+
+    let mut depth_by_slug: HashMap<&str, usize> = HashMap::new();
+    let mut queue: VecDeque<&str> = VecDeque::new();
+    depth_by_slug.insert(center_slug, 0);
+    queue.push_back(center_slug);
+
+    while let Some(current) = queue.pop_front() {
+        let depth = *depth_by_slug.get(current).unwrap_or(&0);
+        if depth >= hops {
+            continue;
+        }
+
+        if let Some(nexts) = outgoing.get(current) {
+            for next in nexts {
+                if !depth_by_slug.contains_key(next) {
+                    depth_by_slug.insert(next, depth + 1);
+                    queue.push_back(next);
+                }
+            }
+        }
+
+        if let Some(prevs) = incoming.get(current) {
+            for prev in prevs {
+                if !depth_by_slug.contains_key(prev) {
+                    depth_by_slug.insert(prev, depth + 1);
+                    queue.push_back(prev);
+                }
+            }
+        }
+    }
+
+    let mut selected = depth_by_slug.into_iter().collect::<Vec<_>>();
+    selected.sort_by(|(a_slug, a_depth), (b_slug, b_depth)| {
+        a_depth
+            .cmp(b_depth)
+            .then_with(|| {
+                let a_title = post_by_slug
+                    .get(a_slug)
+                    .map(|post| post.title.to_lowercase())
+                    .unwrap_or_else(|| (*a_slug).to_string());
+                let b_title = post_by_slug
+                    .get(b_slug)
+                    .map(|post| post.title.to_lowercase())
+                    .unwrap_or_else(|| (*b_slug).to_string());
+                a_title.cmp(&b_title)
+            })
+            .then_with(|| a_slug.cmp(b_slug))
+    });
+
+    if selected.len() > max_nodes {
+        selected.truncate(max_nodes);
+    }
+
+    let selected_set = selected
+        .iter()
+        .map(|(slug, _)| (*slug).to_string())
+        .collect::<HashSet<_>>();
+
+    let nodes = selected
+        .iter()
+        .filter_map(|(slug, _)| post_by_slug.get(slug))
+        .map(|post| GraphNode {
+            id: post.slug.clone(),
+            title: post.title.clone(),
+            url: format!("/notes/{}/", post.slug),
+        })
+        .collect::<Vec<_>>();
+
+    let mut links = Vec::new();
+    for post in posts {
+        if !selected_set.contains(&post.slug) {
+            continue;
+        }
+        for target in &post.outgoing_links {
+            if selected_set.contains(target) {
+                links.push(GraphLink {
+                    source: post.slug.clone(),
+                    target: target.clone(),
+                });
+            }
+        }
+    }
+
+    (nodes, links)
+}
+
 fn write_sitemap(config: &BuildConfig, posts: &[Post], tags: &[TagEntry]) -> Result<()> {
     let mut xml = String::new();
     xml.push_str("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
     xml.push_str("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n");
 
     append_sitemap_url(&mut xml, &absolute_url(&config.site.base_url, "/"), None);
+    append_sitemap_url(
+        &mut xml,
+        &absolute_url(&config.site.base_url, "/graph/"),
+        None,
+    );
 
     for post in posts {
         append_sitemap_url(
@@ -956,13 +1176,25 @@ fn render_post_body_with_maud(markdown_html: &str, backlinks: &[Backlink]) -> St
         article class="note-body" {
             (PreEscaped(markdown_html))
         }
-        @if !backlinks.is_empty() {
-            section class="backlinks" {
-                h2 { "Linked Mentions" }
+        section class="backlinks" {
+            h2 { "Linked Mentions" }
+            @if backlinks.is_empty() {
+                p class="backlinks-empty" { "No linked mentions yet." }
+            } @else {
+                p class="backlinks-meta" {
+                    (format!(
+                        "{} linked note{} · sorted by recency",
+                        backlinks.len(),
+                        if backlinks.len() == 1 { "" } else { "s" }
+                    ))
+                }
                 ul {
                     @for link in backlinks {
                         li {
-                            a href=(link.url) { (link.title) }
+                            div class="backlinks-item-head" {
+                                a href=(link.url) { (link.title) }
+                                span class="backlinks-item-date" { (link.date_display) }
+                            }
                             p { (link.excerpt) }
                         }
                     }
@@ -982,10 +1214,15 @@ fn build_backlinks(
     for source in posts {
         for target in &source.outgoing_links {
             if known_posts.contains_key(target) && target != &source.slug {
+                let date = source.updated.or(source.date);
                 let entry = Backlink {
                     title: source.title.clone(),
                     url: format!("/notes/{}/", source.slug),
                     excerpt: source.excerpt.clone(),
+                    date_display: date
+                        .map(|value| value.format("%Y-%m-%d").to_string())
+                        .unwrap_or_else(|| "Undated".to_string()),
+                    sort_timestamp: date.map(|value| value.timestamp()).unwrap_or(i64::MIN),
                 };
 
                 let items = backlinks.entry(target.clone()).or_default();
@@ -994,6 +1231,14 @@ fn build_backlinks(
                 }
             }
         }
+    }
+
+    for items in backlinks.values_mut() {
+        items.sort_by(|a, b| {
+            b.sort_timestamp
+                .cmp(&a.sort_timestamp)
+                .then_with(|| a.title.to_lowercase().cmp(&b.title.to_lowercase()))
+        });
     }
 
     backlinks
@@ -1051,6 +1296,11 @@ fn website_layout(
     updated_time: &str,
     json_ld: String,
     toc_items: Vec<TocItem>,
+    show_search: bool,
+    show_graph_module: bool,
+    graph_data_url: String,
+    graph_center_id: String,
+    show_side_graph: bool,
 ) -> LayoutContext {
     let canonical_url = absolute_url(&config.site.base_url, page_path);
 
@@ -1069,6 +1319,11 @@ fn website_layout(
         json_ld,
         page_tabs: build_page_tabs(posts, page_path),
         toc_items,
+        show_search,
+        show_graph_module,
+        graph_data_url,
+        graph_center_id,
+        show_side_graph,
     }
 }
 
@@ -1773,6 +2028,23 @@ Linked from [[second-brain]].
         );
 
         write_text(
+            &content_dir.join("isolated.md"),
+            r#"---
+title: Isolated
+date: 2026-02-13
+tags: [solo]
+dg-publish: true
+dg-enable-search: false
+dg-show-local-graph: false
+---
+
+# Isolated
+
+No links here.
+"#,
+        );
+
+        write_text(
             &content_dir.join("draft-note.md"),
             r#"---
 title: Draft
@@ -1813,23 +2085,32 @@ Not published.
         };
 
         let summary = build_site(&config)?;
-        assert_eq!(summary.posts, 3);
+        assert_eq!(summary.posts, 4);
 
         assert!(output_dir.join("index.html").exists());
         assert!(output_dir.join("notes/home/index.html").exists());
         assert!(output_dir.join("notes/second-brain/index.html").exists());
         assert!(output_dir.join("notes/seo/index.html").exists());
+        assert!(output_dir.join("notes/isolated/index.html").exists());
         assert!(output_dir.join("filetree.json").exists());
+        assert!(output_dir.join("local-graph/second-brain.json").exists());
+        assert!(output_dir.join("local-graph/isolated.json").exists());
         assert!(output_dir.join("tags/architecture/index.html").exists());
         assert!(!output_dir.join("notes/draft-note/index.html").exists());
         assert!(!output_dir.join("notes/hidden-note/index.html").exists());
-        assert!(!output_dir.join("graph/index.html").exists());
+        assert!(output_dir.join("graph/index.html").exists());
 
         let index_html = fs::read_to_string(output_dir.join("index.html"))?;
         assert!(index_html.contains(r#"rel="canonical" href="https://example.test/""#));
+        assert!(index_html.contains(r#"src="/assets/toc-tracker.js""#));
+        assert!(index_html.contains(r#"src="/assets/link-preview.js""#));
+        assert!(index_html.contains("window.initTocTracker"));
+        assert!(index_html.contains("window.initLinkPreview"));
+        assert!(index_html.contains(r#"dataUrl: "/graph.json""#));
 
         let home_html = fs::read_to_string(output_dir.join("notes/home/index.html"))?;
         assert!(home_html.contains("/notes/second-brain/#architecture-overview"));
+        assert!(home_html.contains(r#"dataUrl: "/local-graph/home.json""#));
 
         let second_html = fs::read_to_string(output_dir.join("notes/second-brain/index.html"))?;
         assert!(second_html.contains(r#"id="architecture-overview""#));
@@ -1837,9 +2118,16 @@ Not published.
         assert!(second_html.contains("href=\"#architecture-overview\""));
         assert!(second_html.contains("Linked Mentions"));
         assert!(second_html.contains("/notes/home/"));
+        assert!(second_html.contains(r#"dataUrl: "/local-graph/second-brain.json""#));
 
         assert!(index_html.contains(r#"id="side-graph-stage""#));
         assert!(index_html.contains(r#"src="/assets/graph-view.js""#));
+
+        let graph_html = fs::read_to_string(output_dir.join("graph/index.html"))?;
+        assert!(graph_html.contains("id=\"global-graph-stage\""));
+        assert!(graph_html.contains("id=\"global-graph-search\""));
+        assert!(graph_html.contains(r#"dataUrl: "/graph.json""#));
+        assert!(!graph_html.contains(r#"id="side-graph-stage""#));
 
         let graph: serde_json::Value =
             serde_json::from_str(&fs::read_to_string(output_dir.join("graph.json"))?)?;
@@ -1853,6 +2141,26 @@ Not published.
                         && entry.get("target").and_then(|v| v.as_str()) == Some("second-brain")
                 });
         assert!(has_home_to_second);
+
+        let second_local_graph: serde_json::Value = serde_json::from_str(&fs::read_to_string(
+            output_dir.join("local-graph/second-brain.json"),
+        )?)?;
+        assert_eq!(second_local_graph["center"].as_str(), Some("second-brain"));
+        let local_nodes = second_local_graph["nodes"]
+            .as_array()
+            .cloned()
+            .unwrap_or_default();
+        assert!(local_nodes
+            .iter()
+            .any(|entry| entry.get("id").and_then(|value| value.as_str()) == Some("home")));
+        assert!(local_nodes
+            .iter()
+            .any(|entry| entry.get("id").and_then(|value| value.as_str()) == Some("seo")));
+
+        let isolated_html = fs::read_to_string(output_dir.join("notes/isolated/index.html"))?;
+        assert!(isolated_html.contains("No linked mentions yet."));
+        assert!(!isolated_html.contains(r#"id="global-search-input""#));
+        assert!(!isolated_html.contains(r#"id="side-graph-stage""#));
 
         let search_index = fs::read_to_string(output_dir.join("search-index.json"))?;
         assert!(!search_index.contains("draft-note"));

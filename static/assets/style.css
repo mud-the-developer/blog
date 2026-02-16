@@ -182,6 +182,48 @@ a:hover {
   border-radius: 2px;
 }
 
+.link-preview-card {
+  position: absolute;
+  z-index: 24;
+  width: min(320px, calc(100vw - 1.5rem));
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: 0 12px 24px rgba(8, 22, 42, 0.18);
+  padding: 0.6rem 0.68rem;
+  pointer-events: none;
+}
+
+.link-preview-title {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.link-preview-excerpt {
+  margin: 0.34rem 0 0;
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.link-preview-tags {
+  margin-top: 0.35rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.24rem;
+}
+
+.link-preview-tag {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.66rem;
+  color: var(--muted);
+  padding: 0.06rem 0.34rem;
+  line-height: 1.2;
+}
+
 .search-empty {
   margin: 0;
   color: var(--muted);
@@ -426,10 +468,18 @@ body.preview-open .page-tab-preview {
   line-height: 1.35;
   text-decoration: none;
   color: var(--muted);
+  border-left: 2px solid transparent;
+  padding-left: 0.4rem;
 }
 
 .toc-link:hover {
   color: var(--accent);
+}
+
+.toc-link.is-active {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  font-weight: 600;
 }
 
 .toc-depth-1 {
@@ -521,6 +571,22 @@ main {
   padding-top: 1rem;
 }
 
+.backlinks h2 {
+  margin: 0;
+}
+
+.backlinks-meta {
+  margin: 0.34rem 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.83rem;
+}
+
+.backlinks-empty {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
 .backlinks ul {
   list-style: none;
   margin: 0;
@@ -536,9 +602,33 @@ main {
   padding: 0.7rem;
 }
 
+.backlinks-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.7rem;
+}
+
+.backlinks-item-date {
+  color: var(--muted);
+  font-size: 0.74rem;
+  white-space: nowrap;
+}
+
+.backlinks li p {
+  margin: 0.28rem 0 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
 .graph-panel {
   display: grid;
   gap: 0.9rem;
+}
+
+.graph-head h1 {
+  margin: 0;
 }
 
 .graph-toolbar {

@@ -60,6 +60,7 @@
           <nav class="site-nav" aria-label="Main navigation">
             <a href="/">Blog Home</a>
             <a href="/notes/jinhyuk-kim/">Jinhyuk Kim</a>
+            <a href="/graph/">Graph</a>
             <a href="/rss.xml">RSS</a>
             <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">Dark</button>
           </nav>
@@ -68,6 +69,7 @@
 
       <div class="site-layout">
         <aside class="panel page-tabs" aria-label="Page tabs">
+          {% if layout.show_search %}
           <div class="site-search">
             <label class="sr-only" for="global-search-input">Search notes</label>
             <input
@@ -80,6 +82,7 @@
             />
             <div id="global-search-results" class="search-results" role="listbox" hidden></div>
           </div>
+          {% endif %}
           <div class="page-tabs-head">
             <h2>Pages</h2>
             <button id="preview-toggle" class="preview-toggle" type="button" aria-pressed="false">Preview: OFF</button>
@@ -98,7 +101,9 @@
           {% block content %}{% endblock %}
         </main>
 
+        {% if layout.show_side_graph %}
         <aside class="panel live-graph" aria-label="Graph preview">
+          {% if layout.show_graph_module %}
           <div class="live-graph-head">
             <h2>Graph</h2>
           </div>
@@ -108,6 +113,7 @@
               <g id="side-graph-node-layer"></g>
             </svg>
           </div>
+          {% endif %}
           {% if layout.toc_items.len() > 0 %}
           <section class="toc-panel" aria-label="Table of contents">
             <h3>On This Page</h3>
@@ -119,6 +125,7 @@
           </section>
           {% endif %}
         </aside>
+        {% endif %}
       </div>
 
       <footer class="site-footer">
@@ -127,6 +134,8 @@
     </div>
 
     <script src="/assets/filetree.js"></script>
+    <script src="/assets/toc-tracker.js"></script>
+    <script src="/assets/link-preview.js"></script>
     <script src="/assets/graph-view.js"></script>
     <script>
       (() => {
@@ -451,12 +460,50 @@
           });
         }
 
-        if (window.initGraphView) {
+        if (window.initTocTracker) {
+          window.initTocTracker({
+            panelSelector: ".toc-panel"
+          });
+        }
+
+        if (window.initLinkPreview) {
+          window.initLinkPreview({
+            containerSelector: ".note-body",
+            indexUrl: "/search-index.json"
+          });
+        }
+
+        if (window.initGraphView && document.getElementById("global-graph-stage")) {
+          window.initGraphView({
+            stageId: "global-graph-stage",
+            svgId: "global-graph-svg",
+            linkLayerId: "global-graph-link-layer",
+            nodeLayerId: "global-graph-node-layer",
+            detailId: "global-graph-detail",
+            searchInputId: "global-graph-search",
+            resetButtonId: "global-graph-reset",
+            toggleButtonId: "global-graph-toggle",
+            dataUrl: "/graph.json",
+            width: 1000,
+            height: 640,
+            idealDistance: 112,
+            nodeRadius: 9,
+            showLabels: true,
+            labelFontSize: 12,
+            idleText: "Hover nodes to inspect relationships.",
+            emptyText: "No graph data yet."
+          });
+        }
+
+        if (window.initGraphView && document.getElementById("side-graph-stage")) {
           window.initGraphView({
             stageId: "side-graph-stage",
             svgId: "side-graph-svg",
             linkLayerId: "side-graph-link-layer",
             nodeLayerId: "side-graph-node-layer",
+            dataUrl: "{{ layout.graph_data_url }}",
+            fallbackDataUrl: "/graph.json",
+            centerNodeId: "{{ layout.graph_center_id }}",
             width: 540,
             height: 420,
             idealDistance: 88,

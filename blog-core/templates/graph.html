@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="panel graph-panel">
+    <header class="graph-head">
+      <h1>Graph</h1>
+      <p class="post-meta">{{ total_nodes }} notes • {{ total_links }} links</p>
+    </header>
+
+    <div class="graph-toolbar">
+      <label for="global-graph-search">Search graph</label>
+      <input
+        id="global-graph-search"
+        type="search"
+        placeholder="Filter nodes by title or slug..."
+        autocomplete="off"
+      />
+      <button id="global-graph-reset" type="button">Reset</button>
+      <button id="global-graph-toggle" type="button">Pause</button>
+      <a class="graph-data-link" href="/graph.json" target="_blank" rel="noopener noreferrer">Graph JSON</a>
+    </div>
+
+    <div id="global-graph-stage" class="graph-stage">
+      <svg id="global-graph-svg" viewBox="0 0 1000 640" aria-label="Global graph view">
+        <g id="global-graph-link-layer"></g>
+        <g id="global-graph-node-layer"></g>
+      </svg>
+    </div>
+
+    <p id="global-graph-detail" class="graph-detail">
+      Hover nodes to inspect relationships.
+    </p>
+  </section>
+{% endblock %}

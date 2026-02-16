@@ -20,6 +20,8 @@
     const centerX = width / 2;
     const centerY = height / 2;
     const dataUrl = opts.dataUrl || "/graph.json";
+    const fallbackDataUrl = opts.fallbackDataUrl || "";
+    const preferredCenterNodeId = typeof opts.centerNodeId === "string" ? opts.centerNodeId : "";
     const idealDistance = opts.idealDistance || 120;
     const nodeRadius = opts.nodeRadius || 9;
     const showLabels = opts.showLabels !== false;
@@ -58,6 +60,7 @@
       dragPointerId: -1,
       dragMoved: false,
       activeNodeId: "",
+      defaultActiveNodeId: "",
       searchTerm: "",
       viewport: {
         scale: 1,
@@ -103,6 +106,23 @@
       graphState.viewport.tx = 0;
       graphState.viewport.ty = 0;
       applyViewportTransform();
+    };
+
+    const focusNode = (node, preferredScale) => {
+      if (!node) {
+        return;
+      }
+
+      const nextScale =
+        typeof preferredScale === "number"
+          ? Math.min(maxZoom, Math.max(minZoom, preferredScale))
+          : graphState.viewport.scale;
+
+      graphState.viewport.scale = nextScale;
+      graphState.viewport.tx = centerX - node.x * nextScale;
+      graphState.viewport.ty = centerY - node.y * nextScale;
+      applyViewportTransform();
+      wakeSimulation();
     };
 
     const resetLayout = () => {
@@ -430,13 +450,20 @@
       );
     };
 
-    fetch(dataUrl)
-      .then((response) => {
+    const fetchGraphPayload = (url) =>
+      fetch(url).then((response) => {
         if (!response.ok) {
           throw new Error("Failed to load graph JSON");
         }
         return response.json();
-      })
+      });
+
+    let payloadPromise = fetchGraphPayload(dataUrl);
+    if (fallbackDataUrl && fallbackDataUrl !== dataUrl) {
+      payloadPromise = payloadPromise.catch(() => fetchGraphPayload(fallbackDataUrl));
+    }
+
+    payloadPromise
       .then((payload) => {
         const nodes = Array.isArray(payload.nodes) ? payload.nodes : [];
         const links = Array.isArray(payload.links) ? payload.links : [];
@@ -465,8 +492,20 @@
         }));
         graphState.nodesById = new Map(graphState.nodes.map((node) => [node.id, node]));
 
+        const payloadCenterNodeId = typeof payload.center === "string" ? payload.center : "";
+        const defaultCenterNodeId = payloadCenterNodeId || preferredCenterNodeId;
+        if (defaultCenterNodeId && graphState.nodesById.has(defaultCenterNodeId)) {
+          graphState.defaultActiveNodeId = defaultCenterNodeId;
+          graphState.activeNodeId = defaultCenterNodeId;
+        }
+
         resetLayout();
         resetViewport();
+
+        if (graphState.defaultActiveNodeId) {
+          const centerNode = graphState.nodesById.get(graphState.defaultActiveNodeId);
+          focusNode(centerNode, 1.12);
+        }
 
         graphState.links.forEach((link) => {
           const line = createSvgEl("line");
@@ -501,8 +540,9 @@
           });
 
           group.addEventListener("mouseleave", () => {
-            graphState.activeNodeId = "";
-            updateDetail(null);
+            graphState.activeNodeId = graphState.defaultActiveNodeId;
+            const defaultNode = graphState.nodesById.get(graphState.defaultActiveNodeId);
+            updateDetail(defaultNode || null);
             applyVisualState();
           });
 
@@ -532,12 +572,41 @@
         });
 
         attachInteractionEvents();
-        updateDetail(null);
+        const initialNode = graphState.nodesById.get(graphState.defaultActiveNodeId);
+        updateDetail(initialNode || null);
 
         if (searchInput) {
           searchInput.addEventListener("input", () => {
             graphState.searchTerm = searchInput.value.trim().toLowerCase();
             applyVisualState();
+          });
+
+          searchInput.addEventListener("keydown", (event) => {
+            if (event.key !== "Enter") {
+              return;
+            }
+
+            const query = searchInput.value.trim().toLowerCase();
+            if (!query) {
+              graphState.activeNodeId = graphState.defaultActiveNodeId;
+              const defaultNode = graphState.nodesById.get(graphState.defaultActiveNodeId);
+              updateDetail(defaultNode || null);
+              applyVisualState();
+              return;
+            }
+
+            const match = graphState.nodes.find(
+              (node) =>
+                node.title.toLowerCase().includes(query) || node.id.toLowerCase().includes(query)
+            );
+            if (!match) {
+              return;
+            }
+
+            graphState.activeNodeId = match.id;
+            updateDetail(match);
+            applyVisualState();
+            focusNode(match, Math.max(graphState.viewport.scale, 1.14));
           });
         }
 
