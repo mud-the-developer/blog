@@ -45,6 +45,33 @@ static DATAVIEW_TABLE_FROM_RE: Lazy<Regex> = Lazy::new(|| {
 static DATAVIEW_TASK_FROM_RE: Lazy<Regex> = Lazy::new(|| {
     Regex::new(r"(?i)^\s*TASK\s+FROM\s+#([A-Za-z0-9_-]+)\s*$").expect("invalid dataview task regex")
 });
+static DATAVIEW_SORT_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r"(?i)^\s*SORT\s+(?:file\.name|title)\s*(ASC|DESC)?\s*$")
+        .expect("invalid dataview sort regex")
+});
+static DATAVIEW_LIMIT_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r"(?i)^\s*LIMIT\s+([0-9]{1,4})\s*$").expect("invalid dataview limit regex")
+});
+static DATAVIEW_WHERE_TITLE_CONTAINS_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r#"(?i)^\s*WHERE\s+contains\(\s*title\s*,\s*["']([^"']+)["']\s*\)\s*$"#)
+        .expect("invalid dataview where title regex")
+});
+static DATAVIEW_WHERE_TAG_CONTAINS_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r#"(?i)^\s*WHERE\s+contains\(\s*tags\s*,\s*["']?#?([A-Za-z0-9_-]+)["']?\s*\)\s*$"#)
+        .expect("invalid dataview where tag regex")
+});
+static DATAVIEW_INLINE_THIS_FILE_NAME_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r"(?i)`=\s*this\.file\.name\s*`").expect("invalid dataview inline file name regex")
+});
+static DATAVIEW_INLINE_THIS_FILE_LINK_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r"(?i)`=\s*this\.file\.link\s*`").expect("invalid dataview inline file link regex")
+});
+static DATAVIEW_INLINE_PAGES_LENGTH_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r#"(?i)`=\s*dv\.pages\(\s*["']#?([A-Za-z0-9_-]+)["']\s*\)\.length\s*`"#)
+        .expect("invalid dataview inline pages length regex")
+});
+static NOTE_LINK_MARKDOWN_RE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r"\]\(/notes/([^)]+)\)").expect("invalid markdown note link regex"));
 static HTML_TAG_RE: Lazy<Regex> =
     Lazy::new(|| Regex::new(r"(?s)<[^>]+>").expect("invalid html tag regex"));
 static HIGHLIGHT_RE: Lazy<Regex> =
@@ -74,12 +101,34 @@ const SUPPORTED_FRONTMATTER_KEYS: &[&str] = &[
 ];
 
 #[derive(Debug, Clone)]
+pub struct SiteText {
+    pub search_placeholder: String,
+    pub pages_heading: String,
+    pub toc_heading: String,
+    pub backlinks_heading: String,
+    pub backlinks_empty: String,
+}
+
+impl Default for SiteText {
+    fn default() -> Self {
+        Self {
+            search_placeholder: "Search notes...".to_string(),
+            pages_heading: "Pages".to_string(),
+            toc_heading: "On This Page".to_string(),
+            backlinks_heading: "Linked Mentions".to_string(),
+            backlinks_empty: "No linked mentions yet.".to_string(),
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
 pub struct SiteConfig {
     pub base_url: String,
     pub title: String,
     pub description: String,
     pub author: String,
     pub language: String,
+    pub text: SiteText,
 }
 
 impl Default for SiteConfig {
@@ -90,6 +139,7 @@ impl Default for SiteConfig {
             description: "Thoughts, notes, and connected ideas.".to_string(),
             author: "Author".to_string(),
             language: "en".to_string(),
+            text: SiteText::default(),
         }
     }
 }
@@ -206,6 +256,7 @@ struct Post {
     markdown_html: String,
     toc: Vec<TocEntry>,
     outgoing_links: Vec<String>,
+    unresolved_note_slugs: Vec<String>,
     reading_time_min: usize,
     is_home: bool,
     enable_search: bool,
@@ -284,6 +335,21 @@ struct SeedSummary {
     tags: Vec<String>,
 }
 
+#[derive(Debug, Clone, Copy)]
+enum DataviewKind {
+    List,
+    Table,
+    Task,
+}
+
+#[derive(Debug, Clone, Default)]
+struct DataviewQueryOptions {
+    where_title_contains: Option<String>,
+    where_tag_contains: Option<String>,
+    sort_desc: bool,
+    limit: Option<usize>,
+}
+
 #[derive(Debug, Clone)]
 struct LayoutContext {
     site_title: String,
@@ -301,6 +367,9 @@ struct LayoutContext {
     extra_meta_tags: Vec<MetaTag>,
     page_tabs: Vec<PageTab>,
     toc_items: Vec<TocItem>,
+    search_placeholder: String,
+    pages_heading: String,
+    toc_heading: String,
     show_search: bool,
     show_graph_module: bool,
     graph_data_url: String,
@@ -322,6 +391,7 @@ struct PostCard {
     url: String,
     excerpt: String,
     date_display: String,
+    updated_display: Option<String>,
     reading_time_min: usize,
     tags: Vec<TagEntry>,
 }
@@ -405,6 +475,14 @@ struct NotFoundTemplate {
     layout: LayoutContext,
 }
 
+#[derive(Template)]
+#[template(path = "missing-note.html")]
+struct MissingNoteTemplate {
+    layout: LayoutContext,
+    missing_title: String,
+    missing_slug: String,
+}
+
 pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
     let seeds = collect_post_seeds(config)?;
     let slug_map = build_slug_map(&seeds);
@@ -436,6 +514,7 @@ pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
 
     render_index(config, &posts, &tags, &home_intro_html)?;
     render_posts_pages(config, &posts, &backlinks)?;
+    render_missing_note_pages(config, &posts)?;
     render_tag_pages(config, &tags, &posts)?;
     render_graph_page(config, &posts)?;
     render_not_found_page(config, &posts)?;
@@ -560,6 +639,10 @@ fn collect_post_seeds(config: &BuildConfig) -> Result<Vec<PostSeed>> {
 fn render_posts(seeds: &[PostSeed], slug_map: &HashMap<String, String>) -> Result<Vec<Post>> {
     let mut posts = Vec::with_capacity(seeds.len());
     let mut embed_sources = HashMap::with_capacity(seeds.len());
+    let known_slugs = seeds
+        .iter()
+        .map(|seed| seed.slug.clone())
+        .collect::<HashSet<_>>();
     let seed_summaries = seeds
         .iter()
         .map(|seed| SeedSummary {
@@ -587,10 +670,20 @@ fn render_posts(seeds: &[PostSeed], slug_map: &HashMap<String, String>) -> Resul
             .get(&seed.slug)
             .map(|source| source.markdown.as_str())
             .unwrap_or_default();
-        let with_dataview = apply_dataview_blocks(body, &seed_summaries, &seed.slug);
+        let with_dataview_blocks = apply_dataview_blocks(body, &seed_summaries, &seed.slug);
+        let with_dataview = apply_dataview_inline(
+            &with_dataview_blocks,
+            &seed_summaries,
+            &seed.slug,
+            &seed.title,
+        );
 
         let (rewritten, outgoing_links) =
             rewrite_wikilinks(&with_dataview, slug_map, &embed_sources, &seed.slug, true);
+        let unresolved_note_slugs = extract_referenced_note_slugs(&rewritten)
+            .into_iter()
+            .filter(|slug| !known_slugs.contains(slug))
+            .collect::<Vec<_>>();
         let markdown_html = markdown_to_html(&rewritten);
         let toc = extract_toc_entries(&markdown_html);
 
@@ -609,6 +702,7 @@ fn render_posts(seeds: &[PostSeed], slug_map: &HashMap<String, String>) -> Resul
             markdown_html,
             toc,
             outgoing_links,
+            unresolved_note_slugs,
             reading_time_min: estimate_reading_time_minutes(body),
             is_home: seed.is_home,
             enable_search: seed.enable_search,
@@ -694,7 +788,8 @@ fn render_posts_pages(
         );
 
         let backlink_list = backlinks.get(&post.slug).cloned().unwrap_or_default();
-        let body_html = render_post_body_with_maud(&post.markdown_html, &backlink_list);
+        let body_html =
+            render_post_body_with_maud(&post.markdown_html, &backlink_list, &config.site.text);
 
         let template = PostTemplate {
             layout,
@@ -823,6 +918,59 @@ fn render_not_found_page(config: &BuildConfig, posts: &[Post]) -> Result<()> {
 
     let template = NotFoundTemplate { layout };
     write_file(config.output_dir.join("404.html"), template.render()?)
+}
+
+fn render_missing_note_pages(config: &BuildConfig, posts: &[Post]) -> Result<()> {
+    let known_slugs = posts
+        .iter()
+        .map(|post| post.slug.as_str())
+        .collect::<HashSet<_>>();
+    let mut missing_slugs = posts
+        .iter()
+        .flat_map(|post| post.unresolved_note_slugs.iter())
+        .filter(|slug| !known_slugs.contains(slug.as_str()))
+        .cloned()
+        .collect::<Vec<_>>();
+    missing_slugs.sort();
+    missing_slugs.dedup();
+
+    for slug in missing_slugs {
+        let missing_title = humanize_missing_note_slug(&slug);
+        let page_path = format!("/notes/{slug}/");
+        let layout = website_layout(
+            config,
+            posts,
+            format!("{missing_title} | {}", config.site.title),
+            "This note is not published yet.".to_string(),
+            &page_path,
+            "website",
+            "",
+            "",
+            website_json_ld(config),
+            Vec::new(),
+            true,
+            false,
+            "/graph.json".to_string(),
+            String::new(),
+            false,
+            Vec::new(),
+        );
+
+        let template = MissingNoteTemplate {
+            layout,
+            missing_title,
+            missing_slug: slug.clone(),
+        };
+
+        let target = config
+            .output_dir
+            .join("notes")
+            .join(&slug)
+            .join("index.html");
+        write_file(target, template.render()?)?;
+    }
+
+    Ok(())
 }
 
 fn write_search_index(config: &BuildConfig, posts: &[Post]) -> Result<()> {
@@ -1404,7 +1552,13 @@ fn rewrite_wikilinks(
                 let display = if label.is_empty() { target_raw } else { label };
                 format!("[{}]({})", display, asset_url)
             } else {
-                format!("`[[{}]]`", target_raw)
+                let unresolved_url = build_unresolved_note_url(target_raw, heading);
+                let display = if label.is_empty() { target_raw } else { label };
+                if is_embed && allow_embeds {
+                    format!("[{} (missing note)]({})", display, unresolved_url)
+                } else {
+                    format!("[{}]({})", display, unresolved_url)
+                }
             }
         })
         .to_string();
@@ -1543,6 +1697,77 @@ fn resolve_asset_url(target_raw: &str) -> String {
     format!("/content/{normalized}")
 }
 
+fn build_unresolved_note_url(target_raw: &str, heading: Option<&str>) -> String {
+    let normalized = normalize_slug_candidate(target_raw);
+    let slug = if normalized.is_empty() {
+        let fallback = slugify(target_raw.trim());
+        if fallback.is_empty() {
+            "missing-note".to_string()
+        } else {
+            fallback
+        }
+    } else {
+        normalized
+    };
+
+    let mut url = format!("/notes/{slug}/");
+    if let Some(anchor) = heading
+        .map(str::trim)
+        .filter(|value| !value.is_empty())
+        .map(slugify)
+        .filter(|value| !value.is_empty())
+    {
+        url.push('#');
+        url.push_str(&anchor);
+    }
+    url
+}
+
+fn extract_referenced_note_slugs(markdown: &str) -> Vec<String> {
+    let mut slugs = NOTE_LINK_MARKDOWN_RE
+        .captures_iter(markdown)
+        .filter_map(|caps| caps.get(1).map(|m| m.as_str().trim()))
+        .map(|path| path.split('#').next().unwrap_or(path))
+        .map(|path| path.split('?').next().unwrap_or(path))
+        .map(|path| path.trim_matches('/'))
+        .map(normalize_slug_candidate)
+        .filter(|slug| !slug.is_empty())
+        .collect::<Vec<_>>();
+    slugs.sort();
+    slugs.dedup();
+    slugs
+}
+
+fn humanize_missing_note_slug(slug: &str) -> String {
+    let tail = slug
+        .trim_matches('/')
+        .split('/')
+        .next_back()
+        .unwrap_or(slug)
+        .replace('-', " ")
+        .replace('_', " ");
+    let mut words = tail
+        .split_whitespace()
+        .map(|word| {
+            let mut chars = word.chars();
+            let Some(first) = chars.next() else {
+                return String::new();
+            };
+            let mut title = String::new();
+            title.push(first.to_ascii_uppercase());
+            title.push_str(chars.as_str());
+            title
+        })
+        .filter(|word| !word.is_empty())
+        .collect::<Vec<_>>();
+    if words.is_empty() {
+        "Missing Note".to_string()
+    } else {
+        words.push("(Not Published)".to_string());
+        words.join(" ")
+    }
+}
+
 fn pdf_display_title(target_raw: &str, label: &str) -> String {
     let label = label.trim();
     if !label.is_empty() && label != target_raw.trim() {
@@ -1632,57 +1857,203 @@ fn apply_dataview_blocks(markdown: &str, seeds: &[SeedSummary], current_slug: &s
     transformed
 }
 
+fn apply_dataview_inline(
+    markdown: &str,
+    seeds: &[SeedSummary],
+    current_slug: &str,
+    current_title: &str,
+) -> String {
+    let mut transformed = String::new();
+    let mut in_fence = false;
+
+    for line in markdown.lines() {
+        let trimmed = line.trim_start();
+        if trimmed.starts_with("```") || trimmed.starts_with("~~~") {
+            in_fence = !in_fence;
+            transformed.push_str(line);
+            transformed.push('\n');
+            continue;
+        }
+
+        if in_fence {
+            transformed.push_str(line);
+            transformed.push('\n');
+            continue;
+        }
+
+        let with_name = DATAVIEW_INLINE_THIS_FILE_NAME_RE
+            .replace_all(line, current_title)
+            .to_string();
+        let with_link = DATAVIEW_INLINE_THIS_FILE_LINK_RE
+            .replace_all(
+                &with_name,
+                format!("[{}](/notes/{}/)", current_title, current_slug),
+            )
+            .to_string();
+        let with_count = DATAVIEW_INLINE_PAGES_LENGTH_RE
+            .replace_all(&with_link, |caps: &Captures| {
+                let tag = caps
+                    .get(1)
+                    .map(|m| m.as_str().to_ascii_lowercase())
+                    .unwrap_or_default();
+                seeds
+                    .iter()
+                    .filter(|seed| seed.tags.iter().any(|item| item == &tag))
+                    .count()
+                    .to_string()
+            })
+            .to_string();
+
+        transformed.push_str(&with_count);
+        transformed.push('\n');
+    }
+
+    if !markdown.ends_with('\n') && transformed.ends_with('\n') {
+        transformed.pop();
+    }
+
+    transformed
+}
+
+fn parse_dataview_query(raw_query: &str) -> Option<(DataviewKind, String, DataviewQueryOptions)> {
+    let mut lines = raw_query
+        .lines()
+        .map(str::trim)
+        .filter(|line| !line.is_empty());
+    let head = lines.next()?;
+
+    let (kind, tag) = if let Some(caps) = DATAVIEW_TASK_FROM_RE.captures(head) {
+        (
+            DataviewKind::Task,
+            caps.get(1)
+                .map(|m| m.as_str().to_ascii_lowercase())
+                .unwrap_or_default(),
+        )
+    } else if let Some(caps) = DATAVIEW_TABLE_FROM_RE.captures(head) {
+        (
+            DataviewKind::Table,
+            caps.get(1)
+                .map(|m| m.as_str().to_ascii_lowercase())
+                .unwrap_or_default(),
+        )
+    } else if let Some(caps) = DATAVIEW_LIST_FROM_RE.captures(head) {
+        (
+            DataviewKind::List,
+            caps.get(1)
+                .map(|m| m.as_str().to_ascii_lowercase())
+                .unwrap_or_default(),
+        )
+    } else {
+        return None;
+    };
+
+    let mut options = DataviewQueryOptions::default();
+    for line in lines {
+        if let Some(caps) = DATAVIEW_SORT_RE.captures(line) {
+            let direction = caps
+                .get(1)
+                .map(|m| m.as_str().to_ascii_lowercase())
+                .unwrap_or_else(|| "asc".to_string());
+            options.sort_desc = direction == "desc";
+            continue;
+        }
+
+        if let Some(caps) = DATAVIEW_LIMIT_RE.captures(line) {
+            options.limit = caps
+                .get(1)
+                .and_then(|m| m.as_str().parse::<usize>().ok())
+                .map(|value| value.clamp(1, 200));
+            continue;
+        }
+
+        if let Some(caps) = DATAVIEW_WHERE_TITLE_CONTAINS_RE.captures(line) {
+            options.where_title_contains = caps
+                .get(1)
+                .map(|m| m.as_str().trim().to_ascii_lowercase())
+                .filter(|value| !value.is_empty());
+            continue;
+        }
+
+        if let Some(caps) = DATAVIEW_WHERE_TAG_CONTAINS_RE.captures(line) {
+            options.where_tag_contains = caps
+                .get(1)
+                .map(|m| m.as_str().trim().to_ascii_lowercase())
+                .filter(|value| !value.is_empty());
+        }
+    }
+
+    Some((kind, tag, options))
+}
+
+fn collect_dataview_matches(
+    seeds: &[SeedSummary],
+    current_slug: &str,
+    from_tag: &str,
+    options: &DataviewQueryOptions,
+) -> Vec<(String, String)> {
+    let mut matches = seeds
+        .iter()
+        .filter(|seed| seed.slug != current_slug)
+        .filter(|seed| seed.tags.iter().any(|item| item == from_tag))
+        .filter(|seed| {
+            options
+                .where_title_contains
+                .as_ref()
+                .map(|term| seed.title.to_ascii_lowercase().contains(term))
+                .unwrap_or(true)
+        })
+        .filter(|seed| {
+            options
+                .where_tag_contains
+                .as_ref()
+                .map(|tag| seed.tags.iter().any(|item| item.contains(tag)))
+                .unwrap_or(true)
+        })
+        .map(|seed| (seed.title.clone(), seed.slug.clone()))
+        .collect::<Vec<_>>();
+
+    matches.sort_by(|a, b| a.0.to_lowercase().cmp(&b.0.to_lowercase()));
+    if options.sort_desc {
+        matches.reverse();
+    }
+    if let Some(limit) = options.limit {
+        matches.truncate(limit);
+    }
+
+    matches
+}
+
 fn render_dataview_query_block(query: &str, seeds: &[SeedSummary], current_slug: &str) -> String {
     let raw_query = query.trim();
     if raw_query.is_empty() {
         return "> [!info] Dataview\n> Empty Dataview query.\n".to_string();
     }
 
-    if let Some(caps) = DATAVIEW_TASK_FROM_RE.captures(raw_query) {
-        let tag = caps
-            .get(1)
-            .map(|m| m.as_str().to_ascii_lowercase())
-            .unwrap_or_default();
-        let mut matches = seeds
-            .iter()
-            .filter(|seed| seed.slug != current_slug)
-            .filter(|seed| seed.tags.iter().any(|item| item == &tag))
-            .map(|seed| (seed.title.clone(), seed.slug.clone()))
-            .collect::<Vec<_>>();
-        matches.sort_by(|a, b| a.0.to_lowercase().cmp(&b.0.to_lowercase()));
+    let Some((kind, tag, options)) = parse_dataview_query(raw_query) else {
+        return format!(
+            "> [!info] Dataview\n> Query is not supported yet.\n>\n> ```text\n> {}\n> ```\n",
+            raw_query.replace('\n', "\n> ")
+        );
+    };
 
-        let mut rendered = String::new();
-        rendered.push_str("> [!info] Dataview\n");
-        rendered.push_str(&format!("> Query: `TASK FROM #{}`\n>\n", tag));
-        if matches.is_empty() {
-            rendered.push_str(&format!("> _No notes found for #{}._\n", tag));
-        } else {
+    let matches = collect_dataview_matches(seeds, current_slug, &tag, &options);
+    let mut rendered = String::new();
+    rendered.push_str("> [!info] Dataview\n");
+    let display_query = raw_query.replace('`', "\\`").replace('\n', " ; ");
+    rendered.push_str(&format!("> Query: `{}`\n>\n", display_query));
+
+    if matches.is_empty() {
+        rendered.push_str(&format!("> _No notes found for #{}._\n", tag));
+        return rendered;
+    }
+
+    match kind {
+        DataviewKind::Task => {
             for (title, slug) in matches {
                 rendered.push_str(&format!("> - [ ] [{}](/notes/{}/)\n", title, slug));
             }
         }
-        return rendered;
-    }
-
-    if let Some(caps) = DATAVIEW_TABLE_FROM_RE.captures(raw_query) {
-        let tag = caps
-            .get(1)
-            .map(|m| m.as_str().to_ascii_lowercase())
-            .unwrap_or_default();
-        let mut matches = seeds
-            .iter()
-            .filter(|seed| seed.slug != current_slug)
-            .filter(|seed| seed.tags.iter().any(|item| item == &tag))
-            .map(|seed| (seed.title.clone(), seed.slug.clone()))
-            .collect::<Vec<_>>();
-        matches.sort_by(|a, b| a.0.to_lowercase().cmp(&b.0.to_lowercase()));
-
-        let mut rendered = String::new();
-        rendered.push_str("> [!info] Dataview\n");
-        rendered.push_str(&format!("> Query: `TABLE FROM #{}`\n>\n", tag));
-        if matches.is_empty() {
-            rendered.push_str(&format!("> _No notes found for #{}._\n", tag));
-        } else {
+        DataviewKind::Table => {
             rendered.push_str("> | Title | Note |\n");
             rendered.push_str("> | --- | --- |\n");
             for (title, slug) in matches {
@@ -1690,39 +2061,14 @@ fn render_dataview_query_block(query: &str, seeds: &[SeedSummary], current_slug:
                 rendered.push_str(&format!("> | {} | [Open](/notes/{}/) |\n", title, slug));
             }
         }
-        return rendered;
-    }
-
-    if let Some(caps) = DATAVIEW_LIST_FROM_RE.captures(raw_query) {
-        let tag = caps
-            .get(1)
-            .map(|m| m.as_str().to_ascii_lowercase())
-            .unwrap_or_default();
-        let mut matches = seeds
-            .iter()
-            .filter(|seed| seed.slug != current_slug)
-            .filter(|seed| seed.tags.iter().any(|item| item == &tag))
-            .map(|seed| (seed.title.clone(), seed.slug.clone()))
-            .collect::<Vec<_>>();
-        matches.sort_by(|a, b| a.0.to_lowercase().cmp(&b.0.to_lowercase()));
-
-        let mut rendered = String::new();
-        rendered.push_str("> [!info] Dataview\n");
-        rendered.push_str(&format!("> Query: `LIST FROM #{}`\n>\n", tag));
-        if matches.is_empty() {
-            rendered.push_str(&format!("> _No notes found for #{}._\n", tag));
-        } else {
+        DataviewKind::List => {
             for (title, slug) in matches {
                 rendered.push_str(&format!("> - [{}](/notes/{}/)\n", title, slug));
             }
         }
-        return rendered;
     }
 
-    format!(
-        "> [!info] Dataview\n> Query is not supported yet.\n>\n> ```text\n> {}\n> ```\n",
-        raw_query.replace('\n', "\n> ")
-    )
+    rendered
 }
 
 fn render_dataviewjs_fallback(query: &str) -> String {
@@ -2116,15 +2462,19 @@ fn toc_items_for_post(post: &Post) -> Vec<TocItem> {
         .collect()
 }
 
-fn render_post_body_with_maud(markdown_html: &str, backlinks: &[Backlink]) -> String {
+fn render_post_body_with_maud(
+    markdown_html: &str,
+    backlinks: &[Backlink],
+    site_text: &SiteText,
+) -> String {
     html! {
         article class="note-body" {
             (PreEscaped(markdown_html))
         }
         section class="backlinks" {
-            h2 { "Linked Mentions" }
+            h2 { (site_text.backlinks_heading) }
             @if backlinks.is_empty() {
-                p class="backlinks-empty" { "No linked mentions yet." }
+                p class="backlinks-empty" { (site_text.backlinks_empty) }
             } @else {
                 p class="backlinks-meta" {
                     (format!(
@@ -2228,6 +2578,7 @@ fn post_to_card(post: &Post) -> PostCard {
             .date
             .map(|date| date.format("%Y-%m-%d").to_string())
             .unwrap_or_else(|| "Undated".to_string()),
+        updated_display: post.updated.map(|date| date.format("%Y-%m-%d").to_string()),
         reading_time_min: post.reading_time_min,
         tags: post
             .tags
@@ -2277,6 +2628,9 @@ fn website_layout(
         extra_meta_tags,
         page_tabs: build_page_tabs(posts, page_path),
         toc_items,
+        search_placeholder: config.site.text.search_placeholder.clone(),
+        pages_heading: config.site.text.pages_heading.clone(),
+        toc_heading: config.site.text.toc_heading.clone(),
         show_search,
         show_graph_module,
         graph_data_url,
@@ -3186,6 +3540,53 @@ mod tests {
     }
 
     #[test]
+    fn rewrite_wikilinks_links_unresolved_notes_to_placeholder_path() {
+        let slug_map = HashMap::new();
+        let embed_sources = HashMap::new();
+        let (html, outgoing) = rewrite_wikilinks(
+            "[[Missing Note#Overview|Open missing]]",
+            &slug_map,
+            &embed_sources,
+            "home",
+            true,
+        );
+
+        assert!(outgoing.is_empty());
+        assert!(html.contains("[Open missing](/notes/missing-note/#overview)"));
+    }
+
+    #[test]
+    fn apply_dataview_inline_supports_this_file_and_pages_length() {
+        let seeds = vec![
+            SeedSummary {
+                slug: "home".to_string(),
+                title: "Home".to_string(),
+                tags: vec!["intro".to_string()],
+            },
+            SeedSummary {
+                slug: "seo-note".to_string(),
+                title: "SEO Note".to_string(),
+                tags: vec!["seo".to_string()],
+            },
+            SeedSummary {
+                slug: "seo-two".to_string(),
+                title: "SEO Two".to_string(),
+                tags: vec!["seo".to_string()],
+            },
+        ];
+        let rendered = apply_dataview_inline(
+            "Name: `= this.file.name`\nLink: `= this.file.link`\nCount: `= dv.pages(\"#seo\").length`",
+            &seeds,
+            "home",
+            "Home",
+        );
+
+        assert!(rendered.contains("Name: Home"));
+        assert!(rendered.contains("Link: [Home](/notes/home/)"));
+        assert!(rendered.contains("Count: 2"));
+    }
+
+    #[test]
     fn apply_dataview_blocks_supports_list_from_tag() {
         let seeds = vec![
             SeedSummary {
@@ -3247,6 +3648,43 @@ mod tests {
     }
 
     #[test]
+    fn apply_dataview_blocks_supports_where_sort_and_limit() {
+        let seeds = vec![
+            SeedSummary {
+                slug: "home".to_string(),
+                title: "Home".to_string(),
+                tags: vec!["intro".to_string()],
+            },
+            SeedSummary {
+                slug: "alpha".to_string(),
+                title: "Alpha SEO".to_string(),
+                tags: vec!["seo".to_string()],
+            },
+            SeedSummary {
+                slug: "beta".to_string(),
+                title: "Beta SEO".to_string(),
+                tags: vec!["seo".to_string()],
+            },
+            SeedSummary {
+                slug: "gamma".to_string(),
+                title: "Gamma Rust".to_string(),
+                tags: vec!["seo".to_string(), "rust".to_string()],
+            },
+        ];
+        let rendered = apply_dataview_blocks(
+            "```dataview\nLIST FROM #seo\nWHERE contains(title, \"seo\")\nSORT title DESC\nLIMIT 1\n```",
+            &seeds,
+            "home",
+        );
+
+        assert!(rendered.contains(
+            "Query: `LIST FROM #seo ; WHERE contains(title, \"seo\") ; SORT title DESC ; LIMIT 1`"
+        ));
+        assert!(rendered.contains("- [Beta SEO](/notes/beta/)"));
+        assert!(!rendered.contains("/notes/alpha/"));
+    }
+
+    #[test]
     fn markdown_to_html_renders_plantuml_embed() {
         let html = markdown_to_html(
             r#"```plantuml
@@ -3292,6 +3730,7 @@ dg-home: true
 # Home
 
 Start with [[second-brain#Architecture Overview|architecture]].
+See also [[ghost-note|Ghost Note]].
 ![[second-brain#Architecture Overview]]
 "#,
         );
@@ -3497,6 +3936,7 @@ Not published.
                 description: "Test description".to_string(),
                 author: "Tester".to_string(),
                 language: "en".to_string(),
+                ..SiteConfig::default()
             },
             publish_policy: PublishPolicy::DgOptIn,
         };
@@ -3510,6 +3950,7 @@ Not published.
         assert!(output_dir.join("notes/nested/seo/index.html").exists());
         assert!(output_dir.join("notes/isolated/index.html").exists());
         assert!(output_dir.join("notes/no-search/index.html").exists());
+        assert!(output_dir.join("notes/ghost-note/index.html").exists());
         assert!(output_dir
             .join("notes/custom/path-note/index.html")
             .exists());
@@ -3548,6 +3989,7 @@ Not published.
 
         let home_html = fs::read_to_string(output_dir.join("notes/home/index.html"))?;
         assert!(home_html.contains("/notes/second-brain/#architecture-overview"));
+        assert!(home_html.contains("/notes/ghost-note/"));
         assert!(home_html.contains(r#"dataUrl: "/local-graph/home.json""#));
         assert!(home_html.contains("Embedded from"));
         assert!(home_html.contains("self alias"));
@@ -3669,6 +4111,8 @@ Not published.
 
         let not_found_html = fs::read_to_string(output_dir.join("404.html"))?;
         assert!(not_found_html.contains("Page Not Found"));
+        let missing_note_html = fs::read_to_string(output_dir.join("notes/ghost-note/index.html"))?;
+        assert!(missing_note_html.contains("not published"));
 
         Ok(())
     }
@@ -3708,6 +4152,7 @@ Should publish in permissive mode.
                 description: "Test description".to_string(),
                 author: "Tester".to_string(),
                 language: "en".to_string(),
+                ..SiteConfig::default()
             },
             publish_policy: PublishPolicy::Permissive,
         };

@@ -12,6 +12,7 @@ Obsidian markdown notes are transformed into a static blog with:
 - Obsidian-like frontmatter support: `dg-publish`, `dg-home`, `tags`, `aliases`, `draft`, `dg-enable-search`
 - Wikilink support: `[[note]]`, `[[note|label]]`, `[[note#heading]]`
 - Note transclusion support: `![[note]]`, `![[note#heading]]`
+- Unresolved note links resolve to generated placeholder note pages (`/notes/<slug>/`)
 - Callout/Admonition support: `> [!tip]`, `> [!warning]-`
 - Mermaid block support: fenced ` ```mermaid ` diagrams rendered client-side
 - PlantUML block support: fenced ` ```plantuml ` diagrams via PlantUML server URL
@@ -140,3 +141,9 @@ Use GitHub Actions to build Rust artifacts, then deploy `dist/` to Cloudflare Pa
 - `blog-dev` is for local preview only.
 - Production is fully static (`dist/`) for cost and performance.
 - If Rust is not installed, install via rustup first.
+- Optional UI text overrides are available via CLI flags:
+  - `--search-placeholder`
+  - `--pages-heading`
+  - `--toc-heading`
+  - `--backlinks-heading`
+  - `--backlinks-empty`

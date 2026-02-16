@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="panel not-found">
+    <h1>{{ missing_title }}</h1>
+    <p>This note is referenced, but it is not published in this garden yet.</p>
+    <p class="post-meta">Requested path: /notes/{{ missing_slug }}/</p>
+    <p><a href="/">Go back home</a></p>
+  </section>
+{% endblock %}

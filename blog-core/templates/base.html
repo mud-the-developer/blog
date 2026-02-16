@@ -77,7 +77,7 @@
             <input
               id="global-search-input"
               type="text"
-              placeholder="Search notes..."
+              placeholder="{{ layout.search_placeholder }}"
               autocomplete="off"
               role="combobox"
               aria-autocomplete="list"
@@ -88,7 +88,7 @@
           </div>
           {% endif %}
           <div class="page-tabs-head">
-            <h2>Pages</h2>
+            <h2>{{ layout.pages_heading }}</h2>
             <button id="preview-toggle" class="preview-toggle" type="button" aria-pressed="false">Preview: OFF</button>
           </div>
           <nav id="filetree-root" class="page-tabs-list">
@@ -123,7 +123,7 @@
           {% endif %}
           {% if layout.toc_items.len() > 0 %}
           <section class="toc-panel" aria-label="Table of contents">
-            <h3>On This Page</h3>
+            <h3>{{ layout.toc_heading }}</h3>
             <nav class="toc-list">
               {% for item in layout.toc_items %}
               <a class="toc-link toc-depth-{{ item.depth }}" href="#{{ item.id }}">{{ item.title }}</a>

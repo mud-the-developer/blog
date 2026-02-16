@@ -4,7 +4,7 @@ use axum::http::StatusCode;
 use axum::response::IntoResponse;
 use axum::routing::{get, post};
 use axum::{Json, Router};
-use blog_core::{build_site, BuildConfig, PublishPolicy, SiteConfig};
+use blog_core::{build_site, BuildConfig, PublishPolicy, SiteConfig, SiteText};
 use clap::Parser;
 use serde::{Deserialize, Serialize};
 use std::net::SocketAddr;
@@ -54,6 +54,16 @@ struct Cli {
     author: String,
     #[arg(long, default_value = "en")]
     language: String,
+    #[arg(long, default_value = "Search notes...")]
+    search_placeholder: String,
+    #[arg(long, default_value = "Pages")]
+    pages_heading: String,
+    #[arg(long, default_value = "On This Page")]
+    toc_heading: String,
+    #[arg(long, default_value = "Linked Mentions")]
+    backlinks_heading: String,
+    #[arg(long, default_value = "No linked mentions yet.")]
+    backlinks_empty: String,
     #[arg(long, default_value = "dg-opt-in", value_parser = ["dg-opt-in", "permissive"])]
     publish_policy: String,
 }
@@ -79,6 +89,14 @@ async fn main() -> Result<()> {
             description: cli.description,
             author: cli.author,
             language: cli.language,
+            text: SiteText {
+                search_placeholder: cli.search_placeholder,
+                pages_heading: cli.pages_heading,
+                toc_heading: cli.toc_heading,
+                backlinks_heading: cli.backlinks_heading,
+                backlinks_empty: cli.backlinks_empty,
+            },
+            ..SiteConfig::default()
         },
         publish_policy: parse_publish_policy(&cli.publish_policy),
     };
