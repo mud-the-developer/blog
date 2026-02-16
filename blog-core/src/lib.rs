@@ -46,7 +46,7 @@ impl Default for SiteConfig {
     fn default() -> Self {
         Self {
             base_url: "https://example.com".to_string(),
-            title: "My Digital Garden".to_string(),
+            title: "Mud's Blog".to_string(),
             description: "Thoughts, notes, and connected ideas.".to_string(),
             author: "Author".to_string(),
             language: "en".to_string(),
@@ -60,6 +60,7 @@ pub struct BuildConfig {
     pub output_dir: PathBuf,
     pub static_dir: PathBuf,
     pub site: SiteConfig,
+    pub publish_policy: PublishPolicy,
 }
 
 impl Default for BuildConfig {
@@ -69,7 +70,20 @@ impl Default for BuildConfig {
             output_dir: PathBuf::from("dist"),
             static_dir: PathBuf::from("static"),
             site: SiteConfig::default(),
+            publish_policy: PublishPolicy::default(),
         }
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PublishPolicy {
+    DgOptIn,
+    Permissive,
+}
+
+impl Default for PublishPolicy {
+    fn default() -> Self {
+        Self::DgOptIn
     }
 }
 
@@ -384,9 +398,12 @@ fn collect_post_seeds(config: &BuildConfig) -> Result<Vec<PostSeed>> {
             .with_context(|| format!("failed to read {}", path.display()))?;
         let (frontmatter, _) = parse_frontmatter_and_body(&raw)?;
 
-        let should_publish = frontmatter
-            .dg_publish
-            .unwrap_or(!frontmatter.draft.unwrap_or(false));
+        let should_publish = match config.publish_policy {
+            PublishPolicy::DgOptIn => frontmatter.dg_publish.unwrap_or(false),
+            PublishPolicy::Permissive => frontmatter
+                .dg_publish
+                .unwrap_or(!frontmatter.draft.unwrap_or(false)),
+        };
 
         if !should_publish {
             continue;
@@ -694,7 +711,7 @@ fn render_graph_page(config: &BuildConfig, posts: &[Post]) -> Result<()> {
 fn write_search_index(config: &BuildConfig, posts: &[Post]) -> Result<()> {
     let entries = posts
         .iter()
-        .filter(|post| !post.hidden)
+        .filter(|post| !post.hidden && post.enable_search)
         .map(|post| SearchRecord {
             title: post.title.clone(),
             slug: post.slug.clone(),
@@ -2376,6 +2393,35 @@ dg-note-icon: "PIN"
 # Path Note
 
 Uses custom path.
+            "#,
+        );
+
+        write_text(
+            &content_dir.join("no-search.md"),
+            r#"---
+title: No Search
+date: 2026-02-11
+tags: [private]
+dg-publish: true
+dg-enable-search: false
+---
+
+# No Search
+
+Visible page, excluded from search index.
+"#,
+        );
+
+        write_text(
+            &content_dir.join("no-flag.md"),
+            r#"---
+title: No Publish Flag
+date: 2026-02-10
+---
+
+# No Publish Flag
+
+Should only publish in permissive mode.
 "#,
         );
 
@@ -2417,16 +2463,18 @@ Not published.
                 author: "Tester".to_string(),
                 language: "en".to_string(),
             },
+            publish_policy: PublishPolicy::DgOptIn,
         };
 
         let summary = build_site(&config)?;
-        assert_eq!(summary.posts, 5);
+        assert_eq!(summary.posts, 6);
 
         assert!(output_dir.join("index.html").exists());
         assert!(output_dir.join("notes/home/index.html").exists());
         assert!(output_dir.join("notes/second-brain/index.html").exists());
         assert!(output_dir.join("notes/nested/seo/index.html").exists());
         assert!(output_dir.join("notes/isolated/index.html").exists());
+        assert!(output_dir.join("notes/no-search/index.html").exists());
         assert!(output_dir
             .join("notes/custom/path-note/index.html")
             .exists());
@@ -2436,6 +2484,7 @@ Not published.
         assert!(output_dir.join("tags/architecture/index.html").exists());
         assert!(!output_dir.join("notes/draft-note/index.html").exists());
         assert!(!output_dir.join("notes/hidden-note/index.html").exists());
+        assert!(!output_dir.join("notes/no-flag/index.html").exists());
         assert!(output_dir.join("graph/index.html").exists());
 
         let index_html = fs::read_to_string(output_dir.join("index.html"))?;
@@ -2514,6 +2563,7 @@ Not published.
         assert!(!search_index.contains("draft-note"));
         assert!(!search_index.contains("hidden-note"));
         assert!(!search_index.contains("isolated"));
+        assert!(!search_index.contains("no-search"));
         assert!(search_index.contains("/notes/custom/path-note/"));
 
         let filetree: serde_json::Value =
@@ -2531,6 +2581,52 @@ Not published.
 
         let robots_txt = fs::read_to_string(output_dir.join("robots.txt"))?;
         assert!(robots_txt.contains("Sitemap: https://example.test/sitemap.xml"));
+
+        Ok(())
+    }
+
+    #[test]
+    fn build_site_permissive_policy_publishes_non_draft_notes_without_dg_publish() -> Result<()> {
+        let tmp = TestDir::new("permissive");
+        let content_dir = tmp.path.join("content/posts");
+        let static_dir = tmp.path.join("static");
+        let output_dir = tmp.path.join("dist");
+
+        write_text(
+            &content_dir.join("no-flag.md"),
+            r#"---
+title: No Publish Flag
+date: 2026-02-10
+---
+
+# No Publish Flag
+
+Should publish in permissive mode.
+"#,
+        );
+
+        write_text(
+            &static_dir.join("assets/style.css"),
+            "body { color: #222; }\n",
+        );
+
+        let config = BuildConfig {
+            content_dir,
+            output_dir: output_dir.clone(),
+            static_dir,
+            site: SiteConfig {
+                base_url: "example.test".to_string(),
+                title: "Test Garden".to_string(),
+                description: "Test description".to_string(),
+                author: "Tester".to_string(),
+                language: "en".to_string(),
+            },
+            publish_policy: PublishPolicy::Permissive,
+        };
+
+        let summary = build_site(&config)?;
+        assert_eq!(summary.posts, 1);
+        assert!(output_dir.join("notes/no-flag/index.html").exists());
 
         Ok(())
     }

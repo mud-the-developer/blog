@@ -4,7 +4,7 @@ use axum::http::StatusCode;
 use axum::response::IntoResponse;
 use axum::routing::{get, post};
 use axum::{Json, Router};
-use blog_core::{build_site, BuildConfig, SiteConfig};
+use blog_core::{build_site, BuildConfig, PublishPolicy, SiteConfig};
 use clap::Parser;
 use serde::{Deserialize, Serialize};
 use std::net::SocketAddr;
@@ -46,7 +46,7 @@ struct Cli {
     static_dir: PathBuf,
     #[arg(long, default_value = "http://localhost:8788")]
     site_url: String,
-    #[arg(long, default_value = "My Digital Garden")]
+    #[arg(long, default_value = "Mud's Blog")]
     title: String,
     #[arg(long, default_value = "Thoughts, notes, and connected ideas.")]
     description: String,
@@ -54,6 +54,15 @@ struct Cli {
     author: String,
     #[arg(long, default_value = "en")]
     language: String,
+    #[arg(long, default_value = "dg-opt-in", value_parser = ["dg-opt-in", "permissive"])]
+    publish_policy: String,
+}
+
+fn parse_publish_policy(raw: &str) -> PublishPolicy {
+    match raw {
+        "permissive" => PublishPolicy::Permissive,
+        _ => PublishPolicy::DgOptIn,
+    }
 }
 
 #[tokio::main]
@@ -71,6 +80,7 @@ async fn main() -> Result<()> {
             author: cli.author,
             language: cli.language,
         },
+        publish_policy: parse_publish_policy(&cli.publish_policy),
     };
 
     let summary = build_site(&config)?;

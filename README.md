@@ -9,11 +9,12 @@ Obsidian markdown notes are transformed into a static blog with:
 
 ## Features
 
-- Obsidian-like frontmatter support: `dg-publish`, `dg-home`, `tags`, `aliases`, `draft`
+- Obsidian-like frontmatter support: `dg-publish`, `dg-home`, `tags`, `aliases`, `draft`, `dg-enable-search`
 - Wikilink support: `[[note]]`, `[[note|label]]`, `[[note#heading]]`
 - Backlinks per note
 - Persistent side graph with zoom/pan and node labels (source data: `graph.json`)
 - Global search API (`/api/search` on `blog-dev`) + live preview dropdown in UI
+- `dg-enable-search: false` excludes that note from `search-index.json` and API search
 - Static outputs: `sitemap.xml`, `rss.xml`, `robots.txt`, `graph.json`, `search-index.json`
 - SEO metadata: canonical, OpenGraph, Twitter, JSON-LD
 - Performance baseline: static HTML, lazy image attrs, lightweight CSS
@@ -37,6 +38,7 @@ tags: [rust, garden]
 aliases: [my-alias]
 dg-publish: true
 dg-home: false
+dg-enable-search: true
 draft: false
 ---
 ```
@@ -48,6 +50,13 @@ cargo run -p blog-build -- \
   --site-url https://your-domain.pages.dev \
   --title "My Garden" \
   --description "Connected notes"
+```
+
+- Default publish policy is DG-style opt-in (`dg-publish: true` required).
+- Optional legacy mode:
+
+```bash
+cargo run -p blog-build -- --publish-policy permissive
 ```
 
 ## Local Preview (axum)

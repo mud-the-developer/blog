@@ -27,4 +27,4 @@ Related:
 
 - [[second-brain|Second Brain Architecture]]
 - [[seo-performance-guide|SEO and Performance Guide]]
-- [[home#My Digital Garden|Home intro]]
+- [[home#Mud's Blog|Home intro]]
