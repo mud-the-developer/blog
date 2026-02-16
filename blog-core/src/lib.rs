@@ -3482,6 +3482,10 @@ Not published.
             &static_dir.join("assets/style.css"),
             "body { color: #222; }\n",
         );
+        write_text(
+            &static_dir.join("_headers"),
+            "/*\n  X-Robots-Tag: index, follow\n",
+        );
 
         let config = BuildConfig {
             content_dir,
@@ -3509,6 +3513,7 @@ Not published.
         assert!(output_dir
             .join("notes/custom/path-note/index.html")
             .exists());
+        assert!(output_dir.join("_headers").exists());
         assert!(output_dir.join("filetree.json").exists());
         assert!(output_dir.join("content/attachments/spec.pdf").exists());
         assert!(output_dir
@@ -3649,6 +3654,8 @@ Not published.
 
         let robots_txt = fs::read_to_string(output_dir.join("robots.txt"))?;
         assert!(robots_txt.contains("Sitemap: https://example.test/sitemap.xml"));
+        let cf_headers = fs::read_to_string(output_dir.join("_headers"))?;
+        assert!(cf_headers.contains("X-Robots-Tag: index, follow"));
 
         let frontmatter_report = fs::read_to_string(output_dir.join("frontmatter-report.json"))?;
         assert!(frontmatter_report.contains("second-brain.md"));

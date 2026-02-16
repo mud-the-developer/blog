@@ -59,6 +59,8 @@
       dragging: "",
       dragPointerId: -1,
       dragMoved: false,
+      dragStartClientX: 0,
+      dragStartClientY: 0,
       activeNodeId: "",
       defaultActiveNodeId: "",
       searchTerm: "",
@@ -343,8 +345,16 @@
 
     const finishPointerAction = (event) => {
       const pointerId = typeof event.pointerId === "number" ? event.pointerId : -1;
+      const wasDraggingNodeId = graphState.dragging;
+      const isDragPointer = graphState.dragPointerId === pointerId || pointerId < 0;
+      const shouldNavigate =
+        event &&
+        event.type === "pointerup" &&
+        isDragPointer &&
+        wasDraggingNodeId &&
+        !graphState.dragMoved;
 
-      if (graphState.dragPointerId === pointerId || pointerId < 0) {
+      if (isDragPointer) {
         graphState.dragging = "";
         graphState.dragPointerId = -1;
         svg.classList.remove("is-dragging");
@@ -358,6 +368,14 @@
 
       if (pointerId >= 0 && typeof svg.hasPointerCapture === "function" && svg.hasPointerCapture(pointerId)) {
         svg.releasePointerCapture(pointerId);
+      }
+
+      if (shouldNavigate) {
+        const node = graphState.nodesById.get(wasDraggingNodeId);
+        if (node && typeof node.url === "string" && node.url.length > 0) {
+          window.location.assign(node.url);
+          return;
+        }
       }
 
       wakeSimulation();
@@ -376,7 +394,11 @@
           }
 
           const point = toGraphPoint(pointInSvg(event));
-          if (Math.abs(node.x - point.x) > 0.8 || Math.abs(node.y - point.y) > 0.8) {
+          const movedDistance = Math.hypot(
+            event.clientX - graphState.dragStartClientX,
+            event.clientY - graphState.dragStartClientY
+          );
+          if (movedDistance > 4) {
             graphState.dragMoved = true;
           }
           node.x = point.x;
@@ -546,20 +568,13 @@
             applyVisualState();
           });
 
-          group.addEventListener("click", () => {
-            if (graphState.dragMoved) {
-              graphState.dragMoved = false;
-              return;
-            }
-            window.location.href = node.url;
-          });
-
           group.addEventListener("pointerdown", (event) => {
-            event.preventDefault();
             event.stopPropagation();
             graphState.dragging = node.id;
             graphState.dragPointerId = event.pointerId;
             graphState.dragMoved = false;
+            graphState.dragStartClientX = event.clientX;
+            graphState.dragStartClientY = event.clientY;
             svg.classList.add("is-dragging");
             wakeSimulation();
             if (typeof svg.setPointerCapture === "function") {
