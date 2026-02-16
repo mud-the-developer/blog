@@ -7,6 +7,6 @@ dg-publish: true
 dg-home: true
 ---
 
-Hi there 😃
-I'm [[About_me|Jinhyuk]] Kim from South Korea 🇰🇷
+# Hi there 😃
+# I'm [[About_me|Jinhyuk]] Kim from South Korea 🇰🇷
 
