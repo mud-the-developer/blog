@@ -15,4 +15,4 @@ Start with [[second-brain|Second Brain]] for the architecture note.
 
 - Wikilink example: [[seo-performance-guide]]
 - Tag pages: `/tags/<tag>/`
-- Graph view: `/graph/` (raw data: `/graph.json`)
+- Graph data source: `/graph.json`

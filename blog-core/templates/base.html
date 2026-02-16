@@ -56,12 +56,18 @@
           <p class="site-title"><a href="/">{{ layout.site_title }}</a></p>
           <p class="site-tagline">{{ layout.site_description }}</p>
         </div>
-        <nav class="site-nav" aria-label="Main navigation">
-          <a href="/">Home</a>
-          <a href="/rss.xml">RSS</a>
-          <a href="/graph/">Graph</a>
-          <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">Dark</button>
-        </nav>
+        <div class="site-actions">
+          <div class="site-search">
+            <label class="sr-only" for="global-search-input">Search notes</label>
+            <input id="global-search-input" type="search" placeholder="Search notes..." autocomplete="off" />
+            <div id="global-search-results" class="search-results" hidden></div>
+          </div>
+          <nav class="site-nav" aria-label="Main navigation">
+            <a href="/">Home</a>
+            <a href="/rss.xml">RSS</a>
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">Dark</button>
+          </nav>
+        </div>
       </header>
 
       <div class="site-layout">
@@ -87,7 +93,6 @@
         <aside class="panel live-graph" aria-label="Graph preview">
           <div class="live-graph-head">
             <h2>Graph</h2>
-            <a class="live-graph-open" href="/graph/">Open</a>
           </div>
           <div id="side-graph-stage" class="graph-stage graph-stage--side">
             <svg id="side-graph-svg" viewBox="0 0 540 420" aria-label="Site graph preview">
@@ -95,9 +100,6 @@
               <g id="side-graph-node-layer"></g>
             </svg>
           </div>
-          <aside id="side-graph-detail" class="graph-detail graph-detail--side">
-            Hover nodes to inspect links.
-          </aside>
         </aside>
       </div>
 
@@ -111,6 +113,8 @@
       (() => {
         const previewButton = document.getElementById("preview-toggle");
         const themeButton = document.getElementById("theme-toggle");
+        const searchInput = document.getElementById("global-search-input");
+        const searchResults = document.getElementById("global-search-results");
 
         if (previewButton) {
           const previewKey = "dg-preview-open";
@@ -148,39 +152,193 @@
           });
         }
 
+        if (searchInput && searchResults) {
+          const escapeHtml = (value) =>
+            String(value || "")
+              .replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/"/g, "&quot;")
+              .replace(/'/g, "&#39;");
+
+          const summarize = (value) => {
+            const text = String(value || "").replace(/\s+/g, " ").trim();
+            if (text.length <= 92) {
+              return text;
+            }
+            return text.slice(0, 92).trimEnd() + "...";
+          };
+
+          let fallbackRecords = null;
+          let requestToken = 0;
+
+          const loadFallbackRecords = async () => {
+            if (fallbackRecords) {
+              return fallbackRecords;
+            }
+
+            const response = await fetch("/search-index.json");
+            if (!response.ok) {
+              throw new Error("Failed to load local search index");
+            }
+
+            const payload = await response.json();
+            fallbackRecords = Array.isArray(payload) ? payload : [];
+            return fallbackRecords;
+          };
+
+          const fallbackSearch = async (query) => {
+            const records = await loadFallbackRecords();
+            const terms = query
+              .toLowerCase()
+              .split(/\s+/)
+              .filter((term) => term.length > 0);
+
+            if (terms.length === 0) {
+              return records.slice(0, 8);
+            }
+
+            const scoreRecord = (record) => {
+              const title = String(record.title || "").toLowerCase();
+              const slug = String(record.slug || "").toLowerCase();
+              const excerpt = String(record.excerpt || "").toLowerCase();
+              const tags = Array.isArray(record.tags)
+                ? record.tags.map((tag) => String(tag).toLowerCase())
+                : [];
+              let score = 0;
+
+              terms.forEach((term) => {
+                if (title.startsWith(term)) score += 28;
+                if (title.includes(term)) score += 18;
+                if (slug.includes(term)) score += 10;
+                if (excerpt.includes(term)) score += 5;
+                if (tags.some((tag) => tag.includes(term))) score += 8;
+              });
+
+              return score;
+            };
+
+            return records
+              .map((record) => ({ record, score: scoreRecord(record) }))
+              .filter((entry) => entry.score > 0)
+              .sort((a, b) => b.score - a.score)
+              .slice(0, 8)
+              .map((entry) => entry.record);
+          };
+
+          const apiSearch = async (query) => {
+            const response = await fetch("/api/search?q=" + encodeURIComponent(query) + "&limit=8", {
+              headers: { Accept: "application/json" }
+            });
+
+            if (!response.ok) {
+              throw new Error("Search API unavailable");
+            }
+
+            const payload = await response.json();
+            return Array.isArray(payload) ? payload : [];
+          };
+
+          const renderResults = (items) => {
+            if (!items.length) {
+              searchResults.hidden = false;
+              searchResults.innerHTML = '<p class="search-empty">No matching notes.</p>';
+              return;
+            }
+
+            searchResults.hidden = false;
+            searchResults.innerHTML = items
+              .map((item) => {
+                const title = escapeHtml(item.title || item.slug || "Untitled");
+                const url = escapeHtml(item.url || "/");
+                const excerpt = escapeHtml(summarize(item.excerpt));
+                return (
+                  '<a class="search-result" href="' +
+                  url +
+                  '">' +
+                  '<span class="search-result-title">' +
+                  title +
+                  "</span>" +
+                  '<span class="search-result-excerpt">' +
+                  excerpt +
+                  "</span>" +
+                  "</a>"
+                );
+              })
+              .join("");
+          };
+
+          const runSearch = async () => {
+            const token = ++requestToken;
+            const query = searchInput.value.trim();
+
+            if (query.length === 0) {
+              searchResults.hidden = true;
+              searchResults.innerHTML = "";
+              return;
+            }
+
+            try {
+              const results = await apiSearch(query);
+              if (token === requestToken) {
+                renderResults(results);
+              }
+            } catch (_) {
+              try {
+                const results = await fallbackSearch(query);
+                if (token === requestToken) {
+                  renderResults(results);
+                }
+              } catch (_) {
+                if (token === requestToken) {
+                  searchResults.hidden = false;
+                  searchResults.innerHTML = '<p class="search-empty">Search is not available.</p>';
+                }
+              }
+            }
+          };
+
+          let debounceTimer = 0;
+          searchInput.addEventListener("input", () => {
+            window.clearTimeout(debounceTimer);
+            debounceTimer = window.setTimeout(runSearch, 120);
+          });
+
+          searchInput.addEventListener("focus", runSearch);
+
+          searchInput.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+              searchResults.hidden = true;
+            }
+          });
+
+          document.addEventListener("click", (event) => {
+            const target = event.target;
+            if (!(target instanceof Element)) {
+              return;
+            }
+
+            if (!target.closest(".site-search")) {
+              searchResults.hidden = true;
+            }
+          });
+        }
+
         if (window.initGraphView) {
           window.initGraphView({
             stageId: "side-graph-stage",
             svgId: "side-graph-svg",
             linkLayerId: "side-graph-link-layer",
             nodeLayerId: "side-graph-node-layer",
-            detailId: "side-graph-detail",
             width: 540,
             height: 420,
             idealDistance: 88,
             nodeRadius: 7,
-            showLabels: false,
-            idleText: "Hover nodes to inspect links.",
+            showLabels: true,
+            labelFontSize: 10,
+            idleText: "",
             emptyText: "No graph data yet."
           });
-
-          if (document.getElementById("full-graph-stage")) {
-            window.initGraphView({
-              stageId: "full-graph-stage",
-              svgId: "full-graph-svg",
-              linkLayerId: "full-graph-link-layer",
-              nodeLayerId: "full-graph-node-layer",
-              detailId: "full-graph-detail",
-              searchInputId: "full-graph-search",
-              resetButtonId: "full-graph-reset",
-              toggleButtonId: "full-graph-toggle",
-              width: 1000,
-              height: 640,
-              idealDistance: 120,
-              nodeRadius: 9,
-              showLabels: true
-            });
-          }
         }
       })();
     </script>

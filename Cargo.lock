@@ -234,6 +234,8 @@ dependencies = [
  "axum",
  "blog-core",
  "clap",
+ "serde",
+ "serde_json",
  "tokio",
  "tower-http",
 ]

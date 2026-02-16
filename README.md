@@ -12,7 +12,8 @@ Obsidian markdown notes are transformed into a static blog with:
 - Obsidian-like frontmatter support: `dg-publish`, `dg-home`, `tags`, `aliases`, `draft`
 - Wikilink support: `[[note]]`, `[[note|label]]`, `[[note#heading]]`
 - Backlinks per note
-- Interactive graph page: `/graph/` (source data: `graph.json`)
+- Persistent side graph with zoom/pan and node labels (source data: `graph.json`)
+- Global search API (`/api/search` on `blog-dev`) + live preview dropdown in UI
 - Static outputs: `sitemap.xml`, `rss.xml`, `robots.txt`, `graph.json`, `search-index.json`
 - SEO metadata: canonical, OpenGraph, Twitter, JSON-LD
 - Performance baseline: static HTML, lazy image attrs, lightweight CSS

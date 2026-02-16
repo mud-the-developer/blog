@@ -23,9 +23,19 @@
     const idealDistance = opts.idealDistance || 120;
     const nodeRadius = opts.nodeRadius || 9;
     const showLabels = opts.showLabels !== false;
-    const idleText = opts.idleText || "Hover nodes to inspect relationships.";
-    const emptyText = opts.emptyText || "No graph data available yet.";
-    const errorText = opts.errorText || "Failed to load graph data.";
+    const labelOffsetX = opts.labelOffsetX || nodeRadius + 6;
+    const labelOffsetY = opts.labelOffsetY || 4;
+    const labelFontSize = opts.labelFontSize || 12;
+    const labelMaxChars = opts.labelMaxChars || 28;
+    const minZoom = opts.minZoom || 0.45;
+    const maxZoom = opts.maxZoom || 3.1;
+    const zoomStep = opts.zoomStep || 0.0017;
+    const idleText =
+      typeof opts.idleText === "string" ? opts.idleText : "Hover nodes to inspect relationships.";
+    const emptyText =
+      typeof opts.emptyText === "string" ? opts.emptyText : "No graph data available yet.";
+    const errorText =
+      typeof opts.errorText === "string" ? opts.errorText : "Failed to load graph data.";
 
     if (!showLabels) {
       stage.classList.add("graph-no-labels");
@@ -40,8 +50,21 @@
       nodesById: new Map(),
       running: true,
       dragging: "",
+      dragPointerId: -1,
+      dragMoved: false,
       activeNodeId: "",
-      searchTerm: ""
+      searchTerm: "",
+      viewport: {
+        scale: 1,
+        tx: 0,
+        ty: 0,
+        panning: false,
+        panPointerId: -1,
+        panStartX: 0,
+        panStartY: 0,
+        panOriginTx: 0,
+        panOriginTy: 0
+      }
     };
 
     const pointInSvg = (event) => {
@@ -50,6 +73,29 @@
         x: ((event.clientX - rect.left) / rect.width) * width,
         y: ((event.clientY - rect.top) / rect.height) * height
       };
+    };
+
+    const toGraphPoint = (point) => {
+      const view = graphState.viewport;
+      return {
+        x: (point.x - view.tx) / view.scale,
+        y: (point.y - view.ty) / view.scale
+      };
+    };
+
+    const applyViewportTransform = () => {
+      const view = graphState.viewport;
+      const transform =
+        "translate(" + view.tx.toFixed(2) + "," + view.ty.toFixed(2) + ") scale(" + view.scale.toFixed(4) + ")";
+      linkLayer.setAttribute("transform", transform);
+      nodeLayer.setAttribute("transform", transform);
+    };
+
+    const resetViewport = () => {
+      graphState.viewport.scale = 1;
+      graphState.viewport.tx = 0;
+      graphState.viewport.ty = 0;
+      applyViewportTransform();
     };
 
     const resetLayout = () => {
@@ -220,31 +266,107 @@
       requestAnimationFrame(tick);
     };
 
-    const attachDragEvents = () => {
+    const finishPointerAction = (event) => {
+      const pointerId = typeof event.pointerId === "number" ? event.pointerId : -1;
+
+      if (graphState.dragPointerId === pointerId || pointerId < 0) {
+        graphState.dragging = "";
+        graphState.dragPointerId = -1;
+        svg.classList.remove("is-dragging");
+      }
+
+      if (graphState.viewport.panPointerId === pointerId || pointerId < 0) {
+        graphState.viewport.panning = false;
+        graphState.viewport.panPointerId = -1;
+        svg.classList.remove("is-panning");
+      }
+
+      if (pointerId >= 0 && typeof svg.hasPointerCapture === "function" && svg.hasPointerCapture(pointerId)) {
+        svg.releasePointerCapture(pointerId);
+      }
+    };
+
+    const attachInteractionEvents = () => {
       svg.addEventListener("pointermove", (event) => {
-        if (!graphState.dragging) {
+        if (graphState.dragging) {
+          if (graphState.dragPointerId !== event.pointerId) {
+            return;
+          }
+
+          const node = graphState.nodesById.get(graphState.dragging);
+          if (!node) {
+            return;
+          }
+
+          const point = toGraphPoint(pointInSvg(event));
+          if (Math.abs(node.x - point.x) > 0.8 || Math.abs(node.y - point.y) > 0.8) {
+            graphState.dragMoved = true;
+          }
+          node.x = point.x;
+          node.y = point.y;
           return;
         }
 
-        const node = graphState.nodesById.get(graphState.dragging);
-        if (!node) {
+        if (!graphState.viewport.panning || graphState.viewport.panPointerId !== event.pointerId) {
           return;
         }
 
         const point = pointInSvg(event);
-        node.x = point.x;
-        node.y = point.y;
+        graphState.viewport.tx = graphState.viewport.panOriginTx + (point.x - graphState.viewport.panStartX);
+        graphState.viewport.ty = graphState.viewport.panOriginTy + (point.y - graphState.viewport.panStartY);
+        applyViewportTransform();
       });
 
-      svg.addEventListener("pointerup", () => {
-        graphState.dragging = "";
-        svg.classList.remove("is-dragging");
+      svg.addEventListener("pointerdown", (event) => {
+        const target = event.target;
+        if (target instanceof Element && target.closest(".graph-node")) {
+          return;
+        }
+
+        const point = pointInSvg(event);
+        graphState.viewport.panning = true;
+        graphState.viewport.panPointerId = event.pointerId;
+        graphState.viewport.panStartX = point.x;
+        graphState.viewport.panStartY = point.y;
+        graphState.viewport.panOriginTx = graphState.viewport.tx;
+        graphState.viewport.panOriginTy = graphState.viewport.ty;
+        svg.classList.add("is-panning");
+        if (typeof svg.setPointerCapture === "function") {
+          svg.setPointerCapture(event.pointerId);
+        }
       });
 
-      svg.addEventListener("pointerleave", () => {
-        graphState.dragging = "";
-        svg.classList.remove("is-dragging");
+      svg.addEventListener("pointerup", finishPointerAction);
+      svg.addEventListener("pointercancel", finishPointerAction);
+      svg.addEventListener("pointerleave", (event) => {
+        if (!graphState.viewport.panning && !graphState.dragging) {
+          return;
+        }
+        finishPointerAction(event);
       });
+
+      svg.addEventListener(
+        "wheel",
+        (event) => {
+          event.preventDefault();
+
+          const view = graphState.viewport;
+          const pointer = pointInSvg(event);
+          const origin = toGraphPoint(pointer);
+          const factor = Math.exp(-event.deltaY * zoomStep);
+          const nextScale = Math.min(maxZoom, Math.max(minZoom, view.scale * factor));
+
+          if (Math.abs(nextScale - view.scale) < 0.0001) {
+            return;
+          }
+
+          view.scale = nextScale;
+          view.tx = pointer.x - origin.x * nextScale;
+          view.ty = pointer.y - origin.y * nextScale;
+          applyViewportTransform();
+        },
+        { passive: false }
+      );
     };
 
     fetch(dataUrl)
@@ -283,6 +405,7 @@
         graphState.nodesById = new Map(graphState.nodes.map((node) => [node.id, node]));
 
         resetLayout();
+        resetViewport();
 
         graphState.links.forEach((link) => {
           const line = createSvgEl("line");
@@ -302,9 +425,11 @@
 
           if (showLabels) {
             const label = createSvgEl("text");
-            label.setAttribute("x", "13");
-            label.setAttribute("y", "4");
-            label.textContent = node.title;
+            label.setAttribute("x", String(labelOffsetX));
+            label.setAttribute("y", String(labelOffsetY));
+            label.style.fontSize = String(labelFontSize) + "px";
+            label.textContent =
+              node.title.length > labelMaxChars ? node.title.slice(0, labelMaxChars - 1) + "…" : node.title;
             group.appendChild(label);
           }
 
@@ -321,20 +446,30 @@
           });
 
           group.addEventListener("click", () => {
+            if (graphState.dragMoved) {
+              graphState.dragMoved = false;
+              return;
+            }
             window.location.href = node.url;
           });
 
           group.addEventListener("pointerdown", (event) => {
             event.preventDefault();
+            event.stopPropagation();
             graphState.dragging = node.id;
+            graphState.dragPointerId = event.pointerId;
+            graphState.dragMoved = false;
             svg.classList.add("is-dragging");
+            if (typeof svg.setPointerCapture === "function") {
+              svg.setPointerCapture(event.pointerId);
+            }
           });
 
           nodeLayer.appendChild(group);
           node.el = group;
         });
 
-        attachDragEvents();
+        attachInteractionEvents();
         updateDetail(null);
 
         if (searchInput) {
@@ -347,6 +482,7 @@
         if (resetButton) {
           resetButton.addEventListener("click", () => {
             resetLayout();
+            resetViewport();
             applyVisualState();
           });
         }

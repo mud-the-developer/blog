@@ -214,14 +214,6 @@ struct TagTemplate {
     posts: Vec<PostCard>,
 }
 
-#[derive(Template)]
-#[template(path = "graph.html")]
-struct GraphTemplate {
-    layout: LayoutContext,
-    node_count: usize,
-    link_count: usize,
-}
-
 pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
     let seeds = collect_post_seeds(config)?;
     let slug_map = build_slug_map(&seeds);
@@ -255,7 +247,6 @@ pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
     render_tag_pages(config, &tags, &posts)?;
     write_search_index(config, &posts)?;
     write_graph(config, &posts)?;
-    render_graph_page(config, &posts)?;
     write_sitemap(config, &posts, &tags)?;
     write_rss(config, &posts)?;
     write_robots_txt(config)?;
@@ -475,32 +466,6 @@ fn render_tag_pages(config: &BuildConfig, tags: &[TagEntry], posts: &[Post]) -> 
     }
 
     Ok(())
-}
-
-fn render_graph_page(config: &BuildConfig, posts: &[Post]) -> Result<()> {
-    let (nodes, links) = build_graph_data(posts);
-    let layout = website_layout(
-        config,
-        posts,
-        format!("Graph | {}", config.site.title),
-        "Interactive graph view of linked notes.".to_string(),
-        "/graph/",
-        "website",
-        "",
-        "",
-        website_json_ld(config),
-    );
-
-    let template = GraphTemplate {
-        layout,
-        node_count: nodes.len(),
-        link_count: links.len(),
-    };
-
-    write_file(
-        config.output_dir.join("graph").join("index.html"),
-        template.render()?,
-    )
 }
 
 fn write_search_index(config: &BuildConfig, posts: &[Post]) -> Result<()> {
@@ -1673,10 +1638,10 @@ Not published.
         assert!(output_dir.join("notes/home/index.html").exists());
         assert!(output_dir.join("notes/second-brain/index.html").exists());
         assert!(output_dir.join("notes/seo/index.html").exists());
-        assert!(output_dir.join("graph/index.html").exists());
         assert!(output_dir.join("tags/architecture/index.html").exists());
         assert!(!output_dir.join("notes/draft-note/index.html").exists());
         assert!(!output_dir.join("notes/hidden-note/index.html").exists());
+        assert!(!output_dir.join("graph/index.html").exists());
 
         let index_html = fs::read_to_string(output_dir.join("index.html"))?;
         assert!(index_html.contains(r#"rel="canonical" href="https://example.test/""#));
@@ -1689,10 +1654,8 @@ Not published.
         assert!(second_html.contains("Linked Mentions"));
         assert!(second_html.contains("/notes/home/"));
 
-        let graph_html = fs::read_to_string(output_dir.join("graph/index.html"))?;
-        assert!(graph_html.contains(r#"id="full-graph-stage""#));
-        assert!(graph_html.contains(r#"id="full-graph-search""#));
-        assert!(graph_html.contains(r#"src="/assets/graph-view.js""#));
+        assert!(index_html.contains(r#"id="side-graph-stage""#));
+        assert!(index_html.contains(r#"src="/assets/graph-view.js""#));
 
         let graph: serde_json::Value =
             serde_json::from_str(&fs::read_to_string(output_dir.join("graph.json"))?)?;
