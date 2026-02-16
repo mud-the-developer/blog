@@ -11,11 +11,21 @@ Obsidian markdown notes are transformed into a static blog with:
 
 - Obsidian-like frontmatter support: `dg-publish`, `dg-home`, `tags`, `aliases`, `draft`, `dg-enable-search`
 - Wikilink support: `[[note]]`, `[[note|label]]`, `[[note#heading]]`
+- Note transclusion support: `![[note]]`, `![[note#heading]]`
+- Callout/Admonition support: `> [!tip]`, `> [!warning]-`
+- Mermaid block support: fenced ` ```mermaid ` diagrams rendered client-side
+- PlantUML block support: fenced ` ```plantuml ` diagrams via PlantUML server URL
+- Math support: KaTeX auto-render for `$...$` and `$$...$$`
+- PDF embed support: `![[...pdf]]`
+- Excalidraw/Canvas JSON mini-preview: `![[...excalidraw]]`, `![[...canvas]]`
+- Dataview minimal support: fenced `dataview` with `LIST/TABLE/TASK FROM #tag`
 - Backlinks per note
 - Persistent side graph with zoom/pan and node labels (source data: `graph.json`)
 - Global search API (`/api/search` on `blog-dev`) + live preview dropdown in UI
 - `dg-enable-search: false` excludes that note from `search-index.json` and API search
-- Static outputs: `sitemap.xml`, `rss.xml`, `robots.txt`, `graph.json`, `search-index.json`
+- Static outputs: `sitemap.xml`, `rss.xml`, `robots.txt`, `graph.json`, `search-index.json`, `frontmatter-report.json`
+- Build-time unsupported frontmatter key report (`frontmatter-report.json`) for migration visibility
+- Generated `404.html` page for unknown routes
 - SEO metadata: canonical, OpenGraph, Twitter, JSON-LD
 - Performance baseline: static HTML, lazy image attrs, lightweight CSS
 
@@ -26,6 +36,7 @@ Obsidian markdown notes are transformed into a static blog with:
 - `blog-dev`: local axum preview server
 - `content/posts`: markdown source notes
 - `static`: copied as-is into `dist`
+- non-markdown files in `content/posts`: copied to `dist/content` for media embeds
 
 ## Frontmatter Example
 

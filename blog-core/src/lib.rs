@@ -31,10 +31,47 @@ static HEADING_WITH_ID_RE: Lazy<Regex> = Lazy::new(|| {
 static MARKDOWN_HEADING_RE: Lazy<Regex> = Lazy::new(|| {
     Regex::new(r"^\s{0,3}(#{1,6})\s+(.+?)\s*$").expect("invalid markdown heading regex")
 });
+static CALLOUT_MARKER_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r"^\s*>\s*\[!([A-Za-z0-9_-]+)\]([+-])?\s*(.*?)\s*$")
+        .expect("invalid callout marker regex")
+});
+static DATAVIEW_LIST_FROM_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r"(?i)^\s*LIST\s+FROM\s+#([A-Za-z0-9_-]+)\s*$").expect("invalid dataview list regex")
+});
+static DATAVIEW_TABLE_FROM_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r"(?i)^\s*TABLE(?:\s+[A-Za-z0-9_,\s]+)?\s+FROM\s+#([A-Za-z0-9_-]+)\s*$")
+        .expect("invalid dataview table regex")
+});
+static DATAVIEW_TASK_FROM_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r"(?i)^\s*TASK\s+FROM\s+#([A-Za-z0-9_-]+)\s*$").expect("invalid dataview task regex")
+});
 static HTML_TAG_RE: Lazy<Regex> =
     Lazy::new(|| Regex::new(r"(?s)<[^>]+>").expect("invalid html tag regex"));
 static HIGHLIGHT_RE: Lazy<Regex> =
     Lazy::new(|| Regex::new(r"==([^=\n][^=\n]*?)==").expect("invalid highlight regex"));
+
+const SUPPORTED_FRONTMATTER_KEYS: &[&str] = &[
+    "title",
+    "description",
+    "slug",
+    "dg-path",
+    "dg-permalink",
+    "date",
+    "updated",
+    "tags",
+    "aliases",
+    "draft",
+    "dg-publish",
+    "dg-home",
+    "dg-enable-search",
+    "dg-show-local-graph",
+    "dg-pinned",
+    "dg-hide",
+    "dg-hide-in-graph",
+    "dg-note-icon",
+    "dg-metatags",
+    "dg-content-classes",
+];
 
 #[derive(Debug, Clone)]
 pub struct SiteConfig {
@@ -191,6 +228,12 @@ struct SearchRecord {
 }
 
 #[derive(Debug, Clone, Serialize)]
+struct FrontmatterReportEntry {
+    file: String,
+    unsupported_keys: Vec<String>,
+}
+
+#[derive(Debug, Clone, Serialize)]
 struct GraphNode {
     id: String,
     title: String,
@@ -232,6 +275,13 @@ struct FileTreeNoteBuilder {
 struct EmbedSource {
     title: String,
     markdown: String,
+}
+
+#[derive(Debug, Clone)]
+struct SeedSummary {
+    slug: String,
+    title: String,
+    tags: Vec<String>,
 }
 
 #[derive(Debug, Clone)]
@@ -349,6 +399,12 @@ struct GraphTemplate {
     total_links: usize,
 }
 
+#[derive(Template)]
+#[template(path = "404.html")]
+struct NotFoundTemplate {
+    layout: LayoutContext,
+}
+
 pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
     let seeds = collect_post_seeds(config)?;
     let slug_map = build_slug_map(&seeds);
@@ -369,6 +425,7 @@ pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
         .with_context(|| format!("failed to create {}", config.output_dir.display()))?;
 
     copy_static_assets(&config.static_dir, &config.output_dir)?;
+    copy_content_assets(&config.content_dir, &config.output_dir)?;
     ensure_default_css(&config.output_dir)?;
 
     let home_intro_html = posts
@@ -381,6 +438,7 @@ pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
     render_posts_pages(config, &posts, &backlinks)?;
     render_tag_pages(config, &tags, &posts)?;
     render_graph_page(config, &posts)?;
+    render_not_found_page(config, &posts)?;
     write_search_index(config, &posts)?;
     write_file_tree(config, &posts)?;
     write_graph(config, &posts)?;
@@ -388,6 +446,7 @@ pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
     write_sitemap(config, &posts, &tags)?;
     write_rss(config, &posts)?;
     write_robots_txt(config)?;
+    write_frontmatter_report(config)?;
 
     Ok(BuildSummary {
         posts: posts.len(),
@@ -501,6 +560,14 @@ fn collect_post_seeds(config: &BuildConfig) -> Result<Vec<PostSeed>> {
 fn render_posts(seeds: &[PostSeed], slug_map: &HashMap<String, String>) -> Result<Vec<Post>> {
     let mut posts = Vec::with_capacity(seeds.len());
     let mut embed_sources = HashMap::with_capacity(seeds.len());
+    let seed_summaries = seeds
+        .iter()
+        .map(|seed| SeedSummary {
+            slug: seed.slug.clone(),
+            title: seed.title.clone(),
+            tags: seed.tags.clone(),
+        })
+        .collect::<Vec<_>>();
 
     for seed in seeds {
         let raw = fs::read_to_string(&seed.source_path)
@@ -520,9 +587,10 @@ fn render_posts(seeds: &[PostSeed], slug_map: &HashMap<String, String>) -> Resul
             .get(&seed.slug)
             .map(|source| source.markdown.as_str())
             .unwrap_or_default();
+        let with_dataview = apply_dataview_blocks(body, &seed_summaries, &seed.slug);
 
         let (rewritten, outgoing_links) =
-            rewrite_wikilinks(body, slug_map, &embed_sources, &seed.slug, true);
+            rewrite_wikilinks(&with_dataview, slug_map, &embed_sources, &seed.slug, true);
         let markdown_html = markdown_to_html(&rewritten);
         let toc = extract_toc_entries(&markdown_html);
 
@@ -731,6 +799,30 @@ fn render_graph_page(config: &BuildConfig, posts: &[Post]) -> Result<()> {
         config.output_dir.join("graph").join("index.html"),
         template.render()?,
     )
+}
+
+fn render_not_found_page(config: &BuildConfig, posts: &[Post]) -> Result<()> {
+    let layout = website_layout(
+        config,
+        posts,
+        format!("Not Found | {}", config.site.title),
+        "The page you requested could not be found.".to_string(),
+        "/404.html",
+        "website",
+        "",
+        "",
+        website_json_ld(config),
+        Vec::new(),
+        true,
+        false,
+        "/graph.json".to_string(),
+        String::new(),
+        false,
+        Vec::new(),
+    );
+
+    let template = NotFoundTemplate { layout };
+    write_file(config.output_dir.join("404.html"), template.render()?)
 }
 
 fn write_search_index(config: &BuildConfig, posts: &[Post]) -> Result<()> {
@@ -1032,6 +1124,9 @@ fn write_sitemap(config: &BuildConfig, posts: &[Post], tags: &[TagEntry]) -> Res
     );
 
     for post in posts {
+        if post.hidden {
+            continue;
+        }
         append_sitemap_url(
             &mut xml,
             &absolute_url(&config.site.base_url, &format!("/notes/{}/", post.slug)),
@@ -1074,7 +1169,7 @@ fn write_rss(config: &BuildConfig, posts: &[Post]) -> Result<()> {
         escape_xml(&config.site.language)
     )?;
 
-    for post in posts.iter().take(30) {
+    for post in posts.iter().filter(|post| !post.hidden).take(30) {
         xml.push_str("<item>\n");
         writeln!(xml, "<title>{}</title>", escape_xml(&post.title))?;
         let link = absolute_url(&config.site.base_url, &format!("/notes/{}/", post.slug));
@@ -1105,6 +1200,65 @@ fn write_robots_txt(config: &BuildConfig) -> Result<()> {
         absolute_url(&config.site.base_url, "/sitemap.xml")
     );
     write_file(config.output_dir.join("robots.txt"), body)
+}
+
+fn write_frontmatter_report(config: &BuildConfig) -> Result<()> {
+    let mut entries = Vec::new();
+
+    for path in collect_markdown_files(&config.content_dir)? {
+        let raw = fs::read_to_string(&path)
+            .with_context(|| format!("failed to read {}", path.display()))?;
+        let Some((frontmatter_text, _)) = split_frontmatter(&raw) else {
+            continue;
+        };
+
+        let parsed_yaml: YamlValue = match serde_yaml::from_str(frontmatter_text) {
+            Ok(value) => value,
+            Err(_) => continue,
+        };
+        let YamlValue::Mapping(map) = parsed_yaml else {
+            continue;
+        };
+
+        let mut unsupported_keys = map
+            .iter()
+            .filter_map(|(key, _)| key.as_str())
+            .map(str::trim)
+            .filter(|key| !key.is_empty())
+            .filter(|key| !SUPPORTED_FRONTMATTER_KEYS.contains(key))
+            .map(|key| key.to_string())
+            .collect::<Vec<_>>();
+        unsupported_keys.sort();
+        unsupported_keys.dedup();
+
+        if unsupported_keys.is_empty() {
+            continue;
+        }
+
+        let file = path
+            .strip_prefix(&config.content_dir)
+            .unwrap_or(&path)
+            .to_string_lossy()
+            .replace('\\', "/");
+
+        entries.push(FrontmatterReportEntry {
+            file,
+            unsupported_keys,
+        });
+    }
+
+    entries.sort_by(|left, right| left.file.cmp(&right.file));
+
+    let payload = json!({
+        "generated_at": Utc::now().to_rfc3339(),
+        "content_root": config.content_dir.to_string_lossy(),
+        "supported_keys": SUPPORTED_FRONTMATTER_KEYS,
+        "entries": entries,
+    });
+    let mut body = serde_json::to_string_pretty(&payload)
+        .with_context(|| "failed to serialize frontmatter report")?;
+    body.push('\n');
+    write_file(config.output_dir.join("frontmatter-report.json"), body)
 }
 
 fn write_file(path: PathBuf, contents: String) -> Result<()> {
@@ -1138,28 +1292,31 @@ fn collect_markdown_files(content_dir: &Path) -> Result<Vec<PathBuf>> {
     Ok(files)
 }
 
-fn parse_frontmatter_and_body(raw: &str) -> Result<(FrontMatter, &str)> {
-    let has_unix = raw.starts_with("---\n");
-    let has_windows = raw.starts_with("---\r\n");
-
-    if has_unix {
+fn split_frontmatter(raw: &str) -> Option<(&str, &str)> {
+    if raw.starts_with("---\n") {
         if let Some(end) = raw[4..].find("\n---\n") {
             let frontmatter = &raw[4..4 + end];
             let body = &raw[4 + end + 5..];
-            let parsed: FrontMatter = serde_yaml::from_str(frontmatter)
-                .with_context(|| "failed to parse YAML frontmatter")?;
-            return Ok((parsed, body));
+            return Some((frontmatter, body));
         }
     }
 
-    if has_windows {
+    if raw.starts_with("---\r\n") {
         if let Some(end) = raw[5..].find("\r\n---\r\n") {
             let frontmatter = &raw[5..5 + end];
             let body = &raw[5 + end + 8..];
-            let parsed: FrontMatter = serde_yaml::from_str(frontmatter)
-                .with_context(|| "failed to parse YAML frontmatter")?;
-            return Ok((parsed, body));
+            return Some((frontmatter, body));
         }
+    }
+
+    None
+}
+
+fn parse_frontmatter_and_body(raw: &str) -> Result<(FrontMatter, &str)> {
+    if let Some((frontmatter, body)) = split_frontmatter(raw) {
+        let parsed: FrontMatter = serde_yaml::from_str(frontmatter)
+            .with_context(|| "failed to parse YAML frontmatter")?;
+        return Ok((parsed, body));
     }
 
     Ok((FrontMatter::default(), raw))
@@ -1230,6 +1387,22 @@ fn rewrite_wikilinks(
                     };
                     format!("[{}]({})", display, target_url)
                 }
+            } else if is_embed && is_pdf_target(target_raw) {
+                let pdf_url = build_embed_asset_url(target_raw, heading);
+                render_pdf_embed_html(&pdf_url, &pdf_display_title(target_raw, label))
+            } else if is_embed && is_excalidraw_target(target_raw) {
+                let source_url = resolve_asset_url(target_raw);
+                render_excalidraw_embed_html(&source_url, &pdf_display_title(target_raw, label))
+            } else if is_embed && is_canvas_target(target_raw) {
+                let source_url = resolve_asset_url(target_raw);
+                render_canvas_embed_html(&source_url, &pdf_display_title(target_raw, label))
+            } else if is_embed && is_image_target(target_raw) {
+                let image_url = resolve_asset_url(target_raw);
+                render_image_embed_markdown(&image_url, &pdf_display_title(target_raw, label))
+            } else if is_asset_link_target(target_raw) {
+                let asset_url = resolve_asset_url(target_raw);
+                let display = if label.is_empty() { target_raw } else { label };
+                format!("[{}]({})", display, asset_url)
             } else {
                 format!("`[[{}]]`", target_raw)
             }
@@ -1305,6 +1478,293 @@ fn render_note_transclusion(
     )
 }
 
+fn is_pdf_target(target: &str) -> bool {
+    let target = target.trim().to_ascii_lowercase();
+    let path = target.split('?').next().unwrap_or(target.as_str());
+    path.ends_with(".pdf")
+}
+
+fn is_excalidraw_target(target: &str) -> bool {
+    extension_matches(target, &["excalidraw"])
+}
+
+fn is_canvas_target(target: &str) -> bool {
+    extension_matches(target, &["canvas"])
+}
+
+fn is_image_target(target: &str) -> bool {
+    extension_matches(
+        target,
+        &["png", "jpg", "jpeg", "gif", "webp", "avif", "svg", "bmp"],
+    )
+}
+
+fn is_asset_link_target(target: &str) -> bool {
+    is_pdf_target(target)
+        || is_excalidraw_target(target)
+        || is_canvas_target(target)
+        || is_image_target(target)
+}
+
+fn extension_matches(target: &str, extensions: &[&str]) -> bool {
+    let target = target.trim().to_ascii_lowercase();
+    let path = target
+        .split(['?', '#'])
+        .next()
+        .unwrap_or(target.as_str())
+        .trim_end_matches('.');
+    let ext = path.rsplit('.').next().unwrap_or(path);
+    extensions.iter().any(|item| ext == *item)
+}
+
+fn build_embed_asset_url(target_raw: &str, heading: Option<&str>) -> String {
+    let mut url = resolve_asset_url(target_raw);
+    if let Some(fragment) = heading.map(str::trim).filter(|value| !value.is_empty()) {
+        url.push('#');
+        url.push_str(fragment);
+    }
+    url
+}
+
+fn resolve_asset_url(target_raw: &str) -> String {
+    let target = target_raw.trim();
+    if target.starts_with("http://")
+        || target.starts_with("https://")
+        || target.starts_with("data:")
+        || target.starts_with('/')
+    {
+        return target.to_string();
+    }
+
+    let normalized = target
+        .trim_start_matches("./")
+        .trim_start_matches('/')
+        .replace('\\', "/");
+    format!("/content/{normalized}")
+}
+
+fn pdf_display_title(target_raw: &str, label: &str) -> String {
+    let label = label.trim();
+    if !label.is_empty() && label != target_raw.trim() {
+        return label.to_string();
+    }
+
+    let file_name = target_raw
+        .trim()
+        .split('?')
+        .next()
+        .unwrap_or(target_raw.trim())
+        .rsplit('/')
+        .next()
+        .unwrap_or(target_raw.trim())
+        .rsplit('\\')
+        .next()
+        .unwrap_or(target_raw.trim());
+
+    let title = file_name
+        .trim_end_matches(".pdf")
+        .trim_end_matches(".PDF")
+        .trim();
+    if title.is_empty() {
+        "PDF".to_string()
+    } else {
+        title.to_string()
+    }
+}
+
+fn render_pdf_embed_html(url: &str, title: &str) -> String {
+    let safe_url = escape_html_text(url);
+    let safe_title = escape_html_text(title);
+    format!(
+        "\n\n<div class=\"dg-pdf-embed\"><div class=\"dg-pdf-embed-head\">{title}</div><object data=\"{url}\" type=\"application/pdf\"><p>PDF preview is not available. <a href=\"{url}\" target=\"_blank\" rel=\"noopener\">Open PDF</a></p></object></div>\n\n",
+        title = safe_title,
+        url = safe_url
+    )
+}
+
+fn apply_dataview_blocks(markdown: &str, seeds: &[SeedSummary], current_slug: &str) -> String {
+    let lines = markdown.lines().collect::<Vec<_>>();
+    let mut transformed = String::new();
+    let mut idx = 0usize;
+
+    while idx < lines.len() {
+        let line = lines[idx];
+        let trimmed = line.trim();
+        let language = trimmed
+            .strip_prefix("```")
+            .map(str::trim)
+            .unwrap_or_default()
+            .to_ascii_lowercase();
+
+        if language == "dataview" || language == "dataviewjs" {
+            idx += 1;
+            let mut block_lines = Vec::new();
+            while idx < lines.len() {
+                if lines[idx].trim_start().starts_with("```") {
+                    idx += 1;
+                    break;
+                }
+                block_lines.push(lines[idx].to_string());
+                idx += 1;
+            }
+
+            let replacement = if language == "dataview" {
+                render_dataview_query_block(&block_lines.join("\n"), seeds, current_slug)
+            } else {
+                render_dataviewjs_fallback(&block_lines.join("\n"))
+            };
+            transformed.push_str(&replacement);
+            if !replacement.ends_with('\n') {
+                transformed.push('\n');
+            }
+            continue;
+        }
+
+        transformed.push_str(line);
+        transformed.push('\n');
+        idx += 1;
+    }
+
+    if !markdown.ends_with('\n') && transformed.ends_with('\n') {
+        transformed.pop();
+    }
+
+    transformed
+}
+
+fn render_dataview_query_block(query: &str, seeds: &[SeedSummary], current_slug: &str) -> String {
+    let raw_query = query.trim();
+    if raw_query.is_empty() {
+        return "> [!info] Dataview\n> Empty Dataview query.\n".to_string();
+    }
+
+    if let Some(caps) = DATAVIEW_TASK_FROM_RE.captures(raw_query) {
+        let tag = caps
+            .get(1)
+            .map(|m| m.as_str().to_ascii_lowercase())
+            .unwrap_or_default();
+        let mut matches = seeds
+            .iter()
+            .filter(|seed| seed.slug != current_slug)
+            .filter(|seed| seed.tags.iter().any(|item| item == &tag))
+            .map(|seed| (seed.title.clone(), seed.slug.clone()))
+            .collect::<Vec<_>>();
+        matches.sort_by(|a, b| a.0.to_lowercase().cmp(&b.0.to_lowercase()));
+
+        let mut rendered = String::new();
+        rendered.push_str("> [!info] Dataview\n");
+        rendered.push_str(&format!("> Query: `TASK FROM #{}`\n>\n", tag));
+        if matches.is_empty() {
+            rendered.push_str(&format!("> _No notes found for #{}._\n", tag));
+        } else {
+            for (title, slug) in matches {
+                rendered.push_str(&format!("> - [ ] [{}](/notes/{}/)\n", title, slug));
+            }
+        }
+        return rendered;
+    }
+
+    if let Some(caps) = DATAVIEW_TABLE_FROM_RE.captures(raw_query) {
+        let tag = caps
+            .get(1)
+            .map(|m| m.as_str().to_ascii_lowercase())
+            .unwrap_or_default();
+        let mut matches = seeds
+            .iter()
+            .filter(|seed| seed.slug != current_slug)
+            .filter(|seed| seed.tags.iter().any(|item| item == &tag))
+            .map(|seed| (seed.title.clone(), seed.slug.clone()))
+            .collect::<Vec<_>>();
+        matches.sort_by(|a, b| a.0.to_lowercase().cmp(&b.0.to_lowercase()));
+
+        let mut rendered = String::new();
+        rendered.push_str("> [!info] Dataview\n");
+        rendered.push_str(&format!("> Query: `TABLE FROM #{}`\n>\n", tag));
+        if matches.is_empty() {
+            rendered.push_str(&format!("> _No notes found for #{}._\n", tag));
+        } else {
+            rendered.push_str("> | Title | Note |\n");
+            rendered.push_str("> | --- | --- |\n");
+            for (title, slug) in matches {
+                let title = title.replace('|', "\\|");
+                rendered.push_str(&format!("> | {} | [Open](/notes/{}/) |\n", title, slug));
+            }
+        }
+        return rendered;
+    }
+
+    if let Some(caps) = DATAVIEW_LIST_FROM_RE.captures(raw_query) {
+        let tag = caps
+            .get(1)
+            .map(|m| m.as_str().to_ascii_lowercase())
+            .unwrap_or_default();
+        let mut matches = seeds
+            .iter()
+            .filter(|seed| seed.slug != current_slug)
+            .filter(|seed| seed.tags.iter().any(|item| item == &tag))
+            .map(|seed| (seed.title.clone(), seed.slug.clone()))
+            .collect::<Vec<_>>();
+        matches.sort_by(|a, b| a.0.to_lowercase().cmp(&b.0.to_lowercase()));
+
+        let mut rendered = String::new();
+        rendered.push_str("> [!info] Dataview\n");
+        rendered.push_str(&format!("> Query: `LIST FROM #{}`\n>\n", tag));
+        if matches.is_empty() {
+            rendered.push_str(&format!("> _No notes found for #{}._\n", tag));
+        } else {
+            for (title, slug) in matches {
+                rendered.push_str(&format!("> - [{}](/notes/{}/)\n", title, slug));
+            }
+        }
+        return rendered;
+    }
+
+    format!(
+        "> [!info] Dataview\n> Query is not supported yet.\n>\n> ```text\n> {}\n> ```\n",
+        raw_query.replace('\n', "\n> ")
+    )
+}
+
+fn render_dataviewjs_fallback(query: &str) -> String {
+    let body = query.trim();
+    if body.is_empty() {
+        return "> [!info] DataviewJS\n> DataviewJS block is not executed.\n".to_string();
+    }
+
+    format!(
+        "> [!info] DataviewJS\n> DataviewJS block is not executed.\n>\n> ```javascript\n> {}\n> ```\n",
+        body.replace('\n', "\n> ")
+    )
+}
+
+fn render_excalidraw_embed_html(url: &str, title: &str) -> String {
+    let safe_url = escape_html_text(url);
+    let safe_title = escape_html_text(title);
+    let svg_candidate = escape_html_text(&format!("{url}.svg"));
+    let png_candidate = escape_html_text(&format!("{url}.png"));
+    format!(
+        "\n\n<div class=\"dg-excalidraw-embed\" data-excalidraw-src=\"{source}\"><div class=\"dg-excalidraw-embed-head\">{title}</div><div class=\"dg-excalidraw-embed-body\"><p class=\"dg-excalidraw-placeholder\">Loading drawing preview...</p><div class=\"dg-excalidraw-preview-wrap\" hidden></div><img class=\"dg-excalidraw-preview\" src=\"{svg}\" alt=\"{title}\" loading=\"lazy\" decoding=\"async\" /><p class=\"dg-excalidraw-links\"><a href=\"{source}\" target=\"_blank\" rel=\"noopener\">Open Excalidraw Source</a> · <a href=\"{png}\" target=\"_blank\" rel=\"noopener\">Try PNG Preview</a></p></div></div>\n\n",
+        title = safe_title,
+        svg = svg_candidate,
+        source = safe_url,
+        png = png_candidate
+    )
+}
+
+fn render_canvas_embed_html(url: &str, title: &str) -> String {
+    let safe_url = escape_html_text(url);
+    let safe_title = escape_html_text(title);
+    format!(
+        "\n\n<div class=\"dg-canvas-embed\" data-canvas-src=\"{url}\"><div class=\"dg-canvas-embed-head\">{title}</div><div class=\"dg-canvas-embed-body\"><p class=\"dg-canvas-placeholder\">Loading canvas preview...</p><div class=\"dg-canvas-preview\" hidden></div><p class=\"dg-canvas-links\"><a href=\"{url}\" target=\"_blank\" rel=\"noopener\">Open Canvas Source</a></p></div></div>\n\n",
+        title = safe_title,
+        url = safe_url
+    )
+}
+
+fn render_image_embed_markdown(url: &str, title: &str) -> String {
+    format!("\n\n![{}]({})\n\n", title, url)
+}
+
 fn extract_markdown_section(markdown: &str, heading: &str) -> Option<String> {
     let target = slugify(heading.trim());
     if target.is_empty() {
@@ -1352,7 +1812,14 @@ fn extract_markdown_section(markdown: &str, heading: &str) -> Option<String> {
 }
 
 fn markdown_to_html(markdown: &str) -> String {
+    let html = markdown_fragment_to_html(markdown);
+    add_heading_ids(&html)
+}
+
+fn markdown_fragment_to_html(markdown: &str) -> String {
     let markdown = apply_highlight_syntax(markdown);
+    let markdown = apply_callout_syntax(&markdown);
+    let markdown = apply_plantuml_syntax(&markdown);
     let mut options = Options::empty();
     options.insert(Options::ENABLE_STRIKETHROUGH);
     options.insert(Options::ENABLE_TABLES);
@@ -1367,7 +1834,68 @@ fn markdown_to_html(markdown: &str) -> String {
         .replace_all(&html, "<img loading=\"lazy\" decoding=\"async\" ")
         .to_string();
 
-    add_heading_ids(&html)
+    html
+}
+
+fn apply_plantuml_syntax(markdown: &str) -> String {
+    let lines = markdown.lines().collect::<Vec<_>>();
+    let mut transformed = String::new();
+    let mut idx = 0usize;
+
+    while idx < lines.len() {
+        let line = lines[idx];
+        let trimmed = line.trim_start();
+        let (fence, language) = if let Some(rest) = trimmed.strip_prefix("```") {
+            ("```", rest.trim().to_ascii_lowercase())
+        } else if let Some(rest) = trimmed.strip_prefix("~~~") {
+            ("~~~", rest.trim().to_ascii_lowercase())
+        } else {
+            ("", String::new())
+        };
+
+        if !fence.is_empty() && (language == "plantuml" || language == "puml") {
+            idx += 1;
+            let mut body_lines = Vec::new();
+            while idx < lines.len() {
+                if lines[idx].trim_start().starts_with(fence) {
+                    idx += 1;
+                    break;
+                }
+                body_lines.push(lines[idx].to_string());
+                idx += 1;
+            }
+
+            let body = body_lines.join("\n").trim().to_string();
+            if !body.is_empty() {
+                let src = plantuml_server_url(&body);
+                let safe_src = escape_html_text(&src);
+                transformed.push_str(&format!(
+                    "\n\n<figure class=\"plantuml-embed\"><img src=\"{}\" alt=\"PlantUML diagram\" loading=\"lazy\" decoding=\"async\" /></figure>\n\n",
+                    safe_src
+                ));
+            }
+            continue;
+        }
+
+        transformed.push_str(line);
+        transformed.push('\n');
+        idx += 1;
+    }
+
+    if !markdown.ends_with('\n') && transformed.ends_with('\n') {
+        transformed.pop();
+    }
+
+    transformed
+}
+
+fn plantuml_server_url(source: &str) -> String {
+    let encoded = source
+        .as_bytes()
+        .iter()
+        .map(|byte| format!("{:02x}", byte))
+        .collect::<String>();
+    format!("https://www.plantuml.com/plantuml/svg/~h{}", encoded)
 }
 
 fn apply_highlight_syntax(markdown: &str) -> String {
@@ -1399,6 +1927,124 @@ fn apply_highlight_syntax(markdown: &str) -> String {
     }
 
     transformed
+}
+
+fn apply_callout_syntax(markdown: &str) -> String {
+    let lines = markdown.lines().collect::<Vec<_>>();
+    let mut transformed = String::new();
+    let mut idx = 0usize;
+
+    while idx < lines.len() {
+        let line = lines[idx];
+        if let Some(caps) = CALLOUT_MARKER_RE.captures(line) {
+            let raw_type = caps.get(1).map(|m| m.as_str()).unwrap_or("note");
+            let callout_type = {
+                let normalized = normalize_class_name(raw_type);
+                if normalized.is_empty() {
+                    "note".to_string()
+                } else {
+                    normalized
+                }
+            };
+            let fold = caps.get(2).map(|m| m.as_str()).unwrap_or("");
+            let custom_title = caps.get(3).map(|m| m.as_str().trim()).unwrap_or("");
+            let title = if custom_title.is_empty() {
+                humanize_callout_type(&callout_type)
+            } else {
+                custom_title.to_string()
+            };
+            let safe_title = escape_html_text(&title);
+
+            idx += 1;
+            let mut body_lines = Vec::new();
+            while idx < lines.len() {
+                let Some(body_line) = strip_blockquote_marker(lines[idx]) else {
+                    break;
+                };
+                body_lines.push(body_line.to_string());
+                idx += 1;
+            }
+
+            let body_markdown = body_lines.join("\n");
+            let body_html = if body_markdown.trim().is_empty() {
+                "<p></p>".to_string()
+            } else {
+                markdown_fragment_to_html(&body_markdown)
+            };
+
+            if !transformed.is_empty() {
+                transformed.push('\n');
+            }
+
+            if fold.is_empty() {
+                transformed.push_str(&format!(
+                    "<div class=\"dg-callout dg-callout-{kind}\" data-callout=\"{kind}\"><div class=\"dg-callout-title\">{title}</div><div class=\"dg-callout-body\">{body}</div></div>",
+                    kind = callout_type,
+                    title = safe_title,
+                    body = body_html
+                ));
+            } else {
+                let open_attr = if fold == "+" { " open" } else { "" };
+                transformed.push_str(&format!(
+                    "<details class=\"dg-callout dg-callout-{kind}\" data-callout=\"{kind}\"{open}><summary class=\"dg-callout-title\">{title}</summary><div class=\"dg-callout-body\">{body}</div></details>",
+                    kind = callout_type,
+                    open = open_attr,
+                    title = safe_title,
+                    body = body_html
+                ));
+            }
+
+            continue;
+        }
+
+        transformed.push_str(line);
+        transformed.push('\n');
+        idx += 1;
+    }
+
+    if !markdown.ends_with('\n') && transformed.ends_with('\n') {
+        transformed.pop();
+    }
+
+    transformed
+}
+
+fn strip_blockquote_marker(line: &str) -> Option<&str> {
+    let trimmed = line.trim_start();
+    let rest = trimmed.strip_prefix('>')?;
+    Some(rest.strip_prefix(' ').unwrap_or(rest))
+}
+
+fn humanize_callout_type(kind: &str) -> String {
+    let words = kind
+        .split(['-', '_'])
+        .filter(|word| !word.trim().is_empty())
+        .map(|word| {
+            let mut chars = word.chars();
+            let Some(first) = chars.next() else {
+                return String::new();
+            };
+            let mut title = String::new();
+            title.push(first.to_ascii_uppercase());
+            title.push_str(chars.as_str());
+            title
+        })
+        .collect::<Vec<_>>();
+
+    if words.is_empty() {
+        "Note".to_string()
+    } else {
+        words.join(" ")
+    }
+}
+
+fn escape_html_text(value: &str) -> String {
+    value
+        .replace('&', "&amp;")
+        .replace('<', "&lt;")
+        .replace('>', "&gt;")
+        .replace('"', "&quot;")
+        .replace('\'', "&#39;")
 }
 
 fn add_heading_ids(html: &str) -> String {
@@ -1682,6 +2328,46 @@ fn article_json_ld(config: &BuildConfig, post: &Post) -> String {
         "mainEntityOfPage": absolute_url(&config.site.base_url, &format!("/notes/{}/", post.slug)),
     })
     .to_string()
+}
+
+fn copy_content_assets(content_dir: &Path, output_dir: &Path) -> Result<()> {
+    if !content_dir.exists() {
+        return Ok(());
+    }
+
+    for entry in WalkDir::new(content_dir)
+        .into_iter()
+        .filter_map(|entry| entry.ok())
+        .filter(|entry| entry.file_type().is_file())
+    {
+        let path = entry.path();
+        let is_markdown = path
+            .extension()
+            .and_then(|ext| ext.to_str())
+            .map(|ext| matches!(ext, "md" | "markdown"))
+            .unwrap_or(false);
+        if is_markdown {
+            continue;
+        }
+
+        let rel = path.strip_prefix(content_dir).with_context(|| {
+            format!(
+                "failed to create relative path for {} from {}",
+                path.display(),
+                content_dir.display()
+            )
+        })?;
+        let dest = output_dir.join("content").join(rel);
+        if let Some(parent) = dest.parent() {
+            fs::create_dir_all(parent)
+                .with_context(|| format!("failed to create {}", parent.display()))?;
+        }
+
+        fs::copy(path, &dest)
+            .with_context(|| format!("failed to copy {} to {}", path.display(), dest.display()))?;
+    }
+
+    Ok(())
 }
 
 fn copy_static_assets(static_dir: &Path, output_dir: &Path) -> Result<()> {
@@ -2439,6 +3125,20 @@ mod tests {
     }
 
     #[test]
+    fn markdown_to_html_renders_callout_blocks() {
+        let html = markdown_to_html(
+            r#"
+> [!warning]- Safety
+> Read this first.
+"#,
+        );
+
+        assert!(html.contains(r#"details class="dg-callout dg-callout-warning""#));
+        assert!(html.contains(r#"summary class="dg-callout-title">Safety</summary>"#));
+        assert!(html.contains("Read this first."));
+    }
+
+    #[test]
     fn extract_excerpt_uses_wikilink_labels() {
         let excerpt = extract_excerpt(
             "Start with [[second-brain|Second Brain]] and [[seo-performance-guide#checklist]].",
@@ -2449,6 +3149,127 @@ mod tests {
         assert!(excerpt.contains("seo performance guide"));
         assert!(!excerpt.contains('|'));
         assert!(!excerpt.contains("[["));
+    }
+
+    #[test]
+    fn rewrite_wikilinks_renders_pdf_embed_markup() {
+        let slug_map = HashMap::new();
+        let embed_sources = HashMap::new();
+        let (html, outgoing) = rewrite_wikilinks(
+            "![[https://example.com/specs/guide.pdf|Guide PDF]]",
+            &slug_map,
+            &embed_sources,
+            "home",
+            true,
+        );
+
+        assert!(outgoing.is_empty());
+        assert!(html.contains("dg-pdf-embed"));
+        assert!(html.contains("Guide PDF"));
+        assert!(html.contains("https://example.com/specs/guide.pdf"));
+    }
+
+    #[test]
+    fn rewrite_wikilinks_resolves_local_asset_links() {
+        let slug_map = HashMap::new();
+        let embed_sources = HashMap::new();
+        let (html, outgoing) = rewrite_wikilinks(
+            "[[attachments/spec.pdf|Spec PDF]]",
+            &slug_map,
+            &embed_sources,
+            "home",
+            true,
+        );
+
+        assert!(outgoing.is_empty());
+        assert!(html.contains("[Spec PDF](/content/attachments/spec.pdf)"));
+    }
+
+    #[test]
+    fn apply_dataview_blocks_supports_list_from_tag() {
+        let seeds = vec![
+            SeedSummary {
+                slug: "home".to_string(),
+                title: "Home".to_string(),
+                tags: vec!["intro".to_string()],
+            },
+            SeedSummary {
+                slug: "seo-note".to_string(),
+                title: "SEO Note".to_string(),
+                tags: vec!["seo".to_string()],
+            },
+        ];
+        let rendered = apply_dataview_blocks("```dataview\nLIST FROM #seo\n```", &seeds, "home");
+
+        assert!(rendered.contains("Dataview"));
+        assert!(rendered.contains("/notes/seo-note/"));
+    }
+
+    #[test]
+    fn apply_dataview_blocks_supports_table_from_tag() {
+        let seeds = vec![
+            SeedSummary {
+                slug: "home".to_string(),
+                title: "Home".to_string(),
+                tags: vec!["intro".to_string()],
+            },
+            SeedSummary {
+                slug: "seo-note".to_string(),
+                title: "SEO | Note".to_string(),
+                tags: vec!["seo".to_string()],
+            },
+        ];
+        let rendered = apply_dataview_blocks("```dataview\nTABLE FROM #seo\n```", &seeds, "home");
+
+        assert!(rendered.contains("Query: `TABLE FROM #seo`"));
+        assert!(rendered.contains("| Title | Note |"));
+        assert!(rendered.contains("/notes/seo-note/"));
+    }
+
+    #[test]
+    fn apply_dataview_blocks_supports_task_from_tag() {
+        let seeds = vec![
+            SeedSummary {
+                slug: "home".to_string(),
+                title: "Home".to_string(),
+                tags: vec!["intro".to_string()],
+            },
+            SeedSummary {
+                slug: "seo-note".to_string(),
+                title: "SEO Task".to_string(),
+                tags: vec!["seo".to_string()],
+            },
+        ];
+        let rendered = apply_dataview_blocks("```dataview\nTASK FROM #seo\n```", &seeds, "home");
+
+        assert!(rendered.contains("Query: `TASK FROM #seo`"));
+        assert!(rendered.contains("- [ ] [SEO Task](/notes/seo-note/)"));
+    }
+
+    #[test]
+    fn markdown_to_html_renders_plantuml_embed() {
+        let html = markdown_to_html(
+            r#"```plantuml
+@startuml
+Alice -> Bob: hi
+@enduml
+```"#,
+        );
+
+        assert!(html.contains("plantuml-embed"));
+        assert!(html.contains("plantuml.com/plantuml/svg/~h"));
+    }
+
+    #[test]
+    fn normalize_base_url_adds_https_scheme() {
+        assert_eq!(
+            normalize_base_url("mud-blog.pages.dev/"),
+            "https://mud-blog.pages.dev"
+        );
+        assert_eq!(
+            absolute_url("mud-blog.pages.dev/", "/notes/home/"),
+            "https://mud-blog.pages.dev/notes/home/"
+        );
     }
 
     #[test]
@@ -2477,7 +3298,7 @@ Start with [[second-brain#Architecture Overview|architecture]].
 
         write_text(
             &content_dir.join("second-brain.md"),
-            r#"---
+            r##"---
 title: Second Brain
 aliases: [brain]
 date: 2026-02-15
@@ -2488,6 +3309,7 @@ dg-metatags:
   - robots=max-image-preview:large
   - og:locale=ko_KR
 dg-content-classes: [focus-mode, article-featured]
+dg-experimental: true
 ---
 
 # Second Brain
@@ -2495,7 +3317,49 @@ dg-content-classes: [focus-mode, article-featured]
 ## Architecture Overview
 
 See [[home]] and [[brain|self alias]].
-"#,
+
+> [!tip] Quick Tip
+> Keep backlinks clean.
+
+```mermaid
+graph TD
+  Home --> Brain
+```
+
+```plantuml
+@startuml
+Alice -> Bob: hi
+@enduml
+```
+
+Inline math $E=mc^2$.
+
+$$
+a^2 + b^2 = c^2
+$$
+
+![[https://example.com/guide.pdf|Guide PDF]]
+![[attachments/spec.pdf|Local Spec]]
+![[attachments/diagram.excalidraw|System Sketch]]
+![[attachments/knowledge.canvas|Knowledge Canvas]]
+![[attachments/preview.png|Preview]]
+
+```dataview
+LIST FROM #seo
+```
+
+```dataview
+TABLE FROM #seo
+```
+
+```dataview
+TASK FROM #seo
+```
+
+```dataviewjs
+dv.pages("#seo")
+```
+"##,
         );
 
         write_text(
@@ -2601,6 +3465,20 @@ Not published.
         );
 
         write_text(
+            &content_dir.join("attachments/spec.pdf"),
+            "%PDF-1.4\nfake\n",
+        );
+        write_text(
+            &content_dir.join("attachments/diagram.excalidraw"),
+            "{\"type\":\"excalidraw\",\"elements\":[{\"id\":\"box1\",\"type\":\"rectangle\",\"x\":20,\"y\":20,\"width\":180,\"height\":80,\"strokeColor\":\"#315f91\"},{\"id\":\"txt1\",\"type\":\"text\",\"x\":44,\"y\":48,\"text\":\"Core\"},{\"id\":\"arr1\",\"type\":\"arrow\",\"x\":200,\"y\":60,\"width\":160,\"height\":0,\"points\":[[0,0],[160,0]],\"strokeColor\":\"#7a99bf\"}]}\n",
+        );
+        write_text(
+            &content_dir.join("attachments/knowledge.canvas"),
+            "{\"nodes\":[]}\n",
+        );
+        write_text(&content_dir.join("attachments/preview.png"), "fakepng");
+
+        write_text(
             &static_dir.join("assets/style.css"),
             "body { color: #222; }\n",
         );
@@ -2632,6 +3510,14 @@ Not published.
             .join("notes/custom/path-note/index.html")
             .exists());
         assert!(output_dir.join("filetree.json").exists());
+        assert!(output_dir.join("content/attachments/spec.pdf").exists());
+        assert!(output_dir
+            .join("content/attachments/diagram.excalidraw")
+            .exists());
+        assert!(output_dir
+            .join("content/attachments/knowledge.canvas")
+            .exists());
+        assert!(output_dir.join("content/attachments/preview.png").exists());
         assert!(output_dir.join("local-graph/second-brain.json").exists());
         assert!(output_dir.join("local-graph/isolated.json").exists());
         assert!(output_dir.join("tags/architecture/index.html").exists());
@@ -2639,13 +3525,18 @@ Not published.
         assert!(!output_dir.join("notes/hidden-note/index.html").exists());
         assert!(!output_dir.join("notes/no-flag/index.html").exists());
         assert!(output_dir.join("graph/index.html").exists());
+        assert!(output_dir.join("404.html").exists());
 
         let index_html = fs::read_to_string(output_dir.join("index.html"))?;
         assert!(index_html.contains(r#"rel="canonical" href="https://example.test/""#));
-        assert!(index_html.contains(r#"src="/assets/toc-tracker.js""#));
-        assert!(index_html.contains(r#"src="/assets/link-preview.js""#));
-        assert!(index_html.contains("window.initTocTracker"));
-        assert!(index_html.contains("window.initLinkPreview"));
+        assert!(index_html.contains("loadScript(\"/assets/filetree.js\")"));
+        assert!(index_html.contains("loadScript(\"/assets/toc-tracker.js\")"));
+        assert!(index_html.contains("loadScript(\"/assets/link-preview.js\")"));
+        assert!(index_html.contains("loadScript(\"/assets/math-render.js\")"));
+        assert!(index_html.contains("loadScript(\"/assets/mermaid-render.js\")"));
+        assert!(index_html.contains("loadScript(\"/assets/excalidraw-preview.js\")"));
+        assert!(index_html.contains("loadScript(\"/assets/canvas-preview.js\")"));
+        assert!(index_html.contains("loadScript(\"/assets/graph-view.js\")"));
         assert!(index_html.contains(r#"dataUrl: "/graph.json""#));
         assert!(index_html.contains("note-icon"));
         assert!(!index_html.contains("Isolated"));
@@ -2663,12 +3554,34 @@ Not published.
         assert!(second_html.contains("Linked Mentions"));
         assert!(second_html.contains("/notes/home/"));
         assert!(second_html.contains(r#"dataUrl: "/local-graph/second-brain.json""#));
+        assert!(second_html.contains("dg-callout-tip"));
+        assert!(second_html.contains("Quick Tip"));
+        assert!(second_html.contains("graph TD"));
+        assert!(second_html.contains("plantuml-embed"));
+        assert!(second_html.contains("plantuml.com/plantuml/svg/~h"));
+        assert!(second_html.contains("$E=mc^2$"));
+        assert!(second_html.contains("dg-pdf-embed"));
+        assert!(second_html.contains("Guide PDF"));
+        assert!(second_html.contains("/content/attachments/spec.pdf"));
+        assert!(second_html.contains("dg-excalidraw-embed"));
+        assert!(second_html.contains("/content/attachments/diagram.excalidraw"));
+        assert!(
+            second_html.contains("data-excalidraw-src=\"/content/attachments/diagram.excalidraw\"")
+        );
+        assert!(second_html.contains("dg-canvas-embed"));
+        assert!(second_html.contains("/content/attachments/knowledge.canvas"));
+        assert!(second_html.contains("data-canvas-src=\"/content/attachments/knowledge.canvas\""));
+        assert!(second_html.contains("/content/attachments/preview.png"));
+        assert!(second_html.contains("Dataview"));
+        assert!(second_html.contains("/notes/nested/seo/"));
+        assert!(second_html.contains("TABLE FROM #seo"));
+        assert!(second_html.contains("TASK FROM #seo"));
+        assert!(second_html.contains("DataviewJS block is not executed"));
         assert!(second_html.contains(r#"<meta name="robots" content="max-image-preview:large" />"#));
         assert!(second_html.contains(r#"<meta property="og:locale" content="ko_KR" />"#));
         assert!(second_html.contains(r#"class="panel note focus-mode article-featured""#));
 
         assert!(index_html.contains(r#"id="side-graph-stage""#));
-        assert!(index_html.contains(r#"src="/assets/graph-view.js""#));
 
         let graph_html = fs::read_to_string(output_dir.join("graph/index.html"))?;
         assert!(graph_html.contains("id=\"global-graph-stage\""));
@@ -2736,6 +3649,19 @@ Not published.
 
         let robots_txt = fs::read_to_string(output_dir.join("robots.txt"))?;
         assert!(robots_txt.contains("Sitemap: https://example.test/sitemap.xml"));
+
+        let frontmatter_report = fs::read_to_string(output_dir.join("frontmatter-report.json"))?;
+        assert!(frontmatter_report.contains("second-brain.md"));
+        assert!(frontmatter_report.contains("dg-experimental"));
+
+        let sitemap_xml = fs::read_to_string(output_dir.join("sitemap.xml"))?;
+        assert!(!sitemap_xml.contains("/notes/isolated/"));
+
+        let rss_xml = fs::read_to_string(output_dir.join("rss.xml"))?;
+        assert!(!rss_xml.contains("/notes/isolated/"));
+
+        let not_found_html = fs::read_to_string(output_dir.join("404.html"))?;
+        assert!(not_found_html.contains("Page Not Found"));
 
         Ok(())
     }

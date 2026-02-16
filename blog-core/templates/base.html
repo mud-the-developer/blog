@@ -63,7 +63,6 @@
         <div class="site-actions">
           <nav class="site-nav" aria-label="Main navigation">
             <a href="/">Blog Home</a>
-            <a href="/graph/">Graph</a>
             <a href="/rss.xml">RSS</a>
             <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">Dark</button>
           </nav>
@@ -77,16 +76,15 @@
             <label class="sr-only" for="global-search-input">Search notes</label>
             <input
               id="global-search-input"
-              type="search"
+              type="text"
               placeholder="Search notes..."
               autocomplete="off"
               role="combobox"
               aria-autocomplete="list"
-              aria-haspopup="listbox"
               aria-expanded="false"
               aria-controls="global-search-results"
             />
-            <div id="global-search-results" class="search-results" role="listbox" hidden></div>
+            <div id="global-search-results" class="search-results" role="listbox" aria-label="Search results" hidden></div>
           </div>
           {% endif %}
           <div class="page-tabs-head">
@@ -142,10 +140,6 @@
       </footer>
     </div>
 
-    <script defer src="/assets/filetree.js"></script>
-    <script defer src="/assets/toc-tracker.js"></script>
-    <script defer src="/assets/link-preview.js"></script>
-    <script defer src="/assets/graph-view.js"></script>
     <script>
       (() => {
         const start = () => {
@@ -153,12 +147,28 @@
           const themeButton = document.getElementById("theme-toggle");
           const searchInput = document.getElementById("global-search-input");
           const searchResults = document.getElementById("global-search-results");
+          const noteBody = document.querySelector(".note-body");
           const scheduleNonCritical = (callback) => {
             if (typeof window.requestIdleCallback === "function") {
               window.requestIdleCallback(callback, { timeout: 850 });
               return;
             }
             window.setTimeout(callback, 120);
+          };
+          const loadScript = (src) => {
+            const marker = "script[data-dg-src=\"" + src + "\"]";
+            if (document.querySelector(marker)) {
+              return Promise.resolve();
+            }
+            return new Promise((resolve, reject) => {
+              const script = document.createElement("script");
+              script.defer = true;
+              script.src = src;
+              script.setAttribute("data-dg-src", src);
+              script.onload = () => resolve();
+              script.onerror = () => reject(new Error("failed to load " + src));
+              document.head.appendChild(script);
+            });
           };
 
         if (previewButton) {
@@ -486,70 +496,124 @@
           });
         }
 
-        if (window.initFileTree && document.getElementById("filetree-root")) {
+        if (document.getElementById("filetree-root")) {
+          scheduleNonCritical(async () => {
+            try {
+              await loadScript("/assets/filetree.js");
+              if (window.initFileTree) {
+                window.initFileTree({
+                  containerId: "filetree-root",
+                  dataUrl: "/filetree.json",
+                  scrollHostSelector: ".page-tabs"
+                });
+              }
+            } catch (_) {
+              // Keep server-rendered page tabs when filetree enhancement fails.
+            }
+          });
+        }
+
+        if (document.querySelector(".toc-panel")) {
+          scheduleNonCritical(async () => {
+            try {
+              await loadScript("/assets/toc-tracker.js");
+              if (window.initTocTracker) {
+                window.initTocTracker({
+                  panelSelector: ".toc-panel"
+                });
+              }
+            } catch (_) {
+              // TOC links still work without active-section tracking.
+            }
+          });
+        }
+
+        if (noteBody) {
+          scheduleNonCritical(async () => {
+            try {
+              await loadScript("/assets/link-preview.js");
+              if (window.initLinkPreview) {
+                window.initLinkPreview({
+                  containerSelector: ".note-body",
+                  indexUrl: "/search-index.json"
+                });
+              }
+            } catch (_) {
+              // Links remain navigable without hover preview.
+            }
+          });
+        }
+
+        if (document.querySelector(".note-body pre > code.language-mermaid, .note-body pre > code.lang-mermaid")) {
           scheduleNonCritical(() => {
-            window.initFileTree({
-              containerId: "filetree-root",
-              dataUrl: "/filetree.json",
-              scrollHostSelector: ".page-tabs"
-            });
+            loadScript("/assets/mermaid-render.js").catch(() => {});
           });
         }
 
-        if (window.initTocTracker) {
-          window.initTocTracker({
-            panelSelector: ".toc-panel"
-          });
-        }
-
-        if (window.initLinkPreview) {
-          window.initLinkPreview({
-            containerSelector: ".note-body",
-            indexUrl: "/search-index.json"
-          });
-        }
-
-        if (window.initGraphView && document.getElementById("global-graph-stage")) {
-          window.initGraphView({
-            stageId: "global-graph-stage",
-            svgId: "global-graph-svg",
-            linkLayerId: "global-graph-link-layer",
-            nodeLayerId: "global-graph-node-layer",
-            detailId: "global-graph-detail",
-            searchInputId: "global-graph-search",
-            resetButtonId: "global-graph-reset",
-            toggleButtonId: "global-graph-toggle",
-            dataUrl: "/graph.json",
-            width: 1000,
-            height: 640,
-            idealDistance: 112,
-            nodeRadius: 9,
-            showLabels: true,
-            labelFontSize: 12,
-            idleText: "Hover nodes to inspect relationships.",
-            emptyText: "No graph data yet."
-          });
-        }
-
-        if (window.initGraphView && document.getElementById("side-graph-stage")) {
+        if (noteBody && (noteBody.textContent || "").includes("$")) {
           scheduleNonCritical(() => {
-            window.initGraphView({
-              stageId: "side-graph-stage",
-              svgId: "side-graph-svg",
-              linkLayerId: "side-graph-link-layer",
-              nodeLayerId: "side-graph-node-layer",
-              dataUrl: "{{ layout.graph_data_url }}",
-              fallbackDataUrl: "/graph.json",
-              centerNodeId: "{{ layout.graph_center_id }}",
-              width: 540,
-              height: 420,
-              idealDistance: 88,
-              nodeRadius: 7,
-              showLabels: true,
-              labelFontSize: 10,
-              idleText: "",
-              emptyText: "No graph data yet."
-            });
+            loadScript("/assets/math-render.js").catch(() => {});
+          });
+        }
+
+        if (document.querySelector(".dg-excalidraw-embed[data-excalidraw-src]")) {
+          scheduleNonCritical(() => {
+            loadScript("/assets/excalidraw-preview.js").catch(() => {});
+          });
+        }
+
+        if (document.querySelector(".dg-canvas-embed[data-canvas-src]")) {
+          scheduleNonCritical(() => {
+            loadScript("/assets/canvas-preview.js").catch(() => {});
+          });
+        }
+
+        if (document.getElementById("global-graph-stage") || document.getElementById("side-graph-stage")) {
+          scheduleNonCritical(async () => {
+            try {
+              await loadScript("/assets/graph-view.js");
+              if (window.initGraphView && document.getElementById("global-graph-stage")) {
+                window.initGraphView({
+                  stageId: "global-graph-stage",
+                  svgId: "global-graph-svg",
+                  linkLayerId: "global-graph-link-layer",
+                  nodeLayerId: "global-graph-node-layer",
+                  searchInputId: "global-graph-search",
+                  resetButtonId: "global-graph-reset",
+                  toggleButtonId: "global-graph-toggle",
+                  dataUrl: "/graph.json",
+                  width: 1000,
+                  height: 640,
+                  idealDistance: 112,
+                  nodeRadius: 9,
+                  showLabels: true,
+                  labelFontSize: 12,
+                  emptyText: "No graph data yet."
+                });
+              }
+
+              if (window.initGraphView && document.getElementById("side-graph-stage")) {
+                window.initGraphView({
+                  stageId: "side-graph-stage",
+                  svgId: "side-graph-svg",
+                  linkLayerId: "side-graph-link-layer",
+                  nodeLayerId: "side-graph-node-layer",
+                  dataUrl: "{{ layout.graph_data_url }}",
+                  fallbackDataUrl: "/graph.json",
+                  centerNodeId: "{{ layout.graph_center_id }}",
+                  width: 540,
+                  height: 420,
+                  idealDistance: 88,
+                  nodeRadius: 7,
+                  showLabels: true,
+                  labelFontSize: 10,
+                  idleText: "",
+                  emptyText: "No graph data yet."
+                });
+              }
+            } catch (_) {
+              // Graph panel remains empty when JS graph rendering is unavailable.
+            }
           });
         }
         };
