@@ -154,6 +154,7 @@ struct LayoutContext {
     published_time: String,
     updated_time: String,
     json_ld: String,
+    page_tabs: Vec<PageTab>,
 }
 
 #[derive(Debug, Clone)]
@@ -171,6 +172,14 @@ struct TagEntry {
     name: String,
     slug: String,
     count: usize,
+}
+
+#[derive(Debug, Clone)]
+struct PageTab {
+    title: String,
+    url: String,
+    preview: String,
+    active: bool,
 }
 
 #[derive(Debug, Clone)]
@@ -364,6 +373,7 @@ fn render_index(
 ) -> Result<()> {
     let layout = website_layout(
         config,
+        posts,
         config.site.title.clone(),
         config.site.description.clone(),
         "/",
@@ -393,6 +403,7 @@ fn render_posts_pages(
         let json_ld = article_json_ld(config, post);
         let layout = website_layout(
             config,
+            posts,
             format!("{} | {}", post.title, config.site.title),
             post.description.clone(),
             &page_path,
@@ -438,6 +449,7 @@ fn render_tag_pages(config: &BuildConfig, tags: &[TagEntry], posts: &[Post]) -> 
         let page_path = format!("/tags/{}/", tag.slug);
         let layout = website_layout(
             config,
+            posts,
             format!("#{} | {}", tag.name, config.site.title),
             format!("Posts tagged '{}'", tag.name),
             &page_path,
@@ -469,6 +481,7 @@ fn render_graph_page(config: &BuildConfig, posts: &[Post]) -> Result<()> {
     let (nodes, links) = build_graph_data(posts);
     let layout = website_layout(
         config,
+        posts,
         format!("Graph | {}", config.site.title),
         "Interactive graph view of linked notes.".to_string(),
         "/graph/",
@@ -885,6 +898,7 @@ fn post_to_card(post: &Post) -> PostCard {
 
 fn website_layout(
     config: &BuildConfig,
+    posts: &[Post],
     page_title: String,
     page_description: String,
     page_path: &str,
@@ -908,7 +922,23 @@ fn website_layout(
         published_time: published_time.to_string(),
         updated_time: updated_time.to_string(),
         json_ld,
+        page_tabs: build_page_tabs(posts, page_path),
     }
+}
+
+fn build_page_tabs(posts: &[Post], page_path: &str) -> Vec<PageTab> {
+    posts
+        .iter()
+        .map(|post| {
+            let url = format!("/notes/{}/", post.slug);
+            PageTab {
+                title: post.title.clone(),
+                url: url.clone(),
+                preview: post.excerpt.clone(),
+                active: url == page_path,
+            }
+        })
+        .collect()
 }
 
 fn website_json_ld(config: &BuildConfig) -> String {

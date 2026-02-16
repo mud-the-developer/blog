@@ -49,13 +49,56 @@
         </nav>
       </header>
 
-      <main>
-        {% block content %}{% endblock %}
-      </main>
+      <div class="site-layout">
+        <aside class="panel page-tabs" aria-label="Page tabs">
+          <div class="page-tabs-head">
+            <h2>Pages</h2>
+            <button id="preview-toggle" class="preview-toggle" type="button" aria-pressed="false">Preview: OFF</button>
+          </div>
+          <nav class="page-tabs-list">
+            {% for tab in layout.page_tabs %}
+            <a class="page-tab{% if tab.active %} is-active{% endif %}" href="{{ tab.url }}">
+              <span class="page-tab-title">{{ tab.title }}</span>
+              <span class="page-tab-preview">{{ tab.preview }}</span>
+            </a>
+            {% endfor %}
+          </nav>
+        </aside>
+
+        <main>
+          {% block content %}{% endblock %}
+        </main>
+      </div>
 
       <footer class="site-footer">
         <p>{{ layout.site_title }} • <a href="{{ layout.site_url }}">{{ layout.site_url }}</a></p>
       </footer>
     </div>
+
+    <script>
+      (() => {
+        const button = document.getElementById("preview-toggle");
+        if (!button) {
+          return;
+        }
+
+        const storageKey = "dg-preview-open";
+
+        const apply = (enabled) => {
+          document.body.classList.toggle("preview-open", enabled);
+          button.setAttribute("aria-pressed", enabled ? "true" : "false");
+          button.textContent = enabled ? "Preview: ON" : "Preview: OFF";
+        };
+
+        const saved = localStorage.getItem(storageKey);
+        apply(saved === "1");
+
+        button.addEventListener("click", () => {
+          const next = !document.body.classList.contains("preview-open");
+          localStorage.setItem(storageKey, next ? "1" : "0");
+          apply(next);
+        });
+      })();
+    </script>
   </body>
 </html>
