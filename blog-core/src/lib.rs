@@ -28,6 +28,9 @@ static HEADING_WITH_ID_RE: Lazy<Regex> = Lazy::new(|| {
     Regex::new(r#"(?s)<h([2-4]) id="([^"]+)">(.*?)</h[2-4]>"#)
         .expect("invalid heading with id regex")
 });
+static MARKDOWN_HEADING_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r"^\s{0,3}(#{1,6})\s+(.+?)\s*$").expect("invalid markdown heading regex")
+});
 static HTML_TAG_RE: Lazy<Regex> =
     Lazy::new(|| Regex::new(r"(?s)<[^>]+>").expect("invalid html tag regex"));
 static HIGHLIGHT_RE: Lazy<Regex> =
@@ -223,6 +226,12 @@ struct FileTreeNoteBuilder {
     title: String,
     preview: String,
     url: String,
+}
+
+#[derive(Debug, Clone)]
+struct EmbedSource {
+    title: String,
+    markdown: String,
 }
 
 #[derive(Debug, Clone)]
@@ -491,13 +500,29 @@ fn collect_post_seeds(config: &BuildConfig) -> Result<Vec<PostSeed>> {
 
 fn render_posts(seeds: &[PostSeed], slug_map: &HashMap<String, String>) -> Result<Vec<Post>> {
     let mut posts = Vec::with_capacity(seeds.len());
+    let mut embed_sources = HashMap::with_capacity(seeds.len());
 
     for seed in seeds {
         let raw = fs::read_to_string(&seed.source_path)
             .with_context(|| format!("failed to read {}", seed.source_path.display()))?;
         let (_, body) = parse_frontmatter_and_body(&raw)?;
+        embed_sources.insert(
+            seed.slug.clone(),
+            EmbedSource {
+                title: seed.title.clone(),
+                markdown: body.to_string(),
+            },
+        );
+    }
 
-        let (rewritten, outgoing_links) = rewrite_wikilinks(body, slug_map);
+    for seed in seeds {
+        let body = embed_sources
+            .get(&seed.slug)
+            .map(|source| source.markdown.as_str())
+            .unwrap_or_default();
+
+        let (rewritten, outgoing_links) =
+            rewrite_wikilinks(body, slug_map, &embed_sources, &seed.slug, true);
         let markdown_html = markdown_to_html(&rewritten);
         let toc = extract_toc_entries(&markdown_html);
 
@@ -1159,7 +1184,13 @@ fn build_slug_map(seeds: &[PostSeed]) -> HashMap<String, String> {
     map
 }
 
-fn rewrite_wikilinks(markdown: &str, slug_map: &HashMap<String, String>) -> (String, Vec<String>) {
+fn rewrite_wikilinks(
+    markdown: &str,
+    slug_map: &HashMap<String, String>,
+    embed_sources: &HashMap<String, EmbedSource>,
+    current_slug: &str,
+    allow_embeds: bool,
+) -> (String, Vec<String>) {
     let mut outgoing = Vec::new();
 
     let rewritten = WIKILINK_RE
@@ -1180,13 +1211,25 @@ fn rewrite_wikilinks(markdown: &str, slug_map: &HashMap<String, String>) -> (Str
 
                 outgoing.push(slug.clone());
 
-                let display = if is_embed {
-                    format!("{} (embedded)", label)
+                if is_embed && allow_embeds {
+                    let (embedded, embed_links) = render_note_transclusion(
+                        slug,
+                        heading,
+                        &target_url,
+                        slug_map,
+                        embed_sources,
+                        current_slug,
+                    );
+                    outgoing.extend(embed_links);
+                    embedded
                 } else {
-                    label.to_string()
-                };
-
-                format!("[{}]({})", display, target_url)
+                    let display = if is_embed {
+                        format!("{} (embedded)", label)
+                    } else {
+                        label.to_string()
+                    };
+                    format!("[{}]({})", display, target_url)
+                }
             } else {
                 format!("`[[{}]]`", target_raw)
             }
@@ -1197,6 +1240,115 @@ fn rewrite_wikilinks(markdown: &str, slug_map: &HashMap<String, String>) -> (Str
     outgoing.dedup();
 
     (rewritten, outgoing)
+}
+
+fn render_note_transclusion(
+    target_slug: &str,
+    heading: Option<&str>,
+    target_url: &str,
+    slug_map: &HashMap<String, String>,
+    embed_sources: &HashMap<String, EmbedSource>,
+    current_slug: &str,
+) -> (String, Vec<String>) {
+    let Some(source) = embed_sources.get(target_slug) else {
+        return (format!("[{}]({})", target_slug, target_url), Vec::new());
+    };
+
+    if target_slug == current_slug {
+        return (
+            format!(
+                "\n\n> **Embedded from [{}]({})**\n>\n> _Self embed skipped._\n\n",
+                source.title, target_url
+            ),
+            Vec::new(),
+        );
+    }
+
+    let transclusion_markdown = heading
+        .filter(|anchor| !anchor.trim().is_empty())
+        .and_then(|anchor| extract_markdown_section(&source.markdown, anchor))
+        .unwrap_or_else(|| source.markdown.clone());
+
+    let snippet = transclusion_markdown.trim();
+    if snippet.is_empty() {
+        return (
+            format!(
+                "\n\n> **Embedded from [{}]({})**\n>\n> _Embedded note is empty._\n\n",
+                source.title, target_url
+            ),
+            Vec::new(),
+        );
+    }
+
+    let (rewritten_snippet, mut snippet_links) =
+        rewrite_wikilinks(snippet, slug_map, embed_sources, target_slug, false);
+    snippet_links.retain(|slug| slug != current_slug);
+
+    let quoted = rewritten_snippet
+        .lines()
+        .map(|line| {
+            if line.trim().is_empty() {
+                ">".to_string()
+            } else {
+                format!("> {line}")
+            }
+        })
+        .collect::<Vec<_>>()
+        .join("\n");
+
+    (
+        format!(
+            "\n\n> **Embedded from [{}]({})**\n>\n{}\n\n",
+            source.title, target_url, quoted
+        ),
+        snippet_links,
+    )
+}
+
+fn extract_markdown_section(markdown: &str, heading: &str) -> Option<String> {
+    let target = slugify(heading.trim());
+    if target.is_empty() {
+        return None;
+    }
+
+    let mut in_section = false;
+    let mut section_level = 0usize;
+    let mut section = String::new();
+
+    for line in markdown.lines() {
+        if let Some(caps) = MARKDOWN_HEADING_RE.captures(line) {
+            let level = caps.get(1).map(|m| m.as_str().len()).unwrap_or(1);
+            let title = caps
+                .get(2)
+                .map(|m| m.as_str())
+                .unwrap_or_default()
+                .trim()
+                .trim_end_matches('#')
+                .trim();
+            let id = slugify(title);
+
+            if in_section && level <= section_level {
+                break;
+            }
+
+            if !in_section && id == target {
+                in_section = true;
+                section_level = level;
+            }
+        }
+
+        if in_section {
+            section.push_str(line);
+            section.push('\n');
+        }
+    }
+
+    let section = section.trim().to_string();
+    if section.is_empty() {
+        None
+    } else {
+        Some(section)
+    }
 }
 
 fn markdown_to_html(markdown: &str) -> String {
@@ -2319,6 +2471,7 @@ dg-home: true
 # Home
 
 Start with [[second-brain#Architecture Overview|architecture]].
+![[second-brain#Architecture Overview]]
 "#,
         );
 
@@ -2500,6 +2653,8 @@ Not published.
         let home_html = fs::read_to_string(output_dir.join("notes/home/index.html"))?;
         assert!(home_html.contains("/notes/second-brain/#architecture-overview"));
         assert!(home_html.contains(r#"dataUrl: "/local-graph/home.json""#));
+        assert!(home_html.contains("Embedded from"));
+        assert!(home_html.contains("self alias"));
 
         let second_html = fs::read_to_string(output_dir.join("notes/second-brain/index.html"))?;
         assert!(second_html.contains(r#"id="architecture-overview""#));
