@@ -6,8 +6,6 @@ tags: [profile]
 dg-publish: true
 ---
 
-# Jinhyuk Kim
-
 Jinhyuk Kim holds a B.S. degree from Yonsei University in Korea.
 He has completed internships in the Mobile Communications Lab and the Robotics and Mobile Networks (RAMO) Lab
 and is currently pursuing his Ph.D. in the RAMO Lab.

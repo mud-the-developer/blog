@@ -77,7 +77,10 @@
               type="search"
               placeholder="Search notes..."
               autocomplete="off"
+              role="combobox"
               aria-autocomplete="list"
+              aria-haspopup="listbox"
+              aria-expanded="false"
               aria-controls="global-search-results"
             />
             <div id="global-search-results" class="search-results" role="listbox" hidden></div>
@@ -133,16 +136,24 @@
       </footer>
     </div>
 
-    <script src="/assets/filetree.js"></script>
-    <script src="/assets/toc-tracker.js"></script>
-    <script src="/assets/link-preview.js"></script>
-    <script src="/assets/graph-view.js"></script>
+    <script defer src="/assets/filetree.js"></script>
+    <script defer src="/assets/toc-tracker.js"></script>
+    <script defer src="/assets/link-preview.js"></script>
+    <script defer src="/assets/graph-view.js"></script>
     <script>
       (() => {
-        const previewButton = document.getElementById("preview-toggle");
-        const themeButton = document.getElementById("theme-toggle");
-        const searchInput = document.getElementById("global-search-input");
-        const searchResults = document.getElementById("global-search-results");
+        const start = () => {
+          const previewButton = document.getElementById("preview-toggle");
+          const themeButton = document.getElementById("theme-toggle");
+          const searchInput = document.getElementById("global-search-input");
+          const searchResults = document.getElementById("global-search-results");
+          const scheduleNonCritical = (callback) => {
+            if (typeof window.requestIdleCallback === "function") {
+              window.requestIdleCallback(callback, { timeout: 850 });
+              return;
+            }
+            window.setTimeout(callback, 120);
+          };
 
         if (previewButton) {
           const previewKey = "dg-preview-open";
@@ -227,6 +238,8 @@
           const hideResults = () => {
             searchResults.hidden = true;
             searchInput.setAttribute("aria-expanded", "false");
+            searchInput.removeAttribute("aria-activedescendant");
+            activeIndex = -1;
           };
 
           const showResults = () => {
@@ -236,9 +249,20 @@
 
           const applyActiveResult = () => {
             const rows = searchResults.querySelectorAll(".search-result");
+            let activeId = "";
             rows.forEach((row, idx) => {
-              row.classList.toggle("is-active", idx === activeIndex);
+              const isActive = idx === activeIndex;
+              row.classList.toggle("is-active", isActive);
+              row.setAttribute("aria-selected", isActive ? "true" : "false");
+              if (isActive) {
+                activeId = row.id;
+              }
             });
+            if (activeId) {
+              searchInput.setAttribute("aria-activedescendant", activeId);
+            } else {
+              searchInput.removeAttribute("aria-activedescendant");
+            }
           };
 
           const loadFallbackRecords = async () => {
@@ -318,10 +342,11 @@
 
             showResults();
             searchResults.innerHTML = items
-              .map((item) => {
+              .map((item, idx) => {
                 const title = highlight(item.title || item.slug || "Untitled", terms);
                 const url = escapeHtml(item.url || "/");
                 const excerpt = highlight(summarize(item.excerpt), terms);
+                const optionId = "global-search-option-" + idx;
                 const tags = Array.isArray(item.tags) ? item.tags.slice(0, 3) : [];
                 const tagHtml = tags.length
                   ? '<span class="search-result-tags">' +
@@ -330,7 +355,9 @@
                   : "";
 
                 return (
-                  '<a class="search-result" href="' +
+                  '<a id="' +
+                  optionId +
+                  '" class="search-result" role="option" aria-selected="false" href="' +
                   url +
                   '">' +
                   '<span class="search-result-title">' +
@@ -344,6 +371,7 @@
                 );
               })
               .join("");
+            applyActiveResult();
           };
 
           const runSearch = async () => {
@@ -452,11 +480,13 @@
           });
         }
 
-        if (window.initFileTree) {
-          window.initFileTree({
-            containerId: "filetree-root",
-            dataUrl: "/filetree.json",
-            scrollHostSelector: ".page-tabs"
+        if (window.initFileTree && document.getElementById("filetree-root")) {
+          scheduleNonCritical(() => {
+            window.initFileTree({
+              containerId: "filetree-root",
+              dataUrl: "/filetree.json",
+              scrollHostSelector: ".page-tabs"
+            });
           });
         }
 
@@ -496,23 +526,32 @@
         }
 
         if (window.initGraphView && document.getElementById("side-graph-stage")) {
-          window.initGraphView({
-            stageId: "side-graph-stage",
-            svgId: "side-graph-svg",
-            linkLayerId: "side-graph-link-layer",
-            nodeLayerId: "side-graph-node-layer",
-            dataUrl: "{{ layout.graph_data_url }}",
-            fallbackDataUrl: "/graph.json",
-            centerNodeId: "{{ layout.graph_center_id }}",
-            width: 540,
-            height: 420,
-            idealDistance: 88,
-            nodeRadius: 7,
-            showLabels: true,
-            labelFontSize: 10,
-            idleText: "",
-            emptyText: "No graph data yet."
+          scheduleNonCritical(() => {
+            window.initGraphView({
+              stageId: "side-graph-stage",
+              svgId: "side-graph-svg",
+              linkLayerId: "side-graph-link-layer",
+              nodeLayerId: "side-graph-node-layer",
+              dataUrl: "{{ layout.graph_data_url }}",
+              fallbackDataUrl: "/graph.json",
+              centerNodeId: "{{ layout.graph_center_id }}",
+              width: 540,
+              height: 420,
+              idealDistance: 88,
+              nodeRadius: 7,
+              showLabels: true,
+              labelFontSize: 10,
+              idleText: "",
+              emptyText: "No graph data yet."
+            });
           });
+        }
+        };
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", start, { once: true });
+        } else {
+          start();
         }
       })();
     </script>
