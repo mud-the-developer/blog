@@ -57,6 +57,16 @@
           <p class="site-tagline">{{ layout.site_description }}</p>
         </div>
         <div class="site-actions">
+          <nav class="site-nav" aria-label="Main navigation">
+            <a href="/">Home</a>
+            <a href="/rss.xml">RSS</a>
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">Dark</button>
+          </nav>
+        </div>
+      </header>
+
+      <div class="site-layout">
+        <aside class="panel page-tabs" aria-label="Page tabs">
           <div class="site-search">
             <label class="sr-only" for="global-search-input">Search notes</label>
             <input
@@ -69,21 +79,11 @@
             />
             <div id="global-search-results" class="search-results" role="listbox" hidden></div>
           </div>
-          <nav class="site-nav" aria-label="Main navigation">
-            <a href="/">Home</a>
-            <a href="/rss.xml">RSS</a>
-            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">Dark</button>
-          </nav>
-        </div>
-      </header>
-
-      <div class="site-layout">
-        <aside class="panel page-tabs" aria-label="Page tabs">
           <div class="page-tabs-head">
             <h2>Pages</h2>
             <button id="preview-toggle" class="preview-toggle" type="button" aria-pressed="false">Preview: OFF</button>
           </div>
-          <nav class="page-tabs-list">
+          <nav id="filetree-root" class="page-tabs-list">
             {% for tab in layout.page_tabs %}
             <a class="page-tab{% if tab.active %} is-active{% endif %}" href="{{ tab.url }}">
               <span class="page-tab-title">{{ tab.title }}</span>
@@ -107,6 +107,16 @@
               <g id="side-graph-node-layer"></g>
             </svg>
           </div>
+          {% if layout.toc_items.len() > 0 %}
+          <section class="toc-panel" aria-label="Table of contents">
+            <h3>On This Page</h3>
+            <nav class="toc-list">
+              {% for item in layout.toc_items %}
+              <a class="toc-link toc-depth-{{ item.depth }}" href="#{{ item.id }}">{{ item.title }}</a>
+              {% endfor %}
+            </nav>
+          </section>
+          {% endif %}
         </aside>
       </div>
 
@@ -115,6 +125,7 @@
       </footer>
     </div>
 
+    <script src="/assets/filetree.js"></script>
     <script src="/assets/graph-view.js"></script>
     <script>
       (() => {
@@ -428,6 +439,14 @@
             if (!target.closest(".site-search")) {
               hideResults();
             }
+          });
+        }
+
+        if (window.initFileTree) {
+          window.initFileTree({
+            containerId: "filetree-root",
+            dataUrl: "/filetree.json",
+            scrollHostSelector: ".page-tabs"
           });
         }
 

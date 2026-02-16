@@ -10,6 +10,7 @@
 - `obsidian-digital-garden`는 플러그인 저장소다.
 - 실제 사이트 프론트 템플릿 기준은 `oleeskild/digitalgarden` 저장소다.
 - "완전 동일" 목표면 기준 템플릿 commit hash를 고정해야 작업이 흔들리지 않는다.
+- 차이 분석 기준 문서: `DG_FRONT_DIFF_REPORT_2026-02-16.md` (이 문서와 함께 유지).
 
 ## 현재 `blog/` 상태 요약 (코드 기준)
 
@@ -97,11 +98,11 @@
 
 작업 파일: `blog-core/src/lib.rs`, `blog-core/templates/base.html`, `blog-core/templates/post.html`, `static/assets/search.js`(신규), `static/assets/filetree.js`(신규), `static/assets/graph-view.js`, `static/assets/style.css`
 
-- [ ] `P3-01` 파일트리 데이터 생성기 구현: 노트 경로 기반 트리 JSON 출력.
-- [ ] `P3-02` 파일트리 UI 구현: 폴더 펼침/접힘, 현재 노트 강조, 스크롤 위치 유지.
+- [x] `P3-01` 파일트리 데이터 생성기 구현: 노트 경로 기반 트리 JSON 출력.
+- [x] `P3-02` 파일트리 UI 구현: 폴더 펼침/접힘, 현재 노트 강조, 스크롤 위치 유지.
 - [x] `P3-03` 검색 UI 구현: 검색 입력, 결과 목록, 키보드 탐색(↑↓ Enter Esc).
 - [x] `P3-04` 검색 라이브 프리뷰 구현: 제목/요약/태그 하이라이트.
-- [ ] `P3-05` TOC 생성 및 우측 패널 표시: 헤딩 계층/현재 섹션 추적.
+- [~] `P3-05` TOC 생성 및 우측 패널 표시: 헤딩 계층/현재 섹션 추적.
 - [ ] `P3-06` 링크 hover preview 구현: 내부 링크 카드 미리보기.
 - [ ] `P3-07` 로컬 그래프 데이터 생성: 현재 노트 주변 n-hop 관계.
 - [ ] `P3-08` 로컬 그래프 위젯 구현: 노트 페이지 우측 패널 연결.

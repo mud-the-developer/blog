@@ -93,7 +93,7 @@ a:hover {
 
 .site-search {
   position: relative;
-  width: min(360px, 60vw);
+  width: 100%;
 }
 
 .site-search input {
@@ -228,6 +228,17 @@ a:hover {
   overflow: auto;
 }
 
+.page-tabs .site-search {
+  margin-bottom: 0.8rem;
+}
+
+.page-tabs .search-results {
+  left: 0;
+  right: 0;
+  width: auto;
+  max-height: min(52vh, 340px);
+}
+
 .page-tabs-head {
   display: flex;
   align-items: center;
@@ -259,6 +270,77 @@ a:hover {
 .page-tabs-list {
   display: grid;
   gap: 0.45rem;
+}
+
+.filetree-root {
+  display: block;
+}
+
+.filetree-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.42rem;
+}
+
+.filetree-list--nested {
+  margin-top: 0.38rem;
+  margin-left: 0.52rem;
+  padding-left: 0.56rem;
+  border-left: 1px dashed var(--line);
+}
+
+.filetree-item {
+  min-width: 0;
+}
+
+.filetree-folder {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fbfdff;
+  padding: 0.28rem 0.35rem;
+}
+
+.filetree-folder[open] {
+  border-color: #9fb6d6;
+  background: #f4f9ff;
+}
+
+.filetree-folder-label {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.36rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.filetree-folder-label::-webkit-details-marker {
+  display: none;
+}
+
+.filetree-folder-label::before {
+  content: "▸";
+  font-size: 0.7rem;
+  color: var(--muted);
+  transform: translateY(1px);
+  transition: transform 120ms ease;
+}
+
+.filetree-folder[open] > .filetree-folder-label::before {
+  transform: rotate(90deg) translateX(1px);
+}
+
+.filetree-folder-label:focus-visible {
+  outline: 2px solid #8ab7ea;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.filetree-note {
+  display: block;
 }
 
 .page-tab {
@@ -318,6 +400,44 @@ body.preview-open .page-tab-preview {
 .live-graph-head h2 {
   font-size: 1rem;
   margin: 0;
+}
+
+.toc-panel {
+  border-top: 1px solid var(--line);
+  padding-top: 0.65rem;
+  display: grid;
+  gap: 0.42rem;
+}
+
+.toc-panel h3 {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.toc-list {
+  display: grid;
+  gap: 0.24rem;
+}
+
+.toc-link {
+  display: block;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  text-decoration: none;
+  color: var(--muted);
+}
+
+.toc-link:hover {
+  color: var(--accent);
+}
+
+.toc-depth-1 {
+  padding-left: 0.48rem;
+}
+
+.toc-depth-2 {
+  padding-left: 0.96rem;
 }
 
 .panel {
@@ -604,15 +724,6 @@ main {
   .site-header {
     align-items: baseline;
     flex-direction: column;
-  }
-
-  .site-actions {
-    width: 100%;
-    justify-items: stretch;
-  }
-
-  .site-search {
-    width: 100%;
   }
 
   .site-nav {

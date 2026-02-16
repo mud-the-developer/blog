@@ -4,6 +4,9 @@
 대상 프로젝트: `/home/mud/repo/blog`  
 비교 기준: `/home/mud/repo/blog_temp/obsidian-digital-garden/README.md`의 기능 목록 + 현재 구현 코드
 
+> 업데이트 메모 (2026-02-16): 이 리포트 작성 이후 `filetree.json` + 좌측 파일트리 UI, 우측 TOC 패널(기본)이 구현되었으므로,
+> 현재 진행 기준에서는 Navigation 갭에서 `Filetree navigation`은 완료, `TOC`는 부분 완료로 본다.
+
 ## 요약
 
 - 현재 `blog`는 **기본 렌더링, 위키링크, 백링크, 태그, 사이드 그래프, 검색 드롭다운**까지는 구현됨.
@@ -130,4 +133,3 @@
 ## 8) 결론
 
 현재 상태는 "Digital Garden 스타일의 정적 노트 블로그"로는 충분히 동작하지만, "Digital Garden 프론트와 완전 동일" 기준에서는 핵심 탐색 UX와 확장 렌더링, frontmatter 제어 계층이 아직 많이 부족하다.
-

@@ -23,6 +23,10 @@ static WIKILINK_RE: Lazy<Regex> = Lazy::new(|| {
 static IMG_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"<img\s").expect("invalid img regex"));
 static HEADING_RE: Lazy<Regex> =
     Lazy::new(|| Regex::new(r#"(?s)<h([1-6])>(.*?)</h[1-6]>"#).expect("invalid heading regex"));
+static HEADING_WITH_ID_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r#"(?s)<h([2-4]) id="([^"]+)">(.*?)</h[2-4]>"#)
+        .expect("invalid heading with id regex")
+});
 static HTML_TAG_RE: Lazy<Regex> =
     Lazy::new(|| Regex::new(r"(?s)<[^>]+>").expect("invalid html tag regex"));
 
@@ -93,6 +97,7 @@ struct FrontMatter {
 #[derive(Debug, Clone)]
 struct PostSeed {
     source_path: PathBuf,
+    source_rel_path: String,
     slug: String,
     title: String,
     description: Option<String>,
@@ -107,12 +112,14 @@ struct PostSeed {
 struct Post {
     slug: String,
     title: String,
+    source_rel_path: String,
     description: String,
     excerpt: String,
     tags: Vec<String>,
     date: Option<DateTime<Utc>>,
     updated: Option<DateTime<Utc>>,
     markdown_html: String,
+    toc: Vec<TocEntry>,
     outgoing_links: Vec<String>,
     reading_time_min: usize,
     is_home: bool,
@@ -140,6 +147,31 @@ struct GraphLink {
     target: String,
 }
 
+#[derive(Debug, Clone, Serialize)]
+struct FileTreeNode {
+    id: String,
+    label: String,
+    kind: String,
+    url: String,
+    preview: String,
+    children: Vec<FileTreeNode>,
+}
+
+#[derive(Debug, Default)]
+struct FileTreeDirBuilder {
+    dirs: BTreeMap<String, FileTreeDirBuilder>,
+    notes: Vec<FileTreeNoteBuilder>,
+}
+
+#[derive(Debug, Clone)]
+struct FileTreeNoteBuilder {
+    sort_key: String,
+    id: String,
+    title: String,
+    preview: String,
+    url: String,
+}
+
 #[derive(Debug, Clone)]
 struct LayoutContext {
     site_title: String,
@@ -155,6 +187,7 @@ struct LayoutContext {
     updated_time: String,
     json_ld: String,
     page_tabs: Vec<PageTab>,
+    toc_items: Vec<TocItem>,
 }
 
 #[derive(Debug, Clone)]
@@ -180,6 +213,20 @@ struct PageTab {
     url: String,
     preview: String,
     active: bool,
+}
+
+#[derive(Debug, Clone)]
+struct TocEntry {
+    level: u8,
+    id: String,
+    title: String,
+}
+
+#[derive(Debug, Clone)]
+struct TocItem {
+    id: String,
+    title: String,
+    depth: usize,
 }
 
 #[derive(Debug, Clone)]
@@ -246,6 +293,7 @@ pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
     render_posts_pages(config, &posts, &backlinks)?;
     render_tag_pages(config, &tags, &posts)?;
     write_search_index(config, &posts)?;
+    write_file_tree(config, &posts)?;
     write_graph(config, &posts)?;
     write_sitemap(config, &posts, &tags)?;
     write_rss(config, &posts)?;
@@ -282,6 +330,12 @@ fn collect_post_seeds(config: &BuildConfig) -> Result<Vec<PostSeed>> {
             .and_then(|s| s.to_str())
             .unwrap_or("untitled")
             .to_string();
+        let source_rel_path = path
+            .strip_prefix(&config.content_dir)
+            .unwrap_or(&path)
+            .with_extension("")
+            .to_string_lossy()
+            .replace('\\', "/");
 
         let title = frontmatter.title.unwrap_or_else(|| file_stem.clone());
         let base_slug = frontmatter.slug.unwrap_or_else(|| slugify(&file_stem));
@@ -310,6 +364,7 @@ fn collect_post_seeds(config: &BuildConfig) -> Result<Vec<PostSeed>> {
 
         seeds.push(PostSeed {
             source_path: path,
+            source_rel_path,
             slug,
             title,
             description: frontmatter.description,
@@ -334,6 +389,7 @@ fn render_posts(seeds: &[PostSeed], slug_map: &HashMap<String, String>) -> Resul
 
         let (rewritten, outgoing_links) = rewrite_wikilinks(body, slug_map);
         let markdown_html = markdown_to_html(&rewritten);
+        let toc = extract_toc_entries(&markdown_html);
 
         let excerpt = extract_excerpt(body, 200);
         let description = seed.description.clone().unwrap_or_else(|| excerpt.clone());
@@ -341,12 +397,14 @@ fn render_posts(seeds: &[PostSeed], slug_map: &HashMap<String, String>) -> Resul
         posts.push(Post {
             slug: seed.slug.clone(),
             title: seed.title.clone(),
+            source_rel_path: seed.source_rel_path.clone(),
             description,
             excerpt,
             tags: seed.tags.clone(),
             date: seed.date,
             updated: seed.updated,
             markdown_html,
+            toc,
             outgoing_links,
             reading_time_min: estimate_reading_time_minutes(body),
             is_home: seed.is_home,
@@ -372,6 +430,7 @@ fn render_index(
         "",
         "",
         website_json_ld(config),
+        Vec::new(),
     );
 
     let template = IndexTemplate {
@@ -402,6 +461,7 @@ fn render_posts_pages(
             &format_datetime(post.date),
             &format_datetime(post.updated),
             json_ld,
+            toc_items_for_post(post),
         );
 
         let backlink_list = backlinks.get(&post.slug).cloned().unwrap_or_default();
@@ -448,6 +508,7 @@ fn render_tag_pages(config: &BuildConfig, tags: &[TagEntry], posts: &[Post]) -> 
             "",
             "",
             website_json_ld(config),
+            Vec::new(),
         );
 
         let template = TagTemplate {
@@ -482,6 +543,88 @@ fn write_search_index(config: &BuildConfig, posts: &[Post]) -> Result<()> {
 
     let json = serde_json::to_string_pretty(&entries)?;
     write_file(config.output_dir.join("search-index.json"), json)
+}
+
+fn write_file_tree(config: &BuildConfig, posts: &[Post]) -> Result<()> {
+    let tree = build_file_tree(posts);
+    let json = serde_json::to_string_pretty(&tree)?;
+    write_file(config.output_dir.join("filetree.json"), json)
+}
+
+fn build_file_tree(posts: &[Post]) -> Vec<FileTreeNode> {
+    let mut root = FileTreeDirBuilder::default();
+
+    for post in posts {
+        let normalized = post.source_rel_path.trim_matches('/').replace('\\', "/");
+        let mut segments = normalized
+            .split('/')
+            .filter(|segment| !segment.trim().is_empty())
+            .collect::<Vec<_>>();
+
+        let leaf_segment = segments.pop().unwrap_or(post.slug.as_str());
+        let mut dir_path = Vec::new();
+        let mut cursor = &mut root;
+
+        for segment in segments {
+            let clean = segment.trim().to_string();
+            dir_path.push(clean.clone());
+            cursor = cursor.dirs.entry(clean).or_default();
+        }
+
+        let mut note_path = dir_path.clone();
+        note_path.push(leaf_segment.to_string());
+
+        cursor.notes.push(FileTreeNoteBuilder {
+            sort_key: leaf_segment.to_string(),
+            id: format!("note:{}", note_path.join("/")),
+            title: post.title.clone(),
+            preview: post.excerpt.clone(),
+            url: format!("/notes/{}/", post.slug),
+        });
+    }
+
+    file_tree_nodes_from_builder(&root, "")
+}
+
+fn file_tree_nodes_from_builder(builder: &FileTreeDirBuilder, path: &str) -> Vec<FileTreeNode> {
+    let mut nodes = Vec::new();
+
+    for (name, child) in &builder.dirs {
+        let child_path = if path.is_empty() {
+            name.to_string()
+        } else {
+            format!("{path}/{name}")
+        };
+
+        nodes.push(FileTreeNode {
+            id: format!("dir:{child_path}"),
+            label: name.to_string(),
+            kind: "folder".to_string(),
+            url: String::new(),
+            preview: String::new(),
+            children: file_tree_nodes_from_builder(child, &child_path),
+        });
+    }
+
+    let mut notes = builder.notes.clone();
+    notes.sort_by(|a, b| {
+        a.sort_key
+            .cmp(&b.sort_key)
+            .then_with(|| a.title.to_lowercase().cmp(&b.title.to_lowercase()))
+    });
+
+    for note in notes {
+        nodes.push(FileTreeNode {
+            id: note.id,
+            label: note.title,
+            kind: "note".to_string(),
+            url: note.url,
+            preview: note.preview,
+            children: Vec::new(),
+        });
+    }
+
+    nodes
 }
 
 fn write_graph(config: &BuildConfig, posts: &[Post]) -> Result<()> {
@@ -772,6 +915,42 @@ fn add_heading_ids(html: &str) -> String {
         .to_string()
 }
 
+fn extract_toc_entries(html: &str) -> Vec<TocEntry> {
+    HEADING_WITH_ID_RE
+        .captures_iter(html)
+        .filter_map(|caps| {
+            let level = caps
+                .get(1)
+                .and_then(|m| m.as_str().parse::<u8>().ok())
+                .unwrap_or(2);
+            let id = caps.get(2).map(|m| m.as_str().trim()).unwrap_or_default();
+            let raw_title = caps.get(3).map(|m| m.as_str()).unwrap_or_default();
+            let title = HTML_TAG_RE.replace_all(raw_title, "").trim().to_string();
+
+            if id.is_empty() || title.is_empty() {
+                return None;
+            }
+
+            Some(TocEntry {
+                level,
+                id: id.to_string(),
+                title,
+            })
+        })
+        .collect()
+}
+
+fn toc_items_for_post(post: &Post) -> Vec<TocItem> {
+    post.toc
+        .iter()
+        .map(|entry| TocItem {
+            id: entry.id.clone(),
+            title: entry.title.clone(),
+            depth: usize::from(entry.level.saturating_sub(2)),
+        })
+        .collect()
+}
+
 fn render_post_body_with_maud(markdown_html: &str, backlinks: &[Backlink]) -> String {
     html! {
         article class="note-body" {
@@ -871,6 +1050,7 @@ fn website_layout(
     published_time: &str,
     updated_time: &str,
     json_ld: String,
+    toc_items: Vec<TocItem>,
 ) -> LayoutContext {
     let canonical_url = absolute_url(&config.site.base_url, page_path);
 
@@ -888,6 +1068,7 @@ fn website_layout(
         updated_time: updated_time.to_string(),
         json_ld,
         page_tabs: build_page_tabs(posts, page_path),
+        toc_items,
     }
 }
 
@@ -1577,7 +1758,7 @@ See [[home]] and [[brain|self alias]].
         );
 
         write_text(
-            &content_dir.join("seo.md"),
+            &content_dir.join("nested/seo.md"),
             r#"---
 title: SEO Notes
 date: 2026-02-14
@@ -1638,6 +1819,7 @@ Not published.
         assert!(output_dir.join("notes/home/index.html").exists());
         assert!(output_dir.join("notes/second-brain/index.html").exists());
         assert!(output_dir.join("notes/seo/index.html").exists());
+        assert!(output_dir.join("filetree.json").exists());
         assert!(output_dir.join("tags/architecture/index.html").exists());
         assert!(!output_dir.join("notes/draft-note/index.html").exists());
         assert!(!output_dir.join("notes/hidden-note/index.html").exists());
@@ -1651,6 +1833,8 @@ Not published.
 
         let second_html = fs::read_to_string(output_dir.join("notes/second-brain/index.html"))?;
         assert!(second_html.contains(r#"id="architecture-overview""#));
+        assert!(second_html.contains("On This Page"));
+        assert!(second_html.contains("href=\"#architecture-overview\""));
         assert!(second_html.contains("Linked Mentions"));
         assert!(second_html.contains("/notes/home/"));
 
@@ -1673,6 +1857,14 @@ Not published.
         let search_index = fs::read_to_string(output_dir.join("search-index.json"))?;
         assert!(!search_index.contains("draft-note"));
         assert!(!search_index.contains("hidden-note"));
+
+        let filetree: serde_json::Value =
+            serde_json::from_str(&fs::read_to_string(output_dir.join("filetree.json"))?)?;
+        assert!(filetree
+            .as_array()
+            .unwrap_or(&Vec::new())
+            .iter()
+            .any(|node| node.get("label").and_then(|value| value.as_str()) == Some("nested")));
 
         let robots_txt = fs::read_to_string(output_dir.join("robots.txt"))?;
         assert!(robots_txt.contains("Sitemap: https://example.test/sitemap.xml"));
