@@ -27,6 +27,20 @@
     <meta property="article:modified_time" content="{{ layout.updated_time }}" />
     {% endif %}
 
+    <script>
+      (() => {
+        try {
+          const key = "dg-theme";
+          const saved = localStorage.getItem(key);
+          const preferredDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+          const theme = saved === "light" || saved === "dark" ? saved : (preferredDark ? "dark" : "light");
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (_) {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      })();
+    </script>
+
     <link rel="alternate" type="application/rss+xml" title="{{ layout.site_title }} RSS" href="/rss.xml" />
     <link rel="preload" href="/assets/style.css" as="style" />
     <link rel="stylesheet" href="/assets/style.css" />
@@ -46,6 +60,7 @@
           <a href="/">Home</a>
           <a href="/rss.xml">RSS</a>
           <a href="/graph/">Graph</a>
+          <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">Dark</button>
         </nav>
       </header>
 
@@ -68,6 +83,22 @@
         <main>
           {% block content %}{% endblock %}
         </main>
+
+        <aside class="panel live-graph" aria-label="Graph preview">
+          <div class="live-graph-head">
+            <h2>Graph</h2>
+            <a class="live-graph-open" href="/graph/">Open</a>
+          </div>
+          <div id="side-graph-stage" class="graph-stage graph-stage--side">
+            <svg id="side-graph-svg" viewBox="0 0 540 420" aria-label="Site graph preview">
+              <g id="side-graph-link-layer"></g>
+              <g id="side-graph-node-layer"></g>
+            </svg>
+          </div>
+          <aside id="side-graph-detail" class="graph-detail graph-detail--side">
+            Hover nodes to inspect links.
+          </aside>
+        </aside>
       </div>
 
       <footer class="site-footer">
@@ -75,29 +106,82 @@
       </footer>
     </div>
 
+    <script src="/assets/graph-view.js"></script>
     <script>
       (() => {
-        const button = document.getElementById("preview-toggle");
-        if (!button) {
-          return;
+        const previewButton = document.getElementById("preview-toggle");
+        const themeButton = document.getElementById("theme-toggle");
+
+        if (previewButton) {
+          const previewKey = "dg-preview-open";
+          const applyPreview = (enabled) => {
+            document.body.classList.toggle("preview-open", enabled);
+            previewButton.setAttribute("aria-pressed", enabled ? "true" : "false");
+            previewButton.textContent = enabled ? "Preview: ON" : "Preview: OFF";
+          };
+
+          const savedPreview = localStorage.getItem(previewKey);
+          applyPreview(savedPreview === "1");
+
+          previewButton.addEventListener("click", () => {
+            const next = !document.body.classList.contains("preview-open");
+            localStorage.setItem(previewKey, next ? "1" : "0");
+            applyPreview(next);
+          });
         }
 
-        const storageKey = "dg-preview-open";
+        if (themeButton) {
+          const themeKey = "dg-theme";
+          const applyTheme = (theme) => {
+            document.documentElement.setAttribute("data-theme", theme);
+            themeButton.textContent = theme === "dark" ? "Light" : "Dark";
+          };
 
-        const apply = (enabled) => {
-          document.body.classList.toggle("preview-open", enabled);
-          button.setAttribute("aria-pressed", enabled ? "true" : "false");
-          button.textContent = enabled ? "Preview: ON" : "Preview: OFF";
-        };
+          const current = document.documentElement.getAttribute("data-theme") || "light";
+          applyTheme(current);
 
-        const saved = localStorage.getItem(storageKey);
-        apply(saved === "1");
+          themeButton.addEventListener("click", () => {
+            const active = document.documentElement.getAttribute("data-theme") || "light";
+            const next = active === "dark" ? "light" : "dark";
+            localStorage.setItem(themeKey, next);
+            applyTheme(next);
+          });
+        }
 
-        button.addEventListener("click", () => {
-          const next = !document.body.classList.contains("preview-open");
-          localStorage.setItem(storageKey, next ? "1" : "0");
-          apply(next);
-        });
+        if (window.initGraphView) {
+          window.initGraphView({
+            stageId: "side-graph-stage",
+            svgId: "side-graph-svg",
+            linkLayerId: "side-graph-link-layer",
+            nodeLayerId: "side-graph-node-layer",
+            detailId: "side-graph-detail",
+            width: 540,
+            height: 420,
+            idealDistance: 88,
+            nodeRadius: 7,
+            showLabels: false,
+            idleText: "Hover nodes to inspect links.",
+            emptyText: "No graph data yet."
+          });
+
+          if (document.getElementById("full-graph-stage")) {
+            window.initGraphView({
+              stageId: "full-graph-stage",
+              svgId: "full-graph-svg",
+              linkLayerId: "full-graph-link-layer",
+              nodeLayerId: "full-graph-node-layer",
+              detailId: "full-graph-detail",
+              searchInputId: "full-graph-search",
+              resetButtonId: "full-graph-reset",
+              toggleButtonId: "full-graph-toggle",
+              width: 1000,
+              height: 640,
+              idealDistance: 120,
+              nodeRadius: 9,
+              showLabels: true
+            });
+          }
+        }
       })();
     </script>
   </body>

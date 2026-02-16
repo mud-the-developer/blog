@@ -1690,7 +1690,9 @@ Not published.
         assert!(second_html.contains("/notes/home/"));
 
         let graph_html = fs::read_to_string(output_dir.join("graph/index.html"))?;
-        assert!(graph_html.contains(r#"fetch("/graph.json")"#));
+        assert!(graph_html.contains(r#"id="full-graph-stage""#));
+        assert!(graph_html.contains(r#"id="full-graph-search""#));
+        assert!(graph_html.contains(r#"src="/assets/graph-view.js""#));
 
         let graph: serde_json::Value =
             serde_json::from_str(&fs::read_to_string(output_dir.join("graph.json"))?)?;
