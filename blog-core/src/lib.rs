@@ -7,6 +7,7 @@ use pulldown_cmark::{html::push_html, Options, Parser};
 use regex::{Captures, Regex};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
+use serde_yaml::Value as YamlValue;
 use slug::slugify;
 use std::cmp::Ordering;
 use std::collections::{BTreeMap, HashMap, HashSet, VecDeque};
@@ -29,6 +30,8 @@ static HEADING_WITH_ID_RE: Lazy<Regex> = Lazy::new(|| {
 });
 static HTML_TAG_RE: Lazy<Regex> =
     Lazy::new(|| Regex::new(r"(?s)<[^>]+>").expect("invalid html tag regex"));
+static HIGHLIGHT_RE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r"==([^=\n][^=\n]*?)==").expect("invalid highlight regex"));
 
 #[derive(Debug, Clone)]
 pub struct SiteConfig {
@@ -83,6 +86,10 @@ struct FrontMatter {
     title: Option<String>,
     description: Option<String>,
     slug: Option<String>,
+    #[serde(rename = "dg-path")]
+    dg_path: Option<String>,
+    #[serde(rename = "dg-permalink")]
+    dg_permalink: Option<String>,
     date: Option<String>,
     updated: Option<String>,
     tags: Option<Vec<String>>,
@@ -96,6 +103,18 @@ struct FrontMatter {
     dg_enable_search: Option<bool>,
     #[serde(rename = "dg-show-local-graph")]
     dg_show_local_graph: Option<bool>,
+    #[serde(rename = "dg-pinned")]
+    dg_pinned: Option<bool>,
+    #[serde(rename = "dg-hide")]
+    dg_hide: Option<bool>,
+    #[serde(rename = "dg-hide-in-graph")]
+    dg_hide_in_graph: Option<bool>,
+    #[serde(rename = "dg-note-icon")]
+    dg_note_icon: Option<String>,
+    #[serde(rename = "dg-metatags")]
+    dg_metatags: Option<YamlValue>,
+    #[serde(rename = "dg-content-classes")]
+    dg_content_classes: Option<YamlValue>,
 }
 
 #[derive(Debug, Clone)]
@@ -112,6 +131,12 @@ struct PostSeed {
     is_home: bool,
     enable_search: bool,
     show_local_graph: bool,
+    pinned: bool,
+    hidden: bool,
+    hide_in_graph: bool,
+    note_icon: Option<String>,
+    meta_tags: Vec<MetaTag>,
+    content_classes: Vec<String>,
 }
 
 #[derive(Debug, Clone)]
@@ -131,6 +156,12 @@ struct Post {
     is_home: bool,
     enable_search: bool,
     show_local_graph: bool,
+    pinned: bool,
+    hidden: bool,
+    hide_in_graph: bool,
+    note_icon: Option<String>,
+    meta_tags: Vec<MetaTag>,
+    content_classes: Vec<String>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -194,6 +225,7 @@ struct LayoutContext {
     published_time: String,
     updated_time: String,
     json_ld: String,
+    extra_meta_tags: Vec<MetaTag>,
     page_tabs: Vec<PageTab>,
     toc_items: Vec<TocItem>,
     show_search: bool,
@@ -204,7 +236,15 @@ struct LayoutContext {
 }
 
 #[derive(Debug, Clone)]
+struct MetaTag {
+    attr: String,
+    key: String,
+    content: String,
+}
+
+#[derive(Debug, Clone)]
 struct PostCard {
+    note_icon: Option<String>,
     title: String,
     url: String,
     excerpt: String,
@@ -222,6 +262,7 @@ struct TagEntry {
 
 #[derive(Debug, Clone)]
 struct PageTab {
+    note_icon: Option<String>,
     title: String,
     url: String,
     preview: String,
@@ -266,6 +307,7 @@ struct PostTemplate {
     layout: LayoutContext,
     post: PostCard,
     body_html: String,
+    content_classes: String,
 }
 
 #[derive(Template)]
@@ -363,7 +405,20 @@ fn collect_post_seeds(config: &BuildConfig) -> Result<Vec<PostSeed>> {
             .replace('\\', "/");
 
         let title = frontmatter.title.unwrap_or_else(|| file_stem.clone());
-        let base_slug = frontmatter.slug.unwrap_or_else(|| slugify(&file_stem));
+        let slug_source = frontmatter
+            .slug
+            .as_deref()
+            .or(frontmatter.dg_path.as_deref())
+            .or(frontmatter.dg_permalink.as_deref())
+            .unwrap_or(&source_rel_path);
+        let base_slug = {
+            let normalized = normalize_slug_candidate(slug_source);
+            if normalized.is_empty() {
+                normalize_slug_candidate(&file_stem)
+            } else {
+                normalized
+            }
+        };
 
         let slug = ensure_unique_slug(base_slug, &mut used_slugs);
 
@@ -400,6 +455,17 @@ fn collect_post_seeds(config: &BuildConfig) -> Result<Vec<PostSeed>> {
             is_home: frontmatter.dg_home.unwrap_or(false),
             enable_search: frontmatter.dg_enable_search.unwrap_or(true),
             show_local_graph: frontmatter.dg_show_local_graph.unwrap_or(true),
+            pinned: frontmatter.dg_pinned.unwrap_or(false),
+            hidden: frontmatter.dg_hide.unwrap_or(false),
+            hide_in_graph: frontmatter.dg_hide_in_graph.unwrap_or(false),
+            note_icon: frontmatter
+                .dg_note_icon
+                .as_deref()
+                .map(str::trim)
+                .filter(|value| !value.is_empty())
+                .map(|value| value.to_string()),
+            meta_tags: parse_frontmatter_metatags(frontmatter.dg_metatags.as_ref()),
+            content_classes: parse_content_classes(frontmatter.dg_content_classes.as_ref()),
         });
     }
 
@@ -437,6 +503,12 @@ fn render_posts(seeds: &[PostSeed], slug_map: &HashMap<String, String>) -> Resul
             is_home: seed.is_home,
             enable_search: seed.enable_search,
             show_local_graph: seed.show_local_graph,
+            pinned: seed.pinned,
+            hidden: seed.hidden,
+            hide_in_graph: seed.hide_in_graph,
+            note_icon: seed.note_icon.clone(),
+            meta_tags: seed.meta_tags.clone(),
+            content_classes: seed.content_classes.clone(),
         });
     }
 
@@ -465,11 +537,16 @@ fn render_index(
         "/graph.json".to_string(),
         String::new(),
         true,
+        Vec::new(),
     );
 
     let template = IndexTemplate {
         layout,
-        posts: posts.iter().map(post_to_card).collect(),
+        posts: posts
+            .iter()
+            .filter(|post| !post.hidden)
+            .map(post_to_card)
+            .collect(),
         tags: tags.to_vec(),
         home_intro_html: home_intro_html.to_string(),
     };
@@ -503,6 +580,7 @@ fn render_posts_pages(
             format!("/local-graph/{}.json", post.slug),
             post.slug.clone(),
             show_side_graph,
+            post.meta_tags.clone(),
         );
 
         let backlink_list = backlinks.get(&post.slug).cloned().unwrap_or_default();
@@ -512,6 +590,7 @@ fn render_posts_pages(
             layout,
             post: post_to_card(post),
             body_html,
+            content_classes: post.content_classes.join(" "),
         };
 
         let target = config
@@ -529,6 +608,9 @@ fn render_posts_pages(
 fn render_tag_pages(config: &BuildConfig, tags: &[TagEntry], posts: &[Post]) -> Result<()> {
     let mut post_map: HashMap<&str, Vec<&Post>> = HashMap::new();
     for post in posts {
+        if post.hidden {
+            continue;
+        }
         for tag in &post.tags {
             post_map.entry(tag.as_str()).or_default().push(post);
         }
@@ -555,6 +637,7 @@ fn render_tag_pages(config: &BuildConfig, tags: &[TagEntry], posts: &[Post]) -> 
             "/graph.json".to_string(),
             String::new(),
             true,
+            Vec::new(),
         );
 
         let template = TagTemplate {
@@ -593,6 +676,7 @@ fn render_graph_page(config: &BuildConfig, posts: &[Post]) -> Result<()> {
         "/graph.json".to_string(),
         String::new(),
         false,
+        Vec::new(),
     );
 
     let template = GraphTemplate {
@@ -610,6 +694,7 @@ fn render_graph_page(config: &BuildConfig, posts: &[Post]) -> Result<()> {
 fn write_search_index(config: &BuildConfig, posts: &[Post]) -> Result<()> {
     let entries = posts
         .iter()
+        .filter(|post| !post.hidden)
         .map(|post| SearchRecord {
             title: post.title.clone(),
             slug: post.slug.clone(),
@@ -633,6 +718,9 @@ fn build_file_tree(posts: &[Post]) -> Vec<FileTreeNode> {
     let mut root = FileTreeDirBuilder::default();
 
     for post in posts {
+        if post.hidden {
+            continue;
+        }
         let normalized = post.source_rel_path.trim_matches('/').replace('\\', "/");
         let mut segments = normalized
             .split('/')
@@ -716,7 +804,12 @@ fn write_graph(config: &BuildConfig, posts: &[Post]) -> Result<()> {
 }
 
 fn build_graph_data(posts: &[Post]) -> (Vec<GraphNode>, Vec<GraphLink>) {
-    let nodes = posts
+    let graph_posts = posts
+        .iter()
+        .filter(|post| !post.hidden && !post.hide_in_graph)
+        .collect::<Vec<_>>();
+
+    let nodes = graph_posts
         .iter()
         .map(|post| GraphNode {
             id: post.slug.clone(),
@@ -726,9 +819,9 @@ fn build_graph_data(posts: &[Post]) -> (Vec<GraphNode>, Vec<GraphLink>) {
         .collect::<Vec<_>>();
 
     let mut links = Vec::new();
-    let known: HashSet<&str> = posts.iter().map(|p| p.slug.as_str()).collect();
+    let known: HashSet<&str> = graph_posts.iter().map(|post| post.slug.as_str()).collect();
 
-    for post in posts {
+    for post in &graph_posts {
         for target in &post.outgoing_links {
             if known.contains(target.as_str()) {
                 links.push(GraphLink {
@@ -769,7 +862,12 @@ fn build_local_graph_data(
     hops: usize,
     max_nodes: usize,
 ) -> (Vec<GraphNode>, Vec<GraphLink>) {
-    let post_by_slug = posts
+    let graph_posts = posts
+        .iter()
+        .filter(|post| !post.hidden && !post.hide_in_graph)
+        .collect::<Vec<_>>();
+
+    let post_by_slug = graph_posts
         .iter()
         .map(|post| (post.slug.as_str(), post))
         .collect::<HashMap<_, _>>();
@@ -782,7 +880,7 @@ fn build_local_graph_data(
     let mut outgoing: HashMap<&str, Vec<&str>> = HashMap::new();
     let mut incoming: HashMap<&str, Vec<&str>> = HashMap::new();
 
-    for post in posts {
+    for post in &graph_posts {
         let source = post.slug.as_str();
         for target in &post.outgoing_links {
             let target = target.as_str();
@@ -862,7 +960,7 @@ fn build_local_graph_data(
         .collect::<Vec<_>>();
 
     let mut links = Vec::new();
-    for post in posts {
+    for post in &graph_posts {
         if !selected_set.contains(&post.slug) {
             continue;
         }
@@ -1085,13 +1183,14 @@ fn rewrite_wikilinks(markdown: &str, slug_map: &HashMap<String, String>) -> (Str
 }
 
 fn markdown_to_html(markdown: &str) -> String {
+    let markdown = apply_highlight_syntax(markdown);
     let mut options = Options::empty();
     options.insert(Options::ENABLE_STRIKETHROUGH);
     options.insert(Options::ENABLE_TABLES);
     options.insert(Options::ENABLE_TASKLISTS);
     options.insert(Options::ENABLE_FOOTNOTES);
 
-    let parser = Parser::new_ext(markdown, options);
+    let parser = Parser::new_ext(&markdown, options);
     let mut html = String::new();
     push_html(&mut html, parser);
 
@@ -1100,6 +1199,37 @@ fn markdown_to_html(markdown: &str) -> String {
         .to_string();
 
     add_heading_ids(&html)
+}
+
+fn apply_highlight_syntax(markdown: &str) -> String {
+    let mut transformed = String::new();
+    let mut in_fence = false;
+
+    for line in markdown.lines() {
+        let trimmed = line.trim_start();
+        if trimmed.starts_with("```") || trimmed.starts_with("~~~") {
+            in_fence = !in_fence;
+            transformed.push_str(line);
+            transformed.push('\n');
+            continue;
+        }
+
+        if in_fence {
+            transformed.push_str(line);
+            transformed.push('\n');
+            continue;
+        }
+
+        let replaced = HIGHLIGHT_RE.replace_all(line, "<mark>$1</mark>");
+        transformed.push_str(&replaced);
+        transformed.push('\n');
+    }
+
+    if !markdown.ends_with('\n') && transformed.ends_with('\n') {
+        transformed.pop();
+    }
+
+    transformed
 }
 
 fn add_heading_ids(html: &str) -> String {
@@ -1212,23 +1342,30 @@ fn build_backlinks(
     let mut backlinks: HashMap<String, Vec<Backlink>> = HashMap::new();
 
     for source in posts {
+        if source.hidden {
+            continue;
+        }
         for target in &source.outgoing_links {
-            if known_posts.contains_key(target) && target != &source.slug {
-                let date = source.updated.or(source.date);
-                let entry = Backlink {
-                    title: source.title.clone(),
-                    url: format!("/notes/{}/", source.slug),
-                    excerpt: source.excerpt.clone(),
-                    date_display: date
-                        .map(|value| value.format("%Y-%m-%d").to_string())
-                        .unwrap_or_else(|| "Undated".to_string()),
-                    sort_timestamp: date.map(|value| value.timestamp()).unwrap_or(i64::MIN),
-                };
+            let Some(target_post) = known_posts.get(target) else {
+                continue;
+            };
+            if target == &source.slug || target_post.hidden {
+                continue;
+            }
+            let date = source.updated.or(source.date);
+            let entry = Backlink {
+                title: source.title.clone(),
+                url: format!("/notes/{}/", source.slug),
+                excerpt: source.excerpt.clone(),
+                date_display: date
+                    .map(|value| value.format("%Y-%m-%d").to_string())
+                    .unwrap_or_else(|| "Undated".to_string()),
+                sort_timestamp: date.map(|value| value.timestamp()).unwrap_or(i64::MIN),
+            };
 
-                let items = backlinks.entry(target.clone()).or_default();
-                if !items.iter().any(|item| item.url == entry.url) {
-                    items.push(entry);
-                }
+            let items = backlinks.entry(target.clone()).or_default();
+            if !items.iter().any(|item| item.url == entry.url) {
+                items.push(entry);
             }
         }
     }
@@ -1248,6 +1385,9 @@ fn build_tag_index(posts: &[Post]) -> Vec<TagEntry> {
     let mut counts: BTreeMap<String, usize> = BTreeMap::new();
 
     for post in posts {
+        if post.hidden {
+            continue;
+        }
         for tag in &post.tags {
             *counts.entry(tag.clone()).or_insert(0) += 1;
         }
@@ -1265,6 +1405,7 @@ fn build_tag_index(posts: &[Post]) -> Vec<TagEntry> {
 
 fn post_to_card(post: &Post) -> PostCard {
     PostCard {
+        note_icon: post.note_icon.clone(),
         title: post.title.clone(),
         url: format!("/notes/{}/", post.slug),
         excerpt: post.excerpt.clone(),
@@ -1301,6 +1442,7 @@ fn website_layout(
     graph_data_url: String,
     graph_center_id: String,
     show_side_graph: bool,
+    extra_meta_tags: Vec<MetaTag>,
 ) -> LayoutContext {
     let canonical_url = absolute_url(&config.site.base_url, page_path);
 
@@ -1317,6 +1459,7 @@ fn website_layout(
         published_time: published_time.to_string(),
         updated_time: updated_time.to_string(),
         json_ld,
+        extra_meta_tags,
         page_tabs: build_page_tabs(posts, page_path),
         toc_items,
         show_search,
@@ -1330,9 +1473,11 @@ fn website_layout(
 fn build_page_tabs(posts: &[Post], page_path: &str) -> Vec<PageTab> {
     posts
         .iter()
+        .filter(|post| !post.hidden)
         .map(|post| {
             let url = format!("/notes/{}/", post.slug);
             PageTab {
+                note_icon: post.note_icon.clone(),
                 title: post.title.clone(),
                 url: url.clone(),
                 preview: post.excerpt.clone(),
@@ -1747,8 +1892,9 @@ fn build_post_sort_key(post: &Post) -> i64 {
 }
 
 fn sort_posts_by_recency(a: &Post, b: &Post) -> Ordering {
-    build_post_sort_key(b)
-        .cmp(&build_post_sort_key(a))
+    b.pinned
+        .cmp(&a.pinned)
+        .then_with(|| build_post_sort_key(b).cmp(&build_post_sort_key(a)))
         .then_with(|| a.title.cmp(&b.title))
 }
 
@@ -1790,6 +1936,171 @@ fn normalize_lookup(value: &str) -> String {
         .unwrap_or(value)
         .trim()
         .to_ascii_lowercase()
+}
+
+fn normalize_slug_candidate(value: &str) -> String {
+    value
+        .trim()
+        .trim_matches('/')
+        .trim_end_matches(".md")
+        .trim_end_matches(".markdown")
+        .replace('\\', "/")
+        .split('/')
+        .map(str::trim)
+        .filter(|segment| !segment.is_empty())
+        .map(slugify)
+        .filter(|segment| !segment.is_empty())
+        .collect::<Vec<_>>()
+        .join("/")
+}
+
+fn parse_frontmatter_metatags(raw: Option<&YamlValue>) -> Vec<MetaTag> {
+    let mut tags = Vec::new();
+    let Some(value) = raw else {
+        return tags;
+    };
+
+    collect_metatags(value, &mut tags);
+
+    let mut seen = HashSet::new();
+    tags.into_iter()
+        .filter(|tag| {
+            let key = format!(
+                "{}|{}|{}",
+                tag.attr,
+                tag.key.to_ascii_lowercase(),
+                tag.content
+            );
+            seen.insert(key)
+        })
+        .collect()
+}
+
+fn collect_metatags(value: &YamlValue, tags: &mut Vec<MetaTag>) {
+    match value {
+        YamlValue::String(raw) => {
+            for token in raw.split(|ch| ch == ',' || ch == '\n') {
+                let token = token.trim();
+                if token.is_empty() {
+                    continue;
+                }
+                if let Some((key, content)) = token.split_once('=') {
+                    push_metatag(tags, key, content);
+                } else {
+                    push_metatag(tags, token, "true");
+                }
+            }
+        }
+        YamlValue::Sequence(items) => {
+            for item in items {
+                collect_metatags(item, tags);
+            }
+        }
+        YamlValue::Mapping(map) => {
+            for (key, value) in map {
+                let key = yaml_scalar_to_string(key);
+                let content = yaml_scalar_to_string(value);
+                push_metatag(tags, &key, &content);
+            }
+        }
+        _ => {}
+    }
+}
+
+fn push_metatag(tags: &mut Vec<MetaTag>, key: &str, content: &str) {
+    let key = key.trim();
+    if key.is_empty() {
+        return;
+    }
+
+    let content = content.trim();
+    let content = if content.is_empty() { "true" } else { content };
+    let attr = if is_property_metatag(key) {
+        "property"
+    } else {
+        "name"
+    };
+
+    tags.push(MetaTag {
+        attr: attr.to_string(),
+        key: key.to_string(),
+        content: content.to_string(),
+    });
+}
+
+fn is_property_metatag(key: &str) -> bool {
+    let key = key.trim().to_ascii_lowercase();
+    key.starts_with("og:")
+        || key.starts_with("article:")
+        || key.starts_with("book:")
+        || key.starts_with("profile:")
+}
+
+fn parse_content_classes(raw: Option<&YamlValue>) -> Vec<String> {
+    let mut classes = Vec::new();
+    let Some(value) = raw else {
+        return classes;
+    };
+
+    collect_content_classes(value, &mut classes);
+
+    let mut seen = HashSet::new();
+    classes
+        .into_iter()
+        .filter(|class_name| seen.insert(class_name.clone()))
+        .collect()
+}
+
+fn collect_content_classes(value: &YamlValue, classes: &mut Vec<String>) {
+    match value {
+        YamlValue::String(raw) => classes.extend(parse_class_tokens(raw)),
+        YamlValue::Sequence(items) => {
+            for item in items {
+                collect_content_classes(item, classes);
+            }
+        }
+        _ => {
+            let raw = yaml_scalar_to_string(value);
+            classes.extend(parse_class_tokens(&raw));
+        }
+    }
+}
+
+fn parse_class_tokens(raw: &str) -> Vec<String> {
+    raw.split(|ch: char| ch.is_whitespace() || ch == ',')
+        .map(normalize_class_name)
+        .filter(|token| !token.is_empty())
+        .collect()
+}
+
+fn normalize_class_name(value: &str) -> String {
+    let mut out = String::new();
+    let mut prev_dash = false;
+
+    for ch in value.trim().chars() {
+        if ch.is_ascii_alphanumeric() || ch == '-' || ch == '_' {
+            out.push(ch.to_ascii_lowercase());
+            prev_dash = false;
+            continue;
+        }
+
+        if !prev_dash {
+            out.push('-');
+            prev_dash = true;
+        }
+    }
+
+    out.trim_matches('-').to_string()
+}
+
+fn yaml_scalar_to_string(value: &YamlValue) -> String {
+    match value {
+        YamlValue::Null => String::new(),
+        YamlValue::Bool(value) => value.to_string(),
+        YamlValue::Number(value) => value.to_string(),
+        YamlValue::String(value) => value.trim().to_string(),
+        _ => String::new(),
+    }
 }
 
 fn clean_tag(tag: &str) -> String {
@@ -2002,6 +2313,11 @@ aliases: [brain]
 date: 2026-02-15
 tags: [rust, architecture]
 dg-publish: true
+dg-pinned: true
+dg-metatags:
+  - robots=max-image-preview:large
+  - og:locale=ko_KR
+dg-content-classes: [focus-mode, article-featured]
 ---
 
 # Second Brain
@@ -2019,6 +2335,7 @@ title: SEO Notes
 date: 2026-02-14
 tags: [seo]
 dg-publish: true
+dg-hide-in-graph: true
 ---
 
 # SEO Notes
@@ -2036,11 +2353,29 @@ tags: [solo]
 dg-publish: true
 dg-enable-search: false
 dg-show-local-graph: false
+dg-hide: true
 ---
 
 # Isolated
 
 No links here.
+"#,
+        );
+
+        write_text(
+            &content_dir.join("path-note.md"),
+            r#"---
+title: Path Note
+date: 2026-02-12
+tags: [path]
+dg-publish: true
+dg-path: custom/path-note
+dg-note-icon: "PIN"
+---
+
+# Path Note
+
+Uses custom path.
 "#,
         );
 
@@ -2085,13 +2420,16 @@ Not published.
         };
 
         let summary = build_site(&config)?;
-        assert_eq!(summary.posts, 4);
+        assert_eq!(summary.posts, 5);
 
         assert!(output_dir.join("index.html").exists());
         assert!(output_dir.join("notes/home/index.html").exists());
         assert!(output_dir.join("notes/second-brain/index.html").exists());
-        assert!(output_dir.join("notes/seo/index.html").exists());
+        assert!(output_dir.join("notes/nested/seo/index.html").exists());
         assert!(output_dir.join("notes/isolated/index.html").exists());
+        assert!(output_dir
+            .join("notes/custom/path-note/index.html")
+            .exists());
         assert!(output_dir.join("filetree.json").exists());
         assert!(output_dir.join("local-graph/second-brain.json").exists());
         assert!(output_dir.join("local-graph/isolated.json").exists());
@@ -2107,6 +2445,8 @@ Not published.
         assert!(index_html.contains("window.initTocTracker"));
         assert!(index_html.contains("window.initLinkPreview"));
         assert!(index_html.contains(r#"dataUrl: "/graph.json""#));
+        assert!(index_html.contains("note-icon"));
+        assert!(!index_html.contains("Isolated"));
 
         let home_html = fs::read_to_string(output_dir.join("notes/home/index.html"))?;
         assert!(home_html.contains("/notes/second-brain/#architecture-overview"));
@@ -2119,6 +2459,9 @@ Not published.
         assert!(second_html.contains("Linked Mentions"));
         assert!(second_html.contains("/notes/home/"));
         assert!(second_html.contains(r#"dataUrl: "/local-graph/second-brain.json""#));
+        assert!(second_html.contains(r#"<meta name="robots" content="max-image-preview:large" />"#));
+        assert!(second_html.contains(r#"<meta property="og:locale" content="ko_KR" />"#));
+        assert!(second_html.contains(r#"class="panel note focus-mode article-featured""#));
 
         assert!(index_html.contains(r#"id="side-graph-stage""#));
         assert!(index_html.contains(r#"src="/assets/graph-view.js""#));
@@ -2141,6 +2484,11 @@ Not published.
                         && entry.get("target").and_then(|v| v.as_str()) == Some("second-brain")
                 });
         assert!(has_home_to_second);
+        assert!(!graph["nodes"]
+            .as_array()
+            .unwrap_or(&Vec::new())
+            .iter()
+            .any(|entry| entry.get("id").and_then(|value| value.as_str()) == Some("nested/seo")));
 
         let second_local_graph: serde_json::Value = serde_json::from_str(&fs::read_to_string(
             output_dir.join("local-graph/second-brain.json"),
@@ -2153,9 +2501,9 @@ Not published.
         assert!(local_nodes
             .iter()
             .any(|entry| entry.get("id").and_then(|value| value.as_str()) == Some("home")));
-        assert!(local_nodes
+        assert!(!local_nodes
             .iter()
-            .any(|entry| entry.get("id").and_then(|value| value.as_str()) == Some("seo")));
+            .any(|entry| entry.get("id").and_then(|value| value.as_str()) == Some("nested/seo")));
 
         let isolated_html = fs::read_to_string(output_dir.join("notes/isolated/index.html"))?;
         assert!(isolated_html.contains("No linked mentions yet."));
@@ -2165,6 +2513,8 @@ Not published.
         let search_index = fs::read_to_string(output_dir.join("search-index.json"))?;
         assert!(!search_index.contains("draft-note"));
         assert!(!search_index.contains("hidden-note"));
+        assert!(!search_index.contains("isolated"));
+        assert!(search_index.contains("/notes/custom/path-note/"));
 
         let filetree: serde_json::Value =
             serde_json::from_str(&fs::read_to_string(output_dir.join("filetree.json"))?)?;
@@ -2173,6 +2523,11 @@ Not published.
             .unwrap_or(&Vec::new())
             .iter()
             .any(|node| node.get("label").and_then(|value| value.as_str()) == Some("nested")));
+        assert!(!filetree
+            .as_array()
+            .unwrap_or(&Vec::new())
+            .iter()
+            .any(|node| node.get("label").and_then(|value| value.as_str()) == Some("Isolated")));
 
         let robots_txt = fs::read_to_string(output_dir.join("robots.txt"))?;
         assert!(robots_txt.contains("Sitemap: https://example.test/sitemap.xml"));

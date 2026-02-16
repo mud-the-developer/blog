@@ -27,6 +27,10 @@
     <meta property="article:modified_time" content="{{ layout.updated_time }}" />
     {% endif %}
 
+    {% for meta in layout.extra_meta_tags %}
+    <meta {{ meta.attr }}="{{ meta.key }}" content="{{ meta.content }}" />
+    {% endfor %}
+
     <script>
       (() => {
         try {
@@ -59,7 +63,6 @@
         <div class="site-actions">
           <nav class="site-nav" aria-label="Main navigation">
             <a href="/">Blog Home</a>
-            <a href="/notes/jinhyuk-kim/">Jinhyuk Kim</a>
             <a href="/graph/">Graph</a>
             <a href="/rss.xml">RSS</a>
             <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">Dark</button>
@@ -93,7 +96,10 @@
           <nav id="filetree-root" class="page-tabs-list">
             {% for tab in layout.page_tabs %}
             <a class="page-tab{% if tab.active %} is-active{% endif %}" href="{{ tab.url }}">
-              <span class="page-tab-title">{{ tab.title }}</span>
+              <span class="page-tab-title">
+                {% if let Some(icon) = tab.note_icon %}<span class="note-icon">{{ icon }}</span>{% endif %}
+                {{ tab.title }}
+              </span>
               <span class="page-tab-preview">{{ tab.preview }}</span>
             </a>
             {% endfor %}
