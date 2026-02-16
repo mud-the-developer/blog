@@ -39,7 +39,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-
+      - name:
+        run: npx wrangler@4 whoami && npx wrangler@4 pages project list
       - name: Build static site
         run: |
           set -euo pipefail
