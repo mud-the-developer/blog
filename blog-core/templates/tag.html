@@ -9,7 +9,7 @@
   <section class="post-list">
     {% for post in posts %}
     <article class="panel post-item">
-      <h3><a href="{{ post.url }}">{% if let Some(icon) = post.note_icon %}<span class="note-icon">{{ icon }}</span>{% endif %}{{ post.title }}</a></h3>
+      <h3><a class="title-link" href="{{ post.url }}">{% if let Some(icon) = post.note_icon %}<span class="note-icon">{{ icon }}</span>{% endif %}{{ post.title }}</a></h3>
       <p class="post-meta">{{ post.date_display }}{% if let Some(updated) = post.updated_display %} • updated {{ updated }}{% endif %} • {{ post.reading_time_min }} min read</p>
       <p>{{ post.excerpt }}</p>
     </article>

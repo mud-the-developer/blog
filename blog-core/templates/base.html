@@ -34,13 +34,18 @@
     <script>
       (() => {
         try {
-          const key = "dg-theme";
-          const saved = localStorage.getItem(key);
+          const themeKey = "dg-theme";
+          const saved = localStorage.getItem(themeKey);
           const preferredDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
           const theme = saved === "light" || saved === "dark" ? saved : (preferredDark ? "dark" : "light");
+          const presetKey = theme === "dark" ? "dg-theme-preset-dark" : "dg-theme-preset-light";
+          const presetFallback = theme === "dark" ? "d01-midnight" : "l01-paper";
+          const preset = localStorage.getItem(presetKey) || presetFallback;
           document.documentElement.setAttribute("data-theme", theme);
+          document.documentElement.setAttribute("data-theme-preset", preset);
         } catch (_) {
           document.documentElement.setAttribute("data-theme", "light");
+          document.documentElement.setAttribute("data-theme-preset", "l01-paper");
         }
       })();
     </script>
@@ -69,14 +74,18 @@
     <div class="site-shell">
       <header class="site-header">
         <div>
-          <p class="site-title"><a href="/">{{ layout.site_title }}</a></p>
+          <p class="site-title"><a class="site-title-link" href="/">{{ layout.site_title }}</a></p>
           <p class="site-tagline">{{ layout.site_description }}</p>
         </div>
         <div class="site-actions">
           <nav class="site-nav" aria-label="Main navigation">
             <a href="/">Blog Home</a>
             <a href="/rss.xml">RSS</a>
-            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">Dark</button>
+            <div class="theme-controls">
+              <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">Dark</button>
+              <label class="sr-only" for="theme-preset-toggle">Theme preset</label>
+              <select id="theme-preset-toggle" class="theme-preset-toggle" aria-label="Theme preset"></select>
+            </div>
           </nav>
         </div>
       </header>
@@ -160,6 +169,7 @@
         const start = () => {
           const previewButton = document.getElementById("preview-toggle");
           const themeButton = document.getElementById("theme-toggle");
+          const themePresetSelect = document.getElementById("theme-preset-toggle");
           const searchInput = document.getElementById("global-search-input");
           const searchResults = document.getElementById("global-search-results");
           const noteBody = document.querySelector(".note-body");
@@ -245,22 +255,135 @@
           });
         }
 
-        if (themeButton) {
+        if (themeButton || themePresetSelect) {
           const themeKey = "dg-theme";
-          const applyTheme = (theme) => {
-            document.documentElement.setAttribute("data-theme", theme);
-            themeButton.textContent = theme === "dark" ? "Light" : "Dark";
+          const defaultPresetByTheme = {
+            light: "l01-paper",
+            dark: "d01-midnight"
+          };
+          const presetsByTheme = {
+            light: [
+              { value: "l01-paper", label: "L01 Paper" },
+              { value: "l02-spring", label: "L02 Spring" },
+              { value: "l03-ocean-mist", label: "L03 Ocean Mist" },
+              { value: "l04-rose-ink", label: "L04 Rose Ink" },
+              { value: "l05-sandstone", label: "L05 Sandstone" },
+              { value: "l06-forest-air", label: "L06 Forest Air" },
+              { value: "l07-amber-day", label: "L07 Amber Day" },
+              { value: "l08-lilac-fog", label: "L08 Lilac Fog" },
+              { value: "l09-ice", label: "L09 Ice" },
+              { value: "l10-peach", label: "L10 Peach" },
+              { value: "l11-mint", label: "L11 Mint" },
+              { value: "l12-sky", label: "L12 Sky" },
+              { value: "l13-olive", label: "L13 Olive" },
+              { value: "l14-latte", label: "L14 Latte" },
+              { value: "l15-coral", label: "L15 Coral" },
+              { value: "l16-teal-paper", label: "L16 Teal Paper" },
+              { value: "l17-slate", label: "L17 Slate" },
+              { value: "l18-butter", label: "L18 Butter" },
+              { value: "l19-river", label: "L19 River" },
+              { value: "l20-graphite-light", label: "L20 Graphite" }
+            ],
+            dark: [
+              { value: "d01-midnight", label: "D01 Midnight" },
+              { value: "d02-carbon", label: "D02 Carbon" },
+              { value: "d03-deep-ocean", label: "D03 Deep Ocean" },
+              { value: "d04-ember", label: "D04 Ember" },
+              { value: "d05-forest-night", label: "D05 Forest Night" },
+              { value: "d06-violet-night", label: "D06 Violet Night" },
+              { value: "d07-steel", label: "D07 Steel" },
+              { value: "d08-ink-blue", label: "D08 Ink Blue" },
+              { value: "d09-mocha-night", label: "D09 Mocha Night" },
+              { value: "d10-aurora", label: "D10 Aurora" },
+              { value: "d11-crimson-night", label: "D11 Crimson Night" },
+              { value: "d12-gold-night", label: "D12 Gold Night" },
+              { value: "d13-cobalt-night", label: "D13 Cobalt Night" },
+              { value: "d14-sage-night", label: "D14 Sage Night" },
+              { value: "d15-rose-night", label: "D15 Rose Night" },
+              { value: "d16-cyan-night", label: "D16 Cyan Night" },
+              { value: "d17-indigo-night", label: "D17 Indigo Night" },
+              { value: "d18-charcoal", label: "D18 Charcoal" },
+              { value: "d19-plum-night", label: "D19 Plum Night" },
+              { value: "d20-obsidian", label: "D20 Obsidian" }
+            ]
           };
 
-          const current = document.documentElement.getAttribute("data-theme") || "light";
-          applyTheme(current);
+          const getPresetStorageKey = (theme) =>
+            theme === "dark" ? "dg-theme-preset-dark" : "dg-theme-preset-light";
 
-          themeButton.addEventListener("click", () => {
-            const active = document.documentElement.getAttribute("data-theme") || "light";
-            const next = active === "dark" ? "light" : "dark";
-            localStorage.setItem(themeKey, next);
-            applyTheme(next);
-          });
+          const hasPreset = (theme, preset) =>
+            presetsByTheme[theme].some((item) => item.value === preset);
+
+          const readPreset = (theme) => {
+            const fallback = defaultPresetByTheme[theme];
+            try {
+              const stored = localStorage.getItem(getPresetStorageKey(theme));
+              return hasPreset(theme, stored) ? stored : fallback;
+            } catch (_) {
+              return fallback;
+            }
+          };
+
+          const renderPresetOptions = (theme) => {
+            if (!themePresetSelect) {
+              return;
+            }
+            const presets = presetsByTheme[theme];
+            themePresetSelect.innerHTML = presets
+              .map((preset) => '<option value="' + preset.value + '">' + preset.label + "</option>")
+              .join("");
+          };
+
+          const applyPreset = (theme, preset, persist) => {
+            const fallback = defaultPresetByTheme[theme];
+            const safePreset = hasPreset(theme, preset) ? preset : fallback;
+            document.documentElement.setAttribute("data-theme-preset", safePreset);
+            if (themePresetSelect) {
+              themePresetSelect.value = safePreset;
+            }
+            if (persist !== false) {
+              try {
+                localStorage.setItem(getPresetStorageKey(theme), safePreset);
+              } catch (_) {
+                // Skip persistence when storage is unavailable.
+              }
+            }
+          };
+
+          const applyTheme = (theme, persistTheme) => {
+            const safeTheme = theme === "dark" ? "dark" : "light";
+            document.documentElement.setAttribute("data-theme", safeTheme);
+            if (themeButton) {
+              themeButton.textContent = safeTheme === "dark" ? "Light" : "Dark";
+            }
+            renderPresetOptions(safeTheme);
+            applyPreset(safeTheme, readPreset(safeTheme), false);
+            if (persistTheme !== false) {
+              try {
+                localStorage.setItem(themeKey, safeTheme);
+              } catch (_) {
+                // Skip persistence when storage is unavailable.
+              }
+            }
+          };
+
+          const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+          applyTheme(currentTheme, false);
+
+          if (themeButton) {
+            themeButton.addEventListener("click", () => {
+              const active = document.documentElement.getAttribute("data-theme") || "light";
+              const next = active === "dark" ? "light" : "dark";
+              applyTheme(next, true);
+            });
+          }
+
+          if (themePresetSelect) {
+            themePresetSelect.addEventListener("change", () => {
+              const active = document.documentElement.getAttribute("data-theme") || "light";
+              applyPreset(active, themePresetSelect.value, true);
+            });
+          }
         }
 
         if (searchInput && searchResults) {
