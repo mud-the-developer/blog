@@ -36,29 +36,39 @@ static CALLOUT_MARKER_RE: Lazy<Regex> = Lazy::new(|| {
         .expect("invalid callout marker regex")
 });
 static DATAVIEW_LIST_FROM_RE: Lazy<Regex> = Lazy::new(|| {
-    Regex::new(r"(?i)^\s*LIST\s+FROM\s+#([A-Za-z0-9_-]+)\s*$").expect("invalid dataview list regex")
+    Regex::new(r#"(?i)^\s*LIST\s+FROM\s+(.+?)\s*$"#).expect("invalid dataview list regex")
 });
 static DATAVIEW_TABLE_FROM_RE: Lazy<Regex> = Lazy::new(|| {
-    Regex::new(r"(?i)^\s*TABLE(?:\s+[A-Za-z0-9_,\s]+)?\s+FROM\s+#([A-Za-z0-9_-]+)\s*$")
+    Regex::new(r#"(?i)^\s*TABLE(?:\s+.+?)?\s+FROM\s+(.+?)\s*$"#)
         .expect("invalid dataview table regex")
 });
 static DATAVIEW_TASK_FROM_RE: Lazy<Regex> = Lazy::new(|| {
-    Regex::new(r"(?i)^\s*TASK\s+FROM\s+#([A-Za-z0-9_-]+)\s*$").expect("invalid dataview task regex")
+    Regex::new(r#"(?i)^\s*TASK\s+FROM\s+(.+?)\s*$"#).expect("invalid dataview task regex")
 });
 static DATAVIEW_SORT_RE: Lazy<Regex> = Lazy::new(|| {
-    Regex::new(r"(?i)^\s*SORT\s+(?:file\.name|title)\s*(ASC|DESC)?\s*$")
+    Regex::new(r"(?i)^\s*SORT\s+(file\.name|title|file\.path)\s*(ASC|DESC)?\s*$")
         .expect("invalid dataview sort regex")
 });
 static DATAVIEW_LIMIT_RE: Lazy<Regex> = Lazy::new(|| {
     Regex::new(r"(?i)^\s*LIMIT\s+([0-9]{1,4})\s*$").expect("invalid dataview limit regex")
 });
 static DATAVIEW_WHERE_TITLE_CONTAINS_RE: Lazy<Regex> = Lazy::new(|| {
-    Regex::new(r#"(?i)^\s*WHERE\s+contains\(\s*title\s*,\s*["']([^"']+)["']\s*\)\s*$"#)
-        .expect("invalid dataview where title regex")
+    Regex::new(
+        r#"(?i)^\s*WHERE\s+contains\(\s*(?:title|file\.name)\s*,\s*["']([^"']+)["']\s*\)\s*$"#,
+    )
+    .expect("invalid dataview where title regex")
 });
 static DATAVIEW_WHERE_TAG_CONTAINS_RE: Lazy<Regex> = Lazy::new(|| {
-    Regex::new(r#"(?i)^\s*WHERE\s+contains\(\s*tags\s*,\s*["']?#?([A-Za-z0-9_-]+)["']?\s*\)\s*$"#)
+    Regex::new(
+        r#"(?i)^\s*WHERE\s+contains\(\s*(?:tags|file\.tags)\s*,\s*["']?#?([A-Za-z0-9_-]+)["']?\s*\)\s*$"#,
+    )
         .expect("invalid dataview where tag regex")
+});
+static DATAVIEW_WHERE_PATH_CONTAINS_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(
+        r#"(?i)^\s*WHERE\s+contains\(\s*(?:file\.path|file\.folder)\s*,\s*["']([^"']+)["']\s*\)\s*$"#,
+    )
+    .expect("invalid dataview where path regex")
 });
 static DATAVIEW_INLINE_THIS_FILE_NAME_RE: Lazy<Regex> = Lazy::new(|| {
     Regex::new(r"(?i)`=\s*this\.file\.name\s*`").expect("invalid dataview inline file name regex")
@@ -66,12 +76,22 @@ static DATAVIEW_INLINE_THIS_FILE_NAME_RE: Lazy<Regex> = Lazy::new(|| {
 static DATAVIEW_INLINE_THIS_FILE_LINK_RE: Lazy<Regex> = Lazy::new(|| {
     Regex::new(r"(?i)`=\s*this\.file\.link\s*`").expect("invalid dataview inline file link regex")
 });
+static DATAVIEW_INLINE_THIS_FILE_PATH_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r"(?i)`=\s*this\.file\.path\s*`").expect("invalid dataview inline file path regex")
+});
+static DATAVIEW_INLINE_THIS_FILE_FOLDER_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r"(?i)`=\s*this\.file\.folder\s*`")
+        .expect("invalid dataview inline file folder regex")
+});
+static DATAVIEW_INLINE_THIS_FILE_TAGS_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r"(?i)`=\s*this\.file\.tags\s*`").expect("invalid dataview inline file tags regex")
+});
 static DATAVIEW_INLINE_PAGES_LENGTH_RE: Lazy<Regex> = Lazy::new(|| {
     Regex::new(r#"(?i)`=\s*dv\.pages\(\s*["']#?([A-Za-z0-9_-]+)["']\s*\)\.length\s*`"#)
         .expect("invalid dataview inline pages length regex")
 });
 static DATAVIEWJS_DV_PAGES_RE: Lazy<Regex> = Lazy::new(|| {
-    Regex::new(r#"(?is)dv\.pages\(\s*["']#?([A-Za-z0-9_-]+)["']\s*\)"#)
+    Regex::new(r#"(?is)dv\.pages\(\s*["']([^"']+)["']\s*\)"#)
         .expect("invalid dataviewjs pages regex")
 });
 static DATAVIEWJS_LIST_RE: Lazy<Regex> =
@@ -394,11 +414,19 @@ enum DataviewKind {
     Task,
 }
 
+#[derive(Debug, Clone)]
+enum DataviewSource {
+    Tag(String),
+    Folder(String),
+}
+
 #[derive(Debug, Clone, Default)]
 struct DataviewQueryOptions {
     where_title_contains: Option<String>,
     where_tag_contains: Option<String>,
+    where_path_contains: Option<String>,
     sort_desc: bool,
+    sort_by_path: bool,
     limit: Option<usize>,
 }
 
@@ -746,6 +774,7 @@ fn render_posts(
             &seed_summaries,
             &seed.slug,
             &seed.title,
+            &seed.tags,
         );
 
         let (rewritten, outgoing_links) =
@@ -2108,9 +2137,23 @@ fn apply_dataview_inline(
     seeds: &[SeedSummary],
     current_slug: &str,
     current_title: &str,
+    current_tags: &[String],
 ) -> String {
     let mut transformed = String::new();
     let mut in_fence = false;
+    let current_folder = current_slug
+        .rsplit_once('/')
+        .map(|(folder, _)| folder)
+        .unwrap_or("");
+    let tags_display = if current_tags.is_empty() {
+        "[]".to_string()
+    } else {
+        current_tags
+            .iter()
+            .map(|tag| format!("#{tag}"))
+            .collect::<Vec<_>>()
+            .join(", ")
+    };
 
     for line in markdown.lines() {
         let trimmed = line.trim_start();
@@ -2136,8 +2179,17 @@ fn apply_dataview_inline(
                 format!("[{}](/notes/{}/)", current_title, current_slug),
             )
             .to_string();
+        let with_path = DATAVIEW_INLINE_THIS_FILE_PATH_RE
+            .replace_all(&with_link, current_slug)
+            .to_string();
+        let with_folder = DATAVIEW_INLINE_THIS_FILE_FOLDER_RE
+            .replace_all(&with_path, current_folder)
+            .to_string();
+        let with_tags = DATAVIEW_INLINE_THIS_FILE_TAGS_RE
+            .replace_all(&with_folder, tags_display.as_str())
+            .to_string();
         let with_count = DATAVIEW_INLINE_PAGES_LENGTH_RE
-            .replace_all(&with_link, |caps: &Captures| {
+            .replace_all(&with_tags, |caps: &Captures| {
                 let tag = caps
                     .get(1)
                     .map(|m| m.as_str().to_ascii_lowercase())
@@ -2161,33 +2213,92 @@ fn apply_dataview_inline(
     transformed
 }
 
-fn parse_dataview_query(raw_query: &str) -> Option<(DataviewKind, String, DataviewQueryOptions)> {
+fn parse_dataview_source(raw_source: &str) -> Option<DataviewSource> {
+    let trimmed = raw_source.trim();
+    if trimmed.is_empty() {
+        return None;
+    }
+
+    let unquoted = if let Some(stripped) = trimmed
+        .strip_prefix('"')
+        .and_then(|value| value.strip_suffix('"'))
+    {
+        stripped.trim()
+    } else if let Some(stripped) = trimmed
+        .strip_prefix('\'')
+        .and_then(|value| value.strip_suffix('\''))
+    {
+        stripped.trim()
+    } else {
+        trimmed
+    };
+
+    if unquoted.is_empty() {
+        return None;
+    }
+
+    if let Some(raw_tag) = unquoted.strip_prefix('#') {
+        let cleaned = clean_tag(raw_tag);
+        if cleaned.is_empty() {
+            None
+        } else {
+            Some(DataviewSource::Tag(cleaned.to_ascii_lowercase()))
+        }
+    } else {
+        let folder = unquoted
+            .trim_start_matches("./")
+            .trim_matches('/')
+            .replace('\\', "/")
+            .trim()
+            .to_ascii_lowercase();
+        if folder.is_empty() {
+            None
+        } else {
+            Some(DataviewSource::Folder(folder))
+        }
+    }
+}
+
+fn dataview_source_label(source: &DataviewSource) -> String {
+    match source {
+        DataviewSource::Tag(tag) => format!("#{tag}"),
+        DataviewSource::Folder(folder) => folder.clone(),
+    }
+}
+
+fn dataview_source_matches(seed: &SeedSummary, source: &DataviewSource) -> bool {
+    match source {
+        DataviewSource::Tag(tag) => seed.tags.iter().any(|item| item == tag),
+        DataviewSource::Folder(folder) => {
+            let slug = seed.slug.to_ascii_lowercase();
+            slug == *folder || slug.starts_with(&format!("{folder}/"))
+        }
+    }
+}
+
+fn parse_dataview_query(
+    raw_query: &str,
+) -> Option<(DataviewKind, DataviewSource, DataviewQueryOptions)> {
     let mut lines = raw_query
         .lines()
         .map(str::trim)
         .filter(|line| !line.is_empty());
     let head = lines.next()?;
 
-    let (kind, tag) = if let Some(caps) = DATAVIEW_TASK_FROM_RE.captures(head) {
+    let (kind, source) = if let Some(caps) = DATAVIEW_TASK_FROM_RE.captures(head) {
         (
             DataviewKind::Task,
-            caps.get(1)
-                .map(|m| m.as_str().to_ascii_lowercase())
-                .unwrap_or_default(),
+            parse_dataview_source(caps.get(1).map(|m| m.as_str()).unwrap_or_default())?,
         )
     } else if let Some(caps) = DATAVIEW_TABLE_FROM_RE.captures(head) {
         (
             DataviewKind::Table,
-            caps.get(1)
-                .map(|m| m.as_str().to_ascii_lowercase())
-                .unwrap_or_default(),
+            parse_dataview_source(caps.get(1).map(|m| m.as_str()).unwrap_or_default())?,
         )
     } else if let Some(caps) = DATAVIEW_LIST_FROM_RE.captures(head) {
         (
             DataviewKind::List,
-            caps.get(1)
-                .map(|m| m.as_str().to_ascii_lowercase())
-                .unwrap_or_default(),
+            parse_dataview_source(caps.get(1).map(|m| m.as_str()).unwrap_or_default())?,
         )
     } else {
         return None;
@@ -2196,8 +2307,13 @@ fn parse_dataview_query(raw_query: &str) -> Option<(DataviewKind, String, Datavi
     let mut options = DataviewQueryOptions::default();
     for line in lines {
         if let Some(caps) = DATAVIEW_SORT_RE.captures(line) {
-            let direction = caps
+            let key = caps
                 .get(1)
+                .map(|m| m.as_str().to_ascii_lowercase())
+                .unwrap_or_else(|| "title".to_string());
+            options.sort_by_path = key == "file.path";
+            let direction = caps
+                .get(2)
                 .map(|m| m.as_str().to_ascii_lowercase())
                 .unwrap_or_else(|| "asc".to_string());
             options.sort_desc = direction == "desc";
@@ -2225,22 +2341,36 @@ fn parse_dataview_query(raw_query: &str) -> Option<(DataviewKind, String, Datavi
                 .get(1)
                 .map(|m| m.as_str().trim().to_ascii_lowercase())
                 .filter(|value| !value.is_empty());
+            continue;
+        }
+
+        if let Some(caps) = DATAVIEW_WHERE_PATH_CONTAINS_RE.captures(line) {
+            options.where_path_contains = caps
+                .get(1)
+                .map(|m| {
+                    m.as_str()
+                        .trim()
+                        .trim_matches('/')
+                        .replace('\\', "/")
+                        .to_ascii_lowercase()
+                })
+                .filter(|value| !value.is_empty());
         }
     }
 
-    Some((kind, tag, options))
+    Some((kind, source, options))
 }
 
 fn collect_dataview_matches(
     seeds: &[SeedSummary],
     current_slug: &str,
-    from_tag: &str,
+    source: &DataviewSource,
     options: &DataviewQueryOptions,
 ) -> Vec<(String, String)> {
     let mut matches = seeds
         .iter()
         .filter(|seed| seed.slug != current_slug)
-        .filter(|seed| seed.tags.iter().any(|item| item == from_tag))
+        .filter(|seed| dataview_source_matches(seed, source))
         .filter(|seed| {
             options
                 .where_title_contains
@@ -2255,10 +2385,25 @@ fn collect_dataview_matches(
                 .map(|tag| seed.tags.iter().any(|item| item.contains(tag)))
                 .unwrap_or(true)
         })
+        .filter(|seed| {
+            options
+                .where_path_contains
+                .as_ref()
+                .map(|term| seed.slug.to_ascii_lowercase().contains(term))
+                .unwrap_or(true)
+        })
         .map(|seed| (seed.title.clone(), seed.slug.clone()))
         .collect::<Vec<_>>();
 
-    matches.sort_by(|a, b| a.0.to_lowercase().cmp(&b.0.to_lowercase()));
+    if options.sort_by_path {
+        matches.sort_by(|a, b| {
+            a.1.to_lowercase()
+                .cmp(&b.1.to_lowercase())
+                .then(a.0.to_lowercase().cmp(&b.0.to_lowercase()))
+        });
+    } else {
+        matches.sort_by(|a, b| a.0.to_lowercase().cmp(&b.0.to_lowercase()));
+    }
     if options.sort_desc {
         matches.reverse();
     }
@@ -2275,21 +2420,24 @@ fn render_dataview_query_block(query: &str, seeds: &[SeedSummary], current_slug:
         return "> [!info] Dataview\n> Empty Dataview query.\n".to_string();
     }
 
-    let Some((kind, tag, options)) = parse_dataview_query(raw_query) else {
+    let Some((kind, source, options)) = parse_dataview_query(raw_query) else {
         return format!(
             "> [!info] Dataview\n> Query is not supported yet.\n>\n> ```text\n> {}\n> ```\n",
             raw_query.replace('\n', "\n> ")
         );
     };
 
-    let matches = collect_dataview_matches(seeds, current_slug, &tag, &options);
+    let matches = collect_dataview_matches(seeds, current_slug, &source, &options);
     let mut rendered = String::new();
     rendered.push_str("> [!info] Dataview\n");
     let display_query = raw_query.replace('`', "\\`").replace('\n', " ; ");
     rendered.push_str(&format!("> Query: `{}`\n>\n", display_query));
 
     if matches.is_empty() {
-        rendered.push_str(&format!("> _No notes found for #{}._\n", tag));
+        rendered.push_str(&format!(
+            "> _No notes found for {}._\n",
+            dataview_source_label(&source)
+        ));
         return rendered;
     }
 
@@ -2330,22 +2478,26 @@ fn render_dataviewjs_fallback(
 
     if dataviewjs_mode == DataviewJsMode::TagPages {
         if let Some(caps) = DATAVIEWJS_DV_PAGES_RE.captures(body) {
-            let tag = caps
-                .get(1)
-                .map(|m| m.as_str().to_ascii_lowercase())
-                .unwrap_or_default();
+            let raw_source = caps.get(1).map(|m| m.as_str().trim()).unwrap_or_default();
+            let Some(source) = parse_dataview_source(raw_source) else {
+                return format!(
+                    "> [!info] DataviewJS\n> DataviewJS block is not executed.\n>\n> ```javascript\n> {}\n> ```\n",
+                    body.replace('\n', "\n> ")
+                );
+            };
             let options = DataviewQueryOptions::default();
-            let matches = collect_dataview_matches(seeds, current_slug, &tag, &options);
+            let matches = collect_dataview_matches(seeds, current_slug, &source, &options);
+            let source_label = dataview_source_label(&source);
 
             let mut rendered = String::new();
             rendered.push_str("> [!info] DataviewJS\n");
             rendered.push_str(&format!(
-                "> Rendered in safe mode (`tag-pages`) for `dv.pages(\"#{}\")`.\n>\n",
-                tag
+                "> Rendered in safe mode (`tag-pages`) for `dv.pages(\"{}\")`.\n>\n",
+                source_label
             ));
 
             if matches.is_empty() {
-                rendered.push_str(&format!("> _No notes found for #{}._\n", tag));
+                rendered.push_str(&format!("> _No notes found for {}._\n", source_label));
                 return rendered;
             }
 
@@ -3885,7 +4037,7 @@ mod tests {
     }
 
     #[test]
-    fn apply_dataview_inline_supports_this_file_and_pages_length() {
+    fn apply_dataview_inline_supports_this_file_fields_and_pages_length() {
         let seeds = vec![
             SeedSummary {
                 slug: "home".to_string(),
@@ -3903,15 +4055,20 @@ mod tests {
                 tags: vec!["seo".to_string()],
             },
         ];
+        let current_tags = vec!["intro".to_string(), "daily".to_string()];
         let rendered = apply_dataview_inline(
-            "Name: `= this.file.name`\nLink: `= this.file.link`\nCount: `= dv.pages(\"#seo\").length`",
+            "Name: `= this.file.name`\nLink: `= this.file.link`\nPath: `= this.file.path`\nFolder: `= this.file.folder`\nTags: `= this.file.tags`\nCount: `= dv.pages(\"#seo\").length`",
             &seeds,
-            "home",
+            "journal/home",
             "Home",
+            &current_tags,
         );
 
         assert!(rendered.contains("Name: Home"));
-        assert!(rendered.contains("Link: [Home](/notes/home/)"));
+        assert!(rendered.contains("Link: [Home](/notes/journal/home/)"));
+        assert!(rendered.contains("Path: journal/home"));
+        assert!(rendered.contains("Folder: journal"));
+        assert!(rendered.contains("Tags: #intro, #daily"));
         assert!(rendered.contains("Count: 2"));
     }
 
@@ -4059,6 +4216,81 @@ mod tests {
         ));
         assert!(rendered.contains("- [Beta SEO](/notes/beta/)"));
         assert!(!rendered.contains("/notes/alpha/"));
+    }
+
+    #[test]
+    fn apply_dataview_blocks_supports_folder_sources_and_file_path_where() {
+        let seeds = vec![
+            SeedSummary {
+                slug: "home".to_string(),
+                title: "Home".to_string(),
+                tags: vec!["intro".to_string()],
+            },
+            SeedSummary {
+                slug: "blog/alpha".to_string(),
+                title: "Alpha SEO".to_string(),
+                tags: vec!["seo".to_string()],
+            },
+            SeedSummary {
+                slug: "blog/zeta".to_string(),
+                title: "Zeta Rust".to_string(),
+                tags: vec!["rust".to_string()],
+            },
+            SeedSummary {
+                slug: "journal/seo-log".to_string(),
+                title: "SEO Journal".to_string(),
+                tags: vec!["seo".to_string()],
+            },
+        ];
+        let rendered = apply_dataview_blocks(
+            "```dataview\nLIST FROM \"blog\"\nWHERE contains(file.path, \"alpha\")\nSORT file.path DESC\n```",
+            &seeds,
+            "home",
+            DataviewJsMode::Disabled,
+        );
+
+        assert!(rendered.contains("Query: `LIST FROM \"blog\" ; WHERE contains(file.path, \"alpha\") ; SORT file.path DESC`"));
+        assert!(rendered.contains("- [Alpha SEO](/notes/blog/alpha/)"));
+        assert!(!rendered.contains("/notes/blog/zeta/"));
+        assert!(!rendered.contains("/notes/journal/seo-log/"));
+    }
+
+    #[test]
+    fn apply_dataview_blocks_renders_dataviewjs_for_folder_sources_in_tag_pages_mode() {
+        let seeds = vec![
+            SeedSummary {
+                slug: "home".to_string(),
+                title: "Home".to_string(),
+                tags: vec!["intro".to_string()],
+            },
+            SeedSummary {
+                slug: "blog/alpha".to_string(),
+                title: "Alpha".to_string(),
+                tags: vec!["seo".to_string()],
+            },
+            SeedSummary {
+                slug: "blog/beta".to_string(),
+                title: "Beta".to_string(),
+                tags: vec!["seo".to_string()],
+            },
+            SeedSummary {
+                slug: "notes/gamma".to_string(),
+                title: "Gamma".to_string(),
+                tags: vec!["seo".to_string()],
+            },
+        ];
+        let rendered = apply_dataview_blocks(
+            "```dataviewjs\ndv.list(dv.pages(\"blog\").map(p => p.file.link))\n```",
+            &seeds,
+            "home",
+            DataviewJsMode::TagPages,
+        );
+
+        assert!(rendered.contains("Rendered in safe mode"));
+        assert!(rendered.contains("dv.pages(\"blog\")"));
+        assert!(rendered.contains("[Alpha](/notes/blog/alpha/)"));
+        assert!(rendered.contains("[Beta](/notes/blog/beta/)"));
+        assert!(!rendered.contains("/notes/notes/gamma/"));
     }
 
     #[test]
