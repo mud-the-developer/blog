@@ -4,7 +4,7 @@ use axum::http::StatusCode;
 use axum::response::IntoResponse;
 use axum::routing::{get, post};
 use axum::{Json, Router};
-use blog_core::{build_site, BuildConfig, PublishPolicy, SiteConfig, SiteText};
+use blog_core::{build_site, BuildConfig, DataviewJsMode, PublishPolicy, SiteConfig, SiteText};
 use clap::Parser;
 use serde::{Deserialize, Serialize};
 use std::net::SocketAddr;
@@ -64,6 +64,8 @@ struct Cli {
     backlinks_heading: String,
     #[arg(long, default_value = "No linked mentions yet.")]
     backlinks_empty: String,
+    #[arg(long, default_value = "disabled", value_parser = ["disabled", "tag-pages"])]
+    dataviewjs_mode: String,
     #[arg(long, default_value = "dg-opt-in", value_parser = ["dg-opt-in", "permissive"])]
     publish_policy: String,
 }
@@ -72,6 +74,13 @@ fn parse_publish_policy(raw: &str) -> PublishPolicy {
     match raw {
         "permissive" => PublishPolicy::Permissive,
         _ => PublishPolicy::DgOptIn,
+    }
+}
+
+fn parse_dataviewjs_mode(raw: &str) -> DataviewJsMode {
+    match raw {
+        "tag-pages" => DataviewJsMode::TagPages,
+        _ => DataviewJsMode::Disabled,
     }
 }
 
@@ -96,6 +105,7 @@ async fn main() -> Result<()> {
                 backlinks_heading: cli.backlinks_heading,
                 backlinks_empty: cli.backlinks_empty,
             },
+            dataviewjs_mode: parse_dataviewjs_mode(&cli.dataviewjs_mode),
             ..SiteConfig::default()
         },
         publish_policy: parse_publish_policy(&cli.publish_policy),

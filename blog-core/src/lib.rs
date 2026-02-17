@@ -70,6 +70,17 @@ static DATAVIEW_INLINE_PAGES_LENGTH_RE: Lazy<Regex> = Lazy::new(|| {
     Regex::new(r#"(?i)`=\s*dv\.pages\(\s*["']#?([A-Za-z0-9_-]+)["']\s*\)\.length\s*`"#)
         .expect("invalid dataview inline pages length regex")
 });
+static DATAVIEWJS_DV_PAGES_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r#"(?is)dv\.pages\(\s*["']#?([A-Za-z0-9_-]+)["']\s*\)"#)
+        .expect("invalid dataviewjs pages regex")
+});
+static DATAVIEWJS_LIST_RE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r"(?is)dv\.list\s*\(").expect("invalid dataviewjs list regex"));
+static DATAVIEWJS_TABLE_RE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r"(?is)dv\.table\s*\(").expect("invalid dataviewjs table regex"));
+static DATAVIEWJS_TASKLIST_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r"(?is)dv\.taskList\s*\(").expect("invalid dataviewjs task list regex")
+});
 static NOTE_LINK_MARKDOWN_RE: Lazy<Regex> =
     Lazy::new(|| Regex::new(r"\]\(/notes/([^)]+)\)").expect("invalid markdown note link regex"));
 static HTML_TAG_RE: Lazy<Regex> =
@@ -129,6 +140,7 @@ pub struct SiteConfig {
     pub author: String,
     pub language: String,
     pub text: SiteText,
+    pub dataviewjs_mode: DataviewJsMode,
 }
 
 impl Default for SiteConfig {
@@ -140,6 +152,7 @@ impl Default for SiteConfig {
             author: "Author".to_string(),
             language: "en".to_string(),
             text: SiteText::default(),
+            dataviewjs_mode: DataviewJsMode::default(),
         }
     }
 }
@@ -174,6 +187,18 @@ pub enum PublishPolicy {
 impl Default for PublishPolicy {
     fn default() -> Self {
         Self::DgOptIn
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum DataviewJsMode {
+    Disabled,
+    TagPages,
+}
+
+impl Default for DataviewJsMode {
+    fn default() -> Self {
+        Self::Disabled
     }
 }
 
@@ -335,6 +360,33 @@ struct SeedSummary {
     tags: Vec<String>,
 }
 
+#[derive(Debug, Deserialize)]
+struct RawRegexFilterRule {
+    pattern: String,
+    replace: String,
+}
+
+#[derive(Debug, Clone)]
+struct RegexFilterRule {
+    regex: Regex,
+    replace: String,
+}
+
+#[derive(Debug, Deserialize, Default)]
+struct RawStyleSettings {
+    root: Option<BTreeMap<String, String>>,
+    light: Option<BTreeMap<String, String>>,
+    dark: Option<BTreeMap<String, String>>,
+}
+
+#[derive(Debug, Clone, Default)]
+struct ThemeAssets {
+    obsidian_theme_css_url: String,
+    style_settings_css_url: String,
+    user_overrides_css_url: String,
+    style_settings_inline_css: String,
+}
+
 #[derive(Debug, Clone, Copy)]
 enum DataviewKind {
     List,
@@ -370,6 +422,10 @@ struct LayoutContext {
     search_placeholder: String,
     pages_heading: String,
     toc_heading: String,
+    obsidian_theme_css_url: String,
+    style_settings_css_url: String,
+    user_overrides_css_url: String,
+    style_settings_inline_css: String,
     show_search: bool,
     show_graph_module: bool,
     graph_data_url: String,
@@ -486,7 +542,14 @@ struct MissingNoteTemplate {
 pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
     let seeds = collect_post_seeds(config)?;
     let slug_map = build_slug_map(&seeds);
-    let mut posts = render_posts(&seeds, &slug_map)?;
+    let regex_filters = load_regex_filters(&config.static_dir)?;
+    let theme_assets = collect_theme_assets(&config.static_dir)?;
+    let mut posts = render_posts(
+        &seeds,
+        &slug_map,
+        config.site.dataviewjs_mode,
+        &regex_filters,
+    )?;
 
     posts.sort_by(sort_posts_by_recency);
 
@@ -512,12 +575,12 @@ pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
         .map(|p| p.markdown_html.clone())
         .unwrap_or_default();
 
-    render_index(config, &posts, &tags, &home_intro_html)?;
-    render_posts_pages(config, &posts, &backlinks)?;
-    render_missing_note_pages(config, &posts)?;
-    render_tag_pages(config, &tags, &posts)?;
-    render_graph_page(config, &posts)?;
-    render_not_found_page(config, &posts)?;
+    render_index(config, &posts, &tags, &home_intro_html, &theme_assets)?;
+    render_posts_pages(config, &posts, &backlinks, &theme_assets)?;
+    render_missing_note_pages(config, &posts, &theme_assets)?;
+    render_tag_pages(config, &tags, &posts, &theme_assets)?;
+    render_graph_page(config, &posts, &theme_assets)?;
+    render_not_found_page(config, &posts, &theme_assets)?;
     write_search_index(config, &posts)?;
     write_file_tree(config, &posts)?;
     write_graph(config, &posts)?;
@@ -636,7 +699,12 @@ fn collect_post_seeds(config: &BuildConfig) -> Result<Vec<PostSeed>> {
     Ok(seeds)
 }
 
-fn render_posts(seeds: &[PostSeed], slug_map: &HashMap<String, String>) -> Result<Vec<Post>> {
+fn render_posts(
+    seeds: &[PostSeed],
+    slug_map: &HashMap<String, String>,
+    dataviewjs_mode: DataviewJsMode,
+    regex_filters: &[RegexFilterRule],
+) -> Result<Vec<Post>> {
     let mut posts = Vec::with_capacity(seeds.len());
     let mut embed_sources = HashMap::with_capacity(seeds.len());
     let known_slugs = seeds
@@ -670,7 +738,9 @@ fn render_posts(seeds: &[PostSeed], slug_map: &HashMap<String, String>) -> Resul
             .get(&seed.slug)
             .map(|source| source.markdown.as_str())
             .unwrap_or_default();
-        let with_dataview_blocks = apply_dataview_blocks(body, &seed_summaries, &seed.slug);
+        let filtered_body = apply_custom_regex_filters(body, regex_filters);
+        let with_dataview_blocks =
+            apply_dataview_blocks(&filtered_body, &seed_summaries, &seed.slug, dataviewjs_mode);
         let with_dataview = apply_dataview_inline(
             &with_dataview_blocks,
             &seed_summaries,
@@ -724,10 +794,12 @@ fn render_index(
     posts: &[Post],
     tags: &[TagEntry],
     home_intro_html: &str,
+    theme_assets: &ThemeAssets,
 ) -> Result<()> {
     let layout = website_layout(
         config,
         posts,
+        theme_assets,
         config.site.title.clone(),
         config.site.description.clone(),
         "/",
@@ -762,6 +834,7 @@ fn render_posts_pages(
     config: &BuildConfig,
     posts: &[Post],
     backlinks: &HashMap<String, Vec<Backlink>>,
+    theme_assets: &ThemeAssets,
 ) -> Result<()> {
     for post in posts {
         let page_path = format!("/notes/{}/", post.slug);
@@ -771,6 +844,7 @@ fn render_posts_pages(
         let layout = website_layout(
             config,
             posts,
+            theme_assets,
             format!("{} | {}", post.title, config.site.title),
             post.description.clone(),
             &page_path,
@@ -810,7 +884,12 @@ fn render_posts_pages(
     Ok(())
 }
 
-fn render_tag_pages(config: &BuildConfig, tags: &[TagEntry], posts: &[Post]) -> Result<()> {
+fn render_tag_pages(
+    config: &BuildConfig,
+    tags: &[TagEntry],
+    posts: &[Post],
+    theme_assets: &ThemeAssets,
+) -> Result<()> {
     let mut post_map: HashMap<&str, Vec<&Post>> = HashMap::new();
     for post in posts {
         if post.hidden {
@@ -829,6 +908,7 @@ fn render_tag_pages(config: &BuildConfig, tags: &[TagEntry], posts: &[Post]) -> 
         let layout = website_layout(
             config,
             posts,
+            theme_assets,
             format!("#{} | {}", tag.name, config.site.title),
             format!("Posts tagged '{}'", tag.name),
             &page_path,
@@ -863,11 +943,16 @@ fn render_tag_pages(config: &BuildConfig, tags: &[TagEntry], posts: &[Post]) -> 
     Ok(())
 }
 
-fn render_graph_page(config: &BuildConfig, posts: &[Post]) -> Result<()> {
+fn render_graph_page(
+    config: &BuildConfig,
+    posts: &[Post],
+    theme_assets: &ThemeAssets,
+) -> Result<()> {
     let (nodes, links) = build_graph_data(posts);
     let layout = website_layout(
         config,
         posts,
+        theme_assets,
         format!("Graph | {}", config.site.title),
         "Interactive graph view of connected notes.".to_string(),
         "/graph/",
@@ -896,10 +981,15 @@ fn render_graph_page(config: &BuildConfig, posts: &[Post]) -> Result<()> {
     )
 }
 
-fn render_not_found_page(config: &BuildConfig, posts: &[Post]) -> Result<()> {
+fn render_not_found_page(
+    config: &BuildConfig,
+    posts: &[Post],
+    theme_assets: &ThemeAssets,
+) -> Result<()> {
     let layout = website_layout(
         config,
         posts,
+        theme_assets,
         format!("Not Found | {}", config.site.title),
         "The page you requested could not be found.".to_string(),
         "/404.html",
@@ -920,7 +1010,11 @@ fn render_not_found_page(config: &BuildConfig, posts: &[Post]) -> Result<()> {
     write_file(config.output_dir.join("404.html"), template.render()?)
 }
 
-fn render_missing_note_pages(config: &BuildConfig, posts: &[Post]) -> Result<()> {
+fn render_missing_note_pages(
+    config: &BuildConfig,
+    posts: &[Post],
+    theme_assets: &ThemeAssets,
+) -> Result<()> {
     let known_slugs = posts
         .iter()
         .map(|post| post.slug.as_str())
@@ -940,6 +1034,7 @@ fn render_missing_note_pages(config: &BuildConfig, posts: &[Post]) -> Result<()>
         let layout = website_layout(
             config,
             posts,
+            theme_assets,
             format!("{missing_title} | {}", config.site.title),
             "This note is not published yet.".to_string(),
             &page_path,
@@ -1409,6 +1504,147 @@ fn write_frontmatter_report(config: &BuildConfig) -> Result<()> {
     write_file(config.output_dir.join("frontmatter-report.json"), body)
 }
 
+fn load_regex_filters(static_dir: &Path) -> Result<Vec<RegexFilterRule>> {
+    let path = static_dir.join("regex-filters.json");
+    if !path.exists() {
+        return Ok(Vec::new());
+    }
+
+    let raw =
+        fs::read_to_string(&path).with_context(|| format!("failed to read {}", path.display()))?;
+    let rules: Vec<RawRegexFilterRule> = serde_json::from_str(&raw)
+        .with_context(|| format!("failed to parse {}", path.display()))?;
+
+    let mut compiled = Vec::new();
+    for (index, rule) in rules.into_iter().enumerate() {
+        let pattern = rule.pattern.trim();
+        if pattern.is_empty() {
+            continue;
+        }
+        let regex = Regex::new(pattern).with_context(|| {
+            format!(
+                "failed to compile regex filter #{} in {}: {}",
+                index + 1,
+                path.display(),
+                pattern
+            )
+        })?;
+        compiled.push(RegexFilterRule {
+            regex,
+            replace: rule.replace,
+        });
+    }
+
+    Ok(compiled)
+}
+
+fn apply_custom_regex_filters(markdown: &str, filters: &[RegexFilterRule]) -> String {
+    let mut transformed = markdown.to_string();
+    for rule in filters {
+        transformed = rule
+            .regex
+            .replace_all(&transformed, rule.replace.as_str())
+            .to_string();
+    }
+    transformed
+}
+
+fn collect_theme_assets(static_dir: &Path) -> Result<ThemeAssets> {
+    Ok(ThemeAssets {
+        obsidian_theme_css_url: static_css_url_if_exists(static_dir, "obsidian-theme.css"),
+        style_settings_css_url: static_css_url_if_exists(static_dir, "style-settings.css"),
+        user_overrides_css_url: static_css_url_if_exists(static_dir, "user-overrides.css"),
+        style_settings_inline_css: load_style_settings_inline_css(static_dir)?,
+    })
+}
+
+fn static_css_url_if_exists(static_dir: &Path, file_name: &str) -> String {
+    if static_dir.join(file_name).exists() {
+        format!("/{}", file_name.replace('\\', "/"))
+    } else {
+        String::new()
+    }
+}
+
+fn load_style_settings_inline_css(static_dir: &Path) -> Result<String> {
+    let path = static_dir.join("style-settings.json");
+    if !path.exists() {
+        return Ok(String::new());
+    }
+
+    let raw =
+        fs::read_to_string(&path).with_context(|| format!("failed to read {}", path.display()))?;
+    let parsed: RawStyleSettings = serde_json::from_str(&raw)
+        .with_context(|| format!("failed to parse {}", path.display()))?;
+
+    let mut css = String::new();
+    if let Some(root) = parsed.root.as_ref() {
+        append_css_var_block(&mut css, ":root", root);
+    }
+    if let Some(light) = parsed.light.as_ref() {
+        append_css_var_block(&mut css, "[data-theme=\"light\"]", light);
+    }
+    if let Some(dark) = parsed.dark.as_ref() {
+        append_css_var_block(&mut css, "[data-theme=\"dark\"]", dark);
+    }
+
+    Ok(css)
+}
+
+fn append_css_var_block(css: &mut String, selector: &str, vars: &BTreeMap<String, String>) {
+    let mut declarations = String::new();
+    for (name, value) in vars {
+        let Some(safe_name) = sanitize_css_var_name(name) else {
+            continue;
+        };
+        let Some(safe_value) = sanitize_css_var_value(value) else {
+            continue;
+        };
+        declarations.push_str(&safe_name);
+        declarations.push(':');
+        declarations.push_str(&safe_value);
+        declarations.push(';');
+    }
+
+    if declarations.is_empty() {
+        return;
+    }
+
+    css.push_str(selector);
+    css.push('{');
+    css.push_str(&declarations);
+    css.push('}');
+}
+
+fn sanitize_css_var_name(name: &str) -> Option<String> {
+    let trimmed = name.trim();
+    if !trimmed.starts_with("--") || trimmed.len() <= 2 {
+        return None;
+    }
+    if trimmed
+        .chars()
+        .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_')
+    {
+        Some(trimmed.to_string())
+    } else {
+        None
+    }
+}
+
+fn sanitize_css_var_value(value: &str) -> Option<String> {
+    let trimmed = value.trim();
+    if trimmed.is_empty() {
+        return None;
+    }
+    if trimmed.contains(';') || trimmed.contains('{') || trimmed.contains('}') {
+        return None;
+    }
+    if trimmed.contains('<') || trimmed.contains('>') {
+        return None;
+    }
+    Some(trimmed.to_string())
+}
+
 fn write_file(path: PathBuf, contents: String) -> Result<()> {
     if let Some(parent) = path.parent() {
         fs::create_dir_all(parent)
@@ -1807,7 +2043,12 @@ fn render_pdf_embed_html(url: &str, title: &str) -> String {
     )
 }
 
-fn apply_dataview_blocks(markdown: &str, seeds: &[SeedSummary], current_slug: &str) -> String {
+fn apply_dataview_blocks(
+    markdown: &str,
+    seeds: &[SeedSummary],
+    current_slug: &str,
+    dataviewjs_mode: DataviewJsMode,
+) -> String {
     let lines = markdown.lines().collect::<Vec<_>>();
     let mut transformed = String::new();
     let mut idx = 0usize;
@@ -1836,7 +2077,12 @@ fn apply_dataview_blocks(markdown: &str, seeds: &[SeedSummary], current_slug: &s
             let replacement = if language == "dataview" {
                 render_dataview_query_block(&block_lines.join("\n"), seeds, current_slug)
             } else {
-                render_dataviewjs_fallback(&block_lines.join("\n"))
+                render_dataviewjs_fallback(
+                    &block_lines.join("\n"),
+                    seeds,
+                    current_slug,
+                    dataviewjs_mode,
+                )
             };
             transformed.push_str(&replacement);
             if !replacement.ends_with('\n') {
@@ -2071,10 +2317,70 @@ fn render_dataview_query_block(query: &str, seeds: &[SeedSummary], current_slug:
     rendered
 }
 
-fn render_dataviewjs_fallback(query: &str) -> String {
+fn render_dataviewjs_fallback(
+    query: &str,
+    seeds: &[SeedSummary],
+    current_slug: &str,
+    dataviewjs_mode: DataviewJsMode,
+) -> String {
     let body = query.trim();
     if body.is_empty() {
         return "> [!info] DataviewJS\n> DataviewJS block is not executed.\n".to_string();
+    }
+
+    if dataviewjs_mode == DataviewJsMode::TagPages {
+        if let Some(caps) = DATAVIEWJS_DV_PAGES_RE.captures(body) {
+            let tag = caps
+                .get(1)
+                .map(|m| m.as_str().to_ascii_lowercase())
+                .unwrap_or_default();
+            let options = DataviewQueryOptions::default();
+            let matches = collect_dataview_matches(seeds, current_slug, &tag, &options);
+
+            let mut rendered = String::new();
+            rendered.push_str("> [!info] DataviewJS\n");
+            rendered.push_str(&format!(
+                "> Rendered in safe mode (`tag-pages`) for `dv.pages(\"#{}\")`.\n>\n",
+                tag
+            ));
+
+            if matches.is_empty() {
+                rendered.push_str(&format!("> _No notes found for #{}._\n", tag));
+                return rendered;
+            }
+
+            if DATAVIEWJS_TABLE_RE.is_match(body) {
+                rendered.push_str("> | Title | Note |\n");
+                rendered.push_str("> | --- | --- |\n");
+                for (title, slug) in matches {
+                    let title = title.replace('|', "\\|");
+                    rendered.push_str(&format!("> | {} | [Open](/notes/{}/) |\n", title, slug));
+                }
+                return rendered;
+            }
+
+            if DATAVIEWJS_TASKLIST_RE.is_match(body) {
+                for (title, slug) in matches {
+                    rendered.push_str(&format!("> - [ ] [{}](/notes/{}/)\n", title, slug));
+                }
+                return rendered;
+            }
+
+            if DATAVIEWJS_LIST_RE.is_match(body) || body.contains(".file.link") {
+                for (title, slug) in matches {
+                    rendered.push_str(&format!("> - [{}](/notes/{}/)\n", title, slug));
+                }
+                return rendered;
+            }
+
+            rendered
+                .push_str("> DataviewJS expression parsed, but output shape is not recognized.\n");
+            rendered.push_str("> Falling back to note list.\n>\n");
+            for (title, slug) in matches {
+                rendered.push_str(&format!("> - [{}](/notes/{}/)\n", title, slug));
+            }
+            return rendered;
+        }
     }
 
     format!(
@@ -2595,6 +2901,7 @@ fn post_to_card(post: &Post) -> PostCard {
 fn website_layout(
     config: &BuildConfig,
     posts: &[Post],
+    theme_assets: &ThemeAssets,
     page_title: String,
     page_description: String,
     page_path: &str,
@@ -2631,6 +2938,10 @@ fn website_layout(
         search_placeholder: config.site.text.search_placeholder.clone(),
         pages_heading: config.site.text.pages_heading.clone(),
         toc_heading: config.site.text.toc_heading.clone(),
+        obsidian_theme_css_url: theme_assets.obsidian_theme_css_url.clone(),
+        style_settings_css_url: theme_assets.style_settings_css_url.clone(),
+        user_overrides_css_url: theme_assets.user_overrides_css_url.clone(),
+        style_settings_inline_css: theme_assets.style_settings_inline_css.clone(),
         show_search,
         show_graph_module,
         graph_data_url,
@@ -3506,6 +3817,24 @@ mod tests {
     }
 
     #[test]
+    fn load_and_apply_regex_filters_from_static_dir() -> Result<()> {
+        let tmp = TestDir::new("regex-filters");
+        let static_dir = tmp.path.join("static");
+        write_text(
+            &static_dir.join("regex-filters.json"),
+            r#"[{"pattern":"Alpha","replace":"Beta"},{"pattern":"\\bWorld\\b","replace":"Garden"}]"#,
+        );
+
+        let filters = load_regex_filters(&static_dir)?;
+        assert_eq!(filters.len(), 2);
+
+        let rendered = apply_custom_regex_filters("Alpha World", &filters);
+        assert_eq!(rendered, "Beta Garden");
+
+        Ok(())
+    }
+
+    #[test]
     fn rewrite_wikilinks_renders_pdf_embed_markup() {
         let slug_map = HashMap::new();
         let embed_sources = HashMap::new();
@@ -3600,7 +3929,12 @@ mod tests {
                 tags: vec!["seo".to_string()],
             },
         ];
-        let rendered = apply_dataview_blocks("```dataview\nLIST FROM #seo\n```", &seeds, "home");
+        let rendered = apply_dataview_blocks(
+            "```dataview\nLIST FROM #seo\n```",
+            &seeds,
+            "home",
+            DataviewJsMode::Disabled,
+        );
 
         assert!(rendered.contains("Dataview"));
         assert!(rendered.contains("/notes/seo-note/"));
@@ -3620,7 +3954,12 @@ mod tests {
                 tags: vec!["seo".to_string()],
             },
         ];
-        let rendered = apply_dataview_blocks("```dataview\nTABLE FROM #seo\n```", &seeds, "home");
+        let rendered = apply_dataview_blocks(
+            "```dataview\nTABLE FROM #seo\n```",
+            &seeds,
+            "home",
+            DataviewJsMode::Disabled,
+        );
 
         assert!(rendered.contains("Query: `TABLE FROM #seo`"));
         assert!(rendered.contains("| Title | Note |"));
@@ -3641,10 +3980,47 @@ mod tests {
                 tags: vec!["seo".to_string()],
             },
         ];
-        let rendered = apply_dataview_blocks("```dataview\nTASK FROM #seo\n```", &seeds, "home");
+        let rendered = apply_dataview_blocks(
+            "```dataview\nTASK FROM #seo\n```",
+            &seeds,
+            "home",
+            DataviewJsMode::Disabled,
+        );
 
         assert!(rendered.contains("Query: `TASK FROM #seo`"));
         assert!(rendered.contains("- [ ] [SEO Task](/notes/seo-note/)"));
+    }
+
+    #[test]
+    fn apply_dataview_blocks_renders_dataviewjs_in_tag_pages_mode() {
+        let seeds = vec![
+            SeedSummary {
+                slug: "home".to_string(),
+                title: "Home".to_string(),
+                tags: vec!["intro".to_string()],
+            },
+            SeedSummary {
+                slug: "alpha-seo".to_string(),
+                title: "Alpha SEO".to_string(),
+                tags: vec!["seo".to_string()],
+            },
+            SeedSummary {
+                slug: "beta-seo".to_string(),
+                title: "Beta SEO".to_string(),
+                tags: vec!["seo".to_string()],
+            },
+        ];
+
+        let rendered = apply_dataview_blocks(
+            "```dataviewjs\ndv.list(dv.pages(\"#seo\").map(p => p.file.link))\n```",
+            &seeds,
+            "home",
+            DataviewJsMode::TagPages,
+        );
+
+        assert!(rendered.contains("Rendered in safe mode"));
+        assert!(rendered.contains("[Alpha SEO](/notes/alpha-seo/)"));
+        assert!(rendered.contains("[Beta SEO](/notes/beta-seo/)"));
     }
 
     #[test]
@@ -3675,6 +4051,7 @@ mod tests {
             "```dataview\nLIST FROM #seo\nWHERE contains(title, \"seo\")\nSORT title DESC\nLIMIT 1\n```",
             &seeds,
             "home",
+            DataviewJsMode::Disabled,
         );
 
         assert!(rendered.contains(
@@ -3922,6 +4299,25 @@ Not published.
             "body { color: #222; }\n",
         );
         write_text(
+            &static_dir.join("obsidian-theme.css"),
+            ":root { --obsidian-accent: #4d7ca8; }\n",
+        );
+        write_text(
+            &static_dir.join("style-settings.css"),
+            ".note { letter-spacing: 0.01em; }\n",
+        );
+        write_text(
+            &static_dir.join("user-overrides.css"),
+            ".site-title { text-transform: none; }\n",
+        );
+        write_text(
+            &static_dir.join("style-settings.json"),
+            r##"{
+  "root": { "--dg-accent": "#2c6fa8" },
+  "dark": { "--bg": "#101820", "--text": "#e7edf4" }
+}"##,
+        );
+        write_text(
             &static_dir.join("_headers"),
             "/*\n  X-Robots-Tag: index, follow\n",
         );
@@ -3972,9 +4368,17 @@ Not published.
         assert!(!output_dir.join("notes/no-flag/index.html").exists());
         assert!(output_dir.join("graph/index.html").exists());
         assert!(output_dir.join("404.html").exists());
+        assert!(output_dir.join("obsidian-theme.css").exists());
+        assert!(output_dir.join("style-settings.css").exists());
+        assert!(output_dir.join("user-overrides.css").exists());
 
         let index_html = fs::read_to_string(output_dir.join("index.html"))?;
         assert!(index_html.contains(r#"rel="canonical" href="https://example.test/""#));
+        assert!(index_html.contains(r#"href="/obsidian-theme.css""#));
+        assert!(index_html.contains(r#"href="/style-settings.css""#));
+        assert!(index_html.contains(r#"href="/user-overrides.css""#));
+        assert!(index_html.contains(":root{--dg-accent:#2c6fa8;}"));
+        assert!(index_html.contains(r#"[data-theme="dark"]{--bg:#101820;--text:#e7edf4;}"#));
         assert!(index_html.contains("loadScript(\"/assets/filetree.js\")"));
         assert!(index_html.contains("loadScript(\"/assets/toc-tracker.js\")"));
         assert!(index_html.contains("loadScript(\"/assets/link-preview.js\")"));

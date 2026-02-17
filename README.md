@@ -20,6 +20,8 @@ Obsidian markdown notes are transformed into a static blog with:
 - PDF embed support: `![[...pdf]]`
 - Excalidraw/Canvas JSON mini-preview: `![[...excalidraw]]`, `![[...canvas]]`
 - Dataview minimal support: fenced `dataview` with `LIST/TABLE/TASK FROM #tag`
+- DataviewJS safe subset mode (`--dataviewjs-mode tag-pages`): static render for `dv.pages("#tag")`
+- Custom regex filters via `static/regex-filters.json` (sequential markdown rewrite rules)
 - Backlinks per note
 - Persistent side graph with zoom/pan and node labels (source data: `graph.json`)
 - Global search API (`/api/search` on `blog-dev`) + live preview dropdown in UI
@@ -113,7 +115,12 @@ Use GitHub Actions to build Rust artifacts, then deploy `dist/` to Cloudflare Pa
 2. In GitHub repository settings, add secrets:
 
 - `CLOUDFLARE_API_TOKEN`: token with Cloudflare Pages edit permissions
-- `CLOUDFLARE_ACCOUNT_ID`: account ID
+- `CLOUDFLARE_ACCOUNT_ID`: 32-character Cloudflare Account ID (not Zone ID)
+
+Token scope minimum:
+
+- `Account` -> `Cloudflare Pages` -> `Edit`
+- `Account` -> `Account Settings` -> `Read`
 
 3. In GitHub repository settings, add variables:
 
@@ -129,12 +136,16 @@ Use GitHub Actions to build Rust artifacts, then deploy `dist/` to Cloudflare Pa
 - Workflow: `.github/workflows/deploy-cloudflare-pages.yml`
 - Action:
   - build with `cargo run -p blog-build`
+  - check frontend asset size budgets (`scripts/check-performance-budget.sh`)
+  - check broken internal links (`scripts/check-html-links.sh`)
   - deploy `dist/` with `wrangler pages deploy`
 
 ## Deployment Mode
 
 - This repository is configured for GitHub Actions deploy to Cloudflare Pages.
 - Disable Cloudflare Pages Git direct deploy to avoid duplicate deployments.
+- If SEO audit reports `x-robots-tag: noindex`, check Cloudflare Pages project setting:
+  `Settings > SEO indexing > Allow search engines`.
 
 ## Notes
 
@@ -147,3 +158,13 @@ Use GitHub Actions to build Rust artifacts, then deploy `dist/` to Cloudflare Pa
   - `--toc-heading`
   - `--backlinks-heading`
   - `--backlinks-empty`
+- DataviewJS execution policy is configurable:
+  - `--dataviewjs-mode disabled` (default)
+  - `--dataviewjs-mode tag-pages` (safe static subset)
+- Optional custom regex filters:
+  - Place `static/regex-filters.json` with objects like `{"pattern":"Old","replace":"New"}`
+- Optional theme/style hooks:
+  - `static/obsidian-theme.css`
+  - `static/style-settings.css`
+  - `static/user-overrides.css`
+  - `static/style-settings.json` (`root`/`light`/`dark` CSS variable maps)

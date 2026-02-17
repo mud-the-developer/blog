@@ -48,6 +48,18 @@
     <link rel="alternate" type="application/rss+xml" title="{{ layout.site_title }} RSS" href="/rss.xml" />
     <link rel="preload" href="/assets/style.css" as="style" />
     <link rel="stylesheet" href="/assets/style.css" />
+    {% if layout.obsidian_theme_css_url.len() > 0 %}
+    <link rel="stylesheet" href="{{ layout.obsidian_theme_css_url }}" />
+    {% endif %}
+    {% if layout.style_settings_css_url.len() > 0 %}
+    <link rel="stylesheet" href="{{ layout.style_settings_css_url }}" />
+    {% endif %}
+    {% if layout.user_overrides_css_url.len() > 0 %}
+    <link rel="stylesheet" href="{{ layout.user_overrides_css_url }}" />
+    {% endif %}
+    {% if layout.style_settings_inline_css.len() > 0 %}
+    <style>{{ layout.style_settings_inline_css|safe }}</style>
+    {% endif %}
 
     {% if layout.json_ld.len() > 0 %}
     <script type="application/ld+json">{{ layout.json_ld|safe }}</script>
@@ -76,15 +88,18 @@
             <label class="sr-only" for="global-search-input">Search notes</label>
             <input
               id="global-search-input"
-              type="text"
+              type="search"
               placeholder="{{ layout.search_placeholder }}"
               autocomplete="off"
-              role="combobox"
-              aria-autocomplete="list"
-              aria-expanded="false"
-              aria-controls="global-search-results"
             />
-            <div id="global-search-results" class="search-results" role="listbox" aria-label="Search results" hidden></div>
+            <div
+              id="global-search-results"
+              class="search-results"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+              hidden
+            ></div>
           </div>
           {% endif %}
           <div class="page-tabs-head">
@@ -155,6 +170,47 @@
             }
             window.setTimeout(callback, 120);
           };
+          const scheduleAfterPageLoad = (callback, delayMs) => {
+            const run = () => {
+              const delay = typeof delayMs === "number" ? delayMs : 0;
+              window.setTimeout(() => scheduleNonCritical(callback), delay);
+            };
+
+            if (document.readyState === "complete") {
+              run();
+              return;
+            }
+
+            window.addEventListener("load", run, { once: true });
+          };
+          const runOnVisibilityOrFallback = (element, callback, fallbackDelayMs) => {
+            let started = false;
+            const runOnce = () => {
+              if (started) {
+                return;
+              }
+              started = true;
+              callback();
+            };
+
+            element.addEventListener("pointerenter", runOnce, { once: true });
+            element.addEventListener("focusin", runOnce, { once: true });
+
+            if (typeof window.IntersectionObserver === "function") {
+              const observer = new window.IntersectionObserver(
+                (entries) => {
+                  if (entries.some((entry) => entry.isIntersecting || entry.intersectionRatio > 0)) {
+                    observer.disconnect();
+                    runOnce();
+                  }
+                },
+                { rootMargin: "200px 0px" }
+              );
+              observer.observe(element);
+            }
+
+            scheduleAfterPageLoad(runOnce, fallbackDelayMs);
+          };
           const loadScript = (src) => {
             const marker = "script[data-dg-src=\"" + src + "\"]";
             if (document.querySelector(marker)) {
@@ -208,8 +264,6 @@
         }
 
         if (searchInput && searchResults) {
-          searchInput.setAttribute("aria-expanded", "false");
-
           const escapeHtml = (value) =>
             String(value || "")
               .replace(/&/g, "&amp;")
@@ -253,32 +307,19 @@
 
           const hideResults = () => {
             searchResults.hidden = true;
-            searchInput.setAttribute("aria-expanded", "false");
-            searchInput.removeAttribute("aria-activedescendant");
             activeIndex = -1;
           };
 
           const showResults = () => {
             searchResults.hidden = false;
-            searchInput.setAttribute("aria-expanded", "true");
           };
 
           const applyActiveResult = () => {
             const rows = searchResults.querySelectorAll(".search-result");
-            let activeId = "";
             rows.forEach((row, idx) => {
               const isActive = idx === activeIndex;
               row.classList.toggle("is-active", isActive);
-              row.setAttribute("aria-selected", isActive ? "true" : "false");
-              if (isActive) {
-                activeId = row.id;
-              }
             });
-            if (activeId) {
-              searchInput.setAttribute("aria-activedescendant", activeId);
-            } else {
-              searchInput.removeAttribute("aria-activedescendant");
-            }
           };
 
           const loadFallbackRecords = async () => {
@@ -373,7 +414,7 @@
                 return (
                   '<a id="' +
                   optionId +
-                  '" class="search-result" role="option" aria-selected="false" href="' +
+                  '" class="search-result" href="' +
                   url +
                   '">' +
                   '<span class="search-result-title">' +
@@ -496,8 +537,9 @@
           });
         }
 
-        if (document.getElementById("filetree-root")) {
-          scheduleNonCritical(async () => {
+        const filetreeRoot = document.getElementById("filetree-root");
+        if (filetreeRoot) {
+          const initFileTree = async () => {
             try {
               await loadScript("/assets/filetree.js");
               if (window.initFileTree) {
@@ -510,7 +552,8 @@
             } catch (_) {
               // Keep server-rendered page tabs when filetree enhancement fails.
             }
-          });
+          };
+          runOnVisibilityOrFallback(filetreeRoot, initFileTree, 900);
         }
 
         if (document.querySelector(".toc-panel")) {
@@ -568,11 +611,14 @@
           });
         }
 
-        if (document.getElementById("global-graph-stage") || document.getElementById("side-graph-stage")) {
-          scheduleNonCritical(async () => {
+        const globalGraphStage = document.getElementById("global-graph-stage");
+        const sideGraphStage = document.getElementById("side-graph-stage");
+        const graphStage = globalGraphStage || sideGraphStage;
+        if (graphStage) {
+          const initGraphs = async () => {
             try {
               await loadScript("/assets/graph-view.js");
-              if (window.initGraphView && document.getElementById("global-graph-stage")) {
+              if (window.initGraphView && globalGraphStage) {
                 window.initGraphView({
                   stageId: "global-graph-stage",
                   svgId: "global-graph-svg",
@@ -592,7 +638,7 @@
                 });
               }
 
-              if (window.initGraphView && document.getElementById("side-graph-stage")) {
+              if (window.initGraphView && sideGraphStage) {
                 window.initGraphView({
                   stageId: "side-graph-stage",
                   svgId: "side-graph-svg",
@@ -614,7 +660,8 @@
             } catch (_) {
               // Graph panel remains empty when JS graph rendering is unavailable.
             }
-          });
+          };
+          runOnVisibilityOrFallback(graphStage, initGraphs, 1300);
         }
         };
 

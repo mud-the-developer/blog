@@ -39,8 +39,29 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name:
-        run: npx wrangler@4 whoami && npx wrangler@4 pages project list
+
+      - name: Validate Cloudflare configuration
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${CLOUDFLARE_API_TOKEN:-}" ]]; then
+            echo "GitHub secret CLOUDFLARE_API_TOKEN is required."
+            exit 1
+          fi
+
+          if [[ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]]; then
+            echo "GitHub secret CLOUDFLARE_ACCOUNT_ID is required."
+            exit 1
+          fi
+
+          if ! [[ "${CLOUDFLARE_ACCOUNT_ID}" =~ ^[A-Za-z0-9]{32}$ ]]; then
+            echo "CLOUDFLARE_ACCOUNT_ID looks invalid. It should be your 32-character Account ID."
+            exit 1
+          fi
+
+      - name: Verify Cloudflare token
+        run: npx wrangler@4 whoami
+
       - name: Build static site
         run: |
           set -euo pipefail
@@ -68,6 +89,12 @@ jobs:
           fi
 
           cargo run -p blog-build -- "${build_args[@]}"
+
+      - name: Check performance budgets
+        run: ./scripts/check-performance-budget.sh dist
+
+      - name: Check internal HTML links
+        run: ./scripts/check-html-links.sh dist
 
       - name: Deploy to Cloudflare Pages
         run: |
