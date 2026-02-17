@@ -14,6 +14,7 @@
     const searchInput = document.getElementById(opts.searchInputId || "");
     const resetButton = document.getElementById(opts.resetButtonId || "");
     const toggleButton = document.getElementById(opts.toggleButtonId || "");
+    const zoomSlider = document.getElementById(opts.zoomSliderId || "");
 
     const width = opts.width || 1000;
     const height = opts.height || 640;
@@ -95,12 +96,22 @@
       };
     };
 
+    const clampScale = (value) => Math.min(maxZoom, Math.max(minZoom, value));
+
+    const syncZoomSlider = () => {
+      if (!(zoomSlider instanceof HTMLInputElement)) {
+        return;
+      }
+      zoomSlider.value = graphState.viewport.scale.toFixed(4);
+    };
+
     const applyViewportTransform = () => {
       const view = graphState.viewport;
       const transform =
         "translate(" + view.tx.toFixed(2) + "," + view.ty.toFixed(2) + ") scale(" + view.scale.toFixed(4) + ")";
       linkLayer.setAttribute("transform", transform);
       nodeLayer.setAttribute("transform", transform);
+      syncZoomSlider();
     };
 
     const resetViewport = () => {
@@ -117,12 +128,25 @@
 
       const nextScale =
         typeof preferredScale === "number"
-          ? Math.min(maxZoom, Math.max(minZoom, preferredScale))
+          ? clampScale(preferredScale)
           : graphState.viewport.scale;
 
       graphState.viewport.scale = nextScale;
       graphState.viewport.tx = centerX - node.x * nextScale;
       graphState.viewport.ty = centerY - node.y * nextScale;
+      applyViewportTransform();
+      wakeSimulation();
+    };
+
+    const setScaleAroundPoint = (nextScale, anchorPoint) => {
+      const safeScale = clampScale(nextScale);
+      const view = graphState.viewport;
+      const anchor = anchorPoint || { x: centerX, y: centerY };
+      const originX = (anchor.x - view.tx) / view.scale;
+      const originY = (anchor.y - view.ty) / view.scale;
+      view.scale = safeScale;
+      view.tx = anchor.x - originX * safeScale;
+      view.ty = anchor.y - originY * safeScale;
       applyViewportTransform();
       wakeSimulation();
     };
@@ -454,19 +478,14 @@
 
           const view = graphState.viewport;
           const pointer = pointInSvg(event);
-          const origin = toGraphPoint(pointer);
           const factor = Math.exp(-event.deltaY * zoomStep);
-          const nextScale = Math.min(maxZoom, Math.max(minZoom, view.scale * factor));
+          const nextScale = clampScale(view.scale * factor);
 
           if (Math.abs(nextScale - view.scale) < 0.0001) {
             return;
           }
 
-          view.scale = nextScale;
-          view.tx = pointer.x - origin.x * nextScale;
-          view.ty = pointer.y - origin.y * nextScale;
-          applyViewportTransform();
-          wakeSimulation();
+          setScaleAroundPoint(nextScale, pointer);
         },
         { passive: false }
       );
@@ -631,6 +650,20 @@
             resetViewport();
             wakeSimulation();
             applyVisualState();
+          });
+        }
+
+        if (zoomSlider instanceof HTMLInputElement) {
+          zoomSlider.min = String(minZoom);
+          zoomSlider.max = String(maxZoom);
+          zoomSlider.step = "0.01";
+          syncZoomSlider();
+          zoomSlider.addEventListener("input", () => {
+            const nextScale = Number.parseFloat(zoomSlider.value);
+            if (!Number.isFinite(nextScale)) {
+              return;
+            }
+            setScaleAroundPoint(nextScale, { x: centerX, y: centerY });
           });
         }
 

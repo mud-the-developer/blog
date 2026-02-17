@@ -138,11 +138,25 @@
           <div class="live-graph-head">
             <h2>Graph</h2>
           </div>
-          <div id="side-graph-stage" class="graph-stage graph-stage--side">
-            <svg id="side-graph-svg" viewBox="0 0 540 420" aria-label="Site graph preview">
-              <g id="side-graph-link-layer"></g>
-              <g id="side-graph-node-layer"></g>
-            </svg>
+          <div class="graph-stage-wrap graph-stage-wrap--side">
+            <div id="side-graph-stage" class="graph-stage graph-stage--side">
+              <svg id="side-graph-svg" viewBox="0 0 540 420" aria-label="Site graph preview">
+                <g id="side-graph-link-layer"></g>
+                <g id="side-graph-node-layer"></g>
+              </svg>
+            </div>
+            <div class="graph-zoom-control graph-zoom-control--side">
+              <label class="sr-only" for="side-graph-zoom">Graph zoom</label>
+              <input
+                id="side-graph-zoom"
+                class="graph-zoom-slider"
+                type="range"
+                min="0.45"
+                max="3.1"
+                step="0.01"
+                value="1"
+              />
+            </div>
           </div>
           {% endif %}
           {% if layout.toc_items.len() > 0 %}
@@ -308,6 +322,129 @@
             ]
           };
 
+          const clampChannel = (value) => Math.max(0, Math.min(255, Math.round(value)));
+
+          const parseColor = (raw) => {
+            const value = String(raw || "").trim().toLowerCase();
+            if (!value) {
+              return null;
+            }
+
+            const hex = value.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+            if (hex) {
+              const token = hex[1];
+              if (token.length === 3) {
+                return {
+                  r: parseInt(token[0] + token[0], 16),
+                  g: parseInt(token[1] + token[1], 16),
+                  b: parseInt(token[2] + token[2], 16)
+                };
+              }
+              return {
+                r: parseInt(token.slice(0, 2), 16),
+                g: parseInt(token.slice(2, 4), 16),
+                b: parseInt(token.slice(4, 6), 16)
+              };
+            }
+
+            const rgb = value.match(/^rgba?\(\s*([0-9.]+)[,\s]+([0-9.]+)[,\s]+([0-9.]+)/);
+            if (rgb) {
+              return {
+                r: clampChannel(Number.parseFloat(rgb[1])),
+                g: clampChannel(Number.parseFloat(rgb[2])),
+                b: clampChannel(Number.parseFloat(rgb[3]))
+              };
+            }
+
+            return null;
+          };
+
+          const rgbToCss = (color) =>
+            "rgb(" + clampChannel(color.r) + ", " + clampChannel(color.g) + ", " + clampChannel(color.b) + ")";
+
+          const mix = (left, right, leftWeight) => {
+            const weight = Number.isFinite(leftWeight) ? leftWeight : 0.5;
+            const clamped = Math.max(0, Math.min(1, weight));
+            return {
+              r: left.r * clamped + right.r * (1 - clamped),
+              g: left.g * clamped + right.g * (1 - clamped),
+              b: left.b * clamped + right.b * (1 - clamped)
+            };
+          };
+
+          const toLinear = (channel) => {
+            const value = channel / 255;
+            if (value <= 0.04045) {
+              return value / 12.92;
+            }
+            return Math.pow((value + 0.055) / 1.055, 2.4);
+          };
+
+          const luminance = (color) =>
+            0.2126 * toLinear(color.r) + 0.7152 * toLinear(color.g) + 0.0722 * toLinear(color.b);
+
+          const contrastRatio = (first, second) => {
+            const l1 = luminance(first);
+            const l2 = luminance(second);
+            const lighter = Math.max(l1, l2);
+            const darker = Math.min(l1, l2);
+            return (lighter + 0.05) / (darker + 0.05);
+          };
+
+          const pickReadableText = (background) => {
+            const darkText = { r: 20, g: 24, b: 33 };
+            const lightText = { r: 241, g: 245, b: 251 };
+            return contrastRatio(darkText, background) >= contrastRatio(lightText, background)
+              ? darkText
+              : lightText;
+          };
+
+          const ensureContrast = (foreground, background, minimumRatio) => {
+            const fallback = pickReadableText(background);
+            if (!foreground) {
+              return fallback;
+            }
+            if (contrastRatio(foreground, background) >= minimumRatio) {
+              return foreground;
+            }
+            return fallback;
+          };
+
+          const applyThemeLegibility = () => {
+            const root = document.documentElement;
+
+            root.style.removeProperty("--text");
+            root.style.removeProperty("--muted");
+            root.style.removeProperty("--accent");
+            root.style.removeProperty("--accent-ink");
+
+            const computed = window.getComputedStyle(root);
+            const surface = parseColor(computed.getPropertyValue("--surface")) || { r: 255, g: 255, b: 255 };
+            const accentSoft = parseColor(computed.getPropertyValue("--accent-soft")) || surface;
+            const textRaw = parseColor(computed.getPropertyValue("--text"));
+            const mutedRaw = parseColor(computed.getPropertyValue("--muted"));
+            const accentRaw = parseColor(computed.getPropertyValue("--accent"));
+            const accentInkRaw = parseColor(computed.getPropertyValue("--accent-ink"));
+
+            const text = ensureContrast(textRaw, surface, 4.5);
+            let muted = ensureContrast(mutedRaw, surface, 3.0);
+            if (contrastRatio(muted, surface) < 3.0) {
+              muted = mix(text, surface, 0.63);
+            }
+
+            let accent = ensureContrast(accentRaw, surface, 3.0);
+            if (contrastRatio(accent, surface) < 3.0) {
+              accent = mix(text, accent, 0.65);
+            }
+
+            const accentInk = ensureContrast(accentInkRaw || accent, accentSoft, 4.5);
+
+            root.style.setProperty("--text", rgbToCss(text));
+            root.style.setProperty("--muted", rgbToCss(muted));
+            root.style.setProperty("--accent", rgbToCss(accent));
+            root.style.setProperty("--accent-ink", rgbToCss(accentInk));
+          };
+
           const getPresetStorageKey = (theme) =>
             theme === "dark" ? "dg-theme-preset-dark" : "dg-theme-preset-light";
 
@@ -348,6 +485,7 @@
                 // Skip persistence when storage is unavailable.
               }
             }
+            applyThemeLegibility();
           };
 
           const applyTheme = (theme, persistTheme) => {
@@ -747,6 +885,7 @@
                   svgId: "global-graph-svg",
                   linkLayerId: "global-graph-link-layer",
                   nodeLayerId: "global-graph-node-layer",
+                  zoomSliderId: "global-graph-zoom",
                   searchInputId: "global-graph-search",
                   resetButtonId: "global-graph-reset",
                   toggleButtonId: "global-graph-toggle",
@@ -767,6 +906,7 @@
                   svgId: "side-graph-svg",
                   linkLayerId: "side-graph-link-layer",
                   nodeLayerId: "side-graph-node-layer",
+                  zoomSliderId: "side-graph-zoom",
                   dataUrl: "{{ layout.graph_data_url }}",
                   fallbackDataUrl: "/graph.json",
                   centerNodeId: "{{ layout.graph_center_id }}",

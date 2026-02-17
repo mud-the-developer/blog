@@ -7,6 +7,7 @@
   --line: #d7dce2;
   --accent: #0057b8;
   --accent-soft: #dbeafe;
+  --accent-ink: #123b70;
   --mark-bg: #ffe08f;
   --mark-text: #2c1f00;
   --radius: 12px;
@@ -21,6 +22,7 @@ html[data-theme="light"] {
   --line: #d7dce2;
   --accent: #0057b8;
   --accent-soft: #dbeafe;
+  --accent-ink: #123b70;
   --mark-bg: #ffe08f;
   --mark-text: #2c1f00;
 }
@@ -34,6 +36,7 @@ html[data-theme="dark"] {
   --line: #2a3c57;
   --accent: #74b0ff;
   --accent-soft: #1f3f66;
+  --accent-ink: #d8e9ff;
   --mark-bg: #664b00;
   --mark-text: #ffe2a6;
 }
@@ -180,7 +183,7 @@ a:hover {
 }
 
 .site-search input:focus {
-  outline: 2px solid #8ab7ea;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -213,7 +216,7 @@ a:hover {
 
 .search-result.is-active {
   background: var(--accent-soft);
-  outline: 1px solid #7aa9df;
+  outline: 1px solid var(--accent);
 }
 
 .search-result-title {
@@ -392,8 +395,8 @@ a:hover {
 .preview-toggle {
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: #f1f5fd;
-  color: #1b3b62;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
   font: inherit;
   font-size: 0.78rem;
   padding: 0.24rem 0.58rem;
@@ -401,7 +404,7 @@ a:hover {
 }
 
 .preview-toggle:hover {
-  background: #e6effc;
+  filter: brightness(0.97);
 }
 
 .page-tabs-list {
@@ -435,13 +438,13 @@ a:hover {
 .filetree-folder {
   border: 1px solid var(--line);
   border-radius: 10px;
-  background: #fbfdff;
+  background: var(--surface);
   padding: 0.28rem 0.35rem;
 }
 
 .filetree-folder[open] {
-  border-color: #9fb6d6;
-  background: #f4f9ff;
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 .filetree-folder-label {
@@ -471,7 +474,7 @@ a:hover {
 }
 
 .filetree-folder-label:focus-visible {
-  outline: 2px solid #8ab7ea;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 6px;
 }
@@ -484,7 +487,7 @@ a:hover {
   display: block;
   border: 1px solid var(--line);
   border-radius: 10px;
-  background: #fbfdff;
+  background: var(--surface);
   padding: 0.5rem 0.58rem;
   text-decoration: none;
   color: var(--text);
@@ -492,13 +495,13 @@ a:hover {
 }
 
 .page-tab:hover {
-  border-color: #9fb6d6;
-  background: #f2f8ff;
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 .page-tab.is-active {
-  border-color: #3a7bc7;
-  background: #eaf3ff;
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 .page-tab-title {
@@ -646,7 +649,7 @@ body.preview-open .page-tab-preview {
   display: inline-block;
   border: 1px solid var(--line);
   background: var(--accent-soft);
-  color: #123b70;
+  color: var(--accent-ink);
   border-radius: 999px;
   padding: 0.15rem 0.6rem;
   font-size: 0.83rem;
@@ -1191,8 +1194,8 @@ html[data-theme="dark"] .note-body .dg-canvas-map .dg-canvas-node text {
 .graph-data-link {
   border: 1px solid var(--line);
   border-radius: 10px;
-  background: #f8fbff;
-  color: #1b3b62;
+  background: var(--surface);
+  color: var(--text);
   padding: 0.42rem 0.65rem;
   font: inherit;
   line-height: 1;
@@ -1201,7 +1204,11 @@ html[data-theme="dark"] .note-body .dg-canvas-map .dg-canvas-node text {
 
 .graph-toolbar button:hover,
 .graph-data-link:hover {
-  background: #edf4ff;
+  background: var(--accent-soft);
+}
+
+.graph-stage-wrap {
+  position: relative;
 }
 
 .graph-stage {
@@ -1209,9 +1216,9 @@ html[data-theme="dark"] .note-body .dg-canvas-map .dg-canvas-node text {
   border-radius: 12px;
   overflow: hidden;
   background:
-    radial-gradient(circle at 8% 15%, #eaf3ff 0, transparent 55%),
-    radial-gradient(circle at 90% 85%, #eff8ff 0, transparent 45%),
-    #f8fbff;
+    radial-gradient(circle at 8% 15%, var(--accent-soft) 0, transparent 55%),
+    radial-gradient(circle at 90% 85%, var(--bg-spot) 0, transparent 45%),
+    var(--surface);
 }
 
 .graph-stage svg {
@@ -1233,14 +1240,45 @@ html[data-theme="dark"] .note-body .dg-canvas-map .dg-canvas-node text {
   cursor: grabbing;
 }
 
+.graph-zoom-control {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.42rem;
+  bottom: 0.7rem;
+  width: 2.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.graph-zoom-control--side {
+  top: 0.55rem;
+  right: 0.34rem;
+  bottom: 0.55rem;
+}
+
+.graph-zoom-slider {
+  width: 132px;
+  height: 1rem;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  pointer-events: auto;
+  accent-color: var(--accent);
+}
+
+.graph-stage--side + .graph-zoom-control .graph-zoom-slider {
+  width: 104px;
+}
+
 .graph-link {
-  stroke: #98a8bf;
+  stroke: var(--line);
   stroke-width: 1.4;
   stroke-opacity: 0.58;
 }
 
 .graph-link.is-active {
-  stroke: #0057b8;
+  stroke: var(--accent);
   stroke-width: 2.1;
   stroke-opacity: 0.92;
 }
@@ -1254,15 +1292,15 @@ html[data-theme="dark"] .note-body .dg-canvas-map .dg-canvas-node text {
 }
 
 .graph-node circle {
-  fill: #ffffff;
-  stroke: #3a7bc7;
+  fill: var(--surface);
+  stroke: var(--accent);
   stroke-width: 1.5;
 }
 
 .graph-node text {
   font-size: 12px;
-  fill: #163a66;
-  stroke: #f8fbff;
+  fill: var(--text);
+  stroke: var(--surface);
   stroke-width: 2.6;
   paint-order: stroke fill;
   pointer-events: none;
@@ -1281,8 +1319,8 @@ html[data-theme="dark"] .note-body .dg-canvas-map .dg-canvas-node text {
 }
 
 .graph-node.is-active circle {
-  fill: #dbeafe;
-  stroke: #0057b8;
+  fill: var(--accent-soft);
+  stroke: var(--accent);
   stroke-width: 2.2;
 }
 
@@ -1295,7 +1333,7 @@ html[data-theme="dark"] .note-body .dg-canvas-map .dg-canvas-node text {
   padding: 0.75rem 0.85rem;
   border: 1px dashed var(--line);
   border-radius: 10px;
-  background: #fbfdff;
+  background: var(--surface);
   color: var(--muted);
   font-size: 0.92rem;
 }
