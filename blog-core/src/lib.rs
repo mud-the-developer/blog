@@ -21,7 +21,15 @@ static WIKILINK_RE: Lazy<Regex> = Lazy::new(|| {
         .expect("invalid wikilink regex")
 });
 
-static IMG_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"<img\s").expect("invalid img regex"));
+static IMG_TAG_RE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r#"(?is)<img\b([^>]*)>"#).expect("invalid img tag regex"));
+static IMG_ALT_ATTR_RE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r#"(?i)(?:^|\s)alt\s*="#).expect("invalid img alt attr regex"));
+static IMG_LOADING_ATTR_RE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r#"(?i)(?:^|\s)loading\s*="#).expect("invalid img loading attr regex"));
+static IMG_DECODING_ATTR_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r#"(?i)(?:^|\s)decoding\s*="#).expect("invalid img decoding attr regex")
+});
 static HEADING_RE: Lazy<Regex> =
     Lazy::new(|| Regex::new(r#"(?s)<h([1-6])>(.*?)</h[1-6]>"#).expect("invalid heading regex"));
 static HEADING_WITH_ID_RE: Lazy<Regex> = Lazy::new(|| {
@@ -3391,11 +3399,38 @@ fn markdown_fragment_to_html(markdown: &str) -> String {
     let mut html = String::new();
     push_html(&mut html, parser);
 
-    let html = IMG_RE
-        .replace_all(&html, "<img loading=\"lazy\" decoding=\"async\" ")
-        .to_string();
+    enhance_image_tags(&html)
+}
 
-    html
+fn enhance_image_tags(html: &str) -> String {
+    IMG_TAG_RE
+        .replace_all(html, |captures: &Captures| {
+            let attrs = captures.get(1).map(|entry| entry.as_str()).unwrap_or("");
+            let mut tag = String::from("<img");
+
+            if !IMG_LOADING_ATTR_RE.is_match(attrs) {
+                tag.push_str(r#" loading="lazy""#);
+            }
+
+            if !IMG_DECODING_ATTR_RE.is_match(attrs) {
+                tag.push_str(r#" decoding="async""#);
+            }
+
+            if !IMG_ALT_ATTR_RE.is_match(attrs) {
+                tag.push_str(r#" alt="""#);
+            }
+
+            if !attrs.is_empty() {
+                if !attrs.starts_with(char::is_whitespace) {
+                    tag.push(' ');
+                }
+                tag.push_str(attrs);
+            }
+
+            tag.push('>');
+            tag
+        })
+        .to_string()
 }
 
 fn apply_plantuml_syntax(markdown: &str) -> String {
@@ -4710,6 +4745,32 @@ mod tests {
         assert!(html.contains(r#"details class="dg-callout dg-callout-warning""#));
         assert!(html.contains(r#"summary class="dg-callout-title">Safety</summary>"#));
         assert!(html.contains("Read this first."));
+    }
+
+    #[test]
+    fn markdown_to_html_adds_default_alt_to_raw_html_images() {
+        let html = markdown_to_html(
+            r#"
+<img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/>
+"#,
+        );
+
+        assert!(html.contains(r#"loading="lazy""#));
+        assert!(html.contains(r#"decoding="async""#));
+        assert!(html.contains(r#"alt="""#));
+    }
+
+    #[test]
+    fn markdown_to_html_preserves_existing_image_alt_text() {
+        let html = markdown_to_html(
+            r#"
+![GitHub Badge](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white)
+"#,
+        );
+
+        assert!(html.contains(r#"alt="GitHub Badge""#));
+        assert!(html.contains(r#"loading="lazy""#));
+        assert!(html.contains(r#"decoding="async""#));
     }
 
     #[test]
