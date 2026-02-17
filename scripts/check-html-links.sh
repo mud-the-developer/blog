@@ -8,11 +8,6 @@ if [[ ! -d "$DIST_DIR" ]]; then
   exit 1
 fi
 
-if ! command -v rg >/dev/null 2>&1; then
-  echo "::error::ripgrep (rg) is required for link checks."
-  exit 1
-fi
-
 normalize_path() {
   local raw="$1"
   local cleaned
@@ -48,6 +43,15 @@ link_target_exists() {
 
 missing=0
 
+extract_link_rows() {
+  if command -v rg >/dev/null 2>&1; then
+    rg --line-number --with-filename --only-matching '(href|src)="/[^"]*"' "$DIST_DIR" --glob '*.html'
+    return
+  fi
+
+  grep -RnoE --include='*.html' '(href|src)="/[^"]*"' "$DIST_DIR"
+}
+
 while IFS='|' read -r source_file link; do
   [[ -n "$source_file" ]] || continue
   [[ -n "$link" ]] || continue
@@ -71,7 +75,7 @@ while IFS='|' read -r source_file link; do
     missing=$((missing + 1))
   fi
 done < <(
-  rg --no-filename --line-number --only-matching '(href|src)="/[^"]*"' "$DIST_DIR" --glob '*.html' \
+  extract_link_rows \
     | sed -E 's/^([^:]+:[0-9]+):.*="([^"]*)"$/\1|\2/'
 )
 
