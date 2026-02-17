@@ -89,8 +89,22 @@
         </div>
         <div class="site-actions">
           <nav class="site-nav" aria-label="Main navigation">
-            <a href="/">Blog Home</a>
-            <a href="/rss.xml">RSS</a>
+            <a class="site-nav-icon-link" href="/" aria-label="Blog Home" title="Blog Home">
+              <svg class="site-nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M3 10.5 12 3l9 7.5"></path>
+                <path d="M5 9.5V21h14V9.5"></path>
+                <path d="M9.5 21v-6h5v6"></path>
+              </svg>
+              <span class="sr-only">Blog Home</span>
+            </a>
+            <a class="site-nav-icon-link" href="/rss.xml" aria-label="RSS Feed" title="RSS Feed">
+              <svg class="site-nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="6.5" cy="17.5" r="1.8"></circle>
+                <path d="M5 11a8 8 0 0 1 8 8"></path>
+                <path d="M5 6a13 13 0 0 1 13 13"></path>
+              </svg>
+              <span class="sr-only">RSS Feed</span>
+            </a>
             <div class="theme-controls">
               <button id="theme-mode-toggle" class="theme-toggle" type="button" aria-label="Theme mode">System</button>
               <label class="sr-only" for="theme-preset-toggle">Theme preset</label>
