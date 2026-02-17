@@ -55,8 +55,8 @@
 - [ ] Embedded PDFs
 - [ ] Excalidraw embed/transclusion
 - [ ] Canvas publish
-- [ ] Dataview blocks/inline
-- [ ] DataviewJS 호환 전략 구현(제한 또는 샌드박스)
+- [x] Dataview blocks/inline
+- [x] DataviewJS 호환 전략 구현(제한 또는 샌드박스)
 
 ## Phase 6: 커스터마이징/설정 호환 (2일)
 

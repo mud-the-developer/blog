@@ -43,7 +43,7 @@
     }
 
     function isInternalNoteLink(anchor) {
-      const path = pathFromHref(anchor.href);
+      const path = pathFromHref(anchor && anchor.href ? anchor.href : "");
       return path.startsWith("/notes/") && path !== currentPath;
     }
 
@@ -82,7 +82,7 @@
     function positionCard(anchor) {
       const rect = anchor.getBoundingClientRect();
       const margin = 10;
-      const width = card.offsetWidth || 300;
+      const width = card.offsetWidth || 320;
       const height = card.offsetHeight || 140;
 
       let left = rect.left + window.scrollX;
@@ -108,16 +108,45 @@
       card.style.top = Math.round(top) + "px";
     }
 
-    function renderCard(record) {
+    function recordFromAnchor(anchor, path) {
+      const titleText = String(
+        (anchor.querySelector(".page-tab-title") && anchor.querySelector(".page-tab-title").textContent) ||
+          anchor.textContent ||
+          "Linked note"
+      )
+        .replace(/\s+/g, " ")
+        .trim();
+
+      const previewText = String(
+        (anchor.querySelector(".page-tab-preview") && anchor.querySelector(".page-tab-preview").textContent) || ""
+      )
+        .replace(/\s+/g, " ")
+        .trim();
+
+      return {
+        title: titleText || "Linked note",
+        excerpt: previewText || "Preview not available.",
+        tags: [],
+        url: path,
+      };
+    }
+
+    function renderCard(record, path) {
       const title = document.createElement("p");
       title.className = "link-preview-title";
       title.textContent = record && record.title ? record.title : "Linked note";
+
+      const pathMeta = document.createElement("p");
+      pathMeta.className = "link-preview-path";
+      pathMeta.textContent = String(path || "")
+        .replace(/^\/notes\//, "")
+        .replace(/\/$/, "");
 
       const excerpt = document.createElement("p");
       excerpt.className = "link-preview-excerpt";
       excerpt.textContent = record && record.excerpt ? record.excerpt : "Preview not available.";
 
-      card.replaceChildren(title, excerpt);
+      card.replaceChildren(title, pathMeta, excerpt);
 
       const tags = Array.isArray(record && record.tags) ? record.tags.filter(Boolean).slice(0, 4) : [];
       if (tags.length) {
@@ -134,7 +163,7 @@
     }
 
     function showForAnchor(anchor) {
-      const path = pathFromHref(anchor.href);
+      const path = pathFromHref(anchor && anchor.href ? anchor.href : "");
       if (!path || path === currentPath) {
         return;
       }
@@ -145,12 +174,8 @@
           return;
         }
 
-        const record = map.get(path);
-        if (!record) {
-          return;
-        }
-
-        renderCard(record);
+        const record = map.get(path) || recordFromAnchor(anchor, path);
+        renderCard(record, path);
         card.hidden = false;
         positionCard(anchor);
       });
@@ -165,7 +190,7 @@
       clearTimeout(showTimer);
       clearTimeout(hideTimer);
       activeAnchor = anchor;
-      showTimer = window.setTimeout(() => showForAnchor(anchor), 180);
+      showTimer = window.setTimeout(() => showForAnchor(anchor), 150);
     }
 
     function scheduleHide(anchor) {
@@ -176,17 +201,60 @@
       hideTimer = window.setTimeout(() => {
         activeAnchor = null;
         hideCard();
-      }, 90);
+      }, 80);
     }
 
-    const anchors = containers
-      .flatMap((container) => Array.from(container.querySelectorAll("a[href]")))
-      .filter(isInternalNoteLink);
+    function findAnchor(target) {
+      if (!(target instanceof Element)) {
+        return null;
+      }
+      const anchor = target.closest("a[href]");
+      if (!(anchor instanceof HTMLAnchorElement)) {
+        return null;
+      }
+      return anchor;
+    }
 
-    anchors.forEach((anchor) => {
-      anchor.addEventListener("mouseenter", () => scheduleShow(anchor));
-      anchor.addEventListener("mouseleave", () => scheduleHide(anchor));
-      anchor.addEventListener("click", hideCard);
+    containers.forEach((container) => {
+      container.addEventListener("pointerover", (event) => {
+        const anchor = findAnchor(event.target);
+        if (!anchor || !isInternalNoteLink(anchor)) {
+          return;
+        }
+        if (event.relatedTarget instanceof Node && anchor.contains(event.relatedTarget)) {
+          return;
+        }
+        scheduleShow(anchor);
+      });
+
+      container.addEventListener("pointerout", (event) => {
+        const anchor = findAnchor(event.target);
+        if (!anchor || !isInternalNoteLink(anchor)) {
+          return;
+        }
+        if (event.relatedTarget instanceof Node && anchor.contains(event.relatedTarget)) {
+          return;
+        }
+        scheduleHide(anchor);
+      });
+
+      container.addEventListener("focusin", (event) => {
+        const anchor = findAnchor(event.target);
+        if (!anchor || !isInternalNoteLink(anchor)) {
+          return;
+        }
+        scheduleShow(anchor);
+      });
+
+      container.addEventListener("focusout", (event) => {
+        const anchor = findAnchor(event.target);
+        if (!anchor || !isInternalNoteLink(anchor)) {
+          return;
+        }
+        scheduleHide(anchor);
+      });
+
+      container.addEventListener("click", hideCard);
     });
 
     document.addEventListener(

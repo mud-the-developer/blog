@@ -9,10 +9,36 @@
     const dataUrl = opts.dataUrl || "/filetree.json";
     const openStorageKey = opts.openStorageKey || "dg-filetree-open";
     const scrollStorageKey = opts.scrollStorageKey || "dg-filetree-scroll";
+    const iconBaseUrl = opts.iconBaseUrl || "/assets/icons/material/";
+    const iconBase = String(iconBaseUrl).endsWith("/") ? String(iconBaseUrl) : String(iconBaseUrl) + "/";
     const scrollHost = document.querySelector(opts.scrollHostSelector || ".page-tabs");
     const normalizePath = (value) => {
       const base = String(value || "/").split(/[?#]/)[0] || "/";
       return base.endsWith("/") ? base : base + "/";
+    };
+    const iconUrl = (iconName, fallbackName) => {
+      const name = String(iconName || fallbackName || "").trim();
+      if (name.length === 0) {
+        return "";
+      }
+      if (name.startsWith("http://") || name.startsWith("https://") || name.startsWith("/")) {
+        return name;
+      }
+      return iconBase + name;
+    };
+    const createIconElement = (iconName, className, fallbackName) => {
+      const src = iconUrl(iconName, fallbackName);
+      if (src.length === 0) {
+        return null;
+      }
+      const icon = document.createElement("img");
+      icon.className = className;
+      icon.src = src;
+      icon.alt = "";
+      icon.setAttribute("aria-hidden", "true");
+      icon.decoding = "async";
+      icon.loading = "lazy";
+      return icon;
     };
     const activePath = normalizePath(opts.activePath || window.location.pathname);
 
@@ -49,7 +75,23 @@
 
           const summary = document.createElement("summary");
           summary.className = "filetree-folder-label";
-          summary.textContent = String(node.label || "Folder");
+
+          const folderIcon = createIconElement(
+            node.icon || "folder-base.svg",
+            "filetree-icon filetree-folder-icon",
+            "folder-base.svg"
+          );
+          if (folderIcon) {
+            folderIcon.dataset.iconClosed = String(node.icon || "folder-base.svg");
+            folderIcon.dataset.iconOpen = String(node.icon_open || "folder-base-open.svg");
+            summary.appendChild(folderIcon);
+          }
+
+          const folderText = document.createElement("span");
+          folderText.className = "filetree-folder-text";
+          folderText.textContent = String(node.label || "Folder");
+          summary.appendChild(folderText);
+
           details.appendChild(summary);
 
           const childList = document.createElement("ul");
@@ -61,6 +103,17 @@
             details.open = true;
           }
 
+          const syncFolderIcon = () => {
+            if (!folderIcon) {
+              return;
+            }
+            const closedName = folderIcon.dataset.iconClosed || "folder-base.svg";
+            const openName = folderIcon.dataset.iconOpen || "folder-base-open.svg";
+            folderIcon.src = iconUrl(details.open ? openName : closedName, closedName);
+          };
+
+          syncFolderIcon();
+
           details.addEventListener("toggle", () => {
             const id = String(node.id || "");
             if (!id) {
@@ -71,6 +124,7 @@
             } else {
               openSet.delete(id);
             }
+            syncFolderIcon();
             saveOpenSet(openSet);
           });
 
@@ -84,7 +138,17 @@
 
           const title = document.createElement("span");
           title.className = "page-tab-title";
-          title.textContent = String(node.label || "Untitled");
+
+          const noteIcon = createIconElement(node.icon || "markdown.svg", "filetree-icon filetree-note-icon", "document.svg");
+          if (noteIcon) {
+            title.appendChild(noteIcon);
+          }
+
+          const titleText = document.createElement("span");
+          titleText.className = "page-tab-title-text";
+          titleText.textContent = String(node.label || "Untitled");
+          title.appendChild(titleText);
+
           link.appendChild(title);
 
           const preview = String(node.preview || "").trim();

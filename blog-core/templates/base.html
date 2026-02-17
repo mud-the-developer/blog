@@ -34,16 +34,26 @@
     <script>
       (() => {
         try {
-          const themeKey = "dg-theme";
-          const saved = localStorage.getItem(themeKey);
+          const modeKey = "dg-theme-mode";
+          const legacyThemeKey = "dg-theme";
+          const savedMode = localStorage.getItem(modeKey);
+          const legacyTheme = localStorage.getItem(legacyThemeKey);
           const preferredDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-          const theme = saved === "light" || saved === "dark" ? saved : (preferredDark ? "dark" : "light");
+          const mode =
+            savedMode === "light" || savedMode === "dark" || savedMode === "system"
+              ? savedMode
+              : legacyTheme === "light" || legacyTheme === "dark"
+              ? legacyTheme
+              : "system";
+          const theme = mode === "system" ? (preferredDark ? "dark" : "light") : mode;
           const presetKey = theme === "dark" ? "dg-theme-preset-dark" : "dg-theme-preset-light";
           const presetFallback = theme === "dark" ? "d01-midnight" : "l01-paper";
           const preset = localStorage.getItem(presetKey) || presetFallback;
+          document.documentElement.setAttribute("data-theme-mode", mode);
           document.documentElement.setAttribute("data-theme", theme);
           document.documentElement.setAttribute("data-theme-preset", preset);
         } catch (_) {
+          document.documentElement.setAttribute("data-theme-mode", "system");
           document.documentElement.setAttribute("data-theme", "light");
           document.documentElement.setAttribute("data-theme-preset", "l01-paper");
         }
@@ -82,9 +92,11 @@
             <a href="/">Blog Home</a>
             <a href="/rss.xml">RSS</a>
             <div class="theme-controls">
-              <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">Dark</button>
+              <button id="theme-mode-toggle" class="theme-toggle" type="button" aria-label="Theme mode">System</button>
               <label class="sr-only" for="theme-preset-toggle">Theme preset</label>
               <select id="theme-preset-toggle" class="theme-preset-toggle" aria-label="Theme preset"></select>
+              <button id="theme-preset-random" class="theme-action" type="button" aria-label="Random preset">Shuffle</button>
+              <button id="theme-reset" class="theme-action" type="button" aria-label="Reset theme">Reset</button>
             </div>
           </nav>
         </div>
@@ -100,20 +112,23 @@
               type="search"
               placeholder="{{ layout.search_placeholder }}"
               autocomplete="off"
+              role="combobox"
+              aria-autocomplete="list"
+              aria-expanded="false"
+              aria-controls="global-search-results"
+              aria-haspopup="listbox"
             />
+            <p id="global-search-shortcut" class="search-shortcut" aria-hidden="true"></p>
             <div
               id="global-search-results"
               class="search-results"
-              role="status"
-              aria-live="polite"
-              aria-atomic="true"
+              role="listbox"
               hidden
             ></div>
           </div>
           {% endif %}
           <div class="page-tabs-head">
             <h2>{{ layout.pages_heading }}</h2>
-            <button id="preview-toggle" class="preview-toggle" type="button" aria-pressed="false">Preview: OFF</button>
           </div>
           <nav id="filetree-root" class="page-tabs-list">
             {% for tab in layout.page_tabs %}
@@ -181,11 +196,13 @@
     <script>
       (() => {
         const start = () => {
-          const previewButton = document.getElementById("preview-toggle");
-          const themeButton = document.getElementById("theme-toggle");
+          const themeModeButton = document.getElementById("theme-mode-toggle");
           const themePresetSelect = document.getElementById("theme-preset-toggle");
+          const themeRandomButton = document.getElementById("theme-preset-random");
+          const themeResetButton = document.getElementById("theme-reset");
           const searchInput = document.getElementById("global-search-input");
           const searchResults = document.getElementById("global-search-results");
+          const searchShortcut = document.getElementById("global-search-shortcut");
           const noteBody = document.querySelector(".note-body");
           const scheduleNonCritical = (callback) => {
             if (typeof window.requestIdleCallback === "function") {
@@ -251,26 +268,9 @@
             });
           };
 
-        if (previewButton) {
-          const previewKey = "dg-preview-open";
-          const applyPreview = (enabled) => {
-            document.body.classList.toggle("preview-open", enabled);
-            previewButton.setAttribute("aria-pressed", enabled ? "true" : "false");
-            previewButton.textContent = enabled ? "Preview: ON" : "Preview: OFF";
-          };
-
-          const savedPreview = localStorage.getItem(previewKey);
-          applyPreview(savedPreview === "1");
-
-          previewButton.addEventListener("click", () => {
-            const next = !document.body.classList.contains("preview-open");
-            localStorage.setItem(previewKey, next ? "1" : "0");
-            applyPreview(next);
-          });
-        }
-
-        if (themeButton || themePresetSelect) {
-          const themeKey = "dg-theme";
+        if (themeModeButton || themePresetSelect || themeRandomButton || themeResetButton) {
+          const modeKey = "dg-theme-mode";
+          const legacyThemeKey = "dg-theme";
           const defaultPresetByTheme = {
             light: "l01-paper",
             dark: "d01-midnight"
@@ -445,6 +445,25 @@
             root.style.setProperty("--accent-ink", rgbToCss(accentInk));
           };
 
+          const systemDarkQuery =
+            window.matchMedia && typeof window.matchMedia === "function"
+              ? window.matchMedia("(prefers-color-scheme: dark)")
+              : null;
+
+          const normalizeThemeMode = (value) => {
+            if (value === "light" || value === "dark" || value === "system") {
+              return value;
+            }
+            return "system";
+          };
+
+          const resolveThemeFromMode = (mode) => {
+            if (mode === "light" || mode === "dark") {
+              return mode;
+            }
+            return systemDarkQuery && systemDarkQuery.matches ? "dark" : "light";
+          };
+
           const getPresetStorageKey = (theme) =>
             theme === "dark" ? "dg-theme-preset-dark" : "dg-theme-preset-light";
 
@@ -488,43 +507,139 @@
             applyThemeLegibility();
           };
 
-          const applyTheme = (theme, persistTheme) => {
-            const safeTheme = theme === "dark" ? "dark" : "light";
-            document.documentElement.setAttribute("data-theme", safeTheme);
-            if (themeButton) {
-              themeButton.textContent = safeTheme === "dark" ? "Light" : "Dark";
+          const setThemeModeLabel = (mode, resolvedTheme) => {
+            if (!themeModeButton) {
+              return;
             }
-            renderPresetOptions(safeTheme);
-            applyPreset(safeTheme, readPreset(safeTheme), false);
-            if (persistTheme !== false) {
+            if (mode === "system") {
+              themeModeButton.textContent = "System · " + (resolvedTheme === "dark" ? "Dark" : "Light");
+              return;
+            }
+            themeModeButton.textContent = mode === "dark" ? "Dark" : "Light";
+          };
+
+          const applyThemeMode = (mode, persistMode) => {
+            const safeMode = normalizeThemeMode(mode);
+            const resolvedTheme = resolveThemeFromMode(safeMode);
+            document.documentElement.setAttribute("data-theme-mode", safeMode);
+            document.documentElement.setAttribute("data-theme", resolvedTheme);
+            setThemeModeLabel(safeMode, resolvedTheme);
+            renderPresetOptions(resolvedTheme);
+            applyPreset(resolvedTheme, readPreset(resolvedTheme), false);
+            if (persistMode !== false) {
               try {
-                localStorage.setItem(themeKey, safeTheme);
+                localStorage.setItem(modeKey, safeMode);
+                localStorage.removeItem(legacyThemeKey);
               } catch (_) {
                 // Skip persistence when storage is unavailable.
               }
             }
           };
 
-          const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
-          applyTheme(currentTheme, false);
+          const cycleThemeMode = (currentMode) => {
+            if (currentMode === "system") {
+              return "light";
+            }
+            if (currentMode === "light") {
+              return "dark";
+            }
+            return "system";
+          };
 
-          if (themeButton) {
-            themeButton.addEventListener("click", () => {
-              const active = document.documentElement.getAttribute("data-theme") || "light";
-              const next = active === "dark" ? "light" : "dark";
-              applyTheme(next, true);
+          const chooseRandomPreset = (theme) => {
+            const presets = presetsByTheme[theme];
+            if (!presets || presets.length === 0) {
+              return defaultPresetByTheme[theme];
+            }
+            const current = document.documentElement.getAttribute("data-theme-preset") || "";
+            const candidates = presets.filter((item) => item.value !== current);
+            const pool = candidates.length ? candidates : presets;
+            const next = pool[Math.floor(Math.random() * pool.length)];
+            return next && next.value ? next.value : defaultPresetByTheme[theme];
+          };
+
+          const resetThemeSystem = () => {
+            try {
+              localStorage.removeItem(modeKey);
+              localStorage.removeItem(legacyThemeKey);
+              localStorage.removeItem("dg-theme-preset-light");
+              localStorage.removeItem("dg-theme-preset-dark");
+            } catch (_) {
+              // Ignore storage cleanup failures.
+            }
+            applyThemeMode("system", false);
+            const theme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+            applyPreset(theme, defaultPresetByTheme[theme], false);
+          };
+
+          const savedMode = normalizeThemeMode(document.documentElement.getAttribute("data-theme-mode"));
+          applyThemeMode(savedMode, false);
+
+          if (themeModeButton) {
+            themeModeButton.addEventListener("click", () => {
+              const activeMode = normalizeThemeMode(document.documentElement.getAttribute("data-theme-mode"));
+              applyThemeMode(cycleThemeMode(activeMode), true);
             });
           }
 
           if (themePresetSelect) {
             themePresetSelect.addEventListener("change", () => {
-              const active = document.documentElement.getAttribute("data-theme") || "light";
-              applyPreset(active, themePresetSelect.value, true);
+              const resolvedTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+              applyPreset(resolvedTheme, themePresetSelect.value, true);
             });
           }
+
+          if (themeRandomButton) {
+            themeRandomButton.addEventListener("click", () => {
+              const resolvedTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+              applyPreset(resolvedTheme, chooseRandomPreset(resolvedTheme), true);
+            });
+          }
+
+          if (themeResetButton) {
+            themeResetButton.addEventListener("click", () => {
+              resetThemeSystem();
+            });
+          }
+
+          if (systemDarkQuery && typeof systemDarkQuery.addEventListener === "function") {
+            systemDarkQuery.addEventListener("change", () => {
+              const activeMode = normalizeThemeMode(document.documentElement.getAttribute("data-theme-mode"));
+              if (activeMode === "system") {
+                applyThemeMode("system", false);
+              }
+            });
+          }
+
+          document.addEventListener("keydown", (event) => {
+            const target = event.target;
+            if (target instanceof Element) {
+              if (target.closest("input, textarea, select, [contenteditable='true']")) {
+                return;
+              }
+            }
+
+            if (event.shiftKey && !event.metaKey && !event.ctrlKey && !event.altKey && event.key.toLowerCase() === "t") {
+              const activeMode = normalizeThemeMode(document.documentElement.getAttribute("data-theme-mode"));
+              applyThemeMode(cycleThemeMode(activeMode), true);
+              return;
+            }
+
+            if (event.shiftKey && !event.metaKey && !event.ctrlKey && !event.altKey && event.key.toLowerCase() === "p") {
+              const resolvedTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+              applyPreset(resolvedTheme, chooseRandomPreset(resolvedTheme), true);
+            }
+          });
         }
 
         if (searchInput && searchResults) {
+          const isMacLike = /Mac|iPhone|iPad|iPod/i.test(
+            [navigator.platform || "", navigator.userAgent || ""].join(" ")
+          );
+          if (searchShortcut) {
+            searchShortcut.textContent = isMacLike ? "⌘K" : "Ctrl+K";
+          }
+
           const escapeHtml = (value) =>
             String(value || "")
               .replace(/&/g, "&amp;")
@@ -534,6 +649,11 @@
               .replace(/'/g, "&#39;");
 
           const escapeRegExp = (value) => String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+          const normalizePath = (raw) => {
+            const path = String(raw || "/").split(/[?#]/)[0] || "/";
+            return path.endsWith("/") ? path : path + "/";
+          };
 
           const summarize = (value) => {
             const text = String(value || "").replace(/\s+/g, " ").trim();
@@ -565,22 +685,34 @@
           let requestToken = 0;
           let currentResults = [];
           let activeIndex = -1;
+          let debounceTimer = 0;
 
           const hideResults = () => {
             searchResults.hidden = true;
+            searchInput.setAttribute("aria-expanded", "false");
+            searchInput.removeAttribute("aria-activedescendant");
             activeIndex = -1;
           };
 
           const showResults = () => {
             searchResults.hidden = false;
+            searchInput.setAttribute("aria-expanded", "true");
           };
 
           const applyActiveResult = () => {
-            const rows = searchResults.querySelectorAll(".search-result");
+            const rows = Array.from(searchResults.querySelectorAll(".search-result"));
             rows.forEach((row, idx) => {
               const isActive = idx === activeIndex;
               row.classList.toggle("is-active", isActive);
+              row.setAttribute("aria-selected", isActive ? "true" : "false");
             });
+
+            if (activeIndex >= 0 && rows[activeIndex]) {
+              searchInput.setAttribute("aria-activedescendant", rows[activeIndex].id);
+              rows[activeIndex].scrollIntoView({ block: "nearest", inline: "nearest" });
+            } else {
+              searchInput.removeAttribute("aria-activedescendant");
+            }
           };
 
           const loadFallbackRecords = async () => {
@@ -616,11 +748,11 @@
               let score = 0;
 
               terms.forEach((term) => {
-                if (title.startsWith(term)) score += 28;
-                if (title.includes(term)) score += 18;
-                if (slug.includes(term)) score += 10;
+                if (title.startsWith(term)) score += 32;
+                if (title.includes(term)) score += 20;
+                if (slug.includes(term)) score += 12;
                 if (excerpt.includes(term)) score += 5;
-                if (tags.some((tag) => tag.includes(term))) score += 8;
+                if (tags.some((tag) => tag.includes(term))) score += 10;
               });
 
               return score;
@@ -647,39 +779,51 @@
             return Array.isArray(payload) ? payload : [];
           };
 
-          const renderResults = (items, query) => {
-            currentResults = items;
+          const renderResults = (items, query, emptyMessage) => {
+            currentResults = items
+              .map((item) => ({
+                title: String(item && item.title ? item.title : item && item.slug ? item.slug : "Untitled"),
+                url: normalizePath(item && item.url ? item.url : "/"),
+                excerpt: String(item && item.excerpt ? item.excerpt : ""),
+                slug: String(item && item.slug ? item.slug : ""),
+                tags: Array.isArray(item && item.tags) ? item.tags : []
+              }))
+              .filter((item) => item.url.length > 0);
             activeIndex = -1;
             const terms = getQueryTerms(query);
 
-            if (!items.length) {
+            if (!currentResults.length) {
               showResults();
-              searchResults.innerHTML = '<p class="search-empty">No matching notes.</p>';
+              searchResults.innerHTML = '<p class="search-empty">' + escapeHtml(emptyMessage || "No matching notes.") + "</p>";
               return;
             }
 
             showResults();
-            searchResults.innerHTML = items
+            searchResults.innerHTML = currentResults
               .map((item, idx) => {
-                const title = highlight(item.title || item.slug || "Untitled", terms);
-                const url = escapeHtml(item.url || "/");
+                const title = highlight(item.title, terms);
+                const url = escapeHtml(item.url);
                 const excerpt = highlight(summarize(item.excerpt), terms);
                 const optionId = "global-search-option-" + idx;
-                const tags = Array.isArray(item.tags) ? item.tags.slice(0, 3) : [];
+                const tags = item.tags.slice(0, 3);
                 const tagHtml = tags.length
                   ? '<span class="search-result-tags">' +
                     tags.map((tag) => '<span class="search-result-tag">#' + highlight(tag, terms) + "</span>").join("") +
                     "</span>"
                   : "";
+                const meta = highlight(item.slug || item.url.replace(/^\/|\/$/g, ""), terms);
 
                 return (
                   '<a id="' +
                   optionId +
-                  '" class="search-result" href="' +
+                  '" class="search-result" role="option" aria-selected="false" href="' +
                   url +
                   '">' +
                   '<span class="search-result-title">' +
                   title +
+                  "</span>" +
+                  '<span class="search-result-meta">' +
+                  meta +
                   "</span>" +
                   '<span class="search-result-excerpt">' +
                   excerpt +
@@ -692,11 +836,12 @@
             applyActiveResult();
           };
 
-          const runSearch = async () => {
+          const runSearch = async (forceShowTopWhenEmpty) => {
             const token = ++requestToken;
             const query = searchInput.value.trim();
+            const queryIsEmpty = query.length === 0;
 
-            if (query.length === 0) {
+            if (queryIsEmpty && !forceShowTopWhenEmpty) {
               currentResults = [];
               hideResults();
               searchResults.innerHTML = "";
@@ -704,44 +849,69 @@
             }
 
             try {
-              const results = await apiSearch(query);
+              const results = queryIsEmpty ? await fallbackSearch("") : await apiSearch(query);
               if (token === requestToken) {
-                renderResults(results, query);
+                renderResults(results, query, queryIsEmpty ? "No notes available yet." : "No matching notes.");
               }
             } catch (_) {
               try {
                 const results = await fallbackSearch(query);
                 if (token === requestToken) {
-                  renderResults(results, query);
+                  renderResults(results, query, queryIsEmpty ? "No notes available yet." : "No matching notes.");
                 }
               } catch (_) {
                 if (token === requestToken) {
                   showResults();
+                  currentResults = [];
                   searchResults.innerHTML = '<p class="search-empty">Search is not available.</p>';
                 }
               }
             }
           };
 
-          let debounceTimer = 0;
+          const openSearchPalette = () => {
+            if (document.activeElement !== searchInput) {
+              searchInput.focus();
+              searchInput.select();
+            }
+            runSearch(true);
+          };
+
           searchInput.addEventListener("input", () => {
             window.clearTimeout(debounceTimer);
-            debounceTimer = window.setTimeout(runSearch, 120);
+            debounceTimer = window.setTimeout(() => {
+              runSearch(false);
+            }, 110);
           });
 
           searchInput.addEventListener("focus", () => {
-            if (searchInput.value.trim().length > 0) {
-              runSearch();
-            }
+            runSearch(true);
           });
 
           searchInput.addEventListener("keydown", (event) => {
             if (event.key === "Escape") {
-              hideResults();
+              if (searchInput.value.trim().length > 0) {
+                searchInput.value = "";
+                runSearch(false);
+              } else {
+                hideResults();
+                searchInput.blur();
+              }
+              return;
+            }
+
+            if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+              event.preventDefault();
+              searchInput.select();
+              runSearch(true);
               return;
             }
 
             if (!currentResults.length) {
+              if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+                event.preventDefault();
+                runSearch(true);
+              }
               return;
             }
 
@@ -759,10 +929,24 @@
               return;
             }
 
-            if (event.key === "Enter" && activeIndex >= 0) {
+            if (event.key === "Home") {
               event.preventDefault();
-              const target = currentResults[activeIndex];
+              activeIndex = 0;
+              applyActiveResult();
+              return;
+            }
+
+            if (event.key === "End") {
+              event.preventDefault();
+              activeIndex = currentResults.length - 1;
+              applyActiveResult();
+              return;
+            }
+
+            if (event.key === "Enter") {
+              const target = activeIndex >= 0 ? currentResults[activeIndex] : currentResults[0];
               if (target && typeof target.url === "string") {
+                event.preventDefault();
                 window.location.href = target.url;
               }
             }
@@ -783,6 +967,13 @@
             if (next >= 0 && next !== activeIndex) {
               activeIndex = next;
               applyActiveResult();
+            }
+          });
+
+          document.addEventListener("keydown", (event) => {
+            if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+              event.preventDefault();
+              openSearchPalette();
             }
           });
 
@@ -832,13 +1023,13 @@
           });
         }
 
-        if (noteBody) {
+        if (document.querySelector(".note-body a[href], .page-tabs-list a[href], #filetree-root a[href]")) {
           scheduleNonCritical(async () => {
             try {
               await loadScript("/assets/link-preview.js");
               if (window.initLinkPreview) {
                 window.initLinkPreview({
-                  containerSelector: ".note-body",
+                  containerSelector: ".note-body, .page-tabs-list, #filetree-root",
                   indexUrl: "/search-index.json"
                 });
               }

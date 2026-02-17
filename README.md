@@ -19,13 +19,16 @@ Obsidian markdown notes are transformed into a static blog with:
 - Math support: KaTeX auto-render for `$...$` and `$$...$$`
 - PDF embed support: `![[...pdf]]`
 - Excalidraw/Canvas JSON mini-preview: `![[...excalidraw]]`, `![[...canvas]]`
-- Dataview minimal support: fenced `dataview` with `LIST/TABLE/TASK FROM #tag`
-- DataviewJS safe subset mode (`--dataviewjs-mode tag-pages`): static render for `dv.pages("#tag")`
+- Dataview subset support: fenced `dataview` with `LIST/TABLE/TASK FROM #tag`, `FROM "folder"`, `FROM [[note]]`
+- Dataview query options: `WHERE` (`contains`/`startswith`/`=` with `AND`), `SORT` (`title`, `file.name`, `file.path`, `file.folder`), `LIMIT`
+- Dataview table column subset: `TABLE file.link, file.path, file.tags ...` with optional `AS "Alias"`
+- DataviewJS safe subset mode (`--dataviewjs-mode tag-pages`): static render for `dv.pages(...)` + subset `where/sort/limit` with `dv.list/dv.table/dv.taskList`
 - Custom regex filters via `static/regex-filters.json` (sequential markdown rewrite rules)
 - Backlinks per note
 - Persistent side graph with zoom/pan and node labels (source data: `graph.json`)
 - Global search API (`/api/search` on `blog-dev`) + live preview dropdown in UI
 - `dg-enable-search: false` excludes that note from `search-index.json` and API search
+- Theme system: 40 presets (20 light / 20 dark), `System/Light/Dark` mode, random preset, reset, and persisted settings
 - Static outputs: `sitemap.xml`, `rss.xml`, `robots.txt`, `graph.json`, `search-index.json`, `frontmatter-report.json`
 - Build-time unsupported frontmatter key report (`frontmatter-report.json`) for migration visibility
 - Generated `404.html` page for unknown routes
@@ -160,7 +163,7 @@ Token scope minimum:
   - `--backlinks-empty`
 - DataviewJS execution policy is configurable:
   - `--dataviewjs-mode disabled` (default)
-  - `--dataviewjs-mode tag-pages` (safe static subset)
+  - `--dataviewjs-mode tag-pages` (safe static subset with filtered `dv.pages(...)` rendering)
 - Optional custom regex filters:
   - Place `static/regex-filters.json` with objects like `{"pattern":"Old","replace":"New"}`
 - Optional theme/style hooks:
