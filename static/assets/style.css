@@ -1848,10 +1848,10 @@ html[data-theme="dark"] .graph-stage {
 :root {
   --radius: 18px;
   --radius-card: 16px;
-  --font-display: "Space Grotesk", "Pretendard", "Noto Sans KR", sans-serif;
-  --font-body: "IBM Plex Sans", "Pretendard", "Noto Sans KR", sans-serif;
-  --font-reading: "Source Serif 4", "Noto Serif KR", "Iowan Old Style", serif;
-  --font-mono: "JetBrains Mono", "SFMono-Regular", "Menlo", monospace;
+  --font-display: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Segoe UI", sans-serif;
+  --font-body: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "IBM Plex Sans", sans-serif;
+  --font-reading: "Noto Serif KR", "Iowan Old Style", "AppleMyungjo", "Source Serif 4", serif;
+  --font-mono: "SFMono-Regular", "JetBrains Mono", "Menlo", monospace;
   --surface-soft: rgba(255, 255, 255, 0.74);
   --surface-strong: rgba(255, 255, 255, 0.92);
   --panel-glow: 0 14px 30px rgba(6, 26, 43, 0.09);

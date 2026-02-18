@@ -24,6 +24,7 @@
     let showTimer = 0;
     let hideTimer = 0;
     let requestToken = 0;
+    let positionRaf = 0;
 
     function normalizePath(raw) {
       const path = String(raw || "").split("#")[0].split("?")[0] || "/";
@@ -108,6 +109,22 @@
       card.style.top = Math.round(top) + "px";
     }
 
+    function requestPosition(anchor) {
+      if (!anchor || card.hidden) {
+        return;
+      }
+      if (positionRaf !== 0) {
+        return;
+      }
+      positionRaf = window.requestAnimationFrame(() => {
+        positionRaf = 0;
+        if (activeAnchor !== anchor || card.hidden) {
+          return;
+        }
+        positionCard(anchor);
+      });
+    }
+
     function recordFromAnchor(anchor, path) {
       const titleText = String(
         (anchor.querySelector(".page-tab-title") && anchor.querySelector(".page-tab-title").textContent) ||
@@ -177,13 +194,17 @@
         const record = map.get(path) || recordFromAnchor(anchor, path);
         renderCard(record, path);
         card.hidden = false;
-        positionCard(anchor);
+        requestPosition(anchor);
       });
     }
 
     function hideCard() {
       card.hidden = true;
       requestToken += 1;
+      if (positionRaf !== 0) {
+        window.cancelAnimationFrame(positionRaf);
+        positionRaf = 0;
+      }
     }
 
     function scheduleShow(anchor) {
@@ -261,7 +282,7 @@
       "scroll",
       () => {
         if (activeAnchor && !card.hidden) {
-          positionCard(activeAnchor);
+          requestPosition(activeAnchor);
         }
       },
       { passive: true }
@@ -269,7 +290,7 @@
 
     window.addEventListener("resize", () => {
       if (activeAnchor && !card.hidden) {
-        positionCard(activeAnchor);
+        requestPosition(activeAnchor);
       }
     });
 

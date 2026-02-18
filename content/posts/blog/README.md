@@ -1,4 +1,13 @@
-# Rust Obsidian Digital Garden (Static + Free-first)
+---
+title: Rust Obsidian-style Blog
+description: Rust-based static blog engine with Obsidian-style features
+date: 2026-02-18
+tags: [rust, blog]
+dg-publish: true
+dg-home: true
+---
+
+# Rust Obsidian-style Blog (Static + Free-first)
 
 Obsidian markdown notes are transformed into a static blog with:
 
@@ -51,7 +60,7 @@ Obsidian markdown notes are transformed into a static blog with:
 title: My Note
 description: Short summary
 date: 2026-02-16
-tags: [rust, garden]
+tags: [rust, blog]
 aliases: [my-alias]
 dg-publish: true
 dg-home: false

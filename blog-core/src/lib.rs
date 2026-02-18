@@ -3979,6 +3979,90 @@ fn copy_content_assets(content_dir: &Path, output_dir: &Path) -> Result<()> {
     Ok(())
 }
 
+fn minify_css(input: &str) -> String {
+    let mut out = String::with_capacity(input.len());
+    let mut chars = input.chars().peekable();
+    let mut in_comment = false;
+    let mut string_delim: Option<char> = None;
+    let mut prev_space = false;
+
+    while let Some(ch) = chars.next() {
+        if in_comment {
+            if ch == '*' && chars.peek() == Some(&'/') {
+                chars.next();
+                in_comment = false;
+            }
+            continue;
+        }
+
+        if let Some(delim) = string_delim {
+            out.push(ch);
+            if ch == '\\' {
+                if let Some(escaped) = chars.next() {
+                    out.push(escaped);
+                }
+                continue;
+            }
+            if ch == delim {
+                string_delim = None;
+            }
+            continue;
+        }
+
+        if ch == '/' && chars.peek() == Some(&'*') {
+            chars.next();
+            in_comment = true;
+            continue;
+        }
+
+        if ch == '"' || ch == '\'' {
+            out.push(ch);
+            string_delim = Some(ch);
+            prev_space = false;
+            continue;
+        }
+
+        if ch.is_whitespace() {
+            let prev = out.chars().last();
+            let next = chars.peek().copied();
+            let prev_blocks_space = matches!(
+                prev,
+                None | Some('{') | Some(':') | Some(';') | Some(',') | Some('(')
+            );
+            let next_blocks_space = matches!(
+                next,
+                Some('}') | Some(':') | Some(';') | Some(',') | Some(')')
+            );
+
+            if prev_blocks_space || next_blocks_space {
+                prev_space = false;
+            } else if !prev_space {
+                out.push(' ');
+                prev_space = true;
+            }
+            continue;
+        }
+
+        if matches!(ch, '{' | '}' | ':' | ';' | ',') {
+            if out.ends_with(' ') {
+                out.pop();
+            }
+            out.push(ch);
+            prev_space = false;
+            continue;
+        }
+
+        if ch == ')' && out.ends_with(' ') {
+            out.pop();
+        }
+
+        out.push(ch);
+        prev_space = false;
+    }
+
+    out.trim().to_string()
+}
+
 fn copy_static_assets(static_dir: &Path, output_dir: &Path) -> Result<()> {
     if !static_dir.exists() {
         return Ok(());
@@ -4012,13 +4096,33 @@ fn copy_static_assets(static_dir: &Path, output_dir: &Path) -> Result<()> {
                     .with_context(|| format!("failed to create {}", parent.display()))?;
             }
 
-            fs::copy(entry_path, &dest).with_context(|| {
-                format!(
-                    "failed to copy {} to {}",
-                    entry_path.display(),
-                    dest.display()
-                )
-            })?;
+            let is_css = entry_path
+                .extension()
+                .and_then(|ext| ext.to_str())
+                .map(|ext| ext.eq_ignore_ascii_case("css"))
+                .unwrap_or(false);
+
+            if is_css {
+                let css = fs::read_to_string(entry_path).with_context(|| {
+                    format!("failed to read CSS asset {}", entry_path.display())
+                })?;
+                let minified = minify_css(&css);
+                fs::write(&dest, minified).with_context(|| {
+                    format!(
+                        "failed to write minified CSS from {} to {}",
+                        entry_path.display(),
+                        dest.display()
+                    )
+                })?;
+            } else {
+                fs::copy(entry_path, &dest).with_context(|| {
+                    format!(
+                        "failed to copy {} to {}",
+                        entry_path.display(),
+                        dest.display()
+                    )
+                })?;
+            }
         }
     }
 
@@ -5831,5 +5935,33 @@ Should publish in permissive mode.
         assert!(output_dir.join("notes/no-flag/index.html").exists());
 
         Ok(())
+    }
+
+    #[test]
+    fn minify_css_removes_comments_and_compacts_tokens() {
+        let source = r#"
+/* test comment */
+.a  {
+  color : red ;
+  margin : 0  1rem ;
+}
+"#;
+
+        let minified = minify_css(source);
+        assert_eq!(minified, ".a{color:red;margin:0 1rem;}");
+    }
+
+    #[test]
+    fn minify_css_preserves_css_function_values() {
+        let source = r#"
+.box {
+  width: calc(100% - 1rem);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E");
+}
+"#;
+
+        let minified = minify_css(source);
+        assert!(minified.contains("calc(100% - 1rem)"));
+        assert!(minified.contains("url(\"data:image/svg+xml"));
     }
 }
