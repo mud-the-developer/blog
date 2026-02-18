@@ -66,14 +66,14 @@ struct Cli {
     backlinks_empty: String,
     #[arg(long, default_value = "disabled", value_parser = ["disabled", "tag-pages"])]
     dataviewjs_mode: String,
-    #[arg(long, default_value = "dg-opt-in", value_parser = ["dg-opt-in", "permissive"])]
+    #[arg(long, default_value = "opt-in", value_parser = ["opt-in", "permissive"])]
     publish_policy: String,
 }
 
 fn parse_publish_policy(raw: &str) -> PublishPolicy {
     match raw {
         "permissive" => PublishPolicy::Permissive,
-        _ => PublishPolicy::DgOptIn,
+        _ => PublishPolicy::OptIn,
     }
 }
 

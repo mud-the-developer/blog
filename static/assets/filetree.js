@@ -54,6 +54,13 @@
         return new Set();
       }
     };
+    const hasStoredOpenState = (() => {
+      try {
+        return localStorage.getItem(openStorageKey) !== null;
+      } catch (_) {
+        return false;
+      }
+    })();
     const saveOpenSet = (openSet) => {
       try {
         localStorage.setItem(openStorageKey, JSON.stringify(Array.from(openSet)));
@@ -99,7 +106,7 @@
           const childHasActive = buildTree(Array.isArray(node.children) ? node.children : [], childList);
           details.appendChild(childList);
 
-          if (childHasActive || openSet.has(String(node.id || ""))) {
+          if (openSet.has(String(node.id || "")) && hasStoredOpenState) {
             details.open = true;
           }
 

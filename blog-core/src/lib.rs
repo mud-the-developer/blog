@@ -262,13 +262,13 @@ impl Default for BuildConfig {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum PublishPolicy {
-    DgOptIn,
+    OptIn,
     Permissive,
 }
 
 impl Default for PublishPolicy {
     fn default() -> Self {
-        Self::DgOptIn
+        Self::OptIn
     }
 }
 
@@ -758,7 +758,7 @@ fn collect_post_seeds(config: &BuildConfig) -> Result<Vec<PostSeed>> {
         let (frontmatter, _) = parse_frontmatter_and_body(&raw)?;
 
         let should_publish = match config.publish_policy {
-            PublishPolicy::DgOptIn => frontmatter.publish.unwrap_or(false),
+            PublishPolicy::OptIn => frontmatter.publish.unwrap_or(false),
             PublishPolicy::Permissive => frontmatter
                 .publish
                 .unwrap_or(!frontmatter.draft.unwrap_or(false)),
@@ -5707,7 +5707,7 @@ Not published.
                 language: "en".to_string(),
                 ..SiteConfig::default()
             },
-            publish_policy: PublishPolicy::DgOptIn,
+            publish_policy: PublishPolicy::OptIn,
         };
 
         let summary = build_site(&config)?;
@@ -5903,7 +5903,7 @@ Not published.
     }
 
     #[test]
-    fn build_site_permissive_policy_publishes_non_draft_notes_without_dg_publish() -> Result<()> {
+    fn build_site_permissive_policy_publishes_non_draft_notes_without_publish_flag() -> Result<()> {
         let tmp = TestDir::new("permissive");
         let content_dir = tmp.path.join("content/posts");
         let static_dir = tmp.path.join("static");
@@ -5978,7 +5978,7 @@ Should publish in permissive mode.
     }
 
     #[test]
-    fn frontmatter_supports_non_dg_keys() -> Result<()> {
+    fn frontmatter_supports_non_prefixed_keys() -> Result<()> {
         let raw = r#"---
 title: Alias Check
 publish: true
