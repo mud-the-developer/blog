@@ -4,6 +4,11 @@ use better_minify_js::{
     minify as minify_javascript_bytes, Session as JsMinifierSession, TopLevelMode,
 };
 use chrono::{DateTime, NaiveDate, TimeZone, Utc};
+use lightningcss::printer::PrinterOptions as CssPrinterOptions;
+use lightningcss::stylesheet::{
+    MinifyOptions as CssMinifyOptions, ParserOptions as CssParserOptions,
+    StyleSheet as CssStyleSheet,
+};
 use maud::{html, PreEscaped};
 use once_cell::sync::Lazy;
 use pulldown_cmark::{html::push_html, Options, Parser};
@@ -4034,87 +4039,22 @@ fn copy_content_assets(content_dir: &Path, output_dir: &Path) -> Result<()> {
 }
 
 fn minify_css(input: &str) -> String {
-    let mut out = String::with_capacity(input.len());
-    let mut chars = input.chars().peekable();
-    let mut in_comment = false;
-    let mut string_delim: Option<char> = None;
-    let mut prev_space = false;
+    let mut stylesheet = match CssStyleSheet::parse(input, CssParserOptions::default()) {
+        Ok(stylesheet) => stylesheet,
+        Err(_) => return input.to_string(),
+    };
 
-    while let Some(ch) = chars.next() {
-        if in_comment {
-            if ch == '*' && chars.peek() == Some(&'/') {
-                chars.next();
-                in_comment = false;
-            }
-            continue;
-        }
-
-        if let Some(delim) = string_delim {
-            out.push(ch);
-            if ch == '\\' {
-                if let Some(escaped) = chars.next() {
-                    out.push(escaped);
-                }
-                continue;
-            }
-            if ch == delim {
-                string_delim = None;
-            }
-            continue;
-        }
-
-        if ch == '/' && chars.peek() == Some(&'*') {
-            chars.next();
-            in_comment = true;
-            continue;
-        }
-
-        if ch == '"' || ch == '\'' {
-            out.push(ch);
-            string_delim = Some(ch);
-            prev_space = false;
-            continue;
-        }
-
-        if ch.is_whitespace() {
-            let prev = out.chars().last();
-            let next = chars.peek().copied();
-            let prev_blocks_space = matches!(
-                prev,
-                None | Some('{') | Some(':') | Some(';') | Some(',') | Some('(')
-            );
-            let next_blocks_space = matches!(
-                next,
-                Some('}') | Some(':') | Some(';') | Some(',') | Some(')')
-            );
-
-            if prev_blocks_space || next_blocks_space {
-                prev_space = false;
-            } else if !prev_space {
-                out.push(' ');
-                prev_space = true;
-            }
-            continue;
-        }
-
-        if matches!(ch, '{' | '}' | ':' | ';' | ',') {
-            if out.ends_with(' ') {
-                out.pop();
-            }
-            out.push(ch);
-            prev_space = false;
-            continue;
-        }
-
-        if ch == ')' && out.ends_with(' ') {
-            out.pop();
-        }
-
-        out.push(ch);
-        prev_space = false;
+    if stylesheet.minify(CssMinifyOptions::default()).is_err() {
+        return input.to_string();
     }
 
-    out.trim().to_string()
+    match stylesheet.to_css(CssPrinterOptions {
+        minify: true,
+        ..CssPrinterOptions::default()
+    }) {
+        Ok(result) => result.code,
+        Err(_) => input.to_string(),
+    }
 }
 
 fn minify_javascript(input: &str) -> String {
@@ -6087,7 +6027,10 @@ Should publish in permissive mode.
 "#;
 
         let minified = minify_css(source);
-        assert_eq!(minified, ".a{color:red;margin:0 1rem;}");
+        assert!(!minified.contains("test comment"));
+        assert!(minified.contains(".a{"));
+        assert!(minified.contains("color:red"));
+        assert!(minified.contains("margin:0 1rem"));
     }
 
     #[test]
@@ -6101,7 +6044,7 @@ Should publish in permissive mode.
 
         let minified = minify_css(source);
         assert!(minified.contains("calc(100% - 1rem)"));
-        assert!(minified.contains("url(\"data:image/svg+xml"));
+        assert!(minified.contains("data:image/svg+xml"));
     }
 
     #[test]
