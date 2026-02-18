@@ -147,21 +147,27 @@
         <aside class="panel page-tabs" aria-label="Page tabs">
           {% if layout.show_search %}
           <div class="site-search">
-            <label class="sr-only" for="global-search-input">Search notes</label>
+            <label class="sr-only" for="note-search-input">Search notes</label>
             <input
-              id="global-search-input"
+              id="note-search-input"
+              name="q"
               type="search"
               placeholder="{{ layout.search_placeholder }}"
               autocomplete="off"
               role="combobox"
               aria-autocomplete="list"
               aria-expanded="false"
-              aria-controls="global-search-results"
+              aria-controls="note-search-results"
               aria-haspopup="listbox"
+              hx-get="/api/search/view?limit=8"
+              hx-trigger="focus, input changed delay:120ms, search"
+              hx-target="#note-search-results"
+              hx-swap="innerHTML"
+              hx-push-url="false"
             />
-            <p id="global-search-shortcut" class="search-shortcut" aria-hidden="true"></p>
+            <p id="note-search-shortcut" class="search-shortcut" aria-hidden="true"></p>
             <div
-              id="global-search-results"
+              id="note-search-results"
               class="search-results"
               role="listbox"
               hidden
@@ -274,6 +280,10 @@
         graphCenterId: "{{ layout.graph_center_id }}"
       };
     </script>
+    {% if layout.show_search %}
+    <script defer src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <script defer src="/assets/search-htmx.js"></script>
+    {% endif %}
     <script defer src="/assets/site-runtime.js"></script>
     <script defer src="/assets/publication-widget.js"></script>
   </body>

@@ -26,7 +26,7 @@ Obsidian markdown notes are transformed into a static blog with:
 - Custom regex filters via `static/regex-filters.json` (sequential markdown rewrite rules)
 - Backlinks per note
 - Persistent side graph with zoom/pan and node labels (source data: `graph.json`)
-- Global search API (`/api/search` on `blog-dev`) + live preview dropdown in UI
+- Global search API (`/api/search`) and htmx search fragment endpoint (`/api/search/view`) on `blog-dev`
 - `enable-search: false` excludes that note from `search-index.json` and API search
 - Theme system: 40 presets (20 light / 20 dark), `System/Light/Dark` mode, random preset, reset, and persisted settings
 - Static outputs: `sitemap.xml`, `rss.xml`, `robots.txt`, `graph.json`, `search-index.json`, `frontmatter-report.json`

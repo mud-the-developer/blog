@@ -1,7 +1,7 @@
 use anyhow::Result;
 use axum::extract::{Query, State};
 use axum::http::StatusCode;
-use axum::response::IntoResponse;
+use axum::response::{Html, IntoResponse};
 use axum::routing::{get, post};
 use axum::{Json, Router};
 use blog_core::{build_site, BuildConfig, DataviewJsMode, PublishPolicy, SiteConfig, SiteText};
@@ -129,6 +129,7 @@ async fn main() -> Result<()> {
 
     let app = Router::new()
         .route("/api/search", get(search_handler))
+        .route("/api/search/view", get(search_view_handler))
         .route("/__rebuild", post(rebuild_handler))
         .with_state(state)
         .fallback_service(ServeDir::new(config.output_dir));
@@ -172,30 +173,135 @@ async fn search_handler(
     let limit = query.limit.unwrap_or(8).clamp(1, 30);
     let index_path = state.config.output_dir.join("search-index.json");
 
-    let raw = match tokio::fs::read_to_string(&index_path).await {
-        Ok(raw) => raw,
-        Err(err) => {
-            return (
-                StatusCode::NOT_FOUND,
-                format!("search index is missing: {err}"),
-            )
-                .into_response();
-        }
-    };
-
-    let records = match serde_json::from_str::<Vec<SearchRecord>>(&raw) {
+    let records = match load_search_records(&index_path).await {
         Ok(records) => records,
-        Err(err) => {
-            return (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                format!("search index parse error: {err}"),
-            )
-                .into_response();
-        }
+        Err(response) => return response.into_response(),
     };
 
     let results = search_records(records, &query_text, limit);
     (StatusCode::OK, Json(results)).into_response()
+}
+
+async fn search_view_handler(
+    State(state): State<AppState>,
+    Query(query): Query<SearchQuery>,
+) -> impl IntoResponse {
+    let query_text = query.q.unwrap_or_default();
+    let query_trimmed = query_text.trim().to_string();
+    let limit = query.limit.unwrap_or(8).clamp(1, 30);
+    let index_path = state.config.output_dir.join("search-index.json");
+
+    let records = match load_search_records(&index_path).await {
+        Ok(records) => records,
+        Err(response) => return response.into_response(),
+    };
+
+    let results = search_records(records, &query_trimmed, limit);
+    let empty_message = if query_trimmed.is_empty() {
+        "No notes available yet."
+    } else {
+        "No matching notes."
+    };
+
+    (
+        StatusCode::OK,
+        Html(render_search_results_fragment(&results, empty_message)),
+    )
+        .into_response()
+}
+
+async fn load_search_records(
+    index_path: &PathBuf,
+) -> Result<Vec<SearchRecord>, (StatusCode, String)> {
+    let raw = tokio::fs::read_to_string(index_path).await.map_err(|err| {
+        (
+            StatusCode::NOT_FOUND,
+            format!("search index is missing: {err}"),
+        )
+    })?;
+
+    serde_json::from_str::<Vec<SearchRecord>>(&raw).map_err(|err| {
+        (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            format!("search index parse error: {err}"),
+        )
+    })
+}
+
+fn render_search_results_fragment(results: &[SearchRecord], empty_message: &str) -> String {
+    if results.is_empty() {
+        return format!(
+            "<p class=\"search-empty\">{}</p>",
+            escape_html(empty_message)
+        );
+    }
+
+    results
+        .iter()
+        .take(8)
+        .enumerate()
+        .map(|(index, record)| {
+            let safe_title = escape_html(&record.title);
+            let safe_url = escape_html(&record.url);
+            let safe_excerpt = escape_html(&summarize_excerpt(&record.excerpt));
+            let safe_meta = escape_html(if record.slug.trim().is_empty() {
+                record.url.trim_matches('/')
+            } else {
+                &record.slug
+            });
+
+            let tags = record
+                .tags
+                .iter()
+                .take(3)
+                .map(|tag| format!("<span class=\"search-result-tag\">#{}</span>", escape_html(tag)))
+                .collect::<Vec<_>>();
+
+            let tags_html = if tags.is_empty() {
+                String::new()
+            } else {
+                format!("<span class=\"search-result-tags\">{}</span>", tags.join(""))
+            };
+
+            format!(
+                concat!(
+                    "<a id=\"note-search-option-{}\" class=\"search-result\" role=\"option\" aria-selected=\"false\" href=\"{}\">",
+                    "<span class=\"search-result-title\">{}</span>",
+                    "<span class=\"search-result-meta\">{}</span>",
+                    "<span class=\"search-result-excerpt\">{}</span>",
+                    "{}",
+                    "</a>"
+                ),
+                index, safe_url, safe_title, safe_meta, safe_excerpt, tags_html
+            )
+        })
+        .collect::<Vec<_>>()
+        .join("")
+}
+
+fn summarize_excerpt(value: &str) -> String {
+    let compact = value
+        .split_whitespace()
+        .filter(|segment| !segment.is_empty())
+        .collect::<Vec<_>>()
+        .join(" ");
+
+    let mut chars = compact.chars();
+    let shortened = chars.by_ref().take(92).collect::<String>();
+    if chars.next().is_none() {
+        compact
+    } else {
+        format!("{}...", shortened.trim_end())
+    }
+}
+
+fn escape_html(value: &str) -> String {
+    value
+        .replace('&', "&amp;")
+        .replace('<', "&lt;")
+        .replace('>', "&gt;")
+        .replace('"', "&quot;")
+        .replace('\'', "&#39;")
 }
 
 fn search_records(records: Vec<SearchRecord>, query: &str, limit: usize) -> Vec<SearchRecord> {
@@ -262,7 +368,7 @@ fn search_records(records: Vec<SearchRecord>, query: &str, limit: usize) -> Vec<
 
 #[cfg(test)]
 mod tests {
-    use super::{search_records, SearchRecord};
+    use super::{render_search_results_fragment, search_records, SearchRecord};
 
     fn record(title: &str, slug: &str, excerpt: &str, tags: &[&str]) -> SearchRecord {
         SearchRecord {
@@ -299,5 +405,37 @@ mod tests {
         let results = search_records(records, "rust render", 5);
         assert!(!results.is_empty());
         assert_eq!(results[0].slug, "rust-render");
+    }
+
+    #[test]
+    fn search_fragment_renders_anchor_cards() {
+        let results = vec![record(
+            "Rust Rendering",
+            "rust-render",
+            "A long excerpt that is useful for rendering tests.",
+            &["rendering", "rust"],
+        )];
+
+        let html = render_search_results_fragment(&results, "No matching notes.");
+        assert!(html.contains("class=\"search-result\""));
+        assert!(html.contains("note-search-option-0"));
+        assert!(html.contains("#rendering"));
+        assert!(html.contains("Rust Rendering"));
+    }
+
+    #[test]
+    fn search_fragment_escapes_html() {
+        let results = vec![record(
+            "<b>Unsafe</b>",
+            "unsafe",
+            "Excerpt <script>alert(1)</script>",
+            &["<tag>"],
+        )];
+
+        let html = render_search_results_fragment(&results, "No matching notes.");
+        assert!(html.contains("&lt;b&gt;Unsafe&lt;/b&gt;"));
+        assert!(html.contains("&lt;script&gt;alert(1)&lt;/script&gt;"));
+        assert!(html.contains("#&lt;tag&gt;"));
+        assert!(!html.contains("<script>alert(1)</script>"));
     }
 }
