@@ -41,36 +41,6 @@
         root.setAttribute("data-theme-preset", theme === "dark" ? "d02-carbon" : "l04-rose-ink");
       })();
     </script>
-    <script>
-      (() => {
-        const href =
-          "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap";
-
-        const loadFonts = () => {
-          if (document.querySelector("link[data-fonts='lazy']")) {
-            return;
-          }
-          const link = document.createElement("link");
-          link.rel = "stylesheet";
-          link.href = href;
-          link.setAttribute("data-fonts", "lazy");
-          document.head.appendChild(link);
-        };
-
-        if ("requestIdleCallback" in window) {
-          window.requestIdleCallback(loadFonts, { timeout: 2000 });
-        } else {
-          window.addEventListener("load", loadFonts, { once: true });
-        }
-      })();
-    </script>
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap"
-      />
-    </noscript>
-
     <link rel="alternate" type="application/rss+xml" title="{{ layout.site_title }} RSS" href="/rss.xml" />
     <link rel="preload" href="/assets/style.css" as="style" />
     <link rel="stylesheet" href="/assets/style.css" />
