@@ -1,4 +1,4 @@
-# Rust Obsidian-style Blog (Static + Free-first)
+# Rust Obsidian-style Blog (Static)
 
 Obsidian markdown notes are transformed into a static blog with:
 
