@@ -99,7 +99,7 @@ curl -X POST http://127.0.0.1:8788/__rebuild
 ```bash
 git init -b main
 git add .
-git commit -m "Initial digital garden setup"
+git commit -m "Initial blog setup"
 git remote add origin git@github.com:<your-username>/<your-repo>.git
 git push -u origin main
 ```

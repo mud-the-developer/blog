@@ -4,7 +4,7 @@ use clap::Parser;
 use std::path::PathBuf;
 
 #[derive(Debug, Parser)]
-#[command(author, version, about = "Build a static digital-garden style blog")]
+#[command(author, version, about = "Build a static note-style blog")]
 struct Cli {
     #[arg(long, default_value = "content/posts")]
     content: PathBuf,

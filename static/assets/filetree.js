@@ -7,8 +7,8 @@
     }
 
     const dataUrl = opts.dataUrl || "/filetree.json";
-    const openStorageKey = opts.openStorageKey || "dg-filetree-open";
-    const scrollStorageKey = opts.scrollStorageKey || "dg-filetree-scroll";
+    const openStorageKey = opts.openStorageKey || "note-filetree-open";
+    const scrollStorageKey = opts.scrollStorageKey || "note-filetree-scroll";
     const iconBaseUrl = opts.iconBaseUrl || "/assets/icons/material/";
     const iconBase = String(iconBaseUrl).endsWith("/") ? String(iconBaseUrl) : String(iconBaseUrl) + "/";
     const scrollHost = document.querySelector(opts.scrollHostSelector || ".page-tabs");

@@ -169,34 +169,33 @@ const SUPPORTED_FRONTMATTER_KEYS: &[&str] = &[
     "description",
     "slug",
     "path",
-    "dg-path",
+    "note-path",
     "permalink",
-    "dg-permalink",
+    "note-permalink",
     "date",
     "updated",
     "tags",
     "aliases",
     "draft",
     "publish",
-    "dg-publish",
+    "note-publish",
     "home",
-    "dg-home",
+    "note-home",
     "enable-search",
-    "dg-enable-search",
+    "note-enable-search",
     "show-local-graph",
-    "dg-show-local-graph",
+    "note-show-local-graph",
     "pinned",
-    "dg-pinned",
+    "note-pinned",
     "hide",
-    "dg-hide",
+    "note-hide",
     "hide-in-graph",
-    "dg-hide-in-graph",
+    "note-hide-in-graph",
     "note-icon",
-    "dg-note-icon",
     "metatags",
-    "dg-metatags",
+    "note-metatags",
     "content-classes",
-    "dg-content-classes",
+    "note-content-classes",
 ];
 
 #[derive(Debug, Clone)]
@@ -303,34 +302,34 @@ struct FrontMatter {
     title: Option<String>,
     description: Option<String>,
     slug: Option<String>,
-    #[serde(rename = "path", alias = "dg-path")]
+    #[serde(rename = "path", alias = "note-path")]
     path: Option<String>,
-    #[serde(rename = "permalink", alias = "dg-permalink")]
+    #[serde(rename = "permalink", alias = "note-permalink")]
     permalink: Option<String>,
     date: Option<String>,
     updated: Option<String>,
     tags: Option<Vec<String>>,
     aliases: Option<Vec<String>>,
     draft: Option<bool>,
-    #[serde(rename = "publish", alias = "dg-publish")]
+    #[serde(rename = "publish", alias = "note-publish")]
     publish: Option<bool>,
-    #[serde(rename = "home", alias = "dg-home")]
+    #[serde(rename = "home", alias = "note-home")]
     home: Option<bool>,
-    #[serde(rename = "enable-search", alias = "dg-enable-search")]
+    #[serde(rename = "enable-search", alias = "note-enable-search")]
     enable_search: Option<bool>,
-    #[serde(rename = "show-local-graph", alias = "dg-show-local-graph")]
+    #[serde(rename = "show-local-graph", alias = "note-show-local-graph")]
     show_local_graph: Option<bool>,
-    #[serde(rename = "pinned", alias = "dg-pinned")]
+    #[serde(rename = "pinned", alias = "note-pinned")]
     pinned: Option<bool>,
-    #[serde(rename = "hide", alias = "dg-hide")]
+    #[serde(rename = "hide", alias = "note-hide")]
     hide: Option<bool>,
-    #[serde(rename = "hide-in-graph", alias = "dg-hide-in-graph")]
+    #[serde(rename = "hide-in-graph", alias = "note-hide-in-graph")]
     hide_in_graph: Option<bool>,
-    #[serde(rename = "note-icon", alias = "dg-note-icon")]
+    #[serde(rename = "note-icon")]
     note_icon: Option<String>,
-    #[serde(rename = "metatags", alias = "dg-metatags")]
+    #[serde(rename = "metatags", alias = "note-metatags")]
     metatags: Option<YamlValue>,
-    #[serde(rename = "content-classes", alias = "dg-content-classes")]
+    #[serde(rename = "content-classes", alias = "note-content-classes")]
     content_classes: Option<YamlValue>,
 }
 
@@ -2453,7 +2452,7 @@ fn render_pdf_embed_html(url: &str, title: &str) -> String {
     let safe_url = escape_html_text(url);
     let safe_title = escape_html_text(title);
     format!(
-        "\n\n<div class=\"dg-pdf-embed\"><div class=\"dg-pdf-embed-head\">{title}</div><object data=\"{url}\" type=\"application/pdf\"><p>PDF preview is not available. <a href=\"{url}\" target=\"_blank\" rel=\"noopener\">Open PDF</a></p></object></div>\n\n",
+        "\n\n<div class=\"note-pdf-embed\"><div class=\"note-pdf-embed-head\">{title}</div><object data=\"{url}\" type=\"application/pdf\"><p>PDF preview is not available. <a href=\"{url}\" target=\"_blank\" rel=\"noopener\">Open PDF</a></p></object></div>\n\n",
         title = safe_title,
         url = safe_url
     )
@@ -3350,7 +3349,7 @@ fn render_excalidraw_embed_html(url: &str, title: &str) -> String {
     let svg_candidate = escape_html_text(&format!("{url}.svg"));
     let png_candidate = escape_html_text(&format!("{url}.png"));
     format!(
-        "\n\n<div class=\"dg-excalidraw-embed\" data-excalidraw-src=\"{source}\"><div class=\"dg-excalidraw-embed-head\">{title}</div><div class=\"dg-excalidraw-embed-body\"><p class=\"dg-excalidraw-placeholder\">Loading drawing preview...</p><div class=\"dg-excalidraw-preview-wrap\" hidden></div><img class=\"dg-excalidraw-preview\" src=\"{svg}\" alt=\"{title}\" loading=\"lazy\" decoding=\"async\" /><p class=\"dg-excalidraw-links\"><a href=\"{source}\" target=\"_blank\" rel=\"noopener\">Open Excalidraw Source</a> · <a href=\"{png}\" target=\"_blank\" rel=\"noopener\">Try PNG Preview</a></p></div></div>\n\n",
+        "\n\n<div class=\"note-excalidraw-embed\" data-excalidraw-src=\"{source}\"><div class=\"note-excalidraw-embed-head\">{title}</div><div class=\"note-excalidraw-embed-body\"><p class=\"note-excalidraw-placeholder\">Loading drawing preview...</p><div class=\"note-excalidraw-preview-wrap\" hidden></div><img class=\"note-excalidraw-preview\" src=\"{svg}\" alt=\"{title}\" loading=\"lazy\" decoding=\"async\" /><p class=\"note-excalidraw-links\"><a href=\"{source}\" target=\"_blank\" rel=\"noopener\">Open Excalidraw Source</a> · <a href=\"{png}\" target=\"_blank\" rel=\"noopener\">Try PNG Preview</a></p></div></div>\n\n",
         title = safe_title,
         svg = svg_candidate,
         source = safe_url,
@@ -3362,7 +3361,7 @@ fn render_canvas_embed_html(url: &str, title: &str) -> String {
     let safe_url = escape_html_text(url);
     let safe_title = escape_html_text(title);
     format!(
-        "\n\n<div class=\"dg-canvas-embed\" data-canvas-src=\"{url}\"><div class=\"dg-canvas-embed-head\">{title}</div><div class=\"dg-canvas-embed-body\"><p class=\"dg-canvas-placeholder\">Loading canvas preview...</p><div class=\"dg-canvas-preview\" hidden></div><p class=\"dg-canvas-links\"><a href=\"{url}\" target=\"_blank\" rel=\"noopener\">Open Canvas Source</a></p></div></div>\n\n",
+        "\n\n<div class=\"note-canvas-embed\" data-canvas-src=\"{url}\"><div class=\"note-canvas-embed-head\">{title}</div><div class=\"note-canvas-embed-body\"><p class=\"note-canvas-placeholder\">Loading canvas preview...</p><div class=\"note-canvas-preview\" hidden></div><p class=\"note-canvas-links\"><a href=\"{url}\" target=\"_blank\" rel=\"noopener\">Open Canvas Source</a></p></div></div>\n\n",
         title = safe_title,
         url = safe_url
     )
@@ -3612,7 +3611,7 @@ fn apply_callout_syntax(markdown: &str) -> String {
 
             if fold.is_empty() {
                 transformed.push_str(&format!(
-                    "<div class=\"dg-callout dg-callout-{kind}\" data-callout=\"{kind}\"><div class=\"dg-callout-title\">{title}</div><div class=\"dg-callout-body\">{body}</div></div>",
+                    "<div class=\"note-callout note-callout-{kind}\" data-callout=\"{kind}\"><div class=\"note-callout-title\">{title}</div><div class=\"note-callout-body\">{body}</div></div>",
                     kind = callout_type,
                     title = safe_title,
                     body = body_html
@@ -3620,7 +3619,7 @@ fn apply_callout_syntax(markdown: &str) -> String {
             } else {
                 let open_attr = if fold == "+" { " open" } else { "" };
                 transformed.push_str(&format!(
-                    "<details class=\"dg-callout dg-callout-{kind}\" data-callout=\"{kind}\"{open}><summary class=\"dg-callout-title\">{title}</summary><div class=\"dg-callout-body\">{body}</div></details>",
+                    "<details class=\"note-callout note-callout-{kind}\" data-callout=\"{kind}\"{open}><summary class=\"note-callout-title\">{title}</summary><div class=\"note-callout-body\">{body}</div></details>",
                     kind = callout_type,
                     open = open_attr,
                     title = safe_title,
@@ -4920,8 +4919,8 @@ mod tests {
 "#,
         );
 
-        assert!(html.contains(r#"details class="dg-callout dg-callout-warning""#));
-        assert!(html.contains(r#"summary class="dg-callout-title">Safety</summary>"#));
+        assert!(html.contains(r#"details class="note-callout note-callout-warning""#));
+        assert!(html.contains(r#"summary class="note-callout-title">Safety</summary>"#));
         assert!(html.contains("Read this first."));
     }
 
@@ -4995,7 +4994,7 @@ mod tests {
         );
 
         assert!(outgoing.is_empty());
-        assert!(html.contains("dg-pdf-embed"));
+        assert!(html.contains("note-pdf-embed"));
         assert!(html.contains("Guide PDF"));
         assert!(html.contains("https://example.com/specs/guide.pdf"));
     }
@@ -5535,8 +5534,8 @@ Alice -> Bob: hi
 title: Home
 date: 2026-02-16
 tags: [intro]
-dg-publish: true
-dg-home: true
+note-publish: true
+note-home: true
 ---
 
 # Home
@@ -5554,13 +5553,13 @@ title: Second Brain
 aliases: [brain]
 date: 2026-02-15
 tags: [rust, architecture]
-dg-publish: true
-dg-pinned: true
-dg-metatags:
+note-publish: true
+note-pinned: true
+note-metatags:
   - robots=max-image-preview:large
   - og:locale=ko_KR
-dg-content-classes: [focus-mode, article-featured]
-dg-experimental: true
+note-content-classes: [focus-mode, article-featured]
+note-experimental: true
 ---
 
 # Second Brain
@@ -5619,8 +5618,8 @@ dv.pages("#seo")
 title: SEO Notes
 date: 2026-02-14
 tags: [seo]
-dg-publish: true
-dg-hide-in-graph: true
+note-publish: true
+note-hide-in-graph: true
 ---
 
 # SEO Notes
@@ -5635,10 +5634,10 @@ Linked from [[second-brain]].
 title: Isolated
 date: 2026-02-13
 tags: [solo]
-dg-publish: true
-dg-enable-search: false
-dg-show-local-graph: false
-dg-hide: true
+note-publish: true
+note-enable-search: false
+note-show-local-graph: false
+note-hide: true
 ---
 
 # Isolated
@@ -5653,9 +5652,9 @@ No links here.
 title: Path Note
 date: 2026-02-12
 tags: [path]
-dg-publish: true
-dg-path: custom/path-note
-dg-note-icon: "PIN"
+note-publish: true
+note-path: custom/path-note
+note-icon: "PIN"
 ---
 
 # Path Note
@@ -5670,8 +5669,8 @@ Uses custom path.
 title: No Search
 date: 2026-02-11
 tags: [private]
-dg-publish: true
-dg-enable-search: false
+note-publish: true
+note-enable-search: false
 ---
 
 # No Search
@@ -5708,7 +5707,7 @@ Not published.
             &content_dir.join("hidden-note.md"),
             r#"---
 title: Hidden
-dg-publish: false
+note-publish: false
 ---
 
 Not published.
@@ -5748,7 +5747,7 @@ Not published.
         write_text(
             &static_dir.join("style-settings.json"),
             r##"{
-  "root": { "--dg-accent": "#2c6fa8" },
+  "root": { "--note-accent": "#2c6fa8" },
   "dark": { "--bg": "#101820", "--text": "#e7edf4" }
 }"##,
         );
@@ -5812,7 +5811,7 @@ Not published.
         assert!(index_html.contains(r#"href="/obsidian-theme.css""#));
         assert!(index_html.contains(r#"href="/style-settings.css""#));
         assert!(index_html.contains(r#"href="/user-overrides.css""#));
-        assert!(index_html.contains(":root{--dg-accent:#2c6fa8;}"));
+        assert!(index_html.contains(":root{--note-accent:#2c6fa8;}"));
         assert!(index_html.contains(r#"[data-theme="dark"]{--bg:#101820;--text:#e7edf4;}"#));
         assert!(index_html.contains("loadScript(\"/assets/filetree.min.js\")"));
         assert!(index_html.contains("loadScript(\"/assets/toc-tracker.js\")"));
@@ -5840,21 +5839,21 @@ Not published.
         assert!(second_html.contains("Linked Mentions"));
         assert!(second_html.contains("/notes/home/"));
         assert!(second_html.contains(r#"dataUrl: "/local-graph/second-brain.json""#));
-        assert!(second_html.contains("dg-callout-tip"));
+        assert!(second_html.contains("note-callout-tip"));
         assert!(second_html.contains("Quick Tip"));
         assert!(second_html.contains("graph TD"));
         assert!(second_html.contains("plantuml-embed"));
         assert!(second_html.contains("plantuml.com/plantuml/svg/~h"));
         assert!(second_html.contains("$E=mc^2$"));
-        assert!(second_html.contains("dg-pdf-embed"));
+        assert!(second_html.contains("note-pdf-embed"));
         assert!(second_html.contains("Guide PDF"));
         assert!(second_html.contains("/content/attachments/spec.pdf"));
-        assert!(second_html.contains("dg-excalidraw-embed"));
+        assert!(second_html.contains("note-excalidraw-embed"));
         assert!(second_html.contains("/content/attachments/diagram.excalidraw"));
         assert!(
             second_html.contains("data-excalidraw-src=\"/content/attachments/diagram.excalidraw\"")
         );
-        assert!(second_html.contains("dg-canvas-embed"));
+        assert!(second_html.contains("note-canvas-embed"));
         assert!(second_html.contains("/content/attachments/knowledge.canvas"));
         assert!(second_html.contains("data-canvas-src=\"/content/attachments/knowledge.canvas\""));
         assert!(second_html.contains("/content/attachments/preview.png"));
@@ -5948,7 +5947,7 @@ Not published.
 
         let frontmatter_report = fs::read_to_string(output_dir.join("frontmatter-report.json"))?;
         assert!(frontmatter_report.contains("second-brain.md"));
-        assert!(frontmatter_report.contains("dg-experimental"));
+        assert!(frontmatter_report.contains("note-experimental"));
 
         let sitemap_xml = fs::read_to_string(output_dir.join("sitemap.xml"))?;
         assert!(!sitemap_xml.contains("/notes/isolated/"));

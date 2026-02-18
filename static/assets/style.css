@@ -864,8 +864,8 @@ main {
   margin: 0 auto;
 }
 
-.note-body .dg-callout,
-.note-body details.dg-callout {
+.note-body .note-callout,
+.note-body details.note-callout {
   margin: 1rem 0;
   border: 1px solid var(--line);
   border-left: 4px solid var(--accent);
@@ -874,7 +874,7 @@ main {
   overflow: hidden;
 }
 
-.note-body .dg-callout-title {
+.note-body .note-callout-title {
   margin: 0;
   padding: 0.5rem 0.72rem;
   font-size: 0.88rem;
@@ -884,74 +884,74 @@ main {
   background: #edf5ff;
 }
 
-.note-body details.dg-callout > summary {
+.note-body details.note-callout > summary {
   cursor: pointer;
   list-style: none;
 }
 
-.note-body details.dg-callout > summary::-webkit-details-marker {
+.note-body details.note-callout > summary::-webkit-details-marker {
   display: none;
 }
 
-.note-body details.dg-callout > summary::after {
+.note-body details.note-callout > summary::after {
   content: "▾";
   float: right;
   color: var(--muted);
   font-weight: 500;
 }
 
-.note-body details.dg-callout:not([open]) > summary::after {
+.note-body details.note-callout:not([open]) > summary::after {
   content: "▸";
 }
 
-.note-body .dg-callout-body {
+.note-body .note-callout-body {
   padding: 0.55rem 0.72rem 0.4rem;
 }
 
-.note-body .dg-callout-body > :first-child {
+.note-body .note-callout-body > :first-child {
   margin-top: 0;
 }
 
-.note-body .dg-callout-body > :last-child {
+.note-body .note-callout-body > :last-child {
   margin-bottom: 0;
 }
 
-.note-body .dg-callout[data-callout="warning"],
-.note-body .dg-callout[data-callout="caution"] {
+.note-body .note-callout[data-callout="warning"],
+.note-body .note-callout[data-callout="caution"] {
   border-left-color: #d08a00;
   background: #fff9ee;
 }
 
-.note-body .dg-callout[data-callout="warning"] .dg-callout-title,
-.note-body .dg-callout[data-callout="caution"] .dg-callout-title {
+.note-body .note-callout[data-callout="warning"] .note-callout-title,
+.note-body .note-callout[data-callout="caution"] .note-callout-title {
   color: #5f3e00;
   background: #fff1d3;
 }
 
-.note-body .dg-callout[data-callout="tip"],
-.note-body .dg-callout[data-callout="success"],
-.note-body .dg-callout[data-callout="check"] {
+.note-body .note-callout[data-callout="tip"],
+.note-body .note-callout[data-callout="success"],
+.note-body .note-callout[data-callout="check"] {
   border-left-color: #1f8a4c;
   background: #f0fbf4;
 }
 
-.note-body .dg-callout[data-callout="tip"] .dg-callout-title,
-.note-body .dg-callout[data-callout="success"] .dg-callout-title,
-.note-body .dg-callout[data-callout="check"] .dg-callout-title {
+.note-body .note-callout[data-callout="tip"] .note-callout-title,
+.note-body .note-callout[data-callout="success"] .note-callout-title,
+.note-body .note-callout[data-callout="check"] .note-callout-title {
   color: #14552f;
   background: #ddf5e6;
 }
 
-.note-body .dg-callout[data-callout="danger"],
-.note-body .dg-callout[data-callout="error"],
-.note-body .dg-callout[data-callout="fail"] {
+.note-body .note-callout[data-callout="danger"],
+.note-body .note-callout[data-callout="error"],
+.note-body .note-callout[data-callout="fail"] {
   border-left-color: #c44343;
   background: #fff1f1;
 }
 
-.note-body .dg-callout[data-callout="danger"] .dg-callout-title,
-.note-body .dg-callout[data-callout="error"] .dg-callout-title,
-.note-body .dg-callout[data-callout="fail"] .dg-callout-title {
+.note-body .note-callout[data-callout="danger"] .note-callout-title,
+.note-body .note-callout[data-callout="error"] .note-callout-title,
+.note-body .note-callout[data-callout="fail"] .note-callout-title {
   color: #6a1a1a;
   background: #ffdddd;
 }
@@ -976,49 +976,49 @@ main {
   border-color: #d08a00;
 }
 
-html[data-theme="dark"] .note-body .dg-callout,
-html[data-theme="dark"] .note-body details.dg-callout {
+html[data-theme="dark"] .note-body .note-callout,
+html[data-theme="dark"] .note-body details.note-callout {
   background: #101f33;
 }
 
-html[data-theme="dark"] .note-body .dg-callout-title {
+html[data-theme="dark"] .note-body .note-callout-title {
   color: #d3e4ff;
   background: #163250;
 }
 
-html[data-theme="dark"] .note-body .dg-callout[data-callout="warning"],
-html[data-theme="dark"] .note-body .dg-callout[data-callout="caution"] {
+html[data-theme="dark"] .note-body .note-callout[data-callout="warning"],
+html[data-theme="dark"] .note-body .note-callout[data-callout="caution"] {
   background: #33270f;
 }
 
-html[data-theme="dark"] .note-body .dg-callout[data-callout="warning"] .dg-callout-title,
-html[data-theme="dark"] .note-body .dg-callout[data-callout="caution"] .dg-callout-title {
+html[data-theme="dark"] .note-body .note-callout[data-callout="warning"] .note-callout-title,
+html[data-theme="dark"] .note-body .note-callout[data-callout="caution"] .note-callout-title {
   color: #ffe2a8;
   background: #4a3813;
 }
 
-html[data-theme="dark"] .note-body .dg-callout[data-callout="tip"],
-html[data-theme="dark"] .note-body .dg-callout[data-callout="success"],
-html[data-theme="dark"] .note-body .dg-callout[data-callout="check"] {
+html[data-theme="dark"] .note-body .note-callout[data-callout="tip"],
+html[data-theme="dark"] .note-body .note-callout[data-callout="success"],
+html[data-theme="dark"] .note-body .note-callout[data-callout="check"] {
   background: #0f2e1f;
 }
 
-html[data-theme="dark"] .note-body .dg-callout[data-callout="tip"] .dg-callout-title,
-html[data-theme="dark"] .note-body .dg-callout[data-callout="success"] .dg-callout-title,
-html[data-theme="dark"] .note-body .dg-callout[data-callout="check"] .dg-callout-title {
+html[data-theme="dark"] .note-body .note-callout[data-callout="tip"] .note-callout-title,
+html[data-theme="dark"] .note-body .note-callout[data-callout="success"] .note-callout-title,
+html[data-theme="dark"] .note-body .note-callout[data-callout="check"] .note-callout-title {
   color: #b9efcf;
   background: #16422d;
 }
 
-html[data-theme="dark"] .note-body .dg-callout[data-callout="danger"],
-html[data-theme="dark"] .note-body .dg-callout[data-callout="error"],
-html[data-theme="dark"] .note-body .dg-callout[data-callout="fail"] {
+html[data-theme="dark"] .note-body .note-callout[data-callout="danger"],
+html[data-theme="dark"] .note-body .note-callout[data-callout="error"],
+html[data-theme="dark"] .note-body .note-callout[data-callout="fail"] {
   background: #351a1a;
 }
 
-html[data-theme="dark"] .note-body .dg-callout[data-callout="danger"] .dg-callout-title,
-html[data-theme="dark"] .note-body .dg-callout[data-callout="error"] .dg-callout-title,
-html[data-theme="dark"] .note-body .dg-callout[data-callout="fail"] .dg-callout-title {
+html[data-theme="dark"] .note-body .note-callout[data-callout="danger"] .note-callout-title,
+html[data-theme="dark"] .note-body .note-callout[data-callout="error"] .note-callout-title,
+html[data-theme="dark"] .note-body .note-callout[data-callout="fail"] .note-callout-title {
   color: #ffc4c4;
   background: #4b2222;
 }
@@ -1037,7 +1037,7 @@ html[data-theme="dark"] .note-body li code {
   color: #e4eeff;
 }
 
-.note-body .dg-pdf-embed {
+.note-body .note-pdf-embed {
   margin: 1rem 0;
   border: 1px solid var(--line);
   border-radius: 10px;
@@ -1045,7 +1045,7 @@ html[data-theme="dark"] .note-body li code {
   overflow: hidden;
 }
 
-.note-body .dg-pdf-embed-head {
+.note-body .note-pdf-embed-head {
   padding: 0.5rem 0.72rem;
   border-bottom: 1px solid var(--line);
   color: var(--muted);
@@ -1053,7 +1053,7 @@ html[data-theme="dark"] .note-body li code {
   font-weight: 600;
 }
 
-.note-body .dg-pdf-embed object {
+.note-body .note-pdf-embed object {
   display: block;
   width: 100%;
   min-height: 480px;
@@ -1061,23 +1061,23 @@ html[data-theme="dark"] .note-body li code {
   background: #ffffff;
 }
 
-.note-body .dg-pdf-embed p {
+.note-body .note-pdf-embed p {
   margin: 0;
   padding: 0.8rem;
   color: var(--muted);
   font-size: 0.84rem;
 }
 
-html[data-theme="dark"] .note-body .dg-pdf-embed {
+html[data-theme="dark"] .note-body .note-pdf-embed {
   background: #0f1b2b;
 }
 
-html[data-theme="dark"] .note-body .dg-pdf-embed object {
+html[data-theme="dark"] .note-body .note-pdf-embed object {
   background: #0d1624;
 }
 
-.note-body .dg-excalidraw-embed,
-.note-body .dg-canvas-embed {
+.note-body .note-excalidraw-embed,
+.note-body .note-canvas-embed {
   margin: 1rem 0;
   border: 1px solid var(--line);
   border-radius: 10px;
@@ -1085,8 +1085,8 @@ html[data-theme="dark"] .note-body .dg-pdf-embed object {
   overflow: hidden;
 }
 
-.note-body .dg-excalidraw-embed-head,
-.note-body .dg-canvas-embed-head {
+.note-body .note-excalidraw-embed-head,
+.note-body .note-canvas-embed-head {
   padding: 0.5rem 0.72rem;
   border-bottom: 1px solid var(--line);
   color: var(--muted);
@@ -1094,12 +1094,12 @@ html[data-theme="dark"] .note-body .dg-pdf-embed object {
   font-weight: 600;
 }
 
-.note-body .dg-excalidraw-embed-body,
-.note-body .dg-canvas-embed-body {
+.note-body .note-excalidraw-embed-body,
+.note-body .note-canvas-embed-body {
   padding: 0.72rem;
 }
 
-.note-body .dg-excalidraw-preview {
+.note-body .note-excalidraw-preview {
   display: block;
   width: 100%;
   border: 1px solid var(--line);
@@ -1109,25 +1109,25 @@ html[data-theme="dark"] .note-body .dg-pdf-embed object {
   object-fit: contain;
 }
 
-.note-body .dg-excalidraw-placeholder {
+.note-body .note-excalidraw-placeholder {
   margin: 0;
   color: var(--muted);
   font-size: 0.82rem;
 }
 
-.note-body .dg-excalidraw-preview-wrap {
+.note-body .note-excalidraw-preview-wrap {
   margin-top: 0.6rem;
   display: grid;
   gap: 0.45rem;
 }
 
-.note-body .dg-excalidraw-stats {
+.note-body .note-excalidraw-stats {
   margin: 0;
   color: var(--muted);
   font-size: 0.78rem;
 }
 
-.note-body .dg-excalidraw-map {
+.note-body .note-excalidraw-map {
   width: 100%;
   height: auto;
   border: 1px solid var(--line);
@@ -1135,54 +1135,54 @@ html[data-theme="dark"] .note-body .dg-pdf-embed object {
   background: #ffffff;
 }
 
-.note-body .dg-excalidraw-map .dg-excalidraw-shape {
+.note-body .note-excalidraw-map .note-excalidraw-shape {
   stroke-width: 1.2;
 }
 
-.note-body .dg-excalidraw-map .dg-excalidraw-stroke {
+.note-body .note-excalidraw-map .note-excalidraw-stroke {
   stroke-width: 1.3;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-.note-body .dg-excalidraw-map .dg-excalidraw-text {
+.note-body .note-excalidraw-map .note-excalidraw-text {
   font-size: 10px;
   font-family: "Pretendard", "Noto Sans KR", "IBM Plex Sans", sans-serif;
 }
 
-.note-body .dg-excalidraw-embed.is-enhanced .dg-excalidraw-preview {
+.note-body .note-excalidraw-embed.is-enhanced .note-excalidraw-preview {
   display: none;
 }
 
-.note-body .dg-excalidraw-links {
+.note-body .note-excalidraw-links {
   margin: 0.55rem 0 0;
   color: var(--muted);
   font-size: 0.82rem;
 }
 
-.note-body .dg-canvas-embed-body p {
+.note-body .note-canvas-embed-body p {
   margin: 0.2rem 0 0;
   color: var(--muted);
   font-size: 0.84rem;
 }
 
-.note-body .dg-canvas-placeholder {
+.note-body .note-canvas-placeholder {
   margin: 0;
 }
 
-.note-body .dg-canvas-preview {
+.note-body .note-canvas-preview {
   margin-top: 0.65rem;
   display: grid;
   gap: 0.55rem;
 }
 
-.note-body .dg-canvas-stats {
+.note-body .note-canvas-stats {
   margin: 0;
   color: var(--muted);
   font-size: 0.78rem;
 }
 
-.note-body .dg-canvas-map {
+.note-body .note-canvas-map {
   width: 100%;
   height: auto;
   border: 1px solid var(--line);
@@ -1190,25 +1190,25 @@ html[data-theme="dark"] .note-body .dg-pdf-embed object {
   background: #ffffff;
 }
 
-.note-body .dg-canvas-map .dg-canvas-links line {
+.note-body .note-canvas-map .note-canvas-links line {
   stroke: #9fb4cc;
   stroke-width: 1.2;
   stroke-opacity: 0.75;
 }
 
-.note-body .dg-canvas-map .dg-canvas-node rect {
+.note-body .note-canvas-map .note-canvas-node rect {
   fill: #f3f8ff;
   stroke: #7294be;
   stroke-width: 1;
 }
 
-.note-body .dg-canvas-map .dg-canvas-node text {
+.note-body .note-canvas-map .note-canvas-node text {
   fill: #1a3f68;
   font-size: 10px;
   font-family: "Pretendard", "Noto Sans KR", "IBM Plex Sans", sans-serif;
 }
 
-.note-body .dg-canvas-node-list {
+.note-body .note-canvas-node-list {
   margin: 0;
   padding-left: 1rem;
   color: var(--muted);
@@ -1217,45 +1217,45 @@ html[data-theme="dark"] .note-body .dg-pdf-embed object {
   gap: 0.22rem;
 }
 
-.note-body .dg-canvas-empty {
+.note-body .note-canvas-empty {
   margin: 0;
   color: var(--muted);
   font-size: 0.82rem;
 }
 
-.note-body .dg-canvas-links {
+.note-body .note-canvas-links {
   margin-top: 0.55rem;
   color: var(--muted);
   font-size: 0.82rem;
 }
 
-html[data-theme="dark"] .note-body .dg-excalidraw-embed,
-html[data-theme="dark"] .note-body .dg-canvas-embed {
+html[data-theme="dark"] .note-body .note-excalidraw-embed,
+html[data-theme="dark"] .note-body .note-canvas-embed {
   background: #0f1b2b;
 }
 
-html[data-theme="dark"] .note-body .dg-excalidraw-preview {
+html[data-theme="dark"] .note-body .note-excalidraw-preview {
   background: #0d1624;
 }
 
-html[data-theme="dark"] .note-body .dg-excalidraw-map {
+html[data-theme="dark"] .note-body .note-excalidraw-map {
   background: #0d1624;
 }
 
-html[data-theme="dark"] .note-body .dg-canvas-map {
+html[data-theme="dark"] .note-body .note-canvas-map {
   background: #0d1624;
 }
 
-html[data-theme="dark"] .note-body .dg-canvas-map .dg-canvas-links line {
+html[data-theme="dark"] .note-body .note-canvas-map .note-canvas-links line {
   stroke: #4f6f94;
 }
 
-html[data-theme="dark"] .note-body .dg-canvas-map .dg-canvas-node rect {
+html[data-theme="dark"] .note-body .note-canvas-map .note-canvas-node rect {
   fill: #16304d;
   stroke: #5d88bb;
 }
 
-html[data-theme="dark"] .note-body .dg-canvas-map .dg-canvas-node text {
+html[data-theme="dark"] .note-body .note-canvas-map .note-canvas-node text {
   fill: #c4ddfb;
 }
 
@@ -1794,21 +1794,21 @@ html[data-theme="dark"] .graph-stage {
     color: var(--text);
   }
 
-  .note-body .dg-callout,
-  .note-body details.dg-callout,
+  .note-body .note-callout,
+  .note-body details.note-callout,
   .note-body .mermaid-render,
   .note-body .plantuml-embed,
-  .note-body .dg-pdf-embed,
-  .note-body .dg-excalidraw-embed,
-  .note-body .dg-canvas-embed {
+  .note-body .note-pdf-embed,
+  .note-body .note-excalidraw-embed,
+  .note-body .note-canvas-embed {
     border: 1px solid var(--line);
     background: var(--surface);
   }
 
-  .note-body .dg-callout-title,
-  .note-body .dg-pdf-embed-head,
-  .note-body .dg-excalidraw-embed-head,
-  .note-body .dg-canvas-embed-head {
+  .note-body .note-callout-title,
+  .note-body .note-pdf-embed-head,
+  .note-body .note-excalidraw-embed-head,
+  .note-body .note-canvas-embed-head {
     background: var(--accent-soft);
     color: var(--accent-ink);
   }
@@ -2475,23 +2475,23 @@ html[data-theme="dark"] .note-body pre {
   color: color-mix(in srgb, var(--text) 82%, var(--muted));
 }
 
-.note-body .dg-callout,
-.note-body details.dg-callout,
+.note-body .note-callout,
+.note-body details.note-callout,
 .note-body .mermaid-render,
 .note-body .plantuml-embed,
-.note-body .dg-pdf-embed,
-.note-body .dg-excalidraw-embed,
-.note-body .dg-canvas-embed {
+.note-body .note-pdf-embed,
+.note-body .note-excalidraw-embed,
+.note-body .note-canvas-embed {
   border-radius: 12px;
   border-color: color-mix(in srgb, var(--line) 84%, transparent);
   background: color-mix(in srgb, var(--surface-strong) 97%, transparent);
   box-shadow: 0 8px 18px color-mix(in srgb, var(--line) 28%, transparent);
 }
 
-.note-body .dg-callout-title,
-.note-body .dg-pdf-embed-head,
-.note-body .dg-excalidraw-embed-head,
-.note-body .dg-canvas-embed-head {
+.note-body .note-callout-title,
+.note-body .note-pdf-embed-head,
+.note-body .note-excalidraw-embed-head,
+.note-body .note-canvas-embed-head {
   background: color-mix(in srgb, var(--accent-soft) 58%, var(--surface));
   color: color-mix(in srgb, var(--text) 86%, var(--accent));
   font-family: var(--font-body);
@@ -2827,52 +2827,52 @@ html[data-theme="dark"] .graph-stage {
   --callout-danger: #c44343;
 }
 
-.note-body .dg-callout,
-.note-body details.dg-callout {
+.note-body .note-callout,
+.note-body details.note-callout {
   background: color-mix(in srgb, var(--callout-info) 8%, var(--surface));
 }
 
-.note-body .dg-callout-title {
+.note-body .note-callout-title {
   color: color-mix(in srgb, var(--callout-info) 70%, var(--text));
   background: color-mix(in srgb, var(--callout-info) 14%, var(--surface));
 }
 
-.note-body .dg-callout[data-callout="warning"],
-.note-body .dg-callout[data-callout="caution"] {
+.note-body .note-callout[data-callout="warning"],
+.note-body .note-callout[data-callout="caution"] {
   border-left-color: var(--callout-warn);
   background: color-mix(in srgb, var(--callout-warn) 8%, var(--surface));
 }
 
-.note-body .dg-callout[data-callout="warning"] .dg-callout-title,
-.note-body .dg-callout[data-callout="caution"] .dg-callout-title {
+.note-body .note-callout[data-callout="warning"] .note-callout-title,
+.note-body .note-callout[data-callout="caution"] .note-callout-title {
   color: color-mix(in srgb, var(--callout-warn) 70%, var(--text));
   background: color-mix(in srgb, var(--callout-warn) 14%, var(--surface));
 }
 
-.note-body .dg-callout[data-callout="tip"],
-.note-body .dg-callout[data-callout="success"],
-.note-body .dg-callout[data-callout="check"] {
+.note-body .note-callout[data-callout="tip"],
+.note-body .note-callout[data-callout="success"],
+.note-body .note-callout[data-callout="check"] {
   border-left-color: var(--callout-success);
   background: color-mix(in srgb, var(--callout-success) 8%, var(--surface));
 }
 
-.note-body .dg-callout[data-callout="tip"] .dg-callout-title,
-.note-body .dg-callout[data-callout="success"] .dg-callout-title,
-.note-body .dg-callout[data-callout="check"] .dg-callout-title {
+.note-body .note-callout[data-callout="tip"] .note-callout-title,
+.note-body .note-callout[data-callout="success"] .note-callout-title,
+.note-body .note-callout[data-callout="check"] .note-callout-title {
   color: color-mix(in srgb, var(--callout-success) 70%, var(--text));
   background: color-mix(in srgb, var(--callout-success) 14%, var(--surface));
 }
 
-.note-body .dg-callout[data-callout="danger"],
-.note-body .dg-callout[data-callout="error"],
-.note-body .dg-callout[data-callout="fail"] {
+.note-body .note-callout[data-callout="danger"],
+.note-body .note-callout[data-callout="error"],
+.note-body .note-callout[data-callout="fail"] {
   border-left-color: var(--callout-danger);
   background: color-mix(in srgb, var(--callout-danger) 8%, var(--surface));
 }
 
-.note-body .dg-callout[data-callout="danger"] .dg-callout-title,
-.note-body .dg-callout[data-callout="error"] .dg-callout-title,
-.note-body .dg-callout[data-callout="fail"] .dg-callout-title {
+.note-body .note-callout[data-callout="danger"] .note-callout-title,
+.note-body .note-callout[data-callout="error"] .note-callout-title,
+.note-body .note-callout[data-callout="fail"] .note-callout-title {
   color: color-mix(in srgb, var(--callout-danger) 70%, var(--text));
   background: color-mix(in srgb, var(--callout-danger) 14%, var(--surface));
 }
@@ -2884,37 +2884,37 @@ html[data-theme="dark"] .graph-stage {
   background: color-mix(in srgb, var(--surface-strong) 97%, transparent);
 }
 
-.note-body .dg-pdf-embed {
+.note-body .note-pdf-embed {
   background: color-mix(in srgb, var(--surface-strong) 97%, transparent);
 }
 
-.note-body .dg-pdf-embed object {
+.note-body .note-pdf-embed object {
   background: var(--surface);
 }
 
-.note-body .dg-excalidraw-embed,
-.note-body .dg-canvas-embed {
+.note-body .note-excalidraw-embed,
+.note-body .note-canvas-embed {
   background: color-mix(in srgb, var(--surface-strong) 97%, transparent);
 }
 
-.note-body .dg-excalidraw-preview {
+.note-body .note-excalidraw-preview {
   background: var(--surface);
 }
 
-.note-body .dg-canvas-map {
+.note-body .note-canvas-map {
   background: var(--surface);
 }
 
-.note-body .dg-canvas-map .dg-canvas-links line {
+.note-body .note-canvas-map .note-canvas-links line {
   stroke: color-mix(in srgb, var(--muted) 60%, transparent);
 }
 
-.note-body .dg-canvas-map .dg-canvas-node rect {
+.note-body .note-canvas-map .note-canvas-node rect {
   fill: color-mix(in srgb, var(--accent-soft) 40%, var(--surface));
   stroke: color-mix(in srgb, var(--accent) 50%, var(--line));
 }
 
-.note-body .dg-canvas-map .dg-canvas-node text {
+.note-body .note-canvas-map .note-canvas-node text {
   fill: var(--text);
 }
 

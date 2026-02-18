@@ -12,18 +12,18 @@
   };
 
   const ensureStylesheet = (href) => {
-    if (document.querySelector('link[data-dg-katex="1"]')) {
+    if (document.querySelector('link[data-katex="1"]')) {
       return;
     }
     const link = document.createElement("link");
     link.rel = "stylesheet";
     link.href = href;
-    link.setAttribute("data-dg-katex", "1");
+    link.setAttribute("data-katex", "1");
     document.head.appendChild(link);
   };
 
   const ensureScript = (src, marker) => {
-    if (document.querySelector('script[data-dg-katex-script="' + marker + '"]')) {
+    if (document.querySelector('script[data-katex-script="' + marker + '"]')) {
       return Promise.resolve();
     }
 
@@ -31,7 +31,7 @@
       const script = document.createElement("script");
       script.src = src;
       script.defer = true;
-      script.setAttribute("data-dg-katex-script", marker);
+      script.setAttribute("data-katex-script", marker);
       script.onload = () => resolve();
       script.onerror = () => reject(new Error("failed to load " + marker));
       document.head.appendChild(script);
@@ -126,7 +126,7 @@
 
     const preferredEngine = (
       document.documentElement.getAttribute("data-math-engine") ||
-      window.DG_MATH_ENGINE ||
+      window.NOTE_MATH_ENGINE ||
       "mathjax"
     )
       .toString()

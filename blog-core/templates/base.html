@@ -71,7 +71,7 @@
     <div class="site-shell">
       <header class="site-header">
         <div class="site-brand">
-          <p class="site-kicker">Digital Garden</p>
+          <p class="site-kicker">Notes</p>
           <p class="site-title"><a class="site-title-link" href="/">{{ layout.site_title }}</a></p>
           <p class="site-tagline">{{ layout.site_description }}</p>
         </div>
@@ -269,7 +269,7 @@
             scheduleAfterPageLoad(runOnce, fallbackDelayMs);
           };
           const loadScript = (src) => {
-            const marker = "script[data-dg-src=\"" + src + "\"]";
+            const marker = "script[data-script-src=\"" + src + "\"]";
             if (document.querySelector(marker)) {
               return Promise.resolve();
             }
@@ -277,7 +277,7 @@
               const script = document.createElement("script");
               script.defer = true;
               script.src = src;
-              script.setAttribute("data-dg-src", src);
+              script.setAttribute("data-script-src", src);
               script.onload = () => resolve();
               script.onerror = () => reject(new Error("failed to load " + src));
               document.head.appendChild(script);
@@ -895,13 +895,13 @@
           });
         }
 
-        if (document.querySelector(".dg-excalidraw-embed[data-excalidraw-src]")) {
+        if (document.querySelector(".note-excalidraw-embed[data-excalidraw-src]")) {
           scheduleNonCritical(() => {
             loadScript("/assets/excalidraw-preview.js").catch(() => {});
           });
         }
 
-        if (document.querySelector(".dg-canvas-embed[data-canvas-src]")) {
+        if (document.querySelector(".note-canvas-embed[data-canvas-src]")) {
           scheduleNonCritical(() => {
             loadScript("/assets/canvas-preview.js").catch(() => {});
           });

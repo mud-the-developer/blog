@@ -28,7 +28,7 @@
         }
 
         try {
-          const id = "dg-mermaid-" + index + "-" + Date.now();
+          const id = "mermaid-" + index + "-" + Date.now();
           const rendered = await mermaid.render(id, source);
           const wrapper = document.createElement("div");
           wrapper.className = "mermaid-render";

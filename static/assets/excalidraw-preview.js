@@ -57,8 +57,8 @@
   };
 
   const renderExcalidraw = (embed, payload) => {
-    const placeholder = embed.querySelector(".dg-excalidraw-placeholder");
-    const previewWrap = embed.querySelector(".dg-excalidraw-preview-wrap");
+    const placeholder = embed.querySelector(".note-excalidraw-placeholder");
+    const previewWrap = embed.querySelector(".note-excalidraw-preview-wrap");
     if (!previewWrap) {
       return;
     }
@@ -99,7 +99,7 @@
         const points = buildPathPoints(element, view, scale);
         if (points) {
           shapes.push(
-            '<polyline class="dg-excalidraw-stroke" points="' +
+            '<polyline class="note-excalidraw-stroke" points="' +
               points +
               '" stroke="' +
               stroke +
@@ -111,7 +111,7 @@
 
       if (type === "ellipse") {
         shapes.push(
-          '<ellipse class="dg-excalidraw-shape" cx="' +
+          '<ellipse class="note-excalidraw-shape" cx="' +
             (view.x + view.width / 2).toFixed(2) +
             '" cy="' +
             (view.y + view.height / 2).toFixed(2) +
@@ -138,7 +138,7 @@
           view.x.toFixed(2) + "," + cy.toFixed(2),
         ].join(" ");
         shapes.push(
-          '<polygon class="dg-excalidraw-shape" points="' +
+          '<polygon class="note-excalidraw-shape" points="' +
             points +
             '" stroke="' +
             stroke +
@@ -152,7 +152,7 @@
       if (type === "text") {
         const text = escapeHtml(String(element.text || "Text").replace(/\s+/g, " ").trim() || "Text");
         shapes.push(
-          '<text class="dg-excalidraw-text" x="' +
+          '<text class="note-excalidraw-text" x="' +
             view.x.toFixed(2) +
             '" y="' +
             (view.y + 14).toFixed(2) +
@@ -166,7 +166,7 @@
       }
 
       shapes.push(
-        '<rect class="dg-excalidraw-shape" x="' +
+        '<rect class="note-excalidraw-shape" x="' +
           view.x.toFixed(2) +
           '" y="' +
           view.y.toFixed(2) +
@@ -183,11 +183,11 @@
     }
 
     const stats =
-      '<p class="dg-excalidraw-stats">' +
+      '<p class="note-excalidraw-stats">' +
       escapeHtml(String(elements.length)) +
       " elements</p>";
     const svg =
-      '<svg class="dg-excalidraw-map" viewBox="0 0 560 280" role="img" aria-label="Excalidraw preview map">' +
+      '<svg class="note-excalidraw-map" viewBox="0 0 560 280" role="img" aria-label="Excalidraw preview map">' +
       shapes.join("") +
       "</svg>";
 
@@ -200,14 +200,14 @@
   };
 
   const renderError = (embed, message) => {
-    const placeholder = embed.querySelector(".dg-excalidraw-placeholder");
+    const placeholder = embed.querySelector(".note-excalidraw-placeholder");
     if (placeholder) {
       placeholder.textContent = message;
     }
   };
 
   const init = async () => {
-    const embeds = Array.from(document.querySelectorAll(".dg-excalidraw-embed[data-excalidraw-src]"));
+    const embeds = Array.from(document.querySelectorAll(".note-excalidraw-embed[data-excalidraw-src]"));
     if (!embeds.length) {
       return;
     }

@@ -1,6 +1,6 @@
 ---
 title: Home
-description: Welcome to my digital garden.
+description: Welcome to my notes.
 date: 2026-02-16
 tags: [home, intro]
 publish: true

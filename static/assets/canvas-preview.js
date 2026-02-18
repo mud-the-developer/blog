@@ -83,8 +83,8 @@
   };
 
   const renderCanvas = (embed, payload) => {
-    const placeholder = embed.querySelector(".dg-canvas-placeholder");
-    const preview = embed.querySelector(".dg-canvas-preview");
+    const placeholder = embed.querySelector(".note-canvas-placeholder");
+    const preview = embed.querySelector(".note-canvas-preview");
     if (!preview) {
       return;
     }
@@ -106,7 +106,7 @@
     }
 
     const stats =
-      '<p class="dg-canvas-stats">' +
+      '<p class="note-canvas-stats">' +
       escapeHtml(String(validNodes.length)) +
       " nodes · " +
       escapeHtml(String(edges.length)) +
@@ -154,7 +154,7 @@
         const p = toView(node.pos, bounds, scale, padding);
         const text = escapeHtml(truncate(node.label, 16));
         nodeShapes.push(
-          '<g class="dg-canvas-node">' +
+          '<g class="note-canvas-node">' +
             '<rect x="' +
             p.x.toFixed(2) +
             '" y="' +
@@ -176,11 +176,11 @@
       }
 
       mapHtml =
-        '<svg class="dg-canvas-map" viewBox="0 0 540 260" role="img" aria-label="Canvas preview map">' +
-        '<g class="dg-canvas-links">' +
+        '<svg class="note-canvas-map" viewBox="0 0 540 260" role="img" aria-label="Canvas preview map">' +
+        '<g class="note-canvas-links">' +
         links.join("") +
         "</g>" +
-        '<g class="dg-canvas-nodes">' +
+        '<g class="note-canvas-nodes">' +
         nodeShapes.join("") +
         "</g>" +
         "</svg>";
@@ -191,8 +191,8 @@
       .map((node) => "<li>" + escapeHtml(node.label) + "</li>")
       .join("");
     const listHtml = topNodes
-      ? '<ul class="dg-canvas-node-list">' + topNodes + "</ul>"
-      : '<p class="dg-canvas-empty">No nodes found.</p>';
+      ? '<ul class="note-canvas-node-list">' + topNodes + "</ul>"
+      : '<p class="note-canvas-empty">No nodes found.</p>';
 
     preview.innerHTML = stats + mapHtml + listHtml;
     preview.hidden = false;
@@ -202,14 +202,14 @@
   };
 
   const renderError = (embed, message) => {
-    const placeholder = embed.querySelector(".dg-canvas-placeholder");
+    const placeholder = embed.querySelector(".note-canvas-placeholder");
     if (placeholder) {
       placeholder.textContent = message;
     }
   };
 
   const init = async () => {
-    const embeds = Array.from(document.querySelectorAll(".dg-canvas-embed[data-canvas-src]"));
+    const embeds = Array.from(document.querySelectorAll(".note-canvas-embed[data-canvas-src]"));
     if (!embeds.length) {
       return;
     }
