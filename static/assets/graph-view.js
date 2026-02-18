@@ -15,6 +15,8 @@
     const resetButton = document.getElementById(opts.resetButtonId || "");
     const toggleButton = document.getElementById(opts.toggleButtonId || "");
     const zoomSlider = document.getElementById(opts.zoomSliderId || "");
+    const zoomInButton = document.getElementById(opts.zoomInButtonId || "");
+    const zoomOutButton = document.getElementById(opts.zoomOutButtonId || "");
 
     const width = opts.width || 1000;
     const height = opts.height || 640;
@@ -33,6 +35,7 @@
     const minZoom = opts.minZoom || 0.45;
     const maxZoom = opts.maxZoom || 3.1;
     const zoomStep = opts.zoomStep || 0.0017;
+    const zoomButtonFactor = opts.zoomButtonFactor || 1.18;
     const autoFreeze = opts.autoFreeze !== false;
     const freezeVelocity = opts.freezeVelocity || 0.095;
     const freezeStableFrames = opts.freezeStableFrames || 55;
@@ -155,6 +158,12 @@
       view.ty = anchor.y - originY * safeScale;
       applyViewportTransform();
       wakeSimulation();
+    };
+
+    const nudgeZoom = (direction) => {
+      const multiplier = direction > 0 ? zoomButtonFactor : 1 / zoomButtonFactor;
+      const nextScale = graphState.viewport.scale * multiplier;
+      setScaleAroundPoint(nextScale, { x: centerX, y: centerY });
     };
 
     const beginViewportPan = (pointerId, point) => {
@@ -820,6 +829,18 @@
               return;
             }
             setScaleAroundPoint(nextScale, { x: centerX, y: centerY });
+          });
+        }
+
+        if (zoomInButton instanceof HTMLButtonElement) {
+          zoomInButton.addEventListener("click", () => {
+            nudgeZoom(1);
+          });
+        }
+
+        if (zoomOutButton instanceof HTMLButtonElement) {
+          zoomOutButton.addEventListener("click", () => {
+            nudgeZoom(-1);
           });
         }
 

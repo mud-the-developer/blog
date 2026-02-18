@@ -5,7 +5,7 @@ date: 2026-02-18
 tags: [template, readme, blog]
 publish: true
 ---
-
+[[home]]
 # README Post Template
 
 Use this file as a starter when you want to publish a README-style project post.

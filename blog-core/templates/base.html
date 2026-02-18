@@ -48,12 +48,6 @@
     </script>
     <link rel="alternate" type="application/rss+xml" title="{{ layout.site_title }} RSS" href="/rss.xml" />
     <link rel="preload" href="/assets/style.css" as="style" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap"
-    />
     <link rel="stylesheet" href="/assets/style.css" />
     {% if layout.obsidian_theme_css_url.len() > 0 %}
     <link rel="stylesheet" href="{{ layout.obsidian_theme_css_url }}" />
@@ -200,16 +194,33 @@
                 </svg>
                 <span class="sr-only">Reset graph view</span>
               </button>
-              <label class="sr-only" for="side-graph-zoom">Graph zoom</label>
-              <input
-                id="side-graph-zoom"
-                class="graph-zoom-slider"
-                type="range"
-                min="0.45"
-                max="3.1"
-                step="0.01"
-                value="1"
-              />
+              <div class="graph-zoom-buttons" role="group" aria-label="Graph zoom controls">
+                <button
+                  id="side-graph-zoom-in"
+                  class="graph-icon-button graph-zoom-button"
+                  type="button"
+                  aria-label="Zoom in"
+                  title="Zoom in"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 5v14"></path>
+                    <path d="M5 12h14"></path>
+                  </svg>
+                  <span class="sr-only">Zoom in</span>
+                </button>
+                <button
+                  id="side-graph-zoom-out"
+                  class="graph-icon-button graph-zoom-button"
+                  type="button"
+                  aria-label="Zoom out"
+                  title="Zoom out"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M5 12h14"></path>
+                  </svg>
+                  <span class="sr-only">Zoom out</span>
+                </button>
+              </div>
             </div>
           </div>
           {% endif %}
@@ -829,7 +840,8 @@
                   svgId: "global-graph-svg",
                   linkLayerId: "global-graph-link-layer",
                   nodeLayerId: "global-graph-node-layer",
-                  zoomSliderId: "global-graph-zoom",
+                  zoomInButtonId: "global-graph-zoom-in",
+                  zoomOutButtonId: "global-graph-zoom-out",
                   searchInputId: "global-graph-search",
                   resetButtonId: "global-graph-reset",
                   toggleButtonId: "global-graph-toggle",
@@ -852,7 +864,8 @@
                   svgId: "side-graph-svg",
                   linkLayerId: "side-graph-link-layer",
                   nodeLayerId: "side-graph-node-layer",
-                  zoomSliderId: "side-graph-zoom",
+                  zoomInButtonId: "side-graph-zoom-in",
+                  zoomOutButtonId: "side-graph-zoom-out",
                   resetButtonId: "side-graph-reset",
                   dataUrl: "{{ layout.graph_data_url }}",
                   fallbackDataUrl: "/graph.json",

@@ -41,16 +41,33 @@
         </svg>
       </div>
       <div class="graph-zoom-control">
-        <label class="sr-only" for="global-graph-zoom">Graph zoom</label>
-        <input
-          id="global-graph-zoom"
-          class="graph-zoom-slider"
-          type="range"
-          min="0.45"
-          max="3.1"
-          step="0.01"
-          value="1"
-        />
+        <div class="graph-zoom-buttons" role="group" aria-label="Graph zoom controls">
+          <button
+            id="global-graph-zoom-in"
+            class="graph-icon-button graph-zoom-button"
+            type="button"
+            aria-label="Zoom in"
+            title="Zoom in"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 5v14"></path>
+              <path d="M5 12h14"></path>
+            </svg>
+            <span class="sr-only">Zoom in</span>
+          </button>
+          <button
+            id="global-graph-zoom-out"
+            class="graph-icon-button graph-zoom-button"
+            type="button"
+            aria-label="Zoom out"
+            title="Zoom out"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M5 12h14"></path>
+            </svg>
+            <span class="sr-only">Zoom out</span>
+          </button>
+        </div>
       </div>
     </div>
 
