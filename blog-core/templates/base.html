@@ -8,6 +8,7 @@
     <title>{{ layout.page_title }}</title>
     <meta name="description" content="{{ layout.page_description }}" />
     <link rel="canonical" href="{{ layout.canonical_url }}" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <meta property="og:site_name" content="{{ layout.site_title }}" />
     <meta property="og:title" content="{{ layout.page_title }}" />
@@ -34,11 +35,15 @@
     <script>
       (() => {
         const root = document.documentElement;
+        const prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
         const theme = prefersDark ? "dark" : "light";
         root.setAttribute("data-theme-mode", "system");
         root.setAttribute("data-theme", theme);
         root.setAttribute("data-theme-preset", theme === "dark" ? "d02-carbon" : "l04-rose-ink");
+        if (!prefersReducedMotion) {
+          root.classList.add("page-transition-enabled", "page-transition-enter");
+        }
       })();
     </script>
     <link rel="alternate" type="application/rss+xml" title="{{ layout.site_title }} RSS" href="/rss.xml" />
@@ -214,6 +219,7 @@
           const searchResults = document.getElementById("global-search-results");
           const searchShortcut = document.getElementById("global-search-shortcut");
           const noteBody = document.querySelector(".note-body");
+          const root = document.documentElement;
           const scheduleNonCritical = (callback) => {
             if (typeof window.requestIdleCallback === "function") {
               window.requestIdleCallback(callback, { timeout: 850 });
@@ -276,6 +282,98 @@
               script.onerror = () => reject(new Error("failed to load " + src));
               document.head.appendChild(script);
             });
+          };
+          const prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          const canAnimatePageTransitions = root.classList.contains("page-transition-enabled") && !prefersReducedMotion;
+          const pageLeaveDurationMs = 220;
+          let isLeavingPage = false;
+
+          const startPageEnterTransition = () => {
+            if (!canAnimatePageTransitions) {
+              return;
+            }
+
+            window.requestAnimationFrame(() => {
+              root.classList.remove("page-transition-leave");
+              root.classList.remove("page-transition-enter");
+            });
+          };
+
+          const navigateWithPageTransition = (url) => {
+            const destination = typeof url === "string" ? url : "";
+            if (!destination) {
+              return;
+            }
+
+            if (!canAnimatePageTransitions) {
+              window.location.href = destination;
+              return;
+            }
+
+            if (isLeavingPage) {
+              return;
+            }
+
+            isLeavingPage = true;
+            root.classList.add("page-transition-leave");
+            window.setTimeout(() => {
+              window.location.href = destination;
+            }, pageLeaveDurationMs);
+          };
+
+          const shouldAnimateNavigationForLink = (link, event) => {
+            if (!canAnimatePageTransitions || isLeavingPage) {
+              return false;
+            }
+
+            if (!(link instanceof HTMLAnchorElement) || !link.href) {
+              return false;
+            }
+
+            if (event.defaultPrevented || event.button !== 0) {
+              return false;
+            }
+
+            if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+              return false;
+            }
+
+            if (link.hasAttribute("download")) {
+              return false;
+            }
+
+            const target = (link.getAttribute("target") || "").trim();
+            if (target.length > 0 && target.toLowerCase() !== "_self") {
+              return false;
+            }
+
+            const rel = (link.getAttribute("rel") || "").toLowerCase();
+            if (rel.includes("external")) {
+              return false;
+            }
+
+            let nextUrl;
+            let currentUrl;
+            try {
+              nextUrl = new URL(link.href, window.location.href);
+              currentUrl = new URL(window.location.href);
+            } catch (_) {
+              return false;
+            }
+
+            if (nextUrl.origin !== currentUrl.origin) {
+              return false;
+            }
+
+            if (nextUrl.protocol !== "http:" && nextUrl.protocol !== "https:") {
+              return false;
+            }
+
+            if (nextUrl.pathname === currentUrl.pathname && nextUrl.search === currentUrl.search) {
+              return false;
+            }
+
+            return true;
           };
 
           const fixedPresetByTheme = {
@@ -351,6 +449,32 @@
               });
             }
           }
+
+          startPageEnterTransition();
+          window.addEventListener("pageshow", () => {
+            isLeavingPage = false;
+            root.classList.remove("page-transition-leave");
+            root.classList.remove("page-transition-enter");
+          });
+
+          document.addEventListener("click", (event) => {
+            const target = event.target;
+            if (!(target instanceof Element)) {
+              return;
+            }
+
+            const link = target.closest("a[href]");
+            if (!(link instanceof HTMLAnchorElement)) {
+              return;
+            }
+
+            if (!shouldAnimateNavigationForLink(link, event)) {
+              return;
+            }
+
+            event.preventDefault();
+            navigateWithPageTransition(link.href);
+          });
 
         if (searchInput && searchResults) {
           const isMacLike = /Mac|iPhone|iPad|iPod/i.test(
@@ -667,7 +791,7 @@
               const target = activeIndex >= 0 ? currentResults[activeIndex] : currentResults[0];
               if (target && typeof target.url === "string") {
                 event.preventDefault();
-                window.location.href = target.url;
+                navigateWithPageTransition(target.url);
               }
             }
           });
@@ -713,7 +837,7 @@
         if (filetreeRoot) {
           const initFileTree = async () => {
             try {
-              await loadScript("/assets/filetree.js");
+              await loadScript("/assets/filetree.min.js");
               if (window.initFileTree) {
                 window.initFileTree({
                   containerId: "filetree-root",
@@ -789,7 +913,7 @@
         if (graphStage) {
           const initGraphs = async () => {
             try {
-              await loadScript("/assets/graph-view.js");
+              await loadScript("/assets/graph-view.min.js");
               if (window.initGraphView && globalGraphStage) {
                 window.initGraphView({
                   stageId: "global-graph-stage",

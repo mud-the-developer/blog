@@ -54,17 +54,25 @@ warn_if_over() {
   fi
 }
 
-graph_js="$DIST_DIR/assets/graph-view.js"
-filetree_js="$DIST_DIR/assets/filetree.js"
+graph_js="$DIST_DIR/assets/graph-view.min.js"
+filetree_js="$DIST_DIR/assets/filetree.min.js"
+
+if [[ ! -f "$graph_js" ]]; then
+  graph_js="$DIST_DIR/assets/graph-view.js"
+fi
+
+if [[ ! -f "$filetree_js" ]]; then
+  filetree_js="$DIST_DIR/assets/filetree.js"
+fi
 
 if [[ -f "$graph_js" ]]; then
   graph_js_size="$(bytes_of "$graph_js")"
-  warn_if_over "assets/graph-view.js" "$graph_js_size" "$MAX_SINGLE_GRAPH_JS"
+  warn_if_over "$(basename "$graph_js")" "$graph_js_size" "$MAX_SINGLE_GRAPH_JS"
 fi
 
 if [[ -f "$filetree_js" ]]; then
   filetree_js_size="$(bytes_of "$filetree_js")"
-  warn_if_over "assets/filetree.js" "$filetree_js_size" "$MAX_SINGLE_FILETREE_JS"
+  warn_if_over "$(basename "$filetree_js")" "$filetree_js_size" "$MAX_SINGLE_FILETREE_JS"
 fi
 
 total_js="$(sum_bytes '*.js')"

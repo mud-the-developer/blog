@@ -1,5 +1,8 @@
 use anyhow::{Context, Result};
 use askama::Template;
+use better_minify_js::{
+    minify as minify_javascript_bytes, Session as JsMinifierSession, TopLevelMode,
+};
 use chrono::{DateTime, NaiveDate, TimeZone, Utc};
 use maud::{html, PreEscaped};
 use once_cell::sync::Lazy;
@@ -13,6 +16,7 @@ use std::cmp::Ordering;
 use std::collections::{BTreeMap, HashMap, HashSet, VecDeque};
 use std::fmt::Write as _;
 use std::fs;
+use std::panic::{catch_unwind, AssertUnwindSafe};
 use std::path::{Path, PathBuf};
 use walkdir::WalkDir;
 
@@ -157,6 +161,8 @@ static HTML_TAG_RE: Lazy<Regex> =
     Lazy::new(|| Regex::new(r"(?s)<[^>]+>").expect("invalid html tag regex"));
 static HIGHLIGHT_RE: Lazy<Regex> =
     Lazy::new(|| Regex::new(r"==([^=\n][^=\n]*?)==").expect("invalid highlight regex"));
+static INLINE_SCRIPT_RE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r#"(?is)<script>(.*?)</script>"#).expect("invalid inline script regex"));
 
 const SUPPORTED_FRONTMATTER_KEYS: &[&str] = &[
     "title",
@@ -2035,13 +2041,33 @@ fn sanitize_css_var_value(value: &str) -> Option<String> {
     Some(trimmed.to_string())
 }
 
+fn minify_inline_scripts_in_html(input: &str) -> String {
+    INLINE_SCRIPT_RE
+        .replace_all(input, |captures: &Captures<'_>| {
+            let script_body = captures.get(1).map(|m| m.as_str()).unwrap_or_default();
+            let minified = minify_javascript(script_body);
+            format!("<script>{}</script>", minified)
+        })
+        .into_owned()
+}
+
 fn write_file(path: PathBuf, contents: String) -> Result<()> {
     if let Some(parent) = path.parent() {
         fs::create_dir_all(parent)
             .with_context(|| format!("failed to create {}", parent.display()))?;
     }
 
-    fs::write(&path, contents).with_context(|| format!("failed to write {}", path.display()))
+    let extension = path
+        .extension()
+        .and_then(|ext| ext.to_str())
+        .map(str::to_ascii_lowercase);
+
+    let to_write = match extension.as_deref() {
+        Some("html") | Some("htm") => minify_inline_scripts_in_html(&contents),
+        _ => contents,
+    };
+
+    fs::write(&path, to_write).with_context(|| format!("failed to write {}", path.display()))
 }
 
 fn collect_markdown_files(content_dir: &Path) -> Result<Vec<PathBuf>> {
@@ -4075,6 +4101,27 @@ fn minify_css(input: &str) -> String {
     out.trim().to_string()
 }
 
+fn minify_javascript(input: &str) -> String {
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    let output = catch_unwind(AssertUnwindSafe(|| {
+        let session = JsMinifierSession::new();
+        let mut out = Vec::with_capacity(input.len());
+        if minify_javascript_bytes(&session, TopLevelMode::Global, input.as_bytes(), &mut out)
+            .is_err()
+        {
+            return None;
+        }
+        String::from_utf8(out).ok()
+    }));
+    std::panic::set_hook(previous_hook);
+
+    match output {
+        Ok(Some(minified)) => minified,
+        _ => input.to_string(),
+    }
+}
+
 fn copy_static_assets(static_dir: &Path, output_dir: &Path) -> Result<()> {
     if !static_dir.exists() {
         return Ok(());
@@ -4108,32 +4155,47 @@ fn copy_static_assets(static_dir: &Path, output_dir: &Path) -> Result<()> {
                     .with_context(|| format!("failed to create {}", parent.display()))?;
             }
 
-            let is_css = entry_path
+            let extension = entry_path
                 .extension()
                 .and_then(|ext| ext.to_str())
-                .map(|ext| ext.eq_ignore_ascii_case("css"))
-                .unwrap_or(false);
+                .map(str::to_ascii_lowercase);
 
-            if is_css {
-                let css = fs::read_to_string(entry_path).with_context(|| {
-                    format!("failed to read CSS asset {}", entry_path.display())
-                })?;
-                let minified = minify_css(&css);
-                fs::write(&dest, minified).with_context(|| {
-                    format!(
-                        "failed to write minified CSS from {} to {}",
-                        entry_path.display(),
-                        dest.display()
-                    )
-                })?;
-            } else {
-                fs::copy(entry_path, &dest).with_context(|| {
-                    format!(
-                        "failed to copy {} to {}",
-                        entry_path.display(),
-                        dest.display()
-                    )
-                })?;
+            match extension.as_deref() {
+                Some("css") => {
+                    let css = fs::read_to_string(entry_path).with_context(|| {
+                        format!("failed to read CSS asset {}", entry_path.display())
+                    })?;
+                    let minified = minify_css(&css);
+                    fs::write(&dest, minified).with_context(|| {
+                        format!(
+                            "failed to write minified CSS from {} to {}",
+                            entry_path.display(),
+                            dest.display()
+                        )
+                    })?;
+                }
+                Some("js") => {
+                    let javascript = fs::read_to_string(entry_path).with_context(|| {
+                        format!("failed to read JS asset {}", entry_path.display())
+                    })?;
+                    let minified = minify_javascript(&javascript);
+                    fs::write(&dest, minified).with_context(|| {
+                        format!(
+                            "failed to write minified JS from {} to {}",
+                            entry_path.display(),
+                            dest.display()
+                        )
+                    })?;
+                }
+                _ => {
+                    fs::copy(entry_path, &dest).with_context(|| {
+                        format!(
+                            "failed to copy {} to {}",
+                            entry_path.display(),
+                            dest.display()
+                        )
+                    })?;
+                }
             }
         }
     }
@@ -5752,14 +5814,14 @@ Not published.
         assert!(index_html.contains(r#"href="/user-overrides.css""#));
         assert!(index_html.contains(":root{--dg-accent:#2c6fa8;}"));
         assert!(index_html.contains(r#"[data-theme="dark"]{--bg:#101820;--text:#e7edf4;}"#));
-        assert!(index_html.contains("loadScript(\"/assets/filetree.js\")"));
+        assert!(index_html.contains("loadScript(\"/assets/filetree.min.js\")"));
         assert!(index_html.contains("loadScript(\"/assets/toc-tracker.js\")"));
         assert!(index_html.contains("loadScript(\"/assets/link-preview.js\")"));
         assert!(index_html.contains("loadScript(\"/assets/math-render.js\")"));
         assert!(index_html.contains("loadScript(\"/assets/mermaid-render.js\")"));
         assert!(index_html.contains("loadScript(\"/assets/excalidraw-preview.js\")"));
         assert!(index_html.contains("loadScript(\"/assets/canvas-preview.js\")"));
-        assert!(index_html.contains("loadScript(\"/assets/graph-view.js\")"));
+        assert!(index_html.contains("loadScript(\"/assets/graph-view.min.js\")"));
         assert!(index_html.contains(r#"dataUrl: "/graph.json""#));
         assert!(index_html.contains("note-icon"));
         assert!(!index_html.contains("Isolated"));
@@ -5975,6 +6037,50 @@ Should publish in permissive mode.
         let minified = minify_css(source);
         assert!(minified.contains("calc(100% - 1rem)"));
         assert!(minified.contains("url(\"data:image/svg+xml"));
+    }
+
+    #[test]
+    fn minify_javascript_compacts_script() {
+        let source = r#"
+// comment
+const add = (left, right) => {
+  const total = left + right;
+  return total;
+};
+console.log(add(1, 2));
+"#;
+
+        let minified = minify_javascript(source);
+        assert!(minified.len() < source.len());
+        assert!(!minified.contains('\n'));
+        assert!(!minified.contains("// comment"));
+        assert!(minified.contains("console.log"));
+    }
+
+    #[test]
+    fn minify_javascript_falls_back_on_invalid_input() {
+        let source = "function {";
+        let minified = minify_javascript(source);
+        assert_eq!(minified, source);
+    }
+
+    #[test]
+    fn minify_inline_scripts_in_html_skips_script_tags_with_attributes() {
+        let source = r#"
+<html>
+  <head>
+    <script>
+      const value = 1 + 2;
+    </script>
+    <script type="application/ld+json">{ "name": "Test" }</script>
+  </head>
+</html>
+"#;
+
+        let minified = minify_inline_scripts_in_html(source);
+        assert!(minified.contains("<script>"));
+        assert!(!minified.contains("const value = 1 + 2;"));
+        assert!(minified.contains(r#"<script type="application/ld+json">{ "name": "Test" }</script>"#));
     }
 
     #[test]
