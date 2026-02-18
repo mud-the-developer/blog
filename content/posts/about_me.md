@@ -21,8 +21,8 @@ Recent research focus:
     class="profile-publication-widget"
     data-widget-base="https://vercel-google-scholar-publications.vercel.app/api/widget?scholar_id=-Uiul2AAAAAJ&count=3"
     data-theme-light="light"
-    data-theme-dark="dark"
-    src="https://vercel-google-scholar-publications.vercel.app/api/widget?scholar_id=-Uiul2AAAAAJ&count=3&theme=light&width=100%25&height=420px"
+    data-theme-dark="material-ocean"
+    src="https://vercel-google-scholar-publications.vercel.app/api/widget?scholar_id=-Uiul2AAAAAJ&count=3&theme=material-ocean&width=100%25&height=420px"
     loading="lazy"
     title="Scholar Publications"
   ></iframe>
