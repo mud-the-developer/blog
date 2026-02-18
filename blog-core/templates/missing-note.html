@@ -2,9 +2,10 @@
 
 {% block content %}
   <section class="panel not-found">
+    <p class="section-kicker">Unpublished</p>
     <h1>{{ missing_title }}</h1>
     <p>This note is referenced, but it is not published in this garden yet.</p>
     <p class="post-meta">Requested path: /notes/{{ missing_slug }}/</p>
-    <p><a href="/">Go back home</a></p>
+    <p class="post-cta"><a class="post-cta-link" href="/">Go back home</a></p>
   </section>
 {% endblock %}
