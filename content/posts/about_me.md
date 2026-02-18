@@ -17,13 +17,15 @@ Recent research focus:
 - Quantum computing
 ## Publications
 <div class="profile-publication-wrap">
-  <a href="https://vercel-google-scholar-publications.vercel.app/api/badge?scholar_id=-Uiul2AAAAAJ&count=3">
-    <img
-      class="profile-publication-badge"
-      src="https://vercel-google-scholar-publications.vercel.app/api/badge?scholar_id=-Uiul2AAAAAJ&count=3"
-      alt="Scholar publication summary badge"
-    />
-  </a>
+  <iframe
+    class="profile-publication-widget"
+    data-widget-base="https://vercel-google-scholar-publications.vercel.app/api/widget?scholar_id=-Uiul2AAAAAJ&count=3"
+    data-theme-light="light"
+    data-theme-dark="dark"
+    src="https://vercel-google-scholar-publications.vercel.app/api/widget?scholar_id=-Uiul2AAAAAJ&count=3&theme=light&width=100%25&height=420px"
+    loading="lazy"
+    title="Scholar Publications"
+  ></iframe>
 </div>
 
 ## Links

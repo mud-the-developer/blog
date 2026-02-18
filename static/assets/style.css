@@ -831,15 +831,30 @@ main {
 }
 
 .note-body .profile-publication-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
+  display: block;
+  width: min(100%, 760px);
+  border: 1px solid color-mix(in srgb, var(--line) 84%, transparent);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 76%, transparent) 0%, color-mix(in srgb, var(--surface-soft) 68%, transparent) 100%);
+  box-shadow: var(--panel-glow);
+  -webkit-backdrop-filter: blur(14px) saturate(1.08);
+  backdrop-filter: blur(14px) saturate(1.08);
+  overflow: hidden;
 }
 
 .note-body .profile-publication-wrap a {
-  display: inline-flex;
-  width: min(100%, clamp(250px, 78vw, 520px));
+  display: block;
+  width: 100%;
+}
+
+.note-body .profile-publication-widget {
+  display: block;
+  width: 100%;
+  height: 420px;
+  min-height: 380px;
+  border: 0;
+  background: transparent;
 }
 
 .note-body .profile-link-grid {
@@ -866,11 +881,17 @@ main {
 
 @media (max-width: 560px) {
   .note-body .profile-publication-wrap {
-    justify-content: center;
+    width: 100%;
+    border-radius: 12px;
   }
 
   .note-body .profile-publication-wrap a {
-    width: min(100%, clamp(220px, 92vw, 420px));
+    width: 100%;
+  }
+
+  .note-body .profile-publication-widget {
+    height: 540px;
+    min-height: 500px;
   }
 
   .note-body .profile-link-grid {
@@ -1987,36 +2008,36 @@ html[data-theme="dark"] .graph-stage {
 }
 
 html[data-theme="dark"] {
-  --bg: #ffffff;
-  --bg-spot: #f2f4f7;
-  --surface: #ffffff;
-  --text: #1f2933;
-  --muted: #4b5563;
-  --line: #c9d0d8;
-  --accent: #0057b8;
-  --accent-soft: #dbeafe;
-  --accent-ink: #123b70;
-  --mark-bg: #ffe08f;
-  --mark-text: #2c1f00;
-  --surface-soft: rgba(255, 255, 255, 0.48);
-  --surface-strong: rgba(255, 255, 255, 0.66);
-  --panel-glow: 0 14px 34px rgba(8, 18, 30, 0.12);
-  --panel-glow-strong: 0 22px 52px rgba(8, 18, 30, 0.18);
-  --checker-line: rgba(130, 141, 152, 0.28);
-  --checker-base: #ffffff;
-  --glass-surface: #111a2a;
-  --glass-surface-soft: rgba(11, 17, 27, 0.66);
-  --glass-surface-strong: rgba(18, 27, 42, 0.82);
-  --glass-text: #dce8f8;
-  --glass-muted: #9eb0ca;
-  --glass-line: rgba(143, 168, 201, 0.38);
-  --glass-accent: #7db8ff;
-  --glass-accent-soft: rgba(52, 97, 156, 0.44);
-  --glass-accent-ink: #d8e8ff;
-  --glass-mark-bg: #685322;
-  --glass-mark-text: #ffe5b2;
-  --glass-panel-glow: 0 18px 44px rgba(6, 10, 18, 0.34);
-  --glass-panel-glow-strong: 0 26px 60px rgba(4, 8, 15, 0.44);
+  --bg: #14151f;
+  --bg-spot: #1f2231;
+  --surface: rgba(20, 21, 31, 0.84);
+  --text: #e5ebff;
+  --muted: #aab4cf;
+  --line: rgba(150, 164, 196, 0.34);
+  --accent: #8cb6ff;
+  --accent-soft: rgba(83, 117, 184, 0.38);
+  --accent-ink: #dbe7ff;
+  --mark-bg: #5d4a22;
+  --mark-text: #ffe6b2;
+  --surface-soft: rgba(20, 21, 31, 0.62);
+  --surface-strong: rgba(20, 21, 31, 0.78);
+  --panel-glow: 0 18px 44px rgba(5, 7, 12, 0.45);
+  --panel-glow-strong: 0 26px 60px rgba(5, 7, 12, 0.56);
+  --checker-line: rgba(198, 206, 222, 0.42);
+  --checker-base: #14151f;
+  --glass-surface: rgba(20, 21, 31, 0.72);
+  --glass-surface-soft: rgba(20, 21, 31, 0.56);
+  --glass-surface-strong: rgba(20, 21, 31, 0.76);
+  --glass-text: #e5ebff;
+  --glass-muted: #aab4cf;
+  --glass-line: rgba(150, 164, 196, 0.34);
+  --glass-accent: #8cb6ff;
+  --glass-accent-soft: rgba(83, 117, 184, 0.38);
+  --glass-accent-ink: #dbe7ff;
+  --glass-mark-bg: #5d4a22;
+  --glass-mark-text: #ffe6b2;
+  --glass-panel-glow: 0 18px 44px rgba(5, 7, 12, 0.45);
+  --glass-panel-glow-strong: 0 26px 60px rgba(5, 7, 12, 0.56);
 }
 
 html[data-theme="dark"] .site-header,
@@ -2045,7 +2066,10 @@ body {
 }
 
 html[data-theme="dark"] body {
-  background: var(--checker-base);
+  background:
+    radial-gradient(1200px 620px at -10% -8%, rgba(86, 98, 142, 0.22) 0%, transparent 60%),
+    radial-gradient(920px 520px at 110% -10%, rgba(58, 76, 126, 0.18) 0%, transparent 58%),
+    var(--checker-base);
 }
 
 body::before {
@@ -2062,7 +2086,10 @@ body::before {
 }
 
 html[data-theme="dark"] body::before {
-  opacity: 0.17;
+  background-image:
+    linear-gradient(to right, var(--checker-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--checker-line) 1px, transparent 1px);
+  opacity: 0.2;
 }
 
 ::selection {
@@ -2748,6 +2775,7 @@ html[data-theme="dark"] .note-body pre {
 }
 
 .graph-stage {
+  position: relative;
   border-radius: 14px;
   border-color: color-mix(in srgb, var(--line) 84%, transparent);
   background:
@@ -2759,6 +2787,53 @@ html[data-theme="dark"] .note-body pre {
       color-mix(in srgb, var(--line) 24%, transparent) 26px,
       color-mix(in srgb, var(--line) 24%, transparent) 27px
     );
+}
+
+.graph-stage.is-loading {
+  filter: saturate(0.92) contrast(0.97);
+}
+
+.graph-status {
+  position: absolute;
+  inset: 0.68rem;
+  display: grid;
+  place-items: center;
+  padding: 0.65rem;
+  border: 1px dashed color-mix(in srgb, var(--line) 72%, transparent);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 84%, transparent) 0%, color-mix(in srgb, var(--surface-soft) 76%, transparent) 100%),
+    repeating-linear-gradient(
+      135deg,
+      transparent 0,
+      transparent 14px,
+      color-mix(in srgb, var(--line) 18%, transparent) 14px,
+      color-mix(in srgb, var(--line) 18%, transparent) 15px
+    );
+  color: color-mix(in srgb, var(--muted) 90%, var(--text));
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-align: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.graph-status.is-delayed {
+  border-style: solid;
+  color: color-mix(in srgb, var(--accent) 72%, var(--text));
+}
+
+.graph-status.is-error {
+  border-style: solid;
+  border-color: color-mix(in srgb, #c44343 58%, var(--line));
+  background: color-mix(in srgb, #c44343 10%, var(--surface));
+  color: color-mix(in srgb, #c44343 78%, var(--text));
+}
+
+.graph-status[hidden] {
+  display: none;
 }
 
 html[data-theme="dark"] .graph-stage {
@@ -2782,10 +2857,26 @@ html[data-theme="dark"] .graph-stage {
 }
 
 .graph-detail {
+  margin-top: 0.74rem;
+  min-height: 2.75rem;
+  padding: 0.66rem 0.78rem;
   border-radius: 11px;
   border-color: color-mix(in srgb, var(--line) 84%, transparent);
   background: color-mix(in srgb, var(--surface-strong) 95%, transparent);
   font-family: var(--font-body);
+  font-size: 0.82rem;
+  line-height: 1.42;
+  color: color-mix(in srgb, var(--muted) 88%, var(--text));
+}
+
+.graph-detail strong {
+  color: var(--text);
+}
+
+.graph-detail--side {
+  margin-top: 0.64rem;
+  min-height: 2.45rem;
+  font-size: 0.76rem;
 }
 
 .not-found {
@@ -2925,6 +3016,12 @@ html[data-theme="dark"] .graph-stage {
   .graph-stage svg,
   .graph-stage--side svg {
     height: 340px;
+  }
+
+  .graph-status {
+    inset: 0.52rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.07em;
   }
 
   .graph-stage--side svg {

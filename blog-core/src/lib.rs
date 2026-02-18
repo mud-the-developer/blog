@@ -5819,22 +5819,18 @@ Not published.
         assert!(index_html.contains(r#"href="/user-overrides.css""#));
         assert!(index_html.contains(":root{--note-accent:#2c6fa8;}"));
         assert!(index_html.contains(r#"[data-theme="dark"]{--bg:#101820;--text:#e7edf4;}"#));
-        assert!(index_html.contains("loadScript(\"/assets/filetree.min.js\")"));
-        assert!(index_html.contains("loadScript(\"/assets/toc-tracker.js\")"));
-        assert!(index_html.contains("loadScript(\"/assets/link-preview.js\")"));
-        assert!(index_html.contains("loadScript(\"/assets/math-render.js\")"));
-        assert!(index_html.contains("loadScript(\"/assets/mermaid-render.js\")"));
-        assert!(index_html.contains("loadScript(\"/assets/excalidraw-preview.js\")"));
-        assert!(index_html.contains("loadScript(\"/assets/canvas-preview.js\")"));
-        assert!(index_html.contains("loadScript(\"/assets/graph-view.min.js\")"));
-        assert!(index_html.contains(r#"dataUrl: "/graph.json""#));
+        assert!(index_html.contains(r#"src="/assets/site-runtime.js""#));
+        assert!(index_html.contains("window.__BLOG_RUNTIME_CONFIG__"));
+        assert!(index_html.contains("graphDataUrl:"));
+        assert!(index_html.contains("/graph.json"));
         assert!(index_html.contains("note-icon"));
         assert!(!index_html.contains("Isolated"));
 
         let home_html = fs::read_to_string(output_dir.join("notes/home/index.html"))?;
         assert!(home_html.contains("/notes/second-brain/#architecture-overview"));
         assert!(home_html.contains("/notes/ghost-note/"));
-        assert!(home_html.contains(r#"dataUrl: "/local-graph/home.json""#));
+        assert!(home_html.contains("graphDataUrl:"));
+        assert!(home_html.contains("/local-graph/home.json"));
         assert!(home_html.contains("Embedded from"));
         assert!(home_html.contains("self alias"));
 
@@ -5844,7 +5840,8 @@ Not published.
         assert!(second_html.contains("href=\"#architecture-overview\""));
         assert!(second_html.contains("Linked Mentions"));
         assert!(second_html.contains("/notes/home/"));
-        assert!(second_html.contains(r#"dataUrl: "/local-graph/second-brain.json""#));
+        assert!(second_html.contains("graphDataUrl:"));
+        assert!(second_html.contains("/local-graph/second-brain.json"));
         assert!(second_html.contains("note-callout-tip"));
         assert!(second_html.contains("Quick Tip"));
         assert!(second_html.contains("graph TD"));
@@ -5877,7 +5874,8 @@ Not published.
         let graph_html = fs::read_to_string(output_dir.join("graph/index.html"))?;
         assert!(graph_html.contains("id=\"global-graph-stage\""));
         assert!(graph_html.contains("id=\"global-graph-search\""));
-        assert!(graph_html.contains(r#"dataUrl: "/graph.json""#));
+        assert!(graph_html.contains("graphDataUrl:"));
+        assert!(graph_html.contains("/graph.json"));
         assert!(!graph_html.contains(r#"id="side-graph-stage""#));
 
         let graph: serde_json::Value =
