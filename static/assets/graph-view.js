@@ -173,6 +173,26 @@
       svg.classList.remove("is-panning");
     };
 
+    const resetInteractionState = () => {
+      graphState.dragging = "";
+      graphState.dragPointerId = -1;
+      graphState.dragMoved = false;
+      graphState.viewport.panning = false;
+      graphState.viewport.panPointerId = -1;
+      graphState.viewport.panStartX = 0;
+      graphState.viewport.panStartY = 0;
+      graphState.viewport.panOriginTx = 0;
+      graphState.viewport.panOriginTy = 0;
+      graphState.viewport.activeTouches.clear();
+      graphState.viewport.pinchActive = false;
+      graphState.viewport.pinchStartDistance = 0;
+      graphState.viewport.pinchStartScale = 1;
+      graphState.viewport.pinchOriginX = 0;
+      graphState.viewport.pinchOriginY = 0;
+      svg.classList.remove("is-dragging");
+      svg.classList.remove("is-panning");
+    };
+
     const beginTouchPinch = () => {
       const touches = Array.from(graphState.viewport.activeTouches.values());
       if (touches.length < 2) {
@@ -340,6 +360,36 @@
         link.el.classList.toggle("is-active", hasActive);
         link.el.classList.toggle("is-dim", !visibleBySearch || (active.length > 0 && !hasActive));
       });
+    };
+
+    const resetToInitialState = () => {
+      resetInteractionState();
+      graphState.searchTerm = "";
+      if (searchInput instanceof HTMLInputElement) {
+        searchInput.value = "";
+      }
+
+      graphState.activeNodeId = graphState.defaultActiveNodeId;
+      graphState.manuallyPaused = false;
+      graphState.running = true;
+      graphState.stableFrames = 0;
+
+      if (toggleButton) {
+        toggleButton.textContent = "Pause";
+      }
+
+      resetLayout();
+      resetViewport();
+
+      const defaultNode = graphState.nodesById.get(graphState.defaultActiveNodeId);
+      updateDetail(defaultNode || null);
+      applyVisualState();
+
+      if (defaultNode) {
+        focusNode(defaultNode, 1.12);
+        return;
+      }
+      wakeSimulation();
     };
 
     const tick = () => {
@@ -651,11 +701,6 @@
         resetLayout();
         resetViewport();
 
-        if (graphState.defaultActiveNodeId) {
-          const centerNode = graphState.nodesById.get(graphState.defaultActiveNodeId);
-          focusNode(centerNode, 1.12);
-        }
-
         graphState.links.forEach((link) => {
           const line = createSvgEl("line");
           line.classList.add("graph-link");
@@ -721,8 +766,7 @@
         });
 
         attachInteractionEvents();
-        const initialNode = graphState.nodesById.get(graphState.defaultActiveNodeId);
-        updateDetail(initialNode || null);
+        resetToInitialState();
 
         if (searchInput) {
           searchInput.addEventListener("input", () => {
@@ -761,10 +805,7 @@
 
         if (resetButton) {
           resetButton.addEventListener("click", () => {
-            resetLayout();
-            resetViewport();
-            wakeSimulation();
-            applyVisualState();
+            resetToInitialState();
           });
         }
 

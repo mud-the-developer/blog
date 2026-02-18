@@ -16,12 +16,26 @@ Recent research focus:
 - Virtualized RAN
 - Quantum computing
 ## Publications
-[![Scholar](https://vercel-google-scholar-publications.vercel.app/api/badge?scholar_id=-Uiul2AAAAAJ&count=3)](https://vercel-google-scholar-publications.vercel.app/api/badge?scholar_id=-Uiul2AAAAAJ&count=3)
+<div class="profile-publication-wrap">
+  <a href="https://vercel-google-scholar-publications.vercel.app/api/badge?scholar_id=-Uiul2AAAAAJ&count=3">
+    <img
+      class="profile-publication-badge"
+      src="https://vercel-google-scholar-publications.vercel.app/api/badge?scholar_id=-Uiul2AAAAAJ&count=3"
+      alt="Scholar publication summary badge"
+    />
+  </a>
+</div>
 
 ## Links
 
-<a href="https://github.com/mud-the-developer"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/></a>
-
-<a href="https://www.linkedin.com/in/jinhyuk-kim-a97b42242/"><img src="https://img.shields.io/badge/Linkedin-0A66C2?style=flat-square&logo=Linkedin&logoColor=white"/></a>
-
-<a href="https://scholar.google.com/citations?user=-Uiul2AAAAAJ&hl=en"><img src="https://img.shields.io/badge/Google%20Scholar-4285F4?style=flat-square&logo=Google%20Scholar&logoColor=white"/></a>
+<div class="profile-link-grid">
+  <a class="profile-link-item" href="https://github.com/mud-the-developer">
+    <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white" alt="GitHub profile" />
+  </a>
+  <a class="profile-link-item" href="https://www.linkedin.com/in/jinhyuk-kim-a97b42242/">
+    <img src="https://img.shields.io/badge/Linkedin-0A66C2?style=flat-square&logo=Linkedin&logoColor=white" alt="LinkedIn profile" />
+  </a>
+  <a class="profile-link-item" href="https://scholar.google.com/citations?user=-Uiul2AAAAAJ&hl=en">
+    <img src="https://img.shields.io/badge/Google%20Scholar-4285F4?style=flat-square&logo=Google%20Scholar&logoColor=white" alt="Google Scholar profile" />
+  </a>
+</div>

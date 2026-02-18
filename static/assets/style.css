@@ -805,6 +805,53 @@ main {
   margin: 0.92rem 0;
 }
 
+.note-body img {
+  max-width: 100%;
+  height: auto;
+}
+
+.note-body .profile-publication-badge {
+  display: block;
+  width: min(100%, 460px);
+  height: auto;
+}
+
+.note-body .profile-publication-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.note-body .profile-publication-wrap a {
+  display: inline-flex;
+}
+
+.note-body .profile-link-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.44rem 0.52rem;
+}
+
+.note-body .profile-link-item {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+@media (max-width: 560px) {
+  .note-body .profile-publication-wrap {
+    justify-content: center;
+  }
+
+  .note-body .profile-link-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, max-content));
+    justify-content: center;
+    gap: 0.48rem;
+  }
+}
+
 .note .note-body > p:first-of-type::first-letter {
   float: left;
   font-family: var(--font-display);
@@ -1381,6 +1428,45 @@ html[data-theme="dark"] .note-body pre {
   background: var(--accent-soft);
 }
 
+.graph-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.05rem;
+  min-width: 2.05rem;
+  height: 2.05rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  pointer-events: auto;
+  flex: 0 0 auto;
+}
+
+.graph-icon-button svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.graph-toolbar .graph-icon-button {
+  padding: 0;
+  text-align: center;
+}
+
+.graph-icon-button:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
 .graph-stage-wrap {
   position: relative;
 }
@@ -1428,8 +1514,10 @@ html[data-theme="dark"] .graph-stage {
   bottom: 0.7rem;
   width: 2.1rem;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 0.45rem;
   pointer-events: none;
 }
 
@@ -1651,6 +1739,10 @@ html[data-theme="dark"] .graph-stage {
   .graph-data-link {
     flex: 1 1 auto;
     text-align: center;
+  }
+
+  .graph-toolbar .graph-icon-button {
+    flex: 0 0 auto;
   }
 
   .graph-stage svg,
@@ -2560,8 +2652,21 @@ html[data-theme="dark"] .note-body pre {
   padding: 0.46rem 0.68rem;
 }
 
+.graph-toolbar .graph-icon-button {
+  padding: 0;
+}
+
 .graph-toolbar button:hover,
 .graph-data-link:hover {
+  background: color-mix(in srgb, var(--accent-soft) 78%, var(--surface));
+}
+
+.graph-icon-button {
+  border-color: color-mix(in srgb, var(--line) 84%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 96%, transparent);
+}
+
+.graph-icon-button:hover {
   background: color-mix(in srgb, var(--accent-soft) 78%, var(--surface));
 }
 
@@ -2792,6 +2897,7 @@ html[data-theme="dark"] .graph-stage {
 .backlinks a:focus-visible,
 .filetree-link:focus-visible,
 .graph-toolbar button:focus-visible,
+.graph-icon-button:focus-visible,
 .graph-toolbar input:focus-visible,
 .graph-data-link:focus-visible,
 .post-item:focus-within,

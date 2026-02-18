@@ -179,6 +179,19 @@
               </svg>
             </div>
             <div class="graph-zoom-control graph-zoom-control--side">
+              <button
+                id="side-graph-reset"
+                class="graph-icon-button"
+                type="button"
+                aria-label="Reset graph view"
+                title="Reset graph view"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M20 11a8 8 0 1 0-2.3 5.7"></path>
+                  <path d="M20 4v7h-7"></path>
+                </svg>
+                <span class="sr-only">Reset graph view</span>
+              </button>
               <label class="sr-only" for="side-graph-zoom">Graph zoom</label>
               <input
                 id="side-graph-zoom"
@@ -942,6 +955,7 @@
                   linkLayerId: "side-graph-link-layer",
                   nodeLayerId: "side-graph-node-layer",
                   zoomSliderId: "side-graph-zoom",
+                  resetButtonId: "side-graph-reset",
                   dataUrl: "{{ layout.graph_data_url }}",
                   fallbackDataUrl: "/graph.json",
                   centerNodeId: "{{ layout.graph_center_id }}",
