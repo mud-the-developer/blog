@@ -16,7 +16,7 @@ struct Cli {
     site_url: String,
     #[arg(long, default_value = "Mud's Blog")]
     title: String,
-    #[arg(long, default_value = "Thoughts, notes, and connected ideas.")]
+    #[arg(long, default_value = "")]
     description: String,
     #[arg(long, default_value = "Author")]
     author: String,

@@ -237,7 +237,7 @@ impl Default for SiteConfig {
         Self {
             base_url: "https://example.com".to_string(),
             title: "Mud's Blog".to_string(),
-            description: "Thoughts, notes, and connected ideas.".to_string(),
+            description: String::new(),
             author: "Author".to_string(),
             language: "en".to_string(),
             social_image: "/og-image.png".to_string(),
