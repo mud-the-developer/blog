@@ -11,11 +11,12 @@ He has completed internships in the Mobile Communications Lab and the Robotics a
 and is currently pursuing his Ph.D. in the RAMO Lab.
 
 Recent research focus:
-
 - Semantic communications
 - Large language models
 - Virtualized RAN
 - Quantum computing
+## Publications
+[![Scholar](https://vercel-google-scholar-publications.vercel.app/api/badge?scholar_id=-Uiul2AAAAAJ&count=3)](https://vercel-google-scholar-publications.vercel.app/api/badge?scholar_id=-Uiul2AAAAAJ&count=3)
 
 ## Links
 

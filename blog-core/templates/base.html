@@ -33,30 +33,12 @@
 
     <script>
       (() => {
-        try {
-          const modeKey = "dg-theme-mode";
-          const legacyThemeKey = "dg-theme";
-          const savedMode = localStorage.getItem(modeKey);
-          const legacyTheme = localStorage.getItem(legacyThemeKey);
-          const preferredDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-          const mode =
-            savedMode === "light" || savedMode === "dark" || savedMode === "system"
-              ? savedMode
-              : legacyTheme === "light" || legacyTheme === "dark"
-              ? legacyTheme
-              : "system";
-          const theme = mode === "system" ? (preferredDark ? "dark" : "light") : mode;
-          const presetKey = theme === "dark" ? "dg-theme-preset-dark" : "dg-theme-preset-light";
-          const presetFallback = theme === "dark" ? "d01-midnight" : "l01-paper";
-          const preset = localStorage.getItem(presetKey) || presetFallback;
-          document.documentElement.setAttribute("data-theme-mode", mode);
-          document.documentElement.setAttribute("data-theme", theme);
-          document.documentElement.setAttribute("data-theme-preset", preset);
-        } catch (_) {
-          document.documentElement.setAttribute("data-theme-mode", "system");
-          document.documentElement.setAttribute("data-theme", "light");
-          document.documentElement.setAttribute("data-theme-preset", "l01-paper");
-        }
+        const root = document.documentElement;
+        const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const theme = prefersDark ? "dark" : "light";
+        root.setAttribute("data-theme-mode", "system");
+        root.setAttribute("data-theme", theme);
+        root.setAttribute("data-theme-preset", theme === "dark" ? "d02-carbon" : "l04-rose-ink");
       })();
     </script>
 
@@ -105,13 +87,18 @@
               </svg>
               <span class="sr-only">RSS Feed</span>
             </a>
-            <div class="theme-controls">
-              <button id="theme-mode-toggle" class="theme-toggle" type="button" aria-label="Theme mode">System</button>
-              <label class="sr-only" for="theme-preset-toggle">Theme preset</label>
-              <select id="theme-preset-toggle" class="theme-preset-toggle" aria-label="Theme preset"></select>
-              <button id="theme-preset-random" class="theme-action" type="button" aria-label="Random preset">Shuffle</button>
-              <button id="theme-reset" class="theme-action" type="button" aria-label="Reset theme">Reset</button>
-            </div>
+            <button
+              id="theme-mode-toggle"
+              class="site-nav-icon-link site-nav-icon-button"
+              type="button"
+              aria-label="Switch to dark mode"
+              title="Switch to dark mode"
+            >
+              <svg class="site-nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"></path>
+              </svg>
+              <span class="sr-only">Theme toggle</span>
+            </button>
           </nav>
         </div>
       </header>
@@ -211,9 +198,6 @@
       (() => {
         const start = () => {
           const themeModeButton = document.getElementById("theme-mode-toggle");
-          const themePresetSelect = document.getElementById("theme-preset-toggle");
-          const themeRandomButton = document.getElementById("theme-preset-random");
-          const themeResetButton = document.getElementById("theme-reset");
           const searchInput = document.getElementById("global-search-input");
           const searchResults = document.getElementById("global-search-results");
           const searchShortcut = document.getElementById("global-search-shortcut");
@@ -282,369 +266,79 @@
             });
           };
 
-        if (themeModeButton || themePresetSelect || themeRandomButton || themeResetButton) {
-          const modeKey = "dg-theme-mode";
-          const legacyThemeKey = "dg-theme";
-          const defaultPresetByTheme = {
-            light: "l01-paper",
-            dark: "d01-midnight"
-          };
-          const presetsByTheme = {
-            light: [
-              { value: "l01-paper", label: "L01 Paper" },
-              { value: "l02-spring", label: "L02 Spring" },
-              { value: "l03-ocean-mist", label: "L03 Ocean Mist" },
-              { value: "l04-rose-ink", label: "L04 Rose Ink" },
-              { value: "l05-sandstone", label: "L05 Sandstone" },
-              { value: "l06-forest-air", label: "L06 Forest Air" },
-              { value: "l07-amber-day", label: "L07 Amber Day" },
-              { value: "l08-lilac-fog", label: "L08 Lilac Fog" },
-              { value: "l09-ice", label: "L09 Ice" },
-              { value: "l10-peach", label: "L10 Peach" },
-              { value: "l11-mint", label: "L11 Mint" },
-              { value: "l12-sky", label: "L12 Sky" },
-              { value: "l13-olive", label: "L13 Olive" },
-              { value: "l14-latte", label: "L14 Latte" },
-              { value: "l15-coral", label: "L15 Coral" },
-              { value: "l16-teal-paper", label: "L16 Teal Paper" },
-              { value: "l17-slate", label: "L17 Slate" },
-              { value: "l18-butter", label: "L18 Butter" },
-              { value: "l19-river", label: "L19 River" },
-              { value: "l20-graphite-light", label: "L20 Graphite" }
-            ],
-            dark: [
-              { value: "d01-midnight", label: "D01 Midnight" },
-              { value: "d02-carbon", label: "D02 Carbon" },
-              { value: "d03-deep-ocean", label: "D03 Deep Ocean" },
-              { value: "d04-ember", label: "D04 Ember" },
-              { value: "d05-forest-night", label: "D05 Forest Night" },
-              { value: "d06-violet-night", label: "D06 Violet Night" },
-              { value: "d07-steel", label: "D07 Steel" },
-              { value: "d08-ink-blue", label: "D08 Ink Blue" },
-              { value: "d09-mocha-night", label: "D09 Mocha Night" },
-              { value: "d10-aurora", label: "D10 Aurora" },
-              { value: "d11-crimson-night", label: "D11 Crimson Night" },
-              { value: "d12-gold-night", label: "D12 Gold Night" },
-              { value: "d13-cobalt-night", label: "D13 Cobalt Night" },
-              { value: "d14-sage-night", label: "D14 Sage Night" },
-              { value: "d15-rose-night", label: "D15 Rose Night" },
-              { value: "d16-cyan-night", label: "D16 Cyan Night" },
-              { value: "d17-indigo-night", label: "D17 Indigo Night" },
-              { value: "d18-charcoal", label: "D18 Charcoal" },
-              { value: "d19-plum-night", label: "D19 Plum Night" },
-              { value: "d20-obsidian", label: "D20 Obsidian" }
-            ]
+          const fixedPresetByTheme = {
+            light: "l04-rose-ink",
+            dark: "d02-carbon"
           };
 
-          const clampChannel = (value) => Math.max(0, Math.min(255, Math.round(value)));
-
-          const parseColor = (raw) => {
-            const value = String(raw || "").trim().toLowerCase();
-            if (!value) {
-              return null;
-            }
-
-            const hex = value.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
-            if (hex) {
-              const token = hex[1];
-              if (token.length === 3) {
-                return {
-                  r: parseInt(token[0] + token[0], 16),
-                  g: parseInt(token[1] + token[1], 16),
-                  b: parseInt(token[2] + token[2], 16)
-                };
-              }
-              return {
-                r: parseInt(token.slice(0, 2), 16),
-                g: parseInt(token.slice(2, 4), 16),
-                b: parseInt(token.slice(4, 6), 16)
-              };
-            }
-
-            const rgb = value.match(/^rgba?\(\s*([0-9.]+)[,\s]+([0-9.]+)[,\s]+([0-9.]+)/);
-            if (rgb) {
-              return {
-                r: clampChannel(Number.parseFloat(rgb[1])),
-                g: clampChannel(Number.parseFloat(rgb[2])),
-                b: clampChannel(Number.parseFloat(rgb[3]))
-              };
-            }
-
-            return null;
+          const resolveThemeFromSystem = () => {
+            const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+            return prefersDark ? "dark" : "light";
           };
 
-          const rgbToCss = (color) =>
-            "rgb(" + clampChannel(color.r) + ", " + clampChannel(color.g) + ", " + clampChannel(color.b) + ")";
-
-          const mix = (left, right, leftWeight) => {
-            const weight = Number.isFinite(leftWeight) ? leftWeight : 0.5;
-            const clamped = Math.max(0, Math.min(1, weight));
-            return {
-              r: left.r * clamped + right.r * (1 - clamped),
-              g: left.g * clamped + right.g * (1 - clamped),
-              b: left.b * clamped + right.b * (1 - clamped)
-            };
+          const applyTheme = (theme) => {
+            const safeTheme = theme === "dark" ? "dark" : "light";
+            document.documentElement.setAttribute("data-theme-mode", "system");
+            document.documentElement.setAttribute("data-theme", safeTheme);
+            document.documentElement.setAttribute("data-theme-preset", fixedPresetByTheme[safeTheme]);
           };
 
-          const toLinear = (channel) => {
-            const value = channel / 255;
-            if (value <= 0.04045) {
-              return value / 12.92;
-            }
-            return Math.pow((value + 0.055) / 1.055, 2.4);
-          };
-
-          const luminance = (color) =>
-            0.2126 * toLinear(color.r) + 0.7152 * toLinear(color.g) + 0.0722 * toLinear(color.b);
-
-          const contrastRatio = (first, second) => {
-            const l1 = luminance(first);
-            const l2 = luminance(second);
-            const lighter = Math.max(l1, l2);
-            const darker = Math.min(l1, l2);
-            return (lighter + 0.05) / (darker + 0.05);
-          };
-
-          const pickReadableText = (background) => {
-            const darkText = { r: 20, g: 24, b: 33 };
-            const lightText = { r: 241, g: 245, b: 251 };
-            return contrastRatio(darkText, background) >= contrastRatio(lightText, background)
-              ? darkText
-              : lightText;
-          };
-
-          const ensureContrast = (foreground, background, minimumRatio) => {
-            const fallback = pickReadableText(background);
-            if (!foreground) {
-              return fallback;
-            }
-            if (contrastRatio(foreground, background) >= minimumRatio) {
-              return foreground;
-            }
-            return fallback;
-          };
-
-          const applyThemeLegibility = () => {
-            const root = document.documentElement;
-
-            root.style.removeProperty("--text");
-            root.style.removeProperty("--muted");
-            root.style.removeProperty("--accent");
-            root.style.removeProperty("--accent-ink");
-
-            const computed = window.getComputedStyle(root);
-            const surface = parseColor(computed.getPropertyValue("--surface")) || { r: 255, g: 255, b: 255 };
-            const accentSoft = parseColor(computed.getPropertyValue("--accent-soft")) || surface;
-            const textRaw = parseColor(computed.getPropertyValue("--text"));
-            const mutedRaw = parseColor(computed.getPropertyValue("--muted"));
-            const accentRaw = parseColor(computed.getPropertyValue("--accent"));
-            const accentInkRaw = parseColor(computed.getPropertyValue("--accent-ink"));
-
-            const text = ensureContrast(textRaw, surface, 4.5);
-            let muted = ensureContrast(mutedRaw, surface, 3.0);
-            if (contrastRatio(muted, surface) < 3.0) {
-              muted = mix(text, surface, 0.63);
-            }
-
-            let accent = ensureContrast(accentRaw, surface, 3.0);
-            if (contrastRatio(accent, surface) < 3.0) {
-              accent = mix(text, accent, 0.65);
-            }
-
-            const accentInk = ensureContrast(accentInkRaw || accent, accentSoft, 4.5);
-
-            root.style.setProperty("--text", rgbToCss(text));
-            root.style.setProperty("--muted", rgbToCss(muted));
-            root.style.setProperty("--accent", rgbToCss(accent));
-            root.style.setProperty("--accent-ink", rgbToCss(accentInk));
-          };
-
-          const systemDarkQuery =
-            window.matchMedia && typeof window.matchMedia === "function"
-              ? window.matchMedia("(prefers-color-scheme: dark)")
-              : null;
-
-          const normalizeThemeMode = (value) => {
-            if (value === "light" || value === "dark" || value === "system") {
-              return value;
-            }
-            return "system";
-          };
-
-          const resolveThemeFromMode = (mode) => {
-            if (mode === "light" || mode === "dark") {
-              return mode;
-            }
-            return systemDarkQuery && systemDarkQuery.matches ? "dark" : "light";
-          };
-
-          const getPresetStorageKey = (theme) =>
-            theme === "dark" ? "dg-theme-preset-dark" : "dg-theme-preset-light";
-
-          const hasPreset = (theme, preset) =>
-            presetsByTheme[theme].some((item) => item.value === preset);
-
-          const readPreset = (theme) => {
-            const fallback = defaultPresetByTheme[theme];
-            try {
-              const stored = localStorage.getItem(getPresetStorageKey(theme));
-              return hasPreset(theme, stored) ? stored : fallback;
-            } catch (_) {
-              return fallback;
-            }
-          };
-
-          const renderPresetOptions = (theme) => {
-            if (!themePresetSelect) {
-              return;
-            }
-            const presets = presetsByTheme[theme];
-            themePresetSelect.innerHTML = presets
-              .map((preset) => '<option value="' + preset.value + '">' + preset.label + "</option>")
-              .join("");
-          };
-
-          const applyPreset = (theme, preset, persist) => {
-            const fallback = defaultPresetByTheme[theme];
-            const safePreset = hasPreset(theme, preset) ? preset : fallback;
-            document.documentElement.setAttribute("data-theme-preset", safePreset);
-            if (themePresetSelect) {
-              themePresetSelect.value = safePreset;
-            }
-            if (persist !== false) {
-              try {
-                localStorage.setItem(getPresetStorageKey(theme), safePreset);
-              } catch (_) {
-                // Skip persistence when storage is unavailable.
-              }
-            }
-            applyThemeLegibility();
-          };
-
-          const setThemeModeLabel = (mode, resolvedTheme) => {
+          const setThemeToggleIcon = (activeTheme) => {
             if (!themeModeButton) {
               return;
             }
-            if (mode === "system") {
-              themeModeButton.textContent = "System · " + (resolvedTheme === "dark" ? "Dark" : "Light");
+
+            if (activeTheme === "dark") {
+              themeModeButton.setAttribute("aria-label", "Switch to light mode");
+              themeModeButton.setAttribute("title", "Switch to light mode");
+              themeModeButton.innerHTML =
+                '<svg class="site-nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+                '<circle cx="12" cy="12" r="4"></circle>' +
+                '<path d="M12 2v2.2"></path><path d="M12 19.8V22"></path>' +
+                '<path d="M4.9 4.9 6.5 6.5"></path><path d="M17.5 17.5 19.1 19.1"></path>' +
+                '<path d="M2 12h2.2"></path><path d="M19.8 12H22"></path>' +
+                '<path d="M4.9 19.1 6.5 17.5"></path><path d="M17.5 6.5 19.1 4.9"></path>' +
+                "</svg>" +
+                '<span class="sr-only">Switch to light mode</span>';
               return;
             }
-            themeModeButton.textContent = mode === "dark" ? "Dark" : "Light";
+
+            themeModeButton.setAttribute("aria-label", "Switch to dark mode");
+            themeModeButton.setAttribute("title", "Switch to dark mode");
+            themeModeButton.innerHTML =
+              '<svg class="site-nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+              '<path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"></path>' +
+              "</svg>" +
+              '<span class="sr-only">Switch to dark mode</span>';
           };
 
-          const applyThemeMode = (mode, persistMode) => {
-            const safeMode = normalizeThemeMode(mode);
-            const resolvedTheme = resolveThemeFromMode(safeMode);
-            document.documentElement.setAttribute("data-theme-mode", safeMode);
-            document.documentElement.setAttribute("data-theme", resolvedTheme);
-            setThemeModeLabel(safeMode, resolvedTheme);
-            renderPresetOptions(resolvedTheme);
-            applyPreset(resolvedTheme, readPreset(resolvedTheme), false);
-            if (persistMode !== false) {
-              try {
-                localStorage.setItem(modeKey, safeMode);
-                localStorage.removeItem(legacyThemeKey);
-              } catch (_) {
-                // Skip persistence when storage is unavailable.
-              }
-            }
+          const syncThemeToggle = () => {
+            const activeTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+            setThemeToggleIcon(activeTheme);
           };
-
-          const cycleThemeMode = (currentMode) => {
-            if (currentMode === "system") {
-              return "light";
-            }
-            if (currentMode === "light") {
-              return "dark";
-            }
-            return "system";
-          };
-
-          const chooseRandomPreset = (theme) => {
-            const presets = presetsByTheme[theme];
-            if (!presets || presets.length === 0) {
-              return defaultPresetByTheme[theme];
-            }
-            const current = document.documentElement.getAttribute("data-theme-preset") || "";
-            const candidates = presets.filter((item) => item.value !== current);
-            const pool = candidates.length ? candidates : presets;
-            const next = pool[Math.floor(Math.random() * pool.length)];
-            return next && next.value ? next.value : defaultPresetByTheme[theme];
-          };
-
-          const resetThemeSystem = () => {
-            try {
-              localStorage.removeItem(modeKey);
-              localStorage.removeItem(legacyThemeKey);
-              localStorage.removeItem("dg-theme-preset-light");
-              localStorage.removeItem("dg-theme-preset-dark");
-            } catch (_) {
-              // Ignore storage cleanup failures.
-            }
-            applyThemeMode("system", false);
-            const theme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
-            applyPreset(theme, defaultPresetByTheme[theme], false);
-          };
-
-          const savedMode = normalizeThemeMode(document.documentElement.getAttribute("data-theme-mode"));
-          applyThemeMode(savedMode, false);
 
           if (themeModeButton) {
+            syncThemeToggle();
             themeModeButton.addEventListener("click", () => {
-              const activeMode = normalizeThemeMode(document.documentElement.getAttribute("data-theme-mode"));
-              applyThemeMode(cycleThemeMode(activeMode), true);
+              const activeTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+              const nextTheme = activeTheme === "dark" ? "light" : "dark";
+              applyTheme(nextTheme);
+              syncThemeToggle();
             });
           }
 
-          if (themePresetSelect) {
-            themePresetSelect.addEventListener("change", () => {
-              const resolvedTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
-              applyPreset(resolvedTheme, themePresetSelect.value, true);
-            });
-          }
-
-          if (themeRandomButton) {
-            themeRandomButton.addEventListener("click", () => {
-              const resolvedTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
-              applyPreset(resolvedTheme, chooseRandomPreset(resolvedTheme), true);
-            });
-          }
-
-          if (themeResetButton) {
-            themeResetButton.addEventListener("click", () => {
-              resetThemeSystem();
-            });
-          }
-
-          if (systemDarkQuery && typeof systemDarkQuery.addEventListener === "function") {
-            systemDarkQuery.addEventListener("change", () => {
-              const activeMode = normalizeThemeMode(document.documentElement.getAttribute("data-theme-mode"));
-              if (activeMode === "system") {
-                applyThemeMode("system", false);
-              }
-            });
-          }
-
-          document.addEventListener("keydown", (event) => {
-            const target = event.target;
-            if (target instanceof Element) {
-              if (target.closest("input, textarea, select, [contenteditable='true']")) {
-                return;
-              }
+          if (window.matchMedia && typeof window.matchMedia === "function") {
+            const systemDarkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+            if (typeof systemDarkQuery.addEventListener === "function") {
+              systemDarkQuery.addEventListener("change", () => {
+                const currentMode = document.documentElement.getAttribute("data-theme-mode");
+                if (currentMode === "system") {
+                  applyTheme(resolveThemeFromSystem());
+                  syncThemeToggle();
+                }
+              });
             }
-
-            if (event.shiftKey && !event.metaKey && !event.ctrlKey && !event.altKey && event.key.toLowerCase() === "t") {
-              const activeMode = normalizeThemeMode(document.documentElement.getAttribute("data-theme-mode"));
-              applyThemeMode(cycleThemeMode(activeMode), true);
-              return;
-            }
-
-            if (event.shiftKey && !event.metaKey && !event.ctrlKey && !event.altKey && event.key.toLowerCase() === "p") {
-              const resolvedTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
-              applyPreset(resolvedTheme, chooseRandomPreset(resolvedTheme), true);
-            }
-          });
-        }
+          }
 
         if (searchInput && searchResults) {
           const isMacLike = /Mac|iPhone|iPad|iPod/i.test(

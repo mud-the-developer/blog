@@ -74,7 +74,13 @@
         panStartX: 0,
         panStartY: 0,
         panOriginTx: 0,
-        panOriginTy: 0
+        panOriginTy: 0,
+        activeTouches: new Map(),
+        pinchActive: false,
+        pinchStartDistance: 0,
+        pinchStartScale: 1,
+        pinchOriginX: 0,
+        pinchOriginY: 0
       }
     };
 
@@ -149,6 +155,71 @@
       view.ty = anchor.y - originY * safeScale;
       applyViewportTransform();
       wakeSimulation();
+    };
+
+    const beginViewportPan = (pointerId, point) => {
+      graphState.viewport.panning = true;
+      graphState.viewport.panPointerId = pointerId;
+      graphState.viewport.panStartX = point.x;
+      graphState.viewport.panStartY = point.y;
+      graphState.viewport.panOriginTx = graphState.viewport.tx;
+      graphState.viewport.panOriginTy = graphState.viewport.ty;
+      svg.classList.add("is-panning");
+    };
+
+    const endViewportPan = () => {
+      graphState.viewport.panning = false;
+      graphState.viewport.panPointerId = -1;
+      svg.classList.remove("is-panning");
+    };
+
+    const beginTouchPinch = () => {
+      const touches = Array.from(graphState.viewport.activeTouches.values());
+      if (touches.length < 2) {
+        return;
+      }
+
+      const first = touches[0];
+      const second = touches[1];
+      const center = {
+        x: (first.x + second.x) / 2,
+        y: (first.y + second.y) / 2
+      };
+      const distance = Math.hypot(second.x - first.x, second.y - first.y);
+
+      graphState.viewport.pinchActive = distance > 0;
+      graphState.viewport.pinchStartDistance = Math.max(distance, 1);
+      graphState.viewport.pinchStartScale = graphState.viewport.scale;
+      graphState.viewport.pinchOriginX = (center.x - graphState.viewport.tx) / graphState.viewport.scale;
+      graphState.viewport.pinchOriginY = (center.y - graphState.viewport.ty) / graphState.viewport.scale;
+      graphState.dragMoved = true;
+      graphState.dragging = "";
+      graphState.dragPointerId = -1;
+      svg.classList.remove("is-dragging");
+      endViewportPan();
+      svg.classList.add("is-panning");
+    };
+
+    const applyTouchPinch = () => {
+      const touches = Array.from(graphState.viewport.activeTouches.values());
+      if (touches.length < 2 || !graphState.viewport.pinchActive) {
+        return;
+      }
+
+      const first = touches[0];
+      const second = touches[1];
+      const center = {
+        x: (first.x + second.x) / 2,
+        y: (first.y + second.y) / 2
+      };
+      const distance = Math.hypot(second.x - first.x, second.y - first.y);
+      const ratio = distance / graphState.viewport.pinchStartDistance;
+      const nextScale = clampScale(graphState.viewport.pinchStartScale * ratio);
+
+      graphState.viewport.scale = nextScale;
+      graphState.viewport.tx = center.x - graphState.viewport.pinchOriginX * nextScale;
+      graphState.viewport.ty = center.y - graphState.viewport.pinchOriginY * nextScale;
+      applyViewportTransform();
     };
 
     const resetLayout = () => {
@@ -369,6 +440,7 @@
 
     const finishPointerAction = (event) => {
       const pointerId = typeof event.pointerId === "number" ? event.pointerId : -1;
+      const isTouchPointer = event && event.pointerType === "touch";
       const wasDraggingNodeId = graphState.dragging;
       const isDragPointer = graphState.dragPointerId === pointerId || pointerId < 0;
       const shouldNavigate =
@@ -384,10 +456,32 @@
         svg.classList.remove("is-dragging");
       }
 
-      if (graphState.viewport.panPointerId === pointerId || pointerId < 0) {
-        graphState.viewport.panning = false;
-        graphState.viewport.panPointerId = -1;
-        svg.classList.remove("is-panning");
+      if (isTouchPointer && pointerId >= 0) {
+        graphState.viewport.activeTouches.delete(pointerId);
+
+        if (graphState.viewport.pinchActive) {
+          graphState.viewport.pinchActive = false;
+          if (graphState.viewport.activeTouches.size >= 2) {
+            beginTouchPinch();
+            applyTouchPinch();
+          } else if (graphState.viewport.activeTouches.size === 1) {
+            const remaining = graphState.viewport.activeTouches.entries().next().value;
+            beginViewportPan(remaining[0], remaining[1]);
+          } else {
+            endViewportPan();
+          }
+        } else if (graphState.viewport.panPointerId === pointerId) {
+          if (graphState.viewport.activeTouches.size === 1) {
+            const remaining = graphState.viewport.activeTouches.entries().next().value;
+            beginViewportPan(remaining[0], remaining[1]);
+          } else {
+            endViewportPan();
+          }
+        } else if (graphState.viewport.activeTouches.size === 0) {
+          endViewportPan();
+        }
+      } else if (graphState.viewport.panPointerId === pointerId || pointerId < 0) {
+        endViewportPan();
       }
 
       if (pointerId >= 0 && typeof svg.hasPointerCapture === "function" && svg.hasPointerCapture(pointerId)) {
@@ -407,6 +501,16 @@
 
     const attachInteractionEvents = () => {
       svg.addEventListener("pointermove", (event) => {
+        if (event.pointerType === "touch" && graphState.viewport.activeTouches.has(event.pointerId)) {
+          graphState.viewport.activeTouches.set(event.pointerId, pointInSvg(event));
+
+          if (graphState.viewport.pinchActive && graphState.viewport.activeTouches.size >= 2) {
+            applyTouchPinch();
+            wakeSimulation();
+            return;
+          }
+        }
+
         if (graphState.dragging) {
           if (graphState.dragPointerId !== event.pointerId) {
             return;
@@ -444,18 +548,22 @@
 
       svg.addEventListener("pointerdown", (event) => {
         const target = event.target;
-        if (target instanceof Element && target.closest(".graph-node")) {
+        if (event.pointerType !== "touch" && target instanceof Element && target.closest(".graph-node")) {
           return;
         }
 
         const point = pointInSvg(event);
-        graphState.viewport.panning = true;
-        graphState.viewport.panPointerId = event.pointerId;
-        graphState.viewport.panStartX = point.x;
-        graphState.viewport.panStartY = point.y;
-        graphState.viewport.panOriginTx = graphState.viewport.tx;
-        graphState.viewport.panOriginTy = graphState.viewport.ty;
-        svg.classList.add("is-panning");
+        if (event.pointerType === "touch") {
+          graphState.viewport.activeTouches.set(event.pointerId, point);
+          if (graphState.viewport.activeTouches.size >= 2) {
+            beginTouchPinch();
+            applyTouchPinch();
+          } else {
+            beginViewportPan(event.pointerId, point);
+          }
+        } else {
+          beginViewportPan(event.pointerId, point);
+        }
         wakeSimulation();
         if (typeof svg.setPointerCapture === "function") {
           svg.setPointerCapture(event.pointerId);
@@ -589,12 +697,19 @@
 
           group.addEventListener("pointerdown", (event) => {
             event.stopPropagation();
+            if (event.pointerType === "touch") {
+              graphState.viewport.activeTouches.set(event.pointerId, pointInSvg(event));
+            }
             graphState.dragging = node.id;
             graphState.dragPointerId = event.pointerId;
             graphState.dragMoved = false;
             graphState.dragStartClientX = event.clientX;
             graphState.dragStartClientY = event.clientY;
             svg.classList.add("is-dragging");
+            if (event.pointerType === "touch" && graphState.viewport.activeTouches.size >= 2) {
+              beginTouchPinch();
+              applyTouchPinch();
+            }
             wakeSimulation();
             if (typeof svg.setPointerCapture === "function") {
               svg.setPointerCapture(event.pointerId);
