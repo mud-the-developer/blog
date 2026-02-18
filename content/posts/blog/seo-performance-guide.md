@@ -3,7 +3,7 @@ title: SEO and Performance Guide
 description: Checklist for fast, crawlable pages.
 date: 2026-02-14
 tags: [seo, performance, web]
-dg-publish: true
+publish: true
 ---
 
 # SEO and Performance Guide

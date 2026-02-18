@@ -9,7 +9,7 @@ Obsidian markdown notes are transformed into a static blog with:
 
 ## Features
 
-- Obsidian-like frontmatter support: `dg-publish`, `dg-home`, `tags`, `aliases`, `draft`, `dg-enable-search`
+- Obsidian-like frontmatter support: `publish`, `home`, `tags`, `aliases`, `draft`, `enable-search`
 - Wikilink support: `[[note]]`, `[[note|label]]`, `[[note#heading]]`
 - Note transclusion support: `![[note]]`, `![[note#heading]]`
 - Unresolved note links resolve to generated placeholder note pages (`/notes/<slug>/`)
@@ -27,7 +27,7 @@ Obsidian markdown notes are transformed into a static blog with:
 - Backlinks per note
 - Persistent side graph with zoom/pan and node labels (source data: `graph.json`)
 - Global search API (`/api/search` on `blog-dev`) + live preview dropdown in UI
-- `dg-enable-search: false` excludes that note from `search-index.json` and API search
+- `enable-search: false` excludes that note from `search-index.json` and API search
 - Theme system: 40 presets (20 light / 20 dark), `System/Light/Dark` mode, random preset, reset, and persisted settings
 - Static outputs: `sitemap.xml`, `rss.xml`, `robots.txt`, `graph.json`, `search-index.json`, `frontmatter-report.json`
 - Build-time unsupported frontmatter key report (`frontmatter-report.json`) for migration visibility
@@ -53,9 +53,9 @@ description: Short summary
 date: 2026-02-16
 tags: [rust, blog]
 aliases: [my-alias]
-dg-publish: true
-dg-home: false
-dg-enable-search: true
+publish: true
+home: false
+enable-search: true
 draft: false
 ---
 ```
@@ -69,7 +69,7 @@ cargo run -p blog-build -- \
   --description "Connected notes"
 ```
 
-- Default publish policy is DG-style opt-in (`dg-publish: true` required).
+- Default publish policy is opt-in (`publish: true` required).
 - Optional legacy mode:
 
 ```bash

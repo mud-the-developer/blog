@@ -3,7 +3,7 @@ title: Obsidian Linking Habits
 description: Practical rules for writing dense, connected notes.
 date: 2026-02-12
 tags: [notes, writing, knowledge]
-dg-publish: true
+publish: true
 ---
 
 # Obsidian Linking Habits

@@ -162,22 +162,34 @@ const SUPPORTED_FRONTMATTER_KEYS: &[&str] = &[
     "title",
     "description",
     "slug",
+    "path",
     "dg-path",
+    "permalink",
     "dg-permalink",
     "date",
     "updated",
     "tags",
     "aliases",
     "draft",
+    "publish",
     "dg-publish",
+    "home",
     "dg-home",
+    "enable-search",
     "dg-enable-search",
+    "show-local-graph",
     "dg-show-local-graph",
+    "pinned",
     "dg-pinned",
+    "hide",
     "dg-hide",
+    "hide-in-graph",
     "dg-hide-in-graph",
+    "note-icon",
     "dg-note-icon",
+    "metatags",
     "dg-metatags",
+    "content-classes",
     "dg-content-classes",
 ];
 
@@ -285,35 +297,35 @@ struct FrontMatter {
     title: Option<String>,
     description: Option<String>,
     slug: Option<String>,
-    #[serde(rename = "dg-path")]
-    dg_path: Option<String>,
-    #[serde(rename = "dg-permalink")]
-    dg_permalink: Option<String>,
+    #[serde(rename = "path", alias = "dg-path")]
+    path: Option<String>,
+    #[serde(rename = "permalink", alias = "dg-permalink")]
+    permalink: Option<String>,
     date: Option<String>,
     updated: Option<String>,
     tags: Option<Vec<String>>,
     aliases: Option<Vec<String>>,
     draft: Option<bool>,
-    #[serde(rename = "dg-publish")]
-    dg_publish: Option<bool>,
-    #[serde(rename = "dg-home")]
-    dg_home: Option<bool>,
-    #[serde(rename = "dg-enable-search")]
-    dg_enable_search: Option<bool>,
-    #[serde(rename = "dg-show-local-graph")]
-    dg_show_local_graph: Option<bool>,
-    #[serde(rename = "dg-pinned")]
-    dg_pinned: Option<bool>,
-    #[serde(rename = "dg-hide")]
-    dg_hide: Option<bool>,
-    #[serde(rename = "dg-hide-in-graph")]
-    dg_hide_in_graph: Option<bool>,
-    #[serde(rename = "dg-note-icon")]
-    dg_note_icon: Option<String>,
-    #[serde(rename = "dg-metatags")]
-    dg_metatags: Option<YamlValue>,
-    #[serde(rename = "dg-content-classes")]
-    dg_content_classes: Option<YamlValue>,
+    #[serde(rename = "publish", alias = "dg-publish")]
+    publish: Option<bool>,
+    #[serde(rename = "home", alias = "dg-home")]
+    home: Option<bool>,
+    #[serde(rename = "enable-search", alias = "dg-enable-search")]
+    enable_search: Option<bool>,
+    #[serde(rename = "show-local-graph", alias = "dg-show-local-graph")]
+    show_local_graph: Option<bool>,
+    #[serde(rename = "pinned", alias = "dg-pinned")]
+    pinned: Option<bool>,
+    #[serde(rename = "hide", alias = "dg-hide")]
+    hide: Option<bool>,
+    #[serde(rename = "hide-in-graph", alias = "dg-hide-in-graph")]
+    hide_in_graph: Option<bool>,
+    #[serde(rename = "note-icon", alias = "dg-note-icon")]
+    note_icon: Option<String>,
+    #[serde(rename = "metatags", alias = "dg-metatags")]
+    metatags: Option<YamlValue>,
+    #[serde(rename = "content-classes", alias = "dg-content-classes")]
+    content_classes: Option<YamlValue>,
 }
 
 #[derive(Debug, Clone)]
@@ -746,9 +758,9 @@ fn collect_post_seeds(config: &BuildConfig) -> Result<Vec<PostSeed>> {
         let (frontmatter, _) = parse_frontmatter_and_body(&raw)?;
 
         let should_publish = match config.publish_policy {
-            PublishPolicy::DgOptIn => frontmatter.dg_publish.unwrap_or(false),
+            PublishPolicy::DgOptIn => frontmatter.publish.unwrap_or(false),
             PublishPolicy::Permissive => frontmatter
-                .dg_publish
+                .publish
                 .unwrap_or(!frontmatter.draft.unwrap_or(false)),
         };
 
@@ -772,8 +784,8 @@ fn collect_post_seeds(config: &BuildConfig) -> Result<Vec<PostSeed>> {
         let slug_source = frontmatter
             .slug
             .as_deref()
-            .or(frontmatter.dg_path.as_deref())
-            .or(frontmatter.dg_permalink.as_deref())
+            .or(frontmatter.path.as_deref())
+            .or(frontmatter.permalink.as_deref())
             .unwrap_or(&source_rel_path);
         let base_slug = {
             let normalized = normalize_slug_candidate(slug_source);
@@ -816,20 +828,20 @@ fn collect_post_seeds(config: &BuildConfig) -> Result<Vec<PostSeed>> {
             aliases,
             date: frontmatter.date.as_deref().and_then(parse_datetime),
             updated: frontmatter.updated.as_deref().and_then(parse_datetime),
-            is_home: frontmatter.dg_home.unwrap_or(false),
-            enable_search: frontmatter.dg_enable_search.unwrap_or(true),
-            show_local_graph: frontmatter.dg_show_local_graph.unwrap_or(true),
-            pinned: frontmatter.dg_pinned.unwrap_or(false),
-            hidden: frontmatter.dg_hide.unwrap_or(false),
-            hide_in_graph: frontmatter.dg_hide_in_graph.unwrap_or(false),
+            is_home: frontmatter.home.unwrap_or(false),
+            enable_search: frontmatter.enable_search.unwrap_or(true),
+            show_local_graph: frontmatter.show_local_graph.unwrap_or(true),
+            pinned: frontmatter.pinned.unwrap_or(false),
+            hidden: frontmatter.hide.unwrap_or(false),
+            hide_in_graph: frontmatter.hide_in_graph.unwrap_or(false),
             note_icon: frontmatter
-                .dg_note_icon
+                .note_icon
                 .as_deref()
                 .map(str::trim)
                 .filter(|value| !value.is_empty())
                 .map(|value| value.to_string()),
-            meta_tags: parse_frontmatter_metatags(frontmatter.dg_metatags.as_ref()),
-            content_classes: parse_content_classes(frontmatter.dg_content_classes.as_ref()),
+            meta_tags: parse_frontmatter_metatags(frontmatter.metatags.as_ref()),
+            content_classes: parse_content_classes(frontmatter.content_classes.as_ref()),
         });
     }
 
@@ -5963,5 +5975,40 @@ Should publish in permissive mode.
         let minified = minify_css(source);
         assert!(minified.contains("calc(100% - 1rem)"));
         assert!(minified.contains("url(\"data:image/svg+xml"));
+    }
+
+    #[test]
+    fn frontmatter_supports_non_dg_keys() -> Result<()> {
+        let raw = r#"---
+title: Alias Check
+publish: true
+home: true
+path: custom/post-path
+enable-search: false
+show-local-graph: false
+pinned: true
+hide: false
+hide-in-graph: true
+note-icon: "PIN"
+---
+
+Body
+"#;
+
+        let (frontmatter, body) = parse_frontmatter_and_body(raw)?;
+
+        assert_eq!(frontmatter.title.as_deref(), Some("Alias Check"));
+        assert_eq!(frontmatter.publish, Some(true));
+        assert_eq!(frontmatter.home, Some(true));
+        assert_eq!(frontmatter.path.as_deref(), Some("custom/post-path"));
+        assert_eq!(frontmatter.enable_search, Some(false));
+        assert_eq!(frontmatter.show_local_graph, Some(false));
+        assert_eq!(frontmatter.pinned, Some(true));
+        assert_eq!(frontmatter.hide, Some(false));
+        assert_eq!(frontmatter.hide_in_graph, Some(true));
+        assert_eq!(frontmatter.note_icon.as_deref(), Some("PIN"));
+        assert!(body.contains("Body"));
+
+        Ok(())
     }
 }

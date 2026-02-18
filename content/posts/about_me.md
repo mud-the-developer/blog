@@ -3,7 +3,7 @@ title: Jinhyuk Kim
 slug: jinhyuk-kim
 description: Research profile and links for Jinhyuk Kim.
 tags: [profile]
-dg-publish: true
+publish: true
 ---
 
 Jinhyuk Kim holds a B.S. degree from Yonsei University in Korea.
@@ -25,4 +25,3 @@ Recent research focus:
 <a href="https://www.linkedin.com/in/jinhyuk-kim-a97b42242/"><img src="https://img.shields.io/badge/Linkedin-0A66C2?style=flat-square&logo=Linkedin&logoColor=white"/></a>
 
 <a href="https://scholar.google.com/citations?user=-Uiul2AAAAAJ&hl=en"><img src="https://img.shields.io/badge/Google%20Scholar-4285F4?style=flat-square&logo=Google%20Scholar&logoColor=white"/></a>
-

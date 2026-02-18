@@ -4,7 +4,7 @@ description: Reliable publishing flow from notes to production.
 date: 2026-02-13
 tags: [github, cloudflare, ops]
 aliases: [publish-pipeline]
-dg-publish: true
+publish: true
 ---
 
 # GitHub to Cloudflare Pipeline

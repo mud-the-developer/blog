@@ -3,7 +3,7 @@ title: Rust Rendering Notes
 description: Why this project mixes Askama templates with Maud sections.
 date: 2026-02-11
 tags: [rust, templates, architecture]
-dg-publish: true
+publish: true
 ---
 
 # Rust Rendering Notes
