@@ -2004,6 +2004,37 @@ html[data-theme="dark"] {
   --panel-glow-strong: 0 22px 52px rgba(8, 18, 30, 0.18);
   --checker-line: rgba(130, 141, 152, 0.28);
   --checker-base: #ffffff;
+  --glass-surface: #111a2a;
+  --glass-surface-soft: rgba(11, 17, 27, 0.66);
+  --glass-surface-strong: rgba(18, 27, 42, 0.82);
+  --glass-text: #dce8f8;
+  --glass-muted: #9eb0ca;
+  --glass-line: rgba(143, 168, 201, 0.38);
+  --glass-accent: #7db8ff;
+  --glass-accent-soft: rgba(52, 97, 156, 0.44);
+  --glass-accent-ink: #d8e8ff;
+  --glass-mark-bg: #685322;
+  --glass-mark-text: #ffe5b2;
+  --glass-panel-glow: 0 18px 44px rgba(6, 10, 18, 0.34);
+  --glass-panel-glow-strong: 0 26px 60px rgba(4, 8, 15, 0.44);
+}
+
+html[data-theme="dark"] .site-header,
+html[data-theme="dark"] .panel,
+html[data-theme="dark"] .link-preview-card {
+  --surface: var(--glass-surface);
+  --surface-soft: var(--glass-surface-soft);
+  --surface-strong: var(--glass-surface-strong);
+  --text: var(--glass-text);
+  --muted: var(--glass-muted);
+  --line: var(--glass-line);
+  --accent: var(--glass-accent);
+  --accent-soft: var(--glass-accent-soft);
+  --accent-ink: var(--glass-accent-ink);
+  --mark-bg: var(--glass-mark-bg);
+  --mark-text: var(--glass-mark-text);
+  --panel-glow: var(--glass-panel-glow);
+  --panel-glow-strong: var(--glass-panel-glow-strong);
 }
 
 body {
