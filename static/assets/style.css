@@ -812,7 +812,7 @@ main {
 
 .note-body .profile-publication-badge {
   display: block;
-  width: min(100%, 460px);
+  width: 100%;
   height: auto;
 }
 
@@ -820,23 +820,34 @@ main {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  width: 100%;
 }
 
 .note-body .profile-publication-wrap a {
   display: inline-flex;
+  width: min(100%, clamp(250px, 78vw, 520px));
 }
 
 .note-body .profile-link-grid {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: stretch;
   gap: 0.44rem 0.52rem;
+  width: 100%;
 }
 
 .note-body .profile-link-item {
   display: inline-flex;
   align-items: center;
   line-height: 1;
+  flex: 1 1 clamp(118px, 24vw, 172px);
+  max-width: 190px;
+}
+
+.note-body .profile-link-item img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 @media (max-width: 560px) {
@@ -844,11 +855,18 @@ main {
     justify-content: center;
   }
 
+  .note-body .profile-publication-wrap a {
+    width: min(100%, clamp(220px, 92vw, 420px));
+  }
+
   .note-body .profile-link-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, max-content));
     justify-content: center;
     gap: 0.48rem;
+  }
+
+  .note-body .profile-link-item {
+    flex: 1 1 calc(50% - 0.52rem);
+    max-width: 220px;
   }
 }
 
@@ -2857,6 +2875,21 @@ html[data-theme="dark"] .graph-stage {
 
   .graph-stage--side svg {
     height: 260px;
+  }
+}
+
+@media (pointer: coarse) {
+  .toc-list {
+    gap: 0.4rem;
+  }
+
+  .toc-link {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding-top: 0.34rem;
+    padding-bottom: 0.34rem;
+    padding-right: 0.3rem;
   }
 }
 
