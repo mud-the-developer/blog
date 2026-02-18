@@ -161,8 +161,9 @@ static HTML_TAG_RE: Lazy<Regex> =
     Lazy::new(|| Regex::new(r"(?s)<[^>]+>").expect("invalid html tag regex"));
 static HIGHLIGHT_RE: Lazy<Regex> =
     Lazy::new(|| Regex::new(r"==([^=\n][^=\n]*?)==").expect("invalid highlight regex"));
-static INLINE_SCRIPT_RE: Lazy<Regex> =
-    Lazy::new(|| Regex::new(r#"(?is)<script>(.*?)</script>"#).expect("invalid inline script regex"));
+static INLINE_SCRIPT_RE: Lazy<Regex> = Lazy::new(|| {
+    Regex::new(r#"(?is)<script>(.*?)</script>"#).expect("invalid inline script regex")
+});
 
 const SUPPORTED_FRONTMATTER_KEYS: &[&str] = &[
     "title",
@@ -226,6 +227,7 @@ pub struct SiteConfig {
     pub description: String,
     pub author: String,
     pub language: String,
+    pub social_image: String,
     pub text: SiteText,
     pub dataviewjs_mode: DataviewJsMode,
 }
@@ -238,6 +240,7 @@ impl Default for SiteConfig {
             description: "Thoughts, notes, and connected ideas.".to_string(),
             author: "Author".to_string(),
             language: "en".to_string(),
+            social_image: "/og-image.png".to_string(),
             text: SiteText::default(),
             dataviewjs_mode: DataviewJsMode::default(),
         }
@@ -566,6 +569,7 @@ struct LayoutContext {
     page_description: String,
     canonical_url: String,
     page_url: String,
+    social_image_url: String,
     og_type: String,
     published_time: String,
     updated_time: String,
@@ -3899,6 +3903,8 @@ fn website_layout(
     extra_meta_tags: Vec<MetaTag>,
 ) -> LayoutContext {
     let canonical_url = absolute_url(&config.site.base_url, page_path);
+    let social_image_url =
+        resolve_social_image_url(&config.site.base_url, &config.site.social_image);
 
     LayoutContext {
         site_title: config.site.title.clone(),
@@ -3909,6 +3915,7 @@ fn website_layout(
         page_description,
         canonical_url: canonical_url.clone(),
         page_url: canonical_url,
+        social_image_url,
         og_type: og_type.to_string(),
         published_time: published_time.to_string(),
         updated_time: updated_time.to_string(),
@@ -4835,6 +4842,19 @@ fn absolute_url(base_url: &str, path: &str) -> String {
     format!("{}{}", base, path)
 }
 
+fn resolve_social_image_url(base_url: &str, value: &str) -> String {
+    let trimmed = value.trim();
+    if trimmed.is_empty() {
+        return absolute_url(base_url, "/og-image.png");
+    }
+
+    if trimmed.starts_with("http://") || trimmed.starts_with("https://") {
+        trimmed.to_string()
+    } else {
+        absolute_url(base_url, trimmed)
+    }
+}
+
 fn normalize_base_url(base_url: &str) -> String {
     let trimmed = base_url.trim().trim_end_matches('/');
     if trimmed.is_empty() {
@@ -5480,6 +5500,22 @@ Alice -> Bob: hi
     }
 
     #[test]
+    fn resolve_social_image_url_supports_relative_and_absolute_inputs() {
+        assert_eq!(
+            resolve_social_image_url("mud-blog.pages.dev/", "/og-image.png"),
+            "https://mud-blog.pages.dev/og-image.png"
+        );
+        assert_eq!(
+            resolve_social_image_url("mud-blog.pages.dev/", "assets/preview.png"),
+            "https://mud-blog.pages.dev/assets/preview.png"
+        );
+        assert_eq!(
+            resolve_social_image_url("mud-blog.pages.dev/", "https://cdn.example.com/cover.png"),
+            "https://cdn.example.com/cover.png"
+        );
+    }
+
+    #[test]
     fn file_tree_folder_icons_maps_common_workspace_folders() {
         assert_eq!(
             file_tree_folder_icons("blog"),
@@ -5808,6 +5844,10 @@ Not published.
 
         let index_html = fs::read_to_string(output_dir.join("index.html"))?;
         assert!(index_html.contains(r#"rel="canonical" href="https://example.test/""#));
+        assert!(index_html
+            .contains(r#"property="og:image" content="https://example.test/og-image.png""#));
+        assert!(index_html
+            .contains(r#"name="twitter:image" content="https://example.test/og-image.png""#));
         assert!(index_html.contains(r#"href="/obsidian-theme.css""#));
         assert!(index_html.contains(r#"href="/style-settings.css""#));
         assert!(index_html.contains(r#"href="/user-overrides.css""#));
@@ -6079,7 +6119,9 @@ console.log(add(1, 2));
         let minified = minify_inline_scripts_in_html(source);
         assert!(minified.contains("<script>"));
         assert!(!minified.contains("const value = 1 + 2;"));
-        assert!(minified.contains(r#"<script type="application/ld+json">{ "name": "Test" }</script>"#));
+        assert!(
+            minified.contains(r#"<script type="application/ld+json">{ "name": "Test" }</script>"#)
+        );
     }
 
     #[test]

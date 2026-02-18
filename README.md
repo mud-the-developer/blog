@@ -133,6 +133,7 @@ Token scope minimum:
 - `SITE_DESCRIPTION` (optional)
 - `SITE_AUTHOR` (optional)
 - `SITE_LANGUAGE` (optional, e.g. `ko`)
+- `SITE_SOCIAL_IMAGE` (optional, e.g. `/og-image.png` or full `https://...`)
 
 4. Push to `main`.
 
@@ -161,6 +162,9 @@ Token scope minimum:
   - `--toc-heading`
   - `--backlinks-heading`
   - `--backlinks-empty`
+- Link preview thumbnail override:
+  - `--social-image /og-image.png` (default)
+  - supports absolute URL (`https://...`) or site-relative path
 - DataviewJS execution policy is configurable:
   - `--dataviewjs-mode disabled` (default)
   - `--dataviewjs-mode tag-pages` (safe static subset with filtered `dv.pages(...)` rendering)
@@ -171,3 +175,5 @@ Token scope minimum:
   - `static/style-settings.css`
   - `static/user-overrides.css`
   - `static/style-settings.json` (`root`/`light`/`dark` CSS variable maps)
+- Social preview image:
+  - default file path is `static/og-image.png` (copied to `/og-image.png`)

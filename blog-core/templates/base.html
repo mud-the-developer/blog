@@ -15,10 +15,14 @@
     <meta property="og:description" content="{{ layout.page_description }}" />
     <meta property="og:type" content="{{ layout.og_type }}" />
     <meta property="og:url" content="{{ layout.page_url }}" />
+    <meta property="og:image" content="{{ layout.social_image_url }}" />
+    <meta property="og:image:alt" content="{{ layout.page_title }}" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="{{ layout.page_title }}" />
     <meta name="twitter:description" content="{{ layout.page_description }}" />
+    <meta name="twitter:image" content="{{ layout.social_image_url }}" />
+    <meta name="twitter:image:alt" content="{{ layout.page_title }}" />
 
     {% if layout.published_time.len() > 0 %}
     <meta property="article:published_time" content="{{ layout.published_time }}" />

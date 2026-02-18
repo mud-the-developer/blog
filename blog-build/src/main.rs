@@ -22,6 +22,8 @@ struct Cli {
     author: String,
     #[arg(long, default_value = "en")]
     language: String,
+    #[arg(long, default_value = "/og-image.png")]
+    social_image: String,
     #[arg(long, default_value = "Search notes...")]
     search_placeholder: String,
     #[arg(long, default_value = "Pages")]
@@ -65,6 +67,7 @@ fn main() -> Result<()> {
             description: cli.description,
             author: cli.author,
             language: cli.language,
+            social_image: cli.social_image,
             text: SiteText {
                 search_placeholder: cli.search_placeholder,
                 pages_heading: cli.pages_heading,

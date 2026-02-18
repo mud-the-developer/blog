@@ -22,6 +22,7 @@ jobs:
       SITE_DESCRIPTION: ${{ vars.SITE_DESCRIPTION }}
       SITE_AUTHOR: ${{ vars.SITE_AUTHOR }}
       SITE_LANGUAGE: ${{ vars.SITE_LANGUAGE }}
+      SITE_SOCIAL_IMAGE: ${{ vars.SITE_SOCIAL_IMAGE }}
       CF_PAGES_PROJECT: ${{ vars.CF_PAGES_PROJECT }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -86,6 +87,10 @@ jobs:
 
           if [[ -n "${SITE_LANGUAGE:-}" ]]; then
             build_args+=(--language "$SITE_LANGUAGE")
+          fi
+
+          if [[ -n "${SITE_SOCIAL_IMAGE:-}" ]]; then
+            build_args+=(--social-image "$SITE_SOCIAL_IMAGE")
           fi
 
           cargo run -p blog-build -- "${build_args[@]}"
