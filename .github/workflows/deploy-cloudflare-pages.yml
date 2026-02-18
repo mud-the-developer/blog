@@ -115,4 +115,37 @@ jobs:
             exit 1
           fi
 
-          npx wrangler@4 pages deploy dist --project-name "$CF_PAGES_PROJECT" --branch "${GITHUB_REF_NAME:-main}"
+          max_attempts=3
+          attempt=1
+          deploy_status=1
+
+          while [[ "$attempt" -le "$max_attempts" ]]; do
+            echo "Cloudflare Pages deploy attempt ${attempt}/${max_attempts}"
+
+            if npx wrangler@4 pages deploy dist \
+              --project-name "$CF_PAGES_PROJECT" \
+              --branch "${GITHUB_REF_NAME:-main}" \
+              --commit-dirty=true; then
+              deploy_status=0
+              break
+            fi
+
+            deploy_status=$?
+            latest_log="$(ls -1t ~/.config/.wrangler/logs/wrangler-* 2>/dev/null | head -n1 || true)"
+            if [[ -n "${latest_log}" ]]; then
+              echo "::group::Wrangler failure log (attempt ${attempt})"
+              sed -n '1,260p' "${latest_log}" || true
+              echo "::endgroup::"
+            fi
+
+            if [[ "$attempt" -lt "$max_attempts" ]]; then
+              sleep "$((attempt * 12))"
+            fi
+
+            attempt=$((attempt + 1))
+          done
+
+          if [[ "$deploy_status" -ne 0 ]]; then
+            echo "Cloudflare Pages deployment failed after ${max_attempts} attempts."
+            exit "$deploy_status"
+          fi
