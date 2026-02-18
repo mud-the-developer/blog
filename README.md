@@ -5,7 +5,7 @@ Obsidian markdown notes are transformed into a static blog with:
 - `maud`: post body composition (including backlinks section)
 - `askama`: page templates/layout
 - `axum`: local preview server
-- Cloudflare Pages: static hosting (free-first)
+- Cloudflare Pages: static hosting
 
 ## Features
 
