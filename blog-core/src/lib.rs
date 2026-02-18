@@ -5873,7 +5873,9 @@ Not published.
 
         let graph_html = fs::read_to_string(output_dir.join("graph/index.html"))?;
         assert!(graph_html.contains("id=\"global-graph-stage\""));
-        assert!(graph_html.contains("id=\"global-graph-search\""));
+        assert!(graph_html.contains("id=\"global-graph-reset\""));
+        assert!(!graph_html.contains("id=\"global-graph-search\""));
+        assert!(!graph_html.contains("id=\"global-graph-toggle\""));
         assert!(graph_html.contains("graphDataUrl:"));
         assert!(graph_html.contains("/graph.json"));
         assert!(!graph_html.contains(r#"id="side-graph-stage""#));

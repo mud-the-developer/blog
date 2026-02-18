@@ -8,31 +8,6 @@
       <p class="post-meta">{{ total_nodes }} notes • {{ total_links }} links</p>
     </header>
 
-    <div class="graph-toolbar">
-      <label for="global-graph-search">Search graph</label>
-      <input
-        id="global-graph-search"
-        type="search"
-        placeholder="Filter nodes by title or slug..."
-        autocomplete="off"
-      />
-      <button
-        id="global-graph-reset"
-        class="graph-icon-button"
-        type="button"
-        aria-label="Reset graph view"
-        title="Reset graph view"
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M20 11a8 8 0 1 0-2.3 5.7"></path>
-          <path d="M20 4v7h-7"></path>
-        </svg>
-        <span class="sr-only">Reset graph view</span>
-      </button>
-      <button id="global-graph-toggle" type="button">Pause</button>
-      <a class="graph-data-link" href="/graph.json" target="_blank" rel="noopener noreferrer">Graph JSON</a>
-    </div>
-
     <div class="graph-stage-wrap">
       <div id="global-graph-stage" class="graph-stage">
         <svg id="global-graph-svg" viewBox="0 0 1000 640" aria-label="Global graph view">
@@ -42,6 +17,19 @@
       </div>
       <p id="global-graph-status" class="graph-status" role="status" aria-live="polite">Loading graph map...</p>
       <div class="graph-zoom-control">
+        <button
+          id="global-graph-reset"
+          class="graph-icon-button"
+          type="button"
+          aria-label="Reset graph view"
+          title="Reset graph view"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M20 11a8 8 0 1 0-2.3 5.7"></path>
+            <path d="M20 4v7h-7"></path>
+          </svg>
+          <span class="sr-only">Reset graph view</span>
+        </button>
         <div class="graph-zoom-buttons" role="group" aria-label="Graph zoom controls">
           <button
             id="global-graph-zoom-in"
