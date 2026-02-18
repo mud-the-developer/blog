@@ -2786,9 +2786,15 @@ html[data-theme="dark"] .graph-stage {
 
   .site-header {
     position: static;
+    align-items: flex-start;
     border-radius: 14px;
     padding: 0.78rem 0.82rem;
     margin-bottom: 0.9rem;
+  }
+
+  .site-brand {
+    width: 100%;
+    text-align: left;
   }
 
   .site-title {
