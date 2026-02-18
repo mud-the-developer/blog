@@ -2,7 +2,7 @@
   font-family: "JetBrains Mono";
   font-style: normal;
   font-weight: 400;
-  font-display: swap;
+  font-display: optional;
   src: url("/assets/fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2");
 }
 
@@ -10,7 +10,7 @@
   font-family: "JetBrains Mono";
   font-style: normal;
   font-weight: 500;
-  font-display: swap;
+  font-display: optional;
   src: url("/assets/fonts/jetbrains-mono-latin-500-normal.woff2") format("woff2");
 }
 
@@ -18,7 +18,7 @@
   font-family: "JetBrains Mono";
   font-style: normal;
   font-weight: 600;
-  font-display: swap;
+  font-display: optional;
   src: url("/assets/fonts/jetbrains-mono-latin-600-normal.woff2") format("woff2");
 }
 
@@ -26,7 +26,7 @@
   font-family: "JetBrains Mono";
   font-style: normal;
   font-weight: 700;
-  font-display: swap;
+  font-display: optional;
   src: url("/assets/fonts/jetbrains-mono-latin-700-normal.woff2") format("woff2");
 }
 
@@ -1995,10 +1995,7 @@ body {
   position: relative;
   font-family: var(--font-body);
   line-height: 1.7;
-  background:
-    radial-gradient(1200px 700px at -12% -20%, color-mix(in srgb, var(--accent-soft) 84%, transparent) 0%, transparent 68%),
-    radial-gradient(900px 500px at 110% -15%, color-mix(in srgb, var(--accent-soft) 58%, transparent) 0%, transparent 66%),
-    linear-gradient(180deg, color-mix(in srgb, var(--bg) 86%, #ffffff 14%) 0%, var(--bg) 70%);
+  background: #ffffff;
 }
 
 html[data-theme="dark"] body {
@@ -2020,8 +2017,8 @@ body::before {
   background-image:
     linear-gradient(to right, color-mix(in srgb, var(--line) 54%, transparent) 1px, transparent 1px),
     linear-gradient(to bottom, color-mix(in srgb, var(--line) 54%, transparent) 1px, transparent 1px);
-  background-size: 44px 44px;
-  opacity: 0.2;
+  background-size: 36px 36px;
+  opacity: 0.15;
   z-index: -1;
 }
 
@@ -2814,11 +2811,6 @@ html[data-theme="dark"] .graph-stage {
 }
 
 @media (max-width: 760px) {
-  body::before {
-    opacity: 0.15;
-    background-size: 36px 36px;
-  }
-
   .site-shell {
     width: calc(100% - 0.9rem);
     margin: 0.72rem auto 2rem;
