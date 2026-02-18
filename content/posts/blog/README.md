@@ -19,16 +19,16 @@ Obsidian markdown notes are transformed into a static blog with:
 ## Features
 
 - Obsidian-like frontmatter support: `dg-publish`, `dg-home`, `tags`, `aliases`, `draft`, `dg-enable-search`
-- Wikilink support: `[[note]]`, `[[note|label]]`, `[[note#heading]]`
-- Note transclusion support: `![[note]]`, `![[note#heading]]`
+- Wikilink support: `\[\[note\]\]`, `\[\[note|label\]\]`, `\[\[note#heading\]\]`
+- Note transclusion support: `!\[\[note\]\]`, `!\[\[note#heading\]\]`
 - Unresolved note links resolve to generated placeholder note pages (`/notes/<slug>/`)
 - Callout/Admonition support: `> [!tip]`, `> [!warning]-`
 - Mermaid block support: fenced ` ```mermaid ` diagrams rendered client-side
 - PlantUML block support: fenced ` ```plantuml ` diagrams via PlantUML server URL
 - Math support: KaTeX auto-render for `$...$` and `$$...$$`
-- PDF embed support: `![[...pdf]]`
-- Excalidraw/Canvas JSON mini-preview: `![[...excalidraw]]`, `![[...canvas]]`
-- Dataview subset support: fenced `dataview` with `LIST/TABLE/TASK FROM #tag`, `FROM "folder"`, `FROM [[note]]`
+- PDF embed support: `!\[\[...pdf\]\]`
+- Excalidraw/Canvas JSON mini-preview: `!\[\[...excalidraw\]\]`, `!\[\[...canvas\]\]`
+- Dataview subset support: fenced `dataview` with `LIST/TABLE/TASK FROM #tag`, `FROM "folder"`, `FROM \[\[note\]\]`
 - Dataview query options: `WHERE` (`contains`/`startswith`/`=` with `AND`), `SORT` (`title`, `file.name`, `file.path`, `file.folder`), `LIMIT`
 - Dataview table column subset: `TABLE file.link, file.path, file.tags ...` with optional `AS "Alias"`
 - DataviewJS safe subset mode (`--dataviewjs-mode tag-pages`): static render for `dv.pages(...)` + subset `where/sort/limit` with `dv.list/dv.table/dv.taskList`
