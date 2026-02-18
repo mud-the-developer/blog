@@ -17,20 +17,6 @@
   --font-display: "Noto Serif KR", "Iowan Old Style", "Baskerville", "Times New Roman", serif;
 }
 
-html[data-theme="light"] {
-  --bg: #f8f7f2;
-  --bg-spot: #eff6ff;
-  --surface: #ffffff;
-  --text: #1f2933;
-  --muted: #4b5563;
-  --line: #d7dce2;
-  --accent: #0057b8;
-  --accent-soft: #dbeafe;
-  --accent-ink: #123b70;
-  --mark-bg: #ffe08f;
-  --mark-text: #2c1f00;
-}
-
 html[data-theme="dark"] {
   --bg: #0b1220;
   --bg-spot: #1a2a44;
@@ -1736,6 +1722,129 @@ html[data-theme="dark"] .graph-stage {
 }
 
 /* Modern editorial refresh */
+
+/* ─── Fallback for browsers without color-mix() support ─── */
+@supports not (background: color-mix(in srgb, red 50%, blue)) {
+  .site-header {
+    border: 1px solid var(--line);
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .page-tabs,
+  .live-graph {
+    border: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .panel {
+    border: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  a {
+    text-decoration-color: var(--accent);
+  }
+
+  a:hover {
+    text-decoration-color: var(--accent);
+  }
+
+  .page-tabs-head h2,
+  .live-graph-head h2,
+  .toc-panel h3 {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .page-tab {
+    border: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .page-tab:hover {
+    background: var(--bg-spot);
+  }
+
+  .section-kicker {
+    color: var(--muted);
+  }
+
+  .home-hero {
+    background: var(--bg-spot);
+  }
+
+  .home-hero-stat {
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .tag {
+    border: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .tag:hover {
+    border-color: var(--accent);
+    background: var(--bg-spot);
+  }
+
+  .post-item h3 a {
+    color: var(--text);
+  }
+
+  .note-route {
+    background: var(--bg-spot);
+    border: 1px solid var(--line);
+  }
+
+  .note-body :where(h2, h3, h4) {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .note-body p code,
+  .note-body li code {
+    background: var(--accent-soft);
+    border: 1px solid var(--line);
+  }
+
+  .note-body pre {
+    background: var(--bg-spot);
+    color: var(--text);
+  }
+
+  .note-body .dg-callout,
+  .note-body details.dg-callout,
+  .note-body .mermaid-render,
+  .note-body .plantuml-embed,
+  .note-body .dg-pdf-embed,
+  .note-body .dg-excalidraw-embed,
+  .note-body .dg-canvas-embed {
+    border: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .note-body .dg-callout-title,
+  .note-body .dg-pdf-embed-head,
+  .note-body .dg-excalidraw-embed-head,
+  .note-body .dg-canvas-embed-head {
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+  }
+
+  .backlinks li {
+    background: var(--surface);
+  }
+
+  .toc-link:hover {
+    color: var(--accent);
+  }
+
+  .not-found {
+    background: var(--bg-spot);
+    border: 1px solid var(--line);
+  }
+}
+
 :root {
   --radius: 18px;
   --radius-card: 16px;
@@ -1821,6 +1930,7 @@ a:hover {
   margin-bottom: 1.28rem;
   background: color-mix(in srgb, var(--surface-strong) 92%, transparent);
   box-shadow: var(--panel-glow);
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
   backdrop-filter: blur(16px) saturate(1.1);
   border-top: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
   animation: panel-rise 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -1941,6 +2051,7 @@ a:hover {
   top: 5rem;
   max-height: calc(100vh - 5.8rem);
   border: 1px solid color-mix(in srgb, var(--line) 84%, transparent);
+  -webkit-backdrop-filter: blur(10px) saturate(1.08);
   backdrop-filter: blur(10px) saturate(1.08);
 }
 
@@ -2650,4 +2761,198 @@ html[data-theme="dark"] .graph-stage {
     transition-duration: 1ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ─── Accessibility: skip link ─── */
+
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--surface);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 150ms ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ─── Accessibility: focus-visible for all interactive elements ─── */
+
+.page-tab:focus-visible,
+.tag:focus-visible,
+.post-cta-link:focus-visible,
+.title-link:focus-visible,
+.toc-link:focus-visible,
+.backlinks a:focus-visible,
+.filetree-link:focus-visible,
+.graph-toolbar button:focus-visible,
+.graph-toolbar input:focus-visible,
+.graph-data-link:focus-visible,
+.post-item:focus-within,
+.home-hero-stat:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ─── Panel hover transition ─── */
+
+.panel {
+  transition: box-shadow 200ms ease, transform 200ms ease;
+}
+
+/* ─── Stagger panel-rise animation ─── */
+
+.site-header {
+  animation-delay: 0ms;
+}
+
+.page-tabs {
+  animation-delay: 60ms;
+}
+
+.site-main .panel:nth-child(1) { animation-delay: 80ms; }
+.site-main .panel:nth-child(2) { animation-delay: 120ms; }
+.site-main .panel:nth-child(3) { animation-delay: 160ms; }
+.site-main .panel:nth-child(4) { animation-delay: 200ms; }
+.site-main .panel:nth-child(n+5) { animation-delay: 240ms; }
+
+.live-graph {
+  animation-delay: 100ms;
+}
+
+/* ─── Tag hover micro-interactions ─── */
+
+.tag {
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.tag:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+/* ─── Callout semantic colors via CSS variables ─── */
+
+:root {
+  --callout-info: #4a90d9;
+  --callout-warn: #d08a00;
+  --callout-success: #1f8a4c;
+  --callout-danger: #c44343;
+}
+
+.note-body .dg-callout,
+.note-body details.dg-callout {
+  background: color-mix(in srgb, var(--callout-info) 8%, var(--surface));
+}
+
+.note-body .dg-callout-title {
+  color: color-mix(in srgb, var(--callout-info) 70%, var(--text));
+  background: color-mix(in srgb, var(--callout-info) 14%, var(--surface));
+}
+
+.note-body .dg-callout[data-callout="warning"],
+.note-body .dg-callout[data-callout="caution"] {
+  border-left-color: var(--callout-warn);
+  background: color-mix(in srgb, var(--callout-warn) 8%, var(--surface));
+}
+
+.note-body .dg-callout[data-callout="warning"] .dg-callout-title,
+.note-body .dg-callout[data-callout="caution"] .dg-callout-title {
+  color: color-mix(in srgb, var(--callout-warn) 70%, var(--text));
+  background: color-mix(in srgb, var(--callout-warn) 14%, var(--surface));
+}
+
+.note-body .dg-callout[data-callout="tip"],
+.note-body .dg-callout[data-callout="success"],
+.note-body .dg-callout[data-callout="check"] {
+  border-left-color: var(--callout-success);
+  background: color-mix(in srgb, var(--callout-success) 8%, var(--surface));
+}
+
+.note-body .dg-callout[data-callout="tip"] .dg-callout-title,
+.note-body .dg-callout[data-callout="success"] .dg-callout-title,
+.note-body .dg-callout[data-callout="check"] .dg-callout-title {
+  color: color-mix(in srgb, var(--callout-success) 70%, var(--text));
+  background: color-mix(in srgb, var(--callout-success) 14%, var(--surface));
+}
+
+.note-body .dg-callout[data-callout="danger"],
+.note-body .dg-callout[data-callout="error"],
+.note-body .dg-callout[data-callout="fail"] {
+  border-left-color: var(--callout-danger);
+  background: color-mix(in srgb, var(--callout-danger) 8%, var(--surface));
+}
+
+.note-body .dg-callout[data-callout="danger"] .dg-callout-title,
+.note-body .dg-callout[data-callout="error"] .dg-callout-title,
+.note-body .dg-callout[data-callout="fail"] .dg-callout-title {
+  color: color-mix(in srgb, var(--callout-danger) 70%, var(--text));
+  background: color-mix(in srgb, var(--callout-danger) 14%, var(--surface));
+}
+
+/* ─── Theme-aware embed backgrounds ─── */
+
+.note-body .mermaid-render,
+.note-body .plantuml-embed {
+  background: color-mix(in srgb, var(--surface-strong) 97%, transparent);
+}
+
+.note-body .dg-pdf-embed {
+  background: color-mix(in srgb, var(--surface-strong) 97%, transparent);
+}
+
+.note-body .dg-pdf-embed object {
+  background: var(--surface);
+}
+
+.note-body .dg-excalidraw-embed,
+.note-body .dg-canvas-embed {
+  background: color-mix(in srgb, var(--surface-strong) 97%, transparent);
+}
+
+.note-body .dg-excalidraw-preview {
+  background: var(--surface);
+}
+
+.note-body .dg-canvas-map {
+  background: var(--surface);
+}
+
+.note-body .dg-canvas-map .dg-canvas-links line {
+  stroke: color-mix(in srgb, var(--muted) 60%, transparent);
+}
+
+.note-body .dg-canvas-map .dg-canvas-node rect {
+  fill: color-mix(in srgb, var(--accent-soft) 40%, var(--surface));
+  stroke: color-mix(in srgb, var(--accent) 50%, var(--line));
+}
+
+.note-body .dg-canvas-map .dg-canvas-node text {
+  fill: var(--text);
+}
+
+.note-body pre {
+  background: color-mix(in srgb, var(--surface-strong) 97%, transparent);
+  color: var(--text);
+}
+
+.note-body p code,
+.note-body li code {
+  background: color-mix(in srgb, var(--accent-soft) 45%, var(--surface));
+  color: var(--text);
+  border: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+}
+
+.backlinks li {
+  background: color-mix(in srgb, var(--surface-strong) 95%, transparent);
 }
