@@ -115,4 +115,4 @@ jobs:
             exit 1
           fi
 
-          npx wrangler@4 pages deploy dist --project-name "$CF_PAGES_PROJECT"
+          npx wrangler@4 pages deploy dist --project-name "$CF_PAGES_PROJECT" --branch "${GITHUB_REF_NAME:-main}"

@@ -14,7 +14,10 @@
   --radius-card: 8px;
   --shadow-soft: 0 6px 20px rgba(10, 18, 34, 0.06);
   --shadow-strong: 0 10px 26px rgba(10, 18, 34, 0.11);
-  --font-display: "Noto Serif KR", "Iowan Old Style", "Baskerville", "Times New Roman", serif;
+  --font-display: "IBM Plex Mono", "SFMono-Regular", "Menlo", monospace;
+  --font-body: "IBM Plex Mono", "SFMono-Regular", "Menlo", monospace;
+  --font-reading: "IBM Plex Mono", "SFMono-Regular", "Menlo", monospace;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", "Menlo", monospace;
 }
 
 html[data-theme="dark"] {
@@ -47,7 +50,7 @@ body {
 }
 
 body {
-  font-family: "Noto Serif KR", "Iowan Old Style", "Times New Roman", serif;
+  font-family: var(--font-body);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0%, transparent 14%),
     radial-gradient(1200px 640px at -8% -10%, var(--bg-spot) 0%, transparent 58%),
@@ -91,7 +94,7 @@ a:hover {
   display: grid;
   gap: 0.55rem;
   justify-items: end;
-  font-family: "Pretendard", "Noto Sans KR", "IBM Plex Sans", sans-serif;
+  font-family: var(--font-body);
 }
 
 .site-title {
@@ -125,7 +128,7 @@ a:hover {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   max-width: 58ch;
-  font-family: "Pretendard", "Noto Sans KR", "IBM Plex Sans", sans-serif;
+  font-family: var(--font-body);
 }
 
 .site-nav {
@@ -202,7 +205,7 @@ a:hover {
   font: inherit;
   font-size: 0.88rem;
   box-shadow: none;
-  font-family: "Pretendard", "Noto Sans KR", "IBM Plex Sans", sans-serif;
+  font-family: var(--font-body);
 }
 
 .site-search input:focus {
@@ -388,7 +391,7 @@ a:hover {
   overflow: auto;
   background: var(--surface);
   border-radius: var(--radius-card);
-  font-family: "Pretendard", "Noto Sans KR", "IBM Plex Sans", sans-serif;
+  font-family: var(--font-body);
 }
 
 .page-tabs .site-search {
@@ -416,7 +419,7 @@ a:hover {
   text-transform: uppercase;
   color: var(--muted);
   margin: 0;
-  font-family: "Pretendard", "Noto Sans KR", "IBM Plex Sans", sans-serif;
+  font-family: var(--font-body);
 }
 
 .page-tabs-list {
@@ -550,7 +553,7 @@ a:hover {
   font-size: 0.9rem;
   font-weight: 600;
   line-height: 1.3;
-  font-family: "Pretendard", "Noto Sans KR", "IBM Plex Sans", sans-serif;
+  font-family: var(--font-body);
 }
 
 .page-tab-title-text {
@@ -574,7 +577,7 @@ a:hover {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  font-family: "Pretendard", "Noto Sans KR", "IBM Plex Sans", sans-serif;
+  font-family: var(--font-body);
 }
 
 .live-graph {
@@ -585,7 +588,7 @@ a:hover {
   gap: 0.8rem;
   background: var(--surface);
   border-radius: var(--radius-card);
-  font-family: "Pretendard", "Noto Sans KR", "IBM Plex Sans", sans-serif;
+  font-family: var(--font-body);
 }
 
 .live-graph-head {
@@ -601,7 +604,7 @@ a:hover {
   text-transform: uppercase;
   color: var(--muted);
   margin: 0;
-  font-family: "Pretendard", "Noto Sans KR", "IBM Plex Sans", sans-serif;
+  font-family: var(--font-body);
 }
 
 .toc-panel {
@@ -617,7 +620,7 @@ a:hover {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
-  font-family: "Pretendard", "Noto Sans KR", "IBM Plex Sans", sans-serif;
+  font-family: var(--font-body);
 }
 
 .toc-list {
@@ -723,7 +726,7 @@ main .note {
   letter-spacing: 0.07em;
   text-transform: uppercase;
   margin-bottom: 0.35rem;
-  font-family: "Pretendard", "Noto Sans KR", "IBM Plex Sans", sans-serif;
+  font-family: var(--font-body);
 }
 
 .tag-wrap {
@@ -742,7 +745,7 @@ main .note {
   padding: 0.12rem 0.45rem;
   font-size: 0.72rem;
   letter-spacing: 0.04em;
-  font-family: "Pretendard", "Noto Sans KR", "IBM Plex Sans", sans-serif;
+  font-family: var(--font-body);
   text-decoration: none;
 }
 
@@ -1191,7 +1194,7 @@ html[data-theme="dark"] .note-body .note-pdf-embed object {
 
 .note-body .note-excalidraw-map .note-excalidraw-text {
   font-size: 10px;
-  font-family: "Pretendard", "Noto Sans KR", "IBM Plex Sans", sans-serif;
+  font-family: var(--font-body);
 }
 
 .note-body .note-excalidraw-embed.is-enhanced .note-excalidraw-preview {
@@ -1249,7 +1252,7 @@ html[data-theme="dark"] .note-body .note-pdf-embed object {
 .note-body .note-canvas-map .note-canvas-node text {
   fill: #1a3f68;
   font-size: 10px;
-  font-family: "Pretendard", "Noto Sans KR", "IBM Plex Sans", sans-serif;
+  font-family: var(--font-body);
 }
 
 .note-body .note-canvas-node-list {
@@ -1919,10 +1922,10 @@ html[data-theme="dark"] .graph-stage {
 :root {
   --radius: 18px;
   --radius-card: 16px;
-  --font-display: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Segoe UI", sans-serif;
-  --font-body: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "IBM Plex Sans", sans-serif;
-  --font-reading: "Noto Serif KR", "Iowan Old Style", "AppleMyungjo", "Source Serif 4", serif;
-  --font-mono: "SFMono-Regular", "JetBrains Mono", "Menlo", monospace;
+  --font-display: "IBM Plex Mono", "SFMono-Regular", "Menlo", monospace;
+  --font-body: "IBM Plex Mono", "SFMono-Regular", "Menlo", monospace;
+  --font-reading: "IBM Plex Mono", "SFMono-Regular", "Menlo", monospace;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", "Menlo", monospace;
   --surface-soft: rgba(255, 255, 255, 0.74);
   --surface-strong: rgba(255, 255, 255, 0.92);
   --panel-glow: 0 14px 30px rgba(6, 26, 43, 0.09);
