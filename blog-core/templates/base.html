@@ -77,7 +77,9 @@
         <div class="site-brand">
           <p class="site-kicker">Notes</p>
           <p class="site-title"><a class="site-title-link" href="/">{{ layout.site_title }}</a></p>
+          {% if layout.site_description.len() > 0 %}
           <p class="site-tagline">{{ layout.site_description }}</p>
+          {% endif %}
         </div>
         <div class="site-actions">
           <nav class="site-nav" aria-label="Main navigation">

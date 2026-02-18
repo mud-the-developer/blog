@@ -3,7 +3,9 @@
 {% block content %}
   <section class="panel home-hero">
     <div class="home-hero-copy">
+      {% if layout.site_description.len() > 0 %}
       <p class="home-hero-lead">{{ layout.site_description }}</p>
+      {% endif %}
     </div>
     <dl class="home-hero-stats" aria-label="Garden statistics">
       <div class="home-hero-stat">

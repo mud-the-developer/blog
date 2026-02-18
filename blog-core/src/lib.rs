@@ -3905,6 +3905,7 @@ fn website_layout(
     let canonical_url = absolute_url(&config.site.base_url, page_path);
     let social_image_url =
         resolve_social_image_url(&config.site.base_url, &config.site.social_image);
+    let page_description = normalize_page_description(page_description, &config.site.title);
 
     LayoutContext {
         site_title: config.site.title.clone(),
@@ -3935,6 +3936,15 @@ fn website_layout(
         graph_data_url,
         graph_center_id,
         show_side_graph,
+    }
+}
+
+fn normalize_page_description(value: String, fallback: &str) -> String {
+    let trimmed = value.trim();
+    if trimmed.is_empty() {
+        fallback.to_string()
+    } else {
+        trimmed.to_string()
     }
 }
 
@@ -5496,6 +5506,22 @@ Alice -> Bob: hi
         assert_eq!(
             absolute_url("mud-blog.pages.dev/", "/notes/home/"),
             "https://mud-blog.pages.dev/notes/home/"
+        );
+    }
+
+    #[test]
+    fn normalize_page_description_uses_fallback_for_empty_values() {
+        assert_eq!(
+            normalize_page_description(String::new(), "Mud's Blog"),
+            "Mud's Blog"
+        );
+        assert_eq!(
+            normalize_page_description("   ".to_string(), "Mud's Blog"),
+            "Mud's Blog"
+        );
+        assert_eq!(
+            normalize_page_description("  Custom description  ".to_string(), "Mud's Blog"),
+            "Custom description"
         );
     }
 
