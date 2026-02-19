@@ -63,6 +63,41 @@ jobs:
       - name: Verify Cloudflare token
         run: npx wrangler@4 whoami
 
+      - name: Resolve Cloudflare Pages production branch
+        run: |
+          set -euo pipefail
+
+          response="$(curl -fsSL \
+            "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${CF_PAGES_PROJECT}" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+            -H "Content-Type: application/json")"
+
+          production_branch="$(echo "${response}" | node -e '
+            const fs = require("node:fs");
+            const raw = fs.readFileSync(0, "utf8");
+            let parsed;
+            try {
+              parsed = JSON.parse(raw);
+            } catch {
+              console.error("Cloudflare API returned invalid JSON.");
+              process.exit(1);
+            }
+            if (!parsed.success) {
+              console.error("Failed to read Cloudflare Pages project metadata.");
+              console.error(raw);
+              process.exit(1);
+            }
+            const branch = parsed?.result?.production_branch;
+            if (!branch) {
+              console.error("Cloudflare Pages production branch is empty.");
+              process.exit(1);
+            }
+            process.stdout.write(branch);
+          ')"
+
+          echo "CF_PAGES_PRODUCTION_BRANCH=${production_branch}" >> "${GITHUB_ENV}"
+          echo "Cloudflare Pages production branch: ${production_branch}"
+
       - name: Build static site
         run: |
           set -euo pipefail
@@ -115,6 +150,12 @@ jobs:
             exit 1
           fi
 
+          deploy_branch="${CF_PAGES_PRODUCTION_BRANCH:-${GITHUB_REF_NAME:-main}}"
+          source_branch="${GITHUB_REF_NAME:-main}"
+          if [[ "${source_branch}" != "${deploy_branch}" ]]; then
+            echo "::notice::GitHub source branch (${source_branch}) differs from Cloudflare production branch (${deploy_branch}). Deploying to production branch."
+          fi
+
           max_attempts=3
           attempt=1
           deploy_status=1
@@ -124,7 +165,8 @@ jobs:
 
             if npx wrangler@4 pages deploy dist \
               --project-name "$CF_PAGES_PROJECT" \
-              --branch "${GITHUB_REF_NAME:-main}" \
+              --branch "${deploy_branch}" \
+              --commit-hash "${GITHUB_SHA}" \
               --commit-dirty=true; then
               deploy_status=0
               break
