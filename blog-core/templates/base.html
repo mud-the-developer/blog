@@ -271,9 +271,48 @@
       };
     </script>
     {% if layout.show_search %}
-    <script defer src="/assets/search-htmx.js"></script>
+    <script>
+      (() => {
+        const input = document.getElementById("note-search-input");
+        if (!(input instanceof HTMLInputElement)) {
+          return;
+        }
+        let loaded = false;
+        const loadSearch = () => {
+          if (loaded) {
+            return;
+          }
+          loaded = true;
+          const script = document.createElement("script");
+          script.defer = true;
+          script.src = "/assets/search-htmx.js";
+          document.head.appendChild(script);
+        };
+        input.addEventListener("focus", loadSearch, { once: true });
+        input.addEventListener("pointerdown", loadSearch, { once: true });
+        document.addEventListener("keydown", (event) => {
+          if (!(event.metaKey || event.ctrlKey) || event.key.toLowerCase() !== "k") {
+            return;
+          }
+          event.preventDefault();
+          loadSearch();
+          input.focus();
+          input.select();
+        });
+      })();
+    </script>
     {% endif %}
     <script defer src="/assets/site-runtime.js"></script>
-    <script defer src="/assets/publication-widget.js"></script>
+    <script>
+      (() => {
+        if (!document.querySelector(".profile-publication-widget[data-widget-base]")) {
+          return;
+        }
+        const script = document.createElement("script");
+        script.defer = true;
+        script.src = "/assets/publication-widget.js";
+        document.head.appendChild(script);
+      })();
+    </script>
   </body>
 </html>

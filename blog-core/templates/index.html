@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block extra_styles %}
+  <link rel="stylesheet" href="/assets/style-home.css" />
+{% endblock %}
+
 {% block content %}
   {% if home_intro_html.len() > 0 %}
   <section class="panel home-intro">
