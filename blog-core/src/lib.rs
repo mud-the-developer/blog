@@ -18,7 +18,7 @@ use serde_json::json;
 use serde_yaml::Value as YamlValue;
 use slug::slugify;
 use std::cmp::Ordering;
-use std::collections::{BTreeMap, HashMap, HashSet, VecDeque};
+use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet, VecDeque};
 use std::fmt::Write as _;
 use std::fs;
 use std::panic::{catch_unwind, AssertUnwindSafe};
@@ -624,6 +624,11 @@ struct LandingLink {
 }
 
 #[derive(Debug, Clone)]
+struct FolderSummary {
+    name: String,
+}
+
+#[derive(Debug, Clone)]
 struct TagEntry {
     name: String,
     slug: String,
@@ -670,7 +675,7 @@ struct IndexTemplate {
     tags: Vec<TagEntry>,
     home_intro_html: String,
     start_here_links: Vec<LandingLink>,
-    project_posts: Vec<PostCard>,
+    folders: Vec<FolderSummary>,
 }
 
 #[derive(Template)]
@@ -991,8 +996,8 @@ fn render_index(
     );
 
     let visible_posts: Vec<&Post> = posts.iter().filter(|post| !post.hidden).collect();
-    let project_posts = build_project_posts(posts);
-    let start_here_links = build_start_here_links(posts, !project_posts.is_empty());
+    let start_here_links = build_start_here_links(posts);
+    let folders = build_folder_summaries(posts);
 
     let template = IndexTemplate {
         layout,
@@ -1000,7 +1005,7 @@ fn render_index(
         tags: tags.to_vec(),
         home_intro_html: home_intro_html.to_string(),
         start_here_links,
-        project_posts,
+        folders,
     };
 
     write_file(config.output_dir.join("index.html"), template.render()?)
@@ -3900,7 +3905,7 @@ fn post_to_card(post: &Post) -> PostCard {
     }
 }
 
-fn build_start_here_links(posts: &[Post], has_projects: bool) -> Vec<LandingLink> {
+fn build_start_here_links(posts: &[Post]) -> Vec<LandingLink> {
     let mut links = Vec::new();
     let about_post = posts
         .iter()
@@ -3927,15 +3932,6 @@ fn build_start_here_links(posts: &[Post], has_projects: bool) -> Vec<LandingLink
         });
     }
 
-    if has_projects {
-        links.push(LandingLink {
-            title: "Projects".to_string(),
-            url: "/#projects".to_string(),
-            description: "Browse selected project notes and implementation details.".to_string(),
-            cta: "View projects".to_string(),
-        });
-    }
-
     links.push(LandingLink {
         title: "Graph".to_string(),
         url: "/graph/".to_string(),
@@ -3943,25 +3939,8 @@ fn build_start_here_links(posts: &[Post], has_projects: bool) -> Vec<LandingLink
         cta: "Open graph".to_string(),
     });
 
-    links.truncate(4);
+    links.truncate(3);
     links
-}
-
-fn build_project_posts(posts: &[Post]) -> Vec<PostCard> {
-    let mut candidates: Vec<&Post> = posts
-        .iter()
-        .filter(|post| !post.hidden && !post.is_home && !is_profile_post(post))
-        .filter(|post| is_project_post(post))
-        .collect();
-
-    if candidates.is_empty() {
-        candidates = posts
-            .iter()
-            .filter(|post| !post.hidden && !post.is_home && !is_profile_post(post))
-            .collect();
-    }
-
-    candidates.into_iter().take(3).map(post_to_card).collect()
 }
 
 fn is_profile_post(post: &Post) -> bool {
@@ -3970,26 +3949,22 @@ fn is_profile_post(post: &Post) -> bool {
         || post.title.to_ascii_lowercase().contains("about")
 }
 
-fn is_project_post(post: &Post) -> bool {
-    const PROJECT_TAG_HINTS: &[&str] = &[
-        "project",
-        "projects",
-        "build",
-        "architecture",
-        "rust",
-        "cloudflare",
-        "github",
-        "ops",
-        "performance",
-        "web",
-        "templates",
-    ];
+fn build_folder_summaries(posts: &[Post]) -> Vec<FolderSummary> {
+    let mut names: BTreeSet<String> = BTreeSet::new();
 
-    post.tags.iter().any(|tag| {
-        PROJECT_TAG_HINTS
-            .iter()
-            .any(|hint| tag.eq_ignore_ascii_case(hint))
-    })
+    for post in posts.iter().filter(|post| !post.hidden) {
+        if let Some((folder, _)) = post.slug.split_once('/') {
+            let trimmed = folder.trim();
+            if !trimmed.is_empty() {
+                names.insert(trimmed.to_string());
+            }
+        }
+    }
+
+    names
+        .into_iter()
+        .map(|name| FolderSummary { name })
+        .collect()
 }
 
 fn website_layout(

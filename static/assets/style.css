@@ -1712,6 +1712,27 @@ a:hover {
   color: color-mix(in srgb, var(--accent) 88%, var(--text));
 }
 
+.folder-chip-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.folder-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.9rem;
+  padding: 0.24rem 0.64rem;
+  border: 1px solid color-mix(in srgb, var(--line) 84%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
+  color: color-mix(in srgb, var(--text) 90%, var(--muted));
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .home-intro {
   position: relative;
   overflow: hidden;
@@ -1774,11 +1795,6 @@ main .post-item:hover,
   font-family: var(--font-display);
   font-size: clamp(1.05rem, 1.1vw + 0.7rem, 1.35rem);
   line-height: 1.2;
-}
-
-.post-item--project {
-  border-left-width: 3px;
-  border-left-color: color-mix(in srgb, var(--accent) 58%, var(--line));
 }
 
 .title-link {
