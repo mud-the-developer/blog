@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+  {% if home_intro_html.len() > 0 %}
+  <section class="panel home-intro">
+    <p class="section-kicker">Pinned</p>
+    <div class="home-intro-body">{{ home_intro_html|safe }}</div>
+  </section>
+  {% endif %}
+
   <section class="panel home-hero">
     <div class="home-hero-copy">
       <h1 class="sr-only">{{ layout.site_title }}</h1>
@@ -21,10 +28,6 @@
       <div class="home-hero-stat">
         <dt>Tags</dt>
         <dd>{{ tags.len() }}</dd>
-      </div>
-      <div class="home-hero-stat">
-        <dt>Search</dt>
-        <dd>{% if layout.show_search %}On{% else %}Off{% endif %}</dd>
       </div>
       <div class="home-hero-stat">
         <dt>Graph</dt>
@@ -65,13 +68,6 @@
       <span class="folder-chip">{{ folder.name }}</span>
     {% endfor %}
     </div>
-  </section>
-  {% endif %}
-
-  {% if home_intro_html.len() > 0 %}
-  <section class="panel home-intro">
-    <p class="section-kicker">Pinned</p>
-    <div class="home-intro-body">{{ home_intro_html|safe }}</div>
   </section>
   {% endif %}
 
