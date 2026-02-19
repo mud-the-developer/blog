@@ -7,6 +7,13 @@ Obsidian markdown notes are transformed into a static blog with:
 - `axum`: local preview server
 - Cloudflare Pages: static hosting
 
+## Version
+
+- Current stable version: `v1.0.0` (`2026-02-19`)
+- Version file: `VERSION`
+- Changelog: `CHANGELOG.md`
+- Release summary: `docs/v1-summary.md`
+
 ## Features
 
 - Obsidian-like frontmatter support: `publish`, `home`, `tags`, `aliases`, `draft`, `enable-search`
