@@ -59,6 +59,7 @@
       nodesById: new Map(),
       running: true,
       manuallyPaused: false,
+      lastNavigationAt: 0,
       stableFrames: 0,
       dragging: "",
       dragPointerId: -1,
@@ -88,6 +89,8 @@
     };
 
     let rafId = 0;
+    const touchDragThreshold = 14;
+    const pointerDragThreshold = 4;
 
     const pointInSvg = (event) => {
       const rect = svg.getBoundingClientRect();
@@ -121,6 +124,21 @@
       linkLayer.setAttribute("transform", transform);
       nodeLayer.setAttribute("transform", transform);
       syncZoomSlider();
+    };
+
+    const navigateToNode = (node) => {
+      if (!node || typeof node.url !== "string" || node.url.length === 0) {
+        return false;
+      }
+
+      const now = Date.now();
+      if (now - graphState.lastNavigationAt < 250) {
+        return true;
+      }
+
+      graphState.lastNavigationAt = now;
+      window.location.assign(node.url);
+      return true;
     };
 
     const resetViewport = () => {
@@ -543,14 +561,18 @@
         endViewportPan();
       }
 
-      if (pointerId >= 0 && typeof svg.hasPointerCapture === "function" && svg.hasPointerCapture(pointerId)) {
+      if (
+        !isTouchPointer &&
+        pointerId >= 0 &&
+        typeof svg.hasPointerCapture === "function" &&
+        svg.hasPointerCapture(pointerId)
+      ) {
         svg.releasePointerCapture(pointerId);
       }
 
       if (shouldNavigate) {
         const node = graphState.nodesById.get(wasDraggingNodeId);
-        if (node && typeof node.url === "string" && node.url.length > 0) {
-          window.location.assign(node.url);
+        if (navigateToNode(node)) {
           return;
         }
       }
@@ -560,6 +582,13 @@
 
     const attachInteractionEvents = () => {
       svg.addEventListener("pointermove", (event) => {
+        if (
+          event.pointerType === "touch" &&
+          (graphState.viewport.panning || graphState.dragging || graphState.viewport.pinchActive)
+        ) {
+          event.preventDefault();
+        }
+
         if (event.pointerType === "touch" && graphState.viewport.activeTouches.has(event.pointerId)) {
           graphState.viewport.activeTouches.set(event.pointerId, pointInSvg(event));
 
@@ -585,7 +614,8 @@
             event.clientX - graphState.dragStartClientX,
             event.clientY - graphState.dragStartClientY
           );
-          if (movedDistance > 4) {
+          const threshold = event.pointerType === "touch" ? touchDragThreshold : pointerDragThreshold;
+          if (movedDistance > threshold) {
             graphState.dragMoved = true;
           }
           node.x = point.x;
@@ -611,6 +641,10 @@
           return;
         }
 
+        if (event.pointerType === "touch") {
+          event.preventDefault();
+        }
+
         const point = pointInSvg(event);
         if (event.pointerType === "touch") {
           graphState.viewport.activeTouches.set(event.pointerId, point);
@@ -624,7 +658,7 @@
           beginViewportPan(event.pointerId, point);
         }
         wakeSimulation();
-        if (typeof svg.setPointerCapture === "function") {
+        if (event.pointerType !== "touch" && typeof svg.setPointerCapture === "function") {
           svg.setPointerCapture(event.pointerId);
         }
       });
@@ -752,7 +786,11 @@
           group.addEventListener("pointerdown", (event) => {
             event.stopPropagation();
             if (event.pointerType === "touch") {
+              event.preventDefault();
               graphState.viewport.activeTouches.set(event.pointerId, pointInSvg(event));
+              graphState.activeNodeId = node.id;
+              updateDetail(node);
+              applyVisualState();
             }
             graphState.dragging = node.id;
             graphState.dragPointerId = event.pointerId;
@@ -765,9 +803,21 @@
               applyTouchPinch();
             }
             wakeSimulation();
-            if (typeof svg.setPointerCapture === "function") {
+            if (event.pointerType !== "touch" && typeof svg.setPointerCapture === "function") {
               svg.setPointerCapture(event.pointerId);
             }
+          });
+
+          group.addEventListener("click", (event) => {
+            if (graphState.dragMoved) {
+              return;
+            }
+
+            if (event.pointerType && event.pointerType !== "touch") {
+              return;
+            }
+
+            navigateToNode(node);
           });
 
           nodeLayer.appendChild(group);
