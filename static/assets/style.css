@@ -1219,8 +1219,13 @@ a:hover {
 
 .site-main {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
   align-content: start;
+}
+
+.site-main > * {
+  min-width: 0;
 }
 
 .panel {
