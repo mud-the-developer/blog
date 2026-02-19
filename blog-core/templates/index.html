@@ -3,7 +3,7 @@
 {% block content %}
   <section class="panel home-hero">
     <div class="home-hero-copy">
-      <h1>{{ layout.site_title }}</h1>
+      <h1 class="sr-only">{{ layout.site_title }}</h1>
       {% if layout.site_description.len() > 0 %}
       <p class="home-hero-lead">{{ layout.site_description }}</p>
       {% endif %}
@@ -58,7 +58,6 @@
   {% if project_posts.len() > 0 %}
   <section id="projects" class="post-list" aria-label="Featured projects">
     <header class="section-head">
-      <p class="section-kicker">Builds</p>
       <h2>Projects</h2>
     </header>
     {% for post in project_posts %}

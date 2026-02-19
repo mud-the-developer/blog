@@ -1518,8 +1518,7 @@ a:hover {
 }
 
 .page-tab-preview {
-  margin-top: 0.35rem;
-  font-size: 0.75rem;
+  display: none;
 }
 
 .filetree-folder {
@@ -1699,6 +1698,10 @@ a:hover {
   color: color-mix(in srgb, var(--text) 84%, var(--muted));
   font-size: 0.8rem;
   line-height: 1.45;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
 .landing-link-cta {

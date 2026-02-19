@@ -3913,7 +3913,7 @@ fn build_start_here_links(posts: &[Post], has_projects: bool) -> Vec<LandingLink
         links.push(LandingLink {
             title: "About".to_string(),
             url: format!("/notes/{}/", post.slug),
-            description: "Who I am and what I am building.".to_string(),
+            description: "Who I am and what I focus on.".to_string(),
             cta: "Open profile".to_string(),
         });
     }
@@ -3931,7 +3931,7 @@ fn build_start_here_links(posts: &[Post], has_projects: bool) -> Vec<LandingLink
         links.push(LandingLink {
             title: "Projects".to_string(),
             url: "/#projects".to_string(),
-            description: "Browse selected build logs and implementation notes.".to_string(),
+            description: "Browse selected project notes and implementation details.".to_string(),
             cta: "View projects".to_string(),
         });
     }
