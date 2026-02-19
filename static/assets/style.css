@@ -1809,8 +1809,8 @@ html[data-theme="dark"] .graph-stage {
 
   .live-graph,
   .page-tabs {
-    content-visibility: auto;
-    contain-intrinsic-size: 560px;
+    width: 100%;
+    max-width: 100%;
   }
 
   .post-list .post-item,
