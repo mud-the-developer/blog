@@ -3,8 +3,7 @@
 {% block content %}
   <section class="panel home-hero">
     <div class="home-hero-copy">
-      <p class="section-kicker">Landing</p>
-      <h1>Notes for Building and Shipping</h1>
+      <h1>{{ layout.site_title }}</h1>
       {% if layout.site_description.len() > 0 %}
       <p class="home-hero-lead">{{ layout.site_description }}</p>
       {% endif %}
