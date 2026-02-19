@@ -2227,7 +2227,9 @@ a:hover {
 .search-results {
   border-radius: 14px;
   border-color: color-mix(in srgb, var(--line) 84%, transparent);
-  background: color-mix(in srgb, var(--surface-strong) 98%, transparent);
+  background: var(--surface);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   box-shadow: var(--panel-glow-strong);
   padding: 0.34rem;
 }
