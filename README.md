@@ -65,7 +65,7 @@ draft: false
 ```bash
 cargo run -p blog-build -- \
   --site-url https://your-domain.pages.dev \
-  --title "My Garden" \
+  --title "My Blog" \
   --description "Connected notes"
 ```
 
@@ -81,7 +81,7 @@ cargo run -p blog-build -- --publish-policy permissive
 ```bash
 cargo run -p blog-dev -- \
   --site-url http://localhost:8788 \
-  --title "My Garden"
+  --title "My Blog"
 ```
 
 - Preview: `http://127.0.0.1:8788`
