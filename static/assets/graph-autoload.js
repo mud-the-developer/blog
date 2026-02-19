@@ -8,17 +8,13 @@
     window.__BLOG_RUNTIME_CONFIG__ && typeof window.__BLOG_RUNTIME_CONFIG__ === "object"
       ? window.__BLOG_RUNTIME_CONFIG__
       : {};
-  const assetVersion =
-    typeof runtimeConfig.assetVersion === "string" ? runtimeConfig.assetVersion : "";
   const graphDataUrl =
     typeof runtimeConfig.graphDataUrl === "string" && runtimeConfig.graphDataUrl.length > 0
       ? runtimeConfig.graphDataUrl
       : "/graph.json";
   const graphCenterId =
     typeof runtimeConfig.graphCenterId === "string" ? runtimeConfig.graphCenterId : "";
-  const graphScriptUrl =
-    "/assets/graph-view.min.js" +
-    (assetVersion.length > 0 ? `?v=${encodeURIComponent(assetVersion)}` : "");
+  const graphScriptUrl = "/assets/graph-view.min.js";
 
   const loadScript = (src) => {
     const selector = `script[data-script-src="${src}"]`;

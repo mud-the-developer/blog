@@ -569,7 +569,6 @@ struct LayoutContext {
     site_title: String,
     site_description: String,
     site_url: String,
-    asset_version: String,
     lang: String,
     page_title: String,
     page_description: String,
@@ -3991,13 +3990,11 @@ fn website_layout(
     let social_image_url =
         resolve_social_image_url(&config.site.base_url, &config.site.social_image);
     let page_description = normalize_page_description(page_description, &config.site.title);
-    let asset_version = Utc::now().timestamp().to_string();
 
     LayoutContext {
         site_title: config.site.title.clone(),
         site_description: config.site.description.clone(),
         site_url: normalize_base_url(&config.site.base_url),
-        asset_version,
         lang: config.site.language.clone(),
         page_title,
         page_description,
@@ -5901,7 +5898,7 @@ Not published.
         assert!(index_html.contains(r#"href="/user-overrides.css""#));
         assert!(index_html.contains(":root{--note-accent:#2c6fa8;}"));
         assert!(index_html.contains(r#"[data-theme="dark"]{--bg:#101820;--text:#e7edf4;}"#));
-        assert!(index_html.contains(r#"src="/assets/site-runtime.js?v="#));
+        assert!(index_html.contains(r#"src="/assets/site-runtime.js""#));
         assert!(index_html.contains("window.__BLOG_RUNTIME_CONFIG__"));
         assert!(index_html.contains("graphDataUrl:"));
         assert!(index_html.contains("/graph.json"));
