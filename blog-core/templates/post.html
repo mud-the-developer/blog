@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block extra_styles %}
+  <link rel="stylesheet" href="/assets/style-note.css" />
+{% endblock %}
+
 {% block content %}
   <article class="panel note{% if content_classes.len() > 0 %} {{ content_classes }}{% endif %}">
     <header class="note-header">

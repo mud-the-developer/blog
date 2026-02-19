@@ -616,6 +616,14 @@ struct PostCard {
 }
 
 #[derive(Debug, Clone)]
+struct LandingLink {
+    title: String,
+    url: String,
+    description: String,
+    cta: String,
+}
+
+#[derive(Debug, Clone)]
 struct TagEntry {
     name: String,
     slug: String,
@@ -661,6 +669,8 @@ struct IndexTemplate {
     posts: Vec<PostCard>,
     tags: Vec<TagEntry>,
     home_intro_html: String,
+    start_here_links: Vec<LandingLink>,
+    project_posts: Vec<PostCard>,
 }
 
 #[derive(Template)]
@@ -980,15 +990,17 @@ fn render_index(
         Vec::new(),
     );
 
+    let visible_posts: Vec<&Post> = posts.iter().filter(|post| !post.hidden).collect();
+    let project_posts = build_project_posts(posts);
+    let start_here_links = build_start_here_links(posts, !project_posts.is_empty());
+
     let template = IndexTemplate {
         layout,
-        posts: posts
-            .iter()
-            .filter(|post| !post.hidden)
-            .map(post_to_card)
-            .collect(),
+        posts: visible_posts.into_iter().map(post_to_card).collect(),
         tags: tags.to_vec(),
         home_intro_html: home_intro_html.to_string(),
+        start_here_links,
+        project_posts,
     };
 
     write_file(config.output_dir.join("index.html"), template.render()?)
@@ -3886,6 +3898,98 @@ fn post_to_card(post: &Post) -> PostCard {
             })
             .collect(),
     }
+}
+
+fn build_start_here_links(posts: &[Post], has_projects: bool) -> Vec<LandingLink> {
+    let mut links = Vec::new();
+    let about_post = posts
+        .iter()
+        .find(|post| !post.hidden && !post.is_home && is_profile_post(post));
+    let latest_post = posts
+        .iter()
+        .find(|post| !post.hidden && !post.is_home && !is_profile_post(post));
+
+    if let Some(post) = about_post {
+        links.push(LandingLink {
+            title: "About".to_string(),
+            url: format!("/notes/{}/", post.slug),
+            description: "Who I am and what I am building.".to_string(),
+            cta: "Open profile".to_string(),
+        });
+    }
+
+    if let Some(post) = latest_post {
+        links.push(LandingLink {
+            title: "Latest Note".to_string(),
+            url: format!("/notes/{}/", post.slug),
+            description: post.excerpt.clone(),
+            cta: "Read now".to_string(),
+        });
+    }
+
+    if has_projects {
+        links.push(LandingLink {
+            title: "Projects".to_string(),
+            url: "/#projects".to_string(),
+            description: "Browse selected build logs and implementation notes.".to_string(),
+            cta: "View projects".to_string(),
+        });
+    }
+
+    links.push(LandingLink {
+        title: "Graph".to_string(),
+        url: "/graph/".to_string(),
+        description: "Explore relationships across notes visually.".to_string(),
+        cta: "Open graph".to_string(),
+    });
+
+    links.truncate(4);
+    links
+}
+
+fn build_project_posts(posts: &[Post]) -> Vec<PostCard> {
+    let mut candidates: Vec<&Post> = posts
+        .iter()
+        .filter(|post| !post.hidden && !post.is_home && !is_profile_post(post))
+        .filter(|post| is_project_post(post))
+        .collect();
+
+    if candidates.is_empty() {
+        candidates = posts
+            .iter()
+            .filter(|post| !post.hidden && !post.is_home && !is_profile_post(post))
+            .collect();
+    }
+
+    candidates.into_iter().take(3).map(post_to_card).collect()
+}
+
+fn is_profile_post(post: &Post) -> bool {
+    post.tags.iter().any(|tag| tag.eq_ignore_ascii_case("profile"))
+        || post.slug.contains("about")
+        || post.title.to_ascii_lowercase().contains("about")
+}
+
+fn is_project_post(post: &Post) -> bool {
+    const PROJECT_TAG_HINTS: &[&str] = &[
+        "project",
+        "projects",
+        "build",
+        "architecture",
+        "rust",
+        "cloudflare",
+        "github",
+        "ops",
+        "performance",
+        "web",
+        "templates",
+    ];
+
+    post.tags.iter().any(|tag| {
+        PROJECT_TAG_HINTS
+            .iter()
+            .any(|hint| tag.eq_ignore_ascii_case(hint))
+    })
 }
 
 fn website_layout(

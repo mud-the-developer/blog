@@ -49,6 +49,7 @@
     <link rel="alternate" type="application/rss+xml" title="{{ layout.site_title }} RSS" href="/rss.xml" />
     <link rel="preload" href="/assets/style.css" as="style" />
     <link rel="stylesheet" href="/assets/style.css" />
+    {% block extra_styles %}{% endblock %}
     {% if layout.obsidian_theme_css_url.len() > 0 %}
     <link rel="stylesheet" href="{{ layout.obsidian_theme_css_url }}" />
     {% endif %}
@@ -160,20 +161,23 @@
             ></div>
           </div>
           {% endif %}
-          <div class="page-tabs-head">
-            <h2>{{ layout.pages_heading }}</h2>
-          </div>
-          <nav id="filetree-root" class="page-tabs-list">
-            {% for tab in layout.page_tabs %}
-            <a class="page-tab{% if tab.active %} is-active{% endif %}" href="{{ tab.url }}">
-              <span class="page-tab-title">
-                {% if let Some(icon) = tab.note_icon %}<span class="note-icon">{{ icon }}</span>{% endif %}
-                {{ tab.title }}
-              </span>
-              <span class="page-tab-preview">{{ tab.preview }}</span>
-            </a>
-            {% endfor %}
-          </nav>
+          <details id="page-tabs-details" class="page-tabs-collapsible" open>
+            <summary class="page-tabs-head">
+              <h2 id="page-tabs-heading">{{ layout.pages_heading }}</h2>
+              <span class="page-tabs-toggle" aria-hidden="true">▾</span>
+            </summary>
+            <nav id="filetree-root" class="page-tabs-list" aria-labelledby="page-tabs-heading">
+              {% for tab in layout.page_tabs %}
+              <a class="page-tab{% if tab.active %} is-active{% endif %}" href="{{ tab.url }}">
+                <span class="page-tab-title">
+                  {% if let Some(icon) = tab.note_icon %}<span class="note-icon">{{ icon }}</span>{% endif %}
+                  {{ tab.title }}
+                </span>
+                <span class="page-tab-preview">{{ tab.preview }}</span>
+              </a>
+              {% endfor %}
+            </nav>
+          </details>
         </aside>
 
         <main class="site-main" id="main-content">
