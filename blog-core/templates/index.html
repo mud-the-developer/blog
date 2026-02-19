@@ -3,7 +3,19 @@
 {% block content %}
   <section class="panel home-hero">
     <div class="home-hero-copy">
+      {% if layout.site_title == "Mud's Blog" %}
+      <h1 class="sr-only">{{ layout.site_title }}</h1>
+      <pre class="home-hero-logo" aria-hidden="true">+-----------------------------+
+|  __  __ _   _ ____  ____    |
+| |  \/  | | | |  _ \/ ___|   |
+| | |\/| | | | | | | \___ \   |
+| | |  | | |_| | |_| |___) |  |
+| |_|  |_|\___/|____/|____/   |
+|      M U D ' S   B L O G    |
++-----------------------------+</pre>
+      {% else %}
       <h1>{{ layout.site_title }}</h1>
+      {% endif %}
       {% if layout.site_description.len() > 0 %}
       <p class="home-hero-lead">{{ layout.site_description }}</p>
       {% endif %}
