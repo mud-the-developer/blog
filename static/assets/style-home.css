@@ -1,4 +1,12 @@
 .home-hero {
+  --hero-drop-x: 0px;
+  --hero-drop-y: 0px;
+  --hero-drop-rot: 0deg;
+  --hero-drop-sx: 1;
+  --hero-drop-sy: 1;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 1rem;
@@ -6,6 +14,50 @@
   background:
     radial-gradient(1000px 320px at 8% -10%, color-mix(in srgb, var(--accent-soft) 72%, transparent) 0%, transparent 68%),
     linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 97%, transparent) 0%, color-mix(in srgb, var(--surface-soft) 96%, transparent) 100%);
+}
+
+.home-hero::before {
+  content: "";
+  position: absolute;
+  width: clamp(190px, 22vw, 286px);
+  aspect-ratio: 1 / 1;
+  top: clamp(-142px, -9vw, -80px);
+  right: clamp(-120px, -7.2vw, -66px);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 32% 28%, color-mix(in srgb, #ffffff 58%, transparent) 0%, transparent 48%),
+    radial-gradient(circle at 68% 64%, color-mix(in srgb, var(--accent) 38%, transparent) 0%, color-mix(in srgb, var(--accent-soft) 78%, transparent) 74%);
+  transform:
+    translate3d(var(--hero-drop-x), var(--hero-drop-y), 0)
+    rotate(var(--hero-drop-rot))
+    scaleX(var(--hero-drop-sx))
+    scaleY(var(--hero-drop-sy));
+  transform-origin: 68% 68%;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.home-hero::after {
+  content: "";
+  position: absolute;
+  width: clamp(128px, 16vw, 206px);
+  aspect-ratio: 1 / 1;
+  top: clamp(-88px, -5.4vw, -48px);
+  right: clamp(-78px, -4.8vw, -42px);
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--line) 74%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 72%, transparent);
+  transform: translate3d(calc(var(--hero-drop-x) * -0.32), calc(var(--hero-drop-y) * -0.24), 0);
+  pointer-events: none;
+  opacity: 0.7;
+  z-index: 0;
+}
+
+.home-hero-copy,
+.home-hero-stats {
+  position: relative;
+  z-index: 1;
 }
 
 .home-hero-copy h1 {
@@ -195,6 +247,14 @@
 }
 
 @media (max-width: 760px) {
+  .home-hero::before {
+    width: clamp(162px, 40vw, 224px);
+  }
+
+  .home-hero::after {
+    width: clamp(108px, 30vw, 168px);
+  }
+
   .home-hero-stats {
     grid-template-columns: 1fr;
   }
@@ -210,5 +270,15 @@
 
   .landing-links-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero {
+    --hero-drop-x: 0px;
+    --hero-drop-y: 0px;
+    --hero-drop-rot: 0deg;
+    --hero-drop-sx: 1;
+    --hero-drop-sy: 1;
   }
 }
