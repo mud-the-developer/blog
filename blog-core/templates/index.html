@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 
 {% block extra_styles %}
-  <link rel="stylesheet" href="/assets/style-home.css" />
+  <link rel="preload" href="/assets/style-home.css" as="style" />
+  <link
+    rel="stylesheet"
+    href="/assets/style-home.css"
+    media="print"
+    onload="this.media='all'"
+  />
+  <noscript><link rel="stylesheet" href="/assets/style-home.css" /></noscript>
 {% endblock %}
 
 {% block content %}

@@ -14,6 +14,7 @@
   }
 
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+  const getScrollY = () => window.scrollY || window.pageYOffset || 0;
   const coarsePointer = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
   const motionScale = coarsePointer ? 0.78 : 1;
 
@@ -28,8 +29,13 @@
   let currentRot = 0;
   let currentStretch = 1;
 
+  let heroDocTop = 0;
+  let heroHeight = 1;
+  let viewportHeight = window.innerHeight || 1;
+  let metricsDirty = true;
+
   let rafId = 0;
-  let lastScrollY = window.scrollY || window.pageYOffset || 0;
+  let lastScrollY = getScrollY();
 
   const queueTick = () => {
     if (rafId !== 0) {
@@ -38,12 +44,32 @@
     rafId = window.requestAnimationFrame(tick);
   };
 
-  const updateTargets = () => {
+  const markMetricsDirty = () => {
+    metricsDirty = true;
+  };
+
+  const recomputeMetrics = () => {
+    const scrollTop = getScrollY();
     const rect = hero.getBoundingClientRect();
-    const viewportHeight = window.innerHeight || 1;
+    heroDocTop = rect.top + scrollTop;
+    heroHeight = Math.max(1, rect.height);
+    viewportHeight = Math.max(1, window.innerHeight || 1);
+    metricsDirty = false;
+  };
+
+  const ensureMetrics = () => {
+    if (!metricsDirty) {
+      return;
+    }
+    recomputeMetrics();
+  };
+
+  const updateTargets = () => {
+    ensureMetrics();
+    const scrollTop = getScrollY();
     const range = clamp(viewportHeight * 0.58, 180, 440);
-    const heroAnchor = rect.top + rect.height * 0.26;
-    const viewportAnchor = viewportHeight * 0.4;
+    const heroAnchor = heroDocTop + heroHeight * 0.26;
+    const viewportAnchor = scrollTop + viewportHeight * 0.4;
     const normalized = clamp((viewportAnchor - heroAnchor) / range, -1.2, 1.2);
     const swing = Math.sin(normalized * Math.PI * 0.9) * motionScale;
 
@@ -82,30 +108,43 @@
   };
 
   const onScroll = () => {
-    const nextScrollY = window.scrollY || window.pageYOffset || 0;
+    const nextScrollY = getScrollY();
     const delta = nextScrollY - lastScrollY;
     lastScrollY = nextScrollY;
     impulse = clamp(impulse + delta * 0.09 * motionScale, -14, 14);
     queueTick();
   };
 
+  const onResize = () => {
+    markMetricsDirty();
+    queueTick();
+  };
+
   window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", queueTick, { passive: true });
+  window.addEventListener("resize", onResize, { passive: true });
   window.addEventListener(
     "orientationchange",
     () => {
       impulse = 0;
-      queueTick();
+      onResize();
     },
     { passive: true }
   );
+  window.addEventListener("load", onResize, { once: true });
+
+  if (typeof ResizeObserver === "function") {
+    const heroResizeObserver = new ResizeObserver(() => {
+      onResize();
+    });
+    heroResizeObserver.observe(hero);
+  }
 
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
       return;
     }
-    lastScrollY = window.scrollY || window.pageYOffset || 0;
-    queueTick();
+    lastScrollY = getScrollY();
+    onResize();
   });
 
   queueTick();
