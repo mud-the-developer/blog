@@ -2,6 +2,7 @@
 title: "Obsidian Blog Helper 설치 가이드"
 date: 2026-02-21 16:05
 lastmod: 2026-02-21 16:05
+publish: true
 draft: false
 tags: [blog, obsidian, setup]
 description: "Obsidian + Git 블로그 환경을 빠르게 설치하고 연동하는 방법"
