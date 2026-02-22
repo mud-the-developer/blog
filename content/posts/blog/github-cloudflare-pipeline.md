@@ -2,8 +2,12 @@
 title: GitHub to Cloudflare Pipeline
 description: Reliable publishing flow from notes to production.
 date: 2026-02-13
-tags: [github, cloudflare, ops]
-aliases: [publish-pipeline]
+tags:
+  - github
+  - cloudflare
+  - ops
+aliases:
+  - publish-pipeline
 publish: true
 ---
 
