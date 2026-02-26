@@ -1,0 +1,19 @@
+.page-tabs .site-search {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.page-tabs .search-results {
+  position: static;
+  inset: auto;
+  width: 100%;
+  margin-top: 0;
+  max-height: min(48vh, 420px);
+  overflow: auto;
+}
+
+@media (max-width: 1080px) {
+  .page-tabs .search-results {
+    max-height: min(46vh, 360px);
+  }
+}
