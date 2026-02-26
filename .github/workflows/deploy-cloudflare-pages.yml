@@ -133,6 +133,9 @@ jobs:
       - name: Check performance budgets
         run: ./scripts/check-performance-budget.sh dist
 
+      - name: Check responsive layout guards
+        run: ./scripts/check-responsive-layout.sh static/assets/style.css
+
       - name: Check internal HTML links
         run: ./scripts/check-html-links.sh dist
 

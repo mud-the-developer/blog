@@ -1714,6 +1714,11 @@ html[data-theme="dark"] .graph-stage {
   .live-graph {
     top: 4.9rem;
   }
+
+  .live-graph {
+    position: static;
+    top: auto;
+  }
 }
 
 @media (max-width: 1080px) {
