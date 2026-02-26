@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block extra_styles %}
+  <link rel="stylesheet" href="/assets/style-graph.css" />
   <link rel="stylesheet" href="/assets/style-graph-page.css" />
 {% endblock %}
 
@@ -14,7 +15,7 @@
 
     <div class="graph-stage-wrap">
       <div id="global-graph-stage" class="graph-stage">
-        <svg id="global-graph-svg" viewBox="0 0 1000 640" aria-label="Global graph view">
+        <svg id="global-graph-svg" width="1000" height="640" viewBox="0 0 1000 640" aria-label="Global graph view">
           <g id="global-graph-link-layer"></g>
           <g id="global-graph-node-layer"></g>
         </svg>

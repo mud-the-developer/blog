@@ -1,0 +1,185 @@
+/* Core note typography and backlinks styles loaded on every note page. */
+
+.note {
+  padding: 1.3rem 1.35rem;
+}
+
+.note-header {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
+}
+
+.note-header h1 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 2.6vw + 0.9rem, 3.3rem);
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+}
+
+.note-route {
+  margin: 0.76rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.note-body {
+  font-family: var(--font-reading);
+  font-size: clamp(1rem, 0.3vw + 0.94rem, 1.12rem);
+  line-height: 1.86;
+}
+
+.note-body :where(h2, h3, h4) {
+  margin-top: 1.85rem;
+  margin-bottom: 0.58rem;
+  font-family: var(--font-display);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+}
+
+.note-body h2 {
+  font-size: 1.45rem;
+}
+
+.note-body h3 {
+  font-size: 1.22rem;
+}
+
+.note-body p {
+  margin: 0.9rem 0;
+}
+
+.note-body img {
+  max-width: 100%;
+  height: auto;
+}
+
+.note-body p code,
+.note-body li code {
+  font-family: var(--font-mono);
+  font-size: 0.84em;
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  background: color-mix(in srgb, var(--accent-soft) 48%, #ffffff);
+  color: color-mix(in srgb, var(--text) 92%, #000000);
+  padding: 0.14rem 0.35rem;
+  border-radius: 7px;
+}
+
+html[data-theme="dark"] .note-body p code,
+html[data-theme="dark"] .note-body li code {
+  background: color-mix(in srgb, var(--accent-soft) 45%, var(--surface));
+  color: var(--text);
+}
+
+.note-body pre {
+  border-radius: 13px;
+  border: 1px solid color-mix(in srgb, var(--line) 84%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 97%, transparent);
+  padding: 0.95rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.87rem;
+  line-height: 1.62;
+  overflow-x: auto;
+}
+
+.note-body pre code {
+  color: inherit;
+}
+
+.note-body blockquote {
+  margin: 1rem 0;
+  border-left: 2px solid color-mix(in srgb, var(--accent) 65%, transparent);
+  padding: 0.2rem 0 0.2rem 0.9rem;
+  color: color-mix(in srgb, var(--text) 82%, var(--muted));
+}
+
+.note-body mark {
+  background: var(--mark-bg);
+  color: var(--mark-text);
+  padding: 0 0.12rem;
+  border-radius: 2px;
+}
+
+.note-body .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.2rem 0;
+}
+
+.note-body mjx-container {
+  max-width: 100%;
+}
+
+.note-body mjx-container[display="true"] {
+  display: block;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.2rem 0;
+}
+
+.backlinks {
+  margin-top: 2.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+}
+
+.backlinks h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.backlinks-meta {
+  margin: 0.34rem 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.83rem;
+  font-family: var(--font-body);
+}
+
+.backlinks-empty {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-family: var(--font-body);
+}
+
+.backlinks ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.backlinks li {
+  border: 1px solid color-mix(in srgb, var(--line) 84%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface-strong) 95%, transparent);
+  padding: 0.7rem;
+}
+
+.backlinks-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.7rem;
+}
+
+.backlinks-item-date {
+  color: var(--muted);
+  font-size: 0.74rem;
+  white-space: nowrap;
+  font-family: var(--font-body);
+}
+
+.backlinks li p {
+  margin: 0.28rem 0 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
+  font-family: var(--font-body);
+}

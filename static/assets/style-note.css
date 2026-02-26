@@ -1,42 +1,4 @@
-/* Post note + backlinks styles (split from style.css to reduce unused CSS on non-note pages) */
-
-.note-header h1 {
-  margin: 0 0 0.5rem;
-  font-size: clamp(2rem, 2.05vw + 1rem, 3rem);
-  letter-spacing: -0.018em;
-  font-family: var(--font-display);
-  font-weight: 700;
-  line-height: 1.12;
-}
-
-.note-header {
-  margin-bottom: 0.95rem;
-  padding-bottom: 0.85rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.note-body :where(h2, h3, h4) {
-  margin-top: 1.7rem;
-}
-
-.note-body :where(h2, h3) {
-  font-family: var(--font-display);
-  letter-spacing: -0.012em;
-  line-height: 1.2;
-}
-
-.note-body {
-  font-size: 1.03rem;
-}
-
-.note-body p {
-  margin: 0.92rem 0;
-}
-
-.note-body img {
-  max-width: 100%;
-  height: auto;
-}
+/* Rich note feature styles (loaded only when rich embeds/callouts exist). */
 
 .note-body .profile-publication-badge {
   display: block;
@@ -141,83 +103,48 @@ html[data-theme="dark"] .note-body .profile-publication-widget {
   }
 }
 
-.note .note-body > p:first-of-type::first-letter {
-  float: left;
-  font-family: var(--font-display);
-  font-size: 3.25rem;
-  font-weight: 700;
-  line-height: 0.9;
-  margin: 0.08rem 0.26rem 0 0;
-  color: var(--accent);
+:root {
+  --callout-info: #4a90d9;
+  --callout-warn: #d08a00;
+  --callout-success: #1f8a4c;
+  --callout-danger: #c44343;
 }
 
-.note-body p code,
-.note-body li code {
-  background: #eef2ff;
-  color: #1f2933;
-  padding: 0.12rem 0.34rem;
-  border-radius: 6px;
-  font-size: 0.92em;
-}
-
-.note-body mark {
-  background: var(--mark-bg);
-  color: var(--mark-text);
-  padding: 0 0.12rem;
-  border-radius: 2px;
-}
-
-.note-body .katex-display {
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 0.2rem 0;
-}
-
-.note-body mjx-container {
-  max-width: 100%;
-}
-
-.note-body mjx-container[display="true"] {
-  display: block;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 0.2rem 0;
-}
-
-.note-body .plantuml-embed {
+.note-body .note-callout,
+.note-body details.note-callout,
+.note-body .mermaid-render,
+.note-body .plantuml-embed,
+.note-body .note-pdf-embed,
+.note-body .note-excalidraw-embed,
+.note-body .note-canvas-embed {
   margin: 1rem 0;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: #f8fafc;
-  overflow: auto;
-  padding: 0.7rem;
-}
-
-.note-body .plantuml-embed img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  margin: 0 auto;
+  border: 1px solid color-mix(in srgb, var(--line) 84%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface-strong) 97%, transparent);
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--line) 28%, transparent);
+  overflow: hidden;
 }
 
 .note-body .note-callout,
 .note-body details.note-callout {
-  margin: 1rem 0;
-  border: 1px solid var(--line);
-  border-left: 4px solid var(--accent);
-  border-radius: 10px;
-  background: #f8fbff;
-  overflow: hidden;
+  border-left-width: 4px;
+  border-left-color: var(--callout-info);
+  background: color-mix(in srgb, var(--callout-info) 8%, var(--surface));
 }
 
-.note-body .note-callout-title {
+.note-body .note-callout-title,
+.note-body .note-pdf-embed-head,
+.note-body .note-excalidraw-embed-head,
+.note-body .note-canvas-embed-head {
   margin: 0;
   padding: 0.5rem 0.72rem;
-  font-size: 0.88rem;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
   font-weight: 700;
   line-height: 1.3;
-  color: #163a66;
-  background: #edf5ff;
+  letter-spacing: 0.03em;
+  color: color-mix(in srgb, var(--callout-info) 70%, var(--text));
+  background: color-mix(in srgb, var(--callout-info) 14%, var(--surface));
 }
 
 .note-body details.note-callout > summary {
@@ -230,14 +157,14 @@ html[data-theme="dark"] .note-body .profile-publication-widget {
 }
 
 .note-body details.note-callout > summary::after {
-  content: "▾";
+  content: "v";
   float: right;
   color: var(--muted);
   font-weight: 500;
 }
 
 .note-body details.note-callout:not([open]) > summary::after {
-  content: "▸";
+  content: ">";
 }
 
 .note-body .note-callout-body {
@@ -254,54 +181,52 @@ html[data-theme="dark"] .note-body .profile-publication-widget {
 
 .note-body .note-callout[data-callout="warning"],
 .note-body .note-callout[data-callout="caution"] {
-  border-left-color: #d08a00;
-  background: #fff9ee;
+  border-left-color: var(--callout-warn);
+  background: color-mix(in srgb, var(--callout-warn) 8%, var(--surface));
 }
 
 .note-body .note-callout[data-callout="warning"] .note-callout-title,
 .note-body .note-callout[data-callout="caution"] .note-callout-title {
-  color: #5f3e00;
-  background: #fff1d3;
+  color: color-mix(in srgb, var(--callout-warn) 70%, var(--text));
+  background: color-mix(in srgb, var(--callout-warn) 14%, var(--surface));
 }
 
 .note-body .note-callout[data-callout="tip"],
 .note-body .note-callout[data-callout="success"],
 .note-body .note-callout[data-callout="check"] {
-  border-left-color: #1f8a4c;
-  background: #f0fbf4;
+  border-left-color: var(--callout-success);
+  background: color-mix(in srgb, var(--callout-success) 8%, var(--surface));
 }
 
 .note-body .note-callout[data-callout="tip"] .note-callout-title,
 .note-body .note-callout[data-callout="success"] .note-callout-title,
 .note-body .note-callout[data-callout="check"] .note-callout-title {
-  color: #14552f;
-  background: #ddf5e6;
+  color: color-mix(in srgb, var(--callout-success) 70%, var(--text));
+  background: color-mix(in srgb, var(--callout-success) 14%, var(--surface));
 }
 
 .note-body .note-callout[data-callout="danger"],
 .note-body .note-callout[data-callout="error"],
 .note-body .note-callout[data-callout="fail"] {
-  border-left-color: #c44343;
-  background: #fff1f1;
+  border-left-color: var(--callout-danger);
+  background: color-mix(in srgb, var(--callout-danger) 8%, var(--surface));
 }
 
 .note-body .note-callout[data-callout="danger"] .note-callout-title,
 .note-body .note-callout[data-callout="error"] .note-callout-title,
 .note-body .note-callout[data-callout="fail"] .note-callout-title {
-  color: #6a1a1a;
-  background: #ffdddd;
+  color: color-mix(in srgb, var(--callout-danger) 70%, var(--text));
+  background: color-mix(in srgb, var(--callout-danger) 14%, var(--surface));
 }
 
-.note-body .mermaid-render {
-  margin: 1rem 0;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: #f8fafc;
+.note-body .mermaid-render,
+.note-body .plantuml-embed {
   padding: 0.7rem;
   overflow-x: auto;
 }
 
-.note-body .mermaid-render svg {
+.note-body .mermaid-render svg,
+.note-body .plantuml-embed img {
   display: block;
   margin: 0 auto;
   max-width: 100%;
@@ -312,89 +237,12 @@ html[data-theme="dark"] .note-body .profile-publication-widget {
   border-color: #d08a00;
 }
 
-html[data-theme="dark"] .note-body .note-callout,
-html[data-theme="dark"] .note-body details.note-callout {
-  background: #101f33;
-}
-
-html[data-theme="dark"] .note-body .note-callout-title {
-  color: #d3e4ff;
-  background: #163250;
-}
-
-html[data-theme="dark"] .note-body .note-callout[data-callout="warning"],
-html[data-theme="dark"] .note-body .note-callout[data-callout="caution"] {
-  background: #33270f;
-}
-
-html[data-theme="dark"] .note-body .note-callout[data-callout="warning"] .note-callout-title,
-html[data-theme="dark"] .note-body .note-callout[data-callout="caution"] .note-callout-title {
-  color: #ffe2a8;
-  background: #4a3813;
-}
-
-html[data-theme="dark"] .note-body .note-callout[data-callout="tip"],
-html[data-theme="dark"] .note-body .note-callout[data-callout="success"],
-html[data-theme="dark"] .note-body .note-callout[data-callout="check"] {
-  background: #0f2e1f;
-}
-
-html[data-theme="dark"] .note-body .note-callout[data-callout="tip"] .note-callout-title,
-html[data-theme="dark"] .note-body .note-callout[data-callout="success"] .note-callout-title,
-html[data-theme="dark"] .note-body .note-callout[data-callout="check"] .note-callout-title {
-  color: #b9efcf;
-  background: #16422d;
-}
-
-html[data-theme="dark"] .note-body .note-callout[data-callout="danger"],
-html[data-theme="dark"] .note-body .note-callout[data-callout="error"],
-html[data-theme="dark"] .note-body .note-callout[data-callout="fail"] {
-  background: #351a1a;
-}
-
-html[data-theme="dark"] .note-body .note-callout[data-callout="danger"] .note-callout-title,
-html[data-theme="dark"] .note-body .note-callout[data-callout="error"] .note-callout-title,
-html[data-theme="dark"] .note-body .note-callout[data-callout="fail"] .note-callout-title {
-  color: #ffc4c4;
-  background: #4b2222;
-}
-
-html[data-theme="dark"] .note-body .mermaid-render {
-  background: #0e1a2a;
-}
-
-html[data-theme="dark"] .note-body .plantuml-embed {
-  background: #0e1a2a;
-}
-
-html[data-theme="dark"] .note-body p code,
-html[data-theme="dark"] .note-body li code {
-  background: #1b2b41;
-  color: #e4eeff;
-}
-
-.note-body .note-pdf-embed {
-  margin: 1rem 0;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: #fbfdff;
-  overflow: hidden;
-}
-
-.note-body .note-pdf-embed-head {
-  padding: 0.5rem 0.72rem;
-  border-bottom: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 0.82rem;
-  font-weight: 600;
-}
-
 .note-body .note-pdf-embed object {
   display: block;
   width: 100%;
   min-height: 480px;
   border: 0;
-  background: #ffffff;
+  background: var(--surface);
 }
 
 .note-body .note-pdf-embed p {
@@ -402,32 +250,6 @@ html[data-theme="dark"] .note-body li code {
   padding: 0.8rem;
   color: var(--muted);
   font-size: 0.84rem;
-}
-
-html[data-theme="dark"] .note-body .note-pdf-embed {
-  background: #0f1b2b;
-}
-
-html[data-theme="dark"] .note-body .note-pdf-embed object {
-  background: #0d1624;
-}
-
-.note-body .note-excalidraw-embed,
-.note-body .note-canvas-embed {
-  margin: 1rem 0;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: #fbfdff;
-  overflow: hidden;
-}
-
-.note-body .note-excalidraw-embed-head,
-.note-body .note-canvas-embed-head {
-  padding: 0.5rem 0.72rem;
-  border-bottom: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 0.82rem;
-  font-weight: 600;
 }
 
 .note-body .note-excalidraw-embed-body,
@@ -440,7 +262,7 @@ html[data-theme="dark"] .note-body .note-pdf-embed object {
   width: 100%;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: #ffffff;
+  background: var(--surface);
   min-height: 220px;
   object-fit: contain;
 }
@@ -468,7 +290,7 @@ html[data-theme="dark"] .note-body .note-pdf-embed object {
   height: auto;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: #ffffff;
+  background: var(--surface);
 }
 
 .note-body .note-excalidraw-map .note-excalidraw-shape {
@@ -523,23 +345,23 @@ html[data-theme="dark"] .note-body .note-pdf-embed object {
   height: auto;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: #ffffff;
+  background: var(--surface);
 }
 
 .note-body .note-canvas-map .note-canvas-links line {
-  stroke: #9fb4cc;
+  stroke: color-mix(in srgb, var(--muted) 60%, transparent);
   stroke-width: 1.2;
   stroke-opacity: 0.75;
 }
 
 .note-body .note-canvas-map .note-canvas-node rect {
-  fill: #f3f8ff;
-  stroke: #7294be;
+  fill: color-mix(in srgb, var(--accent-soft) 40%, var(--surface));
+  stroke: color-mix(in srgb, var(--accent) 50%, var(--line));
   stroke-width: 1;
 }
 
 .note-body .note-canvas-map .note-canvas-node text {
-  fill: #1a3f68;
+  fill: var(--text);
   font-size: 10px;
   font-family: var(--font-body);
 }
@@ -553,438 +375,15 @@ html[data-theme="dark"] .note-body .note-pdf-embed object {
   gap: 0.22rem;
 }
 
-.note-body .note-canvas-empty {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.82rem;
-}
-
+.note-body .note-canvas-empty,
 .note-body .note-canvas-links {
   margin-top: 0.55rem;
   color: var(--muted);
   font-size: 0.82rem;
 }
 
-html[data-theme="dark"] .note-body .note-excalidraw-embed,
-html[data-theme="dark"] .note-body .note-canvas-embed {
-  background: #0f1b2b;
-}
-
-html[data-theme="dark"] .note-body .note-excalidraw-preview {
-  background: #0d1624;
-}
-
-html[data-theme="dark"] .note-body .note-excalidraw-map {
-  background: #0d1624;
-}
-
-html[data-theme="dark"] .note-body .note-canvas-map {
-  background: #0d1624;
-}
-
-html[data-theme="dark"] .note-body .note-canvas-map .note-canvas-links line {
-  stroke: #4f6f94;
-}
-
-html[data-theme="dark"] .note-body .note-canvas-map .note-canvas-node rect {
-  fill: #16304d;
-  stroke: #5d88bb;
-}
-
-html[data-theme="dark"] .note-body .note-canvas-map .note-canvas-node text {
-  fill: #c4ddfb;
-}
-
-.note-body pre {
-  overflow-x: auto;
-  padding: 0.9rem;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: #f8fafc;
-  color: #1f2933;
-}
-
-.note-body pre code {
-  color: inherit;
-}
-
-html[data-theme="dark"] .note-body pre {
-  background: #0e1a2a;
-  color: #d6e4fb;
-}
-
-.backlinks {
-  margin-top: 2rem;
-  border-top: 1px solid var(--line);
-  padding-top: 1rem;
-}
-
-.backlinks h2 {
-  margin: 0;
-}
-
-.backlinks-meta {
-  margin: 0.34rem 0 0.75rem;
-  color: var(--muted);
-  font-size: 0.83rem;
-}
-
-.backlinks-empty {
-  margin: 0.4rem 0 0;
-  color: var(--muted);
-  font-size: 0.86rem;
-}
-
-.backlinks ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0.65rem;
-}
-
-.backlinks li {
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: #fcfdff;
-  padding: 0.7rem;
-}
-
-.backlinks-item-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 0.7rem;
-}
-
-.backlinks-item-date {
-  color: var(--muted);
-  font-size: 0.74rem;
-  white-space: nowrap;
-}
-
-.backlinks li p {
-  margin: 0.28rem 0 0;
-  color: var(--muted);
-  font-size: 0.84rem;
-  line-height: 1.45;
-}
-
-.note {
-  padding: 1.3rem 1.35rem;
-}
-
-.note-header {
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
-}
-
-.note-header h1 {
-  margin: 0 0 0.5rem;
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 2.6vw + 0.9rem, 3.3rem);
-  letter-spacing: -0.03em;
-  line-height: 1.04;
-}
-
-.note-route {
-  margin: 0.76rem 0 0;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.06em;
-  color: var(--muted);
-  overflow-wrap: anywhere;
-}
-
-.note-body {
-  font-family: var(--font-reading);
-  font-size: clamp(1rem, 0.3vw + 0.94rem, 1.12rem);
-  line-height: 1.86;
-}
-
-.note-body :where(h2, h3, h4) {
-  margin-top: 1.85rem;
-  margin-bottom: 0.58rem;
-  font-family: var(--font-display);
-  line-height: 1.22;
-  letter-spacing: -0.02em;
-}
-
-.note-body h2 {
-  font-size: 1.45rem;
-}
-
-.note-body h3 {
-  font-size: 1.22rem;
-}
-
-.note-body p {
-  margin: 0.9rem 0;
-}
-
-.note .note-body > p:first-of-type::first-letter {
-  float: none;
-  margin: 0;
-  font-size: inherit;
-  font-weight: inherit;
-  line-height: inherit;
-  color: inherit;
-}
-
-.note-body p code,
-.note-body li code {
-  font-family: var(--font-mono);
-  font-size: 0.84em;
-  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
-  background: color-mix(in srgb, var(--accent-soft) 48%, #ffffff);
-  color: color-mix(in srgb, var(--text) 92%, #000000);
-  padding: 0.14rem 0.35rem;
-  border-radius: 7px;
-}
-
-html[data-theme="dark"] .note-body p code,
-html[data-theme="dark"] .note-body li code {
-  background: color-mix(in srgb, var(--accent-soft) 45%, var(--surface));
-  color: var(--text);
-}
-
-.note-body pre {
-  border-radius: 13px;
-  border-color: color-mix(in srgb, var(--line) 84%, transparent);
-  background: color-mix(in srgb, var(--surface-strong) 97%, transparent);
-  padding: 0.95rem 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.87rem;
-  line-height: 1.62;
-}
-
-html[data-theme="dark"] .note-body pre {
-  background: color-mix(in srgb, var(--surface-strong) 97%, transparent);
-}
-
-.note-body blockquote {
-  margin: 1rem 0;
-  border-left: 2px solid color-mix(in srgb, var(--accent) 65%, transparent);
-  padding: 0.2rem 0 0.2rem 0.9rem;
-  color: color-mix(in srgb, var(--text) 82%, var(--muted));
-}
-
-.note-body .note-callout,
-.note-body details.note-callout,
-.note-body .mermaid-render,
-.note-body .plantuml-embed,
-.note-body .note-pdf-embed,
-.note-body .note-excalidraw-embed,
-.note-body .note-canvas-embed {
-  border-radius: 12px;
-  border-color: color-mix(in srgb, var(--line) 84%, transparent);
-  background: color-mix(in srgb, var(--surface-strong) 97%, transparent);
-  box-shadow: 0 8px 18px color-mix(in srgb, var(--line) 28%, transparent);
-}
-
-.note-body .note-callout-title,
-.note-body .note-pdf-embed-head,
-.note-body .note-excalidraw-embed-head,
-.note-body .note-canvas-embed-head {
-  background: color-mix(in srgb, var(--accent-soft) 58%, var(--surface));
-  color: color-mix(in srgb, var(--text) 86%, var(--accent));
-  font-family: var(--font-body);
-  font-size: 0.78rem;
-  letter-spacing: 0.03em;
-}
-
-.backlinks {
-  margin-top: 2.2rem;
-  padding-top: 1rem;
-  border-top-color: color-mix(in srgb, var(--line) 80%, transparent);
-}
-
-.backlinks h2 {
-  margin: 0;
-  font-family: var(--font-display);
-  letter-spacing: -0.02em;
-}
-
-.backlinks-meta,
-.backlinks-empty,
-.backlinks-item-date,
-.backlinks li p {
-  font-family: var(--font-body);
-}
-
-.backlinks li {
-  border-radius: 12px;
-  border-color: color-mix(in srgb, var(--line) 84%, transparent);
-  background: color-mix(in srgb, var(--surface-strong) 95%, transparent);
-}
-
-/* ─── Callout semantic colors via CSS variables ─── */
-
-:root {
-  --callout-info: #4a90d9;
-  --callout-warn: #d08a00;
-  --callout-success: #1f8a4c;
-  --callout-danger: #c44343;
-}
-
-.note-body .note-callout,
-.note-body details.note-callout {
-  background: color-mix(in srgb, var(--callout-info) 8%, var(--surface));
-}
-
-.note-body .note-callout-title {
-  color: color-mix(in srgb, var(--callout-info) 70%, var(--text));
-  background: color-mix(in srgb, var(--callout-info) 14%, var(--surface));
-}
-
-.note-body .note-callout[data-callout="warning"],
-.note-body .note-callout[data-callout="caution"] {
-  border-left-color: var(--callout-warn);
-  background: color-mix(in srgb, var(--callout-warn) 8%, var(--surface));
-}
-
-.note-body .note-callout[data-callout="warning"] .note-callout-title,
-.note-body .note-callout[data-callout="caution"] .note-callout-title {
-  color: color-mix(in srgb, var(--callout-warn) 70%, var(--text));
-  background: color-mix(in srgb, var(--callout-warn) 14%, var(--surface));
-}
-
-.note-body .note-callout[data-callout="tip"],
-.note-body .note-callout[data-callout="success"],
-.note-body .note-callout[data-callout="check"] {
-  border-left-color: var(--callout-success);
-  background: color-mix(in srgb, var(--callout-success) 8%, var(--surface));
-}
-
-.note-body .note-callout[data-callout="tip"] .note-callout-title,
-.note-body .note-callout[data-callout="success"] .note-callout-title,
-.note-body .note-callout[data-callout="check"] .note-callout-title {
-  color: color-mix(in srgb, var(--callout-success) 70%, var(--text));
-  background: color-mix(in srgb, var(--callout-success) 14%, var(--surface));
-}
-
-.note-body .note-callout[data-callout="danger"],
-.note-body .note-callout[data-callout="error"],
-.note-body .note-callout[data-callout="fail"] {
-  border-left-color: var(--callout-danger);
-  background: color-mix(in srgb, var(--callout-danger) 8%, var(--surface));
-}
-
-.note-body .note-callout[data-callout="danger"] .note-callout-title,
-.note-body .note-callout[data-callout="error"] .note-callout-title,
-.note-body .note-callout[data-callout="fail"] .note-callout-title {
-  color: color-mix(in srgb, var(--callout-danger) 70%, var(--text));
-  background: color-mix(in srgb, var(--callout-danger) 14%, var(--surface));
-}
-
-/* ─── Theme-aware embed backgrounds ─── */
-
-.note-body .mermaid-render,
-.note-body .plantuml-embed {
-  background: color-mix(in srgb, var(--surface-strong) 97%, transparent);
-}
-
-.note-body .note-pdf-embed {
-  background: color-mix(in srgb, var(--surface-strong) 97%, transparent);
-}
-
-.note-body .note-pdf-embed object {
-  background: var(--surface);
-}
-
-.note-body .note-excalidraw-embed,
-.note-body .note-canvas-embed {
-  background: color-mix(in srgb, var(--surface-strong) 97%, transparent);
-}
-
-.note-body .note-excalidraw-preview {
-  background: var(--surface);
-}
-
-.note-body .note-canvas-map {
-  background: var(--surface);
-}
-
-.note-body .note-canvas-map .note-canvas-links line {
-  stroke: color-mix(in srgb, var(--muted) 60%, transparent);
-}
-
-.note-body .note-canvas-map .note-canvas-node rect {
-  fill: color-mix(in srgb, var(--accent-soft) 40%, var(--surface));
-  stroke: color-mix(in srgb, var(--accent) 50%, var(--line));
-}
-
-.note-body .note-canvas-map .note-canvas-node text {
-  fill: var(--text);
-}
-
-.note-body pre {
-  background: color-mix(in srgb, var(--surface-strong) 97%, transparent);
-  color: var(--text);
-}
-
-.note-body p code,
-.note-body li code {
-  background: color-mix(in srgb, var(--accent-soft) 45%, var(--surface));
-  color: var(--text);
-  border: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
-}
-
-.backlinks li {
-  background: color-mix(in srgb, var(--surface-strong) 95%, transparent);
-}
-
 html[data-theme="dark"] .note-body .note-callout,
-html[data-theme="dark"] .note-body details.note-callout {
-  background: color-mix(in srgb, var(--callout-info) 8%, var(--surface));
-}
-
-html[data-theme="dark"] .note-body .note-callout-title {
-  color: color-mix(in srgb, var(--callout-info) 70%, var(--text));
-  background: color-mix(in srgb, var(--callout-info) 14%, var(--surface));
-}
-
-html[data-theme="dark"] .note-body .note-callout[data-callout="warning"],
-html[data-theme="dark"] .note-body .note-callout[data-callout="caution"] {
-  border-left-color: var(--callout-warn);
-  background: color-mix(in srgb, var(--callout-warn) 8%, var(--surface));
-}
-
-html[data-theme="dark"] .note-body .note-callout[data-callout="warning"] .note-callout-title,
-html[data-theme="dark"] .note-body .note-callout[data-callout="caution"] .note-callout-title {
-  color: color-mix(in srgb, var(--callout-warn) 70%, var(--text));
-  background: color-mix(in srgb, var(--callout-warn) 14%, var(--surface));
-}
-
-html[data-theme="dark"] .note-body .note-callout[data-callout="tip"],
-html[data-theme="dark"] .note-body .note-callout[data-callout="success"],
-html[data-theme="dark"] .note-body .note-callout[data-callout="check"] {
-  border-left-color: var(--callout-success);
-  background: color-mix(in srgb, var(--callout-success) 8%, var(--surface));
-}
-
-html[data-theme="dark"] .note-body .note-callout[data-callout="tip"] .note-callout-title,
-html[data-theme="dark"] .note-body .note-callout[data-callout="success"] .note-callout-title,
-html[data-theme="dark"] .note-body .note-callout[data-callout="check"] .note-callout-title {
-  color: color-mix(in srgb, var(--callout-success) 70%, var(--text));
-  background: color-mix(in srgb, var(--callout-success) 14%, var(--surface));
-}
-
-html[data-theme="dark"] .note-body .note-callout[data-callout="danger"],
-html[data-theme="dark"] .note-body .note-callout[data-callout="error"],
-html[data-theme="dark"] .note-body .note-callout[data-callout="fail"] {
-  border-left-color: var(--callout-danger);
-  background: color-mix(in srgb, var(--callout-danger) 8%, var(--surface));
-}
-
-html[data-theme="dark"] .note-body .note-callout[data-callout="danger"] .note-callout-title,
-html[data-theme="dark"] .note-body .note-callout[data-callout="error"] .note-callout-title,
-html[data-theme="dark"] .note-body .note-callout[data-callout="fail"] .note-callout-title {
-  color: color-mix(in srgb, var(--callout-danger) 70%, var(--text));
-  background: color-mix(in srgb, var(--callout-danger) 14%, var(--surface));
-}
-
+html[data-theme="dark"] .note-body details.note-callout,
 html[data-theme="dark"] .note-body .mermaid-render,
 html[data-theme="dark"] .note-body .plantuml-embed,
 html[data-theme="dark"] .note-body .note-pdf-embed,
@@ -995,6 +394,7 @@ html[data-theme="dark"] .note-body .note-canvas-embed {
 
 html[data-theme="dark"] .note-body .note-pdf-embed object,
 html[data-theme="dark"] .note-body .note-excalidraw-preview,
+html[data-theme="dark"] .note-body .note-excalidraw-map,
 html[data-theme="dark"] .note-body .note-canvas-map {
   background: var(--surface);
 }

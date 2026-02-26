@@ -386,6 +386,7 @@ struct Post {
     hide_in_graph: bool,
     note_icon: Option<String>,
     meta_tags: Vec<MetaTag>,
+    has_rich_note_styles: bool,
     content_classes: Vec<String>,
 }
 
@@ -684,6 +685,7 @@ struct PostTemplate {
     layout: LayoutContext,
     post: PostCard,
     body_html: String,
+    load_note_rich_css: bool,
     content_classes: String,
 }
 
@@ -935,6 +937,14 @@ fn render_posts(
             .collect::<Vec<_>>();
         let markdown_html = markdown_to_html(&rewritten);
         let toc = extract_toc_entries(&markdown_html);
+        let rich_content_classes = detect_rich_note_content_classes(&markdown_html);
+        let has_rich_note_styles = !rich_content_classes.is_empty();
+        let mut content_classes = seed.content_classes.clone();
+        for class_name in rich_content_classes {
+            if !content_classes.iter().any(|item| item == class_name) {
+                content_classes.push(class_name.to_string());
+            }
+        }
 
         let excerpt = extract_excerpt(body, 200);
         let description = seed.description.clone().unwrap_or_else(|| excerpt.clone());
@@ -961,7 +971,8 @@ fn render_posts(
             hide_in_graph: seed.hide_in_graph,
             note_icon: seed.note_icon.clone(),
             meta_tags: seed.meta_tags.clone(),
-            content_classes: seed.content_classes.clone(),
+            has_rich_note_styles,
+            content_classes,
         });
     }
 
@@ -1050,6 +1061,7 @@ fn render_posts_pages(
             layout,
             post: post_to_card(post),
             body_html,
+            load_note_rich_css: post.has_rich_note_styles,
             content_classes: post.content_classes.join(" "),
         };
 
@@ -3800,6 +3812,40 @@ fn toc_items_for_post(post: &Post) -> Vec<TocItem> {
         .collect()
 }
 
+fn detect_rich_note_content_classes(markdown_html: &str) -> Vec<&'static str> {
+    let mut classes = Vec::new();
+
+    let mut push = |class_name: &'static str| {
+        if !classes.contains(&class_name) {
+            classes.push(class_name);
+        }
+    };
+
+    if markdown_html.contains("note-callout") {
+        push("note-has-callouts");
+    }
+
+    if markdown_html.contains("mermaid-render") || markdown_html.contains("plantuml-embed") {
+        push("note-has-diagrams");
+    }
+
+    if markdown_html.contains("note-pdf-embed")
+        || markdown_html.contains("note-excalidraw-embed")
+        || markdown_html.contains("note-canvas-embed")
+    {
+        push("note-has-embeds");
+    }
+
+    if markdown_html.contains("profile-publication-wrap")
+        || markdown_html.contains("profile-link-grid")
+        || markdown_html.contains("profile-publication-widget")
+    {
+        push("note-has-publication-widget");
+    }
+
+    classes
+}
+
 fn render_post_body_with_maud(
     markdown_html: &str,
     backlinks: &[Backlink],
@@ -5975,7 +6021,9 @@ Not published.
         assert!(second_html.contains("DataviewJS block is not executed"));
         assert!(second_html.contains(r#"<meta name="robots" content="max-image-preview:large" />"#));
         assert!(second_html.contains(r#"<meta property="og:locale" content="ko_KR" />"#));
-        assert!(second_html.contains(r#"class="panel note focus-mode article-featured""#));
+        assert!(second_html.contains(r#"class="panel note "#));
+        assert!(second_html.contains("focus-mode"));
+        assert!(second_html.contains("article-featured"));
 
         assert!(index_html.contains(r#"id="side-graph-stage""#));
 
