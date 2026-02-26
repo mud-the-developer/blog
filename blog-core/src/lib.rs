@@ -1456,8 +1456,33 @@ fn file_tree_folder_icons(folder_name: &str) -> (&'static str, &'static str) {
 
 fn file_tree_note_icon(file_name: &str) -> &'static str {
     let normalized = file_name.trim().to_ascii_lowercase();
+    let is_known_ext = |ext: &str| {
+        matches!(
+            ext,
+            "md" | "markdown"
+                | "mdx"
+                | "json"
+                | "pdf"
+                | "png"
+                | "jpg"
+                | "jpeg"
+                | "gif"
+                | "webp"
+                | "svg"
+                | "bmp"
+                | "excalidraw"
+                | "canvas"
+                | "mermaid"
+                | "toml"
+                | "yaml"
+                | "yml"
+                | "ini"
+                | "conf"
+                | "rs"
+        )
+    };
     let (stem_raw, ext) = match normalized.rsplit_once('.') {
-        Some((stem, ext)) if !stem.is_empty() => (stem, ext),
+        Some((stem, ext)) if !stem.is_empty() && is_known_ext(ext) => (stem, ext),
         _ => (normalized.as_str(), ""),
     };
     let stem_normalized = stem_raw.replace('_', "-");
@@ -3944,7 +3969,9 @@ fn build_start_here_links(posts: &[Post]) -> Vec<LandingLink> {
 }
 
 fn is_profile_post(post: &Post) -> bool {
-    post.tags.iter().any(|tag| tag.eq_ignore_ascii_case("profile"))
+    post.tags
+        .iter()
+        .any(|tag| tag.eq_ignore_ascii_case("profile"))
         || post.slug.contains("about")
         || post.title.to_ascii_lowercase().contains("about")
 }
@@ -5600,6 +5627,8 @@ Alice -> Bob: hi
         assert_eq!(file_tree_note_icon("architecture.mermaid"), "mermaid.svg");
         assert_eq!(file_tree_note_icon("diagram.excalidraw"), "excalidraw.svg");
         assert_eq!(file_tree_note_icon("README.md"), "readme.svg");
+        assert_eq!(file_tree_note_icon("project.v1"), "markdown.svg");
+        assert_eq!(file_tree_note_icon("team.sync.2026"), "markdown.svg");
     }
 
     #[test]

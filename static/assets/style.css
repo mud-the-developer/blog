@@ -1265,11 +1265,19 @@ a:hover {
 .page-tabs,
 .live-graph {
   top: 5rem;
-  max-height: calc(100vh - 5.8rem);
   border: 1px solid color-mix(in srgb, var(--line) 84%, transparent);
   background: color-mix(in srgb, var(--surface-strong) 62%, transparent);
   -webkit-backdrop-filter: blur(10px) saturate(1.08);
   backdrop-filter: blur(10px) saturate(1.08);
+}
+
+.page-tabs {
+  max-height: calc(100vh - 5.8rem);
+  overflow: auto;
+}
+
+.live-graph {
+  max-height: none;
 }
 
 .page-tabs-collapsible {
