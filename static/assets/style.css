@@ -244,7 +244,7 @@ canvas {
   top: calc(100% + 0.4rem);
   right: 0;
   width: min(440px, 88vw);
-  max-height: 300px;
+  max-height: min(62vh, 420px);
   overflow: auto;
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -325,10 +325,15 @@ canvas {
   width: min(320px, calc(100vw - 1.5rem));
   border: 1px solid var(--line);
   border-radius: 12px;
-  background: var(--surface);
+  background: #ffffff;
   box-shadow: 0 12px 24px rgba(8, 22, 42, 0.18);
   padding: 0.6rem 0.68rem;
   pointer-events: none;
+  overflow: hidden;
+}
+
+html[data-theme="dark"] .link-preview-card {
+  background: #171a24;
 }
 
 .link-preview-title {
@@ -367,6 +372,14 @@ canvas {
   color: var(--muted);
   padding: 0.06rem 0.34rem;
   line-height: 1.2;
+}
+
+.link-preview-title,
+.link-preview-path,
+.link-preview-excerpt,
+.link-preview-tag {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .search-empty {
@@ -429,7 +442,7 @@ canvas {
   left: 0;
   right: 0;
   width: auto;
-  max-height: min(52vh, 340px);
+  max-height: clamp(240px, 48vh, 560px);
 }
 
 .page-tabs-head {
@@ -1382,7 +1395,7 @@ a:hover {
 }
 
 .page-tabs-list {
-  max-height: min(40vh, 340px);
+  max-height: clamp(260px, calc(100vh - 15rem), 680px);
   overflow: auto;
   padding-right: 0.2rem;
   scrollbar-gutter: stable;
@@ -1739,7 +1752,7 @@ html[data-theme="dark"] .graph-stage {
   }
 
   .page-tabs-list {
-    max-height: min(42vh, 360px);
+    max-height: clamp(300px, 54vh, 560px);
   }
 }
 
@@ -1814,7 +1827,7 @@ html[data-theme="dark"] .graph-stage {
   }
 
   .page-tabs-list {
-    max-height: min(46vh, 320px);
+    max-height: min(56vh, 420px);
     grid-template-columns: 1fr;
   }
 
