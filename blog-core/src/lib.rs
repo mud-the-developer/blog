@@ -32,6 +32,8 @@ static WIKILINK_RE: Lazy<Regex> = Lazy::new(|| {
 
 static IMG_TAG_RE: Lazy<Regex> =
     Lazy::new(|| Regex::new(r#"(?is)<img\b([^>]*)>"#).expect("invalid img tag regex"));
+static IMG_SRC_ATTR_RE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r#"(?i)\bsrc\s*=\s*"([^"]+)""#).expect("invalid img src attr regex"));
 static IMG_ALT_ATTR_RE: Lazy<Regex> =
     Lazy::new(|| Regex::new(r#"(?i)(?:^|\s)alt\s*="#).expect("invalid img alt attr regex"));
 static IMG_LOADING_ATTR_RE: Lazy<Regex> =
@@ -935,7 +937,8 @@ fn render_posts(
             .into_iter()
             .filter(|slug| !known_slugs.contains(slug))
             .collect::<Vec<_>>();
-        let markdown_html = markdown_to_html(&rewritten);
+        let markdown_html =
+            rewrite_relative_image_asset_urls(&markdown_to_html(&rewritten), &seed.source_rel_path);
         let toc = extract_toc_entries(&markdown_html);
         let rich_content_classes = detect_rich_note_content_classes(&markdown_html);
         let has_rich_note_styles = !rich_content_classes.is_empty();
@@ -3533,6 +3536,100 @@ fn enhance_image_tags(html: &str) -> String {
         .to_string()
 }
 
+fn rewrite_relative_image_asset_urls(html: &str, source_rel_path: &str) -> String {
+    if !html.contains("<img") {
+        return html.to_string();
+    }
+
+    IMG_TAG_RE
+        .replace_all(html, |captures: &Captures| {
+            let full_tag = captures.get(0).map(|entry| entry.as_str()).unwrap_or_default();
+            let attrs = captures.get(1).map(|entry| entry.as_str()).unwrap_or_default();
+            let Some(src_caps) = IMG_SRC_ATTR_RE.captures(attrs) else {
+                return full_tag.to_string();
+            };
+            let source = src_caps
+                .get(1)
+                .map(|entry| entry.as_str())
+                .unwrap_or_default();
+            let Some(rewritten) = resolve_relative_image_asset_url(source, source_rel_path) else {
+                return full_tag.to_string();
+            };
+
+            let replaced_attrs = IMG_SRC_ATTR_RE
+                .replace(attrs, format!(r#"src="{rewritten}""#))
+                .to_string();
+            format!("<img{replaced_attrs}>")
+        })
+        .to_string()
+}
+
+fn resolve_relative_image_asset_url(source: &str, source_rel_path: &str) -> Option<String> {
+    let trimmed = source.trim();
+    if trimmed.is_empty()
+        || trimmed.starts_with('/')
+        || trimmed.starts_with("http://")
+        || trimmed.starts_with("https://")
+        || trimmed.starts_with("data:")
+        || trimmed.starts_with('#')
+        || trimmed.starts_with("mailto:")
+        || trimmed.starts_with("tel:")
+        || trimmed.starts_with("javascript:")
+    {
+        return None;
+    }
+
+    let candidate = trimmed.to_ascii_lowercase();
+    if !(candidate.starts_with("./")
+        || candidate.starts_with("../")
+        || candidate.starts_with("assets/"))
+    {
+        return None;
+    }
+
+    let path_end = trimmed.find(['?', '#']).unwrap_or(trimmed.len());
+    let raw_path = &trimmed[..path_end];
+    let suffix = &trimmed[path_end..];
+    if !is_image_target(raw_path) {
+        return None;
+    }
+
+    if raw_path.starts_with("content/") {
+        return Some(format!("/{raw_path}{suffix}"));
+    }
+
+    let normalized_source = source_rel_path
+        .trim_matches('/')
+        .replace('\\', "/")
+        .to_string();
+    let base_dir = normalized_source
+        .rsplit_once('/')
+        .map(|(dir, _)| dir)
+        .unwrap_or_default();
+    let mut segments = base_dir
+        .split('/')
+        .filter(|segment| !segment.is_empty())
+        .map(str::to_string)
+        .collect::<Vec<_>>();
+
+    let normalized_raw = raw_path.replace('\\', "/");
+    for segment in normalized_raw.split('/') {
+        match segment {
+            "" | "." => {}
+            ".." => {
+                segments.pop();
+            }
+            value => segments.push(value.to_string()),
+        }
+    }
+
+    if segments.is_empty() {
+        return None;
+    }
+
+    Some(format!("/content/{}{}", segments.join("/"), suffix))
+}
+
 fn apply_plantuml_syntax(markdown: &str) -> String {
     let lines = markdown.lines().collect::<Vec<_>>();
     let mut transformed = String::new();
@@ -5070,6 +5167,24 @@ mod tests {
         assert!(html.contains(r#"alt="GitHub Badge""#));
         assert!(html.contains(r#"loading="lazy""#));
         assert!(html.contains(r#"decoding="async""#));
+    }
+
+    #[test]
+    fn rewrite_relative_image_asset_urls_resolves_note_local_assets() {
+        let html = markdown_to_html(
+            r#"
+![Local A](./assets/diagram-a.svg)
+![Local B](assets/diagram-b.png?raw=1)
+![Local C](../shared/diagram-c.webp#v1)
+![Absolute](/content/papers/assets/diagram-d.png)
+"#,
+        );
+        let rewritten = rewrite_relative_image_asset_urls(&html, "papers/uhlm-2412-12687.md");
+
+        assert!(rewritten.contains(r#"src="/content/papers/assets/diagram-a.svg""#));
+        assert!(rewritten.contains(r#"src="/content/papers/assets/diagram-b.png?raw=1""#));
+        assert!(rewritten.contains(r#"src="/content/shared/diagram-c.webp#v1""#));
+        assert!(rewritten.contains(r#"src="/content/papers/assets/diagram-d.png""#));
     }
 
     #[test]
