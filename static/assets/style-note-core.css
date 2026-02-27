@@ -143,22 +143,10 @@
   border: 1px solid color-mix(in srgb, #ffffff 26%, transparent);
   box-shadow: 0 18px 44px rgba(5, 10, 20, 0.45);
   background-color: #f3f6fb;
-  background-image:
-    linear-gradient(45deg, #d8e1ef 25%, transparent 25%),
-    linear-gradient(-45deg, #d8e1ef 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #d8e1ef 75%),
-    linear-gradient(-45deg, transparent 75%, #d8e1ef 75%);
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0;
-  background-size: 20px 20px;
 }
 
 html[data-theme="dark"] .note-image-zoom-media {
-  background-color: #182033;
-  background-image:
-    linear-gradient(45deg, #2e3f61 25%, transparent 25%),
-    linear-gradient(-45deg, #2e3f61 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #2e3f61 75%),
-    linear-gradient(-45deg, transparent 75%, #2e3f61 75%);
+  background-color: #24324a;
 }
 
 .note-image-zoom-caption {
