@@ -58,6 +58,143 @@
   height: auto;
 }
 
+.note-image-zoom-wrap {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.note-image-zoom-wrap > img,
+.note-image-zoom-wrap > a > img {
+  display: block;
+}
+
+.note-image-zoom-button {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  width: 2.05rem;
+  height: 2.05rem;
+  border: 1px solid color-mix(in srgb, var(--line) 84%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-in;
+  opacity: 0;
+  transition: opacity 120ms ease, transform 120ms ease, background-color 120ms ease;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+
+.note-image-zoom-wrap:hover .note-image-zoom-button,
+.note-image-zoom-wrap:focus-within .note-image-zoom-button,
+.note-image-zoom-button:focus-visible {
+  opacity: 1;
+}
+
+.note-image-zoom-button:hover {
+  transform: translateY(-1px);
+  background: color-mix(in srgb, var(--accent-soft) 78%, var(--surface));
+}
+
+.note-image-zoom-button svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.note-image-zoom-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: color-mix(in srgb, #091221 66%, transparent);
+}
+
+.note-image-zoom-modal[hidden] {
+  display: none;
+}
+
+.note-image-zoom-surface {
+  position: relative;
+  width: min(96vw, 1360px);
+  max-height: 92vh;
+  display: grid;
+  gap: 0.6rem;
+  justify-items: center;
+}
+
+.note-image-zoom-media {
+  max-width: 100%;
+  max-height: calc(92vh - 3.6rem);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, #ffffff 26%, transparent);
+  box-shadow: 0 18px 44px rgba(5, 10, 20, 0.45);
+  background: color-mix(in srgb, #000000 16%, transparent);
+}
+
+.note-image-zoom-caption {
+  margin: 0;
+  color: color-mix(in srgb, #ffffff 90%, transparent);
+  font-size: 0.84rem;
+  text-align: center;
+  max-width: min(88vw, 920px);
+}
+
+.note-image-zoom-close {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  width: 2.15rem;
+  height: 2.15rem;
+  border: 1px solid color-mix(in srgb, #ffffff 32%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, #0f172a 62%, transparent);
+  color: #ffffff;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.note-image-zoom-close:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+body.note-image-zoom-open {
+  overflow: hidden;
+}
+
+@media (max-width: 1080px) {
+  .note-image-zoom-button {
+    opacity: 1;
+    top: 0.4rem;
+    right: 0.4rem;
+    width: 1.95rem;
+    height: 1.95rem;
+  }
+
+  .note-image-zoom-close {
+    top: 0.2rem;
+    right: 0.2rem;
+  }
+}
+
 .note-body p code,
 .note-body li code {
   font-family: var(--font-mono);
