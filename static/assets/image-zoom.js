@@ -95,6 +95,28 @@
     wrap.appendChild(button);
   };
 
+  const shouldSkipZoomImage = (img) => {
+    if (!(img instanceof HTMLImageElement)) {
+      return true;
+    }
+
+    if (img.closest(".link-preview-card")) {
+      return true;
+    }
+
+    // Profile/social badges (e.g. shields.io badges) are UI chips, not zoom targets.
+    if (img.closest(".profile-link-item") || img.closest(".profile-link-grid")) {
+      return true;
+    }
+
+    const source = String(img.currentSrc || img.src || "").toLowerCase();
+    if (source.includes("img.shields.io") || source.includes("shields.io/badge/")) {
+      return true;
+    }
+
+    return false;
+  };
+
   const initImageZoom = () => {
     const noteBody = document.querySelector(".note-body");
     if (!(noteBody instanceof HTMLElement)) {
@@ -185,7 +207,7 @@
       if (img.closest(".note-image-zoom-wrap")) {
         return;
       }
-      if (img.closest(".link-preview-card")) {
+      if (shouldSkipZoomImage(img)) {
         return;
       }
       installZoomButton(img, openModal);

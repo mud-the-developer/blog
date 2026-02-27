@@ -1,0 +1,12 @@
+@media (max-width: 760px) {
+  .tag-wrap {
+    gap: 0.56rem;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    padding: 0.24rem 0.66rem;
+  }
+}

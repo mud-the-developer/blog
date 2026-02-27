@@ -199,6 +199,57 @@ body.note-image-zoom-open {
   }
 }
 
+@media (max-width: 760px) {
+  .note {
+    padding: 0.92rem 0.94rem;
+  }
+
+  .note-header {
+    margin-bottom: 0.78rem;
+    padding-bottom: 0.78rem;
+  }
+
+  .note-header h1 {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    margin-bottom: 0.4rem;
+    line-height: 1.08;
+  }
+
+  .note-route {
+    margin-top: 0.62rem;
+    font-size: 0.64rem;
+  }
+
+  .note-body {
+    font-size: 0.95rem;
+    line-height: 1.74;
+  }
+
+  .note-body :where(h2, h3, h4) {
+    margin-top: 1.42rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .note-body h2 {
+    font-size: 1.28rem;
+  }
+
+  .note-body h3 {
+    font-size: 1.12rem;
+  }
+
+  .note-body pre {
+    padding: 0.82rem 0.86rem;
+    font-size: 0.82rem;
+  }
+
+  .toc-link {
+    min-height: 2.2rem;
+    display: flex;
+    align-items: center;
+  }
+}
+
 .note-body p code,
 .note-body li code {
   font-family: var(--font-mono);
