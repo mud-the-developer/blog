@@ -2,7 +2,13 @@
 title: Jinhyuk Kim
 slug: jinhyuk-kim
 description: Research profile and links for Jinhyuk Kim.
-tags: [profile]
+tags:
+  - profile
+  - paper
+  - llm
+  - quantum
+  - semantic
+  - vRAN
 publish: true
 ---
 

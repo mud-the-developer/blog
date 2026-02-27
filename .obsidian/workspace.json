@@ -4,19 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "4b23107ab64cc316",
+        "id": "a703e418d141b61a",
         "type": "tabs",
         "children": [
           {
-            "id": "665054d57ba6a550",
+            "id": "33c289c8cfd960d7",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "content/posts/papers/assets/uhlm-2412-12687/uhlm-2412-12687-infographic.svg"
+                "file": "content/posts/about_me.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "uhlm-2412-12687-infographic"
+              "icon": "lucide-file",
+              "title": "about_me"
             }
           }
         ]
@@ -178,11 +180,12 @@
       "bases:새 베이스 생성하기": false
     }
   },
-  "active": "665054d57ba6a550",
+  "active": "33c289c8cfd960d7",
   "lastOpenFiles": [
-    "content/posts/papers/assets/uhlm-2412-12687/uhlm-2412-12687-architecture-refined.png",
-    "content/posts/papers/assets/uhlm-2412-12687/uhlm-2412-12687-infographic.svg",
     "content/posts/papers/uhlm-2412-12687.md",
+    "content/posts/papers/assets/uhlm-2412-12687/overview-infographic.svg",
+    "content/posts/papers/assets/uhlm-2412-12687/uhlm-2412-12687-infographic.svg",
+    "content/posts/papers/assets/uhlm-2412-12687/uhlm-2412-12687-architecture-refined.png",
     "content/posts/blog/github-cloudflare-pipeline.md",
     "content/posts/blog/installation.md",
     "content/posts/blog/obsidian-linking-habits.md",
