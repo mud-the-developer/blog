@@ -48,12 +48,12 @@
     })();
   </script>
   <link rel="alternate" type="application/rss+xml" title="{{ layout.site_title }} RSS" href="/rss.xml" />
-  <link rel="preload" href="/assets/style-core.css" as="style" />
-  <link rel="stylesheet" href="/assets/style-core.css" />
-  <link rel="stylesheet" href="/assets/style-search-pane.css" />
-  <link rel="stylesheet" href="/assets/style-touch-targets.css" />
+  <link rel="preload" href="/assets/style-core.css?v={{ layout.asset_version }}" as="style" />
+  <link rel="stylesheet" href="/assets/style-core.css?v={{ layout.asset_version }}" />
+  <link rel="stylesheet" href="/assets/style-search-pane.css?v={{ layout.asset_version }}" />
+  <link rel="stylesheet" href="/assets/style-touch-targets.css?v={{ layout.asset_version }}" />
   {% if layout.show_side_graph %}
-  <link rel="stylesheet" href="/assets/style-graph.css" />
+  <link rel="stylesheet" href="/assets/style-graph.css?v={{ layout.asset_version }}" />
   {% endif %}
   {% block extra_styles %}{% endblock %}
   {% if layout.obsidian_theme_css_url.len() > 0 %}

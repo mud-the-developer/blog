@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block extra_styles %}
-  <link rel="stylesheet" href="/assets/style-note-core.css" />
+  <link rel="stylesheet" href="/assets/style-note-core.css?v={{ layout.asset_version }}" />
   {% if load_note_rich_css %}
-  <link rel="stylesheet" href="/assets/style-note.css" />
+  <link rel="stylesheet" href="/assets/style-note.css?v={{ layout.asset_version }}" />
   {% endif %}
 {% endblock %}
 

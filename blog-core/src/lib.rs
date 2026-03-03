@@ -23,6 +23,7 @@ use std::fmt::Write as _;
 use std::fs;
 use std::panic::{catch_unwind, AssertUnwindSafe};
 use std::path::{Path, PathBuf};
+use std::process::Command;
 use walkdir::WalkDir;
 
 static WIKILINK_RE: Lazy<Regex> = Lazy::new(|| {
@@ -597,6 +598,7 @@ struct LayoutContext {
     graph_data_url: String,
     graph_center_id: String,
     show_side_graph: bool,
+    asset_version: String,
 }
 
 #[derive(Debug, Clone)]
@@ -738,6 +740,7 @@ pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
     let post_by_slug: HashMap<String, &Post> = posts.iter().map(|p| (p.slug.clone(), p)).collect();
     let backlinks = build_backlinks(&posts, &post_by_slug);
     let tags = build_tag_index(&posts);
+    let asset_version = asset_version_token();
 
     if config.output_dir.exists() {
         fs::remove_dir_all(&config.output_dir)
@@ -757,12 +760,19 @@ pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
         .map(|p| p.markdown_html.clone())
         .unwrap_or_default();
 
-    render_index(config, &posts, &tags, &home_intro_html, &theme_assets)?;
-    render_posts_pages(config, &posts, &backlinks, &theme_assets)?;
-    render_missing_note_pages(config, &posts, &theme_assets)?;
-    render_tag_pages(config, &tags, &posts, &theme_assets)?;
-    render_graph_page(config, &posts, &theme_assets)?;
-    render_not_found_page(config, &posts, &theme_assets)?;
+    render_index(
+        config,
+        &posts,
+        &tags,
+        &home_intro_html,
+        &theme_assets,
+        &asset_version,
+    )?;
+    render_posts_pages(config, &posts, &backlinks, &theme_assets, &asset_version)?;
+    render_missing_note_pages(config, &posts, &theme_assets, &asset_version)?;
+    render_tag_pages(config, &tags, &posts, &theme_assets, &asset_version)?;
+    render_graph_page(config, &posts, &theme_assets, &asset_version)?;
+    render_not_found_page(config, &posts, &theme_assets, &asset_version)?;
     write_search_index(config, &posts)?;
     write_file_tree(config, &posts)?;
     write_graph(config, &posts)?;
@@ -988,6 +998,7 @@ fn render_index(
     tags: &[TagEntry],
     home_intro_html: &str,
     theme_assets: &ThemeAssets,
+    asset_version: &str,
 ) -> Result<()> {
     let layout = website_layout(
         config,
@@ -1007,6 +1018,7 @@ fn render_index(
         String::new(),
         true,
         Vec::new(),
+        asset_version,
     );
 
     let visible_posts: Vec<&Post> = posts.iter().filter(|post| !post.hidden).collect();
@@ -1030,6 +1042,7 @@ fn render_posts_pages(
     posts: &[Post],
     backlinks: &HashMap<String, Vec<Backlink>>,
     theme_assets: &ThemeAssets,
+    asset_version: &str,
 ) -> Result<()> {
     for post in posts {
         let page_path = format!("/notes/{}/", post.slug);
@@ -1054,6 +1067,7 @@ fn render_posts_pages(
             post.slug.clone(),
             show_side_graph,
             post.meta_tags.clone(),
+            asset_version,
         );
 
         let backlink_list = backlinks.get(&post.slug).cloned().unwrap_or_default();
@@ -1085,6 +1099,7 @@ fn render_tag_pages(
     tags: &[TagEntry],
     posts: &[Post],
     theme_assets: &ThemeAssets,
+    asset_version: &str,
 ) -> Result<()> {
     let mut post_map: HashMap<&str, Vec<&Post>> = HashMap::new();
     for post in posts {
@@ -1119,6 +1134,7 @@ fn render_tag_pages(
             String::new(),
             true,
             Vec::new(),
+            asset_version,
         );
 
         let template = TagTemplate {
@@ -1143,6 +1159,7 @@ fn render_graph_page(
     config: &BuildConfig,
     posts: &[Post],
     theme_assets: &ThemeAssets,
+    asset_version: &str,
 ) -> Result<()> {
     let (nodes, links) = build_graph_data(posts);
     let layout = website_layout(
@@ -1163,6 +1180,7 @@ fn render_graph_page(
         String::new(),
         false,
         Vec::new(),
+        asset_version,
     );
 
     let template = GraphTemplate {
@@ -1181,6 +1199,7 @@ fn render_not_found_page(
     config: &BuildConfig,
     posts: &[Post],
     theme_assets: &ThemeAssets,
+    asset_version: &str,
 ) -> Result<()> {
     let layout = website_layout(
         config,
@@ -1200,6 +1219,7 @@ fn render_not_found_page(
         String::new(),
         false,
         Vec::new(),
+        asset_version,
     );
 
     let template = NotFoundTemplate { layout };
@@ -1210,6 +1230,7 @@ fn render_missing_note_pages(
     config: &BuildConfig,
     posts: &[Post],
     theme_assets: &ThemeAssets,
+    asset_version: &str,
 ) -> Result<()> {
     let known_slugs = posts
         .iter()
@@ -1245,6 +1266,7 @@ fn render_missing_note_pages(
             String::new(),
             false,
             Vec::new(),
+            asset_version,
         );
 
         let template = MissingNoteTemplate {
@@ -4155,6 +4177,7 @@ fn website_layout(
     graph_center_id: String,
     show_side_graph: bool,
     extra_meta_tags: Vec<MetaTag>,
+    asset_version: &str,
 ) -> LayoutContext {
     let canonical_url = absolute_url(&config.site.base_url, page_path);
     let social_image_url =
@@ -4190,7 +4213,22 @@ fn website_layout(
         graph_data_url,
         graph_center_id,
         show_side_graph,
+        asset_version: asset_version.to_string(),
     }
+}
+
+fn asset_version_token() -> String {
+    let git_hash = Command::new("git")
+        .args(["rev-parse", "--short=12", "HEAD"])
+        .output()
+        .ok()
+        .filter(|output| output.status.success())
+        .and_then(|output| {
+            let hash = String::from_utf8_lossy(&output.stdout).trim().to_string();
+            (!hash.is_empty()).then_some(hash)
+        });
+
+    git_hash.unwrap_or_else(|| Utc::now().format("%Y%m%d%H%M%S").to_string())
 }
 
 fn normalize_page_description(value: String, fallback: &str) -> String {

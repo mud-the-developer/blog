@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
 {% block extra_styles %}
-  <link rel="stylesheet" href="/assets/style-listing.css" />
-  <link rel="preload" href="/assets/style-home.css" as="style" />
+  <link rel="stylesheet" href="/assets/style-listing.css?v={{ layout.asset_version }}" />
+  <link rel="preload" href="/assets/style-home.css?v={{ layout.asset_version }}" as="style" />
   <link
     rel="stylesheet"
-    href="/assets/style-home.css"
+    href="/assets/style-home.css?v={{ layout.asset_version }}"
     media="print"
     onload="this.media='all'"
   />
-  <noscript><link rel="stylesheet" href="/assets/style-home.css" /></noscript>
+  <noscript><link rel="stylesheet" href="/assets/style-home.css?v={{ layout.asset_version }}" /></noscript>
 {% endblock %}
 
 {% block content %}
