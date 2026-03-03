@@ -210,15 +210,7 @@
 }
 
 .home-intro::after {
-  content: "";
-  position: absolute;
-  width: 170px;
-  height: 170px;
-  right: -65px;
-  top: -70px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--accent-soft) 66%, transparent);
-  pointer-events: none;
+  content: none;
 }
 
 .home-intro-body {
