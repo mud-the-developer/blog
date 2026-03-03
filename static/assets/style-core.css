@@ -446,3 +446,49 @@ html[data-theme="dark"] body::before {
     opacity: 0.52;
   }
 }
+
+/* Keep mobile/coarse visuals aligned with desktop glass treatment. */
+@media (pointer: coarse) {
+  body,
+  html[data-theme="dark"] body {
+    background:
+      repeating-linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--glass-wave-a) 16%, transparent) 0 88px,
+        color-mix(in srgb, var(--glass-wave-b) 10%, transparent) 88px 176px,
+        color-mix(in srgb, var(--glass-wave-c) 14%, transparent) 176px 264px,
+        color-mix(in srgb, var(--glass-wave-b) 8%, transparent) 264px 352px
+      ),
+      repeating-linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--glass-wave-b) 14%, transparent) 0 96px,
+        color-mix(in srgb, var(--glass-wave-c) 10%, transparent) 96px 192px,
+        color-mix(in srgb, var(--glass-wave-a) 8%, transparent) 192px 288px,
+        color-mix(in srgb, var(--glass-wave-c) 14%, transparent) 288px 384px
+      ),
+      radial-gradient(1120px 700px at 8% -18%, var(--glass-glow-a) 0%, transparent 72%),
+      radial-gradient(980px 620px at 106% -6%, var(--glass-glow-b) 0%, transparent 74%),
+      radial-gradient(900px 640px at 48% 116%, var(--glass-glow-c) 0%, transparent 80%),
+      radial-gradient(960px 520px at 52% 36%, var(--glass-glow-d) 0%, transparent 84%),
+      linear-gradient(128deg, color-mix(in srgb, var(--glass-wave-a) 28%, transparent) 0%, transparent 44%),
+      linear-gradient(-132deg, color-mix(in srgb, var(--glass-wave-b) 24%, transparent) 0%, transparent 56%),
+      linear-gradient(180deg, color-mix(in srgb, var(--bg) 90%, #05070c 10%) 0%, var(--checker-base) 58%, color-mix(in srgb, var(--checker-base) 88%, #04060c 12%) 100%);
+  }
+
+  body::before {
+    display: block;
+    opacity: 0.6;
+  }
+
+  :is(.live-graph, .page-tabs, .site-header) {
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  }
+
+  :is(.home-hero, .live-graph, .page-tabs, .panel, .post-item, main .post-item) {
+    box-shadow:
+      var(--glass-shadow-soft),
+      inset 0 1px 0 var(--glass-sheen),
+      inset 0 -1px 0 color-mix(in srgb, #0d1524 34%, transparent);
+  }
+}
