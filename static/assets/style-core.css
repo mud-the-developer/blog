@@ -63,133 +63,120 @@ html,
 
 /* Glassmorphism visual overhaul */
 :root {
-  --glass-blur: 5px;
-  --glass-saturate: 1.03;
-  --glass-panel-bg: rgba(84, 124, 189, 0.13);
-  --glass-panel-bg-soft: rgba(84, 124, 189, 0.08);
-  --glass-edge: rgba(84, 124, 189, 0.44);
-  --glass-edge-soft: rgba(84, 124, 189, 0.34);
-  --glass-sheen: rgba(216, 230, 255, 0.07);
-  --glass-shadow-soft: 0 4px 30px rgba(0, 0, 0, 0.1);
-  --glass-shadow-strong: 0 14px 46px rgba(0, 0, 0, 0.24);
-  --glass-glow-a: rgba(46, 67, 104, 0.14);
-  --glass-glow-b: rgba(52, 74, 114, 0.11);
-  --glass-glow-c: rgba(44, 63, 95, 0.09);
-  --glass-glow-d: rgba(67, 93, 133, 0.08);
-  --glass-grid-minor: rgba(45, 58, 82, 0.24);
-  --glass-grid-major: rgba(45, 58, 82, 0.38);
-  --glass-grid-tint: rgba(84, 124, 189, 0.12);
-  --glass-wave-a: rgba(84, 124, 189, 0.26);
-  --glass-wave-b: rgba(64, 95, 145, 0.2);
-  --glass-wave-c: rgba(120, 153, 210, 0.12);
+  --glass-blur: 10px;
+  --glass-saturate: 1.16;
+  --glass-panel-bg: rgba(122, 161, 224, 0.18);
+  --glass-panel-bg-soft: rgba(122, 161, 224, 0.12);
+  --glass-edge: rgba(171, 203, 255, 0.32);
+  --glass-edge-soft: rgba(152, 184, 235, 0.26);
+  --glass-sheen: rgba(248, 252, 255, 0.22);
+  --glass-shadow-soft: 0 10px 34px rgba(4, 9, 18, 0.22);
+  --glass-shadow-strong: 0 20px 52px rgba(4, 9, 18, 0.34);
+  --glass-glow-a: rgba(120, 165, 245, 0.22);
+  --glass-glow-b: rgba(94, 138, 222, 0.2);
+  --glass-glow-c: rgba(69, 105, 176, 0.14);
+  --glass-glow-d: rgba(177, 208, 255, 0.16);
+  --glass-tile-size: 112px;
+  --glass-tile-a: rgba(115, 152, 214, 0.26);
+  --glass-tile-b: rgba(96, 134, 198, 0.22);
+  --glass-tile-c: rgba(79, 116, 178, 0.2);
+  --glass-tile-d: rgba(126, 163, 225, 0.18);
+  --glass-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
 }
 
 html[data-theme="light"] {
-  --bg: #5f677b;
-  --bg-spot: #555f74;
-  --surface: rgba(34, 48, 76, 0.18);
-  --surface-soft: rgba(31, 44, 70, 0.16);
-  --surface-strong: rgba(41, 57, 88, 0.24);
-  --text: #101826;
-  --muted: #1f2d44;
-  --line: rgba(38, 55, 87, 0.62);
-  --accent: #6d93d1;
-  --accent-soft: rgba(84, 124, 189, 0.14);
-  --accent-ink: #0d2245;
-  --checker-base: #5d667b;
-  --checker-line: rgba(45, 58, 82, 0.36);
-  --glass-grid-minor: rgba(45, 58, 82, 0.24);
-  --glass-grid-major: rgba(45, 58, 82, 0.4);
-  --glass-grid-tint: rgba(84, 124, 189, 0.12);
-  --glass-wave-a: rgba(84, 124, 189, 0.26);
-  --glass-wave-b: rgba(64, 95, 145, 0.2);
-  --glass-wave-c: rgba(120, 153, 210, 0.12);
+  --bg: #6f82a4;
+  --bg-spot: #617698;
+  --surface: rgba(89, 117, 164, 0.24);
+  --surface-soft: rgba(81, 108, 153, 0.2);
+  --surface-strong: rgba(97, 127, 176, 0.28);
+  --text: #0f1828;
+  --muted: #24334d;
+  --line: rgba(79, 108, 157, 0.48);
+  --accent: #77a7f1;
+  --accent-soft: rgba(110, 154, 226, 0.26);
+  --accent-ink: #10284f;
+  --checker-base: #556988;
+  --glass-tile-a: rgba(124, 162, 224, 0.24);
+  --glass-tile-b: rgba(104, 142, 206, 0.22);
+  --glass-tile-c: rgba(86, 124, 188, 0.2);
+  --glass-tile-d: rgba(136, 172, 232, 0.18);
 }
 
 html[data-theme="dark"] {
-  --bg: #080d16;
-  --bg-spot: #0d1524;
-  --surface: rgba(16, 24, 40, 0.25);
-  --surface-soft: rgba(14, 21, 35, 0.2);
-  --surface-strong: rgba(20, 30, 46, 0.3);
-  --text: #dbe6fb;
-  --muted: #90a3c8;
-  --line: rgba(121, 146, 194, 0.3);
-  --accent: #7ea5e3;
-  --accent-soft: rgba(84, 124, 189, 0.16);
+  --bg: #071023;
+  --bg-spot: #0d1a32;
+  --surface: rgba(20, 35, 60, 0.34);
+  --surface-soft: rgba(17, 30, 52, 0.28);
+  --surface-strong: rgba(25, 41, 69, 0.38);
+  --text: #dce8ff;
+  --muted: #91a7d4;
+  --line: rgba(132, 168, 230, 0.28);
+  --accent: #82b2ff;
+  --accent-soft: rgba(98, 145, 224, 0.3);
   --accent-ink: #dbe7ff;
-  --checker-base: #0a101a;
-  --checker-line: rgba(101, 124, 164, 0.2);
-  --glass-blur: 6px;
-  --glass-saturate: 1.04;
-  --glass-panel-bg: rgba(36, 54, 84, 0.2);
-  --glass-panel-bg-soft: rgba(36, 54, 84, 0.12);
-  --glass-edge: rgba(106, 139, 198, 0.36);
-  --glass-edge-soft: rgba(106, 139, 198, 0.26);
-  --glass-sheen: rgba(188, 208, 245, 0.07);
-  --glass-shadow-soft: 0 4px 30px rgba(0, 0, 0, 0.2);
-  --glass-shadow-strong: 0 16px 48px rgba(0, 0, 0, 0.44);
-  --glass-glow-a: rgba(44, 64, 102, 0.14);
-  --glass-glow-b: rgba(48, 71, 112, 0.11);
-  --glass-glow-c: rgba(40, 57, 89, 0.09);
-  --glass-glow-d: rgba(72, 95, 137, 0.08);
-  --glass-grid-minor: rgba(101, 124, 164, 0.2);
-  --glass-grid-major: rgba(101, 124, 164, 0.32);
-  --glass-grid-tint: rgba(84, 124, 189, 0.14);
-  --glass-wave-a: rgba(84, 124, 189, 0.24);
-  --glass-wave-b: rgba(70, 104, 161, 0.18);
-  --glass-wave-c: rgba(132, 164, 221, 0.1);
+  --checker-base: #091329;
+  --glass-blur: 11px;
+  --glass-saturate: 1.2;
+  --glass-panel-bg: rgba(73, 107, 168, 0.24);
+  --glass-panel-bg-soft: rgba(73, 107, 168, 0.15);
+  --glass-edge: rgba(152, 193, 255, 0.34);
+  --glass-edge-soft: rgba(133, 172, 237, 0.27);
+  --glass-sheen: rgba(235, 245, 255, 0.16);
+  --glass-shadow-soft: 0 12px 40px rgba(2, 6, 14, 0.34);
+  --glass-shadow-strong: 0 24px 62px rgba(2, 6, 14, 0.5);
+  --glass-glow-a: rgba(77, 122, 214, 0.24);
+  --glass-glow-b: rgba(57, 100, 187, 0.2);
+  --glass-glow-c: rgba(45, 78, 146, 0.18);
+  --glass-glow-d: rgba(138, 178, 245, 0.14);
+  --glass-tile-a: rgba(86, 125, 196, 0.25);
+  --glass-tile-b: rgba(70, 107, 174, 0.22);
+  --glass-tile-c: rgba(56, 90, 152, 0.2);
+  --glass-tile-d: rgba(98, 138, 204, 0.18);
 }
 
 html {
   min-height: 100%;
-  background: color-mix(in srgb, var(--checker-base) 90%, #05070c 10%);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--checker-base) 90%, #040710 10%) 0%,
+    color-mix(in srgb, #03060f 20%, var(--checker-base) 80%) 100%
+  );
 }
 
 body {
   min-height: 100vh;
   isolation: isolate;
   background:
-    repeating-linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--glass-wave-a) 16%, transparent) 0 88px,
-      color-mix(in srgb, var(--glass-wave-b) 10%, transparent) 88px 176px,
-      color-mix(in srgb, var(--glass-wave-c) 14%, transparent) 176px 264px,
-      color-mix(in srgb, var(--glass-wave-b) 8%, transparent) 264px 352px
-    ),
-    repeating-linear-gradient(
+    radial-gradient(1180px 760px at 8% -16%, var(--glass-glow-a) 0%, transparent 62%),
+    radial-gradient(980px 660px at 110% -6%, var(--glass-glow-b) 0%, transparent 64%),
+    radial-gradient(920px 640px at 58% 112%, var(--glass-glow-c) 0%, transparent 76%),
+    radial-gradient(760px 520px at 50% 40%, color-mix(in srgb, var(--glass-glow-d) 54%, transparent) 0%, transparent 72%),
+    linear-gradient(
       180deg,
-      color-mix(in srgb, var(--glass-wave-b) 14%, transparent) 0 96px,
-      color-mix(in srgb, var(--glass-wave-c) 10%, transparent) 96px 192px,
-      color-mix(in srgb, var(--glass-wave-a) 8%, transparent) 192px 288px,
-      color-mix(in srgb, var(--glass-wave-c) 14%, transparent) 288px 384px
-    ),
-    radial-gradient(1120px 700px at 8% -18%, var(--glass-glow-a) 0%, transparent 72%),
-    radial-gradient(980px 620px at 106% -6%, var(--glass-glow-b) 0%, transparent 74%),
-    radial-gradient(900px 640px at 48% 116%, var(--glass-glow-c) 0%, transparent 80%),
-    radial-gradient(960px 520px at 52% 36%, var(--glass-glow-d) 0%, transparent 84%),
-    linear-gradient(128deg, color-mix(in srgb, var(--glass-wave-a) 28%, transparent) 0%, transparent 44%),
-    linear-gradient(-132deg, color-mix(in srgb, var(--glass-wave-b) 24%, transparent) 0%, transparent 56%),
-    linear-gradient(180deg, color-mix(in srgb, var(--bg) 90%, #05070c 10%) 0%, var(--checker-base) 58%, color-mix(in srgb, var(--checker-base) 88%, #04060c 12%) 100%);
+      color-mix(in srgb, var(--bg) 86%, #0a1224 14%) 0%,
+      color-mix(in srgb, var(--checker-base) 88%, #060a14 12%) 54%,
+      color-mix(in srgb, #040812 34%, var(--checker-base) 66%) 100%
+    );
 }
 
 body::after {
   content: "";
   position: fixed;
-  inset: -16vh -9vw;
+  inset: -20vh -12vw;
   pointer-events: none;
   z-index: -2;
-  opacity: 0.14;
+  opacity: 0.36;
   background:
-    radial-gradient(56% 42% at 14% 8%, color-mix(in srgb, var(--accent-soft) 22%, transparent) 0%, transparent 76%),
-    radial-gradient(42% 36% at 84% 6%, color-mix(in srgb, var(--accent) 12%, transparent) 0%, transparent 74%),
-    radial-gradient(38% 32% at 72% 90%, color-mix(in srgb, var(--line) 12%, transparent) 0%, transparent 74%);
-  filter: blur(28px) saturate(1);
+    radial-gradient(56% 44% at 10% 4%, color-mix(in srgb, var(--accent-soft) 40%, transparent) 0%, transparent 72%),
+    radial-gradient(46% 40% at 90% 6%, color-mix(in srgb, var(--accent) 28%, transparent) 0%, transparent 72%),
+    radial-gradient(40% 38% at 74% 94%, color-mix(in srgb, var(--line) 28%, transparent) 0%, transparent 74%);
+  filter: blur(52px) saturate(1.12);
 }
 
 html[data-theme="dark"] body::after {
-  opacity: 0.12;
-  filter: blur(26px) saturate(1);
+  opacity: 0.44;
+  filter: blur(58px) saturate(1.16);
 }
 
 body::before {
@@ -201,70 +188,90 @@ body::before {
   background-image:
     repeating-linear-gradient(
       90deg,
-      color-mix(in srgb, var(--glass-wave-a) 36%, transparent) 0 64px,
-      color-mix(in srgb, var(--glass-wave-b) 18%, transparent) 64px 128px,
-      color-mix(in srgb, var(--glass-wave-c) 28%, transparent) 128px 192px,
-      color-mix(in srgb, var(--glass-wave-b) 12%, transparent) 192px 256px
+      color-mix(in srgb, var(--glass-tile-a) 92%, transparent) 0 var(--glass-tile-size),
+      color-mix(in srgb, var(--glass-tile-b) 92%, transparent) var(--glass-tile-size) calc(var(--glass-tile-size) * 2),
+      color-mix(in srgb, var(--glass-tile-c) 92%, transparent) calc(var(--glass-tile-size) * 2) calc(var(--glass-tile-size) * 3),
+      color-mix(in srgb, var(--glass-tile-d) 92%, transparent) calc(var(--glass-tile-size) * 3) calc(var(--glass-tile-size) * 4)
     ),
     repeating-linear-gradient(
       180deg,
-      color-mix(in srgb, var(--glass-wave-b) 30%, transparent) 0 72px,
-      color-mix(in srgb, var(--glass-wave-c) 18%, transparent) 72px 144px,
-      color-mix(in srgb, var(--glass-wave-a) 10%, transparent) 144px 216px,
-      color-mix(in srgb, var(--glass-wave-c) 24%, transparent) 216px 288px
+      color-mix(in srgb, var(--glass-tile-d) 96%, transparent) 0 var(--glass-tile-size),
+      color-mix(in srgb, var(--glass-tile-b) 94%, transparent) var(--glass-tile-size) calc(var(--glass-tile-size) * 2),
+      color-mix(in srgb, var(--glass-tile-a) 92%, transparent) calc(var(--glass-tile-size) * 2) calc(var(--glass-tile-size) * 3),
+      color-mix(in srgb, var(--glass-tile-c) 94%, transparent) calc(var(--glass-tile-size) * 3) calc(var(--glass-tile-size) * 4)
     ),
-    linear-gradient(130deg, color-mix(in srgb, var(--glass-wave-a) 22%, transparent) 0%, transparent 48%),
-    linear-gradient(-138deg, color-mix(in srgb, var(--glass-wave-b) 18%, transparent) 0%, transparent 56%),
-    radial-gradient(120% 90% at 18% -12%, color-mix(in srgb, var(--glass-grid-tint) 88%, transparent) 0%, transparent 72%);
+    repeating-linear-gradient(
+      90deg,
+      color-mix(in srgb, #f8fcff 20%, transparent) 0 1px,
+      transparent 1px calc(var(--glass-tile-size) - 1px),
+      color-mix(in srgb, #020816 26%, transparent) calc(var(--glass-tile-size) - 1px) var(--glass-tile-size)
+    ),
+    repeating-linear-gradient(
+      180deg,
+      color-mix(in srgb, #f8fcff 16%, transparent) 0 1px,
+      transparent 1px calc(var(--glass-tile-size) - 1px),
+      color-mix(in srgb, #020816 24%, transparent) calc(var(--glass-tile-size) - 1px) var(--glass-tile-size)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      color-mix(in srgb, #ffffff 8%, transparent) 0 calc(var(--glass-tile-size) * 0.2),
+      transparent calc(var(--glass-tile-size) * 0.2) calc(var(--glass-tile-size) * 0.82),
+      color-mix(in srgb, #030916 16%, transparent) calc(var(--glass-tile-size) * 0.82) var(--glass-tile-size)
+    ),
+    repeating-linear-gradient(
+      180deg,
+      color-mix(in srgb, #ffffff 6%, transparent) 0 calc(var(--glass-tile-size) * 0.18),
+      transparent calc(var(--glass-tile-size) * 0.18) calc(var(--glass-tile-size) * 0.8),
+      color-mix(in srgb, #020815 14%, transparent) calc(var(--glass-tile-size) * 0.8) var(--glass-tile-size)
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, #f6fbff 12%, transparent) 0%,
+      transparent 34%,
+      color-mix(in srgb, #020611 24%, transparent) 100%
+    ),
+    var(--glass-noise),
+    radial-gradient(88% 64% at 18% 6%, color-mix(in srgb, var(--glass-glow-d) 28%, transparent) 0%, transparent 70%);
   background-size:
-    420px 420px,
-    420px 420px,
     100% 100%,
     100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    180px 180px,
     100% 100%;
   background-position:
-    -120px -90px,
-    120px -160px,
+    0 0,
+    0 0,
+    0 0,
+    0 0,
+    0 0,
+    0 0,
     0 0,
     0 0,
     0 0;
-  filter: saturate(1.04);
-  opacity: 0.6;
+  mix-blend-mode: normal;
+  filter: saturate(1.08);
+  opacity: 0.46;
 }
 
 html[data-theme="dark"] body::before {
-  opacity: 0.66;
+  opacity: 0.53;
 }
 
 @media (max-width: 1080px) and (pointer: coarse) {
-  body {
-    background:
-      repeating-linear-gradient(
-        90deg,
-        color-mix(in srgb, var(--glass-wave-a) 14%, transparent) 0 72px,
-        color-mix(in srgb, var(--glass-wave-b) 10%, transparent) 72px 144px,
-        color-mix(in srgb, var(--glass-wave-c) 12%, transparent) 144px 216px
-      ),
-      repeating-linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--glass-wave-b) 12%, transparent) 0 80px,
-        color-mix(in srgb, var(--glass-wave-c) 10%, transparent) 80px 160px,
-        color-mix(in srgb, var(--glass-wave-a) 8%, transparent) 160px 240px
-      ),
-      radial-gradient(820px 480px at 12% -14%, color-mix(in srgb, var(--glass-wave-a) 38%, transparent) 0%, transparent 70%),
-      radial-gradient(820px 460px at 92% 8%, color-mix(in srgb, var(--glass-wave-b) 32%, transparent) 0%, transparent 72%),
-      linear-gradient(180deg, color-mix(in srgb, var(--bg) 92%, #06080f 8%) 0%, var(--checker-base) 100%);
-  }
-
   body::before {
     display: block;
-    opacity: 0.48;
-    background-size:
-      300px 300px,
-      360px 360px,
-      100% 100%,
-      100% 100%,
-      100% 100%;
+    --glass-tile-size: 92px;
+    opacity: 0.42;
+    mix-blend-mode: normal;
+  }
+
+  body::after {
+    opacity: 0.26;
+    filter: blur(30px) saturate(1.02);
   }
 }
 
@@ -282,11 +289,17 @@ html[data-theme="dark"] body::before {
   isolation: isolate;
   overflow: hidden;
   border: 1px solid var(--glass-edge);
-  background: var(--glass-panel-bg);
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--glass-panel-bg) 84%, #f6fbff 16%) 0%,
+      color-mix(in srgb, var(--glass-panel-bg) 92%, transparent) 54%,
+      color-mix(in srgb, #0f1a33 18%, var(--glass-panel-bg) 82%) 100%
+    );
   box-shadow:
     var(--glass-shadow-soft),
     inset 0 1px 0 var(--glass-sheen),
-    inset 0 -1px 0 color-mix(in srgb, #0d1524 34%, transparent);
+    inset 0 -1px 0 color-mix(in srgb, #0b1428 26%, transparent);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
 }
@@ -302,10 +315,15 @@ html[data-theme="dark"] body::before {
   .post-cta-link
 ) {
   border-color: var(--glass-edge-soft);
-  background: var(--glass-panel-bg-soft);
+  background:
+    linear-gradient(
+      148deg,
+      color-mix(in srgb, var(--glass-panel-bg-soft) 76%, #f7fbff 24%) 0%,
+      color-mix(in srgb, var(--glass-panel-bg-soft) 92%, transparent) 100%
+    );
   box-shadow:
-    inset 0 1px 0 color-mix(in srgb, #e7f0ff 8%, transparent),
-    0 6px 20px color-mix(in srgb, #000000 20%, transparent);
+    inset 0 1px 0 color-mix(in srgb, #f4f8ff 24%, transparent),
+    0 8px 26px color-mix(in srgb, #02050c 22%, transparent);
   -webkit-backdrop-filter: blur(calc(var(--glass-blur) - 1px)) saturate(1.01);
   backdrop-filter: blur(calc(var(--glass-blur) - 1px)) saturate(1.01);
 }
@@ -324,9 +342,16 @@ html[data-theme="dark"] body::before {
   pointer-events: none;
   z-index: 0;
   background:
-    linear-gradient(180deg, color-mix(in srgb, #ffffff 3%, transparent) 0%, transparent 44%),
-    radial-gradient(104% 110% at -6% -8%, color-mix(in srgb, var(--accent-soft) 4%, transparent) 0%, transparent 68%),
-    radial-gradient(92% 94% at 102% 114%, color-mix(in srgb, var(--line) 4%, transparent) 0%, transparent 74%);
+    linear-gradient(180deg, color-mix(in srgb, #ffffff 18%, transparent) 0%, transparent 40%),
+    radial-gradient(104% 112% at -6% -8%, color-mix(in srgb, var(--accent-soft) 12%, transparent) 0%, transparent 66%),
+    radial-gradient(92% 96% at 102% 114%, color-mix(in srgb, var(--line) 9%, transparent) 0%, transparent 72%),
+    var(--glass-noise);
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    180px 180px;
+  opacity: 0.56;
 }
 
 :is(
@@ -343,8 +368,10 @@ html[data-theme="dark"] body::before {
   pointer-events: none;
   z-index: 1;
   border-radius: inherit;
-  border: 1px solid color-mix(in srgb, #d8e8ff 8%, transparent);
-  background: linear-gradient(160deg, color-mix(in srgb, #ffffff 1%, transparent) 0%, transparent 58%);
+  border: 1px solid color-mix(in srgb, #deecff 22%, transparent);
+  background:
+    linear-gradient(160deg, color-mix(in srgb, #ffffff 9%, transparent) 0%, transparent 58%),
+    radial-gradient(86% 58% at 10% -20%, color-mix(in srgb, #ffffff 18%, transparent) 0%, transparent 58%);
 }
 
 :is(
@@ -366,11 +393,11 @@ html[data-theme="dark"] body::before {
   .landing-link-card:hover
 ) {
   transform: translateY(-1px);
-  border-color: color-mix(in srgb, var(--accent) 44%, var(--glass-edge));
+  border-color: color-mix(in srgb, var(--accent) 54%, var(--glass-edge));
   box-shadow:
     var(--glass-shadow-strong),
-    inset 0 1px 0 color-mix(in srgb, #e8f2ff 10%, transparent),
-    inset 0 -1px 0 color-mix(in srgb, #0c1424 24%, transparent);
+    inset 0 1px 0 color-mix(in srgb, #f4f9ff 24%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, #0c1424 26%, transparent);
 }
 
 :is(
@@ -381,10 +408,10 @@ html[data-theme="dark"] body::before {
   .site-nav-icon-link:hover,
   .post-cta-link:hover
 ) {
-  border-color: color-mix(in srgb, var(--accent) 54%, var(--glass-edge-soft));
+  border-color: color-mix(in srgb, var(--accent) 62%, var(--glass-edge-soft));
   box-shadow:
-    inset 0 1px 0 color-mix(in srgb, #e8f2ff 8%, transparent),
-    0 10px 24px color-mix(in srgb, #000000 16%, transparent);
+    inset 0 1px 0 color-mix(in srgb, #f3f8ff 22%, transparent),
+    0 12px 28px color-mix(in srgb, #000000 20%, transparent);
 }
 
 .site-header,
@@ -449,35 +476,15 @@ html[data-theme="dark"] body::before {
 
 /* Keep mobile/coarse visuals aligned with desktop glass treatment. */
 @media (pointer: coarse) {
-  body,
-  html[data-theme="dark"] body {
-    background:
-      repeating-linear-gradient(
-        90deg,
-        color-mix(in srgb, var(--glass-wave-a) 16%, transparent) 0 88px,
-        color-mix(in srgb, var(--glass-wave-b) 10%, transparent) 88px 176px,
-        color-mix(in srgb, var(--glass-wave-c) 14%, transparent) 176px 264px,
-        color-mix(in srgb, var(--glass-wave-b) 8%, transparent) 264px 352px
-      ),
-      repeating-linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--glass-wave-b) 14%, transparent) 0 96px,
-        color-mix(in srgb, var(--glass-wave-c) 10%, transparent) 96px 192px,
-        color-mix(in srgb, var(--glass-wave-a) 8%, transparent) 192px 288px,
-        color-mix(in srgb, var(--glass-wave-c) 14%, transparent) 288px 384px
-      ),
-      radial-gradient(1120px 700px at 8% -18%, var(--glass-glow-a) 0%, transparent 72%),
-      radial-gradient(980px 620px at 106% -6%, var(--glass-glow-b) 0%, transparent 74%),
-      radial-gradient(900px 640px at 48% 116%, var(--glass-glow-c) 0%, transparent 80%),
-      radial-gradient(960px 520px at 52% 36%, var(--glass-glow-d) 0%, transparent 84%),
-      linear-gradient(128deg, color-mix(in srgb, var(--glass-wave-a) 28%, transparent) 0%, transparent 44%),
-      linear-gradient(-132deg, color-mix(in srgb, var(--glass-wave-b) 24%, transparent) 0%, transparent 56%),
-      linear-gradient(180deg, color-mix(in srgb, var(--bg) 90%, #05070c 10%) 0%, var(--checker-base) 58%, color-mix(in srgb, var(--checker-base) 88%, #04060c 12%) 100%);
-  }
-
   body::before {
     display: block;
-    opacity: 0.6;
+    --glass-tile-size: 86px;
+    opacity: 0.4;
+    mix-blend-mode: normal;
+  }
+
+  html[data-theme="dark"] body::before {
+    opacity: 0.48;
   }
 
   :is(.live-graph, .page-tabs, .site-header) {
