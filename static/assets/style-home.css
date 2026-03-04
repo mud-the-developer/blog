@@ -4,8 +4,8 @@
   --hero-drop-rot: 0deg;
   --hero-drop-sx: 1;
   --hero-drop-sy: 1;
-  --hero-panel-fill-top: color-mix(in srgb, var(--surface-strong) 92%, #ffffff 8%);
-  --hero-panel-fill-bottom: color-mix(in srgb, var(--surface-soft) 92%, #0c1418 8%);
+  --hero-panel-fill-top: color-mix(in srgb, var(--surface-strong) 96%, #ffffff 4%);
+  --hero-panel-fill-bottom: color-mix(in srgb, var(--surface-soft) 96%, #0c1418 4%);
   --hero-orb-core: color-mix(in srgb, var(--accent) 48%, transparent);
   --hero-orb-soft: color-mix(in srgb, var(--accent-soft) 82%, transparent);
   --hero-ring: color-mix(in srgb, var(--line) 74%, transparent);
@@ -16,22 +16,22 @@
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 1rem;
   align-items: end;
-  background:
-    radial-gradient(1000px 320px at 8% -10%, color-mix(in srgb, var(--hero-orb-soft) 64%, transparent) 0%, transparent 68%),
-    linear-gradient(180deg, var(--hero-panel-fill-top) 0%, var(--hero-panel-fill-bottom) 100%);
+  background: linear-gradient(180deg, var(--hero-panel-fill-top) 0%, var(--hero-panel-fill-bottom) 100%);
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur) + 1px)) saturate(1.06);
+  backdrop-filter: blur(calc(var(--glass-blur) + 1px)) saturate(1.06);
 }
 
 html[data-theme="light"] .home-hero {
-  --hero-panel-fill-top: rgba(255, 248, 252, 0.94);
-  --hero-panel-fill-bottom: rgba(248, 233, 242, 0.88);
+  --hero-panel-fill-top: rgba(255, 248, 252, 0.985);
+  --hero-panel-fill-bottom: rgba(248, 233, 242, 0.965);
   --hero-orb-core: rgba(214, 96, 150, 0.3);
   --hero-orb-soft: rgba(243, 184, 213, 0.48);
   --hero-ring: rgba(210, 162, 188, 0.52);
 }
 
 html[data-theme="dark"] .home-hero {
-  --hero-panel-fill-top: rgba(7, 37, 33, 0.88);
-  --hero-panel-fill-bottom: rgba(4, 26, 23, 0.84);
+  --hero-panel-fill-top: rgba(6, 33, 30, 0.97);
+  --hero-panel-fill-bottom: rgba(3, 22, 20, 0.95);
   --hero-orb-core: rgba(0, 168, 150, 0.36);
   --hero-orb-soft: rgba(0, 133, 120, 0.34);
   --hero-ring: rgba(89, 162, 151, 0.46);
@@ -40,41 +40,34 @@ html[data-theme="dark"] .home-hero {
 .home-hero::before {
   content: "";
   position: absolute;
-  width: clamp(190px, 22vw, 286px);
+  width: clamp(168px, 20vw, 244px);
   aspect-ratio: 1 / 1;
-  top: clamp(-142px, -9vw, -80px);
-  right: clamp(-120px, -7.2vw, -66px);
+  top: clamp(-126px, -8vw, -70px);
+  right: clamp(-98px, -6.2vw, -54px);
   border-radius: 999px;
   background:
-    radial-gradient(circle at 32% 28%, color-mix(in srgb, #ffffff 68%, transparent) 0%, transparent 46%),
-    radial-gradient(circle at 68% 64%, var(--hero-orb-core) 0%, var(--hero-orb-soft) 74%);
+    radial-gradient(
+      circle at 50% 46%,
+      color-mix(in srgb, #ffffff 24%, transparent) 0%,
+      color-mix(in srgb, var(--hero-orb-core) 58%, transparent) 36%,
+      color-mix(in srgb, var(--hero-orb-soft) 78%, transparent) 68%,
+      transparent 100%
+    );
   transform:
     translate3d(var(--hero-drop-x), var(--hero-drop-y), 0)
     rotate(var(--hero-drop-rot))
     scaleX(var(--hero-drop-sx))
     scaleY(var(--hero-drop-sy));
   transform-origin: 68% 68%;
-  opacity: 0.94;
+  filter: blur(0.34px);
+  opacity: 0.48;
+  mix-blend-mode: screen;
   pointer-events: none;
   z-index: 0;
 }
 
 .home-hero::after {
-  content: "";
-  position: absolute;
-  width: clamp(128px, 16vw, 206px);
-  aspect-ratio: 1 / 1;
-  top: clamp(-88px, -5.4vw, -48px);
-  right: clamp(-78px, -4.8vw, -42px);
-  border-radius: 999px;
-  border: 1px solid var(--hero-ring);
-  background:
-    radial-gradient(circle at 38% 32%, color-mix(in srgb, #ffffff 26%, transparent) 0%, transparent 58%),
-    radial-gradient(circle at 58% 58%, color-mix(in srgb, var(--hero-orb-soft) 68%, transparent) 0%, transparent 88%);
-  transform: translate3d(calc(var(--hero-drop-x) * -0.32), calc(var(--hero-drop-y) * -0.24), 0);
-  pointer-events: none;
-  opacity: 0.76;
-  z-index: 0;
+  content: none;
 }
 
 .home-hero-copy,
@@ -138,8 +131,18 @@ html[data-theme="dark"] .home-hero {
   padding: 0.64rem 0.7rem;
   border: 1px solid color-mix(in srgb, var(--line) 84%, transparent);
   border-radius: 12px;
-  background: color-mix(in srgb, var(--surface-strong) 95%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 98%, transparent);
   min-width: 0;
+}
+
+html[data-theme="light"] .home-hero-stat {
+  background: rgba(255, 248, 252, 0.9);
+  border-color: rgba(212, 176, 196, 0.42);
+}
+
+html[data-theme="dark"] .home-hero-stat {
+  background: rgba(4, 30, 27, 0.72);
+  border-color: rgba(88, 166, 155, 0.34);
 }
 
 .home-hero-stat dt {
@@ -263,11 +266,11 @@ html[data-theme="dark"] .home-hero {
 
 @media (max-width: 760px) {
   .home-hero::before {
-    width: clamp(162px, 40vw, 224px);
+    width: clamp(138px, 36vw, 196px);
   }
 
   .home-hero::after {
-    width: clamp(108px, 30vw, 168px);
+    width: clamp(92px, 26vw, 140px);
   }
 
   .home-hero-stats {
