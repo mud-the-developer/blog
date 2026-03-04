@@ -88,10 +88,13 @@ html,
   --theme-base-end: #f7e8f0;
   --theme-noise-top: rgba(255, 255, 255, 0.18);
   --theme-noise-bottom: rgba(120, 64, 91, 0.16);
+  --theme-pattern-size-desktop: 920px;
+  --theme-pattern-size-mobile: 520px;
   --glass-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
 }
 
-html[data-theme="light"] {
+html[data-theme="light"],
+html[data-theme="light"][data-theme-preset="l04-rose-ink"] {
   --bg: #fff8fb;
   --bg-spot: #ffeaf2;
   --surface: rgba(255, 241, 248, 0.62);
@@ -115,16 +118,32 @@ html[data-theme="light"] {
   --glass-glow-b: rgba(247, 184, 214, 0.24);
   --glass-glow-c: rgba(233, 160, 196, 0.18);
   --glass-glow-d: rgba(255, 244, 250, 0.24);
-  --theme-pattern-image: url("/assets/bg-square-rose-v1.png");
+  --glass-surface: rgba(255, 242, 249, 0.76);
+  --glass-surface-soft: rgba(255, 235, 246, 0.62);
+  --glass-surface-strong: rgba(255, 247, 251, 0.82);
+  --glass-text: #3a2531;
+  --glass-muted: #7a5a6a;
+  --glass-line: rgba(206, 167, 187, 0.48);
+  --glass-accent: #c95a90;
+  --glass-accent-soft: rgba(242, 190, 214, 0.34);
+  --glass-accent-ink: #512c3f;
+  --glass-mark-bg: #ffd8e7;
+  --glass-mark-text: #5a1f3b;
+  --glass-panel-glow: 0 14px 34px rgba(138, 78, 106, 0.2);
+  --glass-panel-glow-strong: 0 22px 52px rgba(138, 78, 106, 0.28);
+  --theme-pattern-image: url("/assets/bg-square-metal-light-tile-v2.png");
   --theme-overlay-top: rgba(255, 255, 255, 0.36);
   --theme-overlay-bottom: rgba(249, 223, 237, 0.5);
   --theme-base-start: #fffbfc;
   --theme-base-end: #f8eaf1;
   --theme-noise-top: rgba(255, 255, 255, 0.2);
   --theme-noise-bottom: rgba(124, 70, 96, 0.16);
+  --theme-pattern-size-desktop: 940px;
+  --theme-pattern-size-mobile: 560px;
 }
 
-html[data-theme="dark"] {
+html[data-theme="dark"],
+html[data-theme="dark"][data-theme-preset="d02-carbon"] {
   --bg: #020808;
   --bg-spot: #031210;
   --surface: rgba(5, 38, 35, 0.52);
@@ -150,17 +169,32 @@ html[data-theme="dark"] {
   --glass-glow-b: rgba(0, 119, 107, 0.24);
   --glass-glow-c: rgba(0, 99, 90, 0.2);
   --glass-glow-d: rgba(123, 230, 215, 0.12);
+  --glass-surface: rgba(4, 34, 31, 0.76);
+  --glass-surface-soft: rgba(4, 28, 25, 0.62);
+  --glass-surface-strong: rgba(7, 40, 36, 0.82);
+  --glass-text: #d6fff8;
+  --glass-muted: #87c9be;
+  --glass-line: rgba(86, 163, 152, 0.34);
+  --glass-accent: #00a896;
+  --glass-accent-soft: rgba(0, 133, 120, 0.36);
+  --glass-accent-ink: #d5fff8;
+  --glass-mark-bg: #24544c;
+  --glass-mark-text: #d8fff7;
+  --glass-panel-glow: 0 18px 44px rgba(1, 10, 9, 0.46);
+  --glass-panel-glow-strong: 0 26px 60px rgba(1, 10, 9, 0.58);
   --glass-tile-a: rgba(86, 125, 196, 0.25);
   --glass-tile-b: rgba(70, 107, 174, 0.22);
   --glass-tile-c: rgba(56, 90, 152, 0.2);
   --glass-tile-d: rgba(98, 138, 204, 0.18);
-  --theme-pattern-image: url("/assets/bg-square-metal-v1.png");
+  --theme-pattern-image: url("/assets/bg-square-metal-dark-tile-v2.png");
   --theme-overlay-top: rgba(2, 8, 8, 0.26);
   --theme-overlay-bottom: rgba(2, 8, 8, 0.52);
   --theme-base-start: #010505;
   --theme-base-end: #031110;
   --theme-noise-top: rgba(240, 255, 249, 0.09);
   --theme-noise-bottom: rgba(0, 0, 0, 0.28);
+  --theme-pattern-size-desktop: 900px;
+  --theme-pattern-size-mobile: 500px;
 }
 
 html {
@@ -183,7 +217,7 @@ body {
     ),
     radial-gradient(1080px 700px at 10% -12%, color-mix(in srgb, var(--glass-glow-a) 62%, transparent) 0%, transparent 66%),
     radial-gradient(920px 640px at 108% -8%, color-mix(in srgb, var(--glass-glow-b) 56%, transparent) 0%, transparent 68%),
-    var(--theme-pattern-image) center top / cover fixed no-repeat,
+    var(--theme-pattern-image) center top / var(--theme-pattern-size-desktop) auto fixed repeat,
     linear-gradient(
       180deg,
       color-mix(in srgb, var(--theme-base-start) 88%, var(--bg) 12%) 0%,
@@ -251,7 +285,7 @@ html[data-theme="dark"] body::before {
       ),
       radial-gradient(1080px 700px at 10% -12%, color-mix(in srgb, var(--glass-glow-a) 62%, transparent) 0%, transparent 66%),
       radial-gradient(920px 640px at 108% -8%, color-mix(in srgb, var(--glass-glow-b) 56%, transparent) 0%, transparent 68%),
-      var(--theme-pattern-image) center top / cover scroll no-repeat,
+      var(--theme-pattern-image) center top / var(--theme-pattern-size-mobile) auto scroll repeat,
       linear-gradient(
         180deg,
         color-mix(in srgb, var(--theme-base-start) 88%, var(--bg) 12%) 0%,
@@ -435,8 +469,8 @@ html[data-theme="dark"] body::before {
 
 @media (max-width: 760px), (pointer: coarse) {
   body::after {
-    opacity: 0.22;
-    filter: blur(18px) saturate(1);
+    opacity: 0.18;
+    filter: blur(14px) saturate(1.02);
   }
 
   :is(
@@ -449,8 +483,15 @@ html[data-theme="dark"] body::before {
     .page-tabs,
     .live-graph
   ) {
-    -webkit-backdrop-filter: blur(5px) saturate(1);
-    backdrop-filter: blur(5px) saturate(1);
+    background:
+      linear-gradient(
+        168deg,
+        color-mix(in srgb, var(--surface-strong) 74%, transparent) 0%,
+        color-mix(in srgb, var(--surface-soft) 66%, transparent) 100%
+      );
+    border-color: color-mix(in srgb, var(--line) 94%, transparent);
+    -webkit-backdrop-filter: blur(2.6px) saturate(1.12);
+    backdrop-filter: blur(2.6px) saturate(1.12);
   }
 
   :is(
@@ -460,7 +501,7 @@ html[data-theme="dark"] body::before {
     .note,
     .landing-link-card
   )::before {
-    opacity: 0.52;
+    opacity: 0.34;
   }
 }
 
