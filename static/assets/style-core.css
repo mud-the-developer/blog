@@ -139,8 +139,8 @@ html {
   min-height: 100%;
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--checker-base) 90%, #040710 10%) 0%,
-    color-mix(in srgb, #03060f 20%, var(--checker-base) 80%) 100%
+    color-mix(in srgb, #010505 84%, var(--checker-base) 16%) 0%,
+    color-mix(in srgb, #031110 90%, var(--checker-base) 10%) 100%
   );
 }
 
@@ -148,15 +148,18 @@ body {
   min-height: 100vh;
   isolation: isolate;
   background:
-    radial-gradient(1180px 760px at 8% -16%, var(--glass-glow-a) 0%, transparent 62%),
-    radial-gradient(980px 660px at 110% -6%, var(--glass-glow-b) 0%, transparent 64%),
-    radial-gradient(920px 640px at 58% 112%, var(--glass-glow-c) 0%, transparent 76%),
-    radial-gradient(760px 520px at 50% 40%, color-mix(in srgb, var(--glass-glow-d) 54%, transparent) 0%, transparent 72%),
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--bg) 86%, #0a1224 14%) 0%,
-      color-mix(in srgb, var(--checker-base) 88%, #060a14 12%) 54%,
-      color-mix(in srgb, #040812 34%, var(--checker-base) 66%) 100%
+      rgba(2, 8, 8, 0.26) 0%,
+      rgba(2, 8, 8, 0.52) 100%
+    ),
+    radial-gradient(1080px 700px at 10% -12%, color-mix(in srgb, var(--glass-glow-a) 62%, transparent) 0%, transparent 66%),
+    radial-gradient(920px 640px at 108% -8%, color-mix(in srgb, var(--glass-glow-b) 56%, transparent) 0%, transparent 68%),
+    url("/assets/bg-square-metal-v1.png") center top / cover fixed no-repeat,
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, #010505 88%, var(--bg) 12%) 0%,
+      color-mix(in srgb, #031110 92%, var(--bg-spot) 8%) 100%
     );
 }
 
@@ -166,17 +169,17 @@ body::after {
   inset: -20vh -12vw;
   pointer-events: none;
   z-index: -2;
-  opacity: 0.36;
+  opacity: 0.26;
   background:
-    radial-gradient(56% 44% at 10% 4%, color-mix(in srgb, var(--accent-soft) 40%, transparent) 0%, transparent 72%),
-    radial-gradient(46% 40% at 90% 6%, color-mix(in srgb, var(--accent) 28%, transparent) 0%, transparent 72%),
-    radial-gradient(40% 38% at 74% 94%, color-mix(in srgb, var(--line) 28%, transparent) 0%, transparent 74%);
-  filter: blur(52px) saturate(1.12);
+    radial-gradient(62% 44% at 12% 4%, color-mix(in srgb, var(--accent-soft) 34%, transparent) 0%, transparent 72%),
+    radial-gradient(52% 40% at 88% 8%, color-mix(in srgb, var(--accent) 24%, transparent) 0%, transparent 74%),
+    radial-gradient(44% 34% at 74% 94%, color-mix(in srgb, var(--line) 22%, transparent) 0%, transparent 76%);
+  filter: blur(58px) saturate(1.1);
 }
 
 html[data-theme="dark"] body::after {
-  opacity: 0.44;
-  filter: blur(58px) saturate(1.16);
+  opacity: 0.32;
+  filter: blur(64px) saturate(1.14);
 }
 
 body::before {
@@ -186,91 +189,37 @@ body::before {
   pointer-events: none;
   z-index: -1;
   background-image:
-    repeating-linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--glass-tile-a) 92%, transparent) 0 var(--glass-tile-size),
-      color-mix(in srgb, var(--glass-tile-b) 92%, transparent) var(--glass-tile-size) calc(var(--glass-tile-size) * 2),
-      color-mix(in srgb, var(--glass-tile-c) 92%, transparent) calc(var(--glass-tile-size) * 2) calc(var(--glass-tile-size) * 3),
-      color-mix(in srgb, var(--glass-tile-d) 92%, transparent) calc(var(--glass-tile-size) * 3) calc(var(--glass-tile-size) * 4)
-    ),
-    repeating-linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--glass-tile-d) 96%, transparent) 0 var(--glass-tile-size),
-      color-mix(in srgb, var(--glass-tile-b) 94%, transparent) var(--glass-tile-size) calc(var(--glass-tile-size) * 2),
-      color-mix(in srgb, var(--glass-tile-a) 92%, transparent) calc(var(--glass-tile-size) * 2) calc(var(--glass-tile-size) * 3),
-      color-mix(in srgb, var(--glass-tile-c) 94%, transparent) calc(var(--glass-tile-size) * 3) calc(var(--glass-tile-size) * 4)
-    ),
-    repeating-linear-gradient(
-      90deg,
-      color-mix(in srgb, #f8fcff 20%, transparent) 0 1px,
-      transparent 1px calc(var(--glass-tile-size) - 1px),
-      color-mix(in srgb, #020816 26%, transparent) calc(var(--glass-tile-size) - 1px) var(--glass-tile-size)
-    ),
-    repeating-linear-gradient(
-      180deg,
-      color-mix(in srgb, #f8fcff 16%, transparent) 0 1px,
-      transparent 1px calc(var(--glass-tile-size) - 1px),
-      color-mix(in srgb, #020816 24%, transparent) calc(var(--glass-tile-size) - 1px) var(--glass-tile-size)
-    ),
-    repeating-linear-gradient(
-      90deg,
-      color-mix(in srgb, #ffffff 8%, transparent) 0 calc(var(--glass-tile-size) * 0.2),
-      transparent calc(var(--glass-tile-size) * 0.2) calc(var(--glass-tile-size) * 0.82),
-      color-mix(in srgb, #030916 16%, transparent) calc(var(--glass-tile-size) * 0.82) var(--glass-tile-size)
-    ),
-    repeating-linear-gradient(
-      180deg,
-      color-mix(in srgb, #ffffff 6%, transparent) 0 calc(var(--glass-tile-size) * 0.18),
-      transparent calc(var(--glass-tile-size) * 0.18) calc(var(--glass-tile-size) * 0.8),
-      color-mix(in srgb, #020815 14%, transparent) calc(var(--glass-tile-size) * 0.8) var(--glass-tile-size)
-    ),
     linear-gradient(
       180deg,
-      color-mix(in srgb, #f6fbff 12%, transparent) 0%,
-      transparent 34%,
-      color-mix(in srgb, #020611 24%, transparent) 100%
+      color-mix(in srgb, #f0fff9 9%, transparent) 0%,
+      transparent 30%,
+      color-mix(in srgb, #000000 28%, transparent) 100%
     ),
-    var(--glass-noise),
-    radial-gradient(88% 64% at 18% 6%, color-mix(in srgb, var(--glass-glow-d) 28%, transparent) 0%, transparent 70%);
+    var(--glass-noise);
   background-size:
     100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    180px 180px,
-    100% 100%;
+    180px 180px;
   background-position:
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
     0 0,
     0 0;
   mix-blend-mode: normal;
-  filter: saturate(1.08);
-  opacity: 0.46;
+  filter: saturate(1.04);
+  opacity: 0.28;
 }
 
 html[data-theme="dark"] body::before {
-  opacity: 0.53;
+  opacity: 0.34;
 }
 
 @media (max-width: 1080px) and (pointer: coarse) {
   body::before {
     display: block;
-    --glass-tile-size: 92px;
-    opacity: 0.42;
+    opacity: 0.24;
     mix-blend-mode: normal;
   }
 
   body::after {
-    opacity: 0.26;
+    opacity: 0.22;
     filter: blur(30px) saturate(1.02);
   }
 }
@@ -478,13 +427,12 @@ html[data-theme="dark"] body::before {
 @media (pointer: coarse) {
   body::before {
     display: block;
-    --glass-tile-size: 86px;
-    opacity: 0.4;
+    opacity: 0.22;
     mix-blend-mode: normal;
   }
 
   html[data-theme="dark"] body::before {
-    opacity: 0.48;
+    opacity: 0.28;
   }
 
   :is(.live-graph, .page-tabs, .site-header) {
