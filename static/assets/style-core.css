@@ -521,3 +521,23 @@ html[data-theme="dark"] body::before {
       inset 0 -1px 0 color-mix(in srgb, #0d1524 34%, transparent);
   }
 }
+
+/* Keep left sidebar tab corners visibly rounded on both sides. */
+.page-tabs .page-tab,
+.page-tabs .filetree-folder,
+.page-tabs .site-search input {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.page-tabs .page-tab,
+.page-tabs .filetree-folder {
+  overflow: hidden;
+  background-clip: padding-box;
+}
+
+.page-tabs {
+  overflow: hidden;
+}
