@@ -3565,8 +3565,14 @@ fn rewrite_relative_image_asset_urls(html: &str, source_rel_path: &str) -> Strin
 
     IMG_TAG_RE
         .replace_all(html, |captures: &Captures| {
-            let full_tag = captures.get(0).map(|entry| entry.as_str()).unwrap_or_default();
-            let attrs = captures.get(1).map(|entry| entry.as_str()).unwrap_or_default();
+            let full_tag = captures
+                .get(0)
+                .map(|entry| entry.as_str())
+                .unwrap_or_default();
+            let attrs = captures
+                .get(1)
+                .map(|entry| entry.as_str())
+                .unwrap_or_default();
             let Some(src_caps) = IMG_SRC_ATTR_RE.captures(attrs) else {
                 return full_tag.to_string();
             };
@@ -4339,8 +4345,9 @@ fn minify_css(input: &str) -> String {
         minify: true,
         ..CssPrinterOptions::default()
     }) {
-        Ok(result) => result.code,
+        Ok(result) if result.code.len() < input.len() => result.code,
         Err(_) => input.to_string(),
+        _ => input.to_string(),
     }
 }
 
@@ -4360,7 +4367,7 @@ fn minify_javascript(input: &str) -> String {
     std::panic::set_hook(previous_hook);
 
     match output {
-        Ok(Some(minified)) => minified,
+        Ok(Some(minified)) if minified.len() < input.len() => minified,
         _ => input.to_string(),
     }
 }
@@ -4384,6 +4391,13 @@ fn copy_static_assets(static_dir: &Path, output_dir: &Path) -> Result<()> {
         })?;
 
         if rel.as_os_str().is_empty() {
+            continue;
+        }
+
+        // `assets/style.css` is a legacy bundle kept in source control for reference.
+        // The runtime templates load split CSS files (`style-core.css`, etc.), so we
+        // avoid copying this duplicate output into dist.
+        if entry.file_type().is_file() && rel == Path::new("assets/style.css") {
             continue;
         }
 
@@ -4447,7 +4461,7 @@ fn copy_static_assets(static_dir: &Path, output_dir: &Path) -> Result<()> {
 }
 
 fn ensure_default_css(output_dir: &Path) -> Result<()> {
-    let css_path = output_dir.join("assets").join("style.css");
+    let css_path = output_dir.join("assets").join("style-core.css");
     if css_path.exists() {
         return Ok(());
     }
@@ -4766,7 +4780,7 @@ a:hover {
             .with_context(|| format!("failed to create {}", parent.display()))?;
     }
 
-    fs::write(&css_path, default_css)
+    fs::write(&css_path, minify_css(default_css))
         .with_context(|| format!("failed to write {}", css_path.display()))
 }
 
