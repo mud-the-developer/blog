@@ -65,82 +65,110 @@ html,
 :root {
   --glass-blur: 10px;
   --glass-saturate: 1.16;
-  --glass-panel-bg: rgba(122, 161, 224, 0.18);
-  --glass-panel-bg-soft: rgba(122, 161, 224, 0.12);
-  --glass-edge: rgba(171, 203, 255, 0.32);
-  --glass-edge-soft: rgba(152, 184, 235, 0.26);
+  --glass-panel-bg: rgba(255, 231, 242, 0.34);
+  --glass-panel-bg-soft: rgba(255, 237, 246, 0.26);
+  --glass-edge: rgba(236, 197, 217, 0.52);
+  --glass-edge-soft: rgba(227, 184, 206, 0.42);
   --glass-sheen: rgba(248, 252, 255, 0.22);
-  --glass-shadow-soft: 0 10px 34px rgba(4, 9, 18, 0.22);
-  --glass-shadow-strong: 0 20px 52px rgba(4, 9, 18, 0.34);
-  --glass-glow-a: rgba(120, 165, 245, 0.22);
-  --glass-glow-b: rgba(94, 138, 222, 0.2);
-  --glass-glow-c: rgba(69, 105, 176, 0.14);
-  --glass-glow-d: rgba(177, 208, 255, 0.16);
+  --glass-shadow-soft: 0 10px 30px rgba(134, 73, 102, 0.18);
+  --glass-shadow-strong: 0 20px 48px rgba(134, 73, 102, 0.24);
+  --glass-glow-a: rgba(255, 203, 226, 0.28);
+  --glass-glow-b: rgba(247, 182, 213, 0.24);
+  --glass-glow-c: rgba(235, 165, 200, 0.18);
+  --glass-glow-d: rgba(255, 240, 248, 0.22);
   --glass-tile-size: 112px;
   --glass-tile-a: rgba(115, 152, 214, 0.26);
   --glass-tile-b: rgba(96, 134, 198, 0.22);
   --glass-tile-c: rgba(79, 116, 178, 0.2);
   --glass-tile-d: rgba(126, 163, 225, 0.18);
+  --theme-pattern-image: url("/assets/bg-square-rose-v1.png");
+  --theme-overlay-top: rgba(255, 255, 255, 0.34);
+  --theme-overlay-bottom: rgba(248, 223, 236, 0.48);
+  --theme-base-start: #fffafc;
+  --theme-base-end: #f7e8f0;
+  --theme-noise-top: rgba(255, 255, 255, 0.18);
+  --theme-noise-bottom: rgba(120, 64, 91, 0.16);
   --glass-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
 }
 
 html[data-theme="light"] {
-  --bg: #6f82a4;
-  --bg-spot: #617698;
-  --surface: rgba(89, 117, 164, 0.24);
-  --surface-soft: rgba(81, 108, 153, 0.2);
-  --surface-strong: rgba(97, 127, 176, 0.28);
-  --text: #0f1828;
-  --muted: #24334d;
-  --line: rgba(79, 108, 157, 0.48);
-  --accent: #77a7f1;
-  --accent-soft: rgba(110, 154, 226, 0.26);
-  --accent-ink: #10284f;
-  --checker-base: #556988;
-  --glass-tile-a: rgba(124, 162, 224, 0.24);
-  --glass-tile-b: rgba(104, 142, 206, 0.22);
-  --glass-tile-c: rgba(86, 124, 188, 0.2);
-  --glass-tile-d: rgba(136, 172, 232, 0.18);
+  --bg: #fff8fb;
+  --bg-spot: #ffeaf2;
+  --surface: rgba(255, 241, 248, 0.62);
+  --surface-soft: rgba(255, 234, 245, 0.5);
+  --surface-strong: rgba(255, 246, 251, 0.74);
+  --text: #3a2531;
+  --muted: #7a5a6a;
+  --line: rgba(206, 167, 187, 0.48);
+  --accent: #c95a90;
+  --accent-soft: rgba(242, 190, 214, 0.34);
+  --accent-ink: #512c3f;
+  --checker-base: #fff9fc;
+  --glass-panel-bg: rgba(255, 230, 241, 0.42);
+  --glass-panel-bg-soft: rgba(255, 237, 246, 0.34);
+  --glass-edge: rgba(234, 194, 215, 0.56);
+  --glass-edge-soft: rgba(224, 179, 202, 0.44);
+  --glass-sheen: rgba(255, 255, 255, 0.74);
+  --glass-shadow-soft: 0 10px 30px rgba(138, 78, 106, 0.2);
+  --glass-shadow-strong: 0 20px 46px rgba(138, 78, 106, 0.28);
+  --glass-glow-a: rgba(255, 206, 228, 0.3);
+  --glass-glow-b: rgba(247, 184, 214, 0.24);
+  --glass-glow-c: rgba(233, 160, 196, 0.18);
+  --glass-glow-d: rgba(255, 244, 250, 0.24);
+  --theme-pattern-image: url("/assets/bg-square-rose-v1.png");
+  --theme-overlay-top: rgba(255, 255, 255, 0.36);
+  --theme-overlay-bottom: rgba(249, 223, 237, 0.5);
+  --theme-base-start: #fffbfc;
+  --theme-base-end: #f8eaf1;
+  --theme-noise-top: rgba(255, 255, 255, 0.2);
+  --theme-noise-bottom: rgba(124, 70, 96, 0.16);
 }
 
 html[data-theme="dark"] {
-  --bg: #071023;
-  --bg-spot: #0d1a32;
-  --surface: rgba(20, 35, 60, 0.34);
-  --surface-soft: rgba(17, 30, 52, 0.28);
-  --surface-strong: rgba(25, 41, 69, 0.38);
-  --text: #dce8ff;
-  --muted: #91a7d4;
-  --line: rgba(132, 168, 230, 0.28);
-  --accent: #82b2ff;
-  --accent-soft: rgba(98, 145, 224, 0.3);
-  --accent-ink: #dbe7ff;
-  --checker-base: #091329;
+  --bg: #020808;
+  --bg-spot: #031210;
+  --surface: rgba(5, 38, 35, 0.52);
+  --surface-soft: rgba(4, 30, 28, 0.42);
+  --surface-strong: rgba(6, 45, 41, 0.58);
+  --text: #d6fff8;
+  --muted: #87c9be;
+  --line: rgba(86, 163, 152, 0.34);
+  --accent: #00a896;
+  --accent-soft: rgba(0, 133, 120, 0.36);
+  --accent-ink: #d5fff8;
+  --checker-base: #020909;
   --glass-blur: 11px;
   --glass-saturate: 1.2;
-  --glass-panel-bg: rgba(73, 107, 168, 0.24);
-  --glass-panel-bg-soft: rgba(73, 107, 168, 0.15);
-  --glass-edge: rgba(152, 193, 255, 0.34);
-  --glass-edge-soft: rgba(133, 172, 237, 0.27);
-  --glass-sheen: rgba(235, 245, 255, 0.16);
-  --glass-shadow-soft: 0 12px 40px rgba(2, 6, 14, 0.34);
-  --glass-shadow-strong: 0 24px 62px rgba(2, 6, 14, 0.5);
-  --glass-glow-a: rgba(77, 122, 214, 0.24);
-  --glass-glow-b: rgba(57, 100, 187, 0.2);
-  --glass-glow-c: rgba(45, 78, 146, 0.18);
-  --glass-glow-d: rgba(138, 178, 245, 0.14);
+  --glass-panel-bg: rgba(8, 74, 67, 0.36);
+  --glass-panel-bg-soft: rgba(6, 62, 57, 0.28);
+  --glass-edge: rgba(103, 186, 174, 0.34);
+  --glass-edge-soft: rgba(86, 166, 155, 0.28);
+  --glass-sheen: rgba(225, 255, 249, 0.14);
+  --glass-shadow-soft: 0 12px 38px rgba(1, 10, 9, 0.42);
+  --glass-shadow-strong: 0 24px 58px rgba(1, 10, 9, 0.56);
+  --glass-glow-a: rgba(0, 133, 120, 0.28);
+  --glass-glow-b: rgba(0, 119, 107, 0.24);
+  --glass-glow-c: rgba(0, 99, 90, 0.2);
+  --glass-glow-d: rgba(123, 230, 215, 0.12);
   --glass-tile-a: rgba(86, 125, 196, 0.25);
   --glass-tile-b: rgba(70, 107, 174, 0.22);
   --glass-tile-c: rgba(56, 90, 152, 0.2);
   --glass-tile-d: rgba(98, 138, 204, 0.18);
+  --theme-pattern-image: url("/assets/bg-square-metal-v1.png");
+  --theme-overlay-top: rgba(2, 8, 8, 0.26);
+  --theme-overlay-bottom: rgba(2, 8, 8, 0.52);
+  --theme-base-start: #010505;
+  --theme-base-end: #031110;
+  --theme-noise-top: rgba(240, 255, 249, 0.09);
+  --theme-noise-bottom: rgba(0, 0, 0, 0.28);
 }
 
 html {
   min-height: 100%;
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, #010505 84%, var(--checker-base) 16%) 0%,
-    color-mix(in srgb, #031110 90%, var(--checker-base) 10%) 100%
+    color-mix(in srgb, var(--theme-base-start) 88%, var(--checker-base) 12%) 0%,
+    color-mix(in srgb, var(--theme-base-end) 90%, var(--checker-base) 10%) 100%
   );
 }
 
@@ -150,16 +178,16 @@ body {
   background:
     linear-gradient(
       180deg,
-      rgba(2, 8, 8, 0.26) 0%,
-      rgba(2, 8, 8, 0.52) 100%
+      var(--theme-overlay-top) 0%,
+      var(--theme-overlay-bottom) 100%
     ),
     radial-gradient(1080px 700px at 10% -12%, color-mix(in srgb, var(--glass-glow-a) 62%, transparent) 0%, transparent 66%),
     radial-gradient(920px 640px at 108% -8%, color-mix(in srgb, var(--glass-glow-b) 56%, transparent) 0%, transparent 68%),
-    url("/assets/bg-square-metal-v1.png") center top / cover fixed no-repeat,
+    var(--theme-pattern-image) center top / cover fixed no-repeat,
     linear-gradient(
       180deg,
-      color-mix(in srgb, #010505 88%, var(--bg) 12%) 0%,
-      color-mix(in srgb, #031110 92%, var(--bg-spot) 8%) 100%
+      color-mix(in srgb, var(--theme-base-start) 88%, var(--bg) 12%) 0%,
+      color-mix(in srgb, var(--theme-base-end) 90%, var(--bg-spot) 10%) 100%
     );
 }
 
@@ -191,9 +219,9 @@ body::before {
   background-image:
     linear-gradient(
       180deg,
-      color-mix(in srgb, #f0fff9 9%, transparent) 0%,
+      var(--theme-noise-top) 0%,
       transparent 30%,
-      color-mix(in srgb, #000000 28%, transparent) 100%
+      var(--theme-noise-bottom) 100%
     ),
     var(--glass-noise);
   background-size:
@@ -212,6 +240,25 @@ html[data-theme="dark"] body::before {
 }
 
 @media (max-width: 1080px) and (pointer: coarse) {
+  body,
+  html[data-theme="light"] body,
+  html[data-theme="dark"] body {
+    background:
+      linear-gradient(
+        180deg,
+        var(--theme-overlay-top) 0%,
+        var(--theme-overlay-bottom) 100%
+      ),
+      radial-gradient(1080px 700px at 10% -12%, color-mix(in srgb, var(--glass-glow-a) 62%, transparent) 0%, transparent 66%),
+      radial-gradient(920px 640px at 108% -8%, color-mix(in srgb, var(--glass-glow-b) 56%, transparent) 0%, transparent 68%),
+      var(--theme-pattern-image) center top / cover scroll no-repeat,
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--theme-base-start) 88%, var(--bg) 12%) 0%,
+        color-mix(in srgb, var(--theme-base-end) 90%, var(--bg-spot) 10%) 100%
+      );
+  }
+
   body::before {
     display: block;
     opacity: 0.24;
@@ -230,7 +277,6 @@ html[data-theme="dark"] body::before {
   .post-item,
   .note,
   .search-results,
-  .home-hero,
   .landing-link-card,
   .link-preview-card
 ) {
@@ -282,7 +328,6 @@ html[data-theme="dark"] body::before {
   .panel:not(.page-tabs):not(.live-graph),
   .post-item,
   .note,
-  .home-hero,
   .landing-link-card
 )::before {
   content: "";
@@ -308,7 +353,6 @@ html[data-theme="dark"] body::before {
   .panel:not(.page-tabs):not(.live-graph),
   .post-item,
   .note,
-  .home-hero,
   .landing-link-card
 )::after {
   content: "";
@@ -328,7 +372,6 @@ html[data-theme="dark"] body::before {
   .panel:not(.page-tabs):not(.live-graph),
   .post-item,
   .note,
-  .home-hero,
   .landing-link-card
 ) > * {
   position: relative;
@@ -402,7 +445,6 @@ html[data-theme="dark"] body::before {
     .post-item,
     .note,
     .search-results,
-    .home-hero,
     .landing-link-card,
     .page-tabs,
     .live-graph
@@ -416,7 +458,6 @@ html[data-theme="dark"] body::before {
     .panel:not(.page-tabs):not(.live-graph),
     .post-item,
     .note,
-    .home-hero,
     .landing-link-card
   )::before {
     opacity: 0.52;
