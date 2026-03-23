@@ -157,3 +157,117 @@ main .post-item:hover,
     width: 100%;
   }
 }
+
+/* 2026-03 editorial renewal */
+
+.section-head {
+  margin-bottom: 0.42rem;
+}
+
+.section-head h2,
+.section-head-inline h2 {
+  font-size: clamp(1.52rem, 1vw + 1.08rem, 2.1rem);
+  letter-spacing: -0.06em;
+  text-wrap: balance;
+}
+
+.post-item {
+  display: grid;
+  grid-template-columns: minmax(150px, 182px) minmax(0, 1fr);
+  gap: 1rem 1.25rem;
+  align-items: start;
+  padding: 1.3rem 1.35rem;
+  border-radius: 30px;
+}
+
+.post-item:hover {
+  transform: translateY(-4px);
+}
+
+.post-item-rail {
+  display: grid;
+  gap: 0.72rem;
+  align-content: start;
+  min-width: 0;
+  padding-right: 0.2rem;
+}
+
+.post-item-label {
+  margin: 0;
+  color: color-mix(in srgb, var(--muted) 96%, transparent);
+  font-family: var(--font-body);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.post-item-body {
+  min-width: 0;
+  display: grid;
+  gap: 0.74rem;
+}
+
+.post-item h3 {
+  margin: 0;
+  font-size: clamp(1.28rem, 1vw + 0.92rem, 1.78rem);
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.post-meta {
+  margin: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.11em;
+}
+
+.post-excerpt {
+  margin: 0;
+  max-width: 72ch;
+  color: color-mix(in srgb, var(--text) 82%, var(--muted));
+  font-size: 1rem;
+  line-height: 1.76;
+}
+
+.post-cta {
+  margin: 0.12rem 0 0;
+}
+
+.post-cta-link {
+  min-height: 46px;
+  padding: 0.72rem 1rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  letter-spacing: 0.11em;
+}
+
+.post-cta-link:hover,
+.post-cta-link:focus-visible {
+  transform: translateY(-1px);
+}
+
+.tag-hero,
+.not-found {
+  border-radius: 30px;
+}
+
+.not-found {
+  min-height: 300px;
+}
+
+@media (max-width: 760px) {
+  .post-item {
+    grid-template-columns: 1fr;
+    gap: 0.84rem;
+    padding: 1rem;
+    border-radius: 24px;
+  }
+
+  .post-item-rail {
+    gap: 0.52rem;
+  }
+
+  .post-excerpt {
+    font-size: 0.96rem;
+  }
+}

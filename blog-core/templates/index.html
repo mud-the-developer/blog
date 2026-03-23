@@ -22,8 +22,8 @@
 
   <section class="panel home-hero">
     <div class="home-hero-copy">
-      <p class="section-kicker">Connected Notes</p>
-      <!-- <h1>Readable notes with glass only where it helps.</h1> -->
+      <p class="section-kicker">Signal Desk</p>
+      <h1>Readable Notes, Papers & Experiments.</h1>
       {% if layout.site_description.len() > 0 %}
       <p class="home-hero-lead">{{ layout.site_description }}</p>
       {% endif %}
@@ -34,35 +34,32 @@
       </div>
     </div>
     <div class="home-hero-preview" aria-hidden="true">
-      <div class="hero-prism">
-        <div class="hero-prism-card hero-prism-card--primary">
-          <span class="hero-prism-label">Surface</span>
-          <strong>Selective glass</strong>
-          <p>Search, folders, graph, and long-form reading each keep a clearer layer so the page feels lighter.</p>
+      <div class="hero-ledger">
+        <div class="hero-ledger-head">
+          <span class="hero-ledger-kicker">Issue 01</span>
+          <strong>Fast Scan, Deep Read</strong>
+          <p>Navigation stays docked, but long-form reading now owns the visual center.</p>
         </div>
-        <div class="hero-prism-row">
-          <div class="hero-prism-card hero-prism-card--metric">
-            <span>Notes</span>
-            <strong>{{ posts.len() }}</strong>
-          </div>
-          <div class="hero-prism-card hero-prism-card--metric">
-            <span>Tags</span>
+        <div class="hero-ledger-grid">
+          <article class="hero-ledger-card hero-ledger-card--feature">
+            <span class="hero-ledger-label">Current Inventory</span>
+            <strong>{{ posts.len() }} Published Notes</strong>
+            <p>Folders, search, graph, and the news radar all sit on the same calmer grid.</p>
+          </article>
+          <article class="hero-ledger-card">
+            <span class="hero-ledger-label">Tags</span>
             <strong>{{ tags.len() }}</strong>
-          </div>
-          <div class="hero-prism-card hero-prism-card--metric">
-            <span>Folders</span>
+            <p>Active topics</p>
+          </article>
+          <article class="hero-ledger-card">
+            <span class="hero-ledger-label">Folders</span>
             <strong>{{ folders.len() }}</strong>
-          </div>
-        </div>
-        <div class="hero-prism-card hero-prism-card--signal">
-          <span class="hero-prism-label">Signal</span>
-          <div class="hero-prism-track"><span></span></div>
-          <div class="hero-prism-tags">
-            <span class="hero-prism-tag">Search</span>
-            <span class="hero-prism-tag">Folders</span>
-            <span class="hero-prism-tag">Graph</span>
-            <span class="hero-prism-tag">Reading</span>
-          </div>
+            <p>Browse shelves</p>
+          </article>
+          <article class="hero-ledger-card hero-ledger-card--wide">
+            <span class="hero-ledger-label">Radar</span>
+            <p>/news/, /graph/, and note pages now feel like one editorial system instead of separate tools.</p>
+          </article>
         </div>
       </div>
     </div>
@@ -138,17 +135,22 @@
     </header>
     {% for post in posts %}
     <article class="panel post-item">
-      <h3><a class="title-link" href="{{ post.url }}">{% if let Some(icon) = post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}{{ post.title }}</a></h3>
-      <p class="post-meta">{{ post.date_display }}{% if let Some(updated) = post.updated_display %} • updated {{ updated }}{% endif %} • {{ post.reading_time_min }} min read</p>
-      <p class="post-excerpt">{{ post.excerpt }}</p>
-      {% if post.tags.len() > 0 %}
-      <div class="tag-wrap">
-        {% for tag in post.tags %}
-        <a class="tag" href="/tags/{{ tag.slug }}/">#{{ tag.name }}</a>
-        {% endfor %}
+      <div class="post-item-rail">
+        <p class="post-item-label">Published</p>
+        <p class="post-meta">{{ post.date_display }}{% if let Some(updated) = post.updated_display %} • updated {{ updated }}{% endif %} • {{ post.reading_time_min }} min read</p>
+        {% if post.tags.len() > 0 %}
+        <div class="tag-wrap">
+          {% for tag in post.tags %}
+          <a class="tag" href="/tags/{{ tag.slug }}/">#{{ tag.name }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
       </div>
-      {% endif %}
-      <p class="post-cta"><a class="post-cta-link" href="{{ post.url }}">Read note →</a></p>
+      <div class="post-item-body">
+        <h3><a class="title-link" href="{{ post.url }}">{% if let Some(icon) = post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}{{ post.title }}</a></h3>
+        <p class="post-excerpt">{{ post.excerpt }}</p>
+        <p class="post-cta"><a class="post-cta-link" href="{{ post.url }}">Open Note →</a></p>
+      </div>
     </article>
     {% endfor %}
   </section>

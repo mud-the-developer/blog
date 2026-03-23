@@ -10,3 +10,19 @@
     padding: 0.24rem 0.66rem;
   }
 }
+
+@media (pointer: coarse) {
+  a,
+  button,
+  summary,
+  input,
+  .tag,
+  .page-tab,
+  .site-nav-icon-link,
+  .home-hero-action,
+  .post-cta-link,
+  .landing-link-card {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(31, 98, 210, 0.12);
+  }
+}

@@ -473,3 +473,142 @@ html[data-theme="dark"] .note-body li code {
     border-radius: 18px;
   }
 }
+
+/* 2026-03 editorial renewal */
+
+.note {
+  padding: 1.9rem 2rem;
+  border-radius: 34px;
+}
+
+.note-header {
+  gap: 0.8rem;
+  margin-bottom: 1.55rem;
+  padding-bottom: 1.22rem;
+}
+
+.note-header h1 {
+  max-width: 15ch;
+  font-size: clamp(2.7rem, 3.2vw + 1rem, 4.6rem);
+  letter-spacing: -0.085em;
+}
+
+.note-route {
+  padding: 0.48rem 0.84rem;
+  background: color-mix(in srgb, var(--panel-bg) 92%, transparent);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+}
+
+.note-body {
+  max-width: 70ch;
+  color: color-mix(in srgb, var(--text) 94%, transparent);
+  font-size: clamp(1.06rem, 0.34vw + 0.98rem, 1.18rem);
+  line-height: 1.92;
+}
+
+.note-body :where(h2, h3, h4) {
+  margin-bottom: 0.72rem;
+  letter-spacing: -0.055em;
+  scroll-margin-top: 6.8rem;
+}
+
+.note-body h2 {
+  margin-top: 2.8rem;
+  font-size: 1.96rem;
+}
+
+.note-body h3 {
+  margin-top: 2.1rem;
+  font-size: 1.5rem;
+}
+
+.note-body h4 {
+  margin-top: 1.6rem;
+  font-size: 1.2rem;
+}
+
+.note-body p {
+  margin: 1.06rem 0;
+}
+
+.note-body :where(ul, ol) {
+  margin: 1.06rem 0;
+  padding-left: 1.42rem;
+}
+
+.note-body img {
+  margin: 1.6rem auto;
+  border-radius: 24px;
+  box-shadow: 0 22px 42px color-mix(in srgb, #09121d 12%, transparent);
+}
+
+.note-body p code,
+.note-body li code {
+  padding: 0.2rem 0.46rem;
+  background: color-mix(in srgb, var(--accent-soft) 34%, var(--panel-bg));
+  font-size: 0.82em;
+}
+
+.note-body pre {
+  padding: 1.08rem 1.12rem;
+  border-radius: 24px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel-bg) 98%, transparent) 0%, color-mix(in srgb, var(--panel-bg-muted) 98%, transparent) 100%);
+  box-shadow: 0 18px 34px color-mix(in srgb, #09121d 8%, transparent);
+}
+
+.note-body blockquote {
+  padding: 1rem 1.08rem 1rem 1.18rem;
+  border-left-width: 4px;
+  border-radius: 22px;
+  background: color-mix(in srgb, var(--accent-soft) 16%, var(--panel-bg-muted));
+}
+
+.note-body table {
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--panel-bg) 98%, transparent);
+}
+
+.note-body th,
+.note-body td {
+  padding: 0.78rem 0.86rem;
+}
+
+.backlinks {
+  margin-top: 3rem;
+  padding-top: 1.4rem;
+}
+
+.backlinks h2 {
+  font-size: 1.5rem;
+}
+
+.backlinks li {
+  padding: 1rem 1.06rem;
+  border-radius: 24px;
+}
+
+@media (max-width: 760px) {
+  .note {
+    padding: 1.06rem;
+    border-radius: 26px;
+  }
+
+  .note-header h1 {
+    max-width: 100%;
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .note-body {
+    font-size: 1rem;
+    line-height: 1.84;
+  }
+
+  .note-body h2 {
+    font-size: 1.62rem;
+  }
+
+  .note-body h3 {
+    font-size: 1.3rem;
+  }
+}

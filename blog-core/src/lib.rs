@@ -220,7 +220,7 @@ pub struct SiteText {
 impl Default for SiteText {
     fn default() -> Self {
         Self {
-            search_placeholder: "Search notes...".to_string(),
+            search_placeholder: "Search notes…".to_string(),
             pages_heading: "Pages".to_string(),
             toc_heading: "On This Page".to_string(),
             backlinks_heading: "Linked Mentions".to_string(),
@@ -4137,7 +4137,8 @@ fn build_start_here_links(posts: &[Post], news_available: bool) -> Vec<LandingLi
         links.push(LandingLink {
             title: "News Radar".to_string(),
             url: "/news/".to_string(),
-            description: "Track repos, papers, and social signals in a separate news feed.".to_string(),
+            description: "Track repos, papers, and social signals in a separate news feed."
+                .to_string(),
             cta: "Open news".to_string(),
         });
     }
@@ -5163,7 +5164,7 @@ fn extract_excerpt(markdown: &str, max_chars: usize) -> String {
         normalized
     } else {
         let excerpt = normalized.chars().take(max_chars).collect::<String>();
-        format!("{}...", excerpt.trim_end())
+        format!("{}…", excerpt.trim_end())
     }
 }
 
