@@ -22,14 +22,48 @@
 
   <section class="panel home-hero">
     <div class="home-hero-copy">
-      <h1 class="sr-only">{{ layout.site_title }}</h1>
+      <p class="section-kicker">Glass Garden</p>
+      <h1>Layered notes behind a living glass surface.</h1>
       {% if layout.site_description.len() > 0 %}
       <p class="home-hero-lead">{{ layout.site_description }}</p>
       {% endif %}
       <div class="home-hero-actions" role="group" aria-label="Primary actions">
-        <a class="home-hero-action" href="#start-here">Start Here</a>
-        <a class="home-hero-action" href="#folders">Folders</a>
-        <a class="home-hero-action" href="/graph/">Graph</a>
+        <a class="home-hero-action" href="#start-here">Open Guide</a>
+        <a class="home-hero-action" href="#folders">Browse Folders</a>
+        <a class="home-hero-action" href="/graph/">View Graph</a>
+      </div>
+    </div>
+    <div class="home-hero-preview" aria-hidden="true">
+      <div class="hero-prism">
+        <div class="hero-prism-card hero-prism-card--primary">
+          <span class="hero-prism-label">Surface</span>
+          <strong>Linked notebook</strong>
+          <p>Search, folders, graph, and long-form reading views stacked inside one frosted shell.</p>
+        </div>
+        <div class="hero-prism-row">
+          <div class="hero-prism-card hero-prism-card--metric">
+            <span>Notes</span>
+            <strong>{{ posts.len() }}</strong>
+          </div>
+          <div class="hero-prism-card hero-prism-card--metric">
+            <span>Tags</span>
+            <strong>{{ tags.len() }}</strong>
+          </div>
+          <div class="hero-prism-card hero-prism-card--metric">
+            <span>Folders</span>
+            <strong>{{ folders.len() }}</strong>
+          </div>
+        </div>
+        <div class="hero-prism-card hero-prism-card--signal">
+          <span class="hero-prism-label">Signal</span>
+          <div class="hero-prism-track"><span></span></div>
+          <div class="hero-prism-tags">
+            <span class="hero-prism-tag">Search</span>
+            <span class="hero-prism-tag">Graph</span>
+            <span class="hero-prism-tag">Backlinks</span>
+            <span class="hero-prism-tag">Reading</span>
+          </div>
+        </div>
       </div>
     </div>
     <dl class="home-hero-stats" aria-label="Garden statistics">

@@ -375,3 +375,198 @@ html[data-theme="dark"] .note-body li code {
   line-height: 1.45;
   font-family: var(--font-body);
 }
+
+/* Prism glass note theme */
+.note {
+  padding: 1.8rem 1.9rem;
+  border-radius: 28px;
+}
+
+.note-header {
+  display: grid;
+  gap: 0.82rem;
+  margin-bottom: 1.35rem;
+  padding-bottom: 1.16rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 78%, transparent);
+}
+
+.note-header h1 {
+  margin: 0;
+  max-width: 14ch;
+  font-size: clamp(2.4rem, 3vw + 1rem, 4rem);
+  font-weight: 700;
+  line-height: 0.94;
+  letter-spacing: -0.08em;
+  text-wrap: balance;
+}
+
+.note-route {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 0;
+  padding: 0.42rem 0.76rem;
+  border: 1px solid color-mix(in srgb, var(--glass-edge-soft) 92%, transparent);
+  border-radius: 999px;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--glass-panel-bg-soft) 80%, #ffffff 20%) 0%, color-mix(in srgb, var(--glass-panel-bg-soft) 96%, transparent) 100%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #ffffff 42%, transparent),
+    0 10px 22px color-mix(in srgb, #09121d 10%, transparent);
+  color: color-mix(in srgb, var(--text) 68%, var(--muted));
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.note-body {
+  max-width: 74ch;
+  font-family: var(--font-reading);
+  font-size: clamp(1.05rem, 0.36vw + 0.96rem, 1.18rem);
+  line-height: 1.92;
+  color: color-mix(in srgb, var(--text) 92%, transparent);
+}
+
+.note-body > :first-child {
+  margin-top: 0;
+}
+
+.note-body :where(h2, h3, h4) {
+  font-family: var(--font-body);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1.08;
+}
+
+.note-body h2 {
+  margin-top: 2.4rem;
+  margin-bottom: 0.72rem;
+  font-size: 1.8rem;
+}
+
+.note-body h3 {
+  margin-top: 1.9rem;
+  margin-bottom: 0.62rem;
+  font-size: 1.4rem;
+}
+
+.note-body p {
+  margin: 1rem 0;
+}
+
+.note-body a {
+  color: var(--accent);
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.18em;
+}
+
+.note-body img {
+  display: block;
+  border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--glass-edge-soft) 90%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #ffffff 18%, transparent),
+    0 18px 34px color-mix(in srgb, #09121d 10%, transparent);
+}
+
+.note-body p code,
+.note-body li code {
+  padding: 0.18rem 0.42rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--glass-edge-soft) 88%, transparent);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--glass-panel-bg-soft) 74%, #ffffff 26%) 0%, color-mix(in srgb, var(--glass-panel-bg-soft) 96%, transparent) 100%);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #ffffff 38%, transparent);
+  color: color-mix(in srgb, var(--text) 92%, transparent);
+}
+
+.note-body pre {
+  border-radius: 22px;
+  border: 1px solid color-mix(in srgb, var(--glass-edge-soft) 92%, transparent);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--glass-panel-bg-soft) 80%, #ffffff 20%) 0%, color-mix(in srgb, var(--glass-panel-bg-soft) 96%, transparent) 100%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #ffffff 38%, transparent),
+    0 18px 32px color-mix(in srgb, #09121d 10%, transparent);
+  padding: 1rem 1.08rem;
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+
+.note-body blockquote {
+  margin: 1.2rem 0;
+  padding: 0.82rem 1rem 0.82rem 1.12rem;
+  border-left: 3px solid color-mix(in srgb, var(--accent) 76%, transparent);
+  border-radius: 20px;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--accent-soft) 28%, #ffffff 72%) 0%, color-mix(in srgb, var(--glass-panel-bg-soft) 92%, transparent) 100%);
+  color: color-mix(in srgb, var(--text) 78%, var(--muted));
+}
+
+.backlinks {
+  margin-top: 2.6rem;
+  padding-top: 1.2rem;
+}
+
+.backlinks h2 {
+  font-size: 1.36rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+
+.backlinks ul {
+  gap: 0.78rem;
+}
+
+.backlinks li {
+  padding: 0.92rem 0.96rem;
+  border: 1px solid color-mix(in srgb, var(--glass-edge-soft) 92%, transparent);
+  border-radius: 22px;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--glass-panel-bg-soft) 80%, #ffffff 20%) 0%, color-mix(in srgb, var(--glass-panel-bg-soft) 96%, transparent) 100%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #ffffff 42%, transparent),
+    0 12px 26px color-mix(in srgb, #09121d 8%, transparent);
+}
+
+@media (max-width: 760px) {
+  .note {
+    padding: 1rem;
+    border-radius: 24px;
+  }
+
+  .note-header {
+    gap: 0.68rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.92rem;
+  }
+
+  .note-header h1 {
+    font-size: clamp(1.8rem, 8.4vw, 2.6rem);
+    max-width: 100%;
+  }
+
+  .note-route {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+  }
+
+  .note-body {
+    font-size: 1rem;
+    line-height: 1.82;
+  }
+
+  .note-body h2 {
+    font-size: 1.5rem;
+  }
+
+  .note-body h3 {
+    font-size: 1.24rem;
+  }
+
+  .note-body pre {
+    padding: 0.9rem 0.92rem;
+  }
+}
