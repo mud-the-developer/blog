@@ -12,6 +12,7 @@ use lightningcss::stylesheet::{
 use maud::{html, PreEscaped};
 use once_cell::sync::Lazy;
 use pulldown_cmark::{html::push_html, Options, Parser};
+use rayon::prelude::*;
 use regex::{Captures, Regex};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
@@ -897,7 +898,6 @@ fn render_posts(
     dataviewjs_mode: DataviewJsMode,
     regex_filters: &[RegexFilterRule],
 ) -> Result<Vec<Post>> {
-    let mut posts = Vec::with_capacity(seeds.len());
     let mut embed_sources = HashMap::with_capacity(seeds.len());
     let known_slugs = seeds
         .iter()
@@ -925,69 +925,73 @@ fn render_posts(
         );
     }
 
-    for seed in seeds {
-        let body = embed_sources
-            .get(&seed.slug)
-            .map(|source| source.markdown.as_str())
-            .unwrap_or_default();
-        let filtered_body = apply_custom_regex_filters(body, regex_filters);
-        let with_dataview_blocks =
-            apply_dataview_blocks(&filtered_body, &seed_summaries, &seed.slug, dataviewjs_mode);
-        let with_dataview = apply_dataview_inline(
-            &with_dataview_blocks,
-            &seed_summaries,
-            &seed.slug,
-            &seed.title,
-            &seed.tags,
-        );
+    let posts = seeds
+        .par_iter()
+        .map(|seed| {
+            let body = embed_sources
+                .get(&seed.slug)
+                .map(|source| source.markdown.as_str())
+                .unwrap_or_default();
+            let filtered_body = apply_custom_regex_filters(body, regex_filters);
+            let with_dataview_blocks =
+                apply_dataview_blocks(&filtered_body, &seed_summaries, &seed.slug, dataviewjs_mode);
+            let with_dataview = apply_dataview_inline(
+                &with_dataview_blocks,
+                &seed_summaries,
+                &seed.slug,
+                &seed.title,
+                &seed.tags,
+            );
 
-        let (rewritten, outgoing_links) =
-            rewrite_wikilinks(&with_dataview, slug_map, &embed_sources, &seed.slug, true);
-        let unresolved_note_slugs = extract_referenced_note_slugs(&rewritten)
-            .into_iter()
-            .filter(|slug| !known_slugs.contains(slug))
-            .collect::<Vec<_>>();
-        let markdown_html =
-            rewrite_relative_image_asset_urls(&markdown_to_html(&rewritten), &seed.source_rel_path);
-        let toc = extract_toc_entries(&markdown_html);
-        let rich_content_classes = detect_rich_note_content_classes(&markdown_html);
-        let has_rich_note_styles = !rich_content_classes.is_empty();
-        let mut content_classes = seed.content_classes.clone();
-        for class_name in rich_content_classes {
-            if !content_classes.iter().any(|item| item == class_name) {
-                content_classes.push(class_name.to_string());
+            let (rewritten, outgoing_links) =
+                rewrite_wikilinks(&with_dataview, slug_map, &embed_sources, &seed.slug, true);
+            let unresolved_note_slugs = extract_referenced_note_slugs(&rewritten)
+                .into_iter()
+                .filter(|slug| !known_slugs.contains(slug))
+                .collect::<Vec<_>>();
+            let markdown_html = rewrite_relative_image_asset_urls(
+                &markdown_to_html(&rewritten),
+                &seed.source_rel_path,
+            );
+            let toc = extract_toc_entries(&markdown_html);
+            let rich_content_classes = detect_rich_note_content_classes(&markdown_html);
+            let has_rich_note_styles = !rich_content_classes.is_empty();
+            let mut content_classes = seed.content_classes.clone();
+            for class_name in rich_content_classes {
+                if !content_classes.iter().any(|item| item == class_name) {
+                    content_classes.push(class_name.to_string());
+                }
             }
-        }
+            let excerpt = extract_excerpt(body, 200);
+            let description = seed.description.clone().unwrap_or_else(|| excerpt.clone());
 
-        let excerpt = extract_excerpt(body, 200);
-        let description = seed.description.clone().unwrap_or_else(|| excerpt.clone());
-
-        posts.push(Post {
-            slug: seed.slug.clone(),
-            title: seed.title.clone(),
-            source_rel_path: seed.source_rel_path.clone(),
-            description,
-            excerpt,
-            tags: seed.tags.clone(),
-            date: seed.date,
-            updated: seed.updated,
-            markdown_html,
-            toc,
-            outgoing_links,
-            unresolved_note_slugs,
-            reading_time_min: estimate_reading_time_minutes(body),
-            is_home: seed.is_home,
-            enable_search: seed.enable_search,
-            show_local_graph: seed.show_local_graph,
-            pinned: seed.pinned,
-            hidden: seed.hidden,
-            hide_in_graph: seed.hide_in_graph,
-            note_icon: seed.note_icon.clone(),
-            meta_tags: seed.meta_tags.clone(),
-            has_rich_note_styles,
-            content_classes,
-        });
-    }
+            Post {
+                slug: seed.slug.clone(),
+                title: seed.title.clone(),
+                source_rel_path: seed.source_rel_path.clone(),
+                description,
+                excerpt,
+                tags: seed.tags.clone(),
+                date: seed.date,
+                updated: seed.updated,
+                markdown_html,
+                toc,
+                outgoing_links,
+                unresolved_note_slugs,
+                reading_time_min: estimate_reading_time_minutes(body),
+                is_home: seed.is_home,
+                enable_search: seed.enable_search,
+                show_local_graph: seed.show_local_graph,
+                pinned: seed.pinned,
+                hidden: seed.hidden,
+                hide_in_graph: seed.hide_in_graph,
+                note_icon: seed.note_icon.clone(),
+                meta_tags: seed.meta_tags.clone(),
+                has_rich_note_styles,
+                content_classes,
+            }
+        })
+        .collect::<Vec<_>>();
 
     Ok(posts)
 }
@@ -1696,7 +1700,7 @@ fn build_graph_data(posts: &[Post]) -> (Vec<GraphNode>, Vec<GraphLink>) {
 }
 
 fn write_local_graphs(config: &BuildConfig, posts: &[Post]) -> Result<()> {
-    for post in posts {
+    posts.par_iter().try_for_each(|post| -> Result<()> {
         let (nodes, links) = build_local_graph_data(posts, &post.slug, 2, 72);
         let payload = json!({
             "center": post.slug,
@@ -1710,8 +1714,8 @@ fn write_local_graphs(config: &BuildConfig, posts: &[Post]) -> Result<()> {
                 .join("local-graph")
                 .join(format!("{}.json", post.slug)),
             serde_json::to_string_pretty(&payload)?,
-        )?;
-    }
+        )
+    })?;
 
     Ok(())
 }

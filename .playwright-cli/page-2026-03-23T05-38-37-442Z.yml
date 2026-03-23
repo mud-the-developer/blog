@@ -1,0 +1,245 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - paragraph [ref=e6]: Notes
+        - paragraph [ref=e7]:
+          - link "Mud's Blog" [ref=e8] [cursor=pointer]:
+            - /url: /
+        - paragraph [ref=e9]: Connected notes
+      - navigation "Main navigation" [ref=e11]:
+        - link "Blog Home" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - img [ref=e13]
+          - generic [ref=e17]: Blog Home
+        - link "RSS Feed" [ref=e18] [cursor=pointer]:
+          - /url: /rss.xml
+          - img [ref=e19]
+          - generic [ref=e23]: RSS Feed
+        - link "Graph View" [ref=e24] [cursor=pointer]:
+          - /url: /graph/
+          - img [ref=e25]
+          - generic [ref=e31]: Graph View
+        - button "Switch to dark mode" [ref=e32] [cursor=pointer]:
+          - img [ref=e33]
+          - generic [ref=e35]: Switch to dark mode
+    - generic [ref=e36]:
+      - complementary "Page tabs" [ref=e37]:
+        - generic [ref=e38]:
+          - generic [ref=e39]: Search notes
+          - combobox "Search notes" [ref=e40]
+          - paragraph
+        - group [ref=e41]:
+          - generic "Pages" [ref=e42] [cursor=pointer]:
+            - heading "Pages" [level=2] [ref=e43]
+            - generic [ref=e44]: ▾
+          - navigation "Pages" [ref=e45]:
+            - 'link "README Post Template home Use this file as a starter when you want to publish a README style project post. What this project does in one sentence. Who it is for. Why it exists. Status: active / prototype / archive..." [ref=e46] [cursor=pointer]':
+              - /url: /notes/blog/readme-post-template/
+              - generic [ref=e47]: README Post Template
+              - generic [ref=e48]: "home Use this file as a starter when you want to publish a README style project post. What this project does in one sentence. Who it is for. Why it exists. Status: active / prototype / archive..."
+            - link "Home I'm Jinhyuk Kim from South Korea 🇰🇷 Welcome to my blog" [ref=e49] [cursor=pointer]:
+              - /url: /notes/home/
+              - generic [ref=e50]: Home
+              - generic [ref=e51]: I'm Jinhyuk Kim from South Korea 🇰🇷 Welcome to my blog
+            - 'link "Second Brain Architecture This note explains the pipeline: 1. Parse frontmatter publish, home, tags. 2. Rewrite Obsidian wikilinks. 3. Render markdown. 4. Generate static HTML pages. See also home and SEO and Performance Guide..." [ref=e52] [cursor=pointer]':
+              - /url: /notes/blog/second-brain/
+              - generic [ref=e53]: Second Brain Architecture
+              - generic [ref=e54]: "This note explains the pipeline: 1. Parse frontmatter publish, home, tags. 2. Rewrite Obsidian wikilinks. 3. Render markdown. 4. Generate static HTML pages. See also home and SEO and Performance Guide..."
+            - 'link "SEO and Performance Guide Key points: Canonical URL for each page. Open Graph and Twitter tags. JSON LD structured data. sitemap.xml, robots.txt, rss.xml. Lightweight CSS and static hosting. This page links back to s..." [ref=e55] [cursor=pointer]':
+              - /url: /notes/blog/seo-performance-guide/
+              - generic [ref=e56]: SEO and Performance Guide
+              - generic [ref=e57]: "Key points: Canonical URL for each page. Open Graph and Twitter tags. JSON LD structured data. sitemap.xml, robots.txt, rss.xml. Lightweight CSS and static hosting. This page links back to s..."
+            - 'link "GitHub to Cloudflare Pipeline This note documents how markdown updates move to production. blog build compiles notes into static files under dist/. Source: content/posts Static assets: static Outputs: index.html, sitemap.xml..." [ref=e58] [cursor=pointer]':
+              - /url: /notes/blog/github-cloudflare-pipeline/
+              - generic [ref=e59]: GitHub to Cloudflare Pipeline
+              - generic [ref=e60]: "This note documents how markdown updates move to production. blog build compiles notes into static files under dist/. Source: content/posts Static assets: static Outputs: index.html, sitemap.xml..."
+            - 'link "Obsidian Linking Habits Connected writing stays maintainable when links are explicit. note for direct references label for readable anchor text note for deep links into long notes Examples: Start from home Deployme..." [ref=e61] [cursor=pointer]':
+              - /url: /notes/blog/obsidian-linking-habits/
+              - generic [ref=e62]: Obsidian Linking Habits
+              - generic [ref=e63]: "Connected writing stays maintainable when links are explicit. note for direct references label for readable anchor text note for deep links into long notes Examples: Start from home Deployme..."
+            - 'link "Rust Rendering Notes This stack uses Askama for page skeletons and Maud for assembled fragments. Askama: predictable layout and metadata templates Maud: ergonomic generation of backlink sections and composed HTML bloc..." [ref=e64] [cursor=pointer]':
+              - /url: /notes/blog/rust-rendering-notes/
+              - generic [ref=e65]: Rust Rendering Notes
+              - generic [ref=e66]: "This stack uses Askama for page skeletons and Maud for assembled fragments. Askama: predictable layout and metadata templates Maud: ergonomic generation of backlink sections and composed HTML bloc..."
+            - link "Jinhyuk Kim Jinhyuk Kim holds a B.S. degree from Yonsei University in Korea. He has completed internships in the Mobile Communications Lab and the Robotics and Mobile Networks RAMO Lab and is currently pursuing h..." [ref=e67] [cursor=pointer]:
+              - /url: /notes/jinhyuk-kim/
+              - generic [ref=e68]: Jinhyuk Kim
+              - generic [ref=e69]: Jinhyuk Kim holds a B.S. degree from Yonsei University in Korea. He has completed internships in the Mobile Communications Lab and the Robotics and Mobile Networks RAMO Lab and is currently pursuing h...
+            - 'link "Obsidian Blog Helper 설치 가이드 이 글은 obsidian blog helper init로 블로그 Vault와 Obsidian 플러그인을 한 번에 세팅하는 방법을 정리합니다. Git Obsidian Desktop Node.jsnpx 또는 Bunbunx 확인: bash git version node v bun version bash npx y obsidian blog..." [ref=e70] [cursor=pointer]':
+              - /url: /notes/blog/installation/
+              - generic [ref=e71]: Obsidian Blog Helper 설치 가이드
+              - generic [ref=e72]: "이 글은 obsidian blog helper init로 블로그 Vault와 Obsidian 플러그인을 한 번에 세팅하는 방법을 정리합니다. Git Obsidian Desktop Node.jsnpx 또는 Bunbunx 확인: bash git version node v bun version bash npx y obsidian blog..."
+            - 'link "Uncertainty-Aware Hybrid Inference with On-Device Small and Remote Large Language Models Source: https://arxiv.org/pdf/2412.12687.pdfhttps://arxiv.org/pdf/2412.12687.pdf U HLM lets the on device SLM opportunistically skip uplink transmission and server side LLM verification for low unce..." [ref=e73] [cursor=pointer]':
+              - /url: /notes/papers/uhlm-2412-12687/
+              - generic [ref=e74]: Uncertainty-Aware Hybrid Inference with On-Device Small and Remote Large Language Models
+              - generic [ref=e75]: "Source: https://arxiv.org/pdf/2412.12687.pdfhttps://arxiv.org/pdf/2412.12687.pdf U HLM lets the on device SLM opportunistically skip uplink transmission and server side LLM verification for low unce..."
+      - main [ref=e76]:
+        - article [ref=e77]:
+          - generic [ref=e78]:
+            - paragraph [ref=e79]: Note
+            - heading "README Post Template" [level=1] [ref=e80]
+            - paragraph [ref=e81]: 2026-02-18 • 2 min read
+            - generic [ref=e82]:
+              - link "#blog" [ref=e83] [cursor=pointer]:
+                - /url: /tags/blog/
+              - link "#readme" [ref=e84] [cursor=pointer]:
+                - /url: /tags/readme/
+              - link "#template" [ref=e85] [cursor=pointer]:
+                - /url: /tags/template/
+            - paragraph [ref=e86]: /notes/blog/readme-post-template/
+          - article [ref=e87]:
+            - paragraph [ref=e88]:
+              - link "home" [ref=e89] [cursor=pointer]:
+                - /url: /notes/home/
+            - heading "README Post Template" [level=1] [ref=e90]
+            - paragraph [ref=e91]: Use this file as a starter when you want to publish a README-style project post.
+            - heading "TL;DR" [level=2] [ref=e92]
+            - list [ref=e93]:
+              - listitem [ref=e94]: What this project does in one sentence.
+              - listitem [ref=e95]: Who it is for.
+              - listitem [ref=e96]: Why it exists.
+            - heading "Project Snapshot" [level=2] [ref=e97]
+            - list [ref=e98]:
+              - listitem [ref=e99]:
+                - text: "Status:"
+                - code [ref=e100]: active
+                - text: /
+                - code [ref=e101]: prototype
+                - text: /
+                - code [ref=e102]: archived
+              - listitem [ref=e103]:
+                - text: "Stack:"
+                - code [ref=e104]: rust
+                - text: ","
+                - code [ref=e105]: askama
+                - text: ","
+                - code [ref=e106]: maud
+                - text: ","
+                - code [ref=e107]: axum
+              - listitem [ref=e108]:
+                - text: "Deploy:"
+                - code [ref=e109]: Cloudflare Pages
+              - listitem [ref=e110]:
+                - text: "Repo:"
+                - code [ref=e111]: <your-repo-url>
+            - heading "Problem" [level=2] [ref=e112]
+            - paragraph [ref=e113]: Describe the pain point this project solves.
+            - heading "Solution" [level=2] [ref=e114]
+            - paragraph [ref=e115]: Describe your approach and key design decisions.
+            - heading "Core Features" [level=2] [ref=e116]
+            - list [ref=e117]:
+              - listitem [ref=e118]: "Feature 1: short description"
+              - listitem [ref=e119]: "Feature 2: short description"
+              - listitem [ref=e120]: "Feature 3: short description"
+            - heading "Architecture" [level=2] [ref=e121]
+            - code [ref=e123]: content/posts -> parser -> renderer -> dist/
+            - heading "Frontmatter Example" [level=2] [ref=e124]
+            - code [ref=e126]: "--- title: My Note description: Short summary date: 2026-02-18 tags: [rust, notes] publish: true ---"
+            - heading "Obsidian Syntax Examples" [level=2] [ref=e127]
+            - paragraph [ref=e128]: "Note: keep the backslashes below only if you want to show syntax as plain text."
+            - list [ref=e129]:
+              - listitem [ref=e130]:
+                - text: "Wikilink:"
+                - code [ref=e131]: \[\[second-brain\]\]
+              - listitem [ref=e132]:
+                - text: "Aliased wikilink:"
+                - code [ref=e133]: \[\[second-brain|Second Brain\]\]
+              - listitem [ref=e134]:
+                - text: "Embed:"
+                - code [ref=e135]: "!\\[\\[attachments/spec.pdf|Spec PDF\\]\\]"
+            - heading "Local Build" [level=2] [ref=e136]
+            - code [ref=e138]: cargo run -p blog-build -- \ --site-url https://your-domain.pages.dev \ --title "My Garden" \ --description "Connected notes"
+            - heading "Local Preview" [level=2] [ref=e139]
+            - code [ref=e141]: cargo run -p blog-dev -- --site-url http://localhost:8788
+            - heading "Deployment" [level=2] [ref=e142]
+            - list [ref=e143]:
+              - listitem [ref=e144]:
+                - text: Push to
+                - code [ref=e145]: main
+              - listitem [ref=e146]:
+                - text: GitHub Actions builds
+                - code [ref=e147]: dist/
+              - listitem [ref=e148]: Deploy to Cloudflare Pages
+            - heading "Trade-offs" [level=2] [ref=e149]
+            - list [ref=e150]:
+              - listitem [ref=e151]: Trade-off 1 and why you accepted it
+              - listitem [ref=e152]: Trade-off 2 and future mitigation plan
+            - heading "Next Steps" [level=2] [ref=e153]
+            - list [ref=e154]:
+              - listitem [ref=e155]:
+                - checkbox [disabled] [ref=e156]
+                - text: Add feature X
+              - listitem [ref=e157]:
+                - checkbox [disabled] [ref=e158]
+                - text: Improve performance for Y
+              - listitem [ref=e159]:
+                - checkbox [disabled] [ref=e160]
+                - text: Write follow-up post
+            - heading "Related Notes" [level=2] [ref=e161]
+            - list [ref=e162]:
+              - listitem [ref=e163]: Replace with your internal links once ready
+              - listitem [ref=e164]:
+                - text: "Example:"
+                - code [ref=e165]: \[\[rust-rendering-notes\]\]
+              - listitem [ref=e166]:
+                - text: "Example:"
+                - code [ref=e167]: \[\[github-cloudflare-pipeline\]\]
+          - generic [ref=e168]:
+            - heading "Linked Mentions" [level=2] [ref=e169]
+            - paragraph [ref=e170]: No linked mentions yet.
+      - complementary "Graph preview" [ref=e171]:
+        - heading "Graph" [level=2] [ref=e173]
+        - generic [ref=e174]:
+          - img "Site graph preview" [ref=e176]
+          - status: Loading graph preview...
+          - generic:
+            - button "Reset graph view" [ref=e177] [cursor=pointer]:
+              - img [ref=e178]
+              - generic [ref=e181]: Reset graph view
+            - group "Graph zoom controls" [ref=e182]:
+              - button "Zoom in" [ref=e183] [cursor=pointer]:
+                - img [ref=e184]
+                - generic [ref=e185]: Zoom in
+              - button "Zoom out" [ref=e186] [cursor=pointer]:
+                - img [ref=e187]
+                - generic [ref=e188]: Zoom out
+        - status [ref=e189]: Hover nodes to inspect relationships.
+        - region "Table of contents" [ref=e190]:
+          - heading "On This Page" [level=3] [ref=e191]
+          - navigation [ref=e192]:
+            - link "TL;DR" [ref=e193] [cursor=pointer]:
+              - /url: "#tl-dr"
+            - link "Project Snapshot" [ref=e194] [cursor=pointer]:
+              - /url: "#project-snapshot"
+            - link "Problem" [ref=e195] [cursor=pointer]:
+              - /url: "#problem"
+            - link "Solution" [ref=e196] [cursor=pointer]:
+              - /url: "#solution"
+            - link "Core Features" [ref=e197] [cursor=pointer]:
+              - /url: "#core-features"
+            - link "Architecture" [ref=e198] [cursor=pointer]:
+              - /url: "#architecture"
+            - link "Frontmatter Example" [ref=e199] [cursor=pointer]:
+              - /url: "#frontmatter-example"
+            - link "Obsidian Syntax Examples" [ref=e200] [cursor=pointer]:
+              - /url: "#obsidian-syntax-examples"
+            - link "Local Build" [ref=e201] [cursor=pointer]:
+              - /url: "#local-build"
+            - link "Local Preview" [ref=e202] [cursor=pointer]:
+              - /url: "#local-preview"
+            - link "Deployment" [ref=e203] [cursor=pointer]:
+              - /url: "#deployment"
+            - link "Trade-offs" [ref=e204] [cursor=pointer]:
+              - /url: "#trade-offs"
+            - link "Next Steps" [ref=e205] [cursor=pointer]:
+              - /url: "#next-steps"
+            - link "Related Notes" [ref=e206] [cursor=pointer]:
+              - /url: "#related-notes"
+    - contentinfo [ref=e207]:
+      - paragraph [ref=e208]:
+        - text: Mud's Blog •
+        - link "http://127.0.0.1:8788" [ref=e209] [cursor=pointer]:
+          - /url: http://127.0.0.1:8788

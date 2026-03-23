@@ -1,0 +1,372 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - paragraph [ref=e6]: Notes
+        - paragraph [ref=e7]:
+          - link "Mud Blog" [ref=e8] [cursor=pointer]:
+            - /url: /
+      - navigation "Main navigation" [ref=e10]:
+        - link "Blog Home" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+          - generic [ref=e16]: Blog Home
+        - link "RSS Feed" [ref=e17] [cursor=pointer]:
+          - /url: /rss.xml
+          - img [ref=e18]
+          - generic [ref=e22]: RSS Feed
+        - link "Graph View" [ref=e23] [cursor=pointer]:
+          - /url: /graph/
+          - img [ref=e24]
+          - generic [ref=e30]: Graph View
+        - button "Switch to dark mode" [ref=e31] [cursor=pointer]:
+          - img [ref=e32]
+          - generic [ref=e34]: Switch to dark mode
+    - generic [ref=e35]:
+      - complementary "Page tabs" [ref=e36]:
+        - generic [ref=e37]:
+          - generic [ref=e38]: Search notes
+          - combobox "Search notes" [ref=e39]
+          - paragraph
+        - group [ref=e40]:
+          - generic "Pages" [ref=e41] [cursor=pointer]:
+            - heading "Pages" [level=2] [ref=e42]
+            - generic [ref=e43]: ▾
+          - navigation "Pages" [ref=e44]:
+            - link "README Post Template" [ref=e45] [cursor=pointer]:
+              - /url: /notes/blog/readme-post-template/
+              - generic [ref=e46]: README Post Template
+            - link "Home" [ref=e47] [cursor=pointer]:
+              - /url: /notes/home/
+              - generic [ref=e48]: Home
+            - link "Second Brain Architecture" [ref=e49] [cursor=pointer]:
+              - /url: /notes/blog/second-brain/
+              - generic [ref=e50]: Second Brain Architecture
+            - link "SEO and Performance Guide" [ref=e51] [cursor=pointer]:
+              - /url: /notes/blog/seo-performance-guide/
+              - generic [ref=e52]: SEO and Performance Guide
+            - link "GitHub to Cloudflare Pipeline" [ref=e53] [cursor=pointer]:
+              - /url: /notes/blog/github-cloudflare-pipeline/
+              - generic [ref=e54]: GitHub to Cloudflare Pipeline
+            - link "Obsidian Linking Habits" [ref=e55] [cursor=pointer]:
+              - /url: /notes/blog/obsidian-linking-habits/
+              - generic [ref=e56]: Obsidian Linking Habits
+            - link "Rust Rendering Notes" [ref=e57] [cursor=pointer]:
+              - /url: /notes/blog/rust-rendering-notes/
+              - generic [ref=e58]: Rust Rendering Notes
+            - link "Jinhyuk Kim" [ref=e59] [cursor=pointer]:
+              - /url: /notes/jinhyuk-kim/
+              - generic [ref=e60]: Jinhyuk Kim
+            - link "Obsidian Blog Helper 설치 가이드" [ref=e61] [cursor=pointer]:
+              - /url: /notes/blog/installation/
+              - generic [ref=e62]: Obsidian Blog Helper 설치 가이드
+            - link "Uncertainty-Aware Hybrid Inference with On-Device Small and Remote Large Language Models" [ref=e63] [cursor=pointer]:
+              - /url: /notes/papers/uhlm-2412-12687/
+              - generic [ref=e64]: Uncertainty-Aware Hybrid Inference with On-Device Small and Remote Large Language Models
+      - main [ref=e65]:
+        - generic [ref=e66]:
+          - paragraph [ref=e67]: Pinned
+          - generic [ref=e68]:
+            - heading "Hi 🙋" [level=2] [ref=e69]
+            - paragraph [ref=e70]:
+              - text: I'm
+              - link "Jinhyuk" [ref=e71] [cursor=pointer]:
+                - /url: /notes/jinhyuk-kim/
+              - text: Kim from South Korea 🇰🇷 Welcome to my blog
+        - generic [ref=e72]:
+          - generic [ref=e73]:
+            - heading "Mud Blog" [level=1] [ref=e74]
+            - group "Primary actions" [ref=e75]:
+              - link "Start Here" [ref=e76] [cursor=pointer]:
+                - /url: "#start-here"
+              - link "Folders" [ref=e77] [cursor=pointer]:
+                - /url: "#folders"
+              - link "Graph" [ref=e78] [cursor=pointer]:
+                - /url: /graph/
+          - generic "Garden statistics" [ref=e79]:
+            - generic [ref=e80]:
+              - term [ref=e81]: Notes
+              - definition [ref=e82]: "10"
+            - generic [ref=e83]:
+              - term [ref=e84]: Tags
+              - definition [ref=e85]: "26"
+            - generic [ref=e86]:
+              - term [ref=e87]: Graph
+              - definition [ref=e88]: "On"
+            - generic [ref=e89]:
+              - term [ref=e90]: Pinned
+              - definition [ref=e91]: "On"
+        - region "Start here" [ref=e92]:
+          - generic [ref=e93]:
+            - paragraph [ref=e94]: Guide
+            - heading "Start Here" [level=2] [ref=e95]
+          - generic [ref=e96]:
+            - link "About Who I am and what I focus on. Open profile →" [ref=e97] [cursor=pointer]:
+              - /url: /notes/jinhyuk-kim/
+              - generic [ref=e98]: About
+              - generic [ref=e99]: Who I am and what I focus on.
+              - generic [ref=e100]: Open profile →
+            - 'link "Latest Note home Use this file as a starter when you want to publish a README style project post. What this project does in one sentence. Who it is for. Why it exists. Status: active / prototype / archive... Read now →" [ref=e101] [cursor=pointer]':
+              - /url: /notes/blog/readme-post-template/
+              - generic [ref=e102]: Latest Note
+              - generic [ref=e103]: "home Use this file as a starter when you want to publish a README style project post. What this project does in one sentence. Who it is for. Why it exists. Status: active / prototype / archive..."
+              - generic [ref=e104]: Read now →
+            - link "Graph Explore relationships across notes visually. Open graph →" [ref=e105] [cursor=pointer]:
+              - /url: /graph/
+              - generic [ref=e106]: Graph
+              - generic [ref=e107]: Explore relationships across notes visually.
+              - generic [ref=e108]: Open graph →
+        - region "Folders" [ref=e109]:
+          - heading "Folders" [level=2] [ref=e111]
+          - generic [ref=e112]:
+            - generic [ref=e113]: blog
+            - generic [ref=e114]: papers
+        - generic [ref=e115]:
+          - generic [ref=e116]:
+            - paragraph [ref=e117]: Taxonomy
+            - heading "Tags" [level=2] [ref=e118]
+          - generic [ref=e119]:
+            - link "#architecture (3)" [ref=e120] [cursor=pointer]:
+              - /url: /tags/architecture/
+            - link "#blog (2)" [ref=e121] [cursor=pointer]:
+              - /url: /tags/blog/
+            - link "#cloudflare (1)" [ref=e122] [cursor=pointer]:
+              - /url: /tags/cloudflare/
+            - link "#github (1)" [ref=e123] [cursor=pointer]:
+              - /url: /tags/github/
+            - link "#home (1)" [ref=e124] [cursor=pointer]:
+              - /url: /tags/home/
+            - link "#infographic (1)" [ref=e125] [cursor=pointer]:
+              - /url: /tags/infographic/
+            - link "#intro (1)" [ref=e126] [cursor=pointer]:
+              - /url: /tags/intro/
+            - link "#knowledge (1)" [ref=e127] [cursor=pointer]:
+              - /url: /tags/knowledge/
+            - link "#llm (2)" [ref=e128] [cursor=pointer]:
+              - /url: /tags/llm/
+            - link "#notes (1)" [ref=e129] [cursor=pointer]:
+              - /url: /tags/notes/
+            - link "#obsidian (1)" [ref=e130] [cursor=pointer]:
+              - /url: /tags/obsidian/
+            - link "#ops (1)" [ref=e131] [cursor=pointer]:
+              - /url: /tags/ops/
+            - link "#paper (2)" [ref=e132] [cursor=pointer]:
+              - /url: /tags/paper/
+            - link "#performance (1)" [ref=e133] [cursor=pointer]:
+              - /url: /tags/performance/
+            - link "#profile (1)" [ref=e134] [cursor=pointer]:
+              - /url: /tags/profile/
+            - link "#quantum (1)" [ref=e135] [cursor=pointer]:
+              - /url: /tags/quantum/
+            - link "#readme (1)" [ref=e136] [cursor=pointer]:
+              - /url: /tags/readme/
+            - link "#rust (2)" [ref=e137] [cursor=pointer]:
+              - /url: /tags/rust/
+            - link "#semantic (1)" [ref=e138] [cursor=pointer]:
+              - /url: /tags/semantic/
+            - link "#seo (1)" [ref=e139] [cursor=pointer]:
+              - /url: /tags/seo/
+            - link "#setup (1)" [ref=e140] [cursor=pointer]:
+              - /url: /tags/setup/
+            - link "#template (1)" [ref=e141] [cursor=pointer]:
+              - /url: /tags/template/
+            - link "#templates (1)" [ref=e142] [cursor=pointer]:
+              - /url: /tags/templates/
+            - link "#vran (1)" [ref=e143] [cursor=pointer]:
+              - /url: /tags/vran/
+            - link "#web (1)" [ref=e144] [cursor=pointer]:
+              - /url: /tags/web/
+            - link "#writing (1)" [ref=e145] [cursor=pointer]:
+              - /url: /tags/writing/
+        - region "Recent posts" [ref=e146]:
+          - generic [ref=e147]:
+            - paragraph [ref=e148]: Latest
+            - heading "All Notes" [level=2] [ref=e149]
+          - article [ref=e150]:
+            - heading "README Post Template" [level=3] [ref=e151]:
+              - link "README Post Template" [ref=e152] [cursor=pointer]:
+                - /url: /notes/blog/readme-post-template/
+            - paragraph [ref=e153]: 2026-02-18 • 2 min read
+            - paragraph [ref=e154]: "home Use this file as a starter when you want to publish a README style project post. What this project does in one sentence. Who it is for. Why it exists. Status: active / prototype / archive..."
+            - generic [ref=e155]:
+              - link "#blog" [ref=e156] [cursor=pointer]:
+                - /url: /tags/blog/
+              - link "#readme" [ref=e157] [cursor=pointer]:
+                - /url: /tags/readme/
+              - link "#template" [ref=e158] [cursor=pointer]:
+                - /url: /tags/template/
+            - paragraph [ref=e159]:
+              - link "Read note →" [ref=e160] [cursor=pointer]:
+                - /url: /notes/blog/readme-post-template/
+          - article [ref=e161]:
+            - heading "Home" [level=3] [ref=e162]:
+              - link "Home" [ref=e163] [cursor=pointer]:
+                - /url: /notes/home/
+            - paragraph [ref=e164]: 2026-02-16 • 1 min read
+            - paragraph [ref=e165]: I'm Jinhyuk Kim from South Korea 🇰🇷 Welcome to my blog
+            - generic [ref=e166]:
+              - link "#home" [ref=e167] [cursor=pointer]:
+                - /url: /tags/home/
+              - link "#intro" [ref=e168] [cursor=pointer]:
+                - /url: /tags/intro/
+            - paragraph [ref=e169]:
+              - link "Read note →" [ref=e170] [cursor=pointer]:
+                - /url: /notes/home/
+          - article [ref=e171]:
+            - heading "Second Brain Architecture" [level=3] [ref=e172]:
+              - link "Second Brain Architecture" [ref=e173] [cursor=pointer]:
+                - /url: /notes/blog/second-brain/
+            - paragraph [ref=e174]: 2026-02-15 • 1 min read
+            - paragraph [ref=e175]: "This note explains the pipeline: 1. Parse frontmatter publish, home, tags. 2. Rewrite Obsidian wikilinks. 3. Render markdown. 4. Generate static HTML pages. See also home and SEO and Performance Guide..."
+            - generic [ref=e176]:
+              - link "#architecture" [ref=e177] [cursor=pointer]:
+                - /url: /tags/architecture/
+              - link "#rust" [ref=e178] [cursor=pointer]:
+                - /url: /tags/rust/
+            - paragraph [ref=e179]:
+              - link "Read note →" [ref=e180] [cursor=pointer]:
+                - /url: /notes/blog/second-brain/
+          - article [ref=e181]:
+            - heading "SEO and Performance Guide" [level=3] [ref=e182]:
+              - link "SEO and Performance Guide" [ref=e183] [cursor=pointer]:
+                - /url: /notes/blog/seo-performance-guide/
+            - paragraph [ref=e184]: 2026-02-14 • 1 min read
+            - paragraph [ref=e185]: "Key points: Canonical URL for each page. Open Graph and Twitter tags. JSON LD structured data. sitemap.xml, robots.txt, rss.xml. Lightweight CSS and static hosting. This page links back to s..."
+            - generic [ref=e186]:
+              - link "#performance" [ref=e187] [cursor=pointer]:
+                - /url: /tags/performance/
+              - link "#seo" [ref=e188] [cursor=pointer]:
+                - /url: /tags/seo/
+              - link "#web" [ref=e189] [cursor=pointer]:
+                - /url: /tags/web/
+            - paragraph [ref=e190]:
+              - link "Read note →" [ref=e191] [cursor=pointer]:
+                - /url: /notes/blog/seo-performance-guide/
+          - article [ref=e192]:
+            - heading "GitHub to Cloudflare Pipeline" [level=3] [ref=e193]:
+              - link "GitHub to Cloudflare Pipeline" [ref=e194] [cursor=pointer]:
+                - /url: /notes/blog/github-cloudflare-pipeline/
+            - paragraph [ref=e195]: 2026-02-13 • 1 min read
+            - paragraph [ref=e196]: "This note documents how markdown updates move to production. blog build compiles notes into static files under dist/. Source: content/posts Static assets: static Outputs: index.html, sitemap.xml..."
+            - generic [ref=e197]:
+              - link "#cloudflare" [ref=e198] [cursor=pointer]:
+                - /url: /tags/cloudflare/
+              - link "#github" [ref=e199] [cursor=pointer]:
+                - /url: /tags/github/
+              - link "#ops" [ref=e200] [cursor=pointer]:
+                - /url: /tags/ops/
+            - paragraph [ref=e201]:
+              - link "Read note →" [ref=e202] [cursor=pointer]:
+                - /url: /notes/blog/github-cloudflare-pipeline/
+          - article [ref=e203]:
+            - heading "Obsidian Linking Habits" [level=3] [ref=e204]:
+              - link "Obsidian Linking Habits" [ref=e205] [cursor=pointer]:
+                - /url: /notes/blog/obsidian-linking-habits/
+            - paragraph [ref=e206]: 2026-02-12 • 1 min read
+            - paragraph [ref=e207]: "Connected writing stays maintainable when links are explicit. note for direct references label for readable anchor text note for deep links into long notes Examples: Start from home Deployme..."
+            - generic [ref=e208]:
+              - link "#knowledge" [ref=e209] [cursor=pointer]:
+                - /url: /tags/knowledge/
+              - link "#notes" [ref=e210] [cursor=pointer]:
+                - /url: /tags/notes/
+              - link "#writing" [ref=e211] [cursor=pointer]:
+                - /url: /tags/writing/
+            - paragraph [ref=e212]:
+              - link "Read note →" [ref=e213] [cursor=pointer]:
+                - /url: /notes/blog/obsidian-linking-habits/
+          - article [ref=e214]:
+            - heading "Rust Rendering Notes" [level=3] [ref=e215]:
+              - link "Rust Rendering Notes" [ref=e216] [cursor=pointer]:
+                - /url: /notes/blog/rust-rendering-notes/
+            - paragraph [ref=e217]: 2026-02-11 • 1 min read
+            - paragraph [ref=e218]: "This stack uses Askama for page skeletons and Maud for assembled fragments. Askama: predictable layout and metadata templates Maud: ergonomic generation of backlink sections and composed HTML bloc..."
+            - generic [ref=e219]:
+              - link "#architecture" [ref=e220] [cursor=pointer]:
+                - /url: /tags/architecture/
+              - link "#rust" [ref=e221] [cursor=pointer]:
+                - /url: /tags/rust/
+              - link "#templates" [ref=e222] [cursor=pointer]:
+                - /url: /tags/templates/
+            - paragraph [ref=e223]:
+              - link "Read note →" [ref=e224] [cursor=pointer]:
+                - /url: /notes/blog/rust-rendering-notes/
+          - article [ref=e225]:
+            - heading "Jinhyuk Kim" [level=3] [ref=e226]:
+              - link "Jinhyuk Kim" [ref=e227] [cursor=pointer]:
+                - /url: /notes/jinhyuk-kim/
+            - paragraph [ref=e228]: Undated • 1 min read
+            - paragraph [ref=e229]: Jinhyuk Kim holds a B.S. degree from Yonsei University in Korea. He has completed internships in the Mobile Communications Lab and the Robotics and Mobile Networks RAMO Lab and is currently pursuing h...
+            - generic [ref=e230]:
+              - link "#llm" [ref=e231] [cursor=pointer]:
+                - /url: /tags/llm/
+              - link "#paper" [ref=e232] [cursor=pointer]:
+                - /url: /tags/paper/
+              - link "#profile" [ref=e233] [cursor=pointer]:
+                - /url: /tags/profile/
+              - link "#quantum" [ref=e234] [cursor=pointer]:
+                - /url: /tags/quantum/
+              - link "#semantic" [ref=e235] [cursor=pointer]:
+                - /url: /tags/semantic/
+              - link "#vran" [ref=e236] [cursor=pointer]:
+                - /url: /tags/vran/
+            - paragraph [ref=e237]:
+              - link "Read note →" [ref=e238] [cursor=pointer]:
+                - /url: /notes/jinhyuk-kim/
+          - article [ref=e239]:
+            - heading "Obsidian Blog Helper 설치 가이드" [level=3] [ref=e240]:
+              - link "Obsidian Blog Helper 설치 가이드" [ref=e241] [cursor=pointer]:
+                - /url: /notes/blog/installation/
+            - paragraph [ref=e242]: Undated • 1 min read
+            - paragraph [ref=e243]: "이 글은 obsidian blog helper init로 블로그 Vault와 Obsidian 플러그인을 한 번에 세팅하는 방법을 정리합니다. Git Obsidian Desktop Node.jsnpx 또는 Bunbunx 확인: bash git version node v bun version bash npx y obsidian blog..."
+            - generic [ref=e244]:
+              - link "#blog" [ref=e245] [cursor=pointer]:
+                - /url: /tags/blog/
+              - link "#obsidian" [ref=e246] [cursor=pointer]:
+                - /url: /tags/obsidian/
+              - link "#setup" [ref=e247] [cursor=pointer]:
+                - /url: /tags/setup/
+            - paragraph [ref=e248]:
+              - link "Read note →" [ref=e249] [cursor=pointer]:
+                - /url: /notes/blog/installation/
+          - article [ref=e250]:
+            - heading "Uncertainty-Aware Hybrid Inference with On-Device Small and Remote Large Language Models" [level=3] [ref=e251]:
+              - link "Uncertainty-Aware Hybrid Inference with On-Device Small and Remote Large Language Models" [ref=e252] [cursor=pointer]:
+                - /url: /notes/papers/uhlm-2412-12687/
+            - paragraph [ref=e253]: Undated • 4 min read
+            - paragraph [ref=e254]: "Source: https://arxiv.org/pdf/2412.12687.pdfhttps://arxiv.org/pdf/2412.12687.pdf U HLM lets the on device SLM opportunistically skip uplink transmission and server side LLM verification for low unce..."
+            - generic [ref=e255]:
+              - link "#architecture" [ref=e256] [cursor=pointer]:
+                - /url: /tags/architecture/
+              - link "#infographic" [ref=e257] [cursor=pointer]:
+                - /url: /tags/infographic/
+              - link "#llm" [ref=e258] [cursor=pointer]:
+                - /url: /tags/llm/
+              - link "#paper" [ref=e259] [cursor=pointer]:
+                - /url: /tags/paper/
+            - paragraph [ref=e260]:
+              - link "Read note →" [ref=e261] [cursor=pointer]:
+                - /url: /notes/papers/uhlm-2412-12687/
+      - complementary "Graph preview" [ref=e262]:
+        - heading "Graph" [level=2] [ref=e264]
+        - generic [ref=e265]:
+          - img "Site graph preview" [ref=e267]
+          - status: Loading graph preview...
+          - generic:
+            - button "Reset graph view" [ref=e268] [cursor=pointer]:
+              - img [ref=e269]
+              - generic [ref=e272]: Reset graph view
+            - group "Graph zoom controls" [ref=e273]:
+              - button "Zoom in" [ref=e274] [cursor=pointer]:
+                - img [ref=e275]
+                - generic [ref=e276]: Zoom in
+              - button "Zoom out" [ref=e277] [cursor=pointer]:
+                - img [ref=e278]
+                - generic [ref=e279]: Zoom out
+        - status [ref=e280]: Hover nodes to inspect relationships.
+    - contentinfo [ref=e281]:
+      - paragraph [ref=e282]:
+        - text: Mud Blog •
+        - link "http://127.0.0.1:8788" [ref=e283] [cursor=pointer]:
+          - /url: http://127.0.0.1:8788
