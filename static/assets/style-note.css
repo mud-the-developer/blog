@@ -427,10 +427,10 @@ html[data-theme="dark"] .note-body .note-canvas-map {
 .note-body .note-excalidraw-embed-head,
 .note-body .note-canvas-embed-head {
   padding: 0.7rem 0.92rem;
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   background:
     linear-gradient(145deg, color-mix(in srgb, var(--accent-soft) 20%, #ffffff 80%) 0%, color-mix(in srgb, var(--glass-panel-bg-soft) 96%, transparent) 100%);

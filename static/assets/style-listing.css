@@ -202,9 +202,10 @@ main .post-item {
   background:
     linear-gradient(145deg, color-mix(in srgb, var(--glass-panel-bg-soft) 80%, #ffffff 20%) 0%, color-mix(in srgb, var(--glass-panel-bg-soft) 96%, transparent) 100%);
   color: color-mix(in srgb, var(--accent-ink) 90%, var(--text));
-  font-size: 0.7rem;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.08em;
   text-decoration: none;
 }
 

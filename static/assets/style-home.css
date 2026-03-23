@@ -393,10 +393,10 @@ html[data-theme="dark"] .home-hero-stat {
   min-height: 48px;
   padding: 0.8rem 1.08rem;
   color: color-mix(in srgb, var(--accent-ink) 92%, var(--text));
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -454,10 +454,10 @@ html[data-theme="dark"] .home-hero-stat {
 
 .hero-prism-label {
   color: color-mix(in srgb, var(--muted) 96%, transparent);
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 0.63rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -493,10 +493,10 @@ html[data-theme="dark"] .home-hero-stat {
 
 .hero-prism-card--metric span {
   color: color-mix(in srgb, var(--muted) 96%, transparent);
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 0.64rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -537,10 +537,10 @@ html[data-theme="dark"] .home-hero-stat {
   background:
     linear-gradient(145deg, color-mix(in srgb, var(--glass-panel-bg-soft) 74%, #ffffff 26%) 0%, color-mix(in srgb, var(--glass-panel-bg-soft) 96%, transparent) 100%);
   color: color-mix(in srgb, var(--text) 82%, var(--muted));
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 0.66rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
@@ -566,10 +566,10 @@ html[data-theme="dark"] .home-hero-stat {
 
 .home-hero-stat dt {
   color: color-mix(in srgb, var(--muted) 96%, transparent);
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -637,9 +637,10 @@ html[data-theme="dark"] .home-hero-stat {
     inset 0 1px 0 color-mix(in srgb, #ffffff 40%, transparent),
     0 8px 18px color-mix(in srgb, #09121d 8%, transparent);
   color: color-mix(in srgb, var(--text) 82%, var(--muted));
+  font-family: var(--font-body);
   font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
 }
 
 @media (prefers-reduced-motion: no-preference) {
