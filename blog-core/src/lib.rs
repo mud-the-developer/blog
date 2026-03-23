@@ -753,6 +753,7 @@ pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
 
     copy_static_assets(&config.static_dir, &config.output_dir)?;
     copy_content_assets(&config.content_dir, &config.output_dir)?;
+    copy_embedded_news_site(&config.output_dir)?;
     ensure_default_css(&config.output_dir)?;
 
     let home_intro_html = posts
@@ -1026,7 +1027,7 @@ fn render_index(
     );
 
     let visible_posts: Vec<&Post> = posts.iter().filter(|post| !post.hidden).collect();
-    let start_here_links = build_start_here_links(posts);
+    let start_here_links = build_start_here_links(posts, embedded_news_site_available());
     let folders = build_folder_summaries(posts);
 
     let template = IndexTemplate {
@@ -4105,7 +4106,7 @@ fn post_to_card(post: &Post) -> PostCard {
     }
 }
 
-fn build_start_here_links(posts: &[Post]) -> Vec<LandingLink> {
+fn build_start_here_links(posts: &[Post], news_available: bool) -> Vec<LandingLink> {
     let mut links = Vec::new();
     let about_post = posts
         .iter()
@@ -4132,6 +4133,15 @@ fn build_start_here_links(posts: &[Post]) -> Vec<LandingLink> {
         });
     }
 
+    if news_available {
+        links.push(LandingLink {
+            title: "News Radar".to_string(),
+            url: "/news/".to_string(),
+            description: "Track repos, papers, and social signals in a separate news feed.".to_string(),
+            cta: "Open news".to_string(),
+        });
+    }
+
     links.push(LandingLink {
         title: "Graph".to_string(),
         url: "/graph/".to_string(),
@@ -4139,7 +4149,7 @@ fn build_start_here_links(posts: &[Post]) -> Vec<LandingLink> {
         cta: "Open graph".to_string(),
     });
 
-    links.truncate(3);
+    links.truncate(4);
     links
 }
 
@@ -4330,6 +4340,120 @@ fn copy_content_assets(content_dir: &Path, output_dir: &Path) -> Result<()> {
 
         fs::copy(path, &dest)
             .with_context(|| format!("failed to copy {} to {}", path.display(), dest.display()))?;
+    }
+
+    Ok(())
+}
+
+fn embedded_news_site_dir() -> PathBuf {
+    PathBuf::from("vendor/blog_news/site")
+}
+
+fn embedded_news_site_available() -> bool {
+    embedded_news_site_dir().join("index.html").exists()
+}
+
+fn rewrite_embedded_news_html(input: &str) -> String {
+    let rewritten = input
+        .replace("href='/data/", "href='/news/data/")
+        .replace("href=\"/data/", "href=\"/news/data/")
+        .replace("src='/assets/", "src='/news/assets/")
+        .replace("src=\"/assets/", "src=\"/news/assets/")
+        .replace("this.src='/assets/", "this.src='/news/assets/")
+        .replace("this.src=\"/assets/", "this.src=\"/news/assets/");
+
+    let head_injection = concat!(
+        "<link rel='icon' type='image/svg+xml' href='/favicon.svg'>",
+        "<link rel='stylesheet' href='/assets/style-news-bridge.css'>"
+    );
+    let with_head = if rewritten.contains("style-news-bridge.css") {
+        rewritten
+    } else {
+        rewritten.replacen("</head>", &format!("{head_injection}</head>"), 1)
+    };
+
+    let bridge_bar = concat!(
+        "<div class='news-bridge-bar'>",
+        "<a class='news-bridge-brand' href='/'>",
+        "<p class='news-bridge-kicker'>Connected Notes</p>",
+        "<p class='news-bridge-title'>Mud's Blog</p>",
+        "</a>",
+        "<div class='news-bridge-links'>",
+        "<a class='news-bridge-link news-bridge-link--primary' href='/news/'>News Radar</a>",
+        "<a class='news-bridge-link' href='/'>Notes</a>",
+        "<a class='news-bridge-link' href='/graph/'>Graph</a>",
+        "<a class='news-bridge-link' href='/news/data/latest.json' target='_blank' rel='noreferrer'>JSON</a>",
+        "</div>",
+        "</div>"
+    );
+
+    if with_head.contains("news-bridge-bar") {
+        with_head
+    } else {
+        with_head.replacen("<body>", &format!("<body>{bridge_bar}"), 1)
+    }
+}
+
+fn copy_embedded_news_site(output_dir: &Path) -> Result<()> {
+    let news_site_dir = embedded_news_site_dir();
+    if !news_site_dir.exists() {
+        return Ok(());
+    }
+
+    let news_output_dir = output_dir.join("news");
+
+    for entry in WalkDir::new(&news_site_dir)
+        .into_iter()
+        .filter_map(|entry| entry.ok())
+    {
+        let entry_path = entry.path();
+        let rel = entry_path.strip_prefix(&news_site_dir).with_context(|| {
+            format!(
+                "failed to create relative path for {} from {}",
+                entry_path.display(),
+                news_site_dir.display()
+            )
+        })?;
+
+        if rel.as_os_str().is_empty() {
+            continue;
+        }
+
+        let dest = news_output_dir.join(rel);
+
+        if entry.file_type().is_dir() {
+            fs::create_dir_all(&dest)
+                .with_context(|| format!("failed to create {}", dest.display()))?;
+            continue;
+        }
+
+        if let Some(parent) = dest.parent() {
+            fs::create_dir_all(parent)
+                .with_context(|| format!("failed to create {}", parent.display()))?;
+        }
+
+        let extension = entry_path
+            .extension()
+            .and_then(|ext| ext.to_str())
+            .map(str::to_ascii_lowercase);
+
+        match extension.as_deref() {
+            Some("html") | Some("htm") => {
+                let html = fs::read_to_string(entry_path).with_context(|| {
+                    format!("failed to read embedded news page {}", entry_path.display())
+                })?;
+                write_file(dest, rewrite_embedded_news_html(&html))?;
+            }
+            _ => {
+                fs::copy(entry_path, &dest).with_context(|| {
+                    format!(
+                        "failed to copy embedded news asset {} to {}",
+                        entry_path.display(),
+                        dest.display()
+                    )
+                })?;
+            }
+        }
     }
 
     Ok(())
