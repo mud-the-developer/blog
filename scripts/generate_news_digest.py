@@ -22,6 +22,7 @@ from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_PATH = ROOT / "vendor" / "blog_news" / "data" / "latest.json"
+SNAPSHOT_PATH = ROOT / "static" / "news" / "data" / "latest.json"
 GENERATED_DIR = ROOT / "content" / "generated" / "news"
 POSTS_DIR = ROOT / "content" / "posts" / "news"
 KST = ZoneInfo("Asia/Seoul")
@@ -72,12 +73,22 @@ def issue_date_from_args(raw: str | None) -> datetime:
 
 
 def load_source_feed() -> dict[str, Any]:
-    return json.loads(SOURCE_PATH.read_text())
+    for path in (SOURCE_PATH, SNAPSHOT_PATH):
+        if path.exists():
+            return json.loads(path.read_text())
+    raise FileNotFoundError(
+        f"missing news source data at {SOURCE_PATH} and fallback snapshot at {SNAPSHOT_PATH}"
+    )
 
 
 def ensure_dirs() -> None:
     GENERATED_DIR.mkdir(parents=True, exist_ok=True)
     POSTS_DIR.mkdir(parents=True, exist_ok=True)
+    SNAPSHOT_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+
+def write_source_snapshot(payload: dict[str, Any]) -> None:
+    SNAPSHOT_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
 
 
 def normalize_image(url: str) -> str:
@@ -341,11 +352,13 @@ def main() -> None:
     ensure_dirs()
     issue_dt = issue_date_from_args(args.date)
     payload = load_source_feed()
+    write_source_snapshot(payload)
     summary = issue_summary(payload)
     digest_stem = write_post(issue_dt, summary, payload, args.limit)
     write_hub_json(issue_dt, payload, summary, digest_stem)
     print(f"Generated news digest post: content/posts/news/{digest_stem}.md")
     print("Generated hub data: content/generated/news/latest.json")
+    print("Updated raw feed snapshot: static/news/data/latest.json")
 
 
 if __name__ == "__main__":
