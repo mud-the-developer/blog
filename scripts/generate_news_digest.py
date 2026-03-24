@@ -46,6 +46,7 @@ SOURCE_LABELS = {
 
 @dataclass
 class NewsItem:
+    headline: str
     title: str
     url: str
     source: str
@@ -103,6 +104,40 @@ def clean_title(value: str) -> str:
     return value
 
 
+def repo_name_from_title(title: str) -> str:
+    if " — " in title:
+        return title.split(" — ", 1)[0].strip()
+    return ""
+
+
+def repo_description_from_title(title: str) -> str:
+    if " — " in title:
+        return title.split(" — ", 1)[1].strip()
+    return ""
+
+
+def headline_for(item: dict[str, Any]) -> str:
+    title = clean_title(item.get("title", "Untitled"))
+    if item.get("source") == "github.com":
+        repo_name = repo_name_from_title(title)
+        if repo_name:
+            return repo_name
+    return clamp_text(title, 96)
+
+
+def ensure_terminal_punctuation(value: str) -> str:
+    value = value.strip()
+    if not value:
+        return value
+    if value.endswith((".", "!", "?", "…")):
+        return value
+    return value + "."
+
+
+def yaml_quote(value: str) -> str:
+    return json.dumps(value, ensure_ascii=False)
+
+
 def source_label(source: str) -> str:
     return SOURCE_LABELS.get(source, source)
 
@@ -138,10 +173,15 @@ def deck_for(item: dict[str, Any], badge: str) -> str:
     tags = [tag for tag in item.get("tags") or [] if tag.lower() != "other"]
     tag_text = ", ".join(tags[:3]).lower()
     if badge == "Repo":
-        if " — " in title:
-            _, repo_desc = title.split(" — ", 1)
-            if repo_desc.strip():
-                return clamp_text(repo_desc.strip(), 150)
+        repo_desc = repo_description_from_title(title)
+        if repo_desc:
+            repo_desc = ensure_terminal_punctuation(repo_desc)
+            freshness = f" Surfaced {hours}h ago"
+            if stars > 0:
+                freshness += f" with {stars} stars."
+            else:
+                freshness += "."
+            return clamp_text(repo_desc + freshness, 170)
         if stars > 0:
             return f"Fresh GitHub repo with {stars} stars and activity in the last {hours}h."
         return f"Fresh GitHub repo signal picked up within the last {hours}h."
@@ -175,6 +215,7 @@ def meta_for(item: dict[str, Any]) -> str:
 def to_card(item: dict[str, Any]) -> NewsItem:
     badge = badge_for(item)
     return NewsItem(
+        headline=headline_for(item),
         title=clean_title(item.get("title", "Untitled")),
         url=item.get("url", "#"),
         source=item.get("source", ""),
@@ -203,23 +244,53 @@ def unique_cards(raw_items: list[dict[str, Any]], limit: int) -> list[NewsItem]:
     return cards
 
 
+def extend_unique_cards(
+    cards: list[NewsItem], seen: set[str], raw_items: list[dict[str, Any]], limit: int
+) -> None:
+    for item in raw_items:
+        url = item.get("url", "")
+        if not url or url in seen:
+            continue
+        seen.add(url)
+        cards.append(to_card(item))
+        if len(cards) >= limit:
+            return
+
+
+def build_top_cards(payload: dict[str, Any], limit: int = 4) -> list[NewsItem]:
+    cards: list[NewsItem] = []
+    seen: set[str] = set()
+    for slug in ("repos", "papers", "social"):
+        extend_unique_cards(cards, seen, payload.get(slug, []), len(cards) + 1)
+    if len(cards) < limit:
+        extend_unique_cards(cards, seen, payload.get("hot24", []), limit)
+    return cards[:limit]
+
+
 def issue_summary(payload: dict[str, Any]) -> str:
-    hot = payload.get("hot24") or []
     repos = payload.get("repos") or []
     papers = payload.get("papers") or []
     social = payload.get("social") or []
-    hot_repo = next((item for item in hot if item.get("source") == "github.com"), None)
-    top_repo = clean_title(hot_repo.get("title", "")) if hot_repo else ""
-    if " — " in top_repo:
-        top_repo = top_repo.split(" — ", 1)[0]
-    repo_fragment = f"Top repo momentum is led by {top_repo}." if top_repo else "Top repo momentum stayed active."
+    repo_item = repos[0] if repos else None
+    paper_item = papers[0] if papers else None
+    social_item = social[0] if social else None
+    fragments: list[str] = []
+    if repo_item:
+        fragments.append(f"Repo momentum is led by {headline_for(repo_item)}")
+    if paper_item:
+        fragments.append(f"paper attention is clustering around {headline_for(paper_item)}")
+    if social_item:
+        fragments.append(
+            f"community chatter is moving through {source_label(social_item.get('source', ''))}"
+        )
+    lead = ensure_terminal_punctuation("; ".join(fragments)) if fragments else "Signals stayed active."
     return (
-        f"{repo_fragment} "
+        f"{lead} "
         f"{len(repos[:4])} repo signals, {len(papers[:4])} paper picks, and {len(social[:4])} community items made today's cut."
     )
 
 
-def archive_entries(current_stem: str) -> list[dict[str, str]]:
+def archive_entries(current_stem: str, current_summary: str) -> list[dict[str, str]]:
     entries: list[dict[str, str]] = []
     for path in sorted(POSTS_DIR.glob("*-ai-news-digest.md"), reverse=True):
         stem = path.stem
@@ -230,6 +301,7 @@ def archive_entries(current_stem: str) -> list[dict[str, str]]:
                 "title": title,
                 "url": f"/notes/news/{stem}/",
                 "date_label": date_label,
+                "description": "",
             }
         )
     if not any(entry["url"].endswith(f"/{current_stem}/") for entry in entries):
@@ -240,6 +312,7 @@ def archive_entries(current_stem: str) -> list[dict[str, str]]:
                 "title": f"Daily AI News Digest — {date_label}",
                 "url": f"/notes/news/{current_stem}/",
                 "date_label": date_label,
+                "description": current_summary,
             },
         )
     return entries[:8]
@@ -252,9 +325,9 @@ def render_markdown(issue_dt: datetime, summary: str, sections: list[tuple[str, 
     frontmatter = "\n".join(
         [
             "---",
-            f"title: {title}",
-            f"description: {summary}",
-            f"date: {issue_date} 00:00",
+            f"title: {yaml_quote(title)}",
+            f"description: {yaml_quote(summary)}",
+            f"date: {issue_date}",
             "tags: [news, news-digest, ai, radar]",
             "publish: true",
             "content-classes: [news-digest-note]",
@@ -319,7 +392,7 @@ def source_count_rows(payload: dict[str, Any]) -> list[dict[str, Any]]:
 
 def write_hub_json(issue_dt: datetime, payload: dict[str, Any], summary: str, digest_stem: str) -> None:
     generated_at = datetime.now(tz=KST).isoformat()
-    top_cards = unique_cards(payload.get("hot24", []), 4)
+    top_cards = build_top_cards(payload, 4)
     sections = []
     for slug, title, description in SECTION_SPECS:
         sections.append(
@@ -342,7 +415,7 @@ def write_hub_json(issue_dt: datetime, payload: dict[str, Any], summary: str, di
             "url": f"/notes/news/{digest_stem}/",
             "description": summary,
         },
-        "archives": archive_entries(digest_stem),
+        "archives": archive_entries(digest_stem, summary),
     }
     (GENERATED_DIR / "latest.json").write_text(json.dumps(hub, ensure_ascii=False, indent=2) + "\n")
 

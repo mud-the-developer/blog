@@ -40,7 +40,7 @@
         <span class="news-card-badge">{{ card.badge }}</span>
         <span class="news-card-source">{{ card.source }}</span>
       </div>
-      <h2>{{ card.title }}</h2>
+      <h2>{% if card.headline.len() > 0 %}{{ card.headline }}{% else %}{{ card.title }}{% endif %}</h2>
       <p>{{ card.deck }}</p>
       {% if card.tags.len() > 0 %}
       <div class="tag-wrap">
@@ -74,7 +74,7 @@
               <span class="news-card-badge">{{ card.badge }}</span>
               <span class="news-card-source">{{ card.source }}</span>
             </div>
-            <h3>{{ card.title }}</h3>
+            <h3>{% if card.headline.len() > 0 %}{{ card.headline }}{% else %}{{ card.title }}{% endif %}</h3>
             <p>{{ card.deck }}</p>
             {% if card.tags.len() > 0 %}
             <div class="tag-wrap">
@@ -92,8 +92,7 @@
     {% endfor %}
   </div>
 
-  <section class="news-lower-grid" aria-label="News support">
-    <section class="panel news-archive-panel">
+  <section class="panel news-archive-panel" aria-label="News archive">
       <header class="section-head">
         <div>
           <p class="section-kicker">Archive</p>
@@ -111,23 +110,5 @@
         </a>
         {% endfor %}
       </div>
-    </section>
-
-    <section class="panel news-source-panel">
-      <header class="section-head">
-        <div>
-          <p class="section-kicker">Coverage</p>
-          <h2>Source Mix</h2>
-        </div>
-      </header>
-      <div class="news-source-list">
-        {% for row in news.source_counts %}
-        <div class="news-source-row">
-          <span>{{ row.label }}</span>
-          <strong>{{ row.value }}</strong>
-        </div>
-        {% endfor %}
-      </div>
-    </section>
   </section>
 {% endblock %}

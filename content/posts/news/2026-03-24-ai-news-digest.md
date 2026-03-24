@@ -1,7 +1,7 @@
 ---
-title: Daily AI News Digest — 2026-03-24
-description: Top repo momentum is led by ceedaragents/cyrus. 4 repo signals, 4 paper picks, and 4 community items made today's cut.
-date: 2026-03-24 00:00
+title: "Daily AI News Digest — 2026-03-24"
+description: "Repo momentum is led by ceedaragents/cyrus; paper attention is clustering around OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning; community chatter is moving through GeekNews. 4 repo signals, 4 paper picks, and 4 community items made today's cut."
+date: 2026-03-24
 tags: [news, news-digest, ai, radar]
 publish: true
 content-classes: [news-digest-note]
@@ -9,7 +9,7 @@ content-classes: [news-digest-note]
 [[home]]
 # Daily AI News Digest — 2026-03-24
 
-Top repo momentum is led by ceedaragents/cyrus. 4 repo signals, 4 paper picks, and 4 community items made today's cut.
+Repo momentum is led by ceedaragents/cyrus; paper attention is clustering around OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning; community chatter is moving through GeekNews. 4 repo signals, 4 paper picks, and 4 community items made today's cut.
 
 Hub: [/news/](/news/) · Raw feed: [/news/data/latest.json](/news/data/latest.json)
 
@@ -19,7 +19,7 @@ Hub: [/news/](/news/) · Raw feed: [/news/data/latest.json](/news/data/latest.js
   <a class="news-digest-card" href="https://github.com/ceedaragents/cyrus" target="_blank" rel="noreferrer">
     <span class="news-digest-badge">Repo</span>
     <h3>ceedaragents/cyrus — Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine</h3>
-    <p>Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine</p>
+    <p>Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine. Surfaced 0h ago with 412 stars.</p>
     <div class="news-digest-chip-row"><span class="news-digest-chip">#AI</span></div>
     <p class="news-digest-meta">GitHub · 412 stars · 0h ago · score 4.77</p>
   </a>
@@ -52,28 +52,28 @@ Hub: [/news/](/news/) · Raw feed: [/news/data/latest.json](/news/data/latest.js
   <a class="news-digest-card" href="https://github.com/ceedaragents/cyrus" target="_blank" rel="noreferrer">
     <span class="news-digest-badge">Repo</span>
     <h3>ceedaragents/cyrus — Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine</h3>
-    <p>Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine</p>
+    <p>Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine. Surfaced 0h ago with 412 stars.</p>
     <div class="news-digest-chip-row"><span class="news-digest-chip">#AI</span></div>
     <p class="news-digest-meta">GitHub · 412 stars · 0h ago · score 4.77</p>
   </a>
   <a class="news-digest-card" href="https://github.com/freddy-schuetz/n8n-claw" target="_blank" rel="noreferrer">
     <span class="news-digest-badge">Repo</span>
     <h3>freddy-schuetz/n8n-claw — OpenClaw-inspired autonomous AI agent built entirely in n8n. Adaptive RAG-powered memory, Skills via MCP templates, proactive task management, media understanding - self-hosted with one setup script</h3>
-    <p>OpenClaw-inspired autonomous AI agent built entirely in n8n. Adaptive RAG-powered memory, Skills via MCP templates, proactive task management, media…</p>
+    <p>OpenClaw-inspired autonomous AI agent built entirely in n8n. Adaptive RAG-powered memory, Skills via MCP templates, proactive task management, media understanding - self…</p>
     <div class="news-digest-chip-row"><span class="news-digest-chip">#AI</span></div>
     <p class="news-digest-meta">GitHub · 170 stars · 0h ago · score 4.38</p>
   </a>
   <a class="news-digest-card" href="https://github.com/RunanywhereAI/RCLI" target="_blank" rel="noreferrer">
     <span class="news-digest-badge">Repo</span>
     <h3>RunanywhereAI/RCLI — Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG</h3>
-    <p>Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG</p>
+    <p>Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG. Surfaced 0h ago with 105 stars.</p>
     <div class="news-digest-chip-row"><span class="news-digest-chip">#AI</span></div>
     <p class="news-digest-meta">GitHub · 105 stars · 0h ago · score 4.09</p>
   </a>
   <a class="news-digest-card" href="https://github.com/agentscope-ai/agentscope-java" target="_blank" rel="noreferrer">
     <span class="news-digest-badge">Repo</span>
     <h3>agentscope-ai/agentscope-java — AgentScope Java: Agent-Oriented Programming for Building LLM Applications</h3>
-    <p>AgentScope Java: Agent-Oriented Programming for Building LLM Applications</p>
+    <p>AgentScope Java: Agent-Oriented Programming for Building LLM Applications. Surfaced 0h ago with 1668 stars.</p>
     <div class="news-digest-chip-row"><span class="news-digest-chip">#AI</span></div>
     <p class="news-digest-meta">GitHub · 1668 stars · 0h ago · score 3.81</p>
   </a>

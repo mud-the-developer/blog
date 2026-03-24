@@ -766,6 +766,8 @@ struct NewsSection {
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 struct NewsCard {
     #[serde(default)]
+    headline: String,
+    #[serde(default)]
     title: String,
     #[serde(default)]
     url: String,
@@ -4543,18 +4545,35 @@ fn load_generated_news_hub_data(posts: &[Post]) -> Result<Option<NewsHubData>> {
         .with_context(|| format!("failed to read generated news hub data {}", path.display()))?;
     let mut news: NewsHubData = serde_json::from_str(&raw)
         .with_context(|| format!("failed to parse generated news hub data {}", path.display()))?;
+    let archive_by_url = news
+        .archives
+        .iter()
+        .map(|entry| (entry.url.clone(), entry.clone()))
+        .collect::<HashMap<_, _>>();
 
     let mut archives = posts
         .iter()
         .filter(|post| is_news_digest_post(post))
-        .map(|post| NewsArchiveEntry {
-            title: post.title.clone(),
-            url: format!("/notes/{}/", post.slug),
-            date_label: post
-                .date
-                .map(|date| date.format("%Y-%m-%d").to_string())
-                .unwrap_or_else(|| "Undated".to_string()),
-            description: post.excerpt.clone(),
+        .map(|post| {
+            let url = format!("/notes/{}/", post.slug);
+            let fallback = archive_by_url.get(&url);
+            NewsArchiveEntry {
+                title: post.title.clone(),
+                url,
+                date_label: post
+                    .date
+                    .map(|date| date.format("%Y-%m-%d").to_string())
+                    .or_else(|| fallback.map(|entry| entry.date_label.clone()))
+                    .unwrap_or_else(|| "Undated".to_string()),
+                description: if !post.description.trim().is_empty() {
+                    post.description.clone()
+                } else {
+                    fallback
+                        .map(|entry| entry.description.clone())
+                        .filter(|description| !description.trim().is_empty())
+                        .unwrap_or_else(|| post.excerpt.clone())
+                },
+            }
         })
         .collect::<Vec<_>>();
     archives.sort_by(|a, b| b.date_label.cmp(&a.date_label));
