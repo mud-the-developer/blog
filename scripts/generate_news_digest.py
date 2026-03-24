@@ -15,6 +15,7 @@ import json
 import re
 from dataclasses import dataclass
 from datetime import datetime
+from html import escape as html_escape
 from pathlib import Path
 from typing import Any
 from urllib.parse import quote
@@ -69,7 +70,7 @@ TRANSLATION_CACHE: dict[str, str] = {}
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate the blog news digest artifacts.")
     parser.add_argument("--date", help="Issue date in YYYY-MM-DD. Defaults to current date in Asia/Seoul.")
-    parser.add_argument("--limit", type=int, default=4, help="Cards per section in the digest post.")
+    parser.add_argument("--limit", type=int, default=8, help="Cards per section in the digest post.")
     return parser.parse_args()
 
 
@@ -230,6 +231,26 @@ def clamp_text(value: str, limit: int) -> str:
     return value[: limit - 1].rstrip() + "…"
 
 
+def safe_text(value: str) -> str:
+    return html_escape(value, quote=True)
+
+
+def description_from_post(path: Path) -> str:
+    raw = path.read_text()
+    match = re.search(r'^description:\s*(.+)$', raw, flags=re.MULTILINE)
+    if not match:
+        return ""
+    value = match.group(1).strip()
+    if not value:
+        return ""
+    if value.startswith(('"', "'")):
+        try:
+            return json.loads(value)
+        except json.JSONDecodeError:
+            return value.strip("\"'")
+    return value
+
+
 def deck_for(item: dict[str, Any], badge: str) -> str:
     hours = int(item.get("publishedHoursAgo") or 0)
     stars = int(item.get("stars") or 0)
@@ -366,7 +387,7 @@ def archive_entries(current_stem: str, current_summary: str) -> list[dict[str, s
                 "title": title,
                 "url": f"/notes/news/{stem}/",
                 "date_label": date_label,
-                "description": "",
+                "description": description_from_post(path),
             }
         )
     if not any(entry["url"].endswith(f"/{current_stem}/") for entry in entries):
@@ -383,10 +404,19 @@ def archive_entries(current_stem: str, current_summary: str) -> list[dict[str, s
     return entries[:8]
 
 
-def render_markdown(issue_dt: datetime, summary: str, sections: list[tuple[str, str, list[NewsItem]]]) -> str:
+def render_markdown(
+    issue_dt: datetime,
+    generated_dt: datetime,
+    summary: str,
+    top_cards: list[NewsItem],
+    sections: list[tuple[str, str, str, list[NewsItem]]],
+    archives: list[dict[str, str]],
+) -> tuple[str, str]:
     issue_date = issue_dt.strftime("%Y-%m-%d")
     stem = f"{issue_date}-ai-news-digest"
     title = f"Daily AI News Digest — {issue_date}"
+    issue_label = issue_date_label(issue_dt)
+    generated_label = generated_timestamp_label(generated_dt)
     frontmatter = "\n".join(
         [
             "---",
@@ -401,42 +431,129 @@ def render_markdown(issue_dt: datetime, summary: str, sections: list[tuple[str, 
         ]
     )
     body = [
-        "[[home]]",
-        f"# {title}",
-        "",
-        summary,
-        "",
-        "Hub: [/news/](/news/) · Raw feed: [/news/data/latest.json](/news/data/latest.json)",
+        '<div class="news-digest-shell">',
+        '  <section class="news-digest-hero">',
+        '    <div class="news-digest-hero-copy">',
+        '      <p class="section-kicker">News Radar</p>',
+        f"      <h1>{safe_text(title)}</h1>",
+        f'      <p class="news-digest-lead">{safe_text(summary)}</p>',
+        '      <div class="news-digest-actions" role="group" aria-label="News actions">',
+        '        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>',
+        '        <a class="post-cta-link" href="#digest-archive">Digest archive</a>',
+        "      </div>",
+        "    </div>",
+        '    <div class="news-digest-meta-grid">',
+        '      <div class="news-digest-meta-card">',
+        '        <span class="news-digest-meta-label">Issue date</span>',
+        f'        <strong><time datetime="{issue_date}">{safe_text(issue_label)}</time></strong>',
+        "      </div>",
+        '      <div class="news-digest-meta-card">',
+        '        <span class="news-digest-meta-label">Generated</span>',
+        f'        <strong><time datetime="{generated_dt.isoformat()}">{safe_text(generated_label)}</time></strong>',
+        "      </div>",
+        '      <div class="news-digest-meta-card">',
+        '        <span class="news-digest-meta-label">Sections</span>',
+        f"        <strong>{len(sections)}</strong>",
+        "      </div>",
+        "    </div>",
+        "  </section>",
         "",
     ]
-    for _, heading, cards in sections:
-        body.append(f"## {heading}")
-        body.append("")
-        body.append('<div class="news-digest-grid">')
+    if top_cards:
+        body.extend(
+            [
+                '  <section class="news-digest-top-shell" aria-label="Top signals">',
+                '    <header class="news-digest-section-head">',
+                '      <p class="section-kicker">Highlights</p>',
+                "      <h2>Top signals</h2>",
+                "    </header>",
+                '    <div class="news-digest-top-grid">',
+            ]
+        )
+        for card in top_cards:
+            body.extend(
+                [
+                    f'      <a class="news-digest-card news-digest-top-card" href="{safe_text(card.url)}" target="_blank" rel="noreferrer">',
+                    f'        <img class="news-digest-image" src="{safe_text(card.image_url)}" alt="{safe_text(card.title)}" width="1200" height="675" loading="lazy" decoding="async" />',
+                    '        <div class="news-digest-card-copy">',
+                    f"          <h3>{safe_text(card.headline or card.title)}</h3>",
+                    "        </div>",
+                    "      </a>",
+                ]
+            )
+        body.extend(["    </div>", "  </section>", ""])
+
+    for slug, heading, description, cards in sections:
+        body.extend(
+            [
+                f'  <section id="digest-{safe_text(slug)}" class="news-digest-section">',
+                '    <header class="news-digest-section-head">',
+                '      <p class="section-kicker">Section</p>',
+                f"      <h2>{safe_text(heading)}</h2>",
+                "    </header>",
+                f'    <p class="news-digest-section-description">{safe_text(description)}</p>',
+                '    <div class="news-digest-grid">',
+            ]
+        )
         for card in cards:
             body.extend(
                 [
-                    f'  <a class="news-digest-card" href="{card.url}" target="_blank" rel="noreferrer">',
-                    f'    <img class="news-digest-image" src="{card.image_url}" alt="{card.title}" width="1200" height="675" loading="lazy" decoding="async" />',
-                    '    <div class="news-digest-card-copy">',
-                    f'      <h3>{card.headline or card.title}</h3>',
-                    "    </div>",
-                    "  </a>",
+                    f'      <a class="news-digest-card" href="{safe_text(card.url)}" target="_blank" rel="noreferrer">',
+                    f'        <img class="news-digest-image" src="{safe_text(card.image_url)}" alt="{safe_text(card.title)}" width="1200" height="675" loading="lazy" decoding="async" />',
+                    '        <div class="news-digest-card-copy">',
+                    f"          <h3>{safe_text(card.headline or card.title)}</h3>",
+                    "        </div>",
+                    "      </a>",
                 ]
             )
-        body.append("</div>")
-        body.append("")
-    body.append(f"_Generated from the ranked feed for {issue_date}._")
-    body.append("")
+        body.extend(["    </div>", "  </section>", ""])
+
+    body.extend(
+        [
+            '  <section id="digest-archive" class="news-digest-archive">',
+            '    <header class="news-digest-section-head">',
+            '      <p class="section-kicker">Archive</p>',
+            "      <h2>Digest Posts</h2>",
+            "    </header>",
+            '    <div class="news-digest-archive-list">',
+        ]
+    )
+    for item in archives:
+        body.extend(
+            [
+                f'      <a class="news-digest-archive-item" href="{safe_text(item["url"])}">',
+                f'        <span class="news-digest-archive-date">{safe_text(item["date_label"])}</span>',
+                f'        <strong>{safe_text(item["title"])}</strong>',
+            ]
+        )
+        if item.get("description", "").strip():
+            body.append(
+                f'        <span>{safe_text(item["description"])}</span>'
+            )
+        body.append("      </a>")
+    body.extend(
+        [
+            "    </div>",
+            "  </section>",
+            "",
+            f'  <p class="news-digest-footnote">Generated from the ranked feed for {safe_text(issue_label)}.</p>',
+            "</div>",
+            "",
+        ]
+    )
     return frontmatter + "\n".join(body), stem
 
 
 def write_post(issue_dt: datetime, summary: str, payload: dict[str, Any], limit: int) -> str:
+    generated_dt = datetime.now(tz=KST)
+    top_cards = build_top_cards(payload, 4)
     sections = [
-        (slug, title, unique_cards(payload.get(slug, []), limit))
-        for slug, title, _ in SECTION_SPECS
+        (slug, title, description, unique_cards(payload.get(slug, []), limit))
+        for slug, title, description in SECTION_SPECS
     ]
-    markdown, stem = render_markdown(issue_dt, summary, sections)
+    stem = f"{issue_dt.strftime('%Y-%m-%d')}-ai-news-digest"
+    archives = archive_entries(stem, summary)
+    markdown, stem = render_markdown(issue_dt, generated_dt, summary, top_cards, sections, archives)
     target = POSTS_DIR / f"{stem}.md"
     target.write_text(markdown)
     return stem

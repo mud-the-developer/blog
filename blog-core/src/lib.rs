@@ -692,6 +692,7 @@ struct PostTemplate {
     body_html: String,
     load_note_rich_css: bool,
     content_classes: String,
+    show_note_header: bool,
 }
 
 #[derive(Template)]
@@ -708,13 +709,6 @@ struct GraphTemplate {
     layout: LayoutContext,
     total_nodes: usize,
     total_links: usize,
-}
-
-#[derive(Template)]
-#[template(path = "news.html")]
-struct NewsTemplate {
-    layout: LayoutContext,
-    news: NewsHubData,
 }
 
 #[derive(Template)]
@@ -1190,6 +1184,7 @@ fn render_posts_pages(
             body_html,
             load_note_rich_css: post.has_rich_note_styles,
             content_classes: post.content_classes.join(" "),
+            show_note_header: !is_news_digest_post(post),
         };
 
         let target = config
@@ -1308,39 +1303,12 @@ fn render_graph_page(
 fn render_news_page(
     config: &BuildConfig,
     posts: &[Post],
-    theme_assets: &ThemeAssets,
-    asset_version: &str,
+    _theme_assets: &ThemeAssets,
+    _asset_version: &str,
 ) -> Result<()> {
     let Some(mut news) = load_generated_news_hub_data(posts)? else {
         return Ok(());
     };
-
-    let description = if news.summary.trim().is_empty() {
-        "Daily repo, paper, and social signal digest.".to_string()
-    } else {
-        news.summary.clone()
-    };
-
-    let layout = website_layout(
-        config,
-        posts,
-        theme_assets,
-        format!("News Radar | {}", config.site.title),
-        description,
-        "/news/",
-        "website",
-        "",
-        "",
-        website_json_ld(config),
-        Vec::new(),
-        true,
-        false,
-        "/graph.json".to_string(),
-        String::new(),
-        false,
-        Vec::new(),
-        asset_version,
-    );
 
     if news.digest.url.trim().is_empty() {
         if let Some(first) = news.archives.first() {
@@ -1352,10 +1320,47 @@ fn render_news_page(
         }
     }
 
-    let template = NewsTemplate { layout, news };
     write_file(
         config.output_dir.join("news").join("index.html"),
-        template.render()?,
+        render_news_redirect_html(
+            &format!("News Radar | {}", config.site.title),
+            if news.summary.trim().is_empty() {
+                "Daily repo, paper, and social signal digest."
+            } else {
+                &news.summary
+            },
+            if news.digest.url.trim().is_empty() {
+                "/"
+            } else {
+                &news.digest.url
+            },
+        ),
+    )
+}
+
+fn render_news_redirect_html(title: &str, description: &str, target: &str) -> String {
+    let safe_title = escape_html_text(title);
+    let safe_description = escape_html_text(description);
+    let safe_target = escape_html_text(target);
+    format!(
+        r#"<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{safe_title}</title>
+  <meta name="description" content="{safe_description}" />
+  <meta http-equiv="refresh" content="0; url={safe_target}" />
+  <link rel="canonical" href="{safe_target}" />
+</head>
+<body>
+  <main>
+    <p>Opening the latest digest…</p>
+    <p><a href="{safe_target}">Continue to the current Daily AI News Digest</a></p>
+  </main>
+  <script>window.location.replace("{safe_target}");</script>
+</body>
+</html>"#
     )
 }
 
@@ -4303,9 +4308,9 @@ fn build_start_here_links(posts: &[Post], news_available: bool) -> Vec<LandingLi
         links.push(LandingLink {
             title: "News Radar".to_string(),
             url: "/news/".to_string(),
-            description: "Track repos, papers, and social signals in a separate news feed."
+            description: "Open the latest digest for repos, papers, and social signals."
                 .to_string(),
-            cta: "Open news".to_string(),
+            cta: "Open digest".to_string(),
         });
     }
 

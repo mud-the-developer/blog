@@ -9,6 +9,7 @@
 
 {% block content %}
   <article class="panel note{% if content_classes.len() > 0 %} {{ content_classes }}{% endif %}">
+    {% if show_note_header %}
     <header class="note-header">
       <p class="section-kicker">Note</p>
       <h1>{% if let Some(icon) = post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}{{ post.title }}</h1>
@@ -22,6 +23,7 @@
       {% endif %}
       <p class="note-route" aria-label="Note path">{{ post.url }}</p>
     </header>
+    {% endif %}
     {{ body_html|safe }}
   </article>
 {% endblock %}
