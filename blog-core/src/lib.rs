@@ -711,6 +711,13 @@ struct GraphTemplate {
 }
 
 #[derive(Template)]
+#[template(path = "news.html")]
+struct NewsTemplate {
+    layout: LayoutContext,
+    news: NewsHubData,
+}
+
+#[derive(Template)]
 #[template(path = "404.html")]
 struct NotFoundTemplate {
     layout: LayoutContext,
@@ -722,6 +729,94 @@ struct MissingNoteTemplate {
     layout: LayoutContext,
     missing_title: String,
     missing_slug: String,
+}
+
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+struct NewsHubData {
+    #[serde(default)]
+    generated_at: String,
+    #[serde(default)]
+    issue_date: String,
+    #[serde(default)]
+    summary: String,
+    #[serde(default)]
+    top_cards: Vec<NewsCard>,
+    #[serde(default)]
+    sections: Vec<NewsSection>,
+    #[serde(default)]
+    source_counts: Vec<NewsSourceCount>,
+    #[serde(default)]
+    digest: NewsDigestLink,
+    #[serde(default)]
+    archives: Vec<NewsArchiveEntry>,
+}
+
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+struct NewsSection {
+    #[serde(default)]
+    slug: String,
+    #[serde(default)]
+    title: String,
+    #[serde(default)]
+    description: String,
+    #[serde(default)]
+    items: Vec<NewsCard>,
+}
+
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+struct NewsCard {
+    #[serde(default)]
+    title: String,
+    #[serde(default)]
+    url: String,
+    #[serde(default)]
+    source: String,
+    #[serde(default)]
+    tags: Vec<String>,
+    #[serde(default)]
+    score: f64,
+    #[serde(default)]
+    published_hours_ago: i64,
+    #[serde(default)]
+    stars: i64,
+    #[serde(default)]
+    image_url: String,
+    #[serde(default)]
+    badge: String,
+    #[serde(default)]
+    deck: String,
+    #[serde(default)]
+    meta: String,
+}
+
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+struct NewsSourceCount {
+    #[serde(default)]
+    label: String,
+    #[serde(default)]
+    value: usize,
+}
+
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+struct NewsDigestLink {
+    #[serde(default)]
+    title: String,
+    #[serde(default)]
+    url: String,
+    #[serde(default)]
+    description: String,
+}
+
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+struct NewsArchiveEntry {
+    #[serde(default)]
+    title: String,
+    #[serde(default)]
+    url: String,
+    #[serde(default)]
+    date_label: String,
+    #[serde(default)]
+    description: String,
 }
 
 pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
@@ -774,6 +869,7 @@ pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
     render_missing_note_pages(config, &posts, &theme_assets, &asset_version)?;
     render_tag_pages(config, &tags, &posts, &theme_assets, &asset_version)?;
     render_graph_page(config, &posts, &theme_assets, &asset_version)?;
+    render_news_page(config, &posts, &theme_assets, &asset_version)?;
     render_not_found_page(config, &posts, &theme_assets, &asset_version)?;
     write_search_index(config, &posts)?;
     write_file_tree(config, &posts)?;
@@ -1026,8 +1122,11 @@ fn render_index(
         asset_version,
     );
 
-    let visible_posts: Vec<&Post> = posts.iter().filter(|post| !post.hidden).collect();
-    let start_here_links = build_start_here_links(posts, embedded_news_site_available());
+    let visible_posts: Vec<&Post> = posts
+        .iter()
+        .filter(|post| !post.hidden && !is_news_digest_post(post))
+        .collect();
+    let start_here_links = build_start_here_links(posts, news_page_available());
     let folders = build_folder_summaries(posts);
 
     let template = IndexTemplate {
@@ -1196,6 +1295,60 @@ fn render_graph_page(
 
     write_file(
         config.output_dir.join("graph").join("index.html"),
+        template.render()?,
+    )
+}
+
+fn render_news_page(
+    config: &BuildConfig,
+    posts: &[Post],
+    theme_assets: &ThemeAssets,
+    asset_version: &str,
+) -> Result<()> {
+    let Some(mut news) = load_generated_news_hub_data(posts)? else {
+        return Ok(());
+    };
+
+    let description = if news.summary.trim().is_empty() {
+        "Daily repo, paper, and social signal digest.".to_string()
+    } else {
+        news.summary.clone()
+    };
+
+    let layout = website_layout(
+        config,
+        posts,
+        theme_assets,
+        format!("News Radar | {}", config.site.title),
+        description,
+        "/news/",
+        "website",
+        "",
+        "",
+        website_json_ld(config),
+        Vec::new(),
+        true,
+        false,
+        "/graph.json".to_string(),
+        String::new(),
+        false,
+        Vec::new(),
+        asset_version,
+    );
+
+    if news.digest.url.trim().is_empty() {
+        if let Some(first) = news.archives.first() {
+            news.digest = NewsDigestLink {
+                title: first.title.clone(),
+                url: first.url.clone(),
+                description: first.description.clone(),
+            };
+        }
+    }
+
+    let template = NewsTemplate { layout, news };
+    write_file(
+        config.output_dir.join("news").join("index.html"),
         template.render()?,
     )
 }
@@ -1853,6 +2006,13 @@ fn write_sitemap(config: &BuildConfig, posts: &[Post], tags: &[TagEntry]) -> Res
         &absolute_url(&config.site.base_url, "/graph/"),
         None,
     );
+    if news_page_available() {
+        append_sitemap_url(
+            &mut xml,
+            &absolute_url(&config.site.base_url, "/news/"),
+            None,
+        );
+    }
 
     for post in posts {
         if post.hidden {
@@ -4111,9 +4271,9 @@ fn build_start_here_links(posts: &[Post], news_available: bool) -> Vec<LandingLi
     let about_post = posts
         .iter()
         .find(|post| !post.hidden && !post.is_home && is_profile_post(post));
-    let latest_post = posts
-        .iter()
-        .find(|post| !post.hidden && !post.is_home && !is_profile_post(post));
+    let latest_post = posts.iter().find(|post| {
+        !post.hidden && !post.is_home && !is_profile_post(post) && !is_news_digest_post(post)
+    });
 
     if let Some(post) = about_post {
         links.push(LandingLink {
@@ -4162,10 +4322,21 @@ fn is_profile_post(post: &Post) -> bool {
         || post.title.to_ascii_lowercase().contains("about")
 }
 
+fn is_news_digest_post(post: &Post) -> bool {
+    post.slug.starts_with("news/")
+        || post
+            .tags
+            .iter()
+            .any(|tag| tag.eq_ignore_ascii_case("news-digest"))
+}
+
 fn build_folder_summaries(posts: &[Post]) -> Vec<FolderSummary> {
     let mut names: BTreeSet<String> = BTreeSet::new();
 
-    for post in posts.iter().filter(|post| !post.hidden) {
+    for post in posts
+        .iter()
+        .filter(|post| !post.hidden && !is_news_digest_post(post))
+    {
         if let Some((folder, _)) = post.slug.split_once('/') {
             let trimmed = folder.trim();
             if !trimmed.is_empty() {
@@ -4264,7 +4435,7 @@ fn normalize_page_description(value: String, fallback: &str) -> String {
 fn build_page_tabs(posts: &[Post], page_path: &str) -> Vec<PageTab> {
     posts
         .iter()
-        .filter(|post| !post.hidden)
+        .filter(|post| !post.hidden && !is_news_digest_post(post))
         .map(|post| {
             let url = format!("/notes/{}/", post.slug);
             PageTab {
@@ -4352,6 +4523,46 @@ fn embedded_news_site_dir() -> PathBuf {
 
 fn embedded_news_site_available() -> bool {
     embedded_news_site_dir().join("index.html").exists()
+}
+
+fn generated_news_hub_data_path() -> PathBuf {
+    PathBuf::from("content/generated/news/latest.json")
+}
+
+fn news_page_available() -> bool {
+    embedded_news_site_available() || generated_news_hub_data_path().exists()
+}
+
+fn load_generated_news_hub_data(posts: &[Post]) -> Result<Option<NewsHubData>> {
+    let path = generated_news_hub_data_path();
+    if !path.exists() {
+        return Ok(None);
+    }
+
+    let raw = fs::read_to_string(&path)
+        .with_context(|| format!("failed to read generated news hub data {}", path.display()))?;
+    let mut news: NewsHubData = serde_json::from_str(&raw)
+        .with_context(|| format!("failed to parse generated news hub data {}", path.display()))?;
+
+    let mut archives = posts
+        .iter()
+        .filter(|post| is_news_digest_post(post))
+        .map(|post| NewsArchiveEntry {
+            title: post.title.clone(),
+            url: format!("/notes/{}/", post.slug),
+            date_label: post
+                .date
+                .map(|date| date.format("%Y-%m-%d").to_string())
+                .unwrap_or_else(|| "Undated".to_string()),
+            description: post.excerpt.clone(),
+        })
+        .collect::<Vec<_>>();
+    archives.sort_by(|a, b| b.date_label.cmp(&a.date_label));
+    if !archives.is_empty() {
+        news.archives = archives.into_iter().take(8).collect();
+    }
+
+    Ok(Some(news))
 }
 
 fn rewrite_embedded_news_html(input: &str) -> String {

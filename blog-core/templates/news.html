@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block extra_styles %}
+  <link rel="stylesheet" href="/assets/style-listing.css?v={{ layout.asset_version }}" />
+  <link rel="stylesheet" href="/assets/style-news.css?v={{ layout.asset_version }}" />
+{% endblock %}
+
+{% block content %}
+  <section class="panel news-hero">
+    <div class="news-hero-copy">
+      <p class="section-kicker">News Radar</p>
+      <h1>Daily cards for repo momentum, fresh papers, and community signal.</h1>
+      <p class="news-hero-lead">{{ news.summary }}</p>
+      <div class="news-hero-actions" role="group" aria-label="News actions">
+        <a class="post-cta-link" href="{{ news.digest.url }}">Open latest digest</a>
+        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
+      </div>
+    </div>
+    <div class="news-hero-meta">
+      <div class="news-meta-card">
+        <span class="news-meta-label">Issue date</span>
+        <strong>{{ news.issue_date }}</strong>
+      </div>
+      <div class="news-meta-card">
+        <span class="news-meta-label">Generated</span>
+        <strong>{{ news.generated_at }}</strong>
+      </div>
+      <div class="news-meta-card">
+        <span class="news-meta-label">Sections</span>
+        <strong>{{ news.sections.len() }}</strong>
+      </div>
+    </div>
+  </section>
+
+  {% if news.top_cards.len() > 0 %}
+  <section class="news-top-grid" aria-label="Top signals">
+    {% for card in news.top_cards %}
+    <a class="panel news-top-card" href="{{ card.url }}" target="_blank" rel="noreferrer">
+      <div class="news-card-head">
+        <span class="news-card-badge">{{ card.badge }}</span>
+        <span class="news-card-source">{{ card.source }}</span>
+      </div>
+      <h2>{{ card.title }}</h2>
+      <p>{{ card.deck }}</p>
+      {% if card.tags.len() > 0 %}
+      <div class="tag-wrap">
+        {% for tag in card.tags %}
+        <span class="tag">#{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <p class="news-card-meta">{{ card.meta }}</p>
+    </a>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  <div class="news-sections">
+    {% for section in news.sections %}
+    <section id="{{ section.slug }}" class="panel news-section">
+      <header class="section-head">
+        <div>
+          <p class="section-kicker">Section</p>
+          <h2>{{ section.title }}</h2>
+        </div>
+      </header>
+      <p class="news-section-description">{{ section.description }}</p>
+      <div class="news-card-grid">
+        {% for card in section.items %}
+        <a class="news-card" href="{{ card.url }}" target="_blank" rel="noreferrer">
+          <img class="news-card-image" src="{{ card.image_url }}" alt="{{ card.title }}" loading="lazy" decoding="async" />
+          <div class="news-card-body">
+            <div class="news-card-head">
+              <span class="news-card-badge">{{ card.badge }}</span>
+              <span class="news-card-source">{{ card.source }}</span>
+            </div>
+            <h3>{{ card.title }}</h3>
+            <p>{{ card.deck }}</p>
+            {% if card.tags.len() > 0 %}
+            <div class="tag-wrap">
+              {% for tag in card.tags %}
+              <span class="tag">#{{ tag }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+            <p class="news-card-meta">{{ card.meta }}</p>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+    {% endfor %}
+  </div>
+
+  <section class="news-lower-grid" aria-label="News support">
+    <section class="panel news-archive-panel">
+      <header class="section-head">
+        <div>
+          <p class="section-kicker">Archive</p>
+          <h2>Digest Posts</h2>
+        </div>
+      </header>
+      <div class="news-archive-list">
+        {% for item in news.archives %}
+        <a class="news-archive-item" href="{{ item.url }}">
+          <span class="news-archive-date">{{ item.date_label }}</span>
+          <strong>{{ item.title }}</strong>
+          {% if item.description.len() > 0 %}
+          <span>{{ item.description }}</span>
+          {% endif %}
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="panel news-source-panel">
+      <header class="section-head">
+        <div>
+          <p class="section-kicker">Coverage</p>
+          <h2>Source Mix</h2>
+        </div>
+      </header>
+      <div class="news-source-list">
+        {% for row in news.source_counts %}
+        <div class="news-source-row">
+          <span>{{ row.label }}</span>
+          <strong>{{ row.value }}</strong>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+  </section>
+{% endblock %}
