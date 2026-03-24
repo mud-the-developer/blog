@@ -19,11 +19,11 @@
     <div class="news-hero-meta">
       <div class="news-meta-card">
         <span class="news-meta-label">Issue date</span>
-        <strong>{{ news.issue_date }}</strong>
+        <strong><time datetime="{{ news.issue_date }}">{{ news.issue_label }}</time></strong>
       </div>
       <div class="news-meta-card">
         <span class="news-meta-label">Generated</span>
-        <strong>{{ news.generated_at }}</strong>
+        <strong><time datetime="{{ news.generated_at }}">{{ news.generated_label }}</time></strong>
       </div>
       <div class="news-meta-card">
         <span class="news-meta-label">Sections</span>
@@ -68,7 +68,7 @@
       <div class="news-card-grid">
         {% for card in section.items %}
         <a class="news-card" href="{{ card.url }}" target="_blank" rel="noreferrer">
-          <img class="news-card-image" src="{{ card.image_url }}" alt="{{ card.title }}" loading="lazy" decoding="async" />
+          <img class="news-card-image" src="{{ card.image_url }}" alt="{{ card.title }}" width="1200" height="675" loading="lazy" decoding="async" />
           <div class="news-card-body">
             <div class="news-card-head">
               <span class="news-card-badge">{{ card.badge }}</span>

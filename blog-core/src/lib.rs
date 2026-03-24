@@ -736,7 +736,11 @@ struct NewsHubData {
     #[serde(default)]
     generated_at: String,
     #[serde(default)]
+    generated_label: String,
+    #[serde(default)]
     issue_date: String,
+    #[serde(default)]
+    issue_label: String,
     #[serde(default)]
     summary: String,
     #[serde(default)]
@@ -4545,6 +4549,16 @@ fn load_generated_news_hub_data(posts: &[Post]) -> Result<Option<NewsHubData>> {
         .with_context(|| format!("failed to read generated news hub data {}", path.display()))?;
     let mut news: NewsHubData = serde_json::from_str(&raw)
         .with_context(|| format!("failed to parse generated news hub data {}", path.display()))?;
+    if news.issue_label.trim().is_empty() {
+        news.issue_label = NaiveDate::parse_from_str(&news.issue_date, "%Y-%m-%d")
+            .map(|date| date.format("%b %-d, %Y").to_string())
+            .unwrap_or_else(|_| news.issue_date.clone());
+    }
+    if news.generated_label.trim().is_empty() {
+        news.generated_label = DateTime::parse_from_rfc3339(&news.generated_at)
+            .map(|date| date.format("%b %-d, %Y · %-I:%M %p %:z").to_string())
+            .unwrap_or_else(|_| news.generated_at.clone());
+    }
     let archive_by_url = news
         .archives
         .iter()

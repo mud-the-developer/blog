@@ -17,6 +17,8 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote
+from urllib.request import urlopen
 from zoneinfo import ZoneInfo
 
 
@@ -25,6 +27,7 @@ SOURCE_PATH = ROOT / "vendor" / "blog_news" / "data" / "latest.json"
 SNAPSHOT_PATH = ROOT / "static" / "news" / "data" / "latest.json"
 GENERATED_DIR = ROOT / "content" / "generated" / "news"
 POSTS_DIR = ROOT / "content" / "posts" / "news"
+TRANSLATION_CACHE_PATH = GENERATED_DIR / "translation-cache.json"
 KST = ZoneInfo("Asia/Seoul")
 
 SECTION_SPECS = [
@@ -60,6 +63,9 @@ class NewsItem:
     meta: str
 
 
+TRANSLATION_CACHE: dict[str, str] = {}
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate the blog news digest artifacts.")
     parser.add_argument("--date", help="Issue date in YYYY-MM-DD. Defaults to current date in Asia/Seoul.")
@@ -71,6 +77,14 @@ def issue_date_from_args(raw: str | None) -> datetime:
     if raw:
         return datetime.strptime(raw, "%Y-%m-%d").replace(tzinfo=KST)
     return datetime.now(tz=KST)
+
+
+def issue_date_label(issue_dt: datetime) -> str:
+    return issue_dt.strftime("%b %-d, %Y")
+
+
+def generated_timestamp_label(generated_at: datetime) -> str:
+    return generated_at.strftime("%b %-d, %Y · %-I:%M %p KST")
 
 
 def load_source_feed() -> dict[str, Any]:
@@ -92,6 +106,18 @@ def write_source_snapshot(payload: dict[str, Any]) -> None:
     SNAPSHOT_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
 
 
+def load_translation_cache() -> None:
+    TRANSLATION_CACHE.clear()
+    if TRANSLATION_CACHE_PATH.exists():
+        TRANSLATION_CACHE.update(json.loads(TRANSLATION_CACHE_PATH.read_text()))
+
+
+def save_translation_cache() -> None:
+    TRANSLATION_CACHE_PATH.write_text(
+        json.dumps(TRANSLATION_CACHE, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    )
+
+
 def normalize_image(url: str) -> str:
     if url.startswith("/assets/"):
         return "/news/assets/" + url.removeprefix("/assets/")
@@ -101,6 +127,33 @@ def normalize_image(url: str) -> str:
 def clean_title(value: str) -> str:
     value = re.sub(r"\s+", " ", value).strip()
     value = re.sub(r"\s+-\s+(LinkedIn|x\.com)$", "", value)
+    return value
+
+
+def needs_translation(value: str) -> bool:
+    return bool(re.search(r"[\u3400-\u4dbf\u4e00-\u9fff\u3040-\u30ff\u3130-\u318f\uac00-\ud7af]", value))
+
+
+def translate_to_english(value: str) -> str:
+    value = value.strip()
+    if not value or not needs_translation(value):
+        return value
+    cached = TRANSLATION_CACHE.get(value)
+    if cached:
+        return cached
+    url = (
+        "https://translate.googleapis.com/translate_a/single"
+        f"?client=gtx&sl=auto&tl=en&dt=t&q={quote(value)}"
+    )
+    try:
+        with urlopen(url, timeout=8) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+        translated = "".join(part[0] for part in payload[0] if part and part[0]).strip()
+        if translated:
+            TRANSLATION_CACHE[value] = translated
+            return translated
+    except Exception:
+        pass
     return value
 
 
@@ -117,7 +170,7 @@ def repo_description_from_title(title: str) -> str:
 
 
 def headline_for(item: dict[str, Any]) -> str:
-    title = clean_title(item.get("title", "Untitled"))
+    title = english_title_for(item)
     if item.get("source") == "github.com":
         repo_name = repo_name_from_title(title)
         if repo_name:
@@ -136,6 +189,17 @@ def ensure_terminal_punctuation(value: str) -> str:
 
 def yaml_quote(value: str) -> str:
     return json.dumps(value, ensure_ascii=False)
+
+
+def english_title_for(item: dict[str, Any]) -> str:
+    title = clean_title(item.get("title", "Untitled"))
+    if not needs_translation(title):
+        return title
+    if item.get("source") == "github.com" and " — " in title:
+        repo_name, repo_desc = title.split(" — ", 1)
+        translated_desc = translate_to_english(repo_desc)
+        return f"{repo_name.strip()} — {translated_desc.strip()}"
+    return translate_to_english(title)
 
 
 def source_label(source: str) -> str:
@@ -169,7 +233,7 @@ def clamp_text(value: str, limit: int) -> str:
 def deck_for(item: dict[str, Any], badge: str) -> str:
     hours = int(item.get("publishedHoursAgo") or 0)
     stars = int(item.get("stars") or 0)
-    title = clean_title(item.get("title", ""))
+    title = english_title_for(item)
     tags = [tag for tag in item.get("tags") or [] if tag.lower() != "other"]
     tag_text = ", ".join(tags[:3]).lower()
     if badge == "Repo":
@@ -214,9 +278,10 @@ def meta_for(item: dict[str, Any]) -> str:
 
 def to_card(item: dict[str, Any]) -> NewsItem:
     badge = badge_for(item)
+    title = english_title_for(item)
     return NewsItem(
         headline=headline_for(item),
-        title=clean_title(item.get("title", "Untitled")),
+        title=title,
         url=item.get("url", "#"),
         source=item.get("source", ""),
         tags=[tag for tag in list(item.get("tags") or []) if tag.lower() != "other"],
@@ -349,17 +414,13 @@ def render_markdown(issue_dt: datetime, summary: str, sections: list[tuple[str, 
         body.append("")
         body.append('<div class="news-digest-grid">')
         for card in cards:
-            tags = "".join(
-                f'<span class="news-digest-chip">#{tag}</span>' for tag in card.tags[:3]
-            )
             body.extend(
                 [
                     f'  <a class="news-digest-card" href="{card.url}" target="_blank" rel="noreferrer">',
-                    f'    <span class="news-digest-badge">{card.badge}</span>',
-                    f'    <h3>{card.title}</h3>',
-                    f'    <p>{card.deck}</p>',
-                    f'    <div class="news-digest-chip-row">{tags}</div>' if tags else '    <div class="news-digest-chip-row"></div>',
-                    f'    <p class="news-digest-meta">{card.meta}</p>',
+                    f'    <img class="news-digest-image" src="{card.image_url}" alt="{card.title}" width="1200" height="675" loading="lazy" decoding="async" />',
+                    '    <div class="news-digest-card-copy">',
+                    f'      <h3>{card.headline or card.title}</h3>',
+                    "    </div>",
                     "  </a>",
                 ]
             )
@@ -391,7 +452,8 @@ def source_count_rows(payload: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def write_hub_json(issue_dt: datetime, payload: dict[str, Any], summary: str, digest_stem: str) -> None:
-    generated_at = datetime.now(tz=KST).isoformat()
+    generated_dt = datetime.now(tz=KST)
+    generated_at = generated_dt.isoformat()
     top_cards = build_top_cards(payload, 4)
     sections = []
     for slug, title, description in SECTION_SPECS:
@@ -405,7 +467,9 @@ def write_hub_json(issue_dt: datetime, payload: dict[str, Any], summary: str, di
         )
     hub = {
         "generated_at": generated_at,
+        "generated_label": generated_timestamp_label(generated_dt),
         "issue_date": issue_dt.strftime("%Y-%m-%d"),
+        "issue_label": issue_date_label(issue_dt),
         "summary": summary,
         "top_cards": [card.__dict__ for card in top_cards],
         "sections": sections,
@@ -423,12 +487,14 @@ def write_hub_json(issue_dt: datetime, payload: dict[str, Any], summary: str, di
 def main() -> None:
     args = parse_args()
     ensure_dirs()
+    load_translation_cache()
     issue_dt = issue_date_from_args(args.date)
     payload = load_source_feed()
     write_source_snapshot(payload)
     summary = issue_summary(payload)
     digest_stem = write_post(issue_dt, summary, payload, args.limit)
     write_hub_json(issue_dt, payload, summary, digest_stem)
+    save_translation_cache()
     print(f"Generated news digest post: content/posts/news/{digest_stem}.md")
     print("Generated hub data: content/generated/news/latest.json")
     print("Updated raw feed snapshot: static/news/data/latest.json")

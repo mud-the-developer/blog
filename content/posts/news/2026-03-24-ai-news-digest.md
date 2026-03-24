@@ -17,32 +17,28 @@ Hub: [/news/](/news/) · Raw feed: [/news/data/latest.json](/news/data/latest.js
 
 <div class="news-digest-grid">
   <a class="news-digest-card" href="https://github.com/ceedaragents/cyrus" target="_blank" rel="noreferrer">
-    <span class="news-digest-badge">Repo</span>
-    <h3>ceedaragents/cyrus — Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine</h3>
-    <p>Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine. Surfaced 0h ago with 412 stars.</p>
-    <div class="news-digest-chip-row"><span class="news-digest-chip">#AI</span></div>
-    <p class="news-digest-meta">GitHub · 412 stars · 0h ago · score 4.77</p>
+    <img class="news-digest-image" src="https://opengraph.githubassets.com/1/ceedaragents/cyrus" alt="ceedaragents/cyrus — Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine" width="1200" height="675" loading="lazy" decoding="async" />
+    <div class="news-digest-card-copy">
+      <h3>ceedaragents/cyrus</h3>
+    </div>
   </a>
   <a class="news-digest-card" href="http://arxiv.org/abs/2603.08566v1" target="_blank" rel="noreferrer">
-    <span class="news-digest-badge">Paper</span>
-    <h3>OSS-CRS: Liberating AIxCC Cyber Reasoning Systems for Real-World Open-Source Security</h3>
-    <p>Fresh arXiv paper posted 22h ago and surfacing in the current feed.</p>
-    <div class="news-digest-chip-row"></div>
-    <p class="news-digest-meta">arXiv · 22h ago · score 2.88</p>
+    <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="OSS-CRS: Liberating AIxCC Cyber Reasoning Systems for Real-World Open-Source Security" width="1200" height="675" loading="lazy" decoding="async" />
+    <div class="news-digest-card-copy">
+      <h3>OSS-CRS: Liberating AIxCC Cyber Reasoning Systems for Real-World Open-Source Security</h3>
+    </div>
   </a>
   <a class="news-digest-card" href="http://arxiv.org/abs/2603.08462v1" target="_blank" rel="noreferrer">
-    <span class="news-digest-badge">Paper</span>
-    <h3>Reasoning as Compression: Unifying Budget Forcing via the Conditional Information Bottleneck</h3>
-    <p>Fresh arXiv paper posted 24h ago and surfacing in the current feed.</p>
-    <div class="news-digest-chip-row"></div>
-    <p class="news-digest-meta">arXiv · 24h ago · score 2.88</p>
+    <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Reasoning as Compression: Unifying Budget Forcing via the Conditional Information Bottleneck" width="1200" height="675" loading="lazy" decoding="async" />
+    <div class="news-digest-card-copy">
+      <h3>Reasoning as Compression: Unifying Budget Forcing via the Conditional Information Bottleneck</h3>
+    </div>
   </a>
   <a class="news-digest-card" href="http://arxiv.org/abs/2603.08655v1" target="_blank" rel="noreferrer">
-    <span class="news-digest-badge">Paper</span>
-    <h3>OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning</h3>
-    <p>Fresh arXiv paper from the ai cluster, posted 21h ago.</p>
-    <div class="news-digest-chip-row"><span class="news-digest-chip">#AI</span></div>
-    <p class="news-digest-meta">arXiv · 21h ago · score 2.88</p>
+    <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning" width="1200" height="675" loading="lazy" decoding="async" />
+    <div class="news-digest-card-copy">
+      <h3>OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning</h3>
+    </div>
   </a>
 </div>
 
@@ -50,32 +46,28 @@ Hub: [/news/](/news/) · Raw feed: [/news/data/latest.json](/news/data/latest.js
 
 <div class="news-digest-grid">
   <a class="news-digest-card" href="https://github.com/ceedaragents/cyrus" target="_blank" rel="noreferrer">
-    <span class="news-digest-badge">Repo</span>
-    <h3>ceedaragents/cyrus — Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine</h3>
-    <p>Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine. Surfaced 0h ago with 412 stars.</p>
-    <div class="news-digest-chip-row"><span class="news-digest-chip">#AI</span></div>
-    <p class="news-digest-meta">GitHub · 412 stars · 0h ago · score 4.77</p>
+    <img class="news-digest-image" src="https://opengraph.githubassets.com/1/ceedaragents/cyrus" alt="ceedaragents/cyrus — Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine" width="1200" height="675" loading="lazy" decoding="async" />
+    <div class="news-digest-card-copy">
+      <h3>ceedaragents/cyrus</h3>
+    </div>
   </a>
   <a class="news-digest-card" href="https://github.com/freddy-schuetz/n8n-claw" target="_blank" rel="noreferrer">
-    <span class="news-digest-badge">Repo</span>
-    <h3>freddy-schuetz/n8n-claw — OpenClaw-inspired autonomous AI agent built entirely in n8n. Adaptive RAG-powered memory, Skills via MCP templates, proactive task management, media understanding - self-hosted with one setup script</h3>
-    <p>OpenClaw-inspired autonomous AI agent built entirely in n8n. Adaptive RAG-powered memory, Skills via MCP templates, proactive task management, media understanding - self…</p>
-    <div class="news-digest-chip-row"><span class="news-digest-chip">#AI</span></div>
-    <p class="news-digest-meta">GitHub · 170 stars · 0h ago · score 4.38</p>
+    <img class="news-digest-image" src="https://opengraph.githubassets.com/1/freddy-schuetz/n8n-claw" alt="freddy-schuetz/n8n-claw — OpenClaw-inspired autonomous AI agent built entirely in n8n. Adaptive RAG-powered memory, Skills via MCP templates, proactive task management, media understanding - self-hosted with one setup script" width="1200" height="675" loading="lazy" decoding="async" />
+    <div class="news-digest-card-copy">
+      <h3>freddy-schuetz/n8n-claw</h3>
+    </div>
   </a>
   <a class="news-digest-card" href="https://github.com/RunanywhereAI/RCLI" target="_blank" rel="noreferrer">
-    <span class="news-digest-badge">Repo</span>
-    <h3>RunanywhereAI/RCLI — Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG</h3>
-    <p>Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG. Surfaced 0h ago with 105 stars.</p>
-    <div class="news-digest-chip-row"><span class="news-digest-chip">#AI</span></div>
-    <p class="news-digest-meta">GitHub · 105 stars · 0h ago · score 4.09</p>
+    <img class="news-digest-image" src="https://opengraph.githubassets.com/1/RunanywhereAI/RCLI" alt="RunanywhereAI/RCLI — Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG" width="1200" height="675" loading="lazy" decoding="async" />
+    <div class="news-digest-card-copy">
+      <h3>RunanywhereAI/RCLI</h3>
+    </div>
   </a>
   <a class="news-digest-card" href="https://github.com/agentscope-ai/agentscope-java" target="_blank" rel="noreferrer">
-    <span class="news-digest-badge">Repo</span>
-    <h3>agentscope-ai/agentscope-java — AgentScope Java: Agent-Oriented Programming for Building LLM Applications</h3>
-    <p>AgentScope Java: Agent-Oriented Programming for Building LLM Applications. Surfaced 0h ago with 1668 stars.</p>
-    <div class="news-digest-chip-row"><span class="news-digest-chip">#AI</span></div>
-    <p class="news-digest-meta">GitHub · 1668 stars · 0h ago · score 3.81</p>
+    <img class="news-digest-image" src="https://opengraph.githubassets.com/1/agentscope-ai/agentscope-java" alt="agentscope-ai/agentscope-java — AgentScope Java: Agent-Oriented Programming for Building LLM Applications" width="1200" height="675" loading="lazy" decoding="async" />
+    <div class="news-digest-card-copy">
+      <h3>agentscope-ai/agentscope-java</h3>
+    </div>
   </a>
 </div>
 
@@ -83,32 +75,28 @@ Hub: [/news/](/news/) · Raw feed: [/news/data/latest.json](/news/data/latest.js
 
 <div class="news-digest-grid">
   <a class="news-digest-card" href="http://arxiv.org/abs/2603.08655v1" target="_blank" rel="noreferrer">
-    <span class="news-digest-badge">Paper</span>
-    <h3>OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning</h3>
-    <p>Fresh arXiv paper from the ai cluster, posted 21h ago.</p>
-    <div class="news-digest-chip-row"><span class="news-digest-chip">#AI</span></div>
-    <p class="news-digest-meta">arXiv · 21h ago · score 2.88</p>
+    <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning" width="1200" height="675" loading="lazy" decoding="async" />
+    <div class="news-digest-card-copy">
+      <h3>OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning</h3>
+    </div>
   </a>
   <a class="news-digest-card" href="http://arxiv.org/abs/2603.08566v1" target="_blank" rel="noreferrer">
-    <span class="news-digest-badge">Paper</span>
-    <h3>OSS-CRS: Liberating AIxCC Cyber Reasoning Systems for Real-World Open-Source Security</h3>
-    <p>Fresh arXiv paper posted 22h ago and surfacing in the current feed.</p>
-    <div class="news-digest-chip-row"></div>
-    <p class="news-digest-meta">arXiv · 22h ago · score 2.88</p>
+    <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="OSS-CRS: Liberating AIxCC Cyber Reasoning Systems for Real-World Open-Source Security" width="1200" height="675" loading="lazy" decoding="async" />
+    <div class="news-digest-card-copy">
+      <h3>OSS-CRS: Liberating AIxCC Cyber Reasoning Systems for Real-World Open-Source Security</h3>
+    </div>
   </a>
   <a class="news-digest-card" href="http://arxiv.org/abs/2603.08462v1" target="_blank" rel="noreferrer">
-    <span class="news-digest-badge">Paper</span>
-    <h3>Reasoning as Compression: Unifying Budget Forcing via the Conditional Information Bottleneck</h3>
-    <p>Fresh arXiv paper posted 24h ago and surfacing in the current feed.</p>
-    <div class="news-digest-chip-row"></div>
-    <p class="news-digest-meta">arXiv · 24h ago · score 2.88</p>
+    <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Reasoning as Compression: Unifying Budget Forcing via the Conditional Information Bottleneck" width="1200" height="675" loading="lazy" decoding="async" />
+    <div class="news-digest-card-copy">
+      <h3>Reasoning as Compression: Unifying Budget Forcing via the Conditional Information Bottleneck</h3>
+    </div>
   </a>
   <a class="news-digest-card" href="http://arxiv.org/abs/2603.08616v1" target="_blank" rel="noreferrer">
-    <span class="news-digest-badge">Paper</span>
-    <h3>Coverage-Guided Multi-Agent Harness Generation for Java Library Fuzzing</h3>
-    <p>Fresh arXiv paper from the ai cluster, posted 22h ago.</p>
-    <div class="news-digest-chip-row"><span class="news-digest-chip">#AI</span></div>
-    <p class="news-digest-meta">arXiv · 22h ago · score 2.81</p>
+    <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Coverage-Guided Multi-Agent Harness Generation for Java Library Fuzzing" width="1200" height="675" loading="lazy" decoding="async" />
+    <div class="news-digest-card-copy">
+      <h3>Coverage-Guided Multi-Agent Harness Generation for Java Library Fuzzing</h3>
+    </div>
   </a>
 </div>
 
@@ -116,32 +104,28 @@ Hub: [/news/](/news/) · Raw feed: [/news/data/latest.json](/news/data/latest.js
 
 <div class="news-digest-grid">
   <a class="news-digest-card" href="https://news.hada.io/topic?id=27376" target="_blank" rel="noreferrer">
-    <span class="news-digest-badge">Social</span>
-    <h3>OpenAI, Oracle과의 Stargate 데이터센터 확장 계획 철회</h3>
-    <p>Community signal picked up on GeekNews about 2h ago.</p>
-    <div class="news-digest-chip-row"><span class="news-digest-chip">#social</span></div>
-    <p class="news-digest-meta">GeekNews · 2h ago · score 2.55</p>
+    <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="OpenAI cancels Stargate data center expansion plans with Oracle" width="1200" height="675" loading="lazy" decoding="async" />
+    <div class="news-digest-card-copy">
+      <h3>OpenAI cancels Stargate data center expansion plans with Oracle</h3>
+    </div>
   </a>
   <a class="news-digest-card" href="https://news.hada.io/topic?id=27379" target="_blank" rel="noreferrer">
-    <span class="news-digest-badge">Social</span>
-    <h3>JSLinux가 이제 x86_64를 지원</h3>
-    <p>Community signal picked up on GeekNews about 1h ago.</p>
-    <div class="news-digest-chip-row"><span class="news-digest-chip">#social</span></div>
-    <p class="news-digest-meta">GeekNews · 1h ago · score 2.40</p>
+    <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="JSLinux now supports x86_64" width="1200" height="675" loading="lazy" decoding="async" />
+    <div class="news-digest-card-copy">
+      <h3>JSLinux now supports x86_64</h3>
+    </div>
   </a>
   <a class="news-digest-card" href="https://news.hada.io/topic?id=27377" target="_blank" rel="noreferrer">
-    <span class="news-digest-badge">Social</span>
-    <h3>Show GN: VSCode 안에서 단독으로 실행되는 OpenClaw의 수정판. 그런데 페르소나를 곁들인.</h3>
-    <p>Community signal picked up on GeekNews about 2h ago.</p>
-    <div class="news-digest-chip-row"><span class="news-digest-chip">#social</span></div>
-    <p class="news-digest-meta">GeekNews · 2h ago · score 2.40</p>
+    <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Show GN: A modified version of OpenClaw that runs standalone inside VSCode. But with Persona." width="1200" height="675" loading="lazy" decoding="async" />
+    <div class="news-digest-card-copy">
+      <h3>Show GN: A modified version of OpenClaw that runs standalone inside VSCode. But with Persona.</h3>
+    </div>
   </a>
   <a class="news-digest-card" href="https://news.hada.io/topic?id=27373" target="_blank" rel="noreferrer">
-    <span class="news-digest-badge">Social</span>
-    <h3>Bluesky CEO 제이 그래버, CEO 자리에서 물러나 최고혁신책임자(CIO)로 전환</h3>
-    <p>Community signal picked up on GeekNews about 6h ago.</p>
-    <div class="news-digest-chip-row"><span class="news-digest-chip">#social</span></div>
-    <p class="news-digest-meta">GeekNews · 6h ago · score 2.40</p>
+    <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Bluesky CEO Jay Graber steps down from CEO position to become Chief Innovation Officer (CIO)" width="1200" height="675" loading="lazy" decoding="async" />
+    <div class="news-digest-card-copy">
+      <h3>Bluesky CEO Jay Graber steps down from CEO position to become Chief Innovation Officer (CIO)</h3>
+    </div>
   </a>
 </div>
 
