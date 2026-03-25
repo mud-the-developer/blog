@@ -2,7 +2,7 @@ name: Update News Digest
 
 on:
   schedule:
-    - cron: "0 15 * * *"
+    - cron: "20 15 * * *"
   workflow_dispatch:
 
 permissions:
@@ -40,6 +40,54 @@ jobs:
         if: ${{ env.NEWS_REPO_TOKEN == '' }}
         run: |
           echo "::warning::NEWS_REPO_TOKEN is not configured. Generating the digest from the committed snapshot fallback."
+
+      - name: Validate news source freshness
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          candidates = [
+              Path("vendor/blog_news/data/latest.json"),
+              Path("static/news/data/latest.json"),
+          ]
+          source_path = next((path for path in candidates if path.exists()), None)
+          if source_path is None:
+              raise SystemExit("no news source payload found")
+
+          data = json.loads(source_path.read_text())
+          generated_raw = data.get("generatedAt")
+          if not generated_raw:
+              raise SystemExit(f"{source_path} is missing generatedAt")
+
+          generated_at = datetime.fromisoformat(generated_raw.replace("Z", "+00:00"))
+          age_hours = (datetime.now(timezone.utc) - generated_at).total_seconds() / 3600
+          errors = data.get("errors") or []
+          hard_errors = [
+              error for error in errors
+              if "GitHub fetch error" in error or "rate limit" in error.lower()
+          ]
+          source_counts = data.get("sourceCounts") or {}
+
+          if age_hours > 36:
+              raise SystemExit(
+                  f"news source is stale: {source_path} was generated {age_hours:.1f}h ago"
+              )
+          if hard_errors:
+              raise SystemExit("blocking source errors: " + " | ".join(hard_errors))
+          if source_counts.get("github.com", 0) < 8:
+              raise SystemExit("github.com coverage is too low in the source payload")
+          if source_counts.get("arxiv.org", 0) < 8:
+              raise SystemExit("arxiv.org coverage is too low in the source payload")
+
+          print(
+              f"validated source payload {source_path}: age={age_hours:.1f}h, "
+              f"github={source_counts.get('github.com', 0)}, "
+              f"arxiv={source_counts.get('arxiv.org', 0)}"
+          )
+          PY
 
       - name: Generate news digest artifacts
         run: |
