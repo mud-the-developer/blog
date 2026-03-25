@@ -39,20 +39,23 @@ jobs:
       - name: Use committed news snapshot fallback
         if: ${{ env.NEWS_REPO_TOKEN == '' }}
         run: |
-          echo "::notice::NEWS_REPO_TOKEN is not configured. Skipping private news refresh."
+          echo "::warning::NEWS_REPO_TOKEN is not configured. Generating the digest from the committed snapshot fallback."
 
       - name: Generate news digest artifacts
-        if: ${{ env.NEWS_REPO_TOKEN != '' }}
         run: |
           set -euo pipefail
           python3 scripts/generate_news_digest.py
 
       - name: Commit and push changes
-        if: ${{ env.NEWS_REPO_TOKEN != '' }}
         run: |
           set -euo pipefail
+          paths=(content/generated/news content/posts/news static/news/data)
 
-          if git diff --quiet -- vendor/blog_news content/generated/news content/posts/news static/news/data; then
+          if [[ -n "${NEWS_REPO_TOKEN}" ]]; then
+            paths=(vendor/blog_news "${paths[@]}")
+          fi
+
+          if git diff --quiet -- "${paths[@]}"; then
             echo "No news changes to commit."
             exit 0
           fi
@@ -60,7 +63,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add vendor/blog_news content/generated/news content/posts/news static/news/data
+          git add "${paths[@]}"
           issue_date="$(date +%F)"
           git commit -m "Refresh the daily news digest for ${issue_date}"
           git push origin HEAD:main
