@@ -622,14 +622,6 @@ struct PostCard {
 }
 
 #[derive(Debug, Clone)]
-struct LandingLink {
-    title: String,
-    url: String,
-    description: String,
-    cta: String,
-}
-
-#[derive(Debug, Clone)]
 struct FolderSummary {
     name: String,
 }
@@ -679,8 +671,6 @@ struct IndexTemplate {
     layout: LayoutContext,
     posts: Vec<PostCard>,
     tags: Vec<TagEntry>,
-    home_intro_html: String,
-    start_here_links: Vec<LandingLink>,
     folders: Vec<FolderSummary>,
 }
 
@@ -851,20 +841,7 @@ pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
     copy_embedded_news_site(&config.output_dir)?;
     ensure_default_css(&config.output_dir)?;
 
-    let home_intro_html = posts
-        .iter()
-        .find(|p| p.is_home)
-        .map(|p| p.markdown_html.clone())
-        .unwrap_or_default();
-
-    render_index(
-        config,
-        &posts,
-        &tags,
-        &home_intro_html,
-        &theme_assets,
-        &asset_version,
-    )?;
+    render_index(config, &posts, &tags, &theme_assets, &asset_version)?;
     render_posts_pages(config, &posts, &backlinks, &theme_assets, &asset_version)?;
     render_missing_note_pages(config, &posts, &theme_assets, &asset_version)?;
     render_tag_pages(config, &tags, &posts, &theme_assets, &asset_version)?;
@@ -1097,7 +1074,6 @@ fn render_index(
     config: &BuildConfig,
     posts: &[Post],
     tags: &[TagEntry],
-    home_intro_html: &str,
     theme_assets: &ThemeAssets,
     asset_version: &str,
 ) -> Result<()> {
@@ -1122,19 +1098,21 @@ fn render_index(
         asset_version,
     );
 
-    let visible_posts: Vec<&Post> = posts
+    let mut visible_posts: Vec<&Post> = posts
         .iter()
         .filter(|post| !post.hidden && !is_news_digest_post(post))
         .collect();
-    let start_here_links = build_start_here_links(posts, news_page_available());
+    visible_posts.sort_by(|a, b| {
+        b.is_home
+            .cmp(&a.is_home)
+            .then_with(|| sort_posts_by_recency(a, b))
+    });
     let folders = build_folder_summaries(posts);
 
     let template = IndexTemplate {
         layout,
         posts: visible_posts.into_iter().map(post_to_card).collect(),
         tags: tags.to_vec(),
-        home_intro_html: home_intro_html.to_string(),
-        start_here_links,
         folders,
     };
 
@@ -4277,62 +4255,6 @@ fn post_to_card(post: &Post) -> PostCard {
     }
 }
 
-fn build_start_here_links(posts: &[Post], news_available: bool) -> Vec<LandingLink> {
-    let mut links = Vec::new();
-    let about_post = posts
-        .iter()
-        .find(|post| !post.hidden && !post.is_home && is_profile_post(post));
-    let latest_post = posts.iter().find(|post| {
-        !post.hidden && !post.is_home && !is_profile_post(post) && !is_news_digest_post(post)
-    });
-
-    if let Some(post) = about_post {
-        links.push(LandingLink {
-            title: "About".to_string(),
-            url: format!("/notes/{}/", post.slug),
-            description: "Who I am and what I focus on.".to_string(),
-            cta: "Open profile".to_string(),
-        });
-    }
-
-    if let Some(post) = latest_post {
-        links.push(LandingLink {
-            title: "Latest Note".to_string(),
-            url: format!("/notes/{}/", post.slug),
-            description: post.excerpt.clone(),
-            cta: "Read now".to_string(),
-        });
-    }
-
-    if news_available {
-        links.push(LandingLink {
-            title: "News Radar".to_string(),
-            url: "/news/".to_string(),
-            description: "Open the latest digest for repos, papers, and social signals."
-                .to_string(),
-            cta: "Open digest".to_string(),
-        });
-    }
-
-    links.push(LandingLink {
-        title: "Graph".to_string(),
-        url: "/graph/".to_string(),
-        description: "Explore relationships across notes visually.".to_string(),
-        cta: "Open graph".to_string(),
-    });
-
-    links.truncate(4);
-    links
-}
-
-fn is_profile_post(post: &Post) -> bool {
-    post.tags
-        .iter()
-        .any(|tag| tag.eq_ignore_ascii_case("profile"))
-        || post.slug.contains("about")
-        || post.title.to_ascii_lowercase().contains("about")
-}
-
 fn is_news_digest_post(post: &Post) -> bool {
     post.slug.starts_with("news/")
         || post
@@ -4920,10 +4842,6 @@ a:hover {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 1.1rem 1.2rem;
-}
-
-.home-intro {
-  margin-bottom: 1.25rem;
 }
 
 .post-list {

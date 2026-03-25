@@ -725,10 +725,6 @@ main .note {
   border-radius: var(--radius-card);
 }
 
-.home-intro {
-  margin-bottom: 1.25rem;
-}
-
 .post-list {
   display: grid;
   gap: 0.8rem;

@@ -13,13 +13,6 @@
 {% endblock %}
 
 {% block content %}
-  {% if home_intro_html.len() > 0 %}
-  <section class="panel home-intro">
-    <p class="section-kicker">Pinned</p>
-    <div class="home-intro-body">{{ home_intro_html|safe }}</div>
-  </section>
-  {% endif %}
-
   <section class="panel home-hero">
     <div class="home-hero-copy">
       <p class="section-kicker">Signal Desk</p>
@@ -28,7 +21,7 @@
       <p class="home-hero-lead">{{ layout.site_description }}</p>
       {% endif %}
       <div class="home-hero-actions" role="group" aria-label="Primary actions">
-        <a class="home-hero-action" href="#start-here">Start Here</a>
+        <a class="home-hero-action" href="#notes">Browse Notes</a>
         <a class="home-hero-action" href="#folders">Browse Folders</a>
         <a class="home-hero-action" href="/graph/">View Graph</a>
       </div>
@@ -77,29 +70,38 @@
         <dd>{% if layout.show_graph_module %}On{% else %}Off{% endif %}</dd>
       </div>
       <div class="home-hero-stat">
-        <dt>Pinned</dt>
-        <dd>{% if home_intro_html.len() > 0 %}On{% else %}Off{% endif %}</dd>
+        <dt>Folders</dt>
+        <dd>{{ folders.len() }}</dd>
       </div>
     </dl>
   </section>
 
-  {% if start_here_links.len() > 0 %}
-  <section id="start-here" class="panel landing-links-panel" aria-label="Start here">
+  <section id="notes" class="post-list" aria-label="Recent posts">
     <header class="section-head">
-      <p class="section-kicker">Guide</p>
-      <h2>Start Here</h2>
+      <p class="section-kicker">Homepage</p>
+      <h2>Notes</h2>
     </header>
-    <div class="landing-links-grid">
-      {% for link in start_here_links %}
-      <a class="landing-link-card" href="{{ link.url }}">
-        <span class="landing-link-title">{{ link.title }}</span>
-        <span class="landing-link-description">{{ link.description }}</span>
-        <span class="landing-link-cta">{{ link.cta }} →</span>
-      </a>
-      {% endfor %}
-    </div>
+    {% for post in posts %}
+    <article class="panel post-item">
+      <div class="post-item-rail">
+        <p class="post-item-label">Published</p>
+        <p class="post-meta">{{ post.date_display }}{% if let Some(updated) = post.updated_display %} • updated {{ updated }}{% endif %} • {{ post.reading_time_min }} min read</p>
+        {% if post.tags.len() > 0 %}
+        <div class="tag-wrap">
+          {% for tag in post.tags %}
+          <a class="tag" href="/tags/{{ tag.slug }}/">#{{ tag.name }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      <div class="post-item-body">
+        <h3><a class="title-link" href="{{ post.url }}">{% if let Some(icon) = post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}{{ post.title }}</a></h3>
+        <p class="post-excerpt">{{ post.excerpt }}</p>
+        <p class="post-cta"><a class="post-cta-link" href="{{ post.url }}">Open Note →</a></p>
+      </div>
+    </article>
+    {% endfor %}
   </section>
-  {% endif %}
 
   {% if folders.len() > 0 %}
   <section id="folders" class="panel folder-list-panel" aria-label="Folders">
@@ -127,33 +129,6 @@
     </div>
   </section>
   {% endif %}
-
-  <section class="post-list" aria-label="Recent posts">
-    <header class="section-head">
-      <p class="section-kicker">Latest</p>
-      <h2>All Notes</h2>
-    </header>
-    {% for post in posts %}
-    <article class="panel post-item">
-      <div class="post-item-rail">
-        <p class="post-item-label">Published</p>
-        <p class="post-meta">{{ post.date_display }}{% if let Some(updated) = post.updated_display %} • updated {{ updated }}{% endif %} • {{ post.reading_time_min }} min read</p>
-        {% if post.tags.len() > 0 %}
-        <div class="tag-wrap">
-          {% for tag in post.tags %}
-          <a class="tag" href="/tags/{{ tag.slug }}/">#{{ tag.name }}</a>
-          {% endfor %}
-        </div>
-        {% endif %}
-      </div>
-      <div class="post-item-body">
-        <h3><a class="title-link" href="{{ post.url }}">{% if let Some(icon) = post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}{{ post.title }}</a></h3>
-        <p class="post-excerpt">{{ post.excerpt }}</p>
-        <p class="post-cta"><a class="post-cta-link" href="{{ post.url }}">Open Note →</a></p>
-      </div>
-    </article>
-    {% endfor %}
-  </section>
 {% endblock %}
 
 {% block extra_scripts %}
