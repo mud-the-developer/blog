@@ -622,6 +622,18 @@ struct PostCard {
 }
 
 #[derive(Debug, Clone)]
+struct HomePostFeature {
+    note_icon: Option<String>,
+    title: String,
+    markdown_html: String,
+    date_display: String,
+    updated_display: Option<String>,
+    reading_time_min: usize,
+    tags: Vec<TagEntry>,
+    content_classes: String,
+}
+
+#[derive(Debug, Clone)]
 struct FolderSummary {
     name: String,
 }
@@ -669,7 +681,9 @@ struct Backlink {
 #[template(path = "index.html")]
 struct IndexTemplate {
     layout: LayoutContext,
-    posts: Vec<PostCard>,
+    home_post: Option<HomePostFeature>,
+    load_home_rich_css: bool,
+    total_notes: usize,
     tags: Vec<TagEntry>,
     folders: Vec<FolderSummary>,
 }
@@ -1102,16 +1116,17 @@ fn render_index(
         .iter()
         .filter(|post| !post.hidden && !is_news_digest_post(post))
         .collect();
-    visible_posts.sort_by(|a, b| {
-        b.is_home
-            .cmp(&a.is_home)
-            .then_with(|| sort_posts_by_recency(a, b))
-    });
+    visible_posts.sort_by(|a, b| sort_posts_by_recency(a, b));
+
+    let total_notes = visible_posts.len();
+    let home_post = visible_posts.iter().copied().find(|post| post.is_home);
     let folders = build_folder_summaries(posts);
 
     let template = IndexTemplate {
         layout,
-        posts: visible_posts.into_iter().map(post_to_card).collect(),
+        home_post: home_post.map(home_post_to_feature),
+        load_home_rich_css: home_post.is_some_and(|post| post.has_rich_note_styles),
+        total_notes,
         tags: tags.to_vec(),
         folders,
     };
@@ -4252,6 +4267,30 @@ fn post_to_card(post: &Post) -> PostCard {
                 count: 0,
             })
             .collect(),
+    }
+}
+
+fn home_post_to_feature(post: &Post) -> HomePostFeature {
+    HomePostFeature {
+        note_icon: post.note_icon.clone(),
+        title: post.title.clone(),
+        markdown_html: post.markdown_html.clone(),
+        date_display: post
+            .date
+            .map(|date| date.format("%Y-%m-%d").to_string())
+            .unwrap_or_else(|| "Undated".to_string()),
+        updated_display: post.updated.map(|date| date.format("%Y-%m-%d").to_string()),
+        reading_time_min: post.reading_time_min,
+        tags: post
+            .tags
+            .iter()
+            .map(|tag| TagEntry {
+                slug: slugify(tag),
+                name: tag.clone(),
+                count: 0,
+            })
+            .collect(),
+        content_classes: post.content_classes.join(" "),
     }
 }
 

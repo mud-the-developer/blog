@@ -1429,14 +1429,51 @@ body::after {
   padding: 1.16rem;
 }
 
+.page-tabs {
+  border: 1px solid var(--panel-border);
+  border-radius: 30px;
+  background: linear-gradient(180deg, var(--panel-bg) 0%, var(--panel-bg-muted) 100%);
+  box-shadow: var(--panel-shadow);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.page-tabs::before {
+  background:
+    radial-gradient(110% 90% at 0% 0%, color-mix(in srgb, var(--accent-soft) 12%, transparent) 0%, transparent 56%),
+    linear-gradient(180deg, color-mix(in srgb, #ffffff 18%, transparent) 0%, transparent 26%);
+}
+
+.page-tabs::after {
+  border: 1px solid color-mix(in srgb, #ffffff 14%, transparent);
+  background: none;
+}
+
 .page-tabs-collapsible > summary {
-  min-height: 44px;
-  padding: 0.16rem 0.1rem;
+  min-height: auto;
+  padding: 0;
 }
 
 .page-tabs-list {
   gap: 0.7rem;
   max-height: clamp(320px, calc(100vh - 14rem), 760px);
+  padding-right: 0.08rem;
+}
+
+.page-tabs .site-search {
+  margin-bottom: 0;
+  padding-bottom: 0.92rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 78%, transparent);
+}
+
+.page-tabs-collapsible {
+  gap: 0.72rem;
+  margin: 0;
+}
+
+.page-tabs-head {
+  align-items: end;
+  padding: 0 0.04rem;
 }
 
 .filetree-folder,

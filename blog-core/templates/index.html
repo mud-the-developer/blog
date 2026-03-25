@@ -2,6 +2,10 @@
 
 {% block extra_styles %}
   <link rel="stylesheet" href="/assets/style-listing.css?v={{ layout.asset_version }}" />
+  <link rel="stylesheet" href="/assets/style-note-core.css?v={{ layout.asset_version }}" />
+  {% if load_home_rich_css %}
+  <link rel="stylesheet" href="/assets/style-note.css?v={{ layout.asset_version }}" />
+  {% endif %}
   <link rel="preload" href="/assets/style-home.css?v={{ layout.asset_version }}" as="style" />
   <link
     rel="stylesheet"
@@ -13,95 +17,43 @@
 {% endblock %}
 
 {% block content %}
-  <section class="panel home-hero">
-    <div class="home-hero-copy">
-      <p class="section-kicker">Signal Desk</p>
-      <h1>Readable Notes, Papers & Experiments.</h1>
-      {% if layout.site_description.len() > 0 %}
-      <p class="home-hero-lead">{{ layout.site_description }}</p>
+  {% if let Some(home_post) = home_post %}
+  <article class="panel note home-feature{% if home_post.content_classes.len() > 0 %} {{ home_post.content_classes }}{% endif %}">
+    <header class="note-header home-feature-head">
+      <p class="section-kicker">Homepage Note</p>
+      <h1>{% if let Some(icon) = home_post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}{{ home_post.title }}</h1>
+      <p class="post-meta">{{ home_post.date_display }}{% if let Some(updated) = home_post.updated_display %} • updated {{ updated }}{% endif %} • {{ home_post.reading_time_min }} min read</p>
+      {% if home_post.tags.len() > 0 %}
+      <div class="tag-wrap">
+        {% for tag in home_post.tags %}
+        <a class="tag" href="/tags/{{ tag.slug }}/">#{{ tag.name }}</a>
+        {% endfor %}
+      </div>
       {% endif %}
-      <div class="home-hero-actions" role="group" aria-label="Primary actions">
-        <a class="home-hero-action" href="#notes">Browse Notes</a>
-        <a class="home-hero-action" href="#folders">Browse Folders</a>
-        <a class="home-hero-action" href="/graph/">View Graph</a>
-      </div>
-    </div>
-    <div class="home-hero-preview" aria-hidden="true">
-      <div class="hero-ledger">
-        <div class="hero-ledger-head">
-          <span class="hero-ledger-kicker">Issue 01</span>
-          <strong>Fast Scan, Deep Read</strong>
-          <p>Navigation stays docked, but long-form reading now owns the visual center.</p>
-        </div>
-        <div class="hero-ledger-grid">
-          <article class="hero-ledger-card hero-ledger-card--feature">
-            <span class="hero-ledger-label">Current Inventory</span>
-            <strong>{{ posts.len() }} Published Notes</strong>
-            <p>Folders, search, graph, and the news radar all sit on the same calmer grid.</p>
-          </article>
-          <article class="hero-ledger-card">
-            <span class="hero-ledger-label">Tags</span>
-            <strong>{{ tags.len() }}</strong>
-            <p>Active topics</p>
-          </article>
-          <article class="hero-ledger-card">
-            <span class="hero-ledger-label">Folders</span>
-            <strong>{{ folders.len() }}</strong>
-            <p>Browse shelves</p>
-          </article>
-          <article class="hero-ledger-card hero-ledger-card--wide">
-            <span class="hero-ledger-label">Radar</span>
-            <p>/news/, /graph/, and note pages now feel like one editorial system instead of separate tools.</p>
-          </article>
-        </div>
-      </div>
-    </div>
-    <dl class="home-hero-stats" aria-label="Garden statistics">
-      <div class="home-hero-stat">
+    </header>
+
+    <div class="note-body home-feature-body">{{ home_post.markdown_html|safe }}</div>
+
+    <dl class="home-feature-stats" aria-label="Garden statistics">
+      <div class="home-feature-stat">
         <dt>Notes</dt>
-        <dd>{{ posts.len() }}</dd>
+        <dd>{{ total_notes }}</dd>
       </div>
-      <div class="home-hero-stat">
+      <div class="home-feature-stat">
         <dt>Tags</dt>
         <dd>{{ tags.len() }}</dd>
       </div>
-      <div class="home-hero-stat">
+      <div class="home-feature-stat">
         <dt>Graph</dt>
         <dd>{% if layout.show_graph_module %}On{% else %}Off{% endif %}</dd>
       </div>
-      <div class="home-hero-stat">
+      <div class="home-feature-stat">
         <dt>Folders</dt>
         <dd>{{ folders.len() }}</dd>
       </div>
     </dl>
-  </section>
-
-  <section id="notes" class="post-list" aria-label="Recent posts">
-    <header class="section-head">
-      <p class="section-kicker">Homepage</p>
-      <h2>Notes</h2>
-    </header>
-    {% for post in posts %}
-    <article class="panel post-item">
-      <div class="post-item-rail">
-        <p class="post-item-label">Published</p>
-        <p class="post-meta">{{ post.date_display }}{% if let Some(updated) = post.updated_display %} • updated {{ updated }}{% endif %} • {{ post.reading_time_min }} min read</p>
-        {% if post.tags.len() > 0 %}
-        <div class="tag-wrap">
-          {% for tag in post.tags %}
-          <a class="tag" href="/tags/{{ tag.slug }}/">#{{ tag.name }}</a>
-          {% endfor %}
-        </div>
-        {% endif %}
-      </div>
-      <div class="post-item-body">
-        <h3><a class="title-link" href="{{ post.url }}">{% if let Some(icon) = post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}{{ post.title }}</a></h3>
-        <p class="post-excerpt">{{ post.excerpt }}</p>
-        <p class="post-cta"><a class="post-cta-link" href="{{ post.url }}">Open Note →</a></p>
-      </div>
-    </article>
-    {% endfor %}
-  </section>
+  </article>
+  {% endif %}
 
   {% if folders.len() > 0 %}
   <section id="folders" class="panel folder-list-panel" aria-label="Folders">
@@ -129,8 +81,4 @@
     </div>
   </section>
   {% endif %}
-{% endblock %}
-
-{% block extra_scripts %}
-  <script defer src="/assets/home-hero-wobble.js"></script>
 {% endblock %}
