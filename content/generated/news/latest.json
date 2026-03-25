@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-03-25T13:19:28.897446+09:00",
-  "generated_label": "Mar 25, 2026 · 1:19 PM KST",
+  "generated_at": "2026-03-25T14:43:24.151945+09:00",
+  "generated_label": "Mar 25, 2026 · 2:43 PM KST",
   "issue_date": "2026-03-25",
   "issue_label": "Mar 25, 2026",
-  "summary": "Repo momentum is led by ceedaragents/cyrus; paper attention is clustering around OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning; community chatter is moving through GeekNews. 4 repo signals, 4 paper picks, and 4 community items made today's cut.",
+  "summary": "GitHub velocity is led by ceedaragents/cyrus; paper attention is clustering around OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning; social attention is tilting toward OpenAI cancels Stargate data center expansion plans with Oracle; biggest mover: PostTrainBench: Can LLM Agents Automate LLM Post-Training? (+21). 8 repo signals, 6 paper picks, and 2 community items made today's cut.",
   "top_cards": [
     {
       "headline": "ceedaragents/cyrus",
@@ -13,13 +13,16 @@
       "tags": [
         "AI"
       ],
-      "score": 4.773,
+      "score": 9.553,
+      "raw_score": 4.773,
       "published_hours_ago": 0,
       "stars": 412,
       "image_url": "https://opengraph.githubassets.com/1/ceedaragents/cyrus",
       "badge": "Repo",
-      "deck": "Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine. Surfaced 0h ago with 412 stars.",
-      "meta": "GitHub · 412 stars · 0h ago · score 4.77"
+      "deck": "Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine. Surfaced 0h ago with 412 stars and 412/day momentum.",
+      "meta": "GitHub · 412 stars · 412/day · 0h ago · signal 9.55",
+      "rank": 1,
+      "rank_delta": null
     },
     {
       "headline": "OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning",
@@ -29,13 +32,16 @@
       "tags": [
         "AI"
       ],
-      "score": 2.878,
+      "score": 5.399,
+      "raw_score": 2.878,
       "published_hours_ago": 21,
       "stars": 0,
       "image_url": "/news/assets/thumb-paper.svg",
       "badge": "Paper",
-      "deck": "Fresh arXiv paper from the ai cluster, posted 21h ago.",
-      "meta": "arXiv · 21h ago · score 2.88"
+      "deck": "Fresh arXiv paper from the ai cluster, posted 21h ago. Down 2 spots from the previous run.",
+      "meta": "arXiv · 21h ago · down 2 · signal 5.40",
+      "rank": 17,
+      "rank_delta": -2
     },
     {
       "headline": "OpenAI cancels Stargate data center expansion plans with Oracle",
@@ -45,27 +51,149 @@
       "tags": [
         "social"
       ],
-      "score": 2.55,
+      "score": 5.492,
+      "raw_score": 2.55,
       "published_hours_ago": 2,
       "stars": 0,
       "image_url": "/news/assets/thumb-ai.svg",
       "badge": "Social",
-      "deck": "Community signal picked up on GeekNews about 2h ago.",
-      "meta": "GeekNews · 2h ago · score 2.55"
+      "deck": "Community signal picked up on GeekNews about 2h ago. Up 10 spots from the previous run.",
+      "meta": "GeekNews · 2h ago · up 10 · signal 5.49",
+      "rank": 25,
+      "rank_delta": 10
     },
     {
-      "headline": "OSS-CRS: Liberating AIxCC Cyber Reasoning Systems for Real-World Open-Source Security",
-      "title": "OSS-CRS: Liberating AIxCC Cyber Reasoning Systems for Real-World Open-Source Security",
-      "url": "http://arxiv.org/abs/2603.08566v1",
-      "source": "arxiv.org",
+      "headline": "RunanywhereAI/RCLI",
+      "title": "RunanywhereAI/RCLI — Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG",
+      "url": "https://github.com/RunanywhereAI/RCLI",
+      "source": "github.com",
+      "tags": [
+        "AI"
+      ],
+      "score": 8.229,
+      "raw_score": 4.094,
+      "published_hours_ago": 0,
+      "stars": 105,
+      "image_url": "https://opengraph.githubassets.com/1/RunanywhereAI/RCLI",
+      "badge": "Repo",
+      "deck": "Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG. Surfaced 0h ago with 105 stars and 105/day momentum.",
+      "meta": "GitHub · 105 stars · 105/day · 0h ago · signal 8.23",
+      "rank": 3,
+      "rank_delta": null
+    }
+  ],
+  "repo_scoreboard": [
+    {
+      "headline": "ceedaragents/cyrus",
+      "title": "ceedaragents/cyrus — Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine",
+      "url": "https://github.com/ceedaragents/cyrus",
+      "source": "github.com",
+      "tags": [
+        "AI"
+      ],
+      "score": 9.553,
+      "raw_score": 4.773,
+      "published_hours_ago": 0,
+      "stars": 412,
+      "image_url": "https://opengraph.githubassets.com/1/ceedaragents/cyrus",
+      "badge": "Repo",
+      "deck": "Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine. Surfaced 0h ago with 412 stars and 412/day momentum.",
+      "meta": "GitHub · 412 stars · 412/day · 0h ago · signal 9.55",
+      "rank": 1,
+      "rank_delta": null
+    },
+    {
+      "headline": "freddy-schuetz/n8n-claw",
+      "title": "freddy-schuetz/n8n-claw — OpenClaw-inspired autonomous AI agent built entirely in n8n. Adaptive RAG-powered memory, Skills via MCP templates, proactive task management, media understanding - self-hosted with one setup script",
+      "url": "https://github.com/freddy-schuetz/n8n-claw",
+      "source": "github.com",
+      "tags": [
+        "AI"
+      ],
+      "score": 8.682,
+      "raw_score": 4.382,
+      "published_hours_ago": 0,
+      "stars": 170,
+      "image_url": "https://opengraph.githubassets.com/1/freddy-schuetz/n8n-claw",
+      "badge": "Repo",
+      "deck": "OpenClaw-inspired autonomous AI agent built entirely in n8n. Adaptive RAG-powered memory, Skills via MCP templates, proactive task management, media understanding - self-hosted with one set…",
+      "meta": "GitHub · 170 stars · 170/day · 0h ago · signal 8.68",
+      "rank": 2,
+      "rank_delta": null
+    },
+    {
+      "headline": "rohitg00/skillkit",
+      "title": "rohitg00/skillkit — Supercharge AI coding agents with portable skills. Install, translate & share skills across Claude Code, Cursor, Codex, Copilot & 40 more",
+      "url": "https://github.com/rohitg00/skillkit",
+      "source": "github.com",
+      "tags": [
+        "AI"
+      ],
+      "score": 8.46,
+      "raw_score": 3.805,
+      "published_hours_ago": 0,
+      "stars": 558,
+      "image_url": "https://opengraph.githubassets.com/1/rohitg00/skillkit",
+      "badge": "Repo",
+      "deck": "Supercharge AI coding agents with portable skills. Install, translate & share skills across Claude Code, Cursor, Codex, Copilot & 40 more. Surfaced 0h ago with 558 stars and 558/day momentu…",
+      "meta": "GitHub · 558 stars · 558/day · 0h ago · signal 8.46",
+      "rank": 7,
+      "rank_delta": null
+    },
+    {
+      "headline": "RunanywhereAI/RCLI",
+      "title": "RunanywhereAI/RCLI — Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG",
+      "url": "https://github.com/RunanywhereAI/RCLI",
+      "source": "github.com",
+      "tags": [
+        "AI"
+      ],
+      "score": 8.229,
+      "raw_score": 4.094,
+      "published_hours_ago": 0,
+      "stars": 105,
+      "image_url": "https://opengraph.githubassets.com/1/RunanywhereAI/RCLI",
+      "badge": "Repo",
+      "deck": "Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG. Surfaced 0h ago with 105 stars and 105/day momentum.",
+      "meta": "GitHub · 105 stars · 105/day · 0h ago · signal 8.23",
+      "rank": 3,
+      "rank_delta": null
+    },
+    {
+      "headline": "agentscope-ai/agentscope-java",
+      "title": "agentscope-ai/agentscope-java — AgentScope Java: Agent-Oriented Programming for Building LLM Applications",
+      "url": "https://github.com/agentscope-ai/agentscope-java",
+      "source": "github.com",
+      "tags": [
+        "AI"
+      ],
+      "score": 8.173,
+      "raw_score": 3.805,
+      "published_hours_ago": 0,
+      "stars": 1668,
+      "image_url": "https://opengraph.githubassets.com/1/agentscope-ai/agentscope-java",
+      "badge": "Repo",
+      "deck": "AgentScope Java: Agent-Oriented Programming for Building LLM Applications. Surfaced 0h ago with 1668 stars and 1668/day momentum.",
+      "meta": "GitHub · 1668 stars · 1668/day · 0h ago · signal 8.17",
+      "rank": 4,
+      "rank_delta": null
+    },
+    {
+      "headline": "urstory/urstory-rag",
+      "title": "urstory/urstory-rag — Korean-specific production RAG system. Includes hybrid search (PGVector + Elasticsearch Nori), Korean reranker (bge-reranker-v2-m3-ko), HyDE, multiquery destructuring, guardrails (PII/injection/hallucination), RAGAS automatic evaluation, and Langfuse monitoring. All functions can be controlled ON/OFF in the administrator UI without changing the code. FastAPI + Haystack 2.x backend, Next.js 15 + shadcn/ui frontend.",
+      "url": "https://github.com/urstory/urstory-rag",
+      "source": "github.com",
       "tags": [],
-      "score": 2.878,
-      "published_hours_ago": 22,
-      "stars": 0,
-      "image_url": "/news/assets/thumb-paper.svg",
-      "badge": "Paper",
-      "deck": "Fresh arXiv paper posted 22h ago and surfacing in the current feed.",
-      "meta": "arXiv · 22h ago · score 2.88"
+      "score": 7.315,
+      "raw_score": 3.6,
+      "published_hours_ago": 0,
+      "stars": 30,
+      "image_url": "https://opengraph.githubassets.com/1/urstory/urstory-rag",
+      "badge": "Repo",
+      "deck": "Korean-specific production RAG system. Includes hybrid search (PGVector + Elasticsearch Nori), Korean reranker (bge-reranker-v2-m3-ko), HyDE, multiquery destructuring, guardrails (PII/injec…",
+      "meta": "GitHub · 30 stars · 30/day · 0h ago · signal 7.32",
+      "rank": 11,
+      "rank_delta": null
     }
   ],
   "sections": [
@@ -82,41 +210,35 @@
           "tags": [
             "AI"
           ],
-          "score": 4.773,
+          "score": 9.553,
+          "raw_score": 4.773,
           "published_hours_ago": 0,
           "stars": 412,
           "image_url": "https://opengraph.githubassets.com/1/ceedaragents/cyrus",
           "badge": "Repo",
-          "deck": "Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine. Surfaced 0h ago with 412 stars.",
-          "meta": "GitHub · 412 stars · 0h ago · score 4.77"
+          "deck": "Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine. Surfaced 0h ago with 412 stars and 412/day momentum.",
+          "meta": "GitHub · 412 stars · 412/day · 0h ago · signal 9.55",
+          "rank": 1,
+          "rank_delta": null
         },
         {
-          "headline": "OSS-CRS: Liberating AIxCC Cyber Reasoning Systems for Real-World Open-Source Security",
-          "title": "OSS-CRS: Liberating AIxCC Cyber Reasoning Systems for Real-World Open-Source Security",
-          "url": "http://arxiv.org/abs/2603.08566v1",
-          "source": "arxiv.org",
-          "tags": [],
-          "score": 2.878,
-          "published_hours_ago": 22,
+          "headline": "OpenAI cancels Stargate data center expansion plans with Oracle",
+          "title": "OpenAI cancels Stargate data center expansion plans with Oracle",
+          "url": "https://news.hada.io/topic?id=27376",
+          "source": "geeknews",
+          "tags": [
+            "social"
+          ],
+          "score": 5.492,
+          "raw_score": 2.55,
+          "published_hours_ago": 2,
           "stars": 0,
-          "image_url": "/news/assets/thumb-paper.svg",
-          "badge": "Paper",
-          "deck": "Fresh arXiv paper posted 22h ago and surfacing in the current feed.",
-          "meta": "arXiv · 22h ago · score 2.88"
-        },
-        {
-          "headline": "Reasoning as Compression: Unifying Budget Forcing via the Conditional Information Bottleneck",
-          "title": "Reasoning as Compression: Unifying Budget Forcing via the Conditional Information Bottleneck",
-          "url": "http://arxiv.org/abs/2603.08462v1",
-          "source": "arxiv.org",
-          "tags": [],
-          "score": 2.878,
-          "published_hours_ago": 24,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-paper.svg",
-          "badge": "Paper",
-          "deck": "Fresh arXiv paper posted 24h ago and surfacing in the current feed.",
-          "meta": "arXiv · 24h ago · score 2.88"
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on GeekNews about 2h ago. Up 10 spots from the previous run.",
+          "meta": "GeekNews · 2h ago · up 10 · signal 5.49",
+          "rank": 25,
+          "rank_delta": 10
         },
         {
           "headline": "OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning",
@@ -126,75 +248,33 @@
           "tags": [
             "AI"
           ],
-          "score": 2.878,
+          "score": 5.399,
+          "raw_score": 2.878,
           "published_hours_ago": 21,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 21h ago.",
-          "meta": "arXiv · 21h ago · score 2.88"
+          "deck": "Fresh arXiv paper from the ai cluster, posted 21h ago. Down 2 spots from the previous run.",
+          "meta": "arXiv · 21h ago · down 2 · signal 5.40",
+          "rank": 17,
+          "rank_delta": -2
         },
         {
-          "headline": "freddy-schuetz/n8n-claw",
-          "title": "freddy-schuetz/n8n-claw — OpenClaw-inspired autonomous AI agent built entirely in n8n. Adaptive RAG-powered memory, Skills via MCP templates, proactive task management, media understanding - self-hosted with one setup script",
-          "url": "https://github.com/freddy-schuetz/n8n-claw",
-          "source": "github.com",
-          "tags": [
-            "AI"
-          ],
-          "score": 4.382,
-          "published_hours_ago": 0,
-          "stars": 170,
-          "image_url": "https://opengraph.githubassets.com/1/freddy-schuetz/n8n-claw",
-          "badge": "Repo",
-          "deck": "OpenClaw-inspired autonomous AI agent built entirely in n8n. Adaptive RAG-powered memory, Skills via MCP templates, proactive task management, media understanding - self…",
-          "meta": "GitHub · 170 stars · 0h ago · score 4.38"
-        },
-        {
-          "headline": "RunanywhereAI/RCLI",
-          "title": "RunanywhereAI/RCLI — Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG",
-          "url": "https://github.com/RunanywhereAI/RCLI",
-          "source": "github.com",
-          "tags": [
-            "AI"
-          ],
-          "score": 4.094,
-          "published_hours_ago": 0,
-          "stars": 105,
-          "image_url": "https://opengraph.githubassets.com/1/RunanywhereAI/RCLI",
-          "badge": "Repo",
-          "deck": "Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG. Surfaced 0h ago with 105 stars.",
-          "meta": "GitHub · 105 stars · 0h ago · score 4.09"
-        },
-        {
-          "headline": "urstory/urstory-rag",
-          "title": "urstory/urstory-rag — Korean-specific production RAG system. Includes hybrid search (PGVector + Elasticsearch Nori), Korean reranker (bge-reranker-v2-m3-ko), HyDE, multiquery destructuring, guardrails (PII/injection/hallucination), RAGAS automatic evaluation, and Langfuse monitoring. All functions can be controlled ON/OFF in the administrator UI without changing the code. FastAPI + Haystack 2.x backend, Next.js 15 + shadcn/ui frontend.",
-          "url": "https://github.com/urstory/urstory-rag",
-          "source": "github.com",
-          "tags": [],
-          "score": 3.6,
-          "published_hours_ago": 0,
-          "stars": 30,
-          "image_url": "https://opengraph.githubassets.com/1/urstory/urstory-rag",
-          "badge": "Repo",
-          "deck": "Korean-specific production RAG system. Includes hybrid search (PGVector + Elasticsearch Nori), Korean reranker (bge-reranker-v2-m3-ko), HyDE, multiquery destructuring, g…",
-          "meta": "GitHub · 30 stars · 0h ago · score 3.60"
-        },
-        {
-          "headline": "Coverage-Guided Multi-Agent Harness Generation for Java Library Fuzzing",
-          "title": "Coverage-Guided Multi-Agent Harness Generation for Java Library Fuzzing",
-          "url": "http://arxiv.org/abs/2603.08616v1",
+          "headline": "OSS-CRS: Liberating AIxCC Cyber Reasoning Systems for Real-World Open-Source Security",
+          "title": "OSS-CRS: Liberating AIxCC Cyber Reasoning Systems for Real-World Open-Source Security",
+          "url": "http://arxiv.org/abs/2603.08566v1",
           "source": "arxiv.org",
-          "tags": [
-            "AI"
-          ],
-          "score": 2.808,
+          "tags": [],
+          "score": 5.286,
+          "raw_score": 2.878,
           "published_hours_ago": 22,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 22h ago.",
-          "meta": "arXiv · 22h ago · score 2.81"
+          "deck": "Fresh arXiv paper posted 22h ago and surfacing in the current feed. Down 1 spots from the previous run.",
+          "meta": "arXiv · 22h ago · down 1 · signal 5.29",
+          "rank": 18,
+          "rank_delta": -1
         }
       ]
     },
@@ -211,13 +291,16 @@
           "tags": [
             "AI"
           ],
-          "score": 4.773,
+          "score": 9.553,
+          "raw_score": 4.773,
           "published_hours_ago": 0,
           "stars": 412,
           "image_url": "https://opengraph.githubassets.com/1/ceedaragents/cyrus",
           "badge": "Repo",
-          "deck": "Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine. Surfaced 0h ago with 412 stars.",
-          "meta": "GitHub · 412 stars · 0h ago · score 4.77"
+          "deck": "Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine. Surfaced 0h ago with 412 stars and 412/day momentum.",
+          "meta": "GitHub · 412 stars · 412/day · 0h ago · signal 9.55",
+          "rank": 1,
+          "rank_delta": null
         },
         {
           "headline": "freddy-schuetz/n8n-claw",
@@ -227,61 +310,16 @@
           "tags": [
             "AI"
           ],
-          "score": 4.382,
+          "score": 8.682,
+          "raw_score": 4.382,
           "published_hours_ago": 0,
           "stars": 170,
           "image_url": "https://opengraph.githubassets.com/1/freddy-schuetz/n8n-claw",
           "badge": "Repo",
-          "deck": "OpenClaw-inspired autonomous AI agent built entirely in n8n. Adaptive RAG-powered memory, Skills via MCP templates, proactive task management, media understanding - self…",
-          "meta": "GitHub · 170 stars · 0h ago · score 4.38"
-        },
-        {
-          "headline": "RunanywhereAI/RCLI",
-          "title": "RunanywhereAI/RCLI — Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG",
-          "url": "https://github.com/RunanywhereAI/RCLI",
-          "source": "github.com",
-          "tags": [
-            "AI"
-          ],
-          "score": 4.094,
-          "published_hours_ago": 0,
-          "stars": 105,
-          "image_url": "https://opengraph.githubassets.com/1/RunanywhereAI/RCLI",
-          "badge": "Repo",
-          "deck": "Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG. Surfaced 0h ago with 105 stars.",
-          "meta": "GitHub · 105 stars · 0h ago · score 4.09"
-        },
-        {
-          "headline": "agentscope-ai/agentscope-java",
-          "title": "agentscope-ai/agentscope-java — AgentScope Java: Agent-Oriented Programming for Building LLM Applications",
-          "url": "https://github.com/agentscope-ai/agentscope-java",
-          "source": "github.com",
-          "tags": [
-            "AI"
-          ],
-          "score": 3.805,
-          "published_hours_ago": 0,
-          "stars": 1668,
-          "image_url": "https://opengraph.githubassets.com/1/agentscope-ai/agentscope-java",
-          "badge": "Repo",
-          "deck": "AgentScope Java: Agent-Oriented Programming for Building LLM Applications. Surfaced 0h ago with 1668 stars.",
-          "meta": "GitHub · 1668 stars · 0h ago · score 3.81"
-        },
-        {
-          "headline": "dapr/dapr-agents",
-          "title": "dapr/dapr-agents — Build autonomous, resilient and observable AI agents with built-in workflow orchestration, security, statefulness and telemetry.",
-          "url": "https://github.com/dapr/dapr-agents",
-          "source": "github.com",
-          "tags": [
-            "AI"
-          ],
-          "score": 3.805,
-          "published_hours_ago": 0,
-          "stars": 622,
-          "image_url": "https://opengraph.githubassets.com/1/dapr/dapr-agents",
-          "badge": "Repo",
-          "deck": "Build autonomous, resilient and observable AI agents with built-in workflow orchestration, security, statefulness and telemetry. Surfaced 0h ago with 622 stars.",
-          "meta": "GitHub · 622 stars · 0h ago · score 3.81"
+          "deck": "OpenClaw-inspired autonomous AI agent built entirely in n8n. Adaptive RAG-powered memory, Skills via MCP templates, proactive task management, media understanding - self-hosted with one set…",
+          "meta": "GitHub · 170 stars · 170/day · 0h ago · signal 8.68",
+          "rank": 2,
+          "rank_delta": null
         },
         {
           "headline": "rohitg00/skillkit",
@@ -291,45 +329,105 @@
           "tags": [
             "AI"
           ],
-          "score": 3.805,
+          "score": 8.46,
+          "raw_score": 3.805,
           "published_hours_ago": 0,
           "stars": 558,
           "image_url": "https://opengraph.githubassets.com/1/rohitg00/skillkit",
           "badge": "Repo",
-          "deck": "Supercharge AI coding agents with portable skills. Install, translate & share skills across Claude Code, Cursor, Codex, Copilot & 40 more. Surfaced 0h ago with 558 stars.",
-          "meta": "GitHub · 558 stars · 0h ago · score 3.81"
+          "deck": "Supercharge AI coding agents with portable skills. Install, translate & share skills across Claude Code, Cursor, Codex, Copilot & 40 more. Surfaced 0h ago with 558 stars and 558/day momentu…",
+          "meta": "GitHub · 558 stars · 558/day · 0h ago · signal 8.46",
+          "rank": 7,
+          "rank_delta": null
         },
         {
-          "headline": "inkeep/agents",
-          "title": "inkeep/agents — Create AI Agents in a No-Code Visual Builder or TypeScript SDK with full 2-way sync. For shipping AI assistants and multi-agent AI workflows.",
-          "url": "https://github.com/inkeep/agents",
+          "headline": "RunanywhereAI/RCLI",
+          "title": "RunanywhereAI/RCLI — Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG",
+          "url": "https://github.com/RunanywhereAI/RCLI",
           "source": "github.com",
           "tags": [
             "AI"
           ],
-          "score": 3.805,
+          "score": 8.229,
+          "raw_score": 4.094,
           "published_hours_ago": 0,
-          "stars": 987,
-          "image_url": "https://opengraph.githubassets.com/1/inkeep/agents",
+          "stars": 105,
+          "image_url": "https://opengraph.githubassets.com/1/RunanywhereAI/RCLI",
           "badge": "Repo",
-          "deck": "Create AI Agents in a No-Code Visual Builder or TypeScript SDK with full 2-way sync. For shipping AI assistants and multi-agent AI workflows. Surfaced 0h ago with 987 st…",
-          "meta": "GitHub · 987 stars · 0h ago · score 3.81"
+          "deck": "Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG. Surfaced 0h ago with 105 stars and 105/day momentum.",
+          "meta": "GitHub · 105 stars · 105/day · 0h ago · signal 8.23",
+          "rank": 3,
+          "rank_delta": null
         },
         {
-          "headline": "volcengine/OpenViking",
-          "title": "volcengine/OpenViking — OpenViking is an open-source context database designed specifically for AI Agents(such as openclaw). OpenViking unifies the management of context (memory, resources, and skills) that Agents need through a file system paradigm, enabling hierarchical context delivery and self-evolving.",
-          "url": "https://github.com/volcengine/OpenViking",
+          "headline": "agentscope-ai/agentscope-java",
+          "title": "agentscope-ai/agentscope-java — AgentScope Java: Agent-Oriented Programming for Building LLM Applications",
+          "url": "https://github.com/agentscope-ai/agentscope-java",
           "source": "github.com",
           "tags": [
             "AI"
           ],
-          "score": 3.805,
+          "score": 8.173,
+          "raw_score": 3.805,
           "published_hours_ago": 0,
-          "stars": 5574,
-          "image_url": "https://opengraph.githubassets.com/1/volcengine/OpenViking",
+          "stars": 1668,
+          "image_url": "https://opengraph.githubassets.com/1/agentscope-ai/agentscope-java",
           "badge": "Repo",
-          "deck": "OpenViking is an open-source context database designed specifically for AI Agents(such as openclaw). OpenViking unifies the management of context (memory, resources, and…",
-          "meta": "GitHub · 5574 stars · 0h ago · score 3.81"
+          "deck": "AgentScope Java: Agent-Oriented Programming for Building LLM Applications. Surfaced 0h ago with 1668 stars and 1668/day momentum.",
+          "meta": "GitHub · 1668 stars · 1668/day · 0h ago · signal 8.17",
+          "rank": 4,
+          "rank_delta": null
+        },
+        {
+          "headline": "urstory/urstory-rag",
+          "title": "urstory/urstory-rag — Korean-specific production RAG system. Includes hybrid search (PGVector + Elasticsearch Nori), Korean reranker (bge-reranker-v2-m3-ko), HyDE, multiquery destructuring, guardrails (PII/injection/hallucination), RAGAS automatic evaluation, and Langfuse monitoring. All functions can be controlled ON/OFF in the administrator UI without changing the code. FastAPI + Haystack 2.x backend, Next.js 15 + shadcn/ui frontend.",
+          "url": "https://github.com/urstory/urstory-rag",
+          "source": "github.com",
+          "tags": [],
+          "score": 7.315,
+          "raw_score": 3.6,
+          "published_hours_ago": 0,
+          "stars": 30,
+          "image_url": "https://opengraph.githubassets.com/1/urstory/urstory-rag",
+          "badge": "Repo",
+          "deck": "Korean-specific production RAG system. Includes hybrid search (PGVector + Elasticsearch Nori), Korean reranker (bge-reranker-v2-m3-ko), HyDE, multiquery destructuring, guardrails (PII/injec…",
+          "meta": "GitHub · 30 stars · 30/day · 0h ago · signal 7.32",
+          "rank": 11,
+          "rank_delta": null
+        },
+        {
+          "headline": "jtalk22/slack-mcp-server",
+          "title": "jtalk22/slack-mcp-server — Session-based Slack MCP for Claude and MCP clients: local-first workflows, secure-default HTTP.",
+          "url": "https://github.com/jtalk22/slack-mcp-server",
+          "source": "github.com",
+          "tags": [],
+          "score": 6.357,
+          "raw_score": 2.812,
+          "published_hours_ago": 0,
+          "stars": 14,
+          "image_url": "https://opengraph.githubassets.com/1/jtalk22/slack-mcp-server",
+          "badge": "Repo",
+          "deck": "Session-based Slack MCP for Claude and MCP clients: local-first workflows, secure-default HTTP. Surfaced 0h ago with 14 stars and 14/day momentum.",
+          "meta": "GitHub · 14 stars · 14/day · 0h ago · signal 6.36",
+          "rank": 22,
+          "rank_delta": null
+        },
+        {
+          "headline": "UniversityOfHelsinkiCS/gptwrapper",
+          "title": "UniversityOfHelsinkiCS/gptwrapper — LLM chat built for University of Helsinki staff and students, for education and research.",
+          "url": "https://github.com/UniversityOfHelsinkiCS/gptwrapper",
+          "source": "github.com",
+          "tags": [],
+          "score": 6.297,
+          "raw_score": 2.86,
+          "published_hours_ago": 0,
+          "stars": 10,
+          "image_url": "https://opengraph.githubassets.com/1/UniversityOfHelsinkiCS/gptwrapper",
+          "badge": "Repo",
+          "deck": "LLM chat built for University of Helsinki staff and students, for education and research. Surfaced 0h ago with 10 stars and 10/day momentum.",
+          "meta": "GitHub · 10 stars · 10/day · 0h ago · signal 6.30",
+          "rank": 20,
+          "rank_delta": null
         }
       ]
     },
@@ -346,13 +444,16 @@
           "tags": [
             "AI"
           ],
-          "score": 2.878,
+          "score": 5.399,
+          "raw_score": 2.878,
           "published_hours_ago": 21,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 21h ago.",
-          "meta": "arXiv · 21h ago · score 2.88"
+          "deck": "Fresh arXiv paper from the ai cluster, posted 21h ago. Down 2 spots from the previous run.",
+          "meta": "arXiv · 21h ago · down 2 · signal 5.40",
+          "rank": 17,
+          "rank_delta": -2
         },
         {
           "headline": "OSS-CRS: Liberating AIxCC Cyber Reasoning Systems for Real-World Open-Source Security",
@@ -360,27 +461,73 @@
           "url": "http://arxiv.org/abs/2603.08566v1",
           "source": "arxiv.org",
           "tags": [],
-          "score": 2.878,
+          "score": 5.286,
+          "raw_score": 2.878,
           "published_hours_ago": 22,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper posted 22h ago and surfacing in the current feed.",
-          "meta": "arXiv · 22h ago · score 2.88"
+          "deck": "Fresh arXiv paper posted 22h ago and surfacing in the current feed. Down 1 spots from the previous run.",
+          "meta": "arXiv · 22h ago · down 1 · signal 5.29",
+          "rank": 18,
+          "rank_delta": -1
         },
         {
-          "headline": "Reasoning as Compression: Unifying Budget Forcing via the Conditional Information Bottleneck",
-          "title": "Reasoning as Compression: Unifying Budget Forcing via the Conditional Information Bottleneck",
-          "url": "http://arxiv.org/abs/2603.08462v1",
+          "headline": "PostTrainBench: Can LLM Agents Automate LLM Post-Training?",
+          "title": "PostTrainBench: Can LLM Agents Automate LLM Post-Training?",
+          "url": "http://arxiv.org/abs/2603.08640v1",
           "source": "arxiv.org",
-          "tags": [],
-          "score": 2.878,
-          "published_hours_ago": 24,
+          "tags": [
+            "AI"
+          ],
+          "score": 5.266,
+          "raw_score": 2.2,
+          "published_hours_ago": 21,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper posted 24h ago and surfacing in the current feed.",
-          "meta": "arXiv · 24h ago · score 2.88"
+          "deck": "Fresh arXiv paper from the ai cluster, posted 21h ago. Up 21 spots from the previous run.",
+          "meta": "arXiv · 21h ago · up 21 · signal 5.27",
+          "rank": 45,
+          "rank_delta": 21
+        },
+        {
+          "headline": "A New Lower Bound for the Random Offerer Mechanism in Bilateral Trade using AI-Guided Evolution…",
+          "title": "A New Lower Bound for the Random Offerer Mechanism in Bilateral Trade using AI-Guided Evolutionary Search",
+          "url": "http://arxiv.org/abs/2603.08679v1",
+          "source": "arxiv.org",
+          "tags": [
+            "AI"
+          ],
+          "score": 5.167,
+          "raw_score": 2.2,
+          "published_hours_ago": 21,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-paper.svg",
+          "badge": "Paper",
+          "deck": "Fresh arXiv paper from the ai cluster, posted 21h ago. Up 21 spots from the previous run.",
+          "meta": "arXiv · 21h ago · up 21 · signal 5.17",
+          "rank": 40,
+          "rank_delta": 21
+        },
+        {
+          "headline": "How Far Can Unsupervised RLVR Scale LLM Training?",
+          "title": "How Far Can Unsupervised RLVR Scale LLM Training?",
+          "url": "http://arxiv.org/abs/2603.08660v1",
+          "source": "arxiv.org",
+          "tags": [
+            "AI"
+          ],
+          "score": 5.159,
+          "raw_score": 2.2,
+          "published_hours_ago": 21,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-paper.svg",
+          "badge": "Paper",
+          "deck": "Fresh arXiv paper from the ai cluster, posted 21h ago. Up 21 spots from the previous run.",
+          "meta": "arXiv · 21h ago · up 21 · signal 5.16",
+          "rank": 42,
+          "rank_delta": 21
         },
         {
           "headline": "Coverage-Guided Multi-Agent Harness Generation for Java Library Fuzzing",
@@ -390,75 +537,16 @@
           "tags": [
             "AI"
           ],
-          "score": 2.808,
+          "score": 5.155,
+          "raw_score": 2.808,
           "published_hours_ago": 22,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 22h ago.",
-          "meta": "arXiv · 22h ago · score 2.81"
-        },
-        {
-          "headline": "Data-Driven Priors for Uncertainty-Aware Deterioration Risk Prediction with Multimodal Data",
-          "title": "Data-Driven Priors for Uncertainty-Aware Deterioration Risk Prediction with Multimodal Data",
-          "url": "http://arxiv.org/abs/2603.08459v1",
-          "source": "arxiv.org",
-          "tags": [
-            "AI"
-          ],
-          "score": 2.528,
-          "published_hours_ago": 24,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-paper.svg",
-          "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 24h ago.",
-          "meta": "arXiv · 24h ago · score 2.53"
-        },
-        {
-          "headline": "AULLM++: Structural Reasoning with Large Language Models for Micro-Expression Recognition",
-          "title": "AULLM++: Structural Reasoning with Large Language Models for Micro-Expression Recognition",
-          "url": "http://arxiv.org/abs/2603.08387v1",
-          "source": "arxiv.org",
-          "tags": [
-            "AI"
-          ],
-          "score": 2.428,
-          "published_hours_ago": 25,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-paper.svg",
-          "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 25h ago.",
-          "meta": "arXiv · 25h ago · score 2.43"
-        },
-        {
-          "headline": "CORE-Acu: Structured Reasoning Traces and Knowledge Graph Safety Verification for Acupuncture C…",
-          "title": "CORE-Acu: Structured Reasoning Traces and Knowledge Graph Safety Verification for Acupuncture Clinical Decision Support",
-          "url": "http://arxiv.org/abs/2603.08321v1",
-          "source": "arxiv.org",
-          "tags": [],
-          "score": 2.428,
-          "published_hours_ago": 26,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-paper.svg",
-          "badge": "Paper",
-          "deck": "Fresh arXiv paper posted 26h ago and surfacing in the current feed.",
-          "meta": "arXiv · 26h ago · score 2.43"
-        },
-        {
-          "headline": "Agentic Critical Training",
-          "title": "Agentic Critical Training",
-          "url": "http://arxiv.org/abs/2603.08706v1",
-          "source": "arxiv.org",
-          "tags": [
-            "AI"
-          ],
-          "score": 2.388,
-          "published_hours_ago": 21,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-paper.svg",
-          "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 21h ago.",
-          "meta": "arXiv · 21h ago · score 2.39"
+          "deck": "Fresh arXiv paper from the ai cluster, posted 22h ago. Down 7 spots from the previous run.",
+          "meta": "arXiv · 22h ago · down 7 · signal 5.16",
+          "rank": 23,
+          "rank_delta": -7
         }
       ]
     },
@@ -475,61 +563,16 @@
           "tags": [
             "social"
           ],
-          "score": 2.55,
+          "score": 5.492,
+          "raw_score": 2.55,
           "published_hours_ago": 2,
           "stars": 0,
           "image_url": "/news/assets/thumb-ai.svg",
           "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 2h ago.",
-          "meta": "GeekNews · 2h ago · score 2.55"
-        },
-        {
-          "headline": "JSLinux now supports x86_64",
-          "title": "JSLinux now supports x86_64",
-          "url": "https://news.hada.io/topic?id=27379",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 2.4,
-          "published_hours_ago": 1,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 1h ago.",
-          "meta": "GeekNews · 1h ago · score 2.40"
-        },
-        {
-          "headline": "Show GN: A modified version of OpenClaw that runs standalone inside VSCode. But with Persona.",
-          "title": "Show GN: A modified version of OpenClaw that runs standalone inside VSCode. But with Persona.",
-          "url": "https://news.hada.io/topic?id=27377",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 2.4,
-          "published_hours_ago": 2,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 2h ago.",
-          "meta": "GeekNews · 2h ago · score 2.40"
-        },
-        {
-          "headline": "Bluesky CEO Jay Graber steps down from CEO position to become Chief Innovation Officer (CIO)",
-          "title": "Bluesky CEO Jay Graber steps down from CEO position to become Chief Innovation Officer (CIO)",
-          "url": "https://news.hada.io/topic?id=27373",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 2.4,
-          "published_hours_ago": 6,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 6h ago.",
-          "meta": "GeekNews · 6h ago · score 2.40"
+          "deck": "Community signal picked up on GeekNews about 2h ago. Up 10 spots from the previous run.",
+          "meta": "GeekNews · 2h ago · up 10 · signal 5.49",
+          "rank": 25,
+          "rank_delta": 10
         },
         {
           "headline": "New research from Microsoft. Phi-4-reasoning-vision-15B is a 15-billion parameter multimodal re…",
@@ -540,63 +583,16 @@
             "AI",
             "social"
           ],
-          "score": 2.256,
+          "score": 3.977,
+          "raw_score": 2.256,
           "published_hours_ago": 72,
           "stars": 0,
           "image_url": "/news/assets/thumb-ai.svg",
           "badge": "Social",
           "deck": "Community signal picked up on X about 72h ago.",
-          "meta": "X · 72h ago · score 2.26"
-        },
-        {
-          "headline": "RAN is the engine of every mobile network yet it’s also where complexity is growing fastest 🗂Mu…",
-          "title": "RAN is the engine of every mobile network yet it’s also where complexity is growing fastest 🗂Multi-vendor environments 🗂Legacy + Open RAN coexistence 🗂Fragmented tools, Limited automation Capgemini and Deutsche Telekom are introducing a unified, m",
-          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNY2toMUFUS0RoZHAxZFpXajlfeVp5Z2RpbzRNMkdTcno3Q2swaHlJT28wbkdSQlhyRkFneFhlbUw1Q2pTS2tWaUhpNnVLMDhGMU00SUlFbkdTd3ZINjA4cU1RUGE5N005bXM2UTVYSFNleHprOXVPTlpEZHAyb1VIblNDVlQ1OW1WVDRULUZxcnlNVTVtU20yMmRuYTd5c2ZsUklqMHlGNWpESUxxSF9kUWQzY1J5QTQ?oc=5",
-          "source": "linkedin.com",
-          "tags": [
-            "social"
-          ],
-          "score": 2.218,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on LinkedIn about 72h ago.",
-          "meta": "LinkedIn · 72h ago · score 2.22"
-        },
-        {
-          "headline": "GPT-5.4 Thinking and GPT-5.4 Pro are rolling out now in ChatGPT. GPT-5.4 is also now available…",
-          "title": "GPT-5.4 Thinking and GPT-5.4 Pro are rolling out now in ChatGPT. GPT-5.4 is also now available in the API and Codex. GPT-5.4 brings our advances in reasoning, coding, and agentic workflows into one frontier model.",
-          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE15VGs5Z3dlQWdfcGV0RURtdDZUUng4a0IxUy1xdFRya1g0QmMxYjVQamZBUk05X0Y1YTVDZVhDRGhkUWJTQi1YV3JxNlR3d0ptYjdvRHllVFdGSlE?oc=5",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social"
-          ],
-          "score": 2.116,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X about 72h ago.",
-          "meta": "X · 72h ago · score 2.12"
-        },
-        {
-          "headline": "www.databricks.com blog transforming healthcare referrals fivetran agentic ai and databricks ge…",
-          "title": "www.databricks.com blog transforming healthcare referrals fivetran agentic ai and databricks genie",
-          "url": "https://endigest.dev/posts/https%3A%2F%2Fwww.databricks.com%2Ffeed%3A%3Ahttps%3A%2F%2Fwww.databricks.com%2Fblog%2Ftransforming-healthcare-referrals-fivetran-agentic-ai-and-databricks-genie",
-          "source": "endigest.dev",
-          "tags": [
-            "AI",
-            "social"
-          ],
-          "score": 2.088,
-          "published_hours_ago": 24,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on Endigest about 24h ago.",
-          "meta": "Endigest · 24h ago · score 2.09"
+          "meta": "X · 72h ago · signal 3.98",
+          "rank": 36,
+          "rank_delta": null
         }
       ]
     }
@@ -604,40 +600,32 @@
   "source_counts": [
     {
       "label": "GitHub",
-      "value": 20
+      "value": 8
     },
     {
       "label": "arXiv",
-      "value": 20
-    },
-    {
-      "label": "Endigest",
-      "value": 10
+      "value": 6
     },
     {
       "label": "GeekNews",
-      "value": 10
-    },
-    {
-      "label": "LinkedIn",
-      "value": 10
+      "value": 1
     },
     {
       "label": "X",
-      "value": 10
+      "value": 1
     }
   ],
   "digest": {
     "title": "Daily AI News Digest — 2026-03-25",
     "url": "/notes/news/2026-03-25-ai-news-digest/",
-    "description": "Repo momentum is led by ceedaragents/cyrus; paper attention is clustering around OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning; community chatter is moving through GeekNews. 4 repo signals, 4 paper picks, and 4 community items made today's cut."
+    "description": "GitHub velocity is led by ceedaragents/cyrus; paper attention is clustering around OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning; social attention is tilting toward OpenAI cancels Stargate data center expansion plans with Oracle; biggest mover: PostTrainBench: Can LLM Agents Automate LLM Post-Training? (+21). 8 repo signals, 6 paper picks, and 2 community items made today's cut."
   },
   "archives": [
     {
       "title": "Daily AI News Digest — 2026-03-25",
       "url": "/notes/news/2026-03-25-ai-news-digest/",
       "date_label": "2026-03-25",
-      "description": "Repo momentum is led by ceedaragents/cyrus; paper attention is clustering around OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning; community chatter is moving through GeekNews. 4 repo signals, 4 paper picks, and 4 community items made today's cut."
+      "description": "GitHub velocity is led by ceedaragents/cyrus; paper attention is clustering around OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning; social attention is tilting toward OpenAI cancels Stargate data center expansion plans with Oracle; biggest mover: PostTrainBench: Can LLM Agents Automate LLM Post-Training? (+21). 8 repo signals, 6 paper picks, and 2 community items made today's cut."
     },
     {
       "title": "Daily AI News Digest — 2026-03-24",
