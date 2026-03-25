@@ -1,6 +1,6 @@
 ---
 title: "Daily AI News Digest — 2026-03-25"
-description: "GitHub velocity is led by ceedaragents/cyrus; paper attention is clustering around OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning; social attention is tilting toward OpenAI cancels Stargate data center expansion plans with Oracle; biggest mover: PostTrainBench: Can LLM Agents Automate LLM Post-Training? (+21). 8 repo signals, 6 paper picks, and 2 community items made today's cut."
+description: "GitHub velocity is led by comet-ml/opik; paper attention is clustering around SpecEyes: Accelerating Agentic Multimodal LLMs via Speculative Perception and Planning; social attention is tilting toward OpenAI, Sora service terminated. 8 repo signals, 6 paper picks, and 3 community items made today's cut."
 date: 2026-03-25
 tags: [news, news-digest, ai, radar]
 publish: true
@@ -11,7 +11,7 @@ content-classes: [news-digest-note]
     <div class="news-digest-hero-copy">
       <p class="section-kicker">News Radar</p>
       <h1>Daily AI News Digest — 2026-03-25</h1>
-      <p class="news-digest-lead">GitHub velocity is led by ceedaragents/cyrus; paper attention is clustering around OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning; social attention is tilting toward OpenAI cancels Stargate data center expansion plans with Oracle; biggest mover: PostTrainBench: Can LLM Agents Automate LLM Post-Training? (+21). 8 repo signals, 6 paper picks, and 2 community items made today&#x27;s cut.</p>
+      <p class="news-digest-lead">GitHub velocity is led by comet-ml/opik; paper attention is clustering around SpecEyes: Accelerating Agentic Multimodal LLMs via Speculative Perception and Planning; social attention is tilting toward OpenAI, Sora service terminated. 8 repo signals, 6 paper picks, and 3 community items made today&#x27;s cut.</p>
       <div class="news-digest-actions" role="group" aria-label="News actions">
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
         <a class="post-cta-link" href="#digest-archive">Digest archive</a>
@@ -24,7 +24,7 @@ content-classes: [news-digest-note]
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Generated</span>
-        <strong><time datetime="2026-03-25T14:43:24.151945+09:00">Mar 25, 2026 · 2:43 PM KST</time></strong>
+        <strong><time datetime="2026-03-25T18:11:38.837170+09:00">Mar 25, 2026 · 6:11 PM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Sections</span>
@@ -40,71 +40,71 @@ content-classes: [news-digest-note]
     </header>
     <p class="news-digest-section-description">Local signal score blends freshness, feed rank, keyword relevance, and GitHub star velocity.</p>
     <div class="news-digest-scoreboard">
-      <a class="news-digest-score-row" href="https://github.com/ceedaragents/cyrus" target="_blank" rel="noreferrer">
+      <a class="news-digest-score-row" href="https://github.com/comet-ml/opik" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
           <span class="news-digest-score-rank">01</span>
-          <strong>ceedaragents/cyrus</strong>
-          <span>GitHub · 412 stars · 412/day · 0h ago · signal 9.55</span>
+          <strong>comet-ml/opik</strong>
+          <span>GitHub · 18469 stars · 18469/day · 0h ago · signal 9.54</span>
         </div>
         <div class="news-digest-score-bar" aria-hidden="true">
           <span style="width: 100.0%"></span>
         </div>
-        <strong class="news-digest-score-value">9.55</strong>
+        <strong class="news-digest-score-value">9.54</strong>
       </a>
-      <a class="news-digest-score-row" href="https://github.com/freddy-schuetz/n8n-claw" target="_blank" rel="noreferrer">
+      <a class="news-digest-score-row" href="https://github.com/BoltzmannEntropy/MimikaStudio" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
           <span class="news-digest-score-rank">02</span>
-          <strong>freddy-schuetz/n8n-claw</strong>
-          <span>GitHub · 170 stars · 170/day · 0h ago · signal 8.68</span>
+          <strong>BoltzmannEntropy/MimikaStudio</strong>
+          <span>GitHub · 485 stars · 485/day · 0h ago · signal 8.99</span>
         </div>
         <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 90.9%"></span>
+          <span style="width: 94.2%"></span>
         </div>
-        <strong class="news-digest-score-value">8.68</strong>
+        <strong class="news-digest-score-value">8.99</strong>
       </a>
-      <a class="news-digest-score-row" href="https://github.com/rohitg00/skillkit" target="_blank" rel="noreferrer">
+      <a class="news-digest-score-row" href="https://github.com/openagents-org/openagents" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
           <span class="news-digest-score-rank">03</span>
-          <strong>rohitg00/skillkit</strong>
-          <span>GitHub · 558 stars · 558/day · 0h ago · signal 8.46</span>
+          <strong>openagents-org/openagents</strong>
+          <span>GitHub · 1784 stars · 1784/day · 0h ago · signal 8.06</span>
         </div>
         <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 88.6%"></span>
+          <span style="width: 84.4%"></span>
         </div>
-        <strong class="news-digest-score-value">8.46</strong>
+        <strong class="news-digest-score-value">8.06</strong>
       </a>
-      <a class="news-digest-score-row" href="https://github.com/RunanywhereAI/RCLI" target="_blank" rel="noreferrer">
+      <a class="news-digest-score-row" href="https://github.com/quic/efficient-transformers" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
           <span class="news-digest-score-rank">04</span>
-          <strong>RunanywhereAI/RCLI</strong>
-          <span>GitHub · 105 stars · 105/day · 0h ago · signal 8.23</span>
+          <strong>quic/efficient-transformers</strong>
+          <span>GitHub · 87 stars · 87/day · 0h ago · signal 7.89</span>
         </div>
         <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 86.1%"></span>
+          <span style="width: 82.7%"></span>
         </div>
-        <strong class="news-digest-score-value">8.23</strong>
+        <strong class="news-digest-score-value">7.89</strong>
       </a>
-      <a class="news-digest-score-row" href="https://github.com/agentscope-ai/agentscope-java" target="_blank" rel="noreferrer">
+      <a class="news-digest-score-row" href="https://github.com/stacklok/toolhive-studio" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
           <span class="news-digest-score-rank">05</span>
-          <strong>agentscope-ai/agentscope-java</strong>
-          <span>GitHub · 1668 stars · 1668/day · 0h ago · signal 8.17</span>
+          <strong>stacklok/toolhive-studio</strong>
+          <span>GitHub · 118 stars · 118/day · 0h ago · signal 7.72</span>
         </div>
         <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 85.6%"></span>
+          <span style="width: 80.9%"></span>
         </div>
-        <strong class="news-digest-score-value">8.17</strong>
+        <strong class="news-digest-score-value">7.72</strong>
       </a>
-      <a class="news-digest-score-row" href="https://github.com/urstory/urstory-rag" target="_blank" rel="noreferrer">
+      <a class="news-digest-score-row" href="https://github.com/shankar0123/certctl" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
           <span class="news-digest-score-rank">06</span>
-          <strong>urstory/urstory-rag</strong>
-          <span>GitHub · 30 stars · 30/day · 0h ago · signal 7.32</span>
+          <strong>shankar0123/certctl</strong>
+          <span>GitHub · 133 stars · 133/day · 0h ago · signal 7.68</span>
         </div>
         <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 76.6%"></span>
+          <span style="width: 80.4%"></span>
         </div>
-        <strong class="news-digest-score-value">7.32</strong>
+        <strong class="news-digest-score-value">7.68</strong>
       </a>
     </div>
   </section>
@@ -115,28 +115,28 @@ content-classes: [news-digest-note]
       <h2>Top signals</h2>
     </header>
     <div class="news-digest-top-grid">
-      <a class="news-digest-card news-digest-top-card" href="https://github.com/ceedaragents/cyrus" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/ceedaragents/cyrus" alt="ceedaragents/cyrus — Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card news-digest-top-card" href="https://github.com/comet-ml/opik" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/comet-ml/opik" alt="comet-ml/opik — Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards." width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>ceedaragents/cyrus</h3>
+          <h3>comet-ml/opik</h3>
         </div>
       </a>
-      <a class="news-digest-card news-digest-top-card" href="http://arxiv.org/abs/2603.08655v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card news-digest-top-card" href="http://arxiv.org/abs/2603.23483v1" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="SpecEyes: Accelerating Agentic Multimodal LLMs via Speculative Perception and Planning" width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning</h3>
+          <h3>SpecEyes: Accelerating Agentic Multimodal LLMs via Speculative Perception and Planning</h3>
         </div>
       </a>
-      <a class="news-digest-card news-digest-top-card" href="https://news.hada.io/topic?id=27376" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="OpenAI cancels Stargate data center expansion plans with Oracle" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card news-digest-top-card" href="https://news.hada.io/topic?id=27839" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="OpenAI, Sora service terminated" width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>OpenAI cancels Stargate data center expansion plans with Oracle</h3>
+          <h3>OpenAI, Sora service terminated</h3>
         </div>
       </a>
-      <a class="news-digest-card news-digest-top-card" href="https://github.com/RunanywhereAI/RCLI" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/RunanywhereAI/RCLI" alt="RunanywhereAI/RCLI — Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card news-digest-top-card" href="http://arxiv.org/abs/2603.23485v1" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Failure of contextual invariance in gender inference with large language models" width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>RunanywhereAI/RCLI</h3>
+          <h3>Failure of contextual invariance in gender inference with large language models</h3>
         </div>
       </a>
     </div>
@@ -149,28 +149,28 @@ content-classes: [news-digest-note]
     </header>
     <p class="news-digest-section-description">The fastest-moving items across repos, papers, and community chatter.</p>
     <div class="news-digest-grid">
-      <a class="news-digest-card" href="https://github.com/ceedaragents/cyrus" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/ceedaragents/cyrus" alt="ceedaragents/cyrus — Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="https://github.com/comet-ml/opik" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/comet-ml/opik" alt="comet-ml/opik — Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards." width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>ceedaragents/cyrus</h3>
+          <h3>comet-ml/opik</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://news.hada.io/topic?id=27376" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="OpenAI cancels Stargate data center expansion plans with Oracle" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="https://github.com/thc1006/nephoran-intent-operator" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/thc1006/nephoran-intent-operator" alt="thc1006/nephoran-intent-operator — This project is an LLM-Enhanced Nephio R5 and O-RAN Network Automation System. It integrates a Large Language Model with Nephio&#x27;s intent-based automation to provide a natural language interface for managing and orchestrating telecommunications network functions." width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>OpenAI cancels Stargate data center expansion plans with Oracle</h3>
+          <h3>thc1006/nephoran-intent-operator</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="http://arxiv.org/abs/2603.08655v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="http://arxiv.org/abs/2603.23483v1" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="SpecEyes: Accelerating Agentic Multimodal LLMs via Speculative Perception and Planning" width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning</h3>
+          <h3>SpecEyes: Accelerating Agentic Multimodal LLMs via Speculative Perception and Planning</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="http://arxiv.org/abs/2603.08566v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="OSS-CRS: Liberating AIxCC Cyber Reasoning Systems for Real-World Open-Source Security" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="http://arxiv.org/abs/2603.23300v1" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Designing Agentic AI-Based Screening for Portfolio Investment" width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>OSS-CRS: Liberating AIxCC Cyber Reasoning Systems for Real-World Open-Source Security</h3>
+          <h3>Designing Agentic AI-Based Screening for Portfolio Investment</h3>
         </div>
       </a>
     </div>
@@ -183,52 +183,52 @@ content-classes: [news-digest-note]
     </header>
     <p class="news-digest-section-description">Fresh GitHub projects worth scanning before the feed turns over.</p>
     <div class="news-digest-grid">
-      <a class="news-digest-card" href="https://github.com/ceedaragents/cyrus" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/ceedaragents/cyrus" alt="ceedaragents/cyrus — Your (Claude Code|Cursor|Codex|Gemini) powered (Linear|Github|Slack) agent that runs on any machine" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="https://github.com/comet-ml/opik" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/comet-ml/opik" alt="comet-ml/opik — Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards." width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>ceedaragents/cyrus</h3>
+          <h3>comet-ml/opik</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://github.com/freddy-schuetz/n8n-claw" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/freddy-schuetz/n8n-claw" alt="freddy-schuetz/n8n-claw — OpenClaw-inspired autonomous AI agent built entirely in n8n. Adaptive RAG-powered memory, Skills via MCP templates, proactive task management, media understanding - self-hosted with one setup script" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="https://github.com/BoltzmannEntropy/MimikaStudio" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/BoltzmannEntropy/MimikaStudio" alt="BoltzmannEntropy/MimikaStudio — MimikaStudio - A local-first application for macOS (Apple Silicon) + Agentic MCP Support" width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>freddy-schuetz/n8n-claw</h3>
+          <h3>BoltzmannEntropy/MimikaStudio</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://github.com/rohitg00/skillkit" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/rohitg00/skillkit" alt="rohitg00/skillkit — Supercharge AI coding agents with portable skills. Install, translate &amp; share skills across Claude Code, Cursor, Codex, Copilot &amp; 40 more" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="https://github.com/openagents-org/openagents" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/openagents-org/openagents" alt="openagents-org/openagents — OpenAgents - AI Agent Networks for Open Collaboration" width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>rohitg00/skillkit</h3>
+          <h3>openagents-org/openagents</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://github.com/RunanywhereAI/RCLI" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/RunanywhereAI/RCLI" alt="RunanywhereAI/RCLI — Talk to your Mac, query your docs, no cloud required. On-device voice AI + RAG" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="https://github.com/quic/efficient-transformers" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/quic/efficient-transformers" alt="quic/efficient-transformers — This library empowers users to seamlessly port pretrained models and checkpoints on the HuggingFace (HF) hub (developed using HF transformers library) into inference-ready formats that run efficiently on Qualcomm Cloud AI 100 accelerators." width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>RunanywhereAI/RCLI</h3>
+          <h3>quic/efficient-transformers</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://github.com/agentscope-ai/agentscope-java" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/agentscope-ai/agentscope-java" alt="agentscope-ai/agentscope-java — AgentScope Java: Agent-Oriented Programming for Building LLM Applications" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="https://github.com/stacklok/toolhive-studio" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/stacklok/toolhive-studio" alt="stacklok/toolhive-studio — ToolHive is an application that allows you to install, manage and run MCP servers and connect them to AI agents" width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>agentscope-ai/agentscope-java</h3>
+          <h3>stacklok/toolhive-studio</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://github.com/urstory/urstory-rag" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/urstory/urstory-rag" alt="urstory/urstory-rag — Korean-specific production RAG system. Includes hybrid search (PGVector + Elasticsearch Nori), Korean reranker (bge-reranker-v2-m3-ko), HyDE, multiquery destructuring, guardrails (PII/injection/hallucination), RAGAS automatic evaluation, and Langfuse monitoring. All functions can be controlled ON/OFF in the administrator UI without changing the code. FastAPI + Haystack 2.x backend, Next.js 15 + shadcn/ui frontend." width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="https://github.com/shankar0123/certctl" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/shankar0123/certctl" alt="shankar0123/certctl — Self-hosted certificate lifecycle automation platform. Any CA, any server, zero human intervention. Full REST API, web dashboard, and agent-based deployment where private keys never leave your infrastructure. Includes CLI, MCP server for AI assistants, and compliance mapping for SOC 2, PCI-DSS, and NIST." width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>urstory/urstory-rag</h3>
+          <h3>shankar0123/certctl</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://github.com/jtalk22/slack-mcp-server" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/jtalk22/slack-mcp-server" alt="jtalk22/slack-mcp-server — Session-based Slack MCP for Claude and MCP clients: local-first workflows, secure-default HTTP." width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="https://github.com/verygoodplugins/automem" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/verygoodplugins/automem" alt="verygoodplugins/automem — AutoMem is a graph-vector memory service that gives AI assistants durable, relational memory:" width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>jtalk22/slack-mcp-server</h3>
+          <h3>verygoodplugins/automem</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://github.com/UniversityOfHelsinkiCS/gptwrapper" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/UniversityOfHelsinkiCS/gptwrapper" alt="UniversityOfHelsinkiCS/gptwrapper — LLM chat built for University of Helsinki staff and students, for education and research." width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="https://github.com/thc1006/nephoran-intent-operator" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/thc1006/nephoran-intent-operator" alt="thc1006/nephoran-intent-operator — This project is an LLM-Enhanced Nephio R5 and O-RAN Network Automation System. It integrates a Large Language Model with Nephio&#x27;s intent-based automation to provide a natural language interface for managing and orchestrating telecommunications network functions." width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>UniversityOfHelsinkiCS/gptwrapper</h3>
+          <h3>thc1006/nephoran-intent-operator</h3>
         </div>
       </a>
     </div>
@@ -241,40 +241,40 @@ content-classes: [news-digest-note]
     </header>
     <p class="news-digest-section-description">New research worth bookmarking for a deeper read.</p>
     <div class="news-digest-grid">
-      <a class="news-digest-card" href="http://arxiv.org/abs/2603.08655v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="http://arxiv.org/abs/2603.23483v1" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="SpecEyes: Accelerating Agentic Multimodal LLMs via Speculative Perception and Planning" width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning</h3>
+          <h3>SpecEyes: Accelerating Agentic Multimodal LLMs via Speculative Perception and Planning</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="http://arxiv.org/abs/2603.08566v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="OSS-CRS: Liberating AIxCC Cyber Reasoning Systems for Real-World Open-Source Security" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="http://arxiv.org/abs/2603.23300v1" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Designing Agentic AI-Based Screening for Portfolio Investment" width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>OSS-CRS: Liberating AIxCC Cyber Reasoning Systems for Real-World Open-Source Security</h3>
+          <h3>Designing Agentic AI-Based Screening for Portfolio Investment</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="http://arxiv.org/abs/2603.08640v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="PostTrainBench: Can LLM Agents Automate LLM Post-Training?" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="http://arxiv.org/abs/2603.23485v1" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Failure of contextual invariance in gender inference with large language models" width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>PostTrainBench: Can LLM Agents Automate LLM Post-Training?</h3>
+          <h3>Failure of contextual invariance in gender inference with large language models</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="http://arxiv.org/abs/2603.08679v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="A New Lower Bound for the Random Offerer Mechanism in Bilateral Trade using AI-Guided Evolutionary Search" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="http://arxiv.org/abs/2603.23322v1" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Leveraging LLMs and Social Media to Understand User Perception of Smartphone-Based Earthquake Early Warnings" width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>A New Lower Bound for the Random Offerer Mechanism in Bilateral Trade using AI-Guided Evolution…</h3>
+          <h3>Leveraging LLMs and Social Media to Understand User Perception of Smartphone-Based Earthquake E…</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="http://arxiv.org/abs/2603.08660v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="How Far Can Unsupervised RLVR Scale LLM Training?" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="http://arxiv.org/abs/2603.23252v1" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="AI Lifecycle-Aware Feasibility Framework for Split-RIC Orchestration in NTN O-RAN" width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>How Far Can Unsupervised RLVR Scale LLM Training?</h3>
+          <h3>AI Lifecycle-Aware Feasibility Framework for Split-RIC Orchestration in NTN O-RAN</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="http://arxiv.org/abs/2603.08616v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Coverage-Guided Multi-Agent Harness Generation for Java Library Fuzzing" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="http://arxiv.org/abs/2603.23353v1" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Design Space and Implementation of RAG-Based Avatars for Virtual Archaeology" width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>Coverage-Guided Multi-Agent Harness Generation for Java Library Fuzzing</h3>
+          <h3>Design Space and Implementation of RAG-Based Avatars for Virtual Archaeology</h3>
         </div>
       </a>
     </div>
@@ -287,16 +287,22 @@ content-classes: [news-digest-note]
     </header>
     <p class="news-digest-section-description">Directional signals from discussion-heavy sources.</p>
     <div class="news-digest-grid">
-      <a class="news-digest-card" href="https://news.hada.io/topic?id=27376" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="OpenAI cancels Stargate data center expansion plans with Oracle" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="https://news.hada.io/topic?id=27839" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="OpenAI, Sora service terminated" width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>OpenAI cancels Stargate data center expansion plans with Oracle</h3>
+          <h3>OpenAI, Sora service terminated</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiXkFVX3lxTE51UHJ0RGVMb0g2ZlFZdjdCb3RTWHNwejhZSHo1d0FiYXdjWmoyeHdTb3U1amFIMUhMRkNjVUdIcnR3Z2VGb1FadXlrQnl6NldHTDktR3h6djBEbzlVQmc?oc=5" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="New research from Microsoft. Phi-4-reasoning-vision-15B is a 15-billion parameter multimodal reasoning model that combines visual understanding with structured reasoning capabilities. As I have been saying, not every agent task needs a frontier model. Phi-" width="1200" height="675" loading="lazy" decoding="async" />
+      <a class="news-digest-card" href="https://news.hada.io/topic?id=27835" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Hypura – A storage layer-aware LLM inference scheduler for Apple Silicon." width="1200" height="675" loading="lazy" decoding="async" />
         <div class="news-digest-card-copy">
-          <h3>New research from Microsoft. Phi-4-reasoning-vision-15B is a 15-billion parameter multimodal re…</h3>
+          <h3>Hypura – A storage layer-aware LLM inference scheduler for Apple Silicon.</h3>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE04Mmp6X0hfYmhCZXE1b0xtN3VBVkVwc2x5NTNiUk9oT05GRDJub2NmbzVnemNDMVRSa040N0t3TU16RDZxWjJVTVJNVGg3S2FwVV9ldHEwMzhFRjctQzZuZlJrTUM?oc=5" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly through AI platforms like ChatGPT, Copilot, and Gemini." width="1200" height="675" loading="lazy" decoding="async" />
+        <div class="news-digest-card-copy">
+          <h3>🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly th…</h3>
         </div>
       </a>
     </div>
