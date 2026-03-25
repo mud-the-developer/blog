@@ -729,92 +729,24 @@ struct MissingNoteTemplate {
     missing_slug: String,
 }
 
-#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, Deserialize)]
 struct NewsHubData {
     #[serde(default)]
-    generated_at: String,
-    #[serde(default)]
-    generated_label: String,
-    #[serde(default)]
-    issue_date: String,
-    #[serde(default)]
-    issue_label: String,
-    #[serde(default)]
     summary: String,
-    #[serde(default)]
-    top_cards: Vec<NewsCard>,
-    #[serde(default)]
-    sections: Vec<NewsSection>,
-    #[serde(default)]
-    source_counts: Vec<NewsSourceCount>,
     #[serde(default)]
     digest: NewsDigestLink,
     #[serde(default)]
     archives: Vec<NewsArchiveEntry>,
 }
 
-#[derive(Debug, Clone, Default, Serialize, Deserialize)]
-struct NewsSection {
-    #[serde(default)]
-    slug: String,
-    #[serde(default)]
-    title: String,
-    #[serde(default)]
-    description: String,
-    #[serde(default)]
-    items: Vec<NewsCard>,
-}
-
-#[derive(Debug, Clone, Default, Serialize, Deserialize)]
-struct NewsCard {
-    #[serde(default)]
-    headline: String,
-    #[serde(default)]
-    title: String,
-    #[serde(default)]
-    url: String,
-    #[serde(default)]
-    source: String,
-    #[serde(default)]
-    tags: Vec<String>,
-    #[serde(default)]
-    score: f64,
-    #[serde(default)]
-    published_hours_ago: i64,
-    #[serde(default)]
-    stars: i64,
-    #[serde(default)]
-    image_url: String,
-    #[serde(default)]
-    badge: String,
-    #[serde(default)]
-    deck: String,
-    #[serde(default)]
-    meta: String,
-}
-
-#[derive(Debug, Clone, Default, Serialize, Deserialize)]
-struct NewsSourceCount {
-    #[serde(default)]
-    label: String,
-    #[serde(default)]
-    value: usize,
-}
-
-#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, Deserialize)]
 struct NewsDigestLink {
     #[serde(default)]
-    title: String,
-    #[serde(default)]
     url: String,
-    #[serde(default)]
-    description: String,
 }
 
-#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, Deserialize)]
 struct NewsArchiveEntry {
-    #[serde(default)]
-    title: String,
     #[serde(default)]
     url: String,
     #[serde(default)]
@@ -860,7 +792,7 @@ pub fn build_site(config: &BuildConfig) -> Result<BuildSummary> {
     render_missing_note_pages(config, &posts, &theme_assets, &asset_version)?;
     render_tag_pages(config, &tags, &posts, &theme_assets, &asset_version)?;
     render_graph_page(config, &posts, &theme_assets, &asset_version)?;
-    render_news_page(config, &posts, &theme_assets, &asset_version)?;
+    render_news_page(config, &posts)?;
     render_not_found_page(config, &posts, &theme_assets, &asset_version)?;
     write_search_index(config, &posts)?;
     write_file_tree(config, &posts)?;
@@ -1293,12 +1225,7 @@ fn render_graph_page(
     )
 }
 
-fn render_news_page(
-    config: &BuildConfig,
-    posts: &[Post],
-    _theme_assets: &ThemeAssets,
-    _asset_version: &str,
-) -> Result<()> {
+fn render_news_page(config: &BuildConfig, posts: &[Post]) -> Result<()> {
     let Some(mut news) = load_generated_news_hub_data(posts)? else {
         return Ok(());
     };
@@ -1306,9 +1233,7 @@ fn render_news_page(
     if news.digest.url.trim().is_empty() {
         if let Some(first) = news.archives.first() {
             news.digest = NewsDigestLink {
-                title: first.title.clone(),
                 url: first.url.clone(),
-                description: first.description.clone(),
             };
         }
     }
@@ -1345,13 +1270,23 @@ fn render_news_redirect_html(title: &str, description: &str, target: &str) -> St
   <meta name="description" content="{safe_description}" />
   <meta http-equiv="refresh" content="0; url={safe_target}" />
   <link rel="canonical" href="{safe_target}" />
+  <style>
+    html, body {{
+      margin: 0;
+      background: #0b1120;
+    }}
+    html.redirecting body {{
+      display: none;
+    }}
+  </style>
+  <script>document.documentElement.classList.add("redirecting"); window.location.replace("{safe_target}");</script>
 </head>
 <body>
-  <main>
-    <p>Opening the latest digest…</p>
-    <p><a href="{safe_target}">Continue to the current Daily AI News Digest</a></p>
-  </main>
-  <script>window.location.replace("{safe_target}");</script>
+  <noscript>
+    <main>
+      <a href="{safe_target}">Continue to the current Daily AI News Digest</a>
+    </main>
+  </noscript>
 </body>
 </html>"#
     )
@@ -4515,16 +4450,6 @@ fn load_generated_news_hub_data(posts: &[Post]) -> Result<Option<NewsHubData>> {
         .with_context(|| format!("failed to read generated news hub data {}", path.display()))?;
     let mut news: NewsHubData = serde_json::from_str(&raw)
         .with_context(|| format!("failed to parse generated news hub data {}", path.display()))?;
-    if news.issue_label.trim().is_empty() {
-        news.issue_label = NaiveDate::parse_from_str(&news.issue_date, "%Y-%m-%d")
-            .map(|date| date.format("%b %-d, %Y").to_string())
-            .unwrap_or_else(|_| news.issue_date.clone());
-    }
-    if news.generated_label.trim().is_empty() {
-        news.generated_label = DateTime::parse_from_rfc3339(&news.generated_at)
-            .map(|date| date.format("%b %-d, %Y · %-I:%M %p %:z").to_string())
-            .unwrap_or_else(|_| news.generated_at.clone());
-    }
     let archive_by_url = news
         .archives
         .iter()
@@ -4538,7 +4463,6 @@ fn load_generated_news_hub_data(posts: &[Post]) -> Result<Option<NewsHubData>> {
             let url = format!("/notes/{}/", post.slug);
             let fallback = archive_by_url.get(&url);
             NewsArchiveEntry {
-                title: post.title.clone(),
                 url,
                 date_label: post
                     .date
@@ -4730,13 +4654,6 @@ fn copy_static_assets(static_dir: &Path, output_dir: &Path) -> Result<()> {
         })?;
 
         if rel.as_os_str().is_empty() {
-            continue;
-        }
-
-        // `assets/style.css` is a legacy bundle kept in source control for reference.
-        // The runtime templates load split CSS files (`style-core.css`, etc.), so we
-        // avoid copying this duplicate output into dist.
-        if entry.file_type().is_file() && rel == Path::new("assets/style.css") {
             continue;
         }
 
@@ -6387,10 +6304,6 @@ Not published.
         write_text(&content_dir.join("attachments/preview.png"), "fakepng");
 
         write_text(
-            &static_dir.join("assets/style.css"),
-            "body { color: #222; }\n",
-        );
-        write_text(
             &static_dir.join("obsidian-theme.css"),
             ":root { --obsidian-accent: #4d7ca8; }\n",
         );
@@ -6645,11 +6558,6 @@ date: 2026-02-10
 
 Should publish in permissive mode.
 "#,
-        );
-
-        write_text(
-            &static_dir.join("assets/style.css"),
-            "body { color: #222; }\n",
         );
 
         let config = BuildConfig {
