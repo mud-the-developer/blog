@@ -24,7 +24,7 @@ content-classes: [news-digest-note]
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Generated</span>
-        <strong><time datetime="2026-03-25T18:11:38.837170+09:00">Mar 25, 2026 · 6:11 PM KST</time></strong>
+        <strong><time datetime="2026-03-25T18:13:09.751391+09:00">Mar 25, 2026 · 6:13 PM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Sections</span>
@@ -317,7 +317,7 @@ content-classes: [news-digest-note]
       <a class="news-digest-archive-item" href="/notes/news/2026-03-25-ai-news-digest/">
         <span class="news-digest-archive-date">2026-03-25</span>
         <strong>Daily AI News Digest — 2026-03-25</strong>
-        <span>GitHub velocity is led by ceedaragents/cyrus; paper attention is clustering around OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning; social attention is tilting toward OpenAI cancels Stargate data center expansion plans with Oracle; biggest mover: PostTrainBench: Can LLM Agents Automate LLM Post-Training? (+21). 8 repo signals, 6 paper picks, and 2 community items made today&#x27;s cut.</span>
+        <span>GitHub velocity is led by comet-ml/opik; paper attention is clustering around SpecEyes: Accelerating Agentic Multimodal LLMs via Speculative Perception and Planning; social attention is tilting toward OpenAI, Sora service terminated. 8 repo signals, 6 paper picks, and 3 community items made today&#x27;s cut.</span>
       </a>
       <a class="news-digest-archive-item" href="/notes/news/2026-03-24-ai-news-digest/">
         <span class="news-digest-archive-date">2026-03-24</span>
