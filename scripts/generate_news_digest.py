@@ -14,7 +14,7 @@ import argparse
 import json
 import math
 import re
-from collections import Counter
+from collections import Counter, defaultdict
 from dataclasses import dataclass
 from datetime import datetime
 from html import escape as html_escape
@@ -32,6 +32,8 @@ GENERATED_DIR = ROOT / "content" / "generated" / "news"
 POSTS_DIR = ROOT / "content" / "posts" / "news"
 TRANSLATION_CACHE_PATH = GENERATED_DIR / "translation-cache.json"
 KST = ZoneInfo("Asia/Seoul")
+ARCHIVE_STEM = "news-digest-archive"
+ARCHIVE_URL = f"/notes/news/{ARCHIVE_STEM}/"
 
 SECTION_SPECS = [
     ("hot24", "Hot in 24 Hours", "The fastest-moving items across repos, papers, and community chatter."),
@@ -1132,7 +1134,22 @@ def archive_entries(current_stem: str, current_summary: str) -> list[dict[str, s
                 "description": current_summary,
             },
         )
-    return entries[:8]
+    return entries
+
+
+def recent_archive_entries(current_stem: str, current_summary: str, limit: int = 8) -> list[dict[str, str]]:
+    return archive_entries(current_stem, current_summary)[:limit]
+
+
+def grouped_archive_entries(entries: list[dict[str, str]]) -> list[tuple[str, str, list[dict[str, str]]]]:
+    grouped: dict[str, list[dict[str, str]]] = defaultdict(list)
+    labels: dict[str, str] = {}
+    for entry in entries:
+        dt = datetime.strptime(entry["date_label"], "%Y-%m-%d")
+        month_key = dt.strftime("%Y-%m")
+        labels[month_key] = dt.strftime("%B %Y")
+        grouped[month_key].append(entry)
+    return [(month_key, labels[month_key], grouped[month_key]) for month_key in sorted(grouped.keys(), reverse=True)]
 
 
 def render_markdown(
@@ -1172,6 +1189,7 @@ def render_markdown(
         '      <div class="news-digest-actions" role="group" aria-label="News actions">',
         '        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>',
         '        <a class="post-cta-link" href="#digest-archive">Digest archive</a>',
+        f'        <a class="post-cta-link" href="{safe_text(ARCHIVE_URL)}">Monthly archive</a>',
         "      </div>",
         "    </div>",
         '    <div class="news-digest-meta-grid">',
@@ -1277,7 +1295,7 @@ def render_markdown(
             '  <section id="digest-archive" class="news-digest-archive">',
             '    <header class="news-digest-section-head">',
             '      <p class="section-kicker">Archive</p>',
-            "      <h2>Digest Posts</h2>",
+            "      <h2>Recent Digest Posts</h2>",
             "    </header>",
             '    <div class="news-digest-archive-list">',
         ]
@@ -1298,6 +1316,7 @@ def render_markdown(
     body.extend(
         [
             "    </div>",
+            f'    <a class="post-cta-link news-digest-archive-link" href="{safe_text(ARCHIVE_URL)}">Browse the monthly archive</a>',
             "  </section>",
             "",
             f'  <p class="news-digest-footnote">Generated from the ranked feed for {safe_text(issue_label)}.</p>',
@@ -1308,9 +1327,93 @@ def render_markdown(
     return frontmatter + "\n".join(body), stem
 
 
+def render_archive_markdown(
+    issue_dt: datetime,
+    generated_dt: datetime,
+    current_summary: str,
+    entries: list[dict[str, str]],
+) -> str:
+    title = "Daily AI News Archive"
+    issue_label = issue_date_label(issue_dt)
+    generated_label = generated_timestamp_label(generated_dt)
+    grouped = grouped_archive_entries(entries)
+    latest_url = entries[0]["url"] if entries else f"/notes/news/{issue_dt.strftime('%Y-%m-%d')}-ai-news-digest/"
+    frontmatter = "\n".join(
+        [
+            "---",
+            f"title: {yaml_quote(title)}",
+            f"description: {yaml_quote('Monthly archive of every Daily AI News Digest post.')}",
+            f"date: {issue_dt.strftime('%Y-%m-%d')}",
+            "tags: [news, news-digest, ai, archive]",
+            "publish: true",
+            "content-classes: [news-digest-note, news-digest-archive-note]",
+            "---",
+            "",
+        ]
+    )
+    body = [
+        '<div class="news-digest-shell news-digest-archive-shell">',
+        '  <section class="news-digest-hero">',
+        '    <div class="news-digest-hero-copy">',
+        '      <p class="section-kicker">News Archive</p>',
+        f"      <h1>{safe_text(title)}</h1>",
+        '      <p class="news-digest-lead">Every Daily AI News Digest, grouped by month so older issues stay skimmable.</p>',
+        '      <div class="news-digest-actions" role="group" aria-label="Archive actions">',
+        f'        <a class="post-cta-link" href="{safe_text(latest_url)}">Latest digest</a>',
+        '        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>',
+        "      </div>",
+        "    </div>",
+        '    <div class="news-digest-meta-grid">',
+        '      <div class="news-digest-meta-card">',
+        '        <span class="news-digest-meta-label">Updated</span>',
+        f'        <strong><time datetime="{generated_dt.isoformat()}">{safe_text(generated_label)}</time></strong>',
+        "      </div>",
+        '      <div class="news-digest-meta-card">',
+        '        <span class="news-digest-meta-label">Issues</span>',
+        f"        <strong>{len(entries)}</strong>",
+        "      </div>",
+        '      <div class="news-digest-meta-card">',
+        '        <span class="news-digest-meta-label">Latest issue</span>',
+        f'        <strong><time datetime="{issue_dt.strftime("%Y-%m-%d")}">{safe_text(issue_label)}</time></strong>',
+        "      </div>",
+        "    </div>",
+        "  </section>",
+        '  <section class="news-digest-archive news-digest-archive-months">',
+        '    <header class="news-digest-section-head">',
+        '      <p class="section-kicker">Monthly View</p>',
+        "      <h2>Digest archive</h2>",
+        f'      <p class="news-digest-section-description">{safe_text(current_summary)}</p>',
+        "    </header>",
+        '    <div class="news-digest-month-groups">',
+    ]
+    for index, (_month_key, month_label, month_entries) in enumerate(grouped):
+        open_attr = " open" if index == 0 else ""
+        body.extend(
+            [
+                f'      <details class="news-digest-month-group"{open_attr}>',
+                f'        <summary class="news-digest-month-summary"><span>{safe_text(month_label)}</span><span class="news-digest-month-count">{len(month_entries)} digests</span></summary>',
+                '        <div class="news-digest-month-list">',
+            ]
+        )
+        for item in month_entries:
+            body.extend(
+                [
+                    f'          <a class="news-digest-archive-item" href="{safe_text(item["url"])}">',
+                    f'            <span class="news-digest-archive-date">{safe_text(item["date_label"])}</span>',
+                    f'            <strong>{safe_text(item["title"])}</strong>',
+                ]
+            )
+            if item.get("description", "").strip():
+                body.append(f'            <span>{safe_text(item["description"])}</span>')
+            body.append("          </a>")
+        body.extend(["        </div>", "      </details>"])
+    body.extend(["    </div>", "  </section>", "</div>", ""])
+    return frontmatter + "\n".join(body)
+
+
 def write_post(issue_dt: datetime, generated_dt: datetime, context: DigestContext) -> str:
     stem = f"{issue_dt.strftime('%Y-%m-%d')}-ai-news-digest"
-    archives = archive_entries(stem, context.summary)
+    archives = recent_archive_entries(stem, context.summary)
     markdown, stem = render_markdown(
         issue_dt,
         generated_dt,
@@ -1323,6 +1426,12 @@ def write_post(issue_dt: datetime, generated_dt: datetime, context: DigestContex
     target = POSTS_DIR / f"{stem}.md"
     target.write_text(markdown)
     return stem
+
+
+def write_archive_post(issue_dt: datetime, generated_dt: datetime, current_summary: str, digest_stem: str) -> None:
+    entries = archive_entries(digest_stem, current_summary)
+    markdown = render_archive_markdown(issue_dt, generated_dt, current_summary, entries)
+    (POSTS_DIR / f"{ARCHIVE_STEM}.md").write_text(markdown)
 
 
 def write_hub_json(issue_dt: datetime, generated_dt: datetime, context: DigestContext, digest_stem: str) -> None:
@@ -1351,7 +1460,8 @@ def write_hub_json(issue_dt: datetime, generated_dt: datetime, context: DigestCo
             "url": f"/notes/news/{digest_stem}/",
             "description": context.summary,
         },
-        "archives": archive_entries(digest_stem, context.summary),
+        "archive_url": ARCHIVE_URL,
+        "archives": recent_archive_entries(digest_stem, context.summary),
     }
     (GENERATED_DIR / "latest.json").write_text(json.dumps(hub, ensure_ascii=False, indent=2) + "\n")
 
@@ -1366,9 +1476,11 @@ def main() -> None:
     generated_dt = datetime.now(tz=KST)
     context = build_digest_context(payload, args.limit)
     digest_stem = write_post(issue_dt, generated_dt, context)
+    write_archive_post(issue_dt, generated_dt, context.summary, digest_stem)
     write_hub_json(issue_dt, generated_dt, context, digest_stem)
     save_translation_cache()
     print(f"Generated news digest post: content/posts/news/{digest_stem}.md")
+    print(f"Generated archive post: content/posts/news/{ARCHIVE_STEM}.md")
     print("Generated hub data: content/generated/news/latest.json")
     print("Updated raw feed snapshot: static/news/data/latest.json")
 
