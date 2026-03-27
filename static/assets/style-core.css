@@ -113,6 +113,7 @@ body {
 }
 
 html {
+  font-size: 15px;
   min-height: 100%;
   background: linear-gradient(
     180deg,
@@ -1350,16 +1351,16 @@ body::after {
 }
 
 .site-title {
-  font-size: clamp(1.96rem, 2.2vw + 0.9rem, 3.35rem);
-  letter-spacing: -0.075em;
+  font-size: clamp(1.82rem, 1.9vw + 0.84rem, 3.05rem);
+  letter-spacing: -0.068em;
 }
 
 .site-tagline {
   max-width: 58ch;
   margin-top: 0.08rem;
   color: color-mix(in srgb, var(--text) 72%, var(--muted));
-  font-size: 0.96rem;
-  line-height: 1.64;
+  font-size: 0.92rem;
+  line-height: 1.58;
 }
 
 .site-actions {
@@ -1491,7 +1492,7 @@ body::after {
 }
 
 .page-tab-title {
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   line-height: 1.36;
 }
 
@@ -1514,7 +1515,7 @@ body::after {
 
 .post-meta {
   color: color-mix(in srgb, var(--text) 52%, var(--muted));
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   letter-spacing: 0.1em;
 }
 
@@ -1527,7 +1528,7 @@ body::after {
   padding: 0.28rem 0.72rem;
   border-color: color-mix(in srgb, var(--panel-border) 84%, transparent);
   background: color-mix(in srgb, var(--panel-bg) 90%, transparent);
-  font-size: 0.73rem;
+  font-size: 0.71rem;
 }
 
 .tag:hover {
@@ -1537,7 +1538,7 @@ body::after {
 .site-footer {
   margin-top: 3rem;
   padding-top: 1.5rem;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
 }
 
 .skip-link:focus-visible {
@@ -1552,9 +1553,14 @@ body::after {
       "graph graph";
   }
 
+  .page-tabs,
   .live-graph {
     position: static;
     top: auto;
+  }
+
+  .page-tabs-list {
+    max-height: none;
   }
 }
 
@@ -1593,11 +1599,11 @@ body::after {
   }
 
   .site-title {
-    font-size: clamp(1.74rem, 8vw, 2.32rem);
+    font-size: clamp(1.62rem, 7.4vw, 2.16rem);
   }
 
   .site-tagline {
-    font-size: 0.86rem;
+    font-size: 0.82rem;
   }
 
   .site-nav {

@@ -33,7 +33,10 @@
 }
 
 .home-feature-head h1 {
-  max-width: 12ch;
+  max-width: 16ch;
+  font-size: clamp(1.9rem, 1.45vw + 1rem, 2.82rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
 }
 
 .home-feature-body {
@@ -71,7 +74,7 @@
 .home-feature-stat dd {
   margin: 0.42rem 0 0;
   font-family: var(--font-display);
-  font-size: clamp(1.22rem, 1vw + 0.9rem, 1.7rem);
+  font-size: clamp(1.14rem, 0.86vw + 0.88rem, 1.58rem);
   font-weight: 800;
   letter-spacing: -0.04em;
 }
@@ -114,7 +117,8 @@
 
   .home-feature-head h1 {
     max-width: 100%;
-    font-size: clamp(2.2rem, 11vw, 3.3rem);
+    font-size: clamp(1.74rem, 7.6vw, 2.28rem);
+    line-height: 1.02;
   }
 
   .home-feature-stats {

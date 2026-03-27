@@ -133,10 +133,10 @@ main .post-item:hover,
 .tag-hero h1 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(2rem, 2.6vw + 0.84rem, 3.1rem);
+  font-size: clamp(1.84rem, 2.2vw + 0.8rem, 2.82rem);
   font-weight: 800;
-  letter-spacing: -0.07em;
-  line-height: 0.94;
+  letter-spacing: -0.062em;
+  line-height: 0.98;
 }
 
 @media (max-width: 760px) {
@@ -166,7 +166,7 @@ main .post-item:hover,
 
 .section-head h2,
 .section-head-inline h2 {
-  font-size: clamp(1.52rem, 1vw + 1.08rem, 2.1rem);
+  font-size: clamp(1.42rem, 0.8vw + 1.04rem, 1.92rem);
   letter-spacing: -0.06em;
   text-wrap: balance;
 }
@@ -210,8 +210,8 @@ main .post-item:hover,
 
 .post-item h3 {
   margin: 0;
-  font-size: clamp(1.28rem, 1vw + 0.92rem, 1.78rem);
-  line-height: 1.08;
+  font-size: clamp(1.18rem, 0.7vw + 0.94rem, 1.56rem);
+  line-height: 1.14;
   text-wrap: balance;
 }
 
@@ -225,8 +225,8 @@ main .post-item:hover,
   margin: 0;
   max-width: 72ch;
   color: color-mix(in srgb, var(--text) 82%, var(--muted));
-  font-size: 1rem;
-  line-height: 1.76;
+  font-size: 0.96rem;
+  line-height: 1.72;
 }
 
 .post-cta {
@@ -269,5 +269,10 @@ main .post-item:hover,
 
   .post-excerpt {
     font-size: 0.96rem;
+  }
+
+  .post-item h3 {
+    font-size: clamp(1.06rem, 4.9vw, 1.3rem);
+    line-height: 1.16;
   }
 }

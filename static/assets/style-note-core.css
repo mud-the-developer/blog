@@ -15,12 +15,12 @@
 
 .note-header h1 {
   margin: 0;
-  max-width: 14ch;
+  max-width: 18.5ch;
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 3vw + 1rem, 4rem);
+  font-size: clamp(2.08rem, 1.82vw + 1rem, 3.2rem);
   font-weight: 800;
-  line-height: 0.94;
-  letter-spacing: -0.08em;
+  line-height: 1;
+  letter-spacing: -0.055em;
   text-wrap: balance;
 }
 
@@ -441,7 +441,8 @@ html[data-theme="dark"] .note-body li code {
 
   .note-header h1 {
     max-width: 100%;
-    font-size: clamp(1.8rem, 8.4vw, 2.7rem);
+    font-size: clamp(1.78rem, 7.6vw, 2.42rem);
+    line-height: 1.01;
   }
 
   .note-route {
@@ -488,23 +489,24 @@ html[data-theme="dark"] .note-body li code {
 }
 
 .note-header h1 {
-  max-width: 15ch;
-  font-size: clamp(2.7rem, 3.2vw + 1rem, 4.6rem);
-  letter-spacing: -0.085em;
+  max-width: 18.5ch;
+  font-size: clamp(2.12rem, 1.9vw + 1rem, 3.3rem);
+  line-height: 1;
+  letter-spacing: -0.056em;
 }
 
 .note-route {
   padding: 0.48rem 0.84rem;
   background: color-mix(in srgb, var(--panel-bg) 92%, transparent);
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   letter-spacing: 0.1em;
 }
 
 .note-body {
   max-width: 70ch;
   color: color-mix(in srgb, var(--text) 94%, transparent);
-  font-size: clamp(1.06rem, 0.34vw + 0.98rem, 1.18rem);
-  line-height: 1.92;
+  font-size: clamp(1rem, 0.28vw + 0.96rem, 1.12rem);
+  line-height: 1.88;
 }
 
 .note-body :where(h2, h3, h4) {
@@ -515,17 +517,17 @@ html[data-theme="dark"] .note-body li code {
 
 .note-body h2 {
   margin-top: 2.8rem;
-  font-size: 1.96rem;
+  font-size: 1.82rem;
 }
 
 .note-body h3 {
   margin-top: 2.1rem;
-  font-size: 1.5rem;
+  font-size: 1.42rem;
 }
 
 .note-body h4 {
   margin-top: 1.6rem;
-  font-size: 1.2rem;
+  font-size: 1.16rem;
 }
 
 .note-body p {
@@ -580,7 +582,7 @@ html[data-theme="dark"] .note-body li code {
 }
 
 .backlinks h2 {
-  font-size: 1.5rem;
+  font-size: 1.42rem;
 }
 
 .backlinks li {
@@ -596,20 +598,21 @@ html[data-theme="dark"] .note-body li code {
 
   .note-header h1 {
     max-width: 100%;
-    font-size: clamp(2rem, 9vw, 3rem);
+    font-size: clamp(1.86rem, 8vw, 2.58rem);
+    line-height: 1.01;
   }
 
   .note-body {
-    font-size: 1rem;
-    line-height: 1.84;
+    font-size: 0.98rem;
+    line-height: 1.8;
   }
 
   .note-body h2 {
-    font-size: 1.62rem;
+    font-size: 1.52rem;
   }
 
   .note-body h3 {
-    font-size: 1.3rem;
+    font-size: 1.24rem;
   }
 }
 
@@ -730,8 +733,8 @@ html[data-theme="dark"] .note-body li code {
 
 .note-body .news-digest-hero h1 {
   max-width: 12ch;
-  font-size: clamp(2.4rem, 3.2vw + 0.9rem, 4.2rem);
-  letter-spacing: -0.075em;
+  font-size: clamp(2.16rem, 2.5vw + 0.84rem, 3.7rem);
+  letter-spacing: -0.062em;
   text-wrap: balance;
 }
 
@@ -1018,7 +1021,7 @@ html[data-theme="dark"] .note-body li code {
 
   .note-body .news-digest-hero h1 {
     max-width: 100%;
-    font-size: clamp(2rem, 10vw, 3rem);
+    font-size: clamp(1.82rem, 8.8vw, 2.62rem);
   }
 
   .note-body .news-digest-actions {
