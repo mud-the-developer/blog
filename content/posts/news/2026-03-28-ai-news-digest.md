@@ -1,7 +1,7 @@
 ---
-title: "Daily AI News Digest — 2026-03-27"
+title: "Daily AI News Digest — 2026-03-28"
 description: "GitHub velocity is led by smith-horn/skillsmith; paper attention is clustering around Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?; social attention is tilting toward Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…; biggest mover: Nudging Hidden States: Training-Free Model Steering for Chain-of-Thought Reasoning in Large Aud… (+15). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
-date: 2026-03-27
+date: 2026-03-28
 tags: [news, news-digest, ai, radar]
 publish: true
 content-classes: [news-digest-note]
@@ -10,7 +10,7 @@ content-classes: [news-digest-note]
   <section class="news-digest-hero">
     <div class="news-digest-hero-copy">
       <p class="section-kicker">News Radar</p>
-      <h1>Daily AI News Digest — 2026-03-27</h1>
+      <h1>Daily AI News Digest — 2026-03-28</h1>
       <p class="news-digest-lead">GitHub velocity is led by smith-horn/skillsmith; paper attention is clustering around Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?; social attention is tilting toward Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…; biggest mover: Nudging Hidden States: Training-Free Model Steering for Chain-of-Thought Reasoning in Large Aud… (+15). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
       <div class="news-digest-actions" role="group" aria-label="News actions">
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
@@ -20,11 +20,11 @@ content-classes: [news-digest-note]
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issue date</span>
-        <strong><time datetime="2026-03-27">Mar 27, 2026</time></strong>
+        <strong><time datetime="2026-03-28">Mar 28, 2026</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Generated</span>
-        <strong><time datetime="2026-03-28T00:34:21.522923+09:00">Mar 28, 2026 · 12:34 AM KST</time></strong>
+        <strong><time datetime="2026-03-28T00:34:22.845812+09:00">Mar 28, 2026 · 12:34 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Sections</span>
@@ -422,7 +422,7 @@ content-classes: [news-digest-note]
       <a class="news-digest-archive-item" href="/notes/news/2026-03-27-ai-news-digest/">
         <span class="news-digest-archive-date">2026-03-27</span>
         <strong>Daily AI News Digest — 2026-03-27</strong>
-        <span>GitHub velocity is led by ceedaragents/cyrus; paper attention is clustering around Revisiting On-Policy Distillation: Empirical Failure Modes and Simple Fixes; social attention is tilting toward Anthropic confirms existence of leak of next-generation model “Claude Mythos” — “The most power…; biggest mover: Adaptive Chunking: Optimizing Chunking-Method Selection for RAG (+42). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+        <span>GitHub velocity is led by smith-horn/skillsmith; paper attention is clustering around Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?; social attention is tilting toward Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…; biggest mover: Nudging Hidden States: Training-Free Model Steering for Chain-of-Thought Reasoning in Large Aud… (+15). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
       </a>
       <a class="news-digest-archive-item" href="/notes/news/2026-03-26-ai-news-digest/">
         <span class="news-digest-archive-date">2026-03-26</span>
@@ -442,5 +442,5 @@ content-classes: [news-digest-note]
     </div>
   </section>
 
-  <p class="news-digest-footnote">Generated from the ranked feed for Mar 27, 2026.</p>
+  <p class="news-digest-footnote">Generated from the ranked feed for Mar 28, 2026.</p>
 </div>

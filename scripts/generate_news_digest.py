@@ -39,10 +39,13 @@ SECTION_SPECS = [
     ("papers", "Fresh Papers", "New research worth bookmarking for a deeper read."),
     ("social", "Community Chatter", "Directional signals from discussion-heavy sources."),
 ]
+PAPER_SOURCES = {"arxiv.org", "openreview.net", "paperswithcode.com", "huggingface.co"}
+SECTION_MINIMUMS = {"repos": 10, "papers": 10, "social": 10}
 
 SOURCE_LABELS = {
     "github.com": "GitHub",
     "arxiv.org": "arXiv",
+    "huggingface.co": "Hugging Face Papers",
     "x.com": "X",
     "linkedin.com": "LinkedIn",
     "geeknews": "GeekNews",
@@ -54,6 +57,7 @@ SOCIAL_SOURCES = {"x.com", "linkedin.com", "geeknews", "endigest.dev"}
 SOURCE_SCORE_BONUS = {
     "github.com": 0.34,
     "arxiv.org": 0.26,
+    "huggingface.co": 0.22,
     "geeknews": 0.24,
     "x.com": 0.12,
     "linkedin.com": 0.08,
@@ -129,7 +133,7 @@ TRANSLATION_CACHE: dict[str, str] = {}
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate the blog news digest artifacts.")
     parser.add_argument("--date", help="Issue date in YYYY-MM-DD. Defaults to current date in Asia/Seoul.")
-    parser.add_argument("--limit", type=int, default=8, help="Cards per section in the digest post.")
+    parser.add_argument("--limit", type=int, default=10, help="Target cards per section in the digest post.")
     return parser.parse_args()
 
 
@@ -304,7 +308,7 @@ def badge_for(item: dict[str, Any]) -> str:
     tags = item.get("tags") or []
     if source == "github.com" or "repo" in categories:
         return "Repo"
-    if source == "arxiv.org":
+    if source in PAPER_SOURCES:
         return "Paper"
     if "cross-domain" in tags:
         return "Cross-domain"
@@ -330,16 +334,26 @@ def lower_category_values(item: dict[str, Any]) -> list[str]:
     return [str(category).strip().lower() for category in item.get("categories") or [] if str(category).strip()]
 
 
+def item_text(item: dict[str, Any]) -> str:
+    parts = [
+        item_title(item),
+        str(item.get("summary") or "").strip(),
+        str(item.get("url") or "").strip(),
+        str(item.get("githubRepo") or "").strip(),
+    ]
+    parts.extend(str(keyword).strip() for keyword in (item.get("ai_keywords") or []) if str(keyword).strip())
+    return " ".join(part for part in parts if part)
+
+
 def relevance_hit_count(item: dict[str, Any]) -> int:
     cached = item.get("_relevance_hits")
     if isinstance(cached, int):
         return cached
     text = " ".join(
         [
-            item_title(item).lower(),
+            item_text(item).lower(),
             " ".join(lower_tag_values(item)),
             " ".join(lower_category_values(item)),
-            str(item.get("url", "")).lower(),
         ]
     )
     hits = {term for term in SIGNAL_TERMS if term in text}
@@ -352,7 +366,7 @@ def primary_topic(item: dict[str, Any]) -> str:
         return cached
     text = " ".join(
         [
-            item_title(item).lower(),
+            item_text(item).lower(),
             " ".join(lower_tag_values(item)),
             " ".join(lower_category_values(item)),
         ]
@@ -367,6 +381,10 @@ def canonical_key(item: dict[str, Any]) -> str:
     cached = item.get("_canonical_key")
     if isinstance(cached, str) and cached:
         return cached
+    url = str(item.get("url") or "").strip().lower()
+    if item.get("supplemental") or "#supp-" in url or "#rebalance-" in url:
+        source = str(item.get("source") or "unknown").strip().lower()
+        return f"supplemental::{source}::{url}"
     title = item_title(item)
     if item_badge(item) == "Repo":
         repo_name = repo_name_from_title(title)
@@ -433,6 +451,7 @@ def include_item(item: dict[str, Any]) -> bool:
     relevance = relevance_hit_count(item)
     categories = lower_category_values(item)
     tags = lower_tag_values(item)
+    text = item_text(item).lower()
     title = item_title(item)
 
     if looks_feed_artifact(title):
@@ -445,7 +464,7 @@ def include_item(item: dict[str, Any]) -> bool:
         if relevance > 0:
             return True
         paper_focus = any(
-            keyword in title.lower()
+            keyword in text
             for keyword in (
                 "llm",
                 "language model",
@@ -465,12 +484,12 @@ def include_item(item: dict[str, Any]) -> bool:
         return paper_focus and any(
             category.startswith(prefix)
             for category in categories
-            for prefix in ("cs.ai", "cs.cl", "cs.lg", "cs.ni", "eess.sp")
+            for prefix in ("cs.ai", "cs.cl", "cs.lg", "cs.ni", "eess.sp", "paper", "hf.daily")
         )
 
     if badge == "Repo":
         repo_focus = any(
-            keyword in title.lower()
+            keyword in text
             for keyword in (
                 "agent",
                 "agentic",
@@ -496,52 +515,101 @@ def include_item(item: dict[str, Any]) -> bool:
     return relevance > 0
 
 
+def relaxed_include_item(item: dict[str, Any]) -> bool:
+    title = item_title(item)
+    if looks_feed_artifact(title):
+        return False
+    badge = item_badge(item)
+    source = item.get("source", "")
+    hours = int(item.get("publishedHoursAgo") or 999)
+    if badge == "Repo":
+        return source == "github.com" and int(item.get("stars") or 0) >= 10
+    if badge == "Paper":
+        return source in PAPER_SOURCES and hours <= 24 * 14
+    if badge == "Social":
+        return source in SOCIAL_SOURCES and hours <= 24 * 14
+    return relevance_hit_count(item) > 0
+
+
+def local_base_score(item: dict[str, Any]) -> float:
+    source = item.get("source", "")
+    hours = int(item.get("publishedHoursAgo") or 0)
+    rank = int(item.get("rank") or 999)
+    rank_delta = item.get("rank_delta")
+    raw_score = float(item.get("score") or 0.0)
+    relevance = relevance_hit_count(item)
+    score = raw_score * 1.08
+    score += freshness_bonus(hours)
+    score += SOURCE_SCORE_BONUS.get(source, 0.0)
+    score += min(0.72, relevance * 0.10)
+    score += rank_bonus(rank)
+    score += movement_bonus(rank_delta if isinstance(rank_delta, int) else None)
+    return score
+
+
+def raw_component(item: dict[str, Any], key: str) -> float:
+    why = item.get("why") or {}
+    try:
+        return float(why.get(key) or 0.0)
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def repo_local_bonus(item: dict[str, Any]) -> float:
+    stars = int(item.get("stars") or 0)
+    stars_per_day = float(item.get("starsPerDay") or 0.0)
+    bonus = min(1.0, math.log1p(max(stars_per_day, 0.0)) * 0.32)
+    bonus += min(0.38, math.log1p(max(stars, 0)) * 0.05)
+    bonus += min(0.18, raw_component(item, "confirmation") * 0.30)
+    if "ai" in lower_tag_values(item):
+        bonus += 0.12
+    if lower_tag_values(item) == ["other"]:
+        bonus -= 0.12
+    return bonus
+
+
+def paper_local_bonus(item: dict[str, Any]) -> float:
+    citations = int(item.get("citations") or 0)
+    upvotes = int(item.get("upvotes") or 0)
+    paper_signal = max(citations, upvotes)
+    bonus = min(0.26, math.log1p(max(paper_signal, 0)) * 0.22)
+    bonus += min(0.22, raw_component(item, "confirmation") * 0.38)
+    if item.get("githubRepo"):
+        bonus += 0.10
+    if any(category.startswith(("cs.ai", "cs.cl", "cs.lg")) for category in lower_category_values(item)):
+        bonus += 0.08
+    return bonus
+
+
+def social_local_bonus(item: dict[str, Any]) -> float:
+    source = item.get("source", "")
+    bonus = {
+        "geeknews": 0.18,
+        "x.com": 0.08,
+        "linkedin.com": 0.02,
+        "endigest.dev": -0.14,
+    }.get(source, 0.0)
+    bonus += min(0.36, raw_component(item, "confirmation") * 0.62)
+    if looks_low_signal_social(item):
+        bonus -= 0.95
+    return bonus
+
+
 def local_signal_score(item: dict[str, Any]) -> float:
     cached = item.get("_signal_score")
     if isinstance(cached, (float, int)):
         return float(cached)
 
     badge = item_badge(item)
-    source = item.get("source", "")
-    hours = int(item.get("publishedHoursAgo") or 0)
-    stars = int(item.get("stars") or 0)
-    stars_per_day = float(item.get("starsPerDay") or 0.0)
-    citations = int(item.get("citations") or 0)
-    rank = int(item.get("rank") or 999)
-    rank_delta = item.get("rank_delta")
-    raw_score = float(item.get("score") or 0.0)
-    relevance = relevance_hit_count(item)
     title = item_title(item)
-
-    score = raw_score * 1.12
-    score += freshness_bonus(hours)
-    score += SOURCE_SCORE_BONUS.get(source, 0.0)
-    score += min(0.72, relevance * 0.12)
-    score += rank_bonus(rank)
-    score += movement_bonus(rank_delta if isinstance(rank_delta, int) else None)
+    score = local_base_score(item)
 
     if badge == "Repo":
-        score += min(1.05, math.log1p(max(stars_per_day, 0.0)) * 0.34)
-        score += min(0.42, math.log1p(max(stars, 0)) * 0.055)
-        if "ai" in lower_tag_values(item):
-            score += 0.12
-        if lower_tag_values(item) == ["other"]:
-            score -= 0.12
+        score += repo_local_bonus(item)
     elif badge == "Paper":
-        score += min(0.28, math.log1p(max(citations, 0)) * 0.24)
-        if any(category.startswith(("cs.ai", "cs.cl", "cs.lg")) for category in lower_category_values(item)):
-            score += 0.08
+        score += paper_local_bonus(item)
     elif badge == "Social":
-        if source == "geeknews":
-            score += 0.16
-        elif source == "x.com":
-            score += 0.06
-        elif source == "linkedin.com":
-            score -= 0.02
-        elif source == "endigest.dev":
-            score -= 0.14
-        if looks_low_signal_social(item):
-            score -= 0.95
+        score += social_local_bonus(item)
 
     if len(title) > 168:
         score -= 0.14
@@ -610,13 +678,20 @@ def deck_for(item: dict[str, Any], badge: str) -> str:
             )
         return clamp_text(f"Fresh GitHub repo signal picked up within the last {hours}h.{movement}", 190)
     if badge == "Paper":
+        paper_source = source_label(item.get("source", ""))
+        summary = str(item.get("summary") or "").strip()
+        if summary:
+            return clamp_text(
+                f"{ensure_terminal_punctuation(summary)} Surfaced via {paper_source} about {hours}h ago.{movement}",
+                190,
+            )
         if tag_text:
             return clamp_text(
-                f"Fresh arXiv paper from the {tag_text} cluster, posted {hours}h ago.{movement}",
+                f"Fresh {paper_source} paper from the {tag_text} cluster, posted {hours}h ago.{movement}",
                 180,
             )
         return clamp_text(
-            f"Fresh arXiv paper posted {hours}h ago and surfacing in the current feed.{movement}",
+            f"Fresh {paper_source} paper posted {hours}h ago and surfacing in the current feed.{movement}",
             180,
         )
     if badge == "Social":
@@ -678,17 +753,39 @@ def to_card(item: dict[str, Any]) -> NewsItem:
     )
 
 
-def prepare_candidates(payload: dict[str, Any]) -> list[dict[str, Any]]:
+def payload_candidate_items(payload: dict[str, Any]) -> list[dict[str, Any]]:
+    items: list[dict[str, Any]] = []
+    for key in ("all", "repos", "papers", "social", "hot24"):
+        values = payload.get(key) or []
+        if isinstance(values, list):
+            items.extend(value for value in values if isinstance(value, dict))
+    by_source = payload.get("bySource") or {}
+    if isinstance(by_source, dict):
+        for values in by_source.values():
+            if isinstance(values, list):
+                items.extend(value for value in values if isinstance(value, dict))
+    return items
+
+
+def annotated_item(raw: dict[str, Any]) -> dict[str, Any]:
+    item = dict(raw)
+    item["_title"] = english_title_for(item)
+    item["_badge"] = badge_for(item)
+    item["_relevance_hits"] = relevance_hit_count(item)
+    item["_topic"] = primary_topic(item)
+    item["_canonical_key"] = canonical_key(item)
+    item["_signal_score"] = local_signal_score(item)
+    return item
+
+
+def prepare_candidates(payload: dict[str, Any], *, relaxed: bool = False) -> list[dict[str, Any]]:
     deduped: dict[str, dict[str, Any]] = {}
-    for raw in payload.get("all", []):
-        item = dict(raw)
-        item["_title"] = english_title_for(item)
-        item["_badge"] = badge_for(item)
-        item["_relevance_hits"] = relevance_hit_count(item)
-        item["_topic"] = primary_topic(item)
-        item["_canonical_key"] = canonical_key(item)
-        item["_signal_score"] = local_signal_score(item)
-        if not include_item(item):
+    for raw in payload_candidate_items(payload):
+        item = annotated_item(raw)
+        if relaxed:
+            if not relaxed_include_item(item):
+                continue
+        elif not include_item(item):
             continue
         key = canonical_key(item)
         current = deduped.get(key)
@@ -705,6 +802,27 @@ def prepare_candidates(payload: dict[str, Any]) -> list[dict[str, Any]]:
     )
 
 
+def lexical_tokens(item: dict[str, Any]) -> set[str]:
+    return set(re.findall(r"[a-z0-9]+", item_title(item).lower()))
+
+
+def item_similarity(left: dict[str, Any], right: dict[str, Any]) -> float:
+    similarity = 0.0
+    if item_badge(left) == item_badge(right):
+        similarity += 0.12
+    if left.get("source") == right.get("source"):
+        similarity += 0.35
+    if primary_topic(left) == primary_topic(right):
+        similarity += 0.35
+    shared_tags = set(lower_tag_values(left)) & set(lower_tag_values(right))
+    similarity += min(0.18, len(shared_tags) * 0.06)
+    left_tokens = lexical_tokens(left)
+    right_tokens = lexical_tokens(right)
+    if left_tokens and right_tokens:
+        similarity += min(0.20, (len(left_tokens & right_tokens) / len(left_tokens | right_tokens)) * 0.35)
+    return min(1.0, similarity)
+
+
 def select_diverse_items(
     items: list[dict[str, Any]],
     limit: int,
@@ -719,10 +837,10 @@ def select_diverse_items(
     topic_counts: Counter[str] = Counter()
     badge_counts: Counter[str] = Counter()
 
-    def take(source_limit: int | None, topic_limit: int | None, badge_limit: int | None) -> None:
+    def best_candidate(source_limit: int | None, topic_limit: int | None, badge_limit: int | None) -> dict[str, Any] | None:
+        winner: dict[str, Any] | None = None
+        winner_score: float | None = None
         for item in items:
-            if len(selected) >= limit:
-                return
             key = canonical_key(item)
             if key in seen:
                 continue
@@ -735,11 +853,12 @@ def select_diverse_items(
                 continue
             if badge_limit is not None and badge_counts[badge] >= badge_limit:
                 continue
-            seen.add(key)
-            selected.append(item)
-            source_counts[source] += 1
-            topic_counts[topic] += 1
-            badge_counts[badge] += 1
+            redundancy = max((item_similarity(item, existing) for existing in selected), default=0.0)
+            marginal = local_signal_score(item) - (0.55 * redundancy)
+            if winner_score is None or marginal > winner_score:
+                winner = item
+                winner_score = marginal
+        return winner
 
     for source_limit, topic_limit, badge_limit in (
         (max_per_source, max_per_topic, max_per_badge),
@@ -747,9 +866,16 @@ def select_diverse_items(
         (None, None, max_per_badge),
         (None, None, None),
     ):
-        if len(selected) >= limit:
-            break
-        take(source_limit, topic_limit, badge_limit)
+        while len(selected) < limit:
+            candidate = best_candidate(source_limit, topic_limit, badge_limit)
+            if candidate is None:
+                break
+            key = canonical_key(candidate)
+            seen.add(key)
+            selected.append(candidate)
+            source_counts[candidate.get("source", "")] += 1
+            topic_counts[primary_topic(candidate)] += 1
+            badge_counts[item_badge(candidate)] += 1
 
     return selected[:limit]
 
@@ -767,12 +893,12 @@ def prune_section_items(slug: str, items: list[dict[str, Any]]) -> list[dict[str
     if not items:
         return []
     best_score = local_signal_score(items[0])
-    min_keep = {"hot24": 4, "repos": 6, "papers": 4, "social": 2}.get(slug, 3)
+    min_keep = {"hot24": 4, **SECTION_MINIMUMS}.get(slug, 3)
     floor = {
         "hot24": max(4.4, best_score - 2.4),
-        "repos": max(5.85, best_score - 3.35),
-        "papers": max(4.35, best_score - 1.45),
-        "social": max(3.75, best_score - 1.7),
+        "repos": max(5.45, best_score - 3.55),
+        "papers": max(4.1, best_score - 1.9),
+        "social": max(3.3, best_score - 2.1),
     }.get(slug, 0.0)
     filtered = [item for item in items if local_signal_score(item) >= floor]
     if len(filtered) >= min_keep:
@@ -832,39 +958,77 @@ def source_count_rows_from_items(items: list[dict[str, Any]]) -> list[dict[str, 
 
 def section_limit_for(slug: str, limit: int) -> int:
     return {
-        "hot24": min(limit, 6),
-        "repos": max(limit, 8),
-        "papers": min(limit, 6),
-        "social": min(limit, 3),
+        "hot24": min(max(limit, 6), 8),
+        "repos": max(limit, SECTION_MINIMUMS["repos"]),
+        "papers": max(limit, SECTION_MINIMUMS["papers"]),
+        "social": max(limit, SECTION_MINIMUMS["social"]),
     }.get(slug, limit)
+
+
+def ensure_section_minimum(items: list[dict[str, Any]], pool: list[dict[str, Any]], minimum: int) -> list[dict[str, Any]]:
+    if len(items) >= minimum:
+        return items
+    selected = list(items)
+    seen = {canonical_key(item) for item in selected}
+    for item in pool:
+        key = canonical_key(item)
+        if key in seen:
+            continue
+        selected.append(item)
+        seen.add(key)
+        if len(selected) >= minimum:
+            break
+    return sorted(selected, key=sort_key)
 
 
 def build_digest_context(payload: dict[str, Any], limit: int) -> DigestContext:
     candidates = prepare_candidates(payload)
+    relaxed_candidates = prepare_candidates(payload, relaxed=True)
     section_items: dict[str, list[dict[str, Any]]] = {
         "repos": [item for item in candidates if item_badge(item) == "Repo"],
         "papers": [item for item in candidates if item_badge(item) == "Paper"],
         "social": [item for item in candidates if item_badge(item) == "Social"],
     }
-    curated_raw: dict[str, list[dict[str, Any]]] = {
-        "repos": prune_section_items(
+    fallback_section_items: dict[str, list[dict[str, Any]]] = {
+        "repos": [item for item in relaxed_candidates if item_badge(item) == "Repo"],
+        "papers": [item for item in relaxed_candidates if item_badge(item) == "Paper"],
+        "social": [item for item in relaxed_candidates if item_badge(item) == "Social"],
+    }
+    curated_raw: dict[str, list[dict[str, Any]]] = {}
+    curated_raw["repos"] = ensure_section_minimum(
+        prune_section_items(
             "repos",
-            select_diverse_items(section_items["repos"], section_limit_for("repos", limit), max_per_topic=2),
+            select_diverse_items(section_items["repos"], section_limit_for("repos", limit), max_per_topic=3),
         ),
-        "papers": prune_section_items(
+        fallback_section_items["repos"],
+        SECTION_MINIMUMS["repos"],
+    )
+    curated_raw["papers"] = ensure_section_minimum(
+        prune_section_items(
             "papers",
-            select_diverse_items(section_items["papers"], section_limit_for("papers", limit), max_per_topic=2),
+            select_diverse_items(
+                section_items["papers"],
+                section_limit_for("papers", limit),
+                max_per_source=6,
+                max_per_topic=4,
+            ),
         ),
-        "social": prune_section_items(
+        fallback_section_items["papers"],
+        SECTION_MINIMUMS["papers"],
+    )
+    curated_raw["social"] = ensure_section_minimum(
+        prune_section_items(
             "social",
             select_diverse_items(
                 section_items["social"],
                 section_limit_for("social", limit),
-                max_per_source=2,
-                max_per_topic=2,
+                max_per_source=4,
+                max_per_topic=4,
             ),
         ),
-    }
+        fallback_section_items["social"],
+        SECTION_MINIMUMS["social"],
+    )
     hot_pool = sorted(
         [
             item
@@ -937,7 +1101,7 @@ def build_digest_context(payload: dict[str, Any], limit: int) -> DigestContext:
     return DigestContext(
         summary=summary,
         top_cards=[to_card(item) for item in featured_raw[:4]],
-        repo_scoreboard=[to_card(item) for item in curated_raw["repos"][:6]],
+        repo_scoreboard=[to_card(item) for item in curated_raw["repos"][:8]],
         sections=sections,
         source_counts=source_counts,
     )
