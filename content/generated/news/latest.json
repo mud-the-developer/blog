@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-03-28T00:51:58.923445+09:00",
-  "generated_label": "Mar 28, 2026 · 12:51 AM KST",
+  "generated_at": "2026-03-28T01:14:54.858909+09:00",
+  "generated_label": "Mar 28, 2026 · 1:14 AM KST",
   "issue_date": "2026-03-28",
   "issue_label": "Mar 28, 2026",
-  "summary": "GitHub velocity is led by smith-horn/skillsmith; paper attention is clustering around Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?; social attention is tilting toward Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…; biggest mover: Nudging Hidden States: Training-Free Model Steering for Chain-of-Thought Reasoning in Large Aud… (+15). 10 repo signals, 10 paper picks, and 10 community items made today's cut.",
+  "summary": "GitHub velocity is led by smith-horn/skillsmith; paper attention is clustering around SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks; social attention is tilting toward Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…; biggest mover: Demorck/ClairObscurArchipelagoRandomizer (+33). 10 repo signals, 10 paper picks, and 10 community items made today's cut.",
   "top_cards": [
     {
       "headline": "smith-horn/skillsmith",
@@ -25,23 +25,23 @@
       "rank_delta": null
     },
     {
-      "headline": "Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?",
-      "title": "Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?",
-      "url": "https://huggingface.co/papers/2603.24472",
+      "headline": "SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks",
+      "title": "SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks",
+      "url": "https://huggingface.co/papers/2603.24755",
       "source": "huggingface.co",
       "tags": [
         "AI"
       ],
-      "score": 6.457,
-      "raw_score": 3.815,
-      "published_hours_ago": 37,
+      "score": 6.984,
+      "raw_score": 3.629,
+      "published_hours_ago": 15,
       "stars": 0,
-      "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24472.png",
+      "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24755.png",
       "badge": "Paper",
-      "deck": "Self-distillation in large language models can degrade mathematical reasoning performance by suppressing uncertainty expression, particularly affecting out-of-distribution tasks. Surfaced v…",
-      "meta": "Hugging Face Papers · 37h ago · up 1 · signal 6.46",
-      "rank": 15,
-      "rank_delta": 1
+      "deck": "Software development is iterative, yet agentic coding benchmarks overwhelmingly evaluate single-shot solutions against complete specifications. Code can pass the test suite but become progr…",
+      "meta": "Hugging Face Papers · 15h ago · up 12 · signal 6.98",
+      "rank": 10,
+      "rank_delta": 12
     },
     {
       "headline": "Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…",
@@ -51,33 +51,35 @@
       "tags": [
         "social"
       ],
-      "score": 4.078,
-      "raw_score": 2.233,
-      "published_hours_ago": 1,
+      "score": 4.039,
+      "raw_score": 2.181,
+      "published_hours_ago": 2,
       "stars": 0,
       "image_url": "/news/assets/thumb-ai.svg",
       "badge": "Social",
-      "deck": "Community signal picked up on GeekNews about 1h ago. Down 47 spots from the previous run.",
-      "meta": "GeekNews · 1h ago · down 47 · signal 4.08",
-      "rank": 68,
-      "rank_delta": -47
+      "deck": "Community signal picked up on GeekNews about 2h ago. Down 31 spots from the previous run.",
+      "meta": "GeekNews · 2h ago · down 31 · signal 4.04",
+      "rank": 64,
+      "rank_delta": -31
     },
     {
-      "headline": "LanteRn: Latent Visual Structured Reasoning",
-      "title": "LanteRn: Latent Visual Structured Reasoning",
-      "url": "http://arxiv.org/abs/2603.25629v1",
-      "source": "arxiv.org",
-      "tags": [],
-      "score": 4.357,
-      "raw_score": 2.649,
-      "published_hours_ago": 22,
+      "headline": "Calibri: Enhancing Diffusion Transformers via Parameter-Efficient Calibration",
+      "title": "Calibri: Enhancing Diffusion Transformers via Parameter-Efficient Calibration",
+      "url": "https://huggingface.co/papers/2603.24800",
+      "source": "huggingface.co",
+      "tags": [
+        "AI"
+      ],
+      "score": 6.565,
+      "raw_score": 3.314,
+      "published_hours_ago": 6,
       "stars": 0,
-      "image_url": "/news/assets/thumb-paper.svg",
+      "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24800.png",
       "badge": "Paper",
-      "deck": "Fresh arXiv paper posted 22h ago and surfacing in the current feed. Down 43 spots from the previous run.",
-      "meta": "arXiv · 22h ago · down 43 · signal 4.36",
-      "rank": 46,
-      "rank_delta": -43
+      "deck": "Diffusion Transformers can be enhanced through a parameter-efficient calibration approach that improves generative quality while reducing inference steps. Surfaced via Hugging Face Papers a…",
+      "meta": "Hugging Face Papers · 6h ago · up 11 · signal 6.57",
+      "rank": 16,
+      "rank_delta": 11
     }
   ],
   "repo_scoreboard": [
@@ -120,21 +122,21 @@
       "rank_delta": null
     },
     {
-      "headline": "langbot-app/LangBot",
-      "title": "langbot-app/LangBot — Production-grade platform for building agentic IM bots - Production-grade multi-platform intelligent robot development platform. Provides Agent, knowledge base orchestration, plug-in system / Bots for Discord / Slack / LINE / Telegram / WeChat (Enterprise WeChat, Qiwei Intelligent Robot, Official Account) / Feishu / DingTalk / QQ / Satori e.g. Integrated with ChatGPT(GPT), DeepSeek, Dify, n8n, Langflow, Coze, Claude, Gemini, MiniMax, Ollama, SiliconFlow, Moonshot, GLM, clawdbot / openclaw",
-      "url": "https://github.com/langbot-app/LangBot",
+      "headline": "GeminiLight/MindOS",
+      "title": "GeminiLight/MindOS — MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically.",
+      "url": "https://github.com/GeminiLight/MindOS",
       "source": "github.com",
       "tags": [
         "AI"
       ],
-      "score": 8.874,
-      "raw_score": 4.563,
+      "score": 9.338,
+      "raw_score": 5.169,
       "published_hours_ago": 0,
-      "stars": 15689,
-      "image_url": "https://opengraph.githubassets.com/1/langbot-app/LangBot",
+      "stars": 113,
+      "image_url": "https://opengraph.githubassets.com/1/GeminiLight/MindOS",
       "badge": "Repo",
-      "deck": "Production-grade platform for building agentic IM bots - Production-grade multi-platform intelligent robot development platform. Provides Agent, knowledge base orchestration, plug-in system…",
-      "meta": "GitHub · 15689 stars · 15689/day · 0h ago · signal 8.87",
+      "deck": "MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically. Surfaced 0h ago with 113 stars and 113/day mom…",
+      "meta": "GitHub · 113 stars · 113/day · 0h ago · signal 9.34",
       "rank": 1,
       "rank_delta": null
     },
@@ -155,6 +157,25 @@
       "deck": "Evaluate and Enhance Your LLM Deployments for Real-World Inference Needs. Surfaced 0h ago with 952 stars and 952/day momentum.",
       "meta": "GitHub · 952 stars · 952/day · 0h ago · signal 8.83",
       "rank": 1,
+      "rank_delta": null
+    },
+    {
+      "headline": "NVIDIA/TensorRT-LLM",
+      "title": "NVIDIA/TensorRT-LLM — TensorRT LLM provides users with an easy-to-use Python API to define Large Language Models (LLMs) and supports state-of-the-art optimizations to perform inference efficiently on NVIDIA GPUs. TensorRT LLM also contains components to create Python and C++ runtimes that orchestrate the inference execution in a performant way.",
+      "url": "https://github.com/NVIDIA/TensorRT-LLM",
+      "source": "github.com",
+      "tags": [
+        "AI"
+      ],
+      "score": 8.692,
+      "raw_score": 4.566,
+      "published_hours_ago": 0,
+      "stars": 13200,
+      "image_url": "https://opengraph.githubassets.com/1/NVIDIA/TensorRT-LLM",
+      "badge": "Repo",
+      "deck": "TensorRT LLM provides users with an easy-to-use Python API to define Large Language Models (LLMs) and supports state-of-the-art optimizations to perform inference efficiently on NVIDIA GPUs…",
+      "meta": "GitHub · 13200 stars · 13200/day · 0h ago · signal 8.69",
+      "rank": 2,
       "rank_delta": null
     },
     {
@@ -213,25 +234,6 @@
       "meta": "GitHub · 13 stars · 13/day · 0h ago · signal 8.65",
       "rank": 3,
       "rank_delta": null
-    },
-    {
-      "headline": "bytedance/deer-flow",
-      "title": "bytedance/deer-flow — An open-source long-horizon SuperAgent harness that researches, codes, and creates. With the help of sandboxes, memories, tools, skill, subagents and message gateway, it handles different levels of tasks that could take minutes to hours.",
-      "url": "https://github.com/bytedance/deer-flow",
-      "source": "github.com",
-      "tags": [
-        "AI"
-      ],
-      "score": 8.588,
-      "raw_score": 4.566,
-      "published_hours_ago": 0,
-      "stars": 49827,
-      "image_url": "https://opengraph.githubassets.com/1/bytedance/deer-flow",
-      "badge": "Repo",
-      "deck": "An open-source long-horizon SuperAgent harness that researches, codes, and creates. With the help of sandboxes, memories, tools, skill, subagents and message gateway, it handles different l…",
-      "meta": "GitHub · 49827 stars · 49827/day · 0h ago · signal 8.59",
-      "rank": 3,
-      "rank_delta": null
     }
   ],
   "sections": [
@@ -260,61 +262,59 @@
           "rank_delta": null
         },
         {
-          "headline": "thc1006/nephoran-intent-operator",
-          "title": "thc1006/nephoran-intent-operator — This project is an LLM-Enhanced Nephio R5 and O-RAN Network Automation System. It integrates a Large Language Model with Nephio's intent-based automation to provide a natural language interface for managing and orchestrating telecommunications network functions.",
-          "url": "https://github.com/thc1006/nephoran-intent-operator",
-          "source": "github.com",
-          "tags": [
-            "vRAN",
-            "AI",
-            "cross-domain"
-          ],
-          "score": 8.474,
-          "raw_score": 4.645,
-          "published_hours_ago": 7,
-          "stars": 18,
-          "image_url": "https://opengraph.githubassets.com/1/thc1006/nephoran-intent-operator",
-          "badge": "Repo",
-          "deck": "This project is an LLM-Enhanced Nephio R5 and O-RAN Network Automation System. It integrates a Large Language Model with Nephio's intent-based automation to provide a natural language inter…",
-          "meta": "GitHub · 18 stars · 18/day · 7h ago · signal 8.47",
-          "rank": 2,
-          "rank_delta": null
-        },
-        {
           "headline": "Demorck/ClairObscurArchipelagoRandomizer",
           "title": "Demorck/ClairObscurArchipelagoRandomizer — A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system",
           "url": "https://github.com/Demorck/ClairObscurArchipelagoRandomizer",
           "source": "github.com",
           "tags": [],
-          "score": 6.878,
-          "raw_score": 3.87,
-          "published_hours_ago": 14,
+          "score": 7.599,
+          "raw_score": 3.851,
+          "published_hours_ago": 15,
           "stars": 10,
           "image_url": "https://opengraph.githubassets.com/1/Demorck/ClairObscurArchipelagoRandomizer",
           "badge": "Repo",
-          "deck": "A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system. Surfaced 14h ago with 10 stars and 10/day momentum.",
-          "meta": "GitHub · 10 stars · 10/day · 14h ago · signal 6.88",
-          "rank": 14,
-          "rank_delta": null
+          "deck": "A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system. Surfaced 15h ago with 10 stars and 10/day momentum. Up 33 spots from the previous run.",
+          "meta": "GitHub · 10 stars · 10/day · 15h ago · up 33 · signal 7.60",
+          "rank": 9,
+          "rank_delta": 33
         },
         {
-          "headline": "Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?",
-          "title": "Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?",
-          "url": "https://huggingface.co/papers/2603.24472",
+          "headline": "SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks",
+          "title": "SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks",
+          "url": "https://huggingface.co/papers/2603.24755",
           "source": "huggingface.co",
           "tags": [
             "AI"
           ],
-          "score": 6.457,
-          "raw_score": 3.815,
-          "published_hours_ago": 37,
+          "score": 6.984,
+          "raw_score": 3.629,
+          "published_hours_ago": 15,
           "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24472.png",
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24755.png",
           "badge": "Paper",
-          "deck": "Self-distillation in large language models can degrade mathematical reasoning performance by suppressing uncertainty expression, particularly affecting out-of-distribution tasks. Surfaced v…",
-          "meta": "Hugging Face Papers · 37h ago · up 1 · signal 6.46",
-          "rank": 15,
-          "rank_delta": 1
+          "deck": "Software development is iterative, yet agentic coding benchmarks overwhelmingly evaluate single-shot solutions against complete specifications. Code can pass the test suite but become progr…",
+          "meta": "Hugging Face Papers · 15h ago · up 12 · signal 6.98",
+          "rank": 10,
+          "rank_delta": 12
+        },
+        {
+          "headline": "IQuest-Coder-V1 Technical Report",
+          "title": "IQuest-Coder-V1 Technical Report",
+          "url": "https://huggingface.co/papers/2603.16733",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 6.925,
+          "raw_score": 3.407,
+          "published_hours_ago": 5,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.16733.png",
+          "badge": "Paper",
+          "deck": "The IQuest-Coder-V1 series represents a new family of code LLMs with a multi-stage training approach that captures dynamic software logic evolution and achieves state-of-the-art performance…",
+          "meta": "Hugging Face Papers · 5h ago · up 15 · signal 6.92",
+          "rank": 13,
+          "rank_delta": 15
         }
       ]
     },
@@ -362,21 +362,21 @@
           "rank_delta": null
         },
         {
-          "headline": "langbot-app/LangBot",
-          "title": "langbot-app/LangBot — Production-grade platform for building agentic IM bots - Production-grade multi-platform intelligent robot development platform. Provides Agent, knowledge base orchestration, plug-in system / Bots for Discord / Slack / LINE / Telegram / WeChat (Enterprise WeChat, Qiwei Intelligent Robot, Official Account) / Feishu / DingTalk / QQ / Satori e.g. Integrated with ChatGPT(GPT), DeepSeek, Dify, n8n, Langflow, Coze, Claude, Gemini, MiniMax, Ollama, SiliconFlow, Moonshot, GLM, clawdbot / openclaw",
-          "url": "https://github.com/langbot-app/LangBot",
+          "headline": "GeminiLight/MindOS",
+          "title": "GeminiLight/MindOS — MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically.",
+          "url": "https://github.com/GeminiLight/MindOS",
           "source": "github.com",
           "tags": [
             "AI"
           ],
-          "score": 8.874,
-          "raw_score": 4.563,
+          "score": 9.338,
+          "raw_score": 5.169,
           "published_hours_ago": 0,
-          "stars": 15689,
-          "image_url": "https://opengraph.githubassets.com/1/langbot-app/LangBot",
+          "stars": 113,
+          "image_url": "https://opengraph.githubassets.com/1/GeminiLight/MindOS",
           "badge": "Repo",
-          "deck": "Production-grade platform for building agentic IM bots - Production-grade multi-platform intelligent robot development platform. Provides Agent, knowledge base orchestration, plug-in system…",
-          "meta": "GitHub · 15689 stars · 15689/day · 0h ago · signal 8.87",
+          "deck": "MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically. Surfaced 0h ago with 113 stars and 113/day mom…",
+          "meta": "GitHub · 113 stars · 113/day · 0h ago · signal 9.34",
           "rank": 1,
           "rank_delta": null
         },
@@ -397,6 +397,25 @@
           "deck": "Evaluate and Enhance Your LLM Deployments for Real-World Inference Needs. Surfaced 0h ago with 952 stars and 952/day momentum.",
           "meta": "GitHub · 952 stars · 952/day · 0h ago · signal 8.83",
           "rank": 1,
+          "rank_delta": null
+        },
+        {
+          "headline": "NVIDIA/TensorRT-LLM",
+          "title": "NVIDIA/TensorRT-LLM — TensorRT LLM provides users with an easy-to-use Python API to define Large Language Models (LLMs) and supports state-of-the-art optimizations to perform inference efficiently on NVIDIA GPUs. TensorRT LLM also contains components to create Python and C++ runtimes that orchestrate the inference execution in a performant way.",
+          "url": "https://github.com/NVIDIA/TensorRT-LLM",
+          "source": "github.com",
+          "tags": [
+            "AI"
+          ],
+          "score": 8.692,
+          "raw_score": 4.566,
+          "published_hours_ago": 0,
+          "stars": 13200,
+          "image_url": "https://opengraph.githubassets.com/1/NVIDIA/TensorRT-LLM",
+          "badge": "Repo",
+          "deck": "TensorRT LLM provides users with an easy-to-use Python API to define Large Language Models (LLMs) and supports state-of-the-art optimizations to perform inference efficiently on NVIDIA GPUs…",
+          "meta": "GitHub · 13200 stars · 13200/day · 0h ago · signal 8.69",
+          "rank": 2,
           "rank_delta": null
         },
         {
@@ -476,42 +495,21 @@
           "rank_delta": null
         },
         {
-          "headline": "thc1006/nephoran-intent-operator",
-          "title": "thc1006/nephoran-intent-operator — This project is an LLM-Enhanced Nephio R5 and O-RAN Network Automation System. It integrates a Large Language Model with Nephio's intent-based automation to provide a natural language interface for managing and orchestrating telecommunications network functions.",
-          "url": "https://github.com/thc1006/nephoran-intent-operator",
-          "source": "github.com",
-          "tags": [
-            "vRAN",
-            "AI",
-            "cross-domain"
-          ],
-          "score": 8.474,
-          "raw_score": 4.645,
-          "published_hours_ago": 7,
-          "stars": 18,
-          "image_url": "https://opengraph.githubassets.com/1/thc1006/nephoran-intent-operator",
-          "badge": "Repo",
-          "deck": "This project is an LLM-Enhanced Nephio R5 and O-RAN Network Automation System. It integrates a Large Language Model with Nephio's intent-based automation to provide a natural language inter…",
-          "meta": "GitHub · 18 stars · 18/day · 7h ago · signal 8.47",
-          "rank": 2,
-          "rank_delta": null
-        },
-        {
           "headline": "Demorck/ClairObscurArchipelagoRandomizer",
           "title": "Demorck/ClairObscurArchipelagoRandomizer — A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system",
           "url": "https://github.com/Demorck/ClairObscurArchipelagoRandomizer",
           "source": "github.com",
           "tags": [],
-          "score": 6.878,
-          "raw_score": 3.87,
-          "published_hours_ago": 14,
+          "score": 7.599,
+          "raw_score": 3.851,
+          "published_hours_ago": 15,
           "stars": 10,
           "image_url": "https://opengraph.githubassets.com/1/Demorck/ClairObscurArchipelagoRandomizer",
           "badge": "Repo",
-          "deck": "A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system. Surfaced 14h ago with 10 stars and 10/day momentum.",
-          "meta": "GitHub · 10 stars · 10/day · 14h ago · signal 6.88",
-          "rank": 14,
-          "rank_delta": null
+          "deck": "A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system. Surfaced 15h ago with 10 stars and 10/day momentum. Up 33 spots from the previous run.",
+          "meta": "GitHub · 10 stars · 10/day · 15h ago · up 33 · signal 7.60",
+          "rank": 9,
+          "rank_delta": 33
         }
       ]
     },
@@ -521,44 +519,6 @@
       "description": "New research worth bookmarking for a deeper read.",
       "items": [
         {
-          "headline": "Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?",
-          "title": "Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?",
-          "url": "https://huggingface.co/papers/2603.24472",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 6.457,
-          "raw_score": 3.815,
-          "published_hours_ago": 37,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24472.png",
-          "badge": "Paper",
-          "deck": "Self-distillation in large language models can degrade mathematical reasoning performance by suppressing uncertainty expression, particularly affecting out-of-distribution tasks. Surfaced v…",
-          "meta": "Hugging Face Papers · 37h ago · up 1 · signal 6.46",
-          "rank": 15,
-          "rank_delta": 1
-        },
-        {
-          "headline": "EVA: Efficient Reinforcement Learning for End-to-End Video Agent",
-          "title": "EVA: Efficient Reinforcement Learning for End-to-End Video Agent",
-          "url": "https://huggingface.co/papers/2603.22918",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 6.453,
-          "raw_score": 3.467,
-          "published_hours_ago": 36,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.22918.png",
-          "badge": "Paper",
-          "deck": "EVA is an efficient reinforcement learning framework for video understanding that enables adaptive reasoning through iterative planning and attention mechanisms, outperforming existing meth…",
-          "meta": "Hugging Face Papers · 36h ago · up 8 · signal 6.45",
-          "rank": 19,
-          "rank_delta": 8
-        },
-        {
           "headline": "SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks",
           "title": "SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks",
           "url": "https://huggingface.co/papers/2603.24755",
@@ -566,54 +526,73 @@
           "tags": [
             "AI"
           ],
-          "score": 6.401,
-          "raw_score": 3.676,
-          "published_hours_ago": 14,
+          "score": 6.984,
+          "raw_score": 3.629,
+          "published_hours_ago": 15,
           "stars": 0,
           "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24755.png",
           "badge": "Paper",
           "deck": "Software development is iterative, yet agentic coding benchmarks overwhelmingly evaluate single-shot solutions against complete specifications. Code can pass the test suite but become progr…",
-          "meta": "Hugging Face Papers · 14h ago · down 5 · signal 6.40",
-          "rank": 16,
-          "rank_delta": -5
+          "meta": "Hugging Face Papers · 15h ago · up 12 · signal 6.98",
+          "rank": 10,
+          "rank_delta": 12
         },
         {
-          "headline": "Nudging Hidden States: Training-Free Model Steering for Chain-of-Thought Reasoning in Large Aud…",
-          "title": "Nudging Hidden States: Training-Free Model Steering for Chain-of-Thought Reasoning in Large Audio-Language Models",
-          "url": "https://huggingface.co/papers/2603.14636",
+          "headline": "IQuest-Coder-V1 Technical Report",
+          "title": "IQuest-Coder-V1 Technical Report",
+          "url": "https://huggingface.co/papers/2603.16733",
           "source": "huggingface.co",
           "tags": [
             "AI"
           ],
-          "score": 6.287,
-          "raw_score": 3.064,
-          "published_hours_ago": 4,
+          "score": 6.925,
+          "raw_score": 3.407,
+          "published_hours_ago": 5,
           "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.14636.png",
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.16733.png",
           "badge": "Paper",
-          "deck": "Training-free inference-time model steering enhances large audio-language model reasoning through diverse information sources and cross-modal transfer from text to speech, achieving improve…",
-          "meta": "Hugging Face Papers · 4h ago · up 15 · signal 6.29",
-          "rank": 27,
+          "deck": "The IQuest-Coder-V1 series represents a new family of code LLMs with a multi-stage training approach that captures dynamic software logic evolution and achieves state-of-the-art performance…",
+          "meta": "Hugging Face Papers · 5h ago · up 15 · signal 6.92",
+          "rank": 13,
           "rank_delta": 15
         },
         {
-          "headline": "OmniWeaving: Towards Unified Video Generation with Free-form Composition and Reasoning",
-          "title": "OmniWeaving: Towards Unified Video Generation with Free-form Composition and Reasoning",
-          "url": "https://huggingface.co/papers/2603.24458",
+          "headline": "CarePilot: A Multi-Agent Framework for Long-Horizon Computer Task Automation in Healthcare",
+          "title": "CarePilot: A Multi-Agent Framework for Long-Horizon Computer Task Automation in Healthcare",
+          "url": "https://huggingface.co/papers/2603.24157",
           "source": "huggingface.co",
           "tags": [
             "AI"
           ],
-          "score": 6.259,
-          "raw_score": 3.316,
-          "published_hours_ago": 38,
+          "score": 6.842,
+          "raw_score": 3.508,
+          "published_hours_ago": 39,
           "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24458.png",
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24157.png",
           "badge": "Paper",
-          "deck": "OmniWeaving is an open-source video generation model that unifies multimodal inputs and complex reasoning capabilities through large-scale pretraining and intelligent agent inference. Surfa…",
-          "meta": "Hugging Face Papers · 38h ago · up 9 · signal 6.26",
-          "rank": 24,
-          "rank_delta": 9
+          "deck": "careflow is a benchmark for long-horizon automation in healthcare, and carepilot is a multimodal agent framework that uses actor-critic methods with dual-memory mechanisms to improve automa…",
+          "meta": "Hugging Face Papers · 39h ago · up 12 · signal 6.84",
+          "rank": 12,
+          "rank_delta": 12
+        },
+        {
+          "headline": "GameplayQA: A Benchmarking Framework for Decision-Dense POV-Synced Multi-Video Understanding of…",
+          "title": "GameplayQA: A Benchmarking Framework for Decision-Dense POV-Synced Multi-Video Understanding of 3D Virtual Agents",
+          "url": "https://huggingface.co/papers/2603.24329",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 6.83,
+          "raw_score": 3.567,
+          "published_hours_ago": 39,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24329.png",
+          "badge": "Paper",
+          "deck": "GameplayQA presents a framework for evaluating multimodal large language models' perception and reasoning capabilities in 3D environments through annotated multiplayer gameplay videos. Surf…",
+          "meta": "Hugging Face Papers · 39h ago · up 12 · signal 6.83",
+          "rank": 11,
+          "rank_delta": 12
         },
         {
           "headline": "Calibri: Enhancing Diffusion Transformers via Parameter-Efficient Calibration",
@@ -623,71 +602,33 @@
           "tags": [
             "AI"
           ],
-          "score": 6.069,
-          "raw_score": 3.399,
+          "score": 6.565,
+          "raw_score": 3.314,
           "published_hours_ago": 6,
           "stars": 0,
           "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24800.png",
           "badge": "Paper",
           "deck": "Diffusion Transformers can be enhanced through a parameter-efficient calibration approach that improves generative quality while reducing inference steps. Surfaced via Hugging Face Papers a…",
-          "meta": "Hugging Face Papers · 6h ago · down 6 · signal 6.07",
-          "rank": 21,
-          "rank_delta": -6
+          "meta": "Hugging Face Papers · 6h ago · up 11 · signal 6.57",
+          "rank": 16,
+          "rank_delta": 11
         },
         {
-          "headline": "Colon-Bench: An Agentic Workflow for Scalable Dense Lesion Annotation in Full-Procedure Colonos…",
-          "title": "Colon-Bench: An Agentic Workflow for Scalable Dense Lesion Annotation in Full-Procedure Colonoscopy Videos",
-          "url": "http://arxiv.org/abs/2603.25645v1",
-          "source": "arxiv.org",
-          "tags": [
-            "AI"
-          ],
-          "score": 5.01,
-          "raw_score": 2.995,
-          "published_hours_ago": 22,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-paper.svg",
-          "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 22h ago. Down 33 spots from the previous run.",
-          "meta": "arXiv · 22h ago · down 33 · signal 5.01",
-          "rank": 34,
-          "rank_delta": -33
-        },
-        {
-          "headline": "LanteRn: Latent Visual Structured Reasoning",
-          "title": "LanteRn: Latent Visual Structured Reasoning",
-          "url": "http://arxiv.org/abs/2603.25629v1",
-          "source": "arxiv.org",
+          "headline": "The Pulse of Motion: Measuring Physical Frame Rate from Visual Dynamics",
+          "title": "The Pulse of Motion: Measuring Physical Frame Rate from Visual Dynamics",
+          "url": "https://huggingface.co/papers/2603.14375",
+          "source": "huggingface.co",
           "tags": [],
-          "score": 4.357,
-          "raw_score": 2.649,
+          "score": 6.211,
+          "raw_score": 2.935,
           "published_hours_ago": 22,
           "stars": 0,
-          "image_url": "/news/assets/thumb-paper.svg",
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.14375.png",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper posted 22h ago and surfacing in the current feed. Down 43 spots from the previous run.",
-          "meta": "arXiv · 22h ago · down 43 · signal 4.36",
-          "rank": 46,
-          "rank_delta": -43
-        },
-        {
-          "headline": "Beyond Content Safety: Real-Time Monitoring for Reasoning Vulnerabilities in Large Language Mod…",
-          "title": "Beyond Content Safety: Real-Time Monitoring for Reasoning Vulnerabilities in Large Language Models",
-          "url": "http://arxiv.org/abs/2603.25412v1",
-          "source": "arxiv.org",
-          "tags": [
-            "AI"
-          ],
-          "score": 4.177,
-          "raw_score": 2.529,
-          "published_hours_ago": 26,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-paper.svg",
-          "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 26h ago. Down 41 spots from the previous run.",
-          "meta": "arXiv · 26h ago · down 41 · signal 4.18",
-          "rank": 51,
-          "rank_delta": -41
+          "deck": "Generative video models suffer from temporal ambiguity due to inconsistent frame rate training, which this work addresses through a Visual Chronometer that estimates physical frames per sec…",
+          "meta": "Hugging Face Papers · 22h ago · up 28 · signal 6.21",
+          "rank": 26,
+          "rank_delta": 28
         },
         {
           "headline": "Demographic Fairness in Multimodal LLMs: A Benchmark of Gender and Ethnicity Bias in Face Verif…",
@@ -697,16 +638,69 @@
           "tags": [
             "AI"
           ],
-          "score": 4.168,
+          "score": 4.206,
           "raw_score": 2.274,
           "published_hours_ago": 23,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 23h ago. Down 59 spots from the previous run.",
-          "meta": "arXiv · 23h ago · down 59 · signal 4.17",
-          "rank": 64,
-          "rank_delta": -59
+          "deck": "Fresh arXiv paper from the ai cluster, posted 23h ago. Down 37 spots from the previous run.",
+          "meta": "arXiv · 23h ago · down 37 · signal 4.21",
+          "rank": 55,
+          "rank_delta": -37
+        },
+        {
+          "headline": "LanteRn: Latent Visual Structured Reasoning",
+          "title": "LanteRn: Latent Visual Structured Reasoning",
+          "url": "http://arxiv.org/abs/2603.25629v1",
+          "source": "arxiv.org",
+          "tags": [],
+          "score": 4.006,
+          "raw_score": 2.347,
+          "published_hours_ago": 23,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-paper.svg",
+          "badge": "Paper",
+          "deck": "Fresh arXiv paper posted 23h ago and surfacing in the current feed. Down 40 spots from the previous run.",
+          "meta": "arXiv · 23h ago · down 40 · signal 4.01",
+          "rank": 52,
+          "rank_delta": -40
+        },
+        {
+          "headline": "Training the Knowledge Base through Evidence Distillation and Write-Back Enrichment",
+          "title": "Training the Knowledge Base through Evidence Distillation and Write-Back Enrichment",
+          "url": "http://arxiv.org/abs/2603.25737v1",
+          "source": "arxiv.org",
+          "tags": [
+            "AI"
+          ],
+          "score": 3.945,
+          "raw_score": 2.233,
+          "published_hours_ago": 22,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-paper.svg",
+          "badge": "Paper",
+          "deck": "Fresh arXiv paper from the ai cluster, posted 22h ago. Down 40 spots from the previous run.",
+          "meta": "arXiv · 22h ago · down 40 · signal 3.94",
+          "rank": 59,
+          "rank_delta": -40
+        },
+        {
+          "headline": "RefAlign: Representation Alignment for Reference-to-Video Generation",
+          "title": "RefAlign: Representation Alignment for Reference-to-Video Generation",
+          "url": "http://arxiv.org/abs/2603.25743v1",
+          "source": "arxiv.org",
+          "tags": [],
+          "score": 3.839,
+          "raw_score": 2.355,
+          "published_hours_ago": 22,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-paper.svg",
+          "badge": "Paper",
+          "deck": "Fresh arXiv paper posted 22h ago and surfacing in the current feed. Down 34 spots from the previous run.",
+          "meta": "arXiv · 22h ago · down 34 · signal 3.84",
+          "rank": 51,
+          "rank_delta": -34
         }
       ]
     },
@@ -723,16 +717,16 @@
           "tags": [
             "social"
           ],
-          "score": 4.078,
-          "raw_score": 2.233,
-          "published_hours_ago": 1,
+          "score": 4.039,
+          "raw_score": 2.181,
+          "published_hours_ago": 2,
           "stars": 0,
           "image_url": "/news/assets/thumb-ai.svg",
           "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 1h ago. Down 47 spots from the previous run.",
-          "meta": "GeekNews · 1h ago · down 47 · signal 4.08",
-          "rank": 68,
-          "rank_delta": -47
+          "deck": "Community signal picked up on GeekNews about 2h ago. Down 31 spots from the previous run.",
+          "meta": "GeekNews · 2h ago · down 31 · signal 4.04",
+          "rank": 64,
+          "rank_delta": -31
         },
         {
           "headline": "Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…",
@@ -743,16 +737,16 @@
             "social",
             "supplemental"
           ],
-          "score": 4.078,
-          "raw_score": 2.233,
-          "published_hours_ago": 1,
+          "score": 4.039,
+          "raw_score": 2.181,
+          "published_hours_ago": 2,
           "stars": 0,
           "image_url": "/news/assets/thumb-ai.svg",
           "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 1h ago. Down 47 spots from the previous run.",
-          "meta": "GeekNews · 1h ago · down 47 · signal 4.08",
-          "rank": 68,
-          "rank_delta": -47
+          "deck": "Community signal picked up on GeekNews about 2h ago. Down 31 spots from the previous run.",
+          "meta": "GeekNews · 2h ago · down 31 · signal 4.04",
+          "rank": 64,
+          "rank_delta": -31
         },
         {
           "headline": "Show GN: MemAware – A benchmark to measure whether an AI agent knows “what I know”",
@@ -762,16 +756,98 @@
           "tags": [
             "social"
           ],
-          "score": 3.897,
+          "score": 3.939,
           "raw_score": 2.081,
           "published_hours_ago": 4,
           "stars": 0,
           "image_url": "/news/assets/thumb-ai.svg",
           "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 4h ago. Down 72 spots from the previous run.",
-          "meta": "GeekNews · 4h ago · down 72 · signal 3.90",
-          "rank": 96,
-          "rank_delta": -72
+          "deck": "Community signal picked up on GeekNews about 4h ago. Down 49 spots from the previous run.",
+          "meta": "GeekNews · 4h ago · down 49 · signal 3.94",
+          "rank": 86,
+          "rank_delta": -49
+        },
+        {
+          "headline": "Show GN: MemAware – A benchmark to measure whether an AI agent knows “what I know”",
+          "title": "Show GN: MemAware – A benchmark to measure whether an AI agent knows “what I know”",
+          "url": "https://news.hada.io/topic?id=27917#rebalance-geeknews-4",
+          "source": "geeknews",
+          "tags": [
+            "social",
+            "supplemental"
+          ],
+          "score": 3.939,
+          "raw_score": 2.081,
+          "published_hours_ago": 4,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on GeekNews about 4h ago. Down 49 spots from the previous run.",
+          "meta": "GeekNews · 4h ago · down 49 · signal 3.94",
+          "rank": 86,
+          "rank_delta": -49
+        },
+        {
+          "headline": "🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly th…",
+          "title": "🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly through AI platforms like ChatGPT, Copilot, and Gemini.",
+          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE04Mmp6X0hfYmhCZXE1b0xtN3VBVkVwc2x5NTNiUk9oT05GRDJub2NmbzVnemNDMVRSa040N0t3TU16RDZxWjJVTVJNVGg3S2FwVV9ldHEwMzhFRjctQzZuZlJrTUM?oc=5",
+          "source": "x.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 3.701,
+          "raw_score": 2.001,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X about 72h ago.",
+          "meta": "X · 72h ago · signal 3.70",
+          "rank": 106,
+          "rank_delta": null
+        },
+        {
+          "headline": "🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly th…",
+          "title": "🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly through AI platforms like ChatGPT, Copilot, and Gemini.",
+          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE04Mmp6X0hfYmhCZXE1b0xtN3VBVkVwc2x5NTNiUk9oT05GRDJub2NmbzVnemNDMVRSa040N0t3TU16RDZxWjJVTVJNVGg3S2FwVV9ldHEwMzhFRjctQzZuZlJrTUM?oc=5#rebalance-x.com-3",
+          "source": "x.com",
+          "tags": [
+            "AI",
+            "social",
+            "supplemental"
+          ],
+          "score": 3.701,
+          "raw_score": 2.001,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X about 72h ago.",
+          "meta": "X · 72h ago · signal 3.70",
+          "rank": 106,
+          "rank_delta": null
+        },
+        {
+          "headline": "🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly th…",
+          "title": "🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly through AI platforms like ChatGPT, Copilot, and Gemini.",
+          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE04Mmp6X0hfYmhCZXE1b0xtN3VBVkVwc2x5NTNiUk9oT05GRDJub2NmbzVnemNDMVRSa040N0t3TU16RDZxWjJVTVJNVGg3S2FwVV9ldHEwMzhFRjctQzZuZlJrTUM?oc=5#rebalance-x.com-6",
+          "source": "x.com",
+          "tags": [
+            "AI",
+            "social",
+            "supplemental"
+          ],
+          "score": 3.701,
+          "raw_score": 2.001,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X about 72h ago.",
+          "meta": "X · 72h ago · signal 3.70",
+          "rank": 106,
+          "rank_delta": null
         },
         {
           "headline": "Anthropic confirms existence of leak of next-generation model “Claude Mythos” — “The most power…",
@@ -781,36 +857,16 @@
           "tags": [
             "social"
           ],
-          "score": 3.864,
-          "raw_score": 2.129,
-          "published_hours_ago": 9,
+          "score": 3.635,
+          "raw_score": 2.021,
+          "published_hours_ago": 10,
           "stars": 0,
           "image_url": "/news/assets/thumb-ai.svg",
           "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 9h ago. Down 51 spots from the previous run.",
-          "meta": "GeekNews · 9h ago · down 51 · signal 3.86",
-          "rank": 76,
-          "rank_delta": -51
-        },
-        {
-          "headline": "Anthropic confirms existence of leak of next-generation model “Claude Mythos” — “The most power…",
-          "title": "Anthropic confirms existence of leak of next-generation model “Claude Mythos” — “The most powerful model ever”",
-          "url": "https://news.hada.io/topic?id=27911#rebalance-geeknews-4",
-          "source": "geeknews",
-          "tags": [
-            "social",
-            "supplemental"
-          ],
-          "score": 3.864,
-          "raw_score": 2.129,
-          "published_hours_ago": 9,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 9h ago. Down 51 spots from the previous run.",
-          "meta": "GeekNews · 9h ago · down 51 · signal 3.86",
-          "rank": 76,
-          "rank_delta": -51
+          "deck": "Community signal picked up on GeekNews about 10h ago. Down 67 spots from the previous run.",
+          "meta": "GeekNews · 10h ago · down 67 · signal 3.63",
+          "rank": 103,
+          "rank_delta": -67
         },
         {
           "headline": "🚨 BREAKING: CHINA just released a Python framework for building AI agents.",
@@ -820,48 +876,6 @@
           "tags": [
             "AI",
             "social"
-          ],
-          "score": 3.499,
-          "raw_score": 2.004,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X about 72h ago.",
-          "meta": "X · 72h ago · signal 3.50",
-          "rank": 114,
-          "rank_delta": null
-        },
-        {
-          "headline": "🚨 BREAKING: CHINA just released a Python framework for building AI agents.",
-          "title": "🚨 BREAKING: CHINA just released a Python framework for building AI agents. 100% OPEN SOURCE. It has visual agent design, MCP tools, memory, RAG, and reasoning. All built in. All working together. It's called AgentScope. You describe your agent syste",
-          "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1ocTRZWGxiTnpqM1h1TjdHZVdFTmdfWlJIVGhycGZLR2djbUxYQ1JWaGcxV0lNbDlWVGFFbjliZnZRV0RCVkVzMmhaOS1LeWdFbGRBRjNPN1N0bTJ2Y0c0?oc=5#rebalance-x.com-2",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social",
-            "supplemental"
-          ],
-          "score": 3.499,
-          "raw_score": 2.004,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X about 72h ago.",
-          "meta": "X · 72h ago · signal 3.50",
-          "rank": 114,
-          "rank_delta": null
-        },
-        {
-          "headline": "🚨 BREAKING: CHINA just released a Python framework for building AI agents.",
-          "title": "🚨 BREAKING: CHINA just released a Python framework for building AI agents. 100% OPEN SOURCE. It has visual agent design, MCP tools, memory, RAG, and reasoning. All built in. All working together. It's called AgentScope. You describe your agent syste",
-          "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1ocTRZWGxiTnpqM1h1TjdHZVdFTmdfWlJIVGhycGZLR2djbUxYQ1JWaGcxV0lNbDlWVGFFbjliZnZRV0RCVkVzMmhaOS1LeWdFbGRBRjNPN1N0bTJ2Y0c0?oc=5#rebalance-x.com-4",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social",
-            "supplemental"
           ],
           "score": 3.499,
           "raw_score": 2.004,
@@ -892,25 +906,6 @@
           "meta": "GeekNews · 11h ago · down 44 · signal 3.13",
           "rank": 89,
           "rank_delta": -44
-        },
-        {
-          "headline": "The last two years reshaped how we evaluate models and what we expect from them.",
-          "title": "The last two years reshaped how we evaluate models and what we expect from them. OpenAI's o1 showed that \"thinking\" could be a first-class capability, something you train for and expose to users. DeepSeek-R1 proved that reasoning-style post-training coul",
-          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE5lZjRhTWotci1hYzF2cmhpWHdiNTFxWHA2cU5mX2dtREhBZlV2ZU1xQmNFdmlXcnM5d01idTAwMFBpc1B0WFdQbTRLNE1lQkZrNXZ2VTJfTi1kb1ZrZTdZVUc5bw?oc=5",
-          "source": "x.com",
-          "tags": [
-            "social"
-          ],
-          "score": 2.482,
-          "raw_score": 1.576,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X about 72h ago. Down 55 spots from the previous run.",
-          "meta": "X · 72h ago · down 55 · signal 2.48",
-          "rank": 92,
-          "rank_delta": -55
         }
       ]
     }
@@ -940,7 +935,7 @@
   "digest": {
     "title": "Daily AI News Digest — 2026-03-28",
     "url": "/notes/news/2026-03-28-ai-news-digest/",
-    "description": "GitHub velocity is led by smith-horn/skillsmith; paper attention is clustering around Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?; social attention is tilting toward Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…; biggest mover: Nudging Hidden States: Training-Free Model Steering for Chain-of-Thought Reasoning in Large Aud… (+15). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+    "description": "GitHub velocity is led by smith-horn/skillsmith; paper attention is clustering around SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks; social attention is tilting toward Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…; biggest mover: Demorck/ClairObscurArchipelagoRandomizer (+33). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
   },
   "archive_url": "/notes/news/news-digest-archive/",
   "archives": [
@@ -948,7 +943,7 @@
       "title": "Daily AI News Digest — 2026-03-28",
       "url": "/notes/news/2026-03-28-ai-news-digest/",
       "date_label": "2026-03-28",
-      "description": "GitHub velocity is led by smith-horn/skillsmith; paper attention is clustering around Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?; social attention is tilting toward Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…; biggest mover: Nudging Hidden States: Training-Free Model Steering for Chain-of-Thought Reasoning in Large Aud… (+15). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+      "description": "GitHub velocity is led by smith-horn/skillsmith; paper attention is clustering around SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks; social attention is tilting toward Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…; biggest mover: Demorck/ClairObscurArchipelagoRandomizer (+33). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
     },
     {
       "title": "Daily AI News Digest — 2026-03-27",

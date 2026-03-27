@@ -1,6 +1,6 @@
 ---
 title: "Daily AI News Digest — 2026-03-28"
-description: "GitHub velocity is led by smith-horn/skillsmith; paper attention is clustering around Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?; social attention is tilting toward Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…; biggest mover: Nudging Hidden States: Training-Free Model Steering for Chain-of-Thought Reasoning in Large Aud… (+15). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+description: "GitHub velocity is led by smith-horn/skillsmith; paper attention is clustering around SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks; social attention is tilting toward Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…; biggest mover: Demorck/ClairObscurArchipelagoRandomizer (+33). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
 date: 2026-03-28
 tags: [news, news-digest, ai, radar]
 publish: true
@@ -11,7 +11,7 @@ content-classes: [news-digest-note]
     <div class="news-digest-hero-copy">
       <p class="section-kicker">News Radar</p>
       <h1>Daily AI News Digest — 2026-03-28</h1>
-      <p class="news-digest-lead">GitHub velocity is led by smith-horn/skillsmith; paper attention is clustering around Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?; social attention is tilting toward Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…; biggest mover: Nudging Hidden States: Training-Free Model Steering for Chain-of-Thought Reasoning in Large Aud… (+15). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-lead">GitHub velocity is led by smith-horn/skillsmith; paper attention is clustering around SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks; social attention is tilting toward Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…; biggest mover: Demorck/ClairObscurArchipelagoRandomizer (+33). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
       <div class="news-digest-actions" role="group" aria-label="News actions">
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
         <a class="post-cta-link" href="#digest-archive">Digest archive</a>
@@ -25,7 +25,7 @@ content-classes: [news-digest-note]
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Generated</span>
-        <strong><time datetime="2026-03-28T00:51:58.923445+09:00">Mar 28, 2026 · 12:51 AM KST</time></strong>
+        <strong><time datetime="2026-03-28T01:14:54.858909+09:00">Mar 28, 2026 · 1:14 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Sections</span>
@@ -63,16 +63,16 @@ content-classes: [news-digest-note]
         </div>
         <strong class="news-digest-score-value">9.40</strong>
       </a>
-      <a class="news-digest-score-row" href="https://github.com/langbot-app/LangBot" target="_blank" rel="noreferrer">
+      <a class="news-digest-score-row" href="https://github.com/GeminiLight/MindOS" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
           <span class="news-digest-score-rank">03</span>
-          <strong>langbot-app/LangBot</strong>
-          <span>GitHub · 15689 stars · 15689/day · 0h ago · signal 8.87</span>
+          <strong>GeminiLight/MindOS</strong>
+          <span>GitHub · 113 stars · 113/day · 0h ago · signal 9.34</span>
         </div>
         <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 93.7%"></span>
+          <span style="width: 98.6%"></span>
         </div>
-        <strong class="news-digest-score-value">8.87</strong>
+        <strong class="news-digest-score-value">9.34</strong>
       </a>
       <a class="news-digest-score-row" href="https://github.com/vllm-project/guidellm" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
@@ -85,9 +85,20 @@ content-classes: [news-digest-note]
         </div>
         <strong class="news-digest-score-value">8.83</strong>
       </a>
-      <a class="news-digest-score-row" href="https://github.com/cloud-apim/otoroshi-llm-extension" target="_blank" rel="noreferrer">
+      <a class="news-digest-score-row" href="https://github.com/NVIDIA/TensorRT-LLM" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
           <span class="news-digest-score-rank">05</span>
+          <strong>NVIDIA/TensorRT-LLM</strong>
+          <span>GitHub · 13200 stars · 13200/day · 0h ago · signal 8.69</span>
+        </div>
+        <div class="news-digest-score-bar" aria-hidden="true">
+          <span style="width: 91.8%"></span>
+        </div>
+        <strong class="news-digest-score-value">8.69</strong>
+      </a>
+      <a class="news-digest-score-row" href="https://github.com/cloud-apim/otoroshi-llm-extension" target="_blank" rel="noreferrer">
+        <div class="news-digest-score-copy">
+          <span class="news-digest-score-rank">06</span>
           <strong>cloud-apim/otoroshi-llm-extension</strong>
           <span>GitHub · 16 stars · 16/day · 0h ago · signal 8.69</span>
         </div>
@@ -98,7 +109,7 @@ content-classes: [news-digest-note]
       </a>
       <a class="news-digest-score-row" href="https://github.com/Tom-Ryder/AgentRunKit" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
-          <span class="news-digest-score-rank">06</span>
+          <span class="news-digest-score-rank">07</span>
           <strong>Tom-Ryder/AgentRunKit</strong>
           <span>GitHub · 13 stars · 13/day · 0h ago · signal 8.66</span>
         </div>
@@ -109,7 +120,7 @@ content-classes: [news-digest-note]
       </a>
       <a class="news-digest-score-row" href="https://github.com/edwardcapriolo/deliverance" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
-          <span class="news-digest-score-rank">07</span>
+          <span class="news-digest-score-rank">08</span>
           <strong>edwardcapriolo/deliverance</strong>
           <span>GitHub · 13 stars · 13/day · 0h ago · signal 8.65</span>
         </div>
@@ -117,17 +128,6 @@ content-classes: [news-digest-note]
           <span style="width: 91.4%"></span>
         </div>
         <strong class="news-digest-score-value">8.65</strong>
-      </a>
-      <a class="news-digest-score-row" href="https://github.com/bytedance/deer-flow" target="_blank" rel="noreferrer">
-        <div class="news-digest-score-copy">
-          <span class="news-digest-score-rank">08</span>
-          <strong>bytedance/deer-flow</strong>
-          <span>GitHub · 49827 stars · 49827/day · 0h ago · signal 8.59</span>
-        </div>
-        <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 90.7%"></span>
-        </div>
-        <strong class="news-digest-score-value">8.59</strong>
       </a>
     </div>
   </section>
@@ -144,10 +144,10 @@ content-classes: [news-digest-note]
           <h3>smith-horn/skillsmith</h3>
         </div>
       </a>
-      <a class="news-digest-card news-digest-top-card" href="https://huggingface.co/papers/2603.24472" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24472.png" alt="Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card news-digest-top-card" href="https://huggingface.co/papers/2603.24755" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24755.png" alt="SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?</h3>
+          <h3>SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks</h3>
         </div>
       </a>
       <a class="news-digest-card news-digest-top-card" href="https://news.hada.io/topic?id=27920" target="_blank" rel="noreferrer">
@@ -156,10 +156,10 @@ content-classes: [news-digest-note]
           <h3>Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…</h3>
         </div>
       </a>
-      <a class="news-digest-card news-digest-top-card" href="http://arxiv.org/abs/2603.25629v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="LanteRn: Latent Visual Structured Reasoning" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card news-digest-top-card" href="https://huggingface.co/papers/2603.24800" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24800.png" alt="Calibri: Enhancing Diffusion Transformers via Parameter-Efficient Calibration" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>LanteRn: Latent Visual Structured Reasoning</h3>
+          <h3>Calibri: Enhancing Diffusion Transformers via Parameter-Efficient Calibration</h3>
         </div>
       </a>
     </div>
@@ -178,22 +178,22 @@ content-classes: [news-digest-note]
           <h3>smith-horn/skillsmith</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://github.com/thc1006/nephoran-intent-operator" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/thc1006/nephoran-intent-operator" alt="thc1006/nephoran-intent-operator — This project is an LLM-Enhanced Nephio R5 and O-RAN Network Automation System. It integrates a Large Language Model with Nephio&#x27;s intent-based automation to provide a natural language interface for managing and orchestrating telecommunications network functions." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <h3>thc1006/nephoran-intent-operator</h3>
-        </div>
-      </a>
       <a class="news-digest-card" href="https://github.com/Demorck/ClairObscurArchipelagoRandomizer" target="_blank" rel="noreferrer">
         <img class="news-digest-image" src="https://opengraph.githubassets.com/1/Demorck/ClairObscurArchipelagoRandomizer" alt="Demorck/ClairObscurArchipelagoRandomizer — A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
         <div class="news-digest-card-copy">
           <h3>Demorck/ClairObscurArchipelagoRandomizer</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://huggingface.co/papers/2603.24472" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24472.png" alt="Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.24755" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24755.png" alt="SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?</h3>
+          <h3>SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks</h3>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.16733" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.16733.png" alt="IQuest-Coder-V1 Technical Report" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+        <div class="news-digest-card-copy">
+          <h3>IQuest-Coder-V1 Technical Report</h3>
         </div>
       </a>
     </div>
@@ -218,16 +218,22 @@ content-classes: [news-digest-note]
           <h3>framersai/agentos</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://github.com/langbot-app/LangBot" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/langbot-app/LangBot" alt="langbot-app/LangBot — Production-grade platform for building agentic IM bots - Production-grade multi-platform intelligent robot development platform. Provides Agent, knowledge base orchestration, plug-in system / Bots for Discord / Slack / LINE / Telegram / WeChat (Enterprise WeChat, Qiwei Intelligent Robot, Official Account) / Feishu / DingTalk / QQ / Satori e.g. Integrated with ChatGPT(GPT), DeepSeek, Dify, n8n, Langflow, Coze, Claude, Gemini, MiniMax, Ollama, SiliconFlow, Moonshot, GLM, clawdbot / openclaw" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
+      <a class="news-digest-card" href="https://github.com/GeminiLight/MindOS" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/GeminiLight/MindOS" alt="GeminiLight/MindOS — MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
         <div class="news-digest-card-copy">
-          <h3>langbot-app/LangBot</h3>
+          <h3>GeminiLight/MindOS</h3>
         </div>
       </a>
       <a class="news-digest-card" href="https://github.com/vllm-project/guidellm" target="_blank" rel="noreferrer">
         <img class="news-digest-image" src="https://opengraph.githubassets.com/1/vllm-project/guidellm" alt="vllm-project/guidellm — Evaluate and Enhance Your LLM Deployments for Real-World Inference Needs" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
         <div class="news-digest-card-copy">
           <h3>vllm-project/guidellm</h3>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://github.com/NVIDIA/TensorRT-LLM" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/NVIDIA/TensorRT-LLM" alt="NVIDIA/TensorRT-LLM — TensorRT LLM provides users with an easy-to-use Python API to define Large Language Models (LLMs) and supports state-of-the-art optimizations to perform inference efficiently on NVIDIA GPUs. TensorRT LLM also contains components to create Python and C++ runtimes that orchestrate the inference execution in a performant way." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
+        <div class="news-digest-card-copy">
+          <h3>NVIDIA/TensorRT-LLM</h3>
         </div>
       </a>
       <a class="news-digest-card" href="https://github.com/cloud-apim/otoroshi-llm-extension" target="_blank" rel="noreferrer">
@@ -254,12 +260,6 @@ content-classes: [news-digest-note]
           <h3>bytedance/deer-flow</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://github.com/thc1006/nephoran-intent-operator" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/thc1006/nephoran-intent-operator" alt="thc1006/nephoran-intent-operator — This project is an LLM-Enhanced Nephio R5 and O-RAN Network Automation System. It integrates a Large Language Model with Nephio&#x27;s intent-based automation to provide a natural language interface for managing and orchestrating telecommunications network functions." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <h3>thc1006/nephoran-intent-operator</h3>
-        </div>
-      </a>
       <a class="news-digest-card" href="https://github.com/Demorck/ClairObscurArchipelagoRandomizer" target="_blank" rel="noreferrer">
         <img class="news-digest-image" src="https://opengraph.githubassets.com/1/Demorck/ClairObscurArchipelagoRandomizer" alt="Demorck/ClairObscurArchipelagoRandomizer — A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
         <div class="news-digest-card-copy">
@@ -276,34 +276,28 @@ content-classes: [news-digest-note]
     </header>
     <p class="news-digest-section-description">New research worth bookmarking for a deeper read.</p>
     <div class="news-digest-grid">
-      <a class="news-digest-card" href="https://huggingface.co/papers/2603.24472" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24472.png" alt="Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <h3>Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?</h3>
-        </div>
-      </a>
-      <a class="news-digest-card" href="https://huggingface.co/papers/2603.22918" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.22918.png" alt="EVA: Efficient Reinforcement Learning for End-to-End Video Agent" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <h3>EVA: Efficient Reinforcement Learning for End-to-End Video Agent</h3>
-        </div>
-      </a>
       <a class="news-digest-card" href="https://huggingface.co/papers/2603.24755" target="_blank" rel="noreferrer">
         <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24755.png" alt="SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
           <h3>SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://huggingface.co/papers/2603.14636" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.14636.png" alt="Nudging Hidden States: Training-Free Model Steering for Chain-of-Thought Reasoning in Large Audio-Language Models" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.16733" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.16733.png" alt="IQuest-Coder-V1 Technical Report" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>Nudging Hidden States: Training-Free Model Steering for Chain-of-Thought Reasoning in Large Aud…</h3>
+          <h3>IQuest-Coder-V1 Technical Report</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://huggingface.co/papers/2603.24458" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24458.png" alt="OmniWeaving: Towards Unified Video Generation with Free-form Composition and Reasoning" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.24157" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24157.png" alt="CarePilot: A Multi-Agent Framework for Long-Horizon Computer Task Automation in Healthcare" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>OmniWeaving: Towards Unified Video Generation with Free-form Composition and Reasoning</h3>
+          <h3>CarePilot: A Multi-Agent Framework for Long-Horizon Computer Task Automation in Healthcare</h3>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.24329" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24329.png" alt="GameplayQA: A Benchmarking Framework for Decision-Dense POV-Synced Multi-Video Understanding of 3D Virtual Agents" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+        <div class="news-digest-card-copy">
+          <h3>GameplayQA: A Benchmarking Framework for Decision-Dense POV-Synced Multi-Video Understanding of…</h3>
         </div>
       </a>
       <a class="news-digest-card" href="https://huggingface.co/papers/2603.24800" target="_blank" rel="noreferrer">
@@ -312,10 +306,16 @@ content-classes: [news-digest-note]
           <h3>Calibri: Enhancing Diffusion Transformers via Parameter-Efficient Calibration</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="http://arxiv.org/abs/2603.25645v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Colon-Bench: An Agentic Workflow for Scalable Dense Lesion Annotation in Full-Procedure Colonoscopy Videos" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.14375" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.14375.png" alt="The Pulse of Motion: Measuring Physical Frame Rate from Visual Dynamics" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>Colon-Bench: An Agentic Workflow for Scalable Dense Lesion Annotation in Full-Procedure Colonos…</h3>
+          <h3>The Pulse of Motion: Measuring Physical Frame Rate from Visual Dynamics</h3>
+        </div>
+      </a>
+      <a class="news-digest-card" href="http://arxiv.org/abs/2603.25613v1" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Demographic Fairness in Multimodal LLMs: A Benchmark of Gender and Ethnicity Bias in Face Verification" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+        <div class="news-digest-card-copy">
+          <h3>Demographic Fairness in Multimodal LLMs: A Benchmark of Gender and Ethnicity Bias in Face Verif…</h3>
         </div>
       </a>
       <a class="news-digest-card" href="http://arxiv.org/abs/2603.25629v1" target="_blank" rel="noreferrer">
@@ -324,16 +324,16 @@ content-classes: [news-digest-note]
           <h3>LanteRn: Latent Visual Structured Reasoning</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="http://arxiv.org/abs/2603.25412v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Beyond Content Safety: Real-Time Monitoring for Reasoning Vulnerabilities in Large Language Models" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="http://arxiv.org/abs/2603.25737v1" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Training the Knowledge Base through Evidence Distillation and Write-Back Enrichment" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>Beyond Content Safety: Real-Time Monitoring for Reasoning Vulnerabilities in Large Language Mod…</h3>
+          <h3>Training the Knowledge Base through Evidence Distillation and Write-Back Enrichment</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="http://arxiv.org/abs/2603.25613v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Demographic Fairness in Multimodal LLMs: A Benchmark of Gender and Ethnicity Bias in Face Verification" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="http://arxiv.org/abs/2603.25743v1" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="RefAlign: Representation Alignment for Reference-to-Video Generation" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>Demographic Fairness in Multimodal LLMs: A Benchmark of Gender and Ethnicity Bias in Face Verif…</h3>
+          <h3>RefAlign: Representation Alignment for Reference-to-Video Generation</h3>
         </div>
       </a>
     </div>
@@ -364,13 +364,31 @@ content-classes: [news-digest-note]
           <h3>Show GN: MemAware – A benchmark to measure whether an AI agent knows “what I know”</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://news.hada.io/topic?id=27911" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Anthropic confirms existence of leak of next-generation model “Claude Mythos” — “The most powerful model ever”" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+      <a class="news-digest-card" href="https://news.hada.io/topic?id=27917#rebalance-geeknews-4" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Show GN: MemAware – A benchmark to measure whether an AI agent knows “what I know”" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
         <div class="news-digest-card-copy">
-          <h3>Anthropic confirms existence of leak of next-generation model “Claude Mythos” — “The most power…</h3>
+          <h3>Show GN: MemAware – A benchmark to measure whether an AI agent knows “what I know”</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://news.hada.io/topic?id=27911#rebalance-geeknews-4" target="_blank" rel="noreferrer">
+      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE04Mmp6X0hfYmhCZXE1b0xtN3VBVkVwc2x5NTNiUk9oT05GRDJub2NmbzVnemNDMVRSa040N0t3TU16RDZxWjJVTVJNVGg3S2FwVV9ldHEwMzhFRjctQzZuZlJrTUM?oc=5" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly through AI platforms like ChatGPT, Copilot, and Gemini." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+        <div class="news-digest-card-copy">
+          <h3>🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly th…</h3>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE04Mmp6X0hfYmhCZXE1b0xtN3VBVkVwc2x5NTNiUk9oT05GRDJub2NmbzVnemNDMVRSa040N0t3TU16RDZxWjJVTVJNVGg3S2FwVV9ldHEwMzhFRjctQzZuZlJrTUM?oc=5#rebalance-x.com-3" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly through AI platforms like ChatGPT, Copilot, and Gemini." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+        <div class="news-digest-card-copy">
+          <h3>🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly th…</h3>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE04Mmp6X0hfYmhCZXE1b0xtN3VBVkVwc2x5NTNiUk9oT05GRDJub2NmbzVnemNDMVRSa040N0t3TU16RDZxWjJVTVJNVGg3S2FwVV9ldHEwMzhFRjctQzZuZlJrTUM?oc=5#rebalance-x.com-6" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly through AI platforms like ChatGPT, Copilot, and Gemini." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+        <div class="news-digest-card-copy">
+          <h3>🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly th…</h3>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://news.hada.io/topic?id=27911" target="_blank" rel="noreferrer">
         <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Anthropic confirms existence of leak of next-generation model “Claude Mythos” — “The most powerful model ever”" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
         <div class="news-digest-card-copy">
           <h3>Anthropic confirms existence of leak of next-generation model “Claude Mythos” — “The most power…</h3>
@@ -382,28 +400,10 @@ content-classes: [news-digest-note]
           <h3>🚨 BREAKING: CHINA just released a Python framework for building AI agents.</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE1ocTRZWGxiTnpqM1h1TjdHZVdFTmdfWlJIVGhycGZLR2djbUxYQ1JWaGcxV0lNbDlWVGFFbjliZnZRV0RCVkVzMmhaOS1LeWdFbGRBRjNPN1N0bTJ2Y0c0?oc=5#rebalance-x.com-2" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="🚨 BREAKING: CHINA just released a Python framework for building AI agents. 100% OPEN SOURCE. It has visual agent design, MCP tools, memory, RAG, and reasoning. All built in. All working together. It&#x27;s called AgentScope. You describe your agent syste" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <h3>🚨 BREAKING: CHINA just released a Python framework for building AI agents.</h3>
-        </div>
-      </a>
-      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE1ocTRZWGxiTnpqM1h1TjdHZVdFTmdfWlJIVGhycGZLR2djbUxYQ1JWaGcxV0lNbDlWVGFFbjliZnZRV0RCVkVzMmhaOS1LeWdFbGRBRjNPN1N0bTJ2Y0c0?oc=5#rebalance-x.com-4" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="🚨 BREAKING: CHINA just released a Python framework for building AI agents. 100% OPEN SOURCE. It has visual agent design, MCP tools, memory, RAG, and reasoning. All built in. All working together. It&#x27;s called AgentScope. You describe your agent syste" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <h3>🚨 BREAKING: CHINA just released a Python framework for building AI agents.</h3>
-        </div>
-      </a>
       <a class="news-digest-card" href="https://news.hada.io/topic?id=27909" target="_blank" rel="noreferrer">
         <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="GitHub policy change / After April 24th, if no separate settings are made, learn with AI data" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
         <div class="news-digest-card-copy">
           <h3>GitHub policy change / After April 24th, if no separate settings are made, learn with AI data</h3>
-        </div>
-      </a>
-      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiY0FVX3lxTE5lZjRhTWotci1hYzF2cmhpWHdiNTFxWHA2cU5mX2dtREhBZlV2ZU1xQmNFdmlXcnM5d01idTAwMFBpc1B0WFdQbTRLNE1lQkZrNXZ2VTJfTi1kb1ZrZTdZVUc5bw?oc=5" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="The last two years reshaped how we evaluate models and what we expect from them. OpenAI&#x27;s o1 showed that &quot;thinking&quot; could be a first-class capability, something you train for and expose to users. DeepSeek-R1 proved that reasoning-style post-training coul" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <h3>The last two years reshaped how we evaluate models and what we expect from them.</h3>
         </div>
       </a>
     </div>
@@ -418,7 +418,7 @@ content-classes: [news-digest-note]
       <a class="news-digest-archive-item" href="/notes/news/2026-03-28-ai-news-digest/">
         <span class="news-digest-archive-date">2026-03-28</span>
         <strong>Daily AI News Digest — 2026-03-28</strong>
-        <span>GitHub velocity is led by smith-horn/skillsmith; paper attention is clustering around Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?; social attention is tilting toward Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…; biggest mover: Nudging Hidden States: Training-Free Model Steering for Chain-of-Thought Reasoning in Large Aud… (+15). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+        <span>GitHub velocity is led by smith-horn/skillsmith; paper attention is clustering around SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks; social attention is tilting toward Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…; biggest mover: Demorck/ClairObscurArchipelagoRandomizer (+33). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
       </a>
       <a class="news-digest-archive-item" href="/notes/news/2026-03-27-ai-news-digest/">
         <span class="news-digest-archive-date">2026-03-27</span>
