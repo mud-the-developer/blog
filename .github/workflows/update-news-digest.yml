@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: update-news-digest
@@ -18,6 +19,7 @@ jobs:
     env:
       TZ: Asia/Seoul
       NEWS_REPO_TOKEN: ${{ secrets.NEWS_REPO_TOKEN }}
+      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -94,7 +96,7 @@ jobs:
           set -euo pipefail
           python3 scripts/generate_news_digest.py
 
-      - name: Commit and push changes
+      - name: Commit, push, and trigger deploy
         run: |
           set -euo pipefail
           paths=(content/generated/news content/posts/news static/news/data)
@@ -115,3 +117,12 @@ jobs:
           issue_date="$(date +%F)"
           git commit -m "Refresh the daily news digest for ${issue_date}"
           git push origin HEAD:main
+
+          curl -fsSL \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/deploy-cloudflare-pages.yml/dispatches" \
+            -d '{"ref":"main"}'
+
+          echo "Triggered Deploy Cloudflare Pages workflow for main."
