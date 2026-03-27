@@ -190,6 +190,26 @@ def normalize_image(url: str) -> str:
     return url
 
 
+def fallback_image_url(source: str, badge: str) -> str:
+    if source == "github.com" or badge == "Repo":
+        return "/news/assets/thumb-repo.svg"
+    if source in PAPER_SOURCES or badge == "Paper":
+        return "/news/assets/thumb-paper.svg"
+    if badge == "vRAN":
+        return "/news/assets/thumb-vran.svg"
+    return "/news/assets/thumb-ai.svg"
+
+
+def render_card_image(card: NewsItem) -> str:
+    fallback = fallback_image_url(card.source, card.badge)
+    return (
+        f'<img class="news-digest-image" src="{safe_text(card.image_url)}" '
+        f'alt="{safe_text(card.title)}" width="1200" height="675" '
+        'loading="lazy" decoding="async" referrerpolicy="no-referrer" '
+        f'onerror="this.onerror=null;this.src=\'{safe_text(fallback)}\';" />'
+    )
+
+
 def clean_title(value: str) -> str:
     value = re.sub(r"\s+", " ", value).strip()
     value = re.sub(r"\s+-\s+(LinkedIn|x\.com)$", "", value)
@@ -1256,7 +1276,7 @@ def render_markdown(
             body.extend(
                 [
                     f'      <a class="news-digest-card news-digest-top-card" href="{safe_text(card.url)}" target="_blank" rel="noreferrer">',
-                    f'        <img class="news-digest-image" src="{safe_text(card.image_url)}" alt="{safe_text(card.title)}" width="1200" height="675" loading="lazy" decoding="async" />',
+                    f"        {render_card_image(card)}",
                     '        <div class="news-digest-card-copy">',
                     f"          <h3>{safe_text(card.headline or card.title)}</h3>",
                     "        </div>",
@@ -1281,7 +1301,7 @@ def render_markdown(
             body.extend(
                 [
                     f'      <a class="news-digest-card" href="{safe_text(card.url)}" target="_blank" rel="noreferrer">',
-                    f'        <img class="news-digest-image" src="{safe_text(card.image_url)}" alt="{safe_text(card.title)}" width="1200" height="675" loading="lazy" decoding="async" />',
+                    f"        {render_card_image(card)}",
                     '        <div class="news-digest-card-copy">',
                     f"          <h3>{safe_text(card.headline or card.title)}</h3>",
                     "        </div>",

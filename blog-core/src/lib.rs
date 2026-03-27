@@ -1760,10 +1760,14 @@ fn write_graph(config: &BuildConfig, posts: &[Post]) -> Result<()> {
     )
 }
 
+fn include_in_graph(post: &Post) -> bool {
+    !post.hidden && !post.hide_in_graph && !is_news_digest_post(post)
+}
+
 fn build_graph_data(posts: &[Post]) -> (Vec<GraphNode>, Vec<GraphLink>) {
     let graph_posts = posts
         .iter()
-        .filter(|post| !post.hidden && !post.hide_in_graph)
+        .filter(|post| include_in_graph(post))
         .collect::<Vec<_>>();
 
     let nodes = graph_posts
@@ -1821,7 +1825,7 @@ fn build_local_graph_data(
 ) -> (Vec<GraphNode>, Vec<GraphLink>) {
     let graph_posts = posts
         .iter()
-        .filter(|post| !post.hidden && !post.hide_in_graph)
+        .filter(|post| include_in_graph(post))
         .collect::<Vec<_>>();
 
     let post_by_slug = graph_posts
