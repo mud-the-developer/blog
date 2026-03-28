@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-03-28T01:14:54.858909+09:00",
-  "generated_label": "Mar 28, 2026 · 1:14 AM KST",
-  "issue_date": "2026-03-28",
-  "issue_label": "Mar 28, 2026",
-  "summary": "GitHub velocity is led by smith-horn/skillsmith; paper attention is clustering around SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks; social attention is tilting toward Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…; biggest mover: Demorck/ClairObscurArchipelagoRandomizer (+33). 10 repo signals, 10 paper picks, and 10 community items made today's cut.",
+  "generated_at": "2026-03-29T02:12:41.408551+09:00",
+  "generated_label": "Mar 29, 2026 · 2:12 AM KST",
+  "issue_date": "2026-03-29",
+  "issue_label": "Mar 29, 2026",
+  "summary": "GitHub velocity is led by framersai/agentos; paper attention is clustering around SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks; social attention is tilting toward The incident that blamed AI for the Iranian school bombing is a more fundamental problem; biggest mover: AVO: Agentic Variation Operators for Autonomous Evolutionary Search (+49). 10 repo signals, 10 paper picks, and 10 community items made today's cut.",
   "top_cards": [
     {
-      "headline": "smith-horn/skillsmith",
-      "title": "smith-horn/skillsmith — Skill discovery, security, optimization, and management for agentic systems",
-      "url": "https://github.com/smith-horn/skillsmith",
+      "headline": "framersai/agentos",
+      "title": "framersai/agentos — TypeScript runtime for autonomous AI agents — multimodal RAG, cognitive memory, streaming guardrails, voice pipeline, and emergent multi-agent orchestration.",
+      "url": "https://github.com/framersai/agentos",
       "source": "github.com",
       "tags": [
         "AI"
       ],
-      "score": 9.469,
-      "raw_score": 5.433,
+      "score": 9.398,
+      "raw_score": 5.382,
       "published_hours_ago": 0,
-      "stars": 33,
-      "image_url": "https://opengraph.githubassets.com/1/smith-horn/skillsmith",
+      "stars": 37,
+      "image_url": "https://opengraph.githubassets.com/1/framersai/agentos",
       "badge": "Repo",
-      "deck": "Skill discovery, security, optimization, and management for agentic systems. Surfaced 0h ago with 33 stars and 33/day momentum.",
-      "meta": "GitHub · 33 stars · 33/day · 0h ago · signal 9.47",
+      "deck": "TypeScript runtime for autonomous AI agents — multimodal RAG, cognitive memory, streaming guardrails, voice pipeline, and emergent multi-agent orchestration. Surfaced 0h ago with 37 stars a…",
+      "meta": "GitHub · 37 stars · 37/day · 0h ago · signal 9.40",
       "rank": 1,
       "rank_delta": null
     },
@@ -32,35 +32,35 @@
       "tags": [
         "AI"
       ],
-      "score": 6.984,
-      "raw_score": 3.629,
-      "published_hours_ago": 15,
+      "score": 6.803,
+      "raw_score": 3.511,
+      "published_hours_ago": 39,
       "stars": 0,
       "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24755.png",
       "badge": "Paper",
       "deck": "Software development is iterative, yet agentic coding benchmarks overwhelmingly evaluate single-shot solutions against complete specifications. Code can pass the test suite but become progr…",
-      "meta": "Hugging Face Papers · 15h ago · up 12 · signal 6.98",
-      "rank": 10,
-      "rank_delta": 12
+      "meta": "Hugging Face Papers · 39h ago · up 40 · signal 6.80",
+      "rank": 11,
+      "rank_delta": 40
     },
     {
-      "headline": "Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…",
-      "title": "Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operations",
-      "url": "https://news.hada.io/topic?id=27920",
+      "headline": "The incident that blamed AI for the Iranian school bombing is a more fundamental problem",
+      "title": "The incident that blamed AI for the Iranian school bombing is a more fundamental problem",
+      "url": "https://news.hada.io/topic?id=27954",
       "source": "geeknews",
       "tags": [
         "social"
       ],
-      "score": 4.039,
-      "raw_score": 2.181,
-      "published_hours_ago": 2,
+      "score": 4.49,
+      "raw_score": 2.233,
+      "published_hours_ago": 1,
       "stars": 0,
       "image_url": "/news/assets/thumb-ai.svg",
       "badge": "Social",
-      "deck": "Community signal picked up on GeekNews about 2h ago. Down 31 spots from the previous run.",
-      "meta": "GeekNews · 2h ago · down 31 · signal 4.04",
-      "rank": 64,
-      "rank_delta": -31
+      "deck": "Community signal picked up on GeekNews about 1h ago.",
+      "meta": "GeekNews · 1h ago · signal 4.49",
+      "rank": 46,
+      "rank_delta": null
     },
     {
       "headline": "Calibri: Enhancing Diffusion Transformers via Parameter-Efficient Calibration",
@@ -70,38 +70,19 @@
       "tags": [
         "AI"
       ],
-      "score": 6.565,
-      "raw_score": 3.314,
-      "published_hours_ago": 6,
+      "score": 6.132,
+      "raw_score": 3.095,
+      "published_hours_ago": 30,
       "stars": 0,
       "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24800.png",
       "badge": "Paper",
       "deck": "Diffusion Transformers can be enhanced through a parameter-efficient calibration approach that improves generative quality while reducing inference steps. Surfaced via Hugging Face Papers a…",
-      "meta": "Hugging Face Papers · 6h ago · up 11 · signal 6.57",
-      "rank": 16,
-      "rank_delta": 11
+      "meta": "Hugging Face Papers · 30h ago · up 16 · signal 6.13",
+      "rank": 14,
+      "rank_delta": 16
     }
   ],
   "repo_scoreboard": [
-    {
-      "headline": "smith-horn/skillsmith",
-      "title": "smith-horn/skillsmith — Skill discovery, security, optimization, and management for agentic systems",
-      "url": "https://github.com/smith-horn/skillsmith",
-      "source": "github.com",
-      "tags": [
-        "AI"
-      ],
-      "score": 9.469,
-      "raw_score": 5.433,
-      "published_hours_ago": 0,
-      "stars": 33,
-      "image_url": "https://opengraph.githubassets.com/1/smith-horn/skillsmith",
-      "badge": "Repo",
-      "deck": "Skill discovery, security, optimization, and management for agentic systems. Surfaced 0h ago with 33 stars and 33/day momentum.",
-      "meta": "GitHub · 33 stars · 33/day · 0h ago · signal 9.47",
-      "rank": 1,
-      "rank_delta": null
-    },
     {
       "headline": "framersai/agentos",
       "title": "framersai/agentos — TypeScript runtime for autonomous AI agents — multimodal RAG, cognitive memory, streaming guardrails, voice pipeline, and emergent multi-agent orchestration.",
@@ -137,6 +118,25 @@
       "badge": "Repo",
       "deck": "MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically. Surfaced 0h ago with 113 stars and 113/day mom…",
       "meta": "GitHub · 113 stars · 113/day · 0h ago · signal 9.34",
+      "rank": 1,
+      "rank_delta": null
+    },
+    {
+      "headline": "LearningCircuit/local-deep-research",
+      "title": "LearningCircuit/local-deep-research — Local Deep Research achieves ~95% on SimpleQA benchmark (tested with GPT-4.1-mini). Supports local and cloud LLMs (Ollama, Google, Anthropic, ...). Searches 10+ sources - arXiv, PubMed, web, and your private documents. Everything Local & Encrypted.",
+      "url": "https://github.com/LearningCircuit/local-deep-research",
+      "source": "github.com",
+      "tags": [
+        "AI"
+      ],
+      "score": 9.255,
+      "raw_score": 4.91,
+      "published_hours_ago": 0,
+      "stars": 4196,
+      "image_url": "https://opengraph.githubassets.com/1/LearningCircuit/local-deep-research",
+      "badge": "Repo",
+      "deck": "Local Deep Research achieves ~95% on SimpleQA benchmark (tested with GPT-4.1-mini). Supports local and cloud LLMs (Ollama, Google, Anthropic, ...). Searches 10+ sources - arXiv, PubMed, web…",
+      "meta": "GitHub · 4196 stars · 4196/day · 0h ago · signal 9.26",
       "rank": 1,
       "rank_delta": null
     },
@@ -243,21 +243,21 @@
       "description": "The fastest-moving items across repos, papers, and community chatter.",
       "items": [
         {
-          "headline": "smith-horn/skillsmith",
-          "title": "smith-horn/skillsmith — Skill discovery, security, optimization, and management for agentic systems",
-          "url": "https://github.com/smith-horn/skillsmith",
+          "headline": "framersai/agentos",
+          "title": "framersai/agentos — TypeScript runtime for autonomous AI agents — multimodal RAG, cognitive memory, streaming guardrails, voice pipeline, and emergent multi-agent orchestration.",
+          "url": "https://github.com/framersai/agentos",
           "source": "github.com",
           "tags": [
             "AI"
           ],
-          "score": 9.469,
-          "raw_score": 5.433,
+          "score": 9.398,
+          "raw_score": 5.382,
           "published_hours_ago": 0,
-          "stars": 33,
-          "image_url": "https://opengraph.githubassets.com/1/smith-horn/skillsmith",
+          "stars": 37,
+          "image_url": "https://opengraph.githubassets.com/1/framersai/agentos",
           "badge": "Repo",
-          "deck": "Skill discovery, security, optimization, and management for agentic systems. Surfaced 0h ago with 33 stars and 33/day momentum.",
-          "meta": "GitHub · 33 stars · 33/day · 0h ago · signal 9.47",
+          "deck": "TypeScript runtime for autonomous AI agents — multimodal RAG, cognitive memory, streaming guardrails, voice pipeline, and emergent multi-agent orchestration. Surfaced 0h ago with 37 stars a…",
+          "meta": "GitHub · 37 stars · 37/day · 0h ago · signal 9.40",
           "rank": 1,
           "rank_delta": null
         },
@@ -267,16 +267,16 @@
           "url": "https://github.com/Demorck/ClairObscurArchipelagoRandomizer",
           "source": "github.com",
           "tags": [],
-          "score": 7.599,
-          "raw_score": 3.851,
-          "published_hours_ago": 15,
+          "score": 7.471,
+          "raw_score": 3.733,
+          "published_hours_ago": 22,
           "stars": 10,
           "image_url": "https://opengraph.githubassets.com/1/Demorck/ClairObscurArchipelagoRandomizer",
           "badge": "Repo",
-          "deck": "A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system. Surfaced 15h ago with 10 stars and 10/day momentum. Up 33 spots from the previous run.",
-          "meta": "GitHub · 10 stars · 10/day · 15h ago · up 33 · signal 7.60",
+          "deck": "A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system. Surfaced 22h ago with 10 stars and 10/day momentum. Up 35 spots from the previous run.",
+          "meta": "GitHub · 10 stars · 10/day · 22h ago · up 35 · signal 7.47",
           "rank": 9,
-          "rank_delta": 33
+          "rank_delta": 35
         },
         {
           "headline": "SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks",
@@ -286,35 +286,35 @@
           "tags": [
             "AI"
           ],
-          "score": 6.984,
-          "raw_score": 3.629,
-          "published_hours_ago": 15,
+          "score": 6.803,
+          "raw_score": 3.511,
+          "published_hours_ago": 39,
           "stars": 0,
           "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24755.png",
           "badge": "Paper",
           "deck": "Software development is iterative, yet agentic coding benchmarks overwhelmingly evaluate single-shot solutions against complete specifications. Code can pass the test suite but become progr…",
-          "meta": "Hugging Face Papers · 15h ago · up 12 · signal 6.98",
-          "rank": 10,
-          "rank_delta": 12
+          "meta": "Hugging Face Papers · 39h ago · up 40 · signal 6.80",
+          "rank": 11,
+          "rank_delta": 40
         },
         {
-          "headline": "IQuest-Coder-V1 Technical Report",
-          "title": "IQuest-Coder-V1 Technical Report",
-          "url": "https://huggingface.co/papers/2603.16733",
+          "headline": "AVO: Agentic Variation Operators for Autonomous Evolutionary Search",
+          "title": "AVO: Agentic Variation Operators for Autonomous Evolutionary Search",
+          "url": "https://huggingface.co/papers/2603.24517",
           "source": "huggingface.co",
           "tags": [
             "AI"
           ],
-          "score": 6.925,
-          "raw_score": 3.407,
-          "published_hours_ago": 5,
+          "score": 6.569,
+          "raw_score": 3.271,
+          "published_hours_ago": 22,
           "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.16733.png",
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24517.png",
           "badge": "Paper",
-          "deck": "The IQuest-Coder-V1 series represents a new family of code LLMs with a multi-stage training approach that captures dynamic software logic evolution and achieves state-of-the-art performance…",
-          "meta": "Hugging Face Papers · 5h ago · up 15 · signal 6.92",
-          "rank": 13,
-          "rank_delta": 15
+          "deck": "Agentic variation operators enable autonomous discovery of performance-critical micro-architectural optimizations for attention kernels, outperforming state-of-the-art implementations on ad…",
+          "meta": "Hugging Face Papers · 22h ago · up 49 · signal 6.57",
+          "rank": 12,
+          "rank_delta": 49
         }
       ]
     },
@@ -323,25 +323,6 @@
       "title": "Repository Momentum",
       "description": "Fresh GitHub projects worth scanning before the feed turns over.",
       "items": [
-        {
-          "headline": "smith-horn/skillsmith",
-          "title": "smith-horn/skillsmith — Skill discovery, security, optimization, and management for agentic systems",
-          "url": "https://github.com/smith-horn/skillsmith",
-          "source": "github.com",
-          "tags": [
-            "AI"
-          ],
-          "score": 9.469,
-          "raw_score": 5.433,
-          "published_hours_ago": 0,
-          "stars": 33,
-          "image_url": "https://opengraph.githubassets.com/1/smith-horn/skillsmith",
-          "badge": "Repo",
-          "deck": "Skill discovery, security, optimization, and management for agentic systems. Surfaced 0h ago with 33 stars and 33/day momentum.",
-          "meta": "GitHub · 33 stars · 33/day · 0h ago · signal 9.47",
-          "rank": 1,
-          "rank_delta": null
-        },
         {
           "headline": "framersai/agentos",
           "title": "framersai/agentos — TypeScript runtime for autonomous AI agents — multimodal RAG, cognitive memory, streaming guardrails, voice pipeline, and emergent multi-agent orchestration.",
@@ -377,6 +358,25 @@
           "badge": "Repo",
           "deck": "MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically. Surfaced 0h ago with 113 stars and 113/day mom…",
           "meta": "GitHub · 113 stars · 113/day · 0h ago · signal 9.34",
+          "rank": 1,
+          "rank_delta": null
+        },
+        {
+          "headline": "LearningCircuit/local-deep-research",
+          "title": "LearningCircuit/local-deep-research — Local Deep Research achieves ~95% on SimpleQA benchmark (tested with GPT-4.1-mini). Supports local and cloud LLMs (Ollama, Google, Anthropic, ...). Searches 10+ sources - arXiv, PubMed, web, and your private documents. Everything Local & Encrypted.",
+          "url": "https://github.com/LearningCircuit/local-deep-research",
+          "source": "github.com",
+          "tags": [
+            "AI"
+          ],
+          "score": 9.255,
+          "raw_score": 4.91,
+          "published_hours_ago": 0,
+          "stars": 4196,
+          "image_url": "https://opengraph.githubassets.com/1/LearningCircuit/local-deep-research",
+          "badge": "Repo",
+          "deck": "Local Deep Research achieves ~95% on SimpleQA benchmark (tested with GPT-4.1-mini). Supports local and cloud LLMs (Ollama, Google, Anthropic, ...). Searches 10+ sources - arXiv, PubMed, web…",
+          "meta": "GitHub · 4196 stars · 4196/day · 0h ago · signal 9.26",
           "rank": 1,
           "rank_delta": null
         },
@@ -476,22 +476,22 @@
           "rank_delta": null
         },
         {
-          "headline": "bytedance/deer-flow",
-          "title": "bytedance/deer-flow — An open-source long-horizon SuperAgent harness that researches, codes, and creates. With the help of sandboxes, memories, tools, skill, subagents and message gateway, it handles different levels of tasks that could take minutes to hours.",
-          "url": "https://github.com/bytedance/deer-flow",
+          "headline": "dcostenco/prism-mcp",
+          "title": "dcostenco/prism-mcp — 🧠 Prism MCP — Persistent memory for AI coding agents. Session history, semantic search, TurboQuant 10x compression, visual memory, autonomous Web Scholar, CRDT multi-agent merging, and a Mind Palace dashboard. Works with Claude, Cursor, Windsurf, Gemini.",
+          "url": "https://github.com/dcostenco/prism-mcp",
           "source": "github.com",
           "tags": [
             "AI"
           ],
-          "score": 8.588,
-          "raw_score": 4.566,
+          "score": 8.576,
+          "raw_score": 4.515,
           "published_hours_ago": 0,
-          "stars": 49827,
-          "image_url": "https://opengraph.githubassets.com/1/bytedance/deer-flow",
+          "stars": 90,
+          "image_url": "https://opengraph.githubassets.com/1/dcostenco/prism-mcp",
           "badge": "Repo",
-          "deck": "An open-source long-horizon SuperAgent harness that researches, codes, and creates. With the help of sandboxes, memories, tools, skill, subagents and message gateway, it handles different l…",
-          "meta": "GitHub · 49827 stars · 49827/day · 0h ago · signal 8.59",
-          "rank": 3,
+          "deck": "🧠 Prism MCP — Persistent memory for AI coding agents. Session history, semantic search, TurboQuant 10x compression, visual memory, autonomous Web Scholar, CRDT multi-agent merging, and a Mi…",
+          "meta": "GitHub · 90 stars · 90/day · 0h ago · signal 8.58",
+          "rank": 2,
           "rank_delta": null
         },
         {
@@ -500,16 +500,16 @@
           "url": "https://github.com/Demorck/ClairObscurArchipelagoRandomizer",
           "source": "github.com",
           "tags": [],
-          "score": 7.599,
-          "raw_score": 3.851,
-          "published_hours_ago": 15,
+          "score": 7.471,
+          "raw_score": 3.733,
+          "published_hours_ago": 22,
           "stars": 10,
           "image_url": "https://opengraph.githubassets.com/1/Demorck/ClairObscurArchipelagoRandomizer",
           "badge": "Repo",
-          "deck": "A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system. Surfaced 15h ago with 10 stars and 10/day momentum. Up 33 spots from the previous run.",
-          "meta": "GitHub · 10 stars · 10/day · 15h ago · up 33 · signal 7.60",
+          "deck": "A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system. Surfaced 22h ago with 10 stars and 10/day momentum. Up 35 spots from the previous run.",
+          "meta": "GitHub · 10 stars · 10/day · 22h ago · up 35 · signal 7.47",
           "rank": 9,
-          "rank_delta": 33
+          "rank_delta": 35
         }
       ]
     },
@@ -526,54 +526,35 @@
           "tags": [
             "AI"
           ],
-          "score": 6.984,
-          "raw_score": 3.629,
-          "published_hours_ago": 15,
+          "score": 6.803,
+          "raw_score": 3.511,
+          "published_hours_ago": 39,
           "stars": 0,
           "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24755.png",
           "badge": "Paper",
           "deck": "Software development is iterative, yet agentic coding benchmarks overwhelmingly evaluate single-shot solutions against complete specifications. Code can pass the test suite but become progr…",
-          "meta": "Hugging Face Papers · 15h ago · up 12 · signal 6.98",
-          "rank": 10,
-          "rank_delta": 12
+          "meta": "Hugging Face Papers · 39h ago · up 40 · signal 6.80",
+          "rank": 11,
+          "rank_delta": 40
         },
         {
-          "headline": "IQuest-Coder-V1 Technical Report",
-          "title": "IQuest-Coder-V1 Technical Report",
-          "url": "https://huggingface.co/papers/2603.16733",
+          "headline": "AVO: Agentic Variation Operators for Autonomous Evolutionary Search",
+          "title": "AVO: Agentic Variation Operators for Autonomous Evolutionary Search",
+          "url": "https://huggingface.co/papers/2603.24517",
           "source": "huggingface.co",
           "tags": [
             "AI"
           ],
-          "score": 6.925,
-          "raw_score": 3.407,
-          "published_hours_ago": 5,
+          "score": 6.569,
+          "raw_score": 3.271,
+          "published_hours_ago": 22,
           "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.16733.png",
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24517.png",
           "badge": "Paper",
-          "deck": "The IQuest-Coder-V1 series represents a new family of code LLMs with a multi-stage training approach that captures dynamic software logic evolution and achieves state-of-the-art performance…",
-          "meta": "Hugging Face Papers · 5h ago · up 15 · signal 6.92",
-          "rank": 13,
-          "rank_delta": 15
-        },
-        {
-          "headline": "CarePilot: A Multi-Agent Framework for Long-Horizon Computer Task Automation in Healthcare",
-          "title": "CarePilot: A Multi-Agent Framework for Long-Horizon Computer Task Automation in Healthcare",
-          "url": "https://huggingface.co/papers/2603.24157",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 6.842,
-          "raw_score": 3.508,
-          "published_hours_ago": 39,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24157.png",
-          "badge": "Paper",
-          "deck": "careflow is a benchmark for long-horizon automation in healthcare, and carepilot is a multimodal agent framework that uses actor-critic methods with dual-memory mechanisms to improve automa…",
-          "meta": "Hugging Face Papers · 39h ago · up 12 · signal 6.84",
+          "deck": "Agentic variation operators enable autonomous discovery of performance-critical micro-architectural optimizations for attention kernels, outperforming state-of-the-art implementations on ad…",
+          "meta": "Hugging Face Papers · 22h ago · up 49 · signal 6.57",
           "rank": 12,
-          "rank_delta": 12
+          "rank_delta": 49
         },
         {
           "headline": "GameplayQA: A Benchmarking Framework for Decision-Dense POV-Synced Multi-Video Understanding of…",
@@ -583,16 +564,16 @@
           "tags": [
             "AI"
           ],
-          "score": 6.83,
-          "raw_score": 3.567,
-          "published_hours_ago": 39,
+          "score": 6.14,
+          "raw_score": 3.218,
+          "published_hours_ago": 63,
           "stars": 0,
           "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24329.png",
           "badge": "Paper",
           "deck": "GameplayQA presents a framework for evaluating multimodal large language models' perception and reasoning capabilities in 3D environments through annotated multiplayer gameplay videos. Surf…",
-          "meta": "Hugging Face Papers · 39h ago · up 12 · signal 6.83",
-          "rank": 11,
-          "rank_delta": 12
+          "meta": "Hugging Face Papers · 63h ago · up 11 · signal 6.14",
+          "rank": 13,
+          "rank_delta": 11
         },
         {
           "headline": "Calibri: Enhancing Diffusion Transformers via Parameter-Efficient Calibration",
@@ -602,16 +583,35 @@
           "tags": [
             "AI"
           ],
-          "score": 6.565,
-          "raw_score": 3.314,
-          "published_hours_ago": 6,
+          "score": 6.132,
+          "raw_score": 3.095,
+          "published_hours_ago": 30,
           "stars": 0,
           "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24800.png",
           "badge": "Paper",
           "deck": "Diffusion Transformers can be enhanced through a parameter-efficient calibration approach that improves generative quality while reducing inference steps. Surfaced via Hugging Face Papers a…",
-          "meta": "Hugging Face Papers · 6h ago · up 11 · signal 6.57",
-          "rank": 16,
-          "rank_delta": 11
+          "meta": "Hugging Face Papers · 30h ago · up 16 · signal 6.13",
+          "rank": 14,
+          "rank_delta": 16
+        },
+        {
+          "headline": "IQuest-Coder-V1 Technical Report",
+          "title": "IQuest-Coder-V1 Technical Report",
+          "url": "https://huggingface.co/papers/2603.16733",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 6.101,
+          "raw_score": 3.008,
+          "published_hours_ago": 29,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.16733.png",
+          "badge": "Paper",
+          "deck": "The IQuest-Coder-V1 series represents a new family of code LLMs with a multi-stage training approach that captures dynamic software logic evolution and achieves state-of-the-art performance…",
+          "meta": "Hugging Face Papers · 29h ago · up 32 · signal 6.10",
+          "rank": 15,
+          "rank_delta": 32
         },
         {
           "headline": "The Pulse of Motion: Measuring Physical Frame Rate from Visual Dynamics",
@@ -619,16 +619,16 @@
           "url": "https://huggingface.co/papers/2603.14375",
           "source": "huggingface.co",
           "tags": [],
-          "score": 6.211,
-          "raw_score": 2.935,
-          "published_hours_ago": 22,
+          "score": 5.699,
+          "raw_score": 2.685,
+          "published_hours_ago": 46,
           "stars": 0,
           "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.14375.png",
           "badge": "Paper",
           "deck": "Generative video models suffer from temporal ambiguity due to inconsistent frame rate training, which this work addresses through a Visual Chronometer that estimates physical frames per sec…",
-          "meta": "Hugging Face Papers · 22h ago · up 28 · signal 6.21",
-          "rank": 26,
-          "rank_delta": 28
+          "meta": "Hugging Face Papers · 46h ago · up 27 · signal 5.70",
+          "rank": 29,
+          "rank_delta": 27
         },
         {
           "headline": "Demographic Fairness in Multimodal LLMs: A Benchmark of Gender and Ethnicity Bias in Face Verif…",
@@ -638,33 +638,16 @@
           "tags": [
             "AI"
           ],
-          "score": 4.206,
-          "raw_score": 2.274,
-          "published_hours_ago": 23,
+          "score": 3.787,
+          "raw_score": 2.111,
+          "published_hours_ago": 47,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 23h ago. Down 37 spots from the previous run.",
-          "meta": "arXiv · 23h ago · down 37 · signal 4.21",
-          "rank": 55,
-          "rank_delta": -37
-        },
-        {
-          "headline": "LanteRn: Latent Visual Structured Reasoning",
-          "title": "LanteRn: Latent Visual Structured Reasoning",
-          "url": "http://arxiv.org/abs/2603.25629v1",
-          "source": "arxiv.org",
-          "tags": [],
-          "score": 4.006,
-          "raw_score": 2.347,
-          "published_hours_ago": 23,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-paper.svg",
-          "badge": "Paper",
-          "deck": "Fresh arXiv paper posted 23h ago and surfacing in the current feed. Down 40 spots from the previous run.",
-          "meta": "arXiv · 23h ago · down 40 · signal 4.01",
-          "rank": 52,
-          "rank_delta": -40
+          "deck": "Fresh arXiv paper from the ai cluster, posted 47h ago. Down 43 spots from the previous run.",
+          "meta": "arXiv · 47h ago · down 43 · signal 3.79",
+          "rank": 58,
+          "rank_delta": -43
         },
         {
           "headline": "Training the Knowledge Base through Evidence Distillation and Write-Back Enrichment",
@@ -674,16 +657,33 @@
           "tags": [
             "AI"
           ],
-          "score": 3.945,
-          "raw_score": 2.233,
-          "published_hours_ago": 22,
+          "score": 3.398,
+          "raw_score": 1.97,
+          "published_hours_ago": 46,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 22h ago. Down 40 spots from the previous run.",
-          "meta": "arXiv · 22h ago · down 40 · signal 3.94",
-          "rank": 59,
-          "rank_delta": -40
+          "deck": "Fresh arXiv paper from the ai cluster, posted 46h ago. Down 49 spots from the previous run.",
+          "meta": "arXiv · 46h ago · down 49 · signal 3.40",
+          "rank": 67,
+          "rank_delta": -49
+        },
+        {
+          "headline": "LanteRn: Latent Visual Structured Reasoning",
+          "title": "LanteRn: Latent Visual Structured Reasoning",
+          "url": "http://arxiv.org/abs/2603.25629v1",
+          "source": "arxiv.org",
+          "tags": [],
+          "score": 3.392,
+          "raw_score": 2.037,
+          "published_hours_ago": 47,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-paper.svg",
+          "badge": "Paper",
+          "deck": "Fresh arXiv paper posted 47h ago and surfacing in the current feed. Down 53 spots from the previous run.",
+          "meta": "arXiv · 47h ago · down 53 · signal 3.39",
+          "rank": 64,
+          "rank_delta": -53
         },
         {
           "headline": "RefAlign: Representation Alignment for Reference-to-Video Generation",
@@ -691,16 +691,16 @@
           "url": "http://arxiv.org/abs/2603.25743v1",
           "source": "arxiv.org",
           "tags": [],
-          "score": 3.839,
-          "raw_score": 2.355,
-          "published_hours_ago": 22,
+          "score": 3.299,
+          "raw_score": 2.099,
+          "published_hours_ago": 45,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper posted 22h ago and surfacing in the current feed. Down 34 spots from the previous run.",
-          "meta": "arXiv · 22h ago · down 34 · signal 3.84",
-          "rank": 51,
-          "rank_delta": -34
+          "deck": "Fresh arXiv paper posted 45h ago and surfacing in the current feed. Down 43 spots from the previous run.",
+          "meta": "arXiv · 45h ago · down 43 · signal 3.30",
+          "rank": 59,
+          "rank_delta": -43
         }
       ]
     },
@@ -710,163 +710,43 @@
       "description": "Directional signals from discussion-heavy sources.",
       "items": [
         {
-          "headline": "Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…",
-          "title": "Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operations",
-          "url": "https://news.hada.io/topic?id=27920",
+          "headline": "The incident that blamed AI for the Iranian school bombing is a more fundamental problem",
+          "title": "The incident that blamed AI for the Iranian school bombing is a more fundamental problem",
+          "url": "https://news.hada.io/topic?id=27954",
           "source": "geeknews",
           "tags": [
             "social"
           ],
-          "score": 4.039,
-          "raw_score": 2.181,
-          "published_hours_ago": 2,
+          "score": 4.49,
+          "raw_score": 2.233,
+          "published_hours_ago": 1,
           "stars": 0,
           "image_url": "/news/assets/thumb-ai.svg",
           "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 2h ago. Down 31 spots from the previous run.",
-          "meta": "GeekNews · 2h ago · down 31 · signal 4.04",
-          "rank": 64,
-          "rank_delta": -31
-        },
-        {
-          "headline": "Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…",
-          "title": "Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operations",
-          "url": "https://news.hada.io/topic?id=27920#rebalance-geeknews-1",
-          "source": "geeknews",
-          "tags": [
-            "social",
-            "supplemental"
-          ],
-          "score": 4.039,
-          "raw_score": 2.181,
-          "published_hours_ago": 2,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 2h ago. Down 31 spots from the previous run.",
-          "meta": "GeekNews · 2h ago · down 31 · signal 4.04",
-          "rank": 64,
-          "rank_delta": -31
-        },
-        {
-          "headline": "Show GN: MemAware – A benchmark to measure whether an AI agent knows “what I know”",
-          "title": "Show GN: MemAware – A benchmark to measure whether an AI agent knows “what I know”",
-          "url": "https://news.hada.io/topic?id=27917",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 3.939,
-          "raw_score": 2.081,
-          "published_hours_ago": 4,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 4h ago. Down 49 spots from the previous run.",
-          "meta": "GeekNews · 4h ago · down 49 · signal 3.94",
-          "rank": 86,
-          "rank_delta": -49
-        },
-        {
-          "headline": "Show GN: MemAware – A benchmark to measure whether an AI agent knows “what I know”",
-          "title": "Show GN: MemAware – A benchmark to measure whether an AI agent knows “what I know”",
-          "url": "https://news.hada.io/topic?id=27917#rebalance-geeknews-4",
-          "source": "geeknews",
-          "tags": [
-            "social",
-            "supplemental"
-          ],
-          "score": 3.939,
-          "raw_score": 2.081,
-          "published_hours_ago": 4,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 4h ago. Down 49 spots from the previous run.",
-          "meta": "GeekNews · 4h ago · down 49 · signal 3.94",
-          "rank": 86,
-          "rank_delta": -49
-        },
-        {
-          "headline": "🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly th…",
-          "title": "🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly through AI platforms like ChatGPT, Copilot, and Gemini.",
-          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE04Mmp6X0hfYmhCZXE1b0xtN3VBVkVwc2x5NTNiUk9oT05GRDJub2NmbzVnemNDMVRSa040N0t3TU16RDZxWjJVTVJNVGg3S2FwVV9ldHEwMzhFRjctQzZuZlJrTUM?oc=5",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social"
-          ],
-          "score": 3.701,
-          "raw_score": 2.001,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X about 72h ago.",
-          "meta": "X · 72h ago · signal 3.70",
-          "rank": 106,
+          "deck": "Community signal picked up on GeekNews about 1h ago.",
+          "meta": "GeekNews · 1h ago · signal 4.49",
+          "rank": 46,
           "rank_delta": null
         },
         {
-          "headline": "🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly th…",
-          "title": "🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly through AI platforms like ChatGPT, Copilot, and Gemini.",
-          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE04Mmp6X0hfYmhCZXE1b0xtN3VBVkVwc2x5NTNiUk9oT05GRDJub2NmbzVnemNDMVRSa040N0t3TU16RDZxWjJVTVJNVGg3S2FwVV9ldHEwMzhFRjctQzZuZlJrTUM?oc=5#rebalance-x.com-3",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social",
-            "supplemental"
-          ],
-          "score": 3.701,
-          "raw_score": 2.001,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X about 72h ago.",
-          "meta": "X · 72h ago · signal 3.70",
-          "rank": 106,
-          "rank_delta": null
-        },
-        {
-          "headline": "🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly th…",
-          "title": "🔥 NEW: Shopify launches agentic storefronts, enabling millions of merchants to sell directly through AI platforms like ChatGPT, Copilot, and Gemini.",
-          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE04Mmp6X0hfYmhCZXE1b0xtN3VBVkVwc2x5NTNiUk9oT05GRDJub2NmbzVnemNDMVRSa040N0t3TU16RDZxWjJVTVJNVGg3S2FwVV9ldHEwMzhFRjctQzZuZlJrTUM?oc=5#rebalance-x.com-6",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social",
-            "supplemental"
-          ],
-          "score": 3.701,
-          "raw_score": 2.001,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X about 72h ago.",
-          "meta": "X · 72h ago · signal 3.70",
-          "rank": 106,
-          "rank_delta": null
-        },
-        {
-          "headline": "Anthropic confirms existence of leak of next-generation model “Claude Mythos” — “The most power…",
-          "title": "Anthropic confirms existence of leak of next-generation model “Claude Mythos” — “The most powerful model ever”",
-          "url": "https://news.hada.io/topic?id=27911",
+          "headline": "The incident that blamed AI for the Iranian school bombing is a more fundamental problem",
+          "title": "The incident that blamed AI for the Iranian school bombing is a more fundamental problem",
+          "url": "https://news.hada.io/topic?id=27954#rebalance-geeknews-1",
           "source": "geeknews",
           "tags": [
-            "social"
+            "social",
+            "supplemental"
           ],
-          "score": 3.635,
-          "raw_score": 2.021,
-          "published_hours_ago": 10,
+          "score": 4.49,
+          "raw_score": 2.233,
+          "published_hours_ago": 1,
           "stars": 0,
           "image_url": "/news/assets/thumb-ai.svg",
           "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 10h ago. Down 67 spots from the previous run.",
-          "meta": "GeekNews · 10h ago · down 67 · signal 3.63",
-          "rank": 103,
-          "rank_delta": -67
+          "deck": "Community signal picked up on GeekNews about 1h ago.",
+          "meta": "GeekNews · 1h ago · signal 4.49",
+          "rank": 46,
+          "rank_delta": null
         },
         {
           "headline": "🚨 BREAKING: CHINA just released a Python framework for building AI agents.",
@@ -877,35 +757,153 @@
             "AI",
             "social"
           ],
-          "score": 3.499,
+          "score": 3.678,
           "raw_score": 2.004,
           "published_hours_ago": 72,
           "stars": 0,
           "image_url": "/news/assets/thumb-ai.svg",
           "badge": "Social",
           "deck": "Community signal picked up on X about 72h ago.",
-          "meta": "X · 72h ago · signal 3.50",
-          "rank": 114,
+          "meta": "X · 72h ago · signal 3.68",
+          "rank": 71,
           "rank_delta": null
         },
         {
-          "headline": "GitHub policy change / After April 24th, if no separate settings are made, learn with AI data",
-          "title": "GitHub policy change / After April 24th, if no separate settings are made, learn with AI data",
-          "url": "https://news.hada.io/topic?id=27909",
-          "source": "geeknews",
+          "headline": "Agentic AI rises ⬆️ AI infrastructure shifts 🔀 Agentic AI calls for infrastructure designed for…",
+          "title": "Agentic AI rises ⬆️ AI infrastructure shifts 🔀 Agentic AI calls for infrastructure designed for real-world inference and scale, elevating the CPU’s role at the center of AI systems to drive efficiency and unlock performance - and Arm is built for it. - twitter.com",
+          "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9FM0F0S2RtXzRKREhiZmZYbDh5c3JCTUZFcldjNXpXZTZRTUt2bm9wY3pmb1U5NzQ1cXh3d1BXNEdTQTBsUE0tSE5La1I0VnRpMi1SWWZidVEzTHM1NGFj?oc=5",
+          "source": "x.com",
           "tags": [
+            "AI",
             "social"
           ],
-          "score": 3.128,
-          "raw_score": 1.712,
-          "published_hours_ago": 11,
+          "score": 3.598,
+          "raw_score": 2.055,
+          "published_hours_ago": 72,
           "stars": 0,
           "image_url": "/news/assets/thumb-ai.svg",
           "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 11h ago. Down 44 spots from the previous run.",
-          "meta": "GeekNews · 11h ago · down 44 · signal 3.13",
-          "rank": 89,
-          "rank_delta": -44
+          "deck": "Community signal picked up on X about 72h ago.",
+          "meta": "X · 72h ago · signal 3.60",
+          "rank": 63,
+          "rank_delta": null
+        },
+        {
+          "headline": "Announcing ARC-AGI-3 The only unsaturated agentic intelligence benchmark in the world Humans sc…",
+          "title": "Announcing ARC-AGI-3 The only unsaturated agentic intelligence benchmark in the world Humans score 100%, AI",
+          "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFBGUDM4ZHhTUm13T2dMd3M4RFVHdjJzU0NpaDU0aUx0X19oQ3ZDOGE4NXVPeURNLV9fa29WdVF0TVZGbEtVa0RVTmRhcHp4Um9XaGE2SmtiUkpDREZQZHc?oc=5",
+          "source": "x.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 3.378,
+          "raw_score": 1.848,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X about 72h ago.",
+          "meta": "X · 72h ago · signal 3.38",
+          "rank": 73,
+          "rank_delta": null
+        },
+        {
+          "headline": "At the moment, ARC-AGI-3 is the only unsaturated agentic AI benchmark.",
+          "title": "At the moment, ARC-AGI-3 is the only unsaturated agentic AI benchmark. Sub-1% scores from frontier models on the private test set. If you want to be among the first to know when an AGI breakthrough happens, monitor the ARC-AGI-3 leaderboard. Any sudde",
+          "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE4wVkN6MXlBQmdrZkhDQ0pyZElIX1ZPamJvTVhMRmVjaU1ja1VSRUNFTVk3Y0loWVlObnpQM0NpaTdmUnBEckdQdnZubVpPS1VEbTVpYTYxTzhCWWtUdnc?oc=5",
+          "source": "x.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 3.334,
+          "raw_score": 1.848,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X about 72h ago.",
+          "meta": "X · 72h ago · signal 3.33",
+          "rank": 74,
+          "rank_delta": null
+        },
+        {
+          "headline": "Anthropic has been testing a new model called \"Mythos\" with certain customers: - a \"step change…",
+          "title": "Anthropic has been testing a new model called \"Mythos\" with certain customers: - a \"step change\" in AI capabilities, including \"dramatically higher scores\" in coding, academic reasoning and cybersecurity - \"currently far ahead of any other AI model in cyber cap",
+          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5GbXVDMHdWaG4ySnBRaXd2ekVmcFl4MG16bm5MdU5mekpsSEkwZVgtT2VlcHJoMXZfUTYybzVXNURDUFZ2b05nMHlSR2UtTXdjMHFiUmlsd21jWmRTMk1xOHNYbng?oc=5",
+          "source": "x.com",
+          "tags": [
+            "social"
+          ],
+          "score": 3.317,
+          "raw_score": 1.899,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X about 72h ago.",
+          "meta": "X · 72h ago · signal 3.32",
+          "rank": 75,
+          "rank_delta": null
+        },
+        {
+          "headline": "I'd just like to interject for a moment. What you're referring to as a \"model with no harness\",…",
+          "title": "I'd just like to interject for a moment. What you're referring to as a \"model with no harness\", is in fact, a model with a harness, or as I've recently taken to calling it, an agentic language system. An LLM is not an agentic language system unto itself, but rather just o",
+          "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFBja3Ztc19VMzhCQ3VPWV83eW8taFMtaVVreUdHTlRpMVF0b0l1M1FWY0dXVmtMWi0wY0VJU1Btb1VzY1ByNk9BV1BjVFFnLURIelg4NHI3VUhIaWdEYmVoag?oc=5",
+          "source": "x.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 3.301,
+          "raw_score": 1.848,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X about 72h ago.",
+          "meta": "X · 72h ago · signal 3.30",
+          "rank": 82,
+          "rank_delta": null
+        },
+        {
+          "headline": "The last two years reshaped how we evaluate models and what we expect from them.",
+          "title": "The last two years reshaped how we evaluate models and what we expect from them. OpenAI's o1 showed that \"thinking\" could be a first-class capability, something you train for and expose to users. DeepSeek-R1 proved that reasoning-style post-training coul",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE5lZjRhTWotci1hYzF2cmhpWHdiNTFxWHA2cU5mX2dtREhBZlV2ZU1xQmNFdmlXcnM5d01idTAwMFBpc1B0WFdQbTRLNE1lQkZrNXZ2VTJfTi1kb1ZrZTdZVUc5bw?oc=5",
+          "source": "x.com",
+          "tags": [
+            "social"
+          ],
+          "score": 2.972,
+          "raw_score": 1.797,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X about 72h ago.",
+          "meta": "X · 72h ago · signal 2.97",
+          "rank": 116,
+          "rank_delta": null
+        },
+        {
+          "headline": "Anthropic’s new model, Capybara: “Compared to Claude Opus 4.6, Capybara achieves dramatically h…",
+          "title": "Anthropic’s new model, Capybara: “Compared to Claude Opus 4.6, Capybara achieves dramatically higher scores in software coding, academic reasoning, and cybersecurity.” According to Dario's previous interview, it might be a 10T-parameter model that cos",
+          "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFBRMzJrUUhuVWNwSmw2NUVZOFItdHRDbXJBV0U5d1ROQnM2dTVIQzNrUnVxMVd1cXlIamhEcDBLakpRWmJUV2NGcVZHcGNHTzZLeDRPMl94Wnd5Y2E4aFNwSA?oc=5",
+          "source": "x.com",
+          "tags": [
+            "social"
+          ],
+          "score": 2.968,
+          "raw_score": 1.797,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X about 72h ago.",
+          "meta": "X · 72h ago · signal 2.97",
+          "rank": 117,
+          "rank_delta": null
         }
       ]
     }
@@ -916,29 +914,35 @@
       "value": 10
     },
     {
-      "label": "GeekNews",
-      "value": 6
+      "label": "X",
+      "value": 8
     },
     {
       "label": "Hugging Face Papers",
       "value": 6
     },
     {
-      "label": "X",
+      "label": "arXiv",
       "value": 4
     },
     {
-      "label": "arXiv",
-      "value": 4
+      "label": "GeekNews",
+      "value": 2
     }
   ],
   "digest": {
-    "title": "Daily AI News Digest — 2026-03-28",
-    "url": "/notes/news/2026-03-28-ai-news-digest/",
-    "description": "GitHub velocity is led by smith-horn/skillsmith; paper attention is clustering around SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks; social attention is tilting toward Show GN: Geas - Claude Code Contract-based governance harness for multi-agent long-term operati…; biggest mover: Demorck/ClairObscurArchipelagoRandomizer (+33). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+    "title": "Daily AI News Digest — 2026-03-29",
+    "url": "/notes/news/2026-03-29-ai-news-digest/",
+    "description": "GitHub velocity is led by framersai/agentos; paper attention is clustering around SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks; social attention is tilting toward The incident that blamed AI for the Iranian school bombing is a more fundamental problem; biggest mover: AVO: Agentic Variation Operators for Autonomous Evolutionary Search (+49). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
   },
   "archive_url": "/notes/news/news-digest-archive/",
   "archives": [
+    {
+      "title": "Daily AI News Digest — 2026-03-29",
+      "url": "/notes/news/2026-03-29-ai-news-digest/",
+      "date_label": "2026-03-29",
+      "description": "GitHub velocity is led by framersai/agentos; paper attention is clustering around SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks; social attention is tilting toward The incident that blamed AI for the Iranian school bombing is a more fundamental problem; biggest mover: AVO: Agentic Variation Operators for Autonomous Evolutionary Search (+49). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+    },
     {
       "title": "Daily AI News Digest — 2026-03-28",
       "url": "/notes/news/2026-03-28-ai-news-digest/",
