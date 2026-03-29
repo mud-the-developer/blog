@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every Daily AI News Digest post."
-date: 2026-03-29
+date: 2026-03-30
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every Daily AI News Digest, grouped by month so older issues stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/notes/news/2026-03-29-ai-news-digest/">Latest digest</a>
+        <a class="post-cta-link" href="/notes/news/2026-03-30-ai-news-digest/">Latest digest</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-03-29T02:12:41.408551+09:00">Mar 29, 2026 · 2:12 AM KST</time></strong>
+        <strong><time datetime="2026-03-30T00:48:16.225819+09:00">Mar 30, 2026 · 12:48 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>6</strong>
+        <strong>7</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-03-29">Mar 29, 2026</time></strong>
+        <strong><time datetime="2026-03-30">Mar 30, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -40,8 +40,13 @@ content-classes: [news-digest-note, news-digest-archive-note]
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>March 2026</span><span class="news-digest-month-count">6 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>March 2026</span><span class="news-digest-month-count">7 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/notes/news/2026-03-30-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-03-30</span>
+            <strong>Daily AI News Digest — 2026-03-30</strong>
+            <span>GitHub velocity is led by framersai/agentos; paper attention is clustering around SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks; social attention is tilting toward The incident that blamed AI for the Iranian school bombing is a more fundamental problem; biggest mover: AVO: Agentic Variation Operators for Autonomous Evolutionary Search (+49). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+          </a>
           <a class="news-digest-archive-item" href="/notes/news/2026-03-29-ai-news-digest/">
             <span class="news-digest-archive-date">2026-03-29</span>
             <strong>Daily AI News Digest — 2026-03-29</strong>
