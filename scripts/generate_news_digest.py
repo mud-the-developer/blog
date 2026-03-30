@@ -669,6 +669,32 @@ def safe_text(value: str) -> str:
     return html_escape(value, quote=True)
 
 
+def badge_class_suffix(badge: str) -> str:
+    normalized = re.sub(r"[^a-z0-9]+", "-", badge.lower()).strip("-")
+    return normalized or "signal"
+
+
+def render_digest_card_lines(card: NewsItem, *, extra_classes: str = "") -> list[str]:
+    card_classes = "news-digest-card"
+    if extra_classes:
+        card_classes += f" {extra_classes}"
+
+    badge_suffix = badge_class_suffix(card.badge)
+    return [
+        f'      <a class="{card_classes}" href="{safe_text(card.url)}" target="_blank" rel="noreferrer">',
+        f"        {render_card_image(card)}",
+        '        <div class="news-digest-card-copy">',
+        '          <div class="news-digest-card-eyebrow">',
+        f'            <span class="news-digest-card-badge news-digest-card-badge--{badge_suffix}">{safe_text(card.badge)}</span>',
+        f'            <span class="news-digest-card-meta">{safe_text(card.meta)}</span>',
+        "          </div>",
+        f"          <h3>{safe_text(card.headline or card.title)}</h3>",
+        f'          <p class="news-digest-card-deck">{safe_text(card.deck)}</p>',
+        "        </div>",
+        "      </a>",
+    ]
+
+
 def description_from_post(path: Path) -> str:
     raw = path.read_text()
     match = re.search(r'^description:\s*(.+)$', raw, flags=re.MULTILINE)
@@ -1290,16 +1316,7 @@ def render_markdown(
             ]
         )
         for card in top_cards:
-            body.extend(
-                [
-                    f'      <a class="news-digest-card news-digest-top-card" href="{safe_text(card.url)}" target="_blank" rel="noreferrer">',
-                    f"        {render_card_image(card)}",
-                    '        <div class="news-digest-card-copy">',
-                    f"          <h3>{safe_text(card.headline or card.title)}</h3>",
-                    "        </div>",
-                    "      </a>",
-                ]
-            )
+            body.extend(render_digest_card_lines(card, extra_classes="news-digest-top-card"))
         body.extend(["    </div>", "  </section>", ""])
 
     for slug, heading, description, cards in sections:
@@ -1315,16 +1332,7 @@ def render_markdown(
             ]
         )
         for card in cards:
-            body.extend(
-                [
-                    f'      <a class="news-digest-card" href="{safe_text(card.url)}" target="_blank" rel="noreferrer">',
-                    f"        {render_card_image(card)}",
-                    '        <div class="news-digest-card-copy">',
-                    f"          <h3>{safe_text(card.headline or card.title)}</h3>",
-                    "        </div>",
-                    "      </a>",
-                ]
-            )
+            body.extend(render_digest_card_lines(card))
         body.extend(["    </div>", "  </section>", ""])
 
     body.extend(
