@@ -23,8 +23,8 @@
   --font-body: "Pretendard Variable", "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", sans-serif;
   --font-reading: "Pretendard Variable", "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Roboto Mono", monospace;
-  --content-shell-reading-max: calc(70ch + 4rem);
-  --content-shell-browse-max: 860px;
+  --content-shell-reading-max: 840px;
+  --content-shell-browse-max: 920px;
 
   --scrollbar-size: 10px;
 }

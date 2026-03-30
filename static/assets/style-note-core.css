@@ -503,7 +503,7 @@ html[data-theme="dark"] .note-body li code {
 }
 
 .note-body {
-  max-width: 70ch;
+  max-width: 74ch;
   color: color-mix(in srgb, var(--text) 94%, transparent);
   font-size: clamp(1rem, 0.28vw + 0.96rem, 1.12rem);
   line-height: 1.88;
