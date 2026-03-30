@@ -1,6 +1,6 @@
 ---
 title: "Daily AI News Digest — 2026-03-30"
-description: "GitHub velocity is led by framersai/agentos; paper attention is clustering around SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks; social attention is tilting toward The incident that blamed AI for the Iranian school bombing is a more fundamental problem; biggest mover: AVO: Agentic Variation Operators for Autonomous Evolutionary Search (+49). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+description: "GitHub velocity is led by framersai/agentos; paper attention is clustering around Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models; social attention is tilting toward Show GN: I created redTerm because it was inconvenient to send images to Claude Code / Codex CL…; biggest mover: PixelSmile: Toward Fine-Grained Facial Expression Editing (+10). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
 date: 2026-03-30
 tags: [news, news-digest, ai, radar]
 publish: true
@@ -11,7 +11,7 @@ content-classes: [news-digest-note]
     <div class="news-digest-hero-copy">
       <p class="section-kicker">News Radar</p>
       <h1>Daily AI News Digest — 2026-03-30</h1>
-      <p class="news-digest-lead">GitHub velocity is led by framersai/agentos; paper attention is clustering around SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks; social attention is tilting toward The incident that blamed AI for the Iranian school bombing is a more fundamental problem; biggest mover: AVO: Agentic Variation Operators for Autonomous Evolutionary Search (+49). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-lead">GitHub velocity is led by framersai/agentos; paper attention is clustering around Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models; social attention is tilting toward Show GN: I created redTerm because it was inconvenient to send images to Claude Code / Codex CL…; biggest mover: PixelSmile: Toward Fine-Grained Facial Expression Editing (+10). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
       <div class="news-digest-actions" role="group" aria-label="News actions">
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
         <a class="post-cta-link" href="#digest-archive">Digest archive</a>
@@ -25,7 +25,7 @@ content-classes: [news-digest-note]
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Generated</span>
-        <strong><time datetime="2026-03-30T00:48:16.225819+09:00">Mar 30, 2026 · 12:48 AM KST</time></strong>
+        <strong><time datetime="2026-03-30T20:19:43.468251+09:00">Mar 30, 2026 · 8:19 PM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Sections</span>
@@ -74,9 +74,20 @@ content-classes: [news-digest-note]
         </div>
         <strong class="news-digest-score-value">9.26</strong>
       </a>
-      <a class="news-digest-score-row" href="https://github.com/vllm-project/guidellm" target="_blank" rel="noreferrer">
+      <a class="news-digest-score-row" href="https://github.com/hihumanzone/Gemini-Discord-Bot" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
           <span class="news-digest-score-rank">04</span>
+          <strong>hihumanzone/Gemini-Discord-Bot</strong>
+          <span>GitHub · 92 stars · 92/day · 0h ago · signal 9.14</span>
+        </div>
+        <div class="news-digest-score-bar" aria-hidden="true">
+          <span style="width: 97.3%"></span>
+        </div>
+        <strong class="news-digest-score-value">9.14</strong>
+      </a>
+      <a class="news-digest-score-row" href="https://github.com/vllm-project/guidellm" target="_blank" rel="noreferrer">
+        <div class="news-digest-score-copy">
+          <span class="news-digest-score-rank">05</span>
           <strong>vllm-project/guidellm</strong>
           <span>GitHub · 952 stars · 952/day · 0h ago · signal 8.83</span>
         </div>
@@ -87,7 +98,7 @@ content-classes: [news-digest-note]
       </a>
       <a class="news-digest-score-row" href="https://github.com/NVIDIA/TensorRT-LLM" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
-          <span class="news-digest-score-rank">05</span>
+          <span class="news-digest-score-rank">06</span>
           <strong>NVIDIA/TensorRT-LLM</strong>
           <span>GitHub · 13200 stars · 13200/day · 0h ago · signal 8.69</span>
         </div>
@@ -96,38 +107,27 @@ content-classes: [news-digest-note]
         </div>
         <strong class="news-digest-score-value">8.69</strong>
       </a>
-      <a class="news-digest-score-row" href="https://github.com/cloud-apim/otoroshi-llm-extension" target="_blank" rel="noreferrer">
-        <div class="news-digest-score-copy">
-          <span class="news-digest-score-rank">06</span>
-          <strong>cloud-apim/otoroshi-llm-extension</strong>
-          <span>GitHub · 16 stars · 16/day · 0h ago · signal 8.69</span>
-        </div>
-        <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 92.4%"></span>
-        </div>
-        <strong class="news-digest-score-value">8.69</strong>
-      </a>
-      <a class="news-digest-score-row" href="https://github.com/Tom-Ryder/AgentRunKit" target="_blank" rel="noreferrer">
+      <a class="news-digest-score-row" href="https://github.com/dcostenco/prism-mcp" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
           <span class="news-digest-score-rank">07</span>
-          <strong>Tom-Ryder/AgentRunKit</strong>
-          <span>GitHub · 13 stars · 13/day · 0h ago · signal 8.66</span>
+          <strong>dcostenco/prism-mcp</strong>
+          <span>GitHub · 90 stars · 90/day · 0h ago · signal 8.58</span>
         </div>
         <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 92.1%"></span>
+          <span style="width: 91.3%"></span>
         </div>
-        <strong class="news-digest-score-value">8.66</strong>
+        <strong class="news-digest-score-value">8.58</strong>
       </a>
-      <a class="news-digest-score-row" href="https://github.com/edwardcapriolo/deliverance" target="_blank" rel="noreferrer">
+      <a class="news-digest-score-row" href="https://github.com/Doist/todoist-ai" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
           <span class="news-digest-score-rank">08</span>
-          <strong>edwardcapriolo/deliverance</strong>
-          <span>GitHub · 13 stars · 13/day · 0h ago · signal 8.65</span>
+          <strong>Doist/todoist-ai</strong>
+          <span>GitHub · 404 stars · 404/day · 0h ago · signal 8.39</span>
         </div>
         <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 92.1%"></span>
+          <span style="width: 89.2%"></span>
         </div>
-        <strong class="news-digest-score-value">8.65</strong>
+        <strong class="news-digest-score-value">8.39</strong>
       </a>
     </div>
   </section>
@@ -144,22 +144,22 @@ content-classes: [news-digest-note]
           <h3>framersai/agentos</h3>
         </div>
       </a>
-      <a class="news-digest-card news-digest-top-card" href="https://huggingface.co/papers/2603.24755" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24755.png" alt="SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card news-digest-top-card" href="https://huggingface.co/papers/2603.25716" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25716.png" alt="Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks</h3>
+          <h3>Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models</h3>
         </div>
       </a>
-      <a class="news-digest-card news-digest-top-card" href="https://news.hada.io/topic?id=27954" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="The incident that blamed AI for the Iranian school bombing is a more fundamental problem" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+      <a class="news-digest-card news-digest-top-card" href="https://github.com/FabrizioCafolla/openai-crawlers-ip-ranges" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/FabrizioCafolla/openai-crawlers-ip-ranges" alt="FabrizioCafolla/openai-crawlers-ip-ranges — OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
         <div class="news-digest-card-copy">
-          <h3>The incident that blamed AI for the Iranian school bombing is a more fundamental problem</h3>
+          <h3>FabrizioCafolla/openai-crawlers-ip-ranges</h3>
         </div>
       </a>
-      <a class="news-digest-card news-digest-top-card" href="https://huggingface.co/papers/2603.24800" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24800.png" alt="Calibri: Enhancing Diffusion Transformers via Parameter-Efficient Calibration" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card news-digest-top-card" href="https://huggingface.co/papers/2603.25319" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25319.png" alt="MACRO: Advancing Multi-Reference Image Generation with Structured Long-Context Data" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>Calibri: Enhancing Diffusion Transformers via Parameter-Efficient Calibration</h3>
+          <h3>MACRO: Advancing Multi-Reference Image Generation with Structured Long-Context Data</h3>
         </div>
       </a>
     </div>
@@ -178,22 +178,22 @@ content-classes: [news-digest-note]
           <h3>framersai/agentos</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://github.com/Demorck/ClairObscurArchipelagoRandomizer" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/Demorck/ClairObscurArchipelagoRandomizer" alt="Demorck/ClairObscurArchipelagoRandomizer — A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
+      <a class="news-digest-card" href="https://github.com/FabrizioCafolla/openai-crawlers-ip-ranges" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/FabrizioCafolla/openai-crawlers-ip-ranges" alt="FabrizioCafolla/openai-crawlers-ip-ranges — OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
         <div class="news-digest-card-copy">
-          <h3>Demorck/ClairObscurArchipelagoRandomizer</h3>
+          <h3>FabrizioCafolla/openai-crawlers-ip-ranges</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://huggingface.co/papers/2603.24755" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24755.png" alt="SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.25716" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25716.png" alt="Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks</h3>
+          <h3>Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://huggingface.co/papers/2603.24517" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24517.png" alt="AVO: Agentic Variation Operators for Autonomous Evolutionary Search" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.23607" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.23607.png" alt="LongTail Driving Scenarios with Reasoning Traces: The KITScenes LongTail Dataset" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>AVO: Agentic Variation Operators for Autonomous Evolutionary Search</h3>
+          <h3>LongTail Driving Scenarios with Reasoning Traces: The KITScenes LongTail Dataset</h3>
         </div>
       </a>
     </div>
@@ -224,6 +224,12 @@ content-classes: [news-digest-note]
           <h3>LearningCircuit/local-deep-research</h3>
         </div>
       </a>
+      <a class="news-digest-card" href="https://github.com/hihumanzone/Gemini-Discord-Bot" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/hihumanzone/Gemini-Discord-Bot" alt="hihumanzone/Gemini-Discord-Bot — A Discord bot leveraging Google Gemini. Has image/video/audio recognition, conversation engagement, and content understanding." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
+        <div class="news-digest-card-copy">
+          <h3>hihumanzone/Gemini-Discord-Bot</h3>
+        </div>
+      </a>
       <a class="news-digest-card" href="https://github.com/vllm-project/guidellm" target="_blank" rel="noreferrer">
         <img class="news-digest-image" src="https://opengraph.githubassets.com/1/vllm-project/guidellm" alt="vllm-project/guidellm — Evaluate and Enhance Your LLM Deployments for Real-World Inference Needs" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
         <div class="news-digest-card-copy">
@@ -236,34 +242,28 @@ content-classes: [news-digest-note]
           <h3>NVIDIA/TensorRT-LLM</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://github.com/cloud-apim/otoroshi-llm-extension" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/cloud-apim/otoroshi-llm-extension" alt="cloud-apim/otoroshi-llm-extension — Connect, setup, secure and seamlessly manage LLM models using an Universal/OpenAI compatible API" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <h3>cloud-apim/otoroshi-llm-extension</h3>
-        </div>
-      </a>
-      <a class="news-digest-card" href="https://github.com/Tom-Ryder/AgentRunKit" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/Tom-Ryder/AgentRunKit" alt="Tom-Ryder/AgentRunKit — Lightweight Swift 6 framework for building LLM-powered agents — cloud + on-device inference via MLX on Apple Silicon" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <h3>Tom-Ryder/AgentRunKit</h3>
-        </div>
-      </a>
-      <a class="news-digest-card" href="https://github.com/edwardcapriolo/deliverance" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/edwardcapriolo/deliverance" alt="edwardcapriolo/deliverance — An advanced Java based inference engine for Large Language Models" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <h3>edwardcapriolo/deliverance</h3>
-        </div>
-      </a>
       <a class="news-digest-card" href="https://github.com/dcostenco/prism-mcp" target="_blank" rel="noreferrer">
         <img class="news-digest-image" src="https://opengraph.githubassets.com/1/dcostenco/prism-mcp" alt="dcostenco/prism-mcp — 🧠 Prism MCP — Persistent memory for AI coding agents. Session history, semantic search, TurboQuant 10x compression, visual memory, autonomous Web Scholar, CRDT multi-agent merging, and a Mind Palace dashboard. Works with Claude, Cursor, Windsurf, Gemini." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
         <div class="news-digest-card-copy">
           <h3>dcostenco/prism-mcp</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://github.com/Demorck/ClairObscurArchipelagoRandomizer" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/Demorck/ClairObscurArchipelagoRandomizer" alt="Demorck/ClairObscurArchipelagoRandomizer — A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
+      <a class="news-digest-card" href="https://github.com/Doist/todoist-ai" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/Doist/todoist-ai" alt="Doist/todoist-ai — A set of tools to connect to AI agents, to allow them to use Todoist on a user&#x27;s behalf. Includes MCP support." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
         <div class="news-digest-card-copy">
-          <h3>Demorck/ClairObscurArchipelagoRandomizer</h3>
+          <h3>Doist/todoist-ai</h3>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://github.com/FabrizioCafolla/openai-crawlers-ip-ranges" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/FabrizioCafolla/openai-crawlers-ip-ranges" alt="FabrizioCafolla/openai-crawlers-ip-ranges — OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
+        <div class="news-digest-card-copy">
+          <h3>FabrizioCafolla/openai-crawlers-ip-ranges</h3>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://github.com/opendataloader-project/opendataloader-pdf" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/opendataloader-project/opendataloader-pdf" alt="opendataloader-project/opendataloader-pdf — PDF Parser for AI-ready data. Automate PDF accessibility. Open-source." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
+        <div class="news-digest-card-copy">
+          <h3>opendataloader-project/opendataloader-pdf</h3>
         </div>
       </a>
     </div>
@@ -276,64 +276,64 @@ content-classes: [news-digest-note]
     </header>
     <p class="news-digest-section-description">New research worth bookmarking for a deeper read.</p>
     <div class="news-digest-grid">
-      <a class="news-digest-card" href="https://huggingface.co/papers/2603.24755" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24755.png" alt="SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.25716" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25716.png" alt="Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks</h3>
+          <h3>Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://huggingface.co/papers/2603.24517" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24517.png" alt="AVO: Agentic Variation Operators for Autonomous Evolutionary Search" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.23607" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.23607.png" alt="LongTail Driving Scenarios with Reasoning Traces: The KITScenes LongTail Dataset" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>AVO: Agentic Variation Operators for Autonomous Evolutionary Search</h3>
+          <h3>LongTail Driving Scenarios with Reasoning Traces: The KITScenes LongTail Dataset</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://huggingface.co/papers/2603.24329" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24329.png" alt="GameplayQA: A Benchmarking Framework for Decision-Dense POV-Synced Multi-Video Understanding of 3D Virtual Agents" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.25158" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25158.png" alt="Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>GameplayQA: A Benchmarking Framework for Decision-Dense POV-Synced Multi-Video Understanding of…</h3>
+          <h3>Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://huggingface.co/papers/2603.24800" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24800.png" alt="Calibri: Enhancing Diffusion Transformers via Parameter-Efficient Calibration" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.25730" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25730.png" alt="PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>Calibri: Enhancing Diffusion Transformers via Parameter-Efficient Calibration</h3>
+          <h3>PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://huggingface.co/papers/2603.16733" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.16733.png" alt="IQuest-Coder-V1 Technical Report" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.24649" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24649.png" alt="MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>IQuest-Coder-V1 Technical Report</h3>
+          <h3>MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://huggingface.co/papers/2603.14375" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.14375.png" alt="The Pulse of Motion: Measuring Physical Frame Rate from Visual Dynamics" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.25746" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25746.png" alt="ShotStream: Streaming Multi-Shot Video Generation for Interactive Storytelling" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>The Pulse of Motion: Measuring Physical Frame Rate from Visual Dynamics</h3>
+          <h3>ShotStream: Streaming Multi-Shot Video Generation for Interactive Storytelling</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="http://arxiv.org/abs/2603.25613v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Demographic Fairness in Multimodal LLMs: A Benchmark of Gender and Ethnicity Bias in Face Verification" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.25723" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25723.png" alt="Natural-Language Agent Harnesses" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>Demographic Fairness in Multimodal LLMs: A Benchmark of Gender and Ethnicity Bias in Face Verif…</h3>
+          <h3>Natural-Language Agent Harnesses</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="http://arxiv.org/abs/2603.25737v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Training the Knowledge Base through Evidence Distillation and Write-Back Enrichment" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.22918" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.22918.png" alt="EVA: Efficient Reinforcement Learning for End-to-End Video Agent" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>Training the Knowledge Base through Evidence Distillation and Write-Back Enrichment</h3>
+          <h3>EVA: Efficient Reinforcement Learning for End-to-End Video Agent</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="http://arxiv.org/abs/2603.25629v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="LanteRn: Latent Visual Structured Reasoning" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.25728" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25728.png" alt="PixelSmile: Toward Fine-Grained Facial Expression Editing" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>LanteRn: Latent Visual Structured Reasoning</h3>
+          <h3>PixelSmile: Toward Fine-Grained Facial Expression Editing</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="http://arxiv.org/abs/2603.25743v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="RefAlign: Representation Alignment for Reference-to-Video Generation" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.25319" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25319.png" alt="MACRO: Advancing Multi-Reference Image Generation with Structured Long-Context Data" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
-          <h3>RefAlign: Representation Alignment for Reference-to-Video Generation</h3>
+          <h3>MACRO: Advancing Multi-Reference Image Generation with Structured Long-Context Data</h3>
         </div>
       </a>
     </div>
@@ -346,40 +346,40 @@ content-classes: [news-digest-note]
     </header>
     <p class="news-digest-section-description">Directional signals from discussion-heavy sources.</p>
     <div class="news-digest-grid">
-      <a class="news-digest-card" href="https://news.hada.io/topic?id=27954" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="The incident that blamed AI for the Iranian school bombing is a more fundamental problem" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+      <a class="news-digest-card" href="https://news.hada.io/topic?id=28004" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Show GN: I created redTerm because it was inconvenient to send images to Claude Code / Codex CLI on a remote server on Android." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
         <div class="news-digest-card-copy">
-          <h3>The incident that blamed AI for the Iranian school bombing is a more fundamental problem</h3>
+          <h3>Show GN: I created redTerm because it was inconvenient to send images to Claude Code / Codex CL…</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://news.hada.io/topic?id=27954#rebalance-geeknews-1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="The incident that blamed AI for the Iranian school bombing is a more fundamental problem" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+      <a class="news-digest-card" href="https://news.hada.io/topic?id=28005" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Establishment of digital argument principles when introducing AI judges: Prompt agreement and measures to secure metadata neutrality" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
         <div class="news-digest-card-copy">
-          <h3>The incident that blamed AI for the Iranian school bombing is a more fundamental problem</h3>
+          <h3>Establishment of digital argument principles when introducing AI judges: Prompt agreement and m…</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE1ocTRZWGxiTnpqM1h1TjdHZVdFTmdfWlJIVGhycGZLR2djbUxYQ1JWaGcxV0lNbDlWVGFFbjliZnZRV0RCVkVzMmhaOS1LeWdFbGRBRjNPN1N0bTJ2Y0c0?oc=5" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="🚨 BREAKING: CHINA just released a Python framework for building AI agents. 100% OPEN SOURCE. It has visual agent design, MCP tools, memory, RAG, and reasoning. All built in. All working together. It&#x27;s called AgentScope. You describe your agent syste" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+      <a class="news-digest-card" href="https://news.hada.io/topic?id=27996" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="What Agentic SaaS Changes — From UI Design to Billing Models" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
         <div class="news-digest-card-copy">
-          <h3>🚨 BREAKING: CHINA just released a Python framework for building AI agents.</h3>
+          <h3>What Agentic SaaS Changes — From UI Design to Billing Models</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE9FM0F0S2RtXzRKREhiZmZYbDh5c3JCTUZFcldjNXpXZTZRTUt2bm9wY3pmb1U5NzQ1cXh3d1BXNEdTQTBsUE0tSE5La1I0VnRpMi1SWWZidVEzTHM1NGFj?oc=5" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Agentic AI rises ⬆️ AI infrastructure shifts 🔀 Agentic AI calls for infrastructure designed for real-world inference and scale, elevating the CPU’s role at the center of AI systems to drive efficiency and unlock performance - and Arm is built for it. - twitter.com" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+      <a class="news-digest-card" href="https://news.hada.io/topic?id=28003" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="ChatGPT blocks input until Cloudflare reads React state" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
         <div class="news-digest-card-copy">
-          <h3>Agentic AI rises ⬆️ AI infrastructure shifts 🔀 Agentic AI calls for infrastructure designed for…</h3>
+          <h3>ChatGPT blocks input until Cloudflare reads React state</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiXkFVX3lxTFBGUDM4ZHhTUm13T2dMd3M4RFVHdjJzU0NpaDU0aUx0X19oQ3ZDOGE4NXVPeURNLV9fa29WdVF0TVZGbEtVa0RVTmRhcHp4Um9XaGE2SmtiUkpDREZQZHc?oc=5" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Announcing ARC-AGI-3 The only unsaturated agentic intelligence benchmark in the world Humans score 100%, AI" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE85d1RTYnhaQ0NRRWFrYml0NG5XR1BZYjVQUWRndHJBR2VyY1hqTjNNWlFmWXU0d2ZNeFN4ajlMZDZBNVZLZkRVVVJrMGd1NzNiUXVRUmtLbHlYV0VlX3BJ?oc=5" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Persuasion has two sides. This chart shows how easy each model is to move as a target. Xiaomi MiMo V2 Pro and Gemini 3.1 Pro Preview are the softest targets. Grok 4.20 Beta 0309 (Reasoning) is nearly immovable on average." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
         <div class="news-digest-card-copy">
-          <h3>Announcing ARC-AGI-3 The only unsaturated agentic intelligence benchmark in the world Humans sc…</h3>
+          <h3>Persuasion has two sides. This chart shows how easy each model is to move as a target.</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiXkFVX3lxTE4wVkN6MXlBQmdrZkhDQ0pyZElIX1ZPamJvTVhMRmVjaU1ja1VSRUNFTVk3Y0loWVlObnpQM0NpaTdmUnBEckdQdnZubVpPS1VEbTVpYTYxTzhCWWtUdnc?oc=5" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="At the moment, ARC-AGI-3 is the only unsaturated agentic AI benchmark. Sub-1% scores from frontier models on the private test set. If you want to be among the first to know when an AGI breakthrough happens, monitor the ARC-AGI-3 leaderboard. Any sudde" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+      <a class="news-digest-card" href="https://news.hada.io/topic?id=27995" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Korean Law MCP - Korean law search, inquiry, and analysis tool" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
         <div class="news-digest-card-copy">
-          <h3>At the moment, ARC-AGI-3 is the only unsaturated agentic AI benchmark.</h3>
+          <h3>Korean Law MCP - Korean law search, inquiry, and analysis tool</h3>
         </div>
       </a>
       <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTE5GbXVDMHdWaG4ySnBRaXd2ekVmcFl4MG16bm5MdU5mekpsSEkwZVgtT2VlcHJoMXZfUTYybzVXNURDUFZ2b05nMHlSR2UtTXdjMHFiUmlsd21jWmRTMk1xOHNYbng?oc=5" target="_blank" rel="noreferrer">
@@ -388,22 +388,22 @@ content-classes: [news-digest-note]
           <h3>Anthropic has been testing a new model called &quot;Mythos&quot; with certain customers: - a &quot;step change…</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiYEFVX3lxTFBja3Ztc19VMzhCQ3VPWV83eW8taFMtaVVreUdHTlRpMVF0b0l1M1FWY0dXVmtMWi0wY0VJU1Btb1VzY1ByNk9BV1BjVFFnLURIelg4NHI3VUhIaWdEYmVoag?oc=5" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="I&#x27;d just like to interject for a moment. What you&#x27;re referring to as a &quot;model with no harness&quot;, is in fact, a model with a harness, or as I&#x27;ve recently taken to calling it, an agentic language system. An LLM is not an agentic language system unto itself, but rather just o" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <h3>I&#x27;d just like to interject for a moment. What you&#x27;re referring to as a &quot;model with no harness&quot;,…</h3>
-        </div>
-      </a>
       <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiY0FVX3lxTE5lZjRhTWotci1hYzF2cmhpWHdiNTFxWHA2cU5mX2dtREhBZlV2ZU1xQmNFdmlXcnM5d01idTAwMFBpc1B0WFdQbTRLNE1lQkZrNXZ2VTJfTi1kb1ZrZTdZVUc5bw?oc=5" target="_blank" rel="noreferrer">
         <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="The last two years reshaped how we evaluate models and what we expect from them. OpenAI&#x27;s o1 showed that &quot;thinking&quot; could be a first-class capability, something you train for and expose to users. DeepSeek-R1 proved that reasoning-style post-training coul" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
         <div class="news-digest-card-copy">
           <h3>The last two years reshaped how we evaluate models and what we expect from them.</h3>
         </div>
       </a>
-      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiYEFVX3lxTFBRMzJrUUhuVWNwSmw2NUVZOFItdHRDbXJBV0U5d1ROQnM2dTVIQzNrUnVxMVd1cXlIamhEcDBLakpRWmJUV2NGcVZHcGNHTzZLeDRPMl94Wnd5Y2E4aFNwSA?oc=5" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Anthropic’s new model, Capybara: “Compared to Claude Opus 4.6, Capybara achieves dramatically higher scores in software coding, academic reasoning, and cybersecurity.” According to Dario&#x27;s previous interview, it might be a 10T-parameter model that cos" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiXkFVX3lxTFBmVHg1ZXdqZUx6VGJwa2tRc3czX3g2N1p0c1E3d2Y2LWVRWHZUQV9YZmkyVGJnRW93TmRPSVBaRUtNdGExa2RFN2VFZnQ5TnVubS1DUW92Y2djM2Zob3c?oc=5" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="ARC-AGI-3 is out now! We&#x27;ve designed the benchmark to evaluate agentic intelligence via interactive reasoning environments. Beating ARC-AGI-3 will be achieved when an AI system matches or exceeds human-level action efficiency on all environments, upo" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
         <div class="news-digest-card-copy">
-          <h3>Anthropic’s new model, Capybara: “Compared to Claude Opus 4.6, Capybara achieves dramatically h…</h3>
+          <h3>ARC-AGI-3 is out now! We&#x27;ve designed the benchmark to evaluate agentic intelligence via interac…</h3>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMivAFBVV95cUxOX1hPVV8tQWhvVmpsRDZVV0pDdm5HemFqY0ZHeDl3eklVT3MyVFR3MTUzRmFNM1I2STM4XzY0LVQ2UVlUeF96enVqR0dKUUpvWElWaVpUYmw4T2VwNUdRSXluZFZrMzVibUV5TzIyTks5ZzhhUGlpaXBoX3dRaGFtMk1FenNkcWszeElBWnlVTTQ2WUczc0I1Uk1XeVR4VlBHUlJob1J0ZlZlZGpmejZlSm5OYXBNLXBDbXJHNg?oc=5" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="OMDIA Open RAN Operator Survey - 2026" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+        <div class="news-digest-card-copy">
+          <h3>OMDIA Open RAN Operator Survey - 2026</h3>
         </div>
       </a>
     </div>
