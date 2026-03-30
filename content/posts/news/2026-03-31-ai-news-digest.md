@@ -1,6 +1,6 @@
 ---
 title: "Daily AI News Digest — 2026-03-31"
-description: "GitHub velocity is led by GeminiLight/MindOS; paper attention is clustering around PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference; social attention is tilting toward Miasma: A tool that traps AI web scrapers in an endless loop of contamination. 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+description: "GitHub velocity is led by comet-ml/opik; paper attention is clustering around MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies; social attention is tilting toward Miasma: A tool that traps AI web scrapers in an endless loop of contamination; biggest mover: MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies (+12). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
 date: 2026-03-31
 tags: [news, news-digest, ai, radar]
 publish: true
@@ -11,7 +11,7 @@ content-classes: [news-digest-note]
     <div class="news-digest-hero-copy">
       <p class="section-kicker">News Radar</p>
       <h1>Daily AI News Digest — 2026-03-31</h1>
-      <p class="news-digest-lead">GitHub velocity is led by GeminiLight/MindOS; paper attention is clustering around PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference; social attention is tilting toward Miasma: A tool that traps AI web scrapers in an endless loop of contamination. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-lead">GitHub velocity is led by comet-ml/opik; paper attention is clustering around MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies; social attention is tilting toward Miasma: A tool that traps AI web scrapers in an endless loop of contamination; biggest mover: MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies (+12). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
       <div class="news-digest-actions" role="group" aria-label="News actions">
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
         <a class="post-cta-link" href="#digest-archive">Digest archive</a>
@@ -25,7 +25,7 @@ content-classes: [news-digest-note]
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Generated</span>
-        <strong><time datetime="2026-03-31T00:39:27.175717+09:00">Mar 31, 2026 · 12:39 AM KST</time></strong>
+        <strong><time datetime="2026-03-31T01:14:34.480819+09:00">Mar 31, 2026 · 1:14 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Sections</span>
@@ -41,71 +41,71 @@ content-classes: [news-digest-note]
     </header>
     <p class="news-digest-section-description">Local signal score blends freshness, feed rank, keyword relevance, and GitHub star velocity.</p>
     <div class="news-digest-scoreboard">
-      <a class="news-digest-score-row" href="https://github.com/GeminiLight/MindOS" target="_blank" rel="noreferrer">
+      <a class="news-digest-score-row" href="https://github.com/comet-ml/opik" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
           <span class="news-digest-score-rank">01</span>
+          <strong>comet-ml/opik</strong>
+          <span>GitHub · 18550 stars · 18550/day · 0h ago · signal 9.63</span>
+        </div>
+        <div class="news-digest-score-bar" aria-hidden="true">
+          <span style="width: 100.0%"></span>
+        </div>
+        <strong class="news-digest-score-value">9.63</strong>
+      </a>
+      <a class="news-digest-score-row" href="https://github.com/GeminiLight/MindOS" target="_blank" rel="noreferrer">
+        <div class="news-digest-score-copy">
+          <span class="news-digest-score-rank">02</span>
           <strong>GeminiLight/MindOS</strong>
           <span>GitHub · 113 stars · 113/day · 0h ago · signal 9.34</span>
         </div>
         <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 100.0%"></span>
+          <span style="width: 96.9%"></span>
         </div>
         <strong class="news-digest-score-value">9.34</strong>
       </a>
       <a class="news-digest-score-row" href="https://github.com/LearningCircuit/local-deep-research" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
-          <span class="news-digest-score-rank">02</span>
+          <span class="news-digest-score-rank">03</span>
           <strong>LearningCircuit/local-deep-research</strong>
           <span>GitHub · 4196 stars · 4196/day · 0h ago · signal 9.26</span>
         </div>
         <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 99.1%"></span>
+          <span style="width: 96.1%"></span>
         </div>
         <strong class="news-digest-score-value">9.26</strong>
       </a>
       <a class="news-digest-score-row" href="https://github.com/ggml-org/llama.cpp" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
-          <span class="news-digest-score-rank">03</span>
+          <span class="news-digest-score-rank">04</span>
           <strong>ggml-org/llama.cpp</strong>
           <span>GitHub · 100013 stars · 100013/day · 0h ago · signal 9.09</span>
         </div>
         <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 97.3%"></span>
+          <span style="width: 94.3%"></span>
         </div>
         <strong class="news-digest-score-value">9.09</strong>
       </a>
       <a class="news-digest-score-row" href="https://github.com/HomericIntelligence/ProjectMnemosyne" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
-          <span class="news-digest-score-rank">04</span>
+          <span class="news-digest-score-rank">05</span>
           <strong>HomericIntelligence/ProjectMnemosyne</strong>
           <span>GitHub · 11 stars · 11/day · 0h ago · signal 8.97</span>
         </div>
         <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 96.1%"></span>
+          <span style="width: 93.1%"></span>
         </div>
         <strong class="news-digest-score-value">8.97</strong>
       </a>
-      <a class="news-digest-score-row" href="https://github.com/4thfever/cultivation-world-simulator" target="_blank" rel="noreferrer">
-        <div class="news-digest-score-copy">
-          <span class="news-digest-score-rank">05</span>
-          <strong>4thfever/cultivation-world-simulator</strong>
-          <span>GitHub · 1441 stars · 1441/day · 0h ago · signal 8.92</span>
-        </div>
-        <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 95.5%"></span>
-        </div>
-        <strong class="news-digest-score-value">8.92</strong>
-      </a>
-      <a class="news-digest-score-row" href="https://github.com/Dataojitori/nocturne_memory" target="_blank" rel="noreferrer">
+      <a class="news-digest-score-row" href="https://github.com/alexk-dev/golemcore-bot" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
           <span class="news-digest-score-rank">06</span>
-          <strong>Dataojitori/nocturne_memory</strong>
-          <span>GitHub · 854 stars · 854/day · 0h ago · signal 8.74</span>
+          <strong>alexk-dev/golemcore-bot</strong>
+          <span>GitHub · 38 stars · 38/day · 0h ago · signal 8.95</span>
         </div>
         <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 93.6%"></span>
+          <span style="width: 92.9%"></span>
         </div>
-        <strong class="news-digest-score-value">8.74</strong>
+        <strong class="news-digest-score-value">8.95</strong>
       </a>
       <a class="news-digest-score-row" href="https://github.com/NVIDIA/TensorRT-LLM" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
@@ -114,20 +114,20 @@ content-classes: [news-digest-note]
           <span>GitHub · 13200 stars · 13200/day · 0h ago · signal 8.69</span>
         </div>
         <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 93.1%"></span>
+          <span style="width: 90.2%"></span>
         </div>
         <strong class="news-digest-score-value">8.69</strong>
       </a>
-      <a class="news-digest-score-row" href="https://github.com/dcostenco/prism-mcp" target="_blank" rel="noreferrer">
+      <a class="news-digest-score-row" href="https://github.com/FabrizioCafolla/openai-crawlers-ip-ranges" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
           <span class="news-digest-score-rank">08</span>
-          <strong>dcostenco/prism-mcp</strong>
-          <span>GitHub · 90 stars · 90/day · 0h ago · signal 8.58</span>
+          <strong>FabrizioCafolla/openai-crawlers-ip-ranges</strong>
+          <span>GitHub · 23 stars · 23/day · 6h ago · signal 8.25</span>
         </div>
         <div class="news-digest-score-bar" aria-hidden="true">
-          <span style="width: 91.8%"></span>
+          <span style="width: 85.6%"></span>
         </div>
-        <strong class="news-digest-score-value">8.58</strong>
+        <strong class="news-digest-score-value">8.25</strong>
       </a>
     </div>
   </section>
@@ -138,26 +138,26 @@ content-classes: [news-digest-note]
       <h2>Top signals</h2>
     </header>
     <div class="news-digest-top-grid">
-      <a class="news-digest-card news-digest-top-card" href="https://github.com/GeminiLight/MindOS" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/GeminiLight/MindOS" alt="GeminiLight/MindOS — MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
+      <a class="news-digest-card news-digest-top-card" href="https://github.com/comet-ml/opik" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/comet-ml/opik" alt="comet-ml/opik — Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 113 stars · 113/day · 0h ago · signal 9.34</span>
+            <span class="news-digest-card-meta">GitHub · 18550 stars · 18550/day · 0h ago · signal 9.63</span>
           </div>
-          <h3>GeminiLight/MindOS</h3>
-          <p class="news-digest-card-deck">MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically. Surfaced 0h ago with 113 stars and 113/day mom…</p>
+          <h3>comet-ml/opik</h3>
+          <p class="news-digest-card-deck">Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards. Surfaced 0h ago wi…</p>
         </div>
       </a>
-      <a class="news-digest-card news-digest-top-card" href="https://huggingface.co/papers/2603.25730" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25730.png" alt="PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card news-digest-top-card" href="https://huggingface.co/papers/2603.24649" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24649.png" alt="MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 11h ago · down 4 · signal 6.30</span>
+            <span class="news-digest-card-meta">Hugging Face Papers · 8h ago · up 12 · signal 6.88</span>
           </div>
-          <h3>PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference</h3>
-          <p class="news-digest-card-deck">PackForcing enables efficient long-video generation through hierarchical KV-cache management and spatiotemporal compression while maintaining temporal consistency and reducing memory usage.…</p>
+          <h3>MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies</h3>
+          <p class="news-digest-card-deck">MEDOPENCLAW and MEDFLOWBENCH enable evaluation of vision-language models in medical imaging by allowing dynamic interaction with 3D medical volumes through standard viewers, revealing limit…</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-top-card" href="https://news.hada.io/topic?id=28014" target="_blank" rel="noreferrer">
@@ -165,21 +165,21 @@ content-classes: [news-digest-note]
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">GeekNews · 1h ago · signal 4.36</span>
+            <span class="news-digest-card-meta">GeekNews · 2h ago · down 8 · signal 4.22</span>
           </div>
           <h3>Miasma: A tool that traps AI web scrapers in an endless loop of contamination</h3>
-          <p class="news-digest-card-deck">Community signal picked up on GeekNews about 1h ago.</p>
+          <p class="news-digest-card-deck">Community signal picked up on GeekNews about 2h ago. Down 8 spots from the previous run.</p>
         </div>
       </a>
-      <a class="news-digest-card news-digest-top-card" href="http://arxiv.org/abs/2603.26487v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Beyond Banning AI: A First Look at GenAI Governance in Open Source Software Communities" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+      <a class="news-digest-card news-digest-top-card" href="https://huggingface.co/papers/2603.25716" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25716.png" alt="Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">arXiv · 71h ago · signal 3.08</span>
+            <span class="news-digest-card-meta">Hugging Face Papers · 15h ago · up 12 · signal 6.87</span>
           </div>
-          <h3>Beyond Banning AI: A First Look at GenAI Governance in Open Source Software Communities</h3>
-          <p class="news-digest-card-deck">Fresh arXiv paper posted 71h ago and surfacing in the current feed.</p>
+          <h3>Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models</h3>
+          <p class="news-digest-card-deck">Hybrid Memory enables video world models to maintain consistent tracking of dynamic subjects during occlusion by combining archival storage for static backgrounds with active tracking for m…</p>
         </div>
       </a>
     </div>
@@ -192,15 +192,15 @@ content-classes: [news-digest-note]
     </header>
     <p class="news-digest-section-description">The fastest-moving items across repos, papers, and community chatter.</p>
     <div class="news-digest-grid">
-      <a class="news-digest-card" href="https://github.com/GeminiLight/MindOS" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/GeminiLight/MindOS" alt="GeminiLight/MindOS — MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
+      <a class="news-digest-card" href="https://github.com/comet-ml/opik" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/comet-ml/opik" alt="comet-ml/opik — Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 113 stars · 113/day · 0h ago · signal 9.34</span>
+            <span class="news-digest-card-meta">GitHub · 18550 stars · 18550/day · 0h ago · signal 9.63</span>
           </div>
-          <h3>GeminiLight/MindOS</h3>
-          <p class="news-digest-card-deck">MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically. Surfaced 0h ago with 113 stars and 113/day mom…</p>
+          <h3>comet-ml/opik</h3>
+          <p class="news-digest-card-deck">Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards. Surfaced 0h ago wi…</p>
         </div>
       </a>
       <a class="news-digest-card" href="https://github.com/FabrizioCafolla/openai-crawlers-ip-ranges" target="_blank" rel="noreferrer">
@@ -208,21 +208,10 @@ content-classes: [news-digest-note]
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 23 stars · 23/day · 5h ago · down 14 · signal 7.79</span>
+            <span class="news-digest-card-meta">GitHub · 23 stars · 23/day · 6h ago · signal 8.25</span>
           </div>
           <h3>FabrizioCafolla/openai-crawlers-ip-ranges</h3>
-          <p class="news-digest-card-deck">OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses. Surfaced 5h ago with 23 stars and 23/day momentum. Down 14 spots from the previous run.</p>
-        </div>
-      </a>
-      <a class="news-digest-card" href="https://huggingface.co/papers/2603.25730" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25730.png" alt="PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
-            <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 11h ago · down 4 · signal 6.30</span>
-          </div>
-          <h3>PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference</h3>
-          <p class="news-digest-card-deck">PackForcing enables efficient long-video generation through hierarchical KV-cache management and spatiotemporal compression while maintaining temporal consistency and reducing memory usage.…</p>
+          <p class="news-digest-card-deck">OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses. Surfaced 6h ago with 23 stars and 23/day momentum.</p>
         </div>
       </a>
       <a class="news-digest-card" href="https://huggingface.co/papers/2603.24649" target="_blank" rel="noreferrer">
@@ -230,10 +219,21 @@ content-classes: [news-digest-note]
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 6h ago · down 9 · signal 6.10</span>
+            <span class="news-digest-card-meta">Hugging Face Papers · 8h ago · up 12 · signal 6.88</span>
           </div>
           <h3>MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies</h3>
           <p class="news-digest-card-deck">MEDOPENCLAW and MEDFLOWBENCH enable evaluation of vision-language models in medical imaging by allowing dynamic interaction with 3D medical volumes through standard viewers, revealing limit…</p>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.25716" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25716.png" alt="Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+        <div class="news-digest-card-copy">
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
+            <span class="news-digest-card-meta">Hugging Face Papers · 15h ago · up 12 · signal 6.87</span>
+          </div>
+          <h3>Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models</h3>
+          <p class="news-digest-card-deck">Hybrid Memory enables video world models to maintain consistent tracking of dynamic subjects during occlusion by combining archival storage for static backgrounds with active tracking for m…</p>
         </div>
       </a>
     </div>
@@ -246,6 +246,17 @@ content-classes: [news-digest-note]
     </header>
     <p class="news-digest-section-description">Fresh GitHub projects worth scanning before the feed turns over.</p>
     <div class="news-digest-grid">
+      <a class="news-digest-card" href="https://github.com/comet-ml/opik" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/comet-ml/opik" alt="comet-ml/opik — Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
+        <div class="news-digest-card-copy">
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
+            <span class="news-digest-card-meta">GitHub · 18550 stars · 18550/day · 0h ago · signal 9.63</span>
+          </div>
+          <h3>comet-ml/opik</h3>
+          <p class="news-digest-card-deck">Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards. Surfaced 0h ago wi…</p>
+        </div>
+      </a>
       <a class="news-digest-card" href="https://github.com/GeminiLight/MindOS" target="_blank" rel="noreferrer">
         <img class="news-digest-image" src="https://opengraph.githubassets.com/1/GeminiLight/MindOS" alt="GeminiLight/MindOS — MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
         <div class="news-digest-card-copy">
@@ -290,26 +301,15 @@ content-classes: [news-digest-note]
           <p class="news-digest-card-deck">ProjectMnemosyne is a skills marketplace for the HomericIntelligence agentic ecosystem. Named after Mnemosyne, the Greek goddess of memory, this repository serves as the collective memory w…</p>
         </div>
       </a>
-      <a class="news-digest-card" href="https://github.com/4thfever/cultivation-world-simulator" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/4thfever/cultivation-world-simulator" alt="4thfever/cultivation-world-simulator — The Immortal World Simulator based on AI Agent workflow aims to restore the intelligent and open Immortal World. | An open-source Cultivation World Simulator using Agentic Workflow to create a dynamic, emerging Xianxia world." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
+      <a class="news-digest-card" href="https://github.com/alexk-dev/golemcore-bot" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/alexk-dev/golemcore-bot" alt="alexk-dev/golemcore-bot — AI agent framework for Java — skill-based architecture with MCP support, tool calling, RAG, and Telegram integration. Built on Spring Boot and LangChain4j" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 1441 stars · 1441/day · 0h ago · signal 8.92</span>
+            <span class="news-digest-card-meta">GitHub · 38 stars · 38/day · 0h ago · signal 8.95</span>
           </div>
-          <h3>4thfever/cultivation-world-simulator</h3>
-          <p class="news-digest-card-deck">The Immortal World Simulator based on AI Agent workflow aims to restore the intelligent and open Immortal World. | An open-source Cultivation World Simulator using Agentic Workflow to creat…</p>
-        </div>
-      </a>
-      <a class="news-digest-card" href="https://github.com/Dataojitori/nocturne_memory" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/Dataojitori/nocturne_memory" alt="Dataojitori/nocturne_memory — A lightweight, rollbackable, and visual Long-Term Memory Server for MCP Agents. Say goodbye to Vector RAG and amnesia. Empower your AI with persistent, graph-like structured memory across any model, session, or tool. Drop-in replacement for OpenClaw." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
-            <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 854 stars · 854/day · 0h ago · signal 8.74</span>
-          </div>
-          <h3>Dataojitori/nocturne_memory</h3>
-          <p class="news-digest-card-deck">A lightweight, rollbackable, and visual Long-Term Memory Server for MCP Agents. Say goodbye to Vector RAG and amnesia. Empower your AI with persistent, graph-like structured memory across a…</p>
+          <h3>alexk-dev/golemcore-bot</h3>
+          <p class="news-digest-card-deck">AI agent framework for Java — skill-based architecture with MCP support, tool calling, RAG, and Telegram integration. Built on Spring Boot and LangChain4j. Surfaced 0h ago with 38 stars and…</p>
         </div>
       </a>
       <a class="news-digest-card" href="https://github.com/NVIDIA/TensorRT-LLM" target="_blank" rel="noreferrer">
@@ -323,37 +323,37 @@ content-classes: [news-digest-note]
           <p class="news-digest-card-deck">TensorRT LLM provides users with an easy-to-use Python API to define Large Language Models (LLMs) and supports state-of-the-art optimizations to perform inference efficiently on NVIDIA GPUs…</p>
         </div>
       </a>
-      <a class="news-digest-card" href="https://github.com/dcostenco/prism-mcp" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/dcostenco/prism-mcp" alt="dcostenco/prism-mcp — 🧠 Prism MCP — Persistent memory for AI coding agents. Session history, semantic search, TurboQuant 10x compression, visual memory, autonomous Web Scholar, CRDT multi-agent merging, and a Mind Palace dashboard. Works with Claude, Cursor, Windsurf, Gemini." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
-            <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 90 stars · 90/day · 0h ago · signal 8.58</span>
-          </div>
-          <h3>dcostenco/prism-mcp</h3>
-          <p class="news-digest-card-deck">🧠 Prism MCP — Persistent memory for AI coding agents. Session history, semantic search, TurboQuant 10x compression, visual memory, autonomous Web Scholar, CRDT multi-agent merging, and a Mi…</p>
-        </div>
-      </a>
-      <a class="news-digest-card" href="https://github.com/eobarretooo/ClawLite" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/eobarretooo/ClawLite" alt="eobarretooo/ClawLite — Open source AI assistant for Linux with gateway, skills, and multi-agent capabilities." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
-            <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 33 stars · 33/day · 0h ago · signal 8.40</span>
-          </div>
-          <h3>eobarretooo/ClawLite</h3>
-          <p class="news-digest-card-deck">Open source AI assistant for Linux with gateway, skills, and multi-agent capabilities. Surfaced 0h ago with 33 stars and 33/day momentum.</p>
-        </div>
-      </a>
       <a class="news-digest-card" href="https://github.com/FabrizioCafolla/openai-crawlers-ip-ranges" target="_blank" rel="noreferrer">
         <img class="news-digest-image" src="https://opengraph.githubassets.com/1/FabrizioCafolla/openai-crawlers-ip-ranges" alt="FabrizioCafolla/openai-crawlers-ip-ranges — OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 23 stars · 23/day · 5h ago · down 14 · signal 7.79</span>
+            <span class="news-digest-card-meta">GitHub · 23 stars · 23/day · 6h ago · signal 8.25</span>
           </div>
           <h3>FabrizioCafolla/openai-crawlers-ip-ranges</h3>
-          <p class="news-digest-card-deck">OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses. Surfaced 5h ago with 23 stars and 23/day momentum. Down 14 spots from the previous run.</p>
+          <p class="news-digest-card-deck">OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses. Surfaced 6h ago with 23 stars and 23/day momentum.</p>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://github.com/rancher-sandbox/rancher-desktop" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/rancher-sandbox/rancher-desktop" alt="rancher-sandbox/rancher-desktop — Container Management and Kubernetes on the Desktop" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
+        <div class="news-digest-card-copy">
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
+            <span class="news-digest-card-meta">GitHub · 7067 stars · 7067/day · 0h ago · signal 8.11</span>
+          </div>
+          <h3>rancher-sandbox/rancher-desktop</h3>
+          <p class="news-digest-card-deck">Container Management and Kubernetes on the Desktop. Surfaced 0h ago with 7067 stars and 7067/day momentum.</p>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://github.com/Demorck/ClairObscurArchipelagoRandomizer" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/Demorck/ClairObscurArchipelagoRandomizer" alt="Demorck/ClairObscurArchipelagoRandomizer — A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
+        <div class="news-digest-card-copy">
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
+            <span class="news-digest-card-meta">GitHub · 10 stars · 3/day · 70h ago · signal 4.65</span>
+          </div>
+          <h3>Demorck/ClairObscurArchipelagoRandomizer</h3>
+          <p class="news-digest-card-deck">A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system. Surfaced 70h ago with 10 stars and 3/day momentum.</p>
         </div>
       </a>
     </div>
@@ -366,48 +366,15 @@ content-classes: [news-digest-note]
     </header>
     <p class="news-digest-section-description">New research worth bookmarking for a deeper read.</p>
     <div class="news-digest-grid">
-      <a class="news-digest-card" href="https://huggingface.co/papers/2603.25730" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25730.png" alt="PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
-            <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 11h ago · down 4 · signal 6.30</span>
-          </div>
-          <h3>PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference</h3>
-          <p class="news-digest-card-deck">PackForcing enables efficient long-video generation through hierarchical KV-cache management and spatiotemporal compression while maintaining temporal consistency and reducing memory usage.…</p>
-        </div>
-      </a>
-      <a class="news-digest-card" href="https://huggingface.co/papers/2603.23607" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.23607.png" alt="LongTail Driving Scenarios with Reasoning Traces: The KITScenes LongTail Dataset" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
-            <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 6h ago · down 8 · signal 6.26</span>
-          </div>
-          <h3>LongTail Driving Scenarios with Reasoning Traces: The KITScenes LongTail Dataset</h3>
-          <p class="news-digest-card-deck">A new long-tail driving dataset with multi-view video, trajectories, and multilingual reasoning traces is introduced to improve few-shot generalization and evaluate multimodal models&#x27; instr…</p>
-        </div>
-      </a>
       <a class="news-digest-card" href="https://huggingface.co/papers/2603.24649" target="_blank" rel="noreferrer">
         <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24649.png" alt="MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 6h ago · down 9 · signal 6.10</span>
+            <span class="news-digest-card-meta">Hugging Face Papers · 8h ago · up 12 · signal 6.88</span>
           </div>
           <h3>MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies</h3>
           <p class="news-digest-card-deck">MEDOPENCLAW and MEDFLOWBENCH enable evaluation of vision-language models in medical imaging by allowing dynamic interaction with 3D medical volumes through standard viewers, revealing limit…</p>
-        </div>
-      </a>
-      <a class="news-digest-card" href="https://huggingface.co/papers/2603.25158" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25158.png" alt="Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
-            <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 12h ago · down 11 · signal 5.92</span>
-          </div>
-          <h3>Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills</h3>
-          <p class="news-digest-card-deck">Trace2Skill enables scalable skill generation for LLM agents by analyzing diverse execution traces in parallel and consolidating them into transferable, declarative skills without parameter…</p>
         </div>
       </a>
       <a class="news-digest-card" href="https://huggingface.co/papers/2603.25716" target="_blank" rel="noreferrer">
@@ -415,10 +382,43 @@ content-classes: [news-digest-note]
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 14h ago · down 12 · signal 5.78</span>
+            <span class="news-digest-card-meta">Hugging Face Papers · 15h ago · up 12 · signal 6.87</span>
           </div>
           <h3>Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models</h3>
           <p class="news-digest-card-deck">Hybrid Memory enables video world models to maintain consistent tracking of dynamic subjects during occlusion by combining archival storage for static backgrounds with active tracking for m…</p>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.25158" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25158.png" alt="Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+        <div class="news-digest-card-copy">
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
+            <span class="news-digest-card-meta">Hugging Face Papers · 13h ago · up 10 · signal 6.78</span>
+          </div>
+          <h3>Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills</h3>
+          <p class="news-digest-card-deck">Trace2Skill enables scalable skill generation for LLM agents by analyzing diverse execution traces in parallel and consolidating them into transferable, declarative skills without parameter…</p>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.23607" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.23607.png" alt="LongTail Driving Scenarios with Reasoning Traces: The KITScenes LongTail Dataset" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+        <div class="news-digest-card-copy">
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
+            <span class="news-digest-card-meta">Hugging Face Papers · 8h ago · up 9 · signal 6.67</span>
+          </div>
+          <h3>LongTail Driving Scenarios with Reasoning Traces: The KITScenes LongTail Dataset</h3>
+          <p class="news-digest-card-deck">A new long-tail driving dataset with multi-view video, trajectories, and multilingual reasoning traces is introduced to improve few-shot generalization and evaluate multimodal models&#x27; instr…</p>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://huggingface.co/papers/2603.25730" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25730.png" alt="PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+        <div class="news-digest-card-copy">
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
+            <span class="news-digest-card-meta">Hugging Face Papers · 12h ago · up 4 · signal 6.23</span>
+          </div>
+          <h3>PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference</h3>
+          <p class="news-digest-card-deck">PackForcing enables efficient long-video generation through hierarchical KV-cache management and spatiotemporal compression while maintaining temporal consistency and reducing memory usage.…</p>
         </div>
       </a>
       <a class="news-digest-card" href="https://huggingface.co/papers/2603.25746" target="_blank" rel="noreferrer">
@@ -426,21 +426,10 @@ content-classes: [news-digest-note]
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 13h ago · down 8 · signal 5.75</span>
+            <span class="news-digest-card-meta">Hugging Face Papers · 15h ago · up 5 · signal 6.02</span>
           </div>
           <h3>ShotStream: Streaming Multi-Shot Video Generation for Interactive Storytelling</h3>
           <p class="news-digest-card-deck">ShotStream enables real-time interactive multi-shot video generation through causal architecture design, dual-cache memory mechanisms, and two-stage distillation to maintain visual consiste…</p>
-        </div>
-      </a>
-      <a class="news-digest-card" href="http://arxiv.org/abs/2603.26487v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Beyond Banning AI: A First Look at GenAI Governance in Open Source Software Communities" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
-            <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">arXiv · 71h ago · signal 3.08</span>
-          </div>
-          <h3>Beyond Banning AI: A First Look at GenAI Governance in Open Source Software Communities</h3>
-          <p class="news-digest-card-deck">Fresh arXiv paper posted 71h ago and surfacing in the current feed.</p>
         </div>
       </a>
       <a class="news-digest-card" href="http://arxiv.org/abs/2603.26249v1" target="_blank" rel="noreferrer">
@@ -448,10 +437,21 @@ content-classes: [news-digest-note]
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">arXiv · 76h ago · signal 2.75</span>
+            <span class="news-digest-card-meta">arXiv · 77h ago · down 67 · signal 2.39</span>
           </div>
           <h3>Knowledge Distillation for Efficient Transformer-Based Reinforcement Learning in Hardware-Const…</h3>
-          <p class="news-digest-card-deck">Fresh arXiv paper from the ai cluster, posted 76h ago.</p>
+          <p class="news-digest-card-deck">Fresh arXiv paper from the ai cluster, posted 77h ago. Down 67 spots from the previous run.</p>
+        </div>
+      </a>
+      <a class="news-digest-card" href="http://arxiv.org/abs/2603.26487v1" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Beyond Banning AI: A First Look at GenAI Governance in Open Source Software Communities" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
+        <div class="news-digest-card-copy">
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
+            <span class="news-digest-card-meta">arXiv · 73h ago · down 69 · signal 2.31</span>
+          </div>
+          <h3>Beyond Banning AI: A First Look at GenAI Governance in Open Source Software Communities</h3>
+          <p class="news-digest-card-deck">Fresh arXiv paper posted 73h ago and surfacing in the current feed. Down 69 spots from the previous run.</p>
         </div>
       </a>
       <a class="news-digest-card" href="http://arxiv.org/abs/2603.26277v1" target="_blank" rel="noreferrer">
@@ -459,10 +459,10 @@ content-classes: [news-digest-note]
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">arXiv · 75h ago · signal 2.73</span>
+            <span class="news-digest-card-meta">arXiv · 77h ago · down 70 · signal 2.29</span>
           </div>
           <h3>Developers and Generative AI: A Study of Self-Admitted Usage in Open Source Projects</h3>
-          <p class="news-digest-card-deck">Fresh arXiv paper posted 75h ago and surfacing in the current feed.</p>
+          <p class="news-digest-card-deck">Fresh arXiv paper posted 77h ago and surfacing in the current feed. Down 70 spots from the previous run.</p>
         </div>
       </a>
       <a class="news-digest-card" href="http://arxiv.org/abs/2603.26664v1" target="_blank" rel="noreferrer">
@@ -470,10 +470,10 @@ content-classes: [news-digest-note]
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">arXiv · 68h ago · signal 2.55</span>
+            <span class="news-digest-card-meta">arXiv · 69h ago · down 86 · signal 2.25</span>
           </div>
           <h3>Learning to Commit: Generating Organic Pull Requests via Online Repository Memory</h3>
-          <p class="news-digest-card-deck">Fresh arXiv paper posted 68h ago and surfacing in the current feed.</p>
+          <p class="news-digest-card-deck">Fresh arXiv paper posted 69h ago and surfacing in the current feed. Down 86 spots from the previous run.</p>
         </div>
       </a>
     </div>
@@ -491,10 +491,10 @@ content-classes: [news-digest-note]
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">GeekNews · 1h ago · signal 4.36</span>
+            <span class="news-digest-card-meta">GeekNews · 2h ago · down 8 · signal 4.22</span>
           </div>
           <h3>Miasma: A tool that traps AI web scrapers in an endless loop of contamination</h3>
-          <p class="news-digest-card-deck">Community signal picked up on GeekNews about 1h ago.</p>
+          <p class="news-digest-card-deck">Community signal picked up on GeekNews about 2h ago. Down 8 spots from the previous run.</p>
         </div>
       </a>
       <a class="news-digest-card" href="https://news.hada.io/topic?id=27996" target="_blank" rel="noreferrer">
@@ -502,86 +502,20 @@ content-classes: [news-digest-note]
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">GeekNews · 13h ago · signal 3.44</span>
+            <span class="news-digest-card-meta">GeekNews · 14h ago · signal 3.41</span>
           </div>
           <h3>What Agentic SaaS Changes — From UI Design to Billing Models</h3>
-          <p class="news-digest-card-deck">Community signal picked up on GeekNews about 13h ago.</p>
+          <p class="news-digest-card-deck">Community signal picked up on GeekNews about 14h ago.</p>
         </div>
       </a>
-      <a class="news-digest-card" href="https://news.hada.io/topic?id=27994" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Show GN: vLLM Compose - Easily switch/serve multiple vLLM models with Docker Compose profiles" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiY0FVX3lxTE5lZjRhTWotci1hYzF2cmhpWHdiNTFxWHA2cU5mX2dtREhBZlV2ZU1xQmNFdmlXcnM5d01idTAwMFBpc1B0WFdQbTRLNE1lQkZrNXZ2VTJfTi1kb1ZrZTdZVUc5bw?oc=5" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="The last two years reshaped how we evaluate models and what we expect from them. OpenAI&#x27;s o1 showed that &quot;thinking&quot; could be a first-class capability, something you train for and expose to users. DeepSeek-R1 proved that reasoning-style post-training coul" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">GeekNews · 13h ago · signal 3.33</span>
+            <span class="news-digest-card-meta">X · 72h ago · signal 3.37</span>
           </div>
-          <h3>Show GN: vLLM Compose - Easily switch/serve multiple vLLM models with Docker Compose profiles</h3>
-          <p class="news-digest-card-deck">Community signal picked up on GeekNews about 13h ago.</p>
-        </div>
-      </a>
-      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiXkFVX3lxTFBmVHg1ZXdqZUx6VGJwa2tRc3czX3g2N1p0c1E3d2Y2LWVRWHZUQV9YZmkyVGJnRW93TmRPSVBaRUtNdGExa2RFN2VFZnQ5TnVubS1DUW92Y2djM2Zob3c?oc=5" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="ARC-AGI-3 is out now! We&#x27;ve designed the benchmark to evaluate agentic intelligence via interactive reasoning environments. Beating ARC-AGI-3 will be achieved when an AI system matches or exceeds human-level action efficiency on all environments, upo" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
-            <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">X · 72h ago · down 38 · signal 3.29</span>
-          </div>
-          <h3>ARC-AGI-3 is out now! We&#x27;ve designed the benchmark to evaluate agentic intelligence via interac…</h3>
-          <p class="news-digest-card-deck">Community signal picked up on X about 72h ago. Down 38 spots from the previous run.</p>
-        </div>
-      </a>
-      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiXkFVX3lxTFBmVHg1ZXdqZUx6VGJwa2tRc3czX3g2N1p0c1E3d2Y2LWVRWHZUQV9YZmkyVGJnRW93TmRPSVBaRUtNdGExa2RFN2VFZnQ5TnVubS1DUW92Y2djM2Zob3c?oc=5#rebalance-x.com-1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="ARC-AGI-3 is out now! We&#x27;ve designed the benchmark to evaluate agentic intelligence via interactive reasoning environments. Beating ARC-AGI-3 will be achieved when an AI system matches or exceeds human-level action efficiency on all environments, upo" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
-            <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">X · 72h ago · down 38 · signal 3.29</span>
-          </div>
-          <h3>ARC-AGI-3 is out now! We&#x27;ve designed the benchmark to evaluate agentic intelligence via interac…</h3>
-          <p class="news-digest-card-deck">Community signal picked up on X about 72h ago. Down 38 spots from the previous run.</p>
-        </div>
-      </a>
-      <a class="news-digest-card" href="https://news.hada.io/topic?id=27995" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Korean Law MCP - Korean law search, inquiry, and analysis tool" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
-            <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">GeekNews · 13h ago · signal 3.23</span>
-          </div>
-          <h3>Korean Law MCP - Korean law search, inquiry, and analysis tool</h3>
-          <p class="news-digest-card-deck">Community signal picked up on GeekNews about 13h ago.</p>
-        </div>
-      </a>
-      <a class="news-digest-card" href="https://news.hada.io/topic?id=27993" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Tennessee woman wrongly arrested for North Dakota crime due to AI facial recognition error" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
-            <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">GeekNews · 13h ago · signal 3.23</span>
-          </div>
-          <h3>Tennessee woman wrongly arrested for North Dakota crime due to AI facial recognition error</h3>
-          <p class="news-digest-card-deck">Community signal picked up on GeekNews about 13h ago.</p>
-        </div>
-      </a>
-      <a class="news-digest-card" href="https://news.hada.io/topic?id=28005" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Establishment of digital argument principles when introducing AI judges: Prompt agreement and measures to secure metadata neutrality" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
-            <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">GeekNews · 10h ago · down 39 · signal 3.19</span>
-          </div>
-          <h3>Establishment of digital argument principles when introducing AI judges: Prompt agreement and m…</h3>
-          <p class="news-digest-card-deck">Community signal picked up on GeekNews about 10h ago. Down 39 spots from the previous run.</p>
-        </div>
-      </a>
-      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiXkFVX3lxTFBGUDM4ZHhTUm13T2dMd3M4RFVHdjJzU0NpaDU0aUx0X19oQ3ZDOGE4NXVPeURNLV9fa29WdVF0TVZGbEtVa0RVTmRhcHp4Um9XaGE2SmtiUkpDREZQZHc?oc=5" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Announcing ARC-AGI-3 The only unsaturated agentic intelligence benchmark in the world Humans score 100%, AI" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
-            <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">X · 72h ago · signal 3.01</span>
-          </div>
-          <h3>Announcing ARC-AGI-3 The only unsaturated agentic intelligence benchmark in the world Humans sc…</h3>
+          <h3>The last two years reshaped how we evaluate models and what we expect from them.</h3>
           <p class="news-digest-card-deck">Community signal picked up on X about 72h ago.</p>
         </div>
       </a>
@@ -590,10 +524,76 @@ content-classes: [news-digest-note]
         <div class="news-digest-card-copy">
           <div class="news-digest-card-eyebrow">
             <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">X · 72h ago · down 73 · signal 2.66</span>
+            <span class="news-digest-card-meta">X · 72h ago · down 25 · signal 3.32</span>
           </div>
           <h3>Persuasion has two sides. This chart shows how easy each model is to move as a target.</h3>
-          <p class="news-digest-card-deck">Community signal picked up on X about 72h ago. Down 73 spots from the previous run.</p>
+          <p class="news-digest-card-deck">Community signal picked up on X about 72h ago. Down 25 spots from the previous run.</p>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE85d1RTYnhaQ0NRRWFrYml0NG5XR1BZYjVQUWRndHJBR2VyY1hqTjNNWlFmWXU0d2ZNeFN4ajlMZDZBNVZLZkRVVVJrMGd1NzNiUXVRUmtLbHlYV0VlX3BJ?oc=5#rebalance-x.com-1" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Persuasion has two sides. This chart shows how easy each model is to move as a target. Xiaomi MiMo V2 Pro and Gemini 3.1 Pro Preview are the softest targets. Grok 4.20 Beta 0309 (Reasoning) is nearly immovable on average." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+        <div class="news-digest-card-copy">
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
+            <span class="news-digest-card-meta">X · 72h ago · down 25 · signal 3.32</span>
+          </div>
+          <h3>Persuasion has two sides. This chart shows how easy each model is to move as a target.</h3>
+          <p class="news-digest-card-deck">Community signal picked up on X about 72h ago. Down 25 spots from the previous run.</p>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://news.google.com/rss/articles/CBMiXkFVX3lxTFBmVHg1ZXdqZUx6VGJwa2tRc3czX3g2N1p0c1E3d2Y2LWVRWHZUQV9YZmkyVGJnRW93TmRPSVBaRUtNdGExa2RFN2VFZnQ5TnVubS1DUW92Y2djM2Zob3c?oc=5" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="ARC-AGI-3 is out now! We&#x27;ve designed the benchmark to evaluate agentic intelligence via interactive reasoning environments. Beating ARC-AGI-3 will be achieved when an AI system matches or exceeds human-level action efficiency on all environments, upo" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+        <div class="news-digest-card-copy">
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
+            <span class="news-digest-card-meta">X · 72h ago · down 30 · signal 3.28</span>
+          </div>
+          <h3>ARC-AGI-3 is out now! We&#x27;ve designed the benchmark to evaluate agentic intelligence via interac…</h3>
+          <p class="news-digest-card-deck">Community signal picked up on X about 72h ago. Down 30 spots from the previous run.</p>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://news.hada.io/topic?id=27994" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Show GN: vLLM Compose - Easily switch/serve multiple vLLM models with Docker Compose profiles" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+        <div class="news-digest-card-copy">
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
+            <span class="news-digest-card-meta">GeekNews · 15h ago · signal 3.26</span>
+          </div>
+          <h3>Show GN: vLLM Compose - Easily switch/serve multiple vLLM models with Docker Compose profiles</h3>
+          <p class="news-digest-card-deck">Community signal picked up on GeekNews about 15h ago.</p>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://news.hada.io/topic?id=28005" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Establishment of digital argument principles when introducing AI judges: Prompt agreement and measures to secure metadata neutrality" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+        <div class="news-digest-card-copy">
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
+            <span class="news-digest-card-meta">GeekNews · 11h ago · down 32 · signal 3.17</span>
+          </div>
+          <h3>Establishment of digital argument principles when introducing AI judges: Prompt agreement and m…</h3>
+          <p class="news-digest-card-deck">Community signal picked up on GeekNews about 11h ago. Down 32 spots from the previous run.</p>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://news.hada.io/topic?id=27995" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Korean Law MCP - Korean law search, inquiry, and analysis tool" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+        <div class="news-digest-card-copy">
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
+            <span class="news-digest-card-meta">GeekNews · 15h ago · signal 3.17</span>
+          </div>
+          <h3>Korean Law MCP - Korean law search, inquiry, and analysis tool</h3>
+          <p class="news-digest-card-deck">Community signal picked up on GeekNews about 15h ago.</p>
+        </div>
+      </a>
+      <a class="news-digest-card" href="https://news.hada.io/topic?id=27993" target="_blank" rel="noreferrer">
+        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Tennessee woman wrongly arrested for North Dakota crime due to AI facial recognition error" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
+        <div class="news-digest-card-copy">
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
+            <span class="news-digest-card-meta">GeekNews · 15h ago · signal 3.16</span>
+          </div>
+          <h3>Tennessee woman wrongly arrested for North Dakota crime due to AI facial recognition error</h3>
+          <p class="news-digest-card-deck">Community signal picked up on GeekNews about 15h ago.</p>
         </div>
       </a>
     </div>

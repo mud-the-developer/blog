@@ -1,47 +1,47 @@
 {
-  "generated_at": "2026-03-31T00:39:27.175717+09:00",
-  "generated_label": "Mar 31, 2026 · 12:39 AM KST",
+  "generated_at": "2026-03-31T01:14:34.480819+09:00",
+  "generated_label": "Mar 31, 2026 · 1:14 AM KST",
   "issue_date": "2026-03-31",
   "issue_label": "Mar 31, 2026",
-  "summary": "GitHub velocity is led by GeminiLight/MindOS; paper attention is clustering around PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference; social attention is tilting toward Miasma: A tool that traps AI web scrapers in an endless loop of contamination. 10 repo signals, 10 paper picks, and 10 community items made today's cut.",
+  "summary": "GitHub velocity is led by comet-ml/opik; paper attention is clustering around MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies; social attention is tilting toward Miasma: A tool that traps AI web scrapers in an endless loop of contamination; biggest mover: MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies (+12). 10 repo signals, 10 paper picks, and 10 community items made today's cut.",
   "top_cards": [
     {
-      "headline": "GeminiLight/MindOS",
-      "title": "GeminiLight/MindOS — MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically.",
-      "url": "https://github.com/GeminiLight/MindOS",
+      "headline": "comet-ml/opik",
+      "title": "comet-ml/opik — Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards.",
+      "url": "https://github.com/comet-ml/opik",
       "source": "github.com",
       "tags": [
         "AI"
       ],
-      "score": 9.338,
-      "raw_score": 5.169,
+      "score": 9.633,
+      "raw_score": 5.225,
       "published_hours_ago": 0,
-      "stars": 113,
-      "image_url": "https://opengraph.githubassets.com/1/GeminiLight/MindOS",
+      "stars": 18550,
+      "image_url": "https://opengraph.githubassets.com/1/comet-ml/opik",
       "badge": "Repo",
-      "deck": "MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically. Surfaced 0h ago with 113 stars and 113/day mom…",
-      "meta": "GitHub · 113 stars · 113/day · 0h ago · signal 9.34",
+      "deck": "Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards. Surfaced 0h ago wi…",
+      "meta": "GitHub · 18550 stars · 18550/day · 0h ago · signal 9.63",
       "rank": 1,
       "rank_delta": null
     },
     {
-      "headline": "PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference",
-      "title": "PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference",
-      "url": "https://huggingface.co/papers/2603.25730",
+      "headline": "MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies",
+      "title": "MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies",
+      "url": "https://huggingface.co/papers/2603.24649",
       "source": "huggingface.co",
       "tags": [
         "AI"
       ],
-      "score": 6.297,
-      "raw_score": 3.673,
-      "published_hours_ago": 11,
+      "score": 6.885,
+      "raw_score": 3.561,
+      "published_hours_ago": 8,
       "stars": 0,
-      "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25730.png",
+      "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24649.png",
       "badge": "Paper",
-      "deck": "PackForcing enables efficient long-video generation through hierarchical KV-cache management and spatiotemporal compression while maintaining temporal consistency and reducing memory usage.…",
-      "meta": "Hugging Face Papers · 11h ago · down 4 · signal 6.30",
-      "rank": 19,
-      "rank_delta": -4
+      "deck": "MEDOPENCLAW and MEDFLOWBENCH enable evaluation of vision-language models in medical imaging by allowing dynamic interaction with 3D medical volumes through standard viewers, revealing limit…",
+      "meta": "Hugging Face Papers · 8h ago · up 12 · signal 6.88",
+      "rank": 14,
+      "rank_delta": 12
     },
     {
       "headline": "Miasma: A tool that traps AI web scrapers in an endless loop of contamination",
@@ -51,36 +51,57 @@
       "tags": [
         "social"
       ],
-      "score": 4.361,
-      "raw_score": 2.233,
-      "published_hours_ago": 1,
+      "score": 4.225,
+      "raw_score": 2.181,
+      "published_hours_ago": 2,
       "stars": 0,
       "image_url": "/news/assets/thumb-ai.svg",
       "badge": "Social",
-      "deck": "Community signal picked up on GeekNews about 1h ago.",
-      "meta": "GeekNews · 1h ago · signal 4.36",
-      "rank": 53,
-      "rank_delta": null
+      "deck": "Community signal picked up on GeekNews about 2h ago. Down 8 spots from the previous run.",
+      "meta": "GeekNews · 2h ago · down 8 · signal 4.22",
+      "rank": 49,
+      "rank_delta": -8
     },
     {
-      "headline": "Beyond Banning AI: A First Look at GenAI Governance in Open Source Software Communities",
-      "title": "Beyond Banning AI: A First Look at GenAI Governance in Open Source Software Communities",
-      "url": "http://arxiv.org/abs/2603.26487v1",
-      "source": "arxiv.org",
-      "tags": [],
-      "score": 3.084,
-      "raw_score": 1.756,
-      "published_hours_ago": 71,
+      "headline": "Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models",
+      "title": "Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models",
+      "url": "https://huggingface.co/papers/2603.25716",
+      "source": "huggingface.co",
+      "tags": [
+        "AI"
+      ],
+      "score": 6.866,
+      "raw_score": 3.721,
+      "published_hours_ago": 15,
       "stars": 0,
-      "image_url": "/news/assets/thumb-paper.svg",
+      "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25716.png",
       "badge": "Paper",
-      "deck": "Fresh arXiv paper posted 71h ago and surfacing in the current feed.",
-      "meta": "arXiv · 71h ago · signal 3.08",
-      "rank": 82,
-      "rank_delta": null
+      "deck": "Hybrid Memory enables video world models to maintain consistent tracking of dynamic subjects during occlusion by combining archival storage for static backgrounds with active tracking for m…",
+      "meta": "Hugging Face Papers · 15h ago · up 12 · signal 6.87",
+      "rank": 12,
+      "rank_delta": 12
     }
   ],
   "repo_scoreboard": [
+    {
+      "headline": "comet-ml/opik",
+      "title": "comet-ml/opik — Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards.",
+      "url": "https://github.com/comet-ml/opik",
+      "source": "github.com",
+      "tags": [
+        "AI"
+      ],
+      "score": 9.633,
+      "raw_score": 5.225,
+      "published_hours_ago": 0,
+      "stars": 18550,
+      "image_url": "https://opengraph.githubassets.com/1/comet-ml/opik",
+      "badge": "Repo",
+      "deck": "Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards. Surfaced 0h ago wi…",
+      "meta": "GitHub · 18550 stars · 18550/day · 0h ago · signal 9.63",
+      "rank": 1,
+      "rank_delta": null
+    },
     {
       "headline": "GeminiLight/MindOS",
       "title": "GeminiLight/MindOS — MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically.",
@@ -158,41 +179,22 @@
       "rank_delta": null
     },
     {
-      "headline": "4thfever/cultivation-world-simulator",
-      "title": "4thfever/cultivation-world-simulator — The Immortal World Simulator based on AI Agent workflow aims to restore the intelligent and open Immortal World. | An open-source Cultivation World Simulator using Agentic Workflow to create a dynamic, emerging Xianxia world.",
-      "url": "https://github.com/4thfever/cultivation-world-simulator",
+      "headline": "alexk-dev/golemcore-bot",
+      "title": "alexk-dev/golemcore-bot — AI agent framework for Java — skill-based architecture with MCP support, tool calling, RAG, and Telegram integration. Built on Spring Boot and LangChain4j",
+      "url": "https://github.com/alexk-dev/golemcore-bot",
       "source": "github.com",
       "tags": [
         "AI"
       ],
-      "score": 8.922,
-      "raw_score": 4.792,
+      "score": 8.945,
+      "raw_score": 4.983,
       "published_hours_ago": 0,
-      "stars": 1441,
-      "image_url": "https://opengraph.githubassets.com/1/4thfever/cultivation-world-simulator",
+      "stars": 38,
+      "image_url": "https://opengraph.githubassets.com/1/alexk-dev/golemcore-bot",
       "badge": "Repo",
-      "deck": "The Immortal World Simulator based on AI Agent workflow aims to restore the intelligent and open Immortal World. | An open-source Cultivation World Simulator using Agentic Workflow to creat…",
-      "meta": "GitHub · 1441 stars · 1441/day · 0h ago · signal 8.92",
-      "rank": 3,
-      "rank_delta": null
-    },
-    {
-      "headline": "Dataojitori/nocturne_memory",
-      "title": "Dataojitori/nocturne_memory — A lightweight, rollbackable, and visual Long-Term Memory Server for MCP Agents. Say goodbye to Vector RAG and amnesia. Empower your AI with persistent, graph-like structured memory across any model, session, or tool. Drop-in replacement for OpenClaw.",
-      "url": "https://github.com/Dataojitori/nocturne_memory",
-      "source": "github.com",
-      "tags": [
-        "AI"
-      ],
-      "score": 8.741,
-      "raw_score": 4.566,
-      "published_hours_ago": 0,
-      "stars": 854,
-      "image_url": "https://opengraph.githubassets.com/1/Dataojitori/nocturne_memory",
-      "badge": "Repo",
-      "deck": "A lightweight, rollbackable, and visual Long-Term Memory Server for MCP Agents. Say goodbye to Vector RAG and amnesia. Empower your AI with persistent, graph-like structured memory across a…",
-      "meta": "GitHub · 854 stars · 854/day · 0h ago · signal 8.74",
-      "rank": 4,
+      "deck": "AI agent framework for Java — skill-based architecture with MCP support, tool calling, RAG, and Telegram integration. Built on Spring Boot and LangChain4j. Surfaced 0h ago with 38 stars and…",
+      "meta": "GitHub · 38 stars · 38/day · 0h ago · signal 8.95",
+      "rank": 2,
       "rank_delta": null
     },
     {
@@ -215,22 +217,20 @@
       "rank_delta": null
     },
     {
-      "headline": "dcostenco/prism-mcp",
-      "title": "dcostenco/prism-mcp — 🧠 Prism MCP — Persistent memory for AI coding agents. Session history, semantic search, TurboQuant 10x compression, visual memory, autonomous Web Scholar, CRDT multi-agent merging, and a Mind Palace dashboard. Works with Claude, Cursor, Windsurf, Gemini.",
-      "url": "https://github.com/dcostenco/prism-mcp",
+      "headline": "FabrizioCafolla/openai-crawlers-ip-ranges",
+      "title": "FabrizioCafolla/openai-crawlers-ip-ranges — OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses",
+      "url": "https://github.com/FabrizioCafolla/openai-crawlers-ip-ranges",
       "source": "github.com",
-      "tags": [
-        "AI"
-      ],
-      "score": 8.576,
-      "raw_score": 4.515,
-      "published_hours_ago": 0,
-      "stars": 90,
-      "image_url": "https://opengraph.githubassets.com/1/dcostenco/prism-mcp",
+      "tags": [],
+      "score": 8.246,
+      "raw_score": 4.557,
+      "published_hours_ago": 6,
+      "stars": 23,
+      "image_url": "https://opengraph.githubassets.com/1/FabrizioCafolla/openai-crawlers-ip-ranges",
       "badge": "Repo",
-      "deck": "🧠 Prism MCP — Persistent memory for AI coding agents. Session history, semantic search, TurboQuant 10x compression, visual memory, autonomous Web Scholar, CRDT multi-agent merging, and a Mi…",
-      "meta": "GitHub · 90 stars · 90/day · 0h ago · signal 8.58",
-      "rank": 2,
+      "deck": "OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses. Surfaced 6h ago with 23 stars and 23/day momentum.",
+      "meta": "GitHub · 23 stars · 23/day · 6h ago · signal 8.25",
+      "rank": 4,
       "rank_delta": null
     }
   ],
@@ -241,21 +241,21 @@
       "description": "The fastest-moving items across repos, papers, and community chatter.",
       "items": [
         {
-          "headline": "GeminiLight/MindOS",
-          "title": "GeminiLight/MindOS — MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically.",
-          "url": "https://github.com/GeminiLight/MindOS",
+          "headline": "comet-ml/opik",
+          "title": "comet-ml/opik — Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards.",
+          "url": "https://github.com/comet-ml/opik",
           "source": "github.com",
           "tags": [
             "AI"
           ],
-          "score": 9.338,
-          "raw_score": 5.169,
+          "score": 9.633,
+          "raw_score": 5.225,
           "published_hours_ago": 0,
-          "stars": 113,
-          "image_url": "https://opengraph.githubassets.com/1/GeminiLight/MindOS",
+          "stars": 18550,
+          "image_url": "https://opengraph.githubassets.com/1/comet-ml/opik",
           "badge": "Repo",
-          "deck": "MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically. Surfaced 0h ago with 113 stars and 113/day mom…",
-          "meta": "GitHub · 113 stars · 113/day · 0h ago · signal 9.34",
+          "deck": "Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards. Surfaced 0h ago wi…",
+          "meta": "GitHub · 18550 stars · 18550/day · 0h ago · signal 9.63",
           "rank": 1,
           "rank_delta": null
         },
@@ -265,35 +265,16 @@
           "url": "https://github.com/FabrizioCafolla/openai-crawlers-ip-ranges",
           "source": "github.com",
           "tags": [],
-          "score": 7.794,
-          "raw_score": 4.34,
-          "published_hours_ago": 5,
+          "score": 8.246,
+          "raw_score": 4.557,
+          "published_hours_ago": 6,
           "stars": 23,
           "image_url": "https://opengraph.githubassets.com/1/FabrizioCafolla/openai-crawlers-ip-ranges",
           "badge": "Repo",
-          "deck": "OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses. Surfaced 5h ago with 23 stars and 23/day momentum. Down 14 spots from the previous run.",
-          "meta": "GitHub · 23 stars · 23/day · 5h ago · down 14 · signal 7.79",
-          "rank": 16,
-          "rank_delta": -14
-        },
-        {
-          "headline": "PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference",
-          "title": "PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference",
-          "url": "https://huggingface.co/papers/2603.25730",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 6.297,
-          "raw_score": 3.673,
-          "published_hours_ago": 11,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25730.png",
-          "badge": "Paper",
-          "deck": "PackForcing enables efficient long-video generation through hierarchical KV-cache management and spatiotemporal compression while maintaining temporal consistency and reducing memory usage.…",
-          "meta": "Hugging Face Papers · 11h ago · down 4 · signal 6.30",
-          "rank": 19,
-          "rank_delta": -4
+          "deck": "OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses. Surfaced 6h ago with 23 stars and 23/day momentum.",
+          "meta": "GitHub · 23 stars · 23/day · 6h ago · signal 8.25",
+          "rank": 4,
+          "rank_delta": null
         },
         {
           "headline": "MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies",
@@ -303,16 +284,35 @@
           "tags": [
             "AI"
           ],
-          "score": 6.1,
-          "raw_score": 3.3,
-          "published_hours_ago": 6,
+          "score": 6.885,
+          "raw_score": 3.561,
+          "published_hours_ago": 8,
           "stars": 0,
           "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24649.png",
           "badge": "Paper",
           "deck": "MEDOPENCLAW and MEDFLOWBENCH enable evaluation of vision-language models in medical imaging by allowing dynamic interaction with 3D medical volumes through standard viewers, revealing limit…",
-          "meta": "Hugging Face Papers · 6h ago · down 9 · signal 6.10",
-          "rank": 25,
-          "rank_delta": -9
+          "meta": "Hugging Face Papers · 8h ago · up 12 · signal 6.88",
+          "rank": 14,
+          "rank_delta": 12
+        },
+        {
+          "headline": "Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models",
+          "title": "Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models",
+          "url": "https://huggingface.co/papers/2603.25716",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 6.866,
+          "raw_score": 3.721,
+          "published_hours_ago": 15,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25716.png",
+          "badge": "Paper",
+          "deck": "Hybrid Memory enables video world models to maintain consistent tracking of dynamic subjects during occlusion by combining archival storage for static backgrounds with active tracking for m…",
+          "meta": "Hugging Face Papers · 15h ago · up 12 · signal 6.87",
+          "rank": 12,
+          "rank_delta": 12
         }
       ]
     },
@@ -321,6 +321,25 @@
       "title": "Repository Momentum",
       "description": "Fresh GitHub projects worth scanning before the feed turns over.",
       "items": [
+        {
+          "headline": "comet-ml/opik",
+          "title": "comet-ml/opik — Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards.",
+          "url": "https://github.com/comet-ml/opik",
+          "source": "github.com",
+          "tags": [
+            "AI"
+          ],
+          "score": 9.633,
+          "raw_score": 5.225,
+          "published_hours_ago": 0,
+          "stars": 18550,
+          "image_url": "https://opengraph.githubassets.com/1/comet-ml/opik",
+          "badge": "Repo",
+          "deck": "Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards. Surfaced 0h ago wi…",
+          "meta": "GitHub · 18550 stars · 18550/day · 0h ago · signal 9.63",
+          "rank": 1,
+          "rank_delta": null
+        },
         {
           "headline": "GeminiLight/MindOS",
           "title": "GeminiLight/MindOS — MindOS is a Human-AI Collaborative Mind System. Globally sync your mind for all agents: transparent, controllable, and evolving symbiotically.",
@@ -398,41 +417,22 @@
           "rank_delta": null
         },
         {
-          "headline": "4thfever/cultivation-world-simulator",
-          "title": "4thfever/cultivation-world-simulator — The Immortal World Simulator based on AI Agent workflow aims to restore the intelligent and open Immortal World. | An open-source Cultivation World Simulator using Agentic Workflow to create a dynamic, emerging Xianxia world.",
-          "url": "https://github.com/4thfever/cultivation-world-simulator",
+          "headline": "alexk-dev/golemcore-bot",
+          "title": "alexk-dev/golemcore-bot — AI agent framework for Java — skill-based architecture with MCP support, tool calling, RAG, and Telegram integration. Built on Spring Boot and LangChain4j",
+          "url": "https://github.com/alexk-dev/golemcore-bot",
           "source": "github.com",
           "tags": [
             "AI"
           ],
-          "score": 8.922,
-          "raw_score": 4.792,
+          "score": 8.945,
+          "raw_score": 4.983,
           "published_hours_ago": 0,
-          "stars": 1441,
-          "image_url": "https://opengraph.githubassets.com/1/4thfever/cultivation-world-simulator",
+          "stars": 38,
+          "image_url": "https://opengraph.githubassets.com/1/alexk-dev/golemcore-bot",
           "badge": "Repo",
-          "deck": "The Immortal World Simulator based on AI Agent workflow aims to restore the intelligent and open Immortal World. | An open-source Cultivation World Simulator using Agentic Workflow to creat…",
-          "meta": "GitHub · 1441 stars · 1441/day · 0h ago · signal 8.92",
-          "rank": 3,
-          "rank_delta": null
-        },
-        {
-          "headline": "Dataojitori/nocturne_memory",
-          "title": "Dataojitori/nocturne_memory — A lightweight, rollbackable, and visual Long-Term Memory Server for MCP Agents. Say goodbye to Vector RAG and amnesia. Empower your AI with persistent, graph-like structured memory across any model, session, or tool. Drop-in replacement for OpenClaw.",
-          "url": "https://github.com/Dataojitori/nocturne_memory",
-          "source": "github.com",
-          "tags": [
-            "AI"
-          ],
-          "score": 8.741,
-          "raw_score": 4.566,
-          "published_hours_ago": 0,
-          "stars": 854,
-          "image_url": "https://opengraph.githubassets.com/1/Dataojitori/nocturne_memory",
-          "badge": "Repo",
-          "deck": "A lightweight, rollbackable, and visual Long-Term Memory Server for MCP Agents. Say goodbye to Vector RAG and amnesia. Empower your AI with persistent, graph-like structured memory across a…",
-          "meta": "GitHub · 854 stars · 854/day · 0h ago · signal 8.74",
-          "rank": 4,
+          "deck": "AI agent framework for Java — skill-based architecture with MCP support, tool calling, RAG, and Telegram integration. Built on Spring Boot and LangChain4j. Surfaced 0h ago with 38 stars and…",
+          "meta": "GitHub · 38 stars · 38/day · 0h ago · signal 8.95",
+          "rank": 2,
           "rank_delta": null
         },
         {
@@ -455,59 +455,55 @@
           "rank_delta": null
         },
         {
-          "headline": "dcostenco/prism-mcp",
-          "title": "dcostenco/prism-mcp — 🧠 Prism MCP — Persistent memory for AI coding agents. Session history, semantic search, TurboQuant 10x compression, visual memory, autonomous Web Scholar, CRDT multi-agent merging, and a Mind Palace dashboard. Works with Claude, Cursor, Windsurf, Gemini.",
-          "url": "https://github.com/dcostenco/prism-mcp",
-          "source": "github.com",
-          "tags": [
-            "AI"
-          ],
-          "score": 8.576,
-          "raw_score": 4.515,
-          "published_hours_ago": 0,
-          "stars": 90,
-          "image_url": "https://opengraph.githubassets.com/1/dcostenco/prism-mcp",
-          "badge": "Repo",
-          "deck": "🧠 Prism MCP — Persistent memory for AI coding agents. Session history, semantic search, TurboQuant 10x compression, visual memory, autonomous Web Scholar, CRDT multi-agent merging, and a Mi…",
-          "meta": "GitHub · 90 stars · 90/day · 0h ago · signal 8.58",
-          "rank": 2,
-          "rank_delta": null
-        },
-        {
-          "headline": "eobarretooo/ClawLite",
-          "title": "eobarretooo/ClawLite — Open source AI assistant for Linux with gateway, skills, and multi-agent capabilities.",
-          "url": "https://github.com/eobarretooo/ClawLite",
-          "source": "github.com",
-          "tags": [
-            "AI"
-          ],
-          "score": 8.398,
-          "raw_score": 4.455,
-          "published_hours_ago": 0,
-          "stars": 33,
-          "image_url": "https://opengraph.githubassets.com/1/eobarretooo/ClawLite",
-          "badge": "Repo",
-          "deck": "Open source AI assistant for Linux with gateway, skills, and multi-agent capabilities. Surfaced 0h ago with 33 stars and 33/day momentum.",
-          "meta": "GitHub · 33 stars · 33/day · 0h ago · signal 8.40",
-          "rank": 3,
-          "rank_delta": null
-        },
-        {
           "headline": "FabrizioCafolla/openai-crawlers-ip-ranges",
           "title": "FabrizioCafolla/openai-crawlers-ip-ranges — OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses",
           "url": "https://github.com/FabrizioCafolla/openai-crawlers-ip-ranges",
           "source": "github.com",
           "tags": [],
-          "score": 7.794,
-          "raw_score": 4.34,
-          "published_hours_ago": 5,
+          "score": 8.246,
+          "raw_score": 4.557,
+          "published_hours_ago": 6,
           "stars": 23,
           "image_url": "https://opengraph.githubassets.com/1/FabrizioCafolla/openai-crawlers-ip-ranges",
           "badge": "Repo",
-          "deck": "OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses. Surfaced 5h ago with 23 stars and 23/day momentum. Down 14 spots from the previous run.",
-          "meta": "GitHub · 23 stars · 23/day · 5h ago · down 14 · signal 7.79",
-          "rank": 16,
-          "rank_delta": -14
+          "deck": "OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses. Surfaced 6h ago with 23 stars and 23/day momentum.",
+          "meta": "GitHub · 23 stars · 23/day · 6h ago · signal 8.25",
+          "rank": 4,
+          "rank_delta": null
+        },
+        {
+          "headline": "rancher-sandbox/rancher-desktop",
+          "title": "rancher-sandbox/rancher-desktop — Container Management and Kubernetes on the Desktop",
+          "url": "https://github.com/rancher-sandbox/rancher-desktop",
+          "source": "github.com",
+          "tags": [],
+          "score": 8.113,
+          "raw_score": 4.345,
+          "published_hours_ago": 0,
+          "stars": 7067,
+          "image_url": "https://opengraph.githubassets.com/1/rancher-sandbox/rancher-desktop",
+          "badge": "Repo",
+          "deck": "Container Management and Kubernetes on the Desktop. Surfaced 0h ago with 7067 stars and 7067/day momentum.",
+          "meta": "GitHub · 7067 stars · 7067/day · 0h ago · signal 8.11",
+          "rank": 7,
+          "rank_delta": null
+        },
+        {
+          "headline": "Demorck/ClairObscurArchipelagoRandomizer",
+          "title": "Demorck/ClairObscurArchipelagoRandomizer — A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system",
+          "url": "https://github.com/Demorck/ClairObscurArchipelagoRandomizer",
+          "source": "github.com",
+          "tags": [],
+          "score": 4.646,
+          "raw_score": 2.587,
+          "published_hours_ago": 70,
+          "stars": 10,
+          "image_url": "https://opengraph.githubassets.com/1/Demorck/ClairObscurArchipelagoRandomizer",
+          "badge": "Repo",
+          "deck": "A Clair Obscur : Expedition 33 mod for the Archipelago multi-game randomizer system. Surfaced 70h ago with 10 stars and 3/day momentum.",
+          "meta": "GitHub · 10 stars · 3/day · 70h ago · signal 4.65",
+          "rank": 29,
+          "rank_delta": null
         }
       ]
     },
@@ -517,44 +513,6 @@
       "description": "New research worth bookmarking for a deeper read.",
       "items": [
         {
-          "headline": "PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference",
-          "title": "PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference",
-          "url": "https://huggingface.co/papers/2603.25730",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 6.297,
-          "raw_score": 3.673,
-          "published_hours_ago": 11,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25730.png",
-          "badge": "Paper",
-          "deck": "PackForcing enables efficient long-video generation through hierarchical KV-cache management and spatiotemporal compression while maintaining temporal consistency and reducing memory usage.…",
-          "meta": "Hugging Face Papers · 11h ago · down 4 · signal 6.30",
-          "rank": 19,
-          "rank_delta": -4
-        },
-        {
-          "headline": "LongTail Driving Scenarios with Reasoning Traces: The KITScenes LongTail Dataset",
-          "title": "LongTail Driving Scenarios with Reasoning Traces: The KITScenes LongTail Dataset",
-          "url": "https://huggingface.co/papers/2603.23607",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 6.258,
-          "raw_score": 3.593,
-          "published_hours_ago": 6,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.23607.png",
-          "badge": "Paper",
-          "deck": "A new long-tail driving dataset with multi-view video, trajectories, and multilingual reasoning traces is introduced to improve few-shot generalization and evaluate multimodal models' instr…",
-          "meta": "Hugging Face Papers · 6h ago · down 8 · signal 6.26",
-          "rank": 20,
-          "rank_delta": -8
-        },
-        {
           "headline": "MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies",
           "title": "MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies",
           "url": "https://huggingface.co/papers/2603.24649",
@@ -562,35 +520,16 @@
           "tags": [
             "AI"
           ],
-          "score": 6.1,
-          "raw_score": 3.3,
-          "published_hours_ago": 6,
+          "score": 6.885,
+          "raw_score": 3.561,
+          "published_hours_ago": 8,
           "stars": 0,
           "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24649.png",
           "badge": "Paper",
           "deck": "MEDOPENCLAW and MEDFLOWBENCH enable evaluation of vision-language models in medical imaging by allowing dynamic interaction with 3D medical volumes through standard viewers, revealing limit…",
-          "meta": "Hugging Face Papers · 6h ago · down 9 · signal 6.10",
-          "rank": 25,
-          "rank_delta": -9
-        },
-        {
-          "headline": "Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills",
-          "title": "Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills",
-          "url": "https://huggingface.co/papers/2603.25158",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 5.92,
-          "raw_score": 3.337,
-          "published_hours_ago": 12,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25158.png",
-          "badge": "Paper",
-          "deck": "Trace2Skill enables scalable skill generation for LLM agents by analyzing diverse execution traces in parallel and consolidating them into transferable, declarative skills without parameter…",
-          "meta": "Hugging Face Papers · 12h ago · down 11 · signal 5.92",
-          "rank": 24,
-          "rank_delta": -11
+          "meta": "Hugging Face Papers · 8h ago · up 12 · signal 6.88",
+          "rank": 14,
+          "rank_delta": 12
         },
         {
           "headline": "Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models",
@@ -600,16 +539,73 @@
           "tags": [
             "AI"
           ],
-          "score": 5.775,
-          "raw_score": 3.387,
-          "published_hours_ago": 14,
+          "score": 6.866,
+          "raw_score": 3.721,
+          "published_hours_ago": 15,
           "stars": 0,
           "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25716.png",
           "badge": "Paper",
           "deck": "Hybrid Memory enables video world models to maintain consistent tracking of dynamic subjects during occlusion by combining archival storage for static backgrounds with active tracking for m…",
-          "meta": "Hugging Face Papers · 14h ago · down 12 · signal 5.78",
-          "rank": 23,
-          "rank_delta": -12
+          "meta": "Hugging Face Papers · 15h ago · up 12 · signal 6.87",
+          "rank": 12,
+          "rank_delta": 12
+        },
+        {
+          "headline": "Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills",
+          "title": "Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills",
+          "url": "https://huggingface.co/papers/2603.25158",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 6.781,
+          "raw_score": 3.552,
+          "published_hours_ago": 13,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25158.png",
+          "badge": "Paper",
+          "deck": "Trace2Skill enables scalable skill generation for LLM agents by analyzing diverse execution traces in parallel and consolidating them into transferable, declarative skills without parameter…",
+          "meta": "Hugging Face Papers · 13h ago · up 10 · signal 6.78",
+          "rank": 15,
+          "rank_delta": 10
+        },
+        {
+          "headline": "LongTail Driving Scenarios with Reasoning Traces: The KITScenes LongTail Dataset",
+          "title": "LongTail Driving Scenarios with Reasoning Traces: The KITScenes LongTail Dataset",
+          "url": "https://huggingface.co/papers/2603.23607",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 6.674,
+          "raw_score": 3.664,
+          "published_hours_ago": 8,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.23607.png",
+          "badge": "Paper",
+          "deck": "A new long-tail driving dataset with multi-view video, trajectories, and multilingual reasoning traces is introduced to improve few-shot generalization and evaluate multimodal models' instr…",
+          "meta": "Hugging Face Papers · 8h ago · up 9 · signal 6.67",
+          "rank": 13,
+          "rank_delta": 9
+        },
+        {
+          "headline": "PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference",
+          "title": "PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference",
+          "url": "https://huggingface.co/papers/2603.25730",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 6.232,
+          "raw_score": 3.402,
+          "published_hours_ago": 12,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25730.png",
+          "badge": "Paper",
+          "deck": "PackForcing enables efficient long-video generation through hierarchical KV-cache management and spatiotemporal compression while maintaining temporal consistency and reducing memory usage.…",
+          "meta": "Hugging Face Papers · 12h ago · up 4 · signal 6.23",
+          "rank": 17,
+          "rank_delta": 4
         },
         {
           "headline": "ShotStream: Streaming Multi-Shot Video Generation for Interactive Storytelling",
@@ -617,33 +613,16 @@
           "url": "https://huggingface.co/papers/2603.25746",
           "source": "huggingface.co",
           "tags": [],
-          "score": 5.754,
-          "raw_score": 3.42,
-          "published_hours_ago": 13,
+          "score": 6.021,
+          "raw_score": 3.354,
+          "published_hours_ago": 15,
           "stars": 0,
           "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25746.png",
           "badge": "Paper",
           "deck": "ShotStream enables real-time interactive multi-shot video generation through causal architecture design, dual-cache memory mechanisms, and two-stage distillation to maintain visual consiste…",
-          "meta": "Hugging Face Papers · 13h ago · down 8 · signal 5.75",
-          "rank": 22,
-          "rank_delta": -8
-        },
-        {
-          "headline": "Beyond Banning AI: A First Look at GenAI Governance in Open Source Software Communities",
-          "title": "Beyond Banning AI: A First Look at GenAI Governance in Open Source Software Communities",
-          "url": "http://arxiv.org/abs/2603.26487v1",
-          "source": "arxiv.org",
-          "tags": [],
-          "score": 3.084,
-          "raw_score": 1.756,
-          "published_hours_ago": 71,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-paper.svg",
-          "badge": "Paper",
-          "deck": "Fresh arXiv paper posted 71h ago and surfacing in the current feed.",
-          "meta": "arXiv · 71h ago · signal 3.08",
-          "rank": 82,
-          "rank_delta": null
+          "meta": "Hugging Face Papers · 15h ago · up 5 · signal 6.02",
+          "rank": 18,
+          "rank_delta": 5
         },
         {
           "headline": "Knowledge Distillation for Efficient Transformer-Based Reinforcement Learning in Hardware-Const…",
@@ -653,16 +632,33 @@
           "tags": [
             "AI"
           ],
-          "score": 2.749,
-          "raw_score": 1.699,
-          "published_hours_ago": 76,
+          "score": 2.387,
+          "raw_score": 1.645,
+          "published_hours_ago": 77,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 76h ago.",
-          "meta": "arXiv · 76h ago · signal 2.75",
-          "rank": 90,
-          "rank_delta": null
+          "deck": "Fresh arXiv paper from the ai cluster, posted 77h ago. Down 67 spots from the previous run.",
+          "meta": "arXiv · 77h ago · down 67 · signal 2.39",
+          "rank": 86,
+          "rank_delta": -67
+        },
+        {
+          "headline": "Beyond Banning AI: A First Look at GenAI Governance in Open Source Software Communities",
+          "title": "Beyond Banning AI: A First Look at GenAI Governance in Open Source Software Communities",
+          "url": "http://arxiv.org/abs/2603.26487v1",
+          "source": "arxiv.org",
+          "tags": [],
+          "score": 2.315,
+          "raw_score": 1.648,
+          "published_hours_ago": 73,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-paper.svg",
+          "badge": "Paper",
+          "deck": "Fresh arXiv paper posted 73h ago and surfacing in the current feed. Down 69 spots from the previous run.",
+          "meta": "arXiv · 73h ago · down 69 · signal 2.31",
+          "rank": 85,
+          "rank_delta": -69
         },
         {
           "headline": "Developers and Generative AI: A Study of Self-Admitted Usage in Open Source Projects",
@@ -670,16 +666,16 @@
           "url": "http://arxiv.org/abs/2603.26277v1",
           "source": "arxiv.org",
           "tags": [],
-          "score": 2.734,
-          "raw_score": 1.736,
-          "published_hours_ago": 75,
+          "score": 2.285,
+          "raw_score": 1.628,
+          "published_hours_ago": 77,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper posted 75h ago and surfacing in the current feed.",
-          "meta": "arXiv · 75h ago · signal 2.73",
-          "rank": 84,
-          "rank_delta": null
+          "deck": "Fresh arXiv paper posted 77h ago and surfacing in the current feed. Down 70 spots from the previous run.",
+          "meta": "arXiv · 77h ago · down 70 · signal 2.29",
+          "rank": 87,
+          "rank_delta": -70
         },
         {
           "headline": "Learning to Commit: Generating Organic Pull Requests via Online Repository Memory",
@@ -687,16 +683,16 @@
           "url": "http://arxiv.org/abs/2603.26664v1",
           "source": "arxiv.org",
           "tags": [],
-          "score": 2.549,
-          "raw_score": 1.496,
-          "published_hours_ago": 68,
+          "score": 2.248,
+          "raw_score": 1.49,
+          "published_hours_ago": 69,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper posted 68h ago and surfacing in the current feed.",
-          "meta": "arXiv · 68h ago · signal 2.55",
-          "rank": 112,
-          "rank_delta": null
+          "deck": "Fresh arXiv paper posted 69h ago and surfacing in the current feed. Down 86 spots from the previous run.",
+          "meta": "arXiv · 69h ago · down 86 · signal 2.25",
+          "rank": 106,
+          "rank_delta": -86
         }
       ]
     },
@@ -713,16 +709,16 @@
           "tags": [
             "social"
           ],
-          "score": 4.361,
-          "raw_score": 2.233,
-          "published_hours_ago": 1,
+          "score": 4.225,
+          "raw_score": 2.181,
+          "published_hours_ago": 2,
           "stars": 0,
           "image_url": "/news/assets/thumb-ai.svg",
           "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 1h ago.",
-          "meta": "GeekNews · 1h ago · signal 4.36",
-          "rank": 53,
-          "rank_delta": null
+          "deck": "Community signal picked up on GeekNews about 2h ago. Down 8 spots from the previous run.",
+          "meta": "GeekNews · 2h ago · down 8 · signal 4.22",
+          "rank": 49,
+          "rank_delta": -8
         },
         {
           "headline": "What Agentic SaaS Changes — From UI Design to Billing Models",
@@ -732,152 +728,34 @@
           "tags": [
             "social"
           ],
-          "score": 3.437,
-          "raw_score": 1.567,
-          "published_hours_ago": 13,
+          "score": 3.414,
+          "raw_score": 1.534,
+          "published_hours_ago": 14,
           "stars": 0,
           "image_url": "/news/assets/thumb-ai.svg",
           "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 13h ago.",
-          "meta": "GeekNews · 13h ago · signal 3.44",
-          "rank": 102,
+          "deck": "Community signal picked up on GeekNews about 14h ago.",
+          "meta": "GeekNews · 14h ago · signal 3.41",
+          "rank": 99,
           "rank_delta": null
         },
         {
-          "headline": "Show GN: vLLM Compose - Easily switch/serve multiple vLLM models with Docker Compose profiles",
-          "title": "Show GN: vLLM Compose - Easily switch/serve multiple vLLM models with Docker Compose profiles",
-          "url": "https://news.hada.io/topic?id=27994",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 3.329,
-          "raw_score": 1.567,
-          "published_hours_ago": 13,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 13h ago.",
-          "meta": "GeekNews · 13h ago · signal 3.33",
-          "rank": 104,
-          "rank_delta": null
-        },
-        {
-          "headline": "ARC-AGI-3 is out now! We've designed the benchmark to evaluate agentic intelligence via interac…",
-          "title": "ARC-AGI-3 is out now! We've designed the benchmark to evaluate agentic intelligence via interactive reasoning environments. Beating ARC-AGI-3 will be achieved when an AI system matches or exceeds human-level action efficiency on all environments, upo",
-          "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFBmVHg1ZXdqZUx6VGJwa2tRc3czX3g2N1p0c1E3d2Y2LWVRWHZUQV9YZmkyVGJnRW93TmRPSVBaRUtNdGExa2RFN2VFZnQ5TnVubS1DUW92Y2djM2Zob3c?oc=5",
+          "headline": "The last two years reshaped how we evaluate models and what we expect from them.",
+          "title": "The last two years reshaped how we evaluate models and what we expect from them. OpenAI's o1 showed that \"thinking\" could be a first-class capability, something you train for and expose to users. DeepSeek-R1 proved that reasoning-style post-training coul",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE5lZjRhTWotci1hYzF2cmhpWHdiNTFxWHA2cU5mX2dtREhBZlV2ZU1xQmNFdmlXcnM5d01idTAwMFBpc1B0WFdQbTRLNE1lQkZrNXZ2VTJfTi1kb1ZrZTdZVUc5bw?oc=5",
           "source": "x.com",
           "tags": [
-            "AI",
             "social"
           ],
-          "score": 3.287,
-          "raw_score": 2.004,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X about 72h ago. Down 38 spots from the previous run.",
-          "meta": "X · 72h ago · down 38 · signal 3.29",
-          "rank": 64,
-          "rank_delta": -38
-        },
-        {
-          "headline": "ARC-AGI-3 is out now! We've designed the benchmark to evaluate agentic intelligence via interac…",
-          "title": "ARC-AGI-3 is out now! We've designed the benchmark to evaluate agentic intelligence via interactive reasoning environments. Beating ARC-AGI-3 will be achieved when an AI system matches or exceeds human-level action efficiency on all environments, upo",
-          "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFBmVHg1ZXdqZUx6VGJwa2tRc3czX3g2N1p0c1E3d2Y2LWVRWHZUQV9YZmkyVGJnRW93TmRPSVBaRUtNdGExa2RFN2VFZnQ5TnVubS1DUW92Y2djM2Zob3c?oc=5#rebalance-x.com-1",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social",
-            "supplemental"
-          ],
-          "score": 3.287,
-          "raw_score": 2.004,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X about 72h ago. Down 38 spots from the previous run.",
-          "meta": "X · 72h ago · down 38 · signal 3.29",
-          "rank": 64,
-          "rank_delta": -38
-        },
-        {
-          "headline": "Korean Law MCP - Korean law search, inquiry, and analysis tool",
-          "title": "Korean Law MCP - Korean law search, inquiry, and analysis tool",
-          "url": "https://news.hada.io/topic?id=27995",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 3.233,
-          "raw_score": 1.567,
-          "published_hours_ago": 13,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 13h ago.",
-          "meta": "GeekNews · 13h ago · signal 3.23",
-          "rank": 103,
-          "rank_delta": null
-        },
-        {
-          "headline": "Tennessee woman wrongly arrested for North Dakota crime due to AI facial recognition error",
-          "title": "Tennessee woman wrongly arrested for North Dakota crime due to AI facial recognition error",
-          "url": "https://news.hada.io/topic?id=27993",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 3.225,
-          "raw_score": 1.567,
-          "published_hours_ago": 13,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 13h ago.",
-          "meta": "GeekNews · 13h ago · signal 3.23",
-          "rank": 105,
-          "rank_delta": null
-        },
-        {
-          "headline": "Establishment of digital argument principles when introducing AI judges: Prompt agreement and m…",
-          "title": "Establishment of digital argument principles when introducing AI judges: Prompt agreement and measures to secure metadata neutrality",
-          "url": "https://news.hada.io/topic?id=28005",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 3.194,
-          "raw_score": 1.75,
-          "published_hours_ago": 10,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews about 10h ago. Down 39 spots from the previous run.",
-          "meta": "GeekNews · 10h ago · down 39 · signal 3.19",
-          "rank": 83,
-          "rank_delta": -39
-        },
-        {
-          "headline": "Announcing ARC-AGI-3 The only unsaturated agentic intelligence benchmark in the world Humans sc…",
-          "title": "Announcing ARC-AGI-3 The only unsaturated agentic intelligence benchmark in the world Humans score 100%, AI",
-          "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFBGUDM4ZHhTUm13T2dMd3M4RFVHdjJzU0NpaDU0aUx0X19oQ3ZDOGE4NXVPeURNLV9fa29WdVF0TVZGbEtVa0RVTmRhcHp4Um9XaGE2SmtiUkpDREZQZHc?oc=5",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social"
-          ],
-          "score": 3.008,
-          "raw_score": 1.598,
+          "score": 3.367,
+          "raw_score": 1.899,
           "published_hours_ago": 72,
           "stars": 0,
           "image_url": "/news/assets/thumb-ai.svg",
           "badge": "Social",
           "deck": "Community signal picked up on X about 72h ago.",
-          "meta": "X · 72h ago · signal 3.01",
-          "rank": 97,
+          "meta": "X · 72h ago · signal 3.37",
+          "rank": 63,
           "rank_delta": null
         },
         {
@@ -888,16 +766,132 @@
           "tags": [
             "social"
           ],
-          "score": 2.663,
-          "raw_score": 1.634,
+          "score": 3.323,
+          "raw_score": 2.055,
           "published_hours_ago": 72,
           "stars": 0,
           "image_url": "/news/assets/thumb-ai.svg",
           "badge": "Social",
-          "deck": "Community signal picked up on X about 72h ago. Down 73 spots from the previous run.",
-          "meta": "X · 72h ago · down 73 · signal 2.66",
-          "rank": 94,
-          "rank_delta": -73
+          "deck": "Community signal picked up on X about 72h ago. Down 25 spots from the previous run.",
+          "meta": "X · 72h ago · down 25 · signal 3.32",
+          "rank": 57,
+          "rank_delta": -25
+        },
+        {
+          "headline": "Persuasion has two sides. This chart shows how easy each model is to move as a target.",
+          "title": "Persuasion has two sides. This chart shows how easy each model is to move as a target. Xiaomi MiMo V2 Pro and Gemini 3.1 Pro Preview are the softest targets. Grok 4.20 Beta 0309 (Reasoning) is nearly immovable on average.",
+          "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE85d1RTYnhaQ0NRRWFrYml0NG5XR1BZYjVQUWRndHJBR2VyY1hqTjNNWlFmWXU0d2ZNeFN4ajlMZDZBNVZLZkRVVVJrMGd1NzNiUXVRUmtLbHlYV0VlX3BJ?oc=5#rebalance-x.com-1",
+          "source": "x.com",
+          "tags": [
+            "social",
+            "supplemental"
+          ],
+          "score": 3.323,
+          "raw_score": 2.055,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X about 72h ago. Down 25 spots from the previous run.",
+          "meta": "X · 72h ago · down 25 · signal 3.32",
+          "rank": 57,
+          "rank_delta": -25
+        },
+        {
+          "headline": "ARC-AGI-3 is out now! We've designed the benchmark to evaluate agentic intelligence via interac…",
+          "title": "ARC-AGI-3 is out now! We've designed the benchmark to evaluate agentic intelligence via interactive reasoning environments. Beating ARC-AGI-3 will be achieved when an AI system matches or exceeds human-level action efficiency on all environments, upo",
+          "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFBmVHg1ZXdqZUx6VGJwa2tRc3czX3g2N1p0c1E3d2Y2LWVRWHZUQV9YZmkyVGJnRW93TmRPSVBaRUtNdGExa2RFN2VFZnQ5TnVubS1DUW92Y2djM2Zob3c?oc=5",
+          "source": "x.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 3.279,
+          "raw_score": 1.955,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X about 72h ago. Down 30 spots from the previous run.",
+          "meta": "X · 72h ago · down 30 · signal 3.28",
+          "rank": 61,
+          "rank_delta": -30
+        },
+        {
+          "headline": "Show GN: vLLM Compose - Easily switch/serve multiple vLLM models with Docker Compose profiles",
+          "title": "Show GN: vLLM Compose - Easily switch/serve multiple vLLM models with Docker Compose profiles",
+          "url": "https://news.hada.io/topic?id=27994",
+          "source": "geeknews",
+          "tags": [
+            "social"
+          ],
+          "score": 3.263,
+          "raw_score": 1.502,
+          "published_hours_ago": 15,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on GeekNews about 15h ago.",
+          "meta": "GeekNews · 15h ago · signal 3.26",
+          "rank": 103,
+          "rank_delta": null
+        },
+        {
+          "headline": "Establishment of digital argument principles when introducing AI judges: Prompt agreement and m…",
+          "title": "Establishment of digital argument principles when introducing AI judges: Prompt agreement and measures to secure metadata neutrality",
+          "url": "https://news.hada.io/topic?id=28005",
+          "source": "geeknews",
+          "tags": [
+            "social"
+          ],
+          "score": 3.17,
+          "raw_score": 1.712,
+          "published_hours_ago": 11,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on GeekNews about 11h ago. Down 32 spots from the previous run.",
+          "meta": "GeekNews · 11h ago · down 32 · signal 3.17",
+          "rank": 79,
+          "rank_delta": -32
+        },
+        {
+          "headline": "Korean Law MCP - Korean law search, inquiry, and analysis tool",
+          "title": "Korean Law MCP - Korean law search, inquiry, and analysis tool",
+          "url": "https://news.hada.io/topic?id=27995",
+          "source": "geeknews",
+          "tags": [
+            "social"
+          ],
+          "score": 3.167,
+          "raw_score": 1.502,
+          "published_hours_ago": 15,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on GeekNews about 15h ago.",
+          "meta": "GeekNews · 15h ago · signal 3.17",
+          "rank": 102,
+          "rank_delta": null
+        },
+        {
+          "headline": "Tennessee woman wrongly arrested for North Dakota crime due to AI facial recognition error",
+          "title": "Tennessee woman wrongly arrested for North Dakota crime due to AI facial recognition error",
+          "url": "https://news.hada.io/topic?id=27993",
+          "source": "geeknews",
+          "tags": [
+            "social"
+          ],
+          "score": 3.159,
+          "raw_score": 1.502,
+          "published_hours_ago": 15,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on GeekNews about 15h ago.",
+          "meta": "GeekNews · 15h ago · signal 3.16",
+          "rank": 104,
+          "rank_delta": null
         }
       ]
     }
@@ -927,7 +921,7 @@
   "digest": {
     "title": "Daily AI News Digest — 2026-03-31",
     "url": "/notes/news/2026-03-31-ai-news-digest/",
-    "description": "GitHub velocity is led by GeminiLight/MindOS; paper attention is clustering around PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference; social attention is tilting toward Miasma: A tool that traps AI web scrapers in an endless loop of contamination. 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+    "description": "GitHub velocity is led by comet-ml/opik; paper attention is clustering around MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies; social attention is tilting toward Miasma: A tool that traps AI web scrapers in an endless loop of contamination; biggest mover: MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies (+12). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
   },
   "archive_url": "/notes/news/news-digest-archive/",
   "archives": [
@@ -935,7 +929,7 @@
       "title": "Daily AI News Digest — 2026-03-31",
       "url": "/notes/news/2026-03-31-ai-news-digest/",
       "date_label": "2026-03-31",
-      "description": "GitHub velocity is led by GeminiLight/MindOS; paper attention is clustering around PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference; social attention is tilting toward Miasma: A tool that traps AI web scrapers in an endless loop of contamination. 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+      "description": "GitHub velocity is led by comet-ml/opik; paper attention is clustering around MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies; social attention is tilting toward Miasma: A tool that traps AI web scrapers in an endless loop of contamination; biggest mover: MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies (+12). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
     },
     {
       "title": "Daily AI News Digest — 2026-03-30",

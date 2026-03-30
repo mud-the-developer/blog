@@ -20,7 +20,7 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-03-31T00:39:27.175717+09:00">Mar 31, 2026 · 12:39 AM KST</time></strong>
+        <strong><time datetime="2026-03-31T01:14:34.480819+09:00">Mar 31, 2026 · 1:14 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
@@ -36,7 +36,7 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by GeminiLight/MindOS; paper attention is clustering around PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference; social attention is tilting toward Miasma: A tool that traps AI web scrapers in an endless loop of contamination. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by comet-ml/opik; paper attention is clustering around MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies; social attention is tilting toward Miasma: A tool that traps AI web scrapers in an endless loop of contamination; biggest mover: MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies (+12). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
@@ -45,7 +45,7 @@ content-classes: [news-digest-note, news-digest-archive-note]
           <a class="news-digest-archive-item" href="/notes/news/2026-03-31-ai-news-digest/">
             <span class="news-digest-archive-date">2026-03-31</span>
             <strong>Daily AI News Digest — 2026-03-31</strong>
-            <span>GitHub velocity is led by GeminiLight/MindOS; paper attention is clustering around PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference; social attention is tilting toward Miasma: A tool that traps AI web scrapers in an endless loop of contamination. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+            <span>GitHub velocity is led by comet-ml/opik; paper attention is clustering around MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies; social attention is tilting toward Miasma: A tool that traps AI web scrapers in an endless loop of contamination; biggest mover: MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies (+12). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
           </a>
           <a class="news-digest-archive-item" href="/notes/news/2026-03-30-ai-news-digest/">
             <span class="news-digest-archive-date">2026-03-30</span>
