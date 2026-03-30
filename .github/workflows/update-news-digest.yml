@@ -72,6 +72,7 @@ jobs:
               if "GitHub fetch error" in error or "rate limit" in error.lower()
           ]
           source_counts = data.get("sourceCounts") or {}
+          papers = data.get("papers") or []
 
           if age_hours > 36:
               raise SystemExit(
@@ -81,13 +82,13 @@ jobs:
               raise SystemExit("blocking source errors: " + " | ".join(hard_errors))
           if source_counts.get("github.com", 0) < 8:
               raise SystemExit("github.com coverage is too low in the source payload")
-          if source_counts.get("arxiv.org", 0) < 8:
-              raise SystemExit("arxiv.org coverage is too low in the source payload")
+          if len(papers) < 8:
+              raise SystemExit("paper coverage is too low in the source payload")
 
           print(
               f"validated source payload {source_path}: age={age_hours:.1f}h, "
               f"github={source_counts.get('github.com', 0)}, "
-              f"arxiv={source_counts.get('arxiv.org', 0)}"
+              f"papers={len(papers)}"
           )
           PY
 
