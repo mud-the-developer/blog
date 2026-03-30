@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-  <article class="panel note{% if content_classes.len() > 0 %} {{ content_classes }}{% endif %}">
+  <article class="panel note note--reading-shell{% if content_classes.len() > 0 %} {{ content_classes }}{% endif %}">
     {% if show_note_header %}
     <header class="note-header">
       <p class="section-kicker">Note</p>

@@ -509,6 +509,11 @@ html[data-theme="dark"] .note-body li code {
   line-height: 1.88;
 }
 
+.note.note--reading-shell:not(.news-digest-note) {
+  width: min(100%, calc(70ch + 4rem));
+  margin-inline: auto;
+}
+
 .note-body :where(h2, h3, h4) {
   margin-bottom: 0.72rem;
   letter-spacing: -0.055em;
@@ -594,6 +599,10 @@ html[data-theme="dark"] .note-body li code {
   .note {
     padding: 1.06rem;
     border-radius: 26px;
+  }
+
+  .note.note--reading-shell:not(.news-digest-note) {
+    width: 100%;
   }
 
   .note-header h1 {
