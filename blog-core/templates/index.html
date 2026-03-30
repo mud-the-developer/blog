@@ -18,7 +18,7 @@
 
 {% block content %}
   {% if let Some(home_post) = home_post %}
-  <article class="panel note home-feature{% if home_post.content_classes.len() > 0 %} {{ home_post.content_classes }}{% endif %}">
+  <article class="panel note home-feature content-shell content-shell--reading{% if home_post.content_classes.len() > 0 %} {{ home_post.content_classes }}{% endif %}">
     <header class="note-header home-feature-head">
       <p class="section-kicker">Homepage Note</p>
       <h1>{% if let Some(icon) = home_post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}{{ home_post.title }}</h1>
@@ -56,7 +56,7 @@
   {% endif %}
 
   {% if folders.len() > 0 %}
-  <section id="folders" class="panel folder-list-panel" aria-label="Folders">
+  <section id="folders" class="panel folder-list-panel content-shell content-shell--reading" aria-label="Folders">
     <header class="section-head">
       <h2>Folders</h2>
     </header>
@@ -69,7 +69,7 @@
   {% endif %}
 
   {% if tags.len() > 0 %}
-  <section class="panel tag-cloud-panel">
+  <section class="panel tag-cloud-panel content-shell content-shell--reading">
     <div class="section-head-inline">
       <p class="section-kicker">Taxonomy</p>
       <h2>Tags</h2>

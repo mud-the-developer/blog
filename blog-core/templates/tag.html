@@ -5,13 +5,13 @@
 {% endblock %}
 
 {% block content %}
-  <section class="panel tag-hero">
+  <section class="panel tag-hero content-shell content-shell--browse">
     <p class="section-kicker">Tag Archive</p>
     <h1>#{{ tag_name }}</h1>
     <p class="post-meta">{{ posts.len() }} note{% if posts.len() != 1 %}s{% endif %} tagged with this topic</p>
   </section>
 
-  <section class="post-list">
+  <section class="post-list content-shell content-shell--browse">
     <header class="section-head">
       <p class="section-kicker">Browse</p>
       <h2>Tagged Notes</h2>

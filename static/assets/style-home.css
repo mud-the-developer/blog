@@ -2,8 +2,6 @@
   position: relative;
   display: grid;
   gap: 1.24rem;
-  width: min(100%, calc(72ch + 3rem));
-  margin-inline: auto;
   padding: 1.45rem 1.5rem;
   border-radius: 34px;
   background:
@@ -113,7 +111,6 @@
 
 @media (max-width: 760px) {
   .home-feature {
-    width: 100%;
     padding: 1rem;
     border-radius: 24px;
   }

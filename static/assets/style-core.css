@@ -23,6 +23,8 @@
   --font-body: "Pretendard Variable", "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", sans-serif;
   --font-reading: "Pretendard Variable", "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Roboto Mono", monospace;
+  --content-shell-reading-max: calc(70ch + 4rem);
+  --content-shell-browse-max: 860px;
 
   --scrollbar-size: 10px;
 }
@@ -692,6 +694,19 @@ main {
 
 .site-main > * {
   min-width: 0;
+}
+
+.content-shell {
+  width: 100%;
+  margin-inline: auto;
+}
+
+.content-shell--reading {
+  max-width: var(--content-shell-reading-max);
+}
+
+.content-shell--browse {
+  max-width: var(--content-shell-browse-max);
 }
 
 .page-tabs,
@@ -1586,6 +1601,11 @@ body::after {
 }
 
 @media (max-width: 760px) {
+  .content-shell--reading,
+  .content-shell--browse {
+    max-width: none;
+  }
+
   .site-shell {
     width: calc(100% - 0.8rem);
     margin: 0.65rem auto 2rem;
