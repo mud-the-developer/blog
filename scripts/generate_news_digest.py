@@ -168,8 +168,25 @@ def ensure_dirs() -> None:
     SNAPSHOT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 
+def snapshot_feed_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    all_items = payload.get("all") or []
+    source_counts = payload.get("sourceCounts") or {}
+    paper_count = sum(1 for item in all_items if item_badge(item) == "Paper")
+
+    return {
+        "generatedAt": payload.get("generatedAt"),
+        "errors": payload.get("errors") or [],
+        "all": all_items,
+        "sourceCounts": source_counts,
+        "paperCount": paper_count,
+    }
+
+
 def write_source_snapshot(payload: dict[str, Any]) -> None:
-    SNAPSHOT_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
+    SNAPSHOT_PATH.write_text(
+        json.dumps(snapshot_feed_payload(payload), ensure_ascii=False, separators=(",", ":"))
+        + "\n"
+    )
 
 
 def load_translation_cache() -> None:

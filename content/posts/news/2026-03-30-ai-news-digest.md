@@ -25,7 +25,7 @@ content-classes: [news-digest-note]
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Generated</span>
-        <strong><time datetime="2026-03-30T23:22:43.326835+09:00">Mar 30, 2026 · 11:22 PM KST</time></strong>
+        <strong><time datetime="2026-03-30T23:49:57.783372+09:00">Mar 30, 2026 · 11:49 PM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Sections</span>
@@ -418,7 +418,7 @@ content-classes: [news-digest-note]
       <a class="news-digest-archive-item" href="/notes/news/2026-03-30-ai-news-digest/">
         <span class="news-digest-archive-date">2026-03-30</span>
         <strong>Daily AI News Digest — 2026-03-30</strong>
-        <span>GitHub velocity is led by framersai/agentos; paper attention is clustering around Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models; social attention is tilting toward Show GN: I created redTerm because it was inconvenient to send images to Claude Code / Codex CL…; biggest mover: PixelSmile: Toward Fine-Grained Facial Expression Editing (+10). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+        <span>GitHub velocity is led by GeminiLight/MindOS; paper attention is clustering around PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference; social attention is tilting toward Miasma: A tool that traps AI web scrapers in an endless loop of contamination. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
       </a>
       <a class="news-digest-archive-item" href="/notes/news/2026-03-29-ai-news-digest/">
         <span class="news-digest-archive-date">2026-03-29</span>

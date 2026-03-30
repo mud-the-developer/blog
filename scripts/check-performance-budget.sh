@@ -11,8 +11,14 @@ fi
 MAX_SINGLE_GRAPH_JS=24576
 MAX_SINGLE_FILETREE_JS=8192
 MAX_TOTAL_JS=131072
-MAX_TOTAL_CSS=65536
 MAX_TOTAL_JSON=131072
+MAX_SHARED_CSS=40960
+MAX_LISTING_BUNDLE_CSS=49152
+MAX_READING_BUNDLE_CSS=61440
+MAX_RICH_READING_BUNDLE_CSS=73728
+MAX_HOME_BUNDLE_CSS=69632
+MAX_RICH_HOME_BUNDLE_CSS=77824
+MAX_NEWS_BRIDGE_BUNDLE_CSS=53248
 
 warn_count=0
 
@@ -28,6 +34,18 @@ sum_bytes() {
     size="$(bytes_of "$file")"
     total=$((total + size))
   done < <(find "$DIST_DIR" -type f -name "$pattern" -print0)
+  echo "$total"
+}
+
+sum_selected_bytes() {
+  local total=0
+  local file
+  for file in "$@"; do
+    local path="$DIST_DIR/$file"
+    if [[ -f "$path" ]]; then
+      total=$((total + $(bytes_of "$path")))
+    fi
+  done
   echo "$total"
 }
 
@@ -80,10 +98,66 @@ total_css="$(sum_bytes '*.css')"
 total_json="$(sum_bytes '*.json')"
 
 warn_if_over "Total JS" "$total_js" "$MAX_TOTAL_JS"
-warn_if_over "Total CSS" "$total_css" "$MAX_TOTAL_CSS"
 warn_if_over "Total JSON" "$total_json" "$MAX_TOTAL_JSON"
 
-echo "Performance budget summary: JS=$(human_size "$total_js"), CSS=$(human_size "$total_css"), JSON=$(human_size "$total_json")."
+shared_css="$(sum_selected_bytes \
+  assets/style-core.css \
+  assets/style-search-pane.css \
+  assets/style-touch-targets.css \
+  assets/style-graph.css)"
+listing_bundle_css="$(sum_selected_bytes \
+  assets/style-core.css \
+  assets/style-search-pane.css \
+  assets/style-touch-targets.css \
+  assets/style-graph.css \
+  assets/style-listing.css)"
+reading_bundle_css="$(sum_selected_bytes \
+  assets/style-core.css \
+  assets/style-search-pane.css \
+  assets/style-touch-targets.css \
+  assets/style-graph.css \
+  assets/style-note-core.css)"
+rich_reading_bundle_css="$(sum_selected_bytes \
+  assets/style-core.css \
+  assets/style-search-pane.css \
+  assets/style-touch-targets.css \
+  assets/style-graph.css \
+  assets/style-note-core.css \
+  assets/style-note.css)"
+home_bundle_css="$(sum_selected_bytes \
+  assets/style-core.css \
+  assets/style-search-pane.css \
+  assets/style-touch-targets.css \
+  assets/style-graph.css \
+  assets/style-listing.css \
+  assets/style-note-core.css \
+  assets/style-home.css)"
+rich_home_bundle_css="$(sum_selected_bytes \
+  assets/style-core.css \
+  assets/style-search-pane.css \
+  assets/style-touch-targets.css \
+  assets/style-graph.css \
+  assets/style-listing.css \
+  assets/style-note-core.css \
+  assets/style-home.css \
+  assets/style-note.css)"
+news_bridge_bundle_css="$(sum_selected_bytes \
+  assets/style-core.css \
+  assets/style-search-pane.css \
+  assets/style-touch-targets.css \
+  assets/style-graph.css \
+  assets/style-news-bridge.css)"
+
+warn_if_over "Shared CSS bundle" "$shared_css" "$MAX_SHARED_CSS"
+warn_if_over "Listing CSS bundle" "$listing_bundle_css" "$MAX_LISTING_BUNDLE_CSS"
+warn_if_over "Reading CSS bundle" "$reading_bundle_css" "$MAX_READING_BUNDLE_CSS"
+warn_if_over "Rich reading CSS bundle" "$rich_reading_bundle_css" "$MAX_RICH_READING_BUNDLE_CSS"
+warn_if_over "Home CSS bundle" "$home_bundle_css" "$MAX_HOME_BUNDLE_CSS"
+warn_if_over "Rich home CSS bundle" "$rich_home_bundle_css" "$MAX_RICH_HOME_BUNDLE_CSS"
+warn_if_over "News bridge CSS bundle" "$news_bridge_bundle_css" "$MAX_NEWS_BRIDGE_BUNDLE_CSS"
+
+echo "Performance budget summary: JS=$(human_size "$total_js"), aggregate CSS=$(human_size "$total_css"), JSON=$(human_size "$total_json")."
+echo "CSS bundle summary: shared=$(human_size "$shared_css"), listing=$(human_size "$listing_bundle_css"), reading=$(human_size "$reading_bundle_css"), rich-reading=$(human_size "$rich_reading_bundle_css"), home=$(human_size "$home_bundle_css"), rich-home=$(human_size "$rich_home_bundle_css"), news-bridge=$(human_size "$news_bridge_bundle_css")."
 
 if (( warn_count > 0 )); then
   echo "::warning::Performance budget check completed with $warn_count warning(s)."

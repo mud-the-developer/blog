@@ -4533,6 +4533,39 @@ fn rewrite_embedded_news_html(input: &str) -> String {
     }
 }
 
+fn compact_embedded_news_payload(raw: &str) -> Result<String> {
+    let payload: serde_json::Value =
+        serde_json::from_str(raw).with_context(|| "failed to parse embedded news payload")?;
+
+    let paper_count = payload
+        .get("papers")
+        .and_then(|value| value.as_array())
+        .map(|items| items.len())
+        .unwrap_or(0);
+
+    let compact = json!({
+        "generatedAt": payload.get("generatedAt").cloned().unwrap_or(serde_json::Value::Null),
+        "errors": payload
+            .get("errors")
+            .cloned()
+            .unwrap_or_else(|| serde_json::Value::Array(Vec::new())),
+        "all": payload
+            .get("all")
+            .cloned()
+            .unwrap_or_else(|| serde_json::Value::Array(Vec::new())),
+        "sourceCounts": payload
+            .get("sourceCounts")
+            .cloned()
+            .unwrap_or_else(|| serde_json::Value::Object(Default::default())),
+        "paperCount": paper_count,
+    });
+
+    let mut body =
+        serde_json::to_string(&compact).with_context(|| "failed to serialize embedded news payload")?;
+    body.push('\n');
+    Ok(body)
+}
+
 fn copy_embedded_news_site(output_dir: &Path) -> Result<()> {
     let news_site_dir = embedded_news_site_dir();
     if !news_site_dir.exists() {
@@ -4582,6 +4615,12 @@ fn copy_embedded_news_site(output_dir: &Path) -> Result<()> {
                     format!("failed to read embedded news page {}", entry_path.display())
                 })?;
                 write_file(dest, rewrite_embedded_news_html(&html))?;
+            }
+            Some("json") if rel == Path::new("data/latest.json") => {
+                let raw = fs::read_to_string(entry_path).with_context(|| {
+                    format!("failed to read embedded news payload {}", entry_path.display())
+                })?;
+                write_file(dest, compact_embedded_news_payload(&raw)?)?;
             }
             _ => {
                 fs::copy(entry_path, &dest).with_context(|| {
