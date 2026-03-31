@@ -930,7 +930,7 @@ html[data-theme="dark"] .note-body li code {
 .note-body .news-digest-image {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 2.25 / 1;
   object-fit: cover;
   background: color-mix(in srgb, var(--panel-bg-muted) 96%, transparent);
 }
@@ -1018,6 +1018,16 @@ html[data-theme="dark"] .note-body li code {
 
 .note-body .news-digest-top-card .news-digest-card-deck {
   -webkit-line-clamp: 4;
+}
+
+.note-body .news-digest-card--paper h3 {
+  -webkit-line-clamp: 2;
+}
+
+.note-body .news-digest-card--paper .news-digest-card-deck {
+  -webkit-line-clamp: 4;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .note-body .news-digest-archive-list {

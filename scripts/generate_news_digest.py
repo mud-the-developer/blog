@@ -674,8 +674,55 @@ def badge_class_suffix(badge: str) -> str:
     return normalized or "signal"
 
 
+def relative_hours_label(hours: int) -> str:
+    if hours <= 0:
+        return "just now"
+    if hours < 24:
+        return f"{hours}h ago"
+    days = max(1, round(hours / 24))
+    return f"{days}d ago"
+
+
+def repo_update_label(item: dict[str, Any]) -> str:
+    hours = int(item.get("updatedHoursAgo") or item.get("publishedHoursAgo") or 0)
+    if hours <= 0:
+        return "updated just now"
+    if hours < 24:
+        return f"updated {hours}h ago"
+    days = max(1, round(hours / 24))
+    return f"updated {days}d ago"
+
+
+def repo_age_days(item: dict[str, Any]) -> float:
+    try:
+        return float(item.get("repoAgeDays") or 0.0)
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def repo_age_label(item: dict[str, Any]) -> str:
+    age_days = repo_age_days(item)
+    if age_days <= 1.5:
+        return "new today"
+    if age_days < 14:
+        return f"{max(2, round(age_days))}d old"
+    return f"{round(age_days)}d old"
+
+
+def repo_rate_label(item: dict[str, Any]) -> str | None:
+    recent_30 = int(item.get("recentStars30d") or 0)
+    if recent_30 > 0:
+        return f"+{recent_30}/30d"
+    age_days = repo_age_days(item)
+    stars_per_day = float(item.get("starsPerDay") or 0.0)
+    if age_days < 14 or stars_per_day <= 0:
+        return None
+    return f"avg {stars_per_day:.1f}/day"
+
+
 def render_digest_card_lines(card: NewsItem, *, extra_classes: str = "") -> list[str]:
     card_classes = "news-digest-card"
+    card_classes += f" news-digest-card--{badge_class_suffix(card.badge)}"
     if extra_classes:
         card_classes += f" {extra_classes}"
 
@@ -726,54 +773,59 @@ def deck_for(item: dict[str, Any], badge: str) -> str:
         movement = f" Down {abs(rank_delta)} spots from the previous run."
     if badge == "Repo":
         repo_desc = repo_description_from_title(title)
+        update_label = repo_update_label(item)
+        age_label = repo_age_label(item)
+        rate_label = repo_rate_label(item)
         if repo_desc:
             repo_desc = ensure_terminal_punctuation(repo_desc)
-            freshness = f" Surfaced {hours}h ago"
-            if stars > 0 and stars_per_day > 0:
-                freshness += f" with {stars} stars and {stars_per_day:.0f}/day momentum."
+            freshness = f" {update_label.capitalize()}."
+            if stars > 0 and rate_label:
+                freshness += f" {stars} stars, {rate_label}, {age_label}."
             elif stars > 0:
-                freshness += f" with {stars} stars."
+                freshness += f" {stars} stars, {age_label}."
             else:
                 freshness += "."
             return clamp_text(repo_desc + freshness + movement, 190)
         if stars > 0:
             return clamp_text(
-                f"Fresh GitHub repo with {stars} stars and {stars_per_day:.0f}/day activity in the last {hours}h.{movement}",
+                f"GitHub repo with {stars} stars, {age_label}, {update_label}.{movement}",
                 190,
             )
-        return clamp_text(f"Fresh GitHub repo signal picked up within the last {hours}h.{movement}", 190)
+        return clamp_text(f"GitHub repo signal picked up with {update_label}.{movement}", 190)
     if badge == "Paper":
         paper_source = source_label(item.get("source", ""))
         summary = str(item.get("summary") or "").strip()
+        time_label = relative_hours_label(hours)
         if summary:
             return clamp_text(
-                f"{ensure_terminal_punctuation(summary)} Surfaced via {paper_source} about {hours}h ago.{movement}",
+                f"{ensure_terminal_punctuation(summary)} Surfaced via {paper_source} {time_label}.{movement}",
                 190,
             )
         if tag_text:
             return clamp_text(
-                f"Fresh {paper_source} paper from the {tag_text} cluster, posted {hours}h ago.{movement}",
+                f"Fresh {paper_source} paper from the {tag_text} cluster, posted {time_label}.{movement}",
                 180,
             )
         return clamp_text(
-            f"Fresh {paper_source} paper posted {hours}h ago and surfacing in the current feed.{movement}",
+            f"Fresh {paper_source} paper posted {time_label} and surfacing in the current feed.{movement}",
             180,
         )
     if badge == "Social":
+        time_label = relative_hours_label(hours)
         return clamp_text(
-            f"Community signal picked up on {source_label(item.get('source', ''))} about {hours}h ago.{movement}",
+            f"Community signal picked up on {source_label(item.get('source', ''))} {time_label}.{movement}",
             170,
         )
     if badge == "Cross-domain":
-        return f"Cross-domain signal bridging AI and telecom themes, surfaced about {hours}h ago.{movement}"
+        return f"Cross-domain signal bridging AI and telecom themes, surfaced {relative_hours_label(hours)}.{movement}"
     if badge == "vRAN":
-        return f"vRAN-oriented signal that bubbled up in the last {hours}h.{movement}"
+        return f"vRAN-oriented signal that bubbled up {relative_hours_label(hours)}.{movement}"
     if tag_text:
         return clamp_text(
-            f"Fresh {tag_text} signal ranked into the current issue within the last {hours}h.{movement}",
+            f"Fresh {tag_text} signal ranked into the current issue {relative_hours_label(hours)}.{movement}",
             170,
         )
-    return clamp_text(f"Fresh signal ranked into the current issue within the last {hours}h.{movement}", 170)
+    return clamp_text(f"Fresh signal ranked into the current issue {relative_hours_label(hours)}.{movement}", 170)
 
 
 def meta_for(item: dict[str, Any]) -> str:
@@ -785,9 +837,14 @@ def meta_for(item: dict[str, Any]) -> str:
     rank_delta = item.get("rank_delta")
     if stars > 0:
         bits.append(f"{stars} stars")
-    if item_badge(item) == "Repo" and stars_per_day > 0:
-        bits.append(f"{stars_per_day:.0f}/day")
-    bits.append(f"{hours}h ago")
+    if item_badge(item) == "Repo":
+        rate_label = repo_rate_label(item)
+        if rate_label:
+            bits.append(rate_label)
+        bits.append(repo_age_label(item))
+        bits.append(repo_update_label(item))
+    else:
+        bits.append(relative_hours_label(hours))
     if isinstance(rank_delta, int) and rank_delta > 0:
         bits.append(f"up {rank_delta}")
     elif isinstance(rank_delta, int) and rank_delta < 0:
