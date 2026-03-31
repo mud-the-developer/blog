@@ -20,7 +20,7 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-03-31T14:09:22.230993+09:00">Mar 31, 2026 · 2:09 PM KST</time></strong>
+        <strong><time datetime="2026-03-31T23:57:29.656835+09:00">Mar 31, 2026 · 11:57 PM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
@@ -36,7 +36,7 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by comet-ml/opik; paper attention is clustering around Gen-Searcher: Reinforcing Agentic Search for Image Generation; social attention is tilting toward PDF Paper RAG, is text alone enough? - Gemini embedding 002 embedding search experiment; biggest mover: Composer 2 Technical Report (+20). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by langgenius/dify; paper attention is clustering around Gen-Searcher: Reinforcing Agentic Search for Image Generation; social attention is tilting toward Codex plugin for Claude Code by OpenAI; biggest mover: Make Geometry Matter for Spatial Reasoning (+27). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
@@ -45,7 +45,7 @@ content-classes: [news-digest-note, news-digest-archive-note]
           <a class="news-digest-archive-item" href="/notes/news/2026-03-31-ai-news-digest/">
             <span class="news-digest-archive-date">2026-03-31</span>
             <strong>Daily AI News Digest — 2026-03-31</strong>
-            <span>GitHub velocity is led by comet-ml/opik; paper attention is clustering around Gen-Searcher: Reinforcing Agentic Search for Image Generation; social attention is tilting toward PDF Paper RAG, is text alone enough? - Gemini embedding 002 embedding search experiment; biggest mover: Composer 2 Technical Report (+20). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+            <span>GitHub velocity is led by langgenius/dify; paper attention is clustering around Gen-Searcher: Reinforcing Agentic Search for Image Generation; social attention is tilting toward Codex plugin for Claude Code by OpenAI; biggest mover: Make Geometry Matter for Spatial Reasoning (+27). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
           </a>
           <a class="news-digest-archive-item" href="/notes/news/2026-03-30-ai-news-digest/">
             <span class="news-digest-archive-date">2026-03-30</span>

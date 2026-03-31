@@ -676,7 +676,7 @@ def badge_class_suffix(badge: str) -> str:
 
 def relative_hours_label(hours: int) -> str:
     if hours <= 0:
-        return "just now"
+        return "<1h ago"
     if hours < 24:
         return f"{hours}h ago"
     days = max(1, round(hours / 24))
@@ -686,7 +686,7 @@ def relative_hours_label(hours: int) -> str:
 def repo_update_label(item: dict[str, Any]) -> str:
     hours = int(item.get("updatedHoursAgo") or item.get("publishedHoursAgo") or 0)
     if hours <= 0:
-        return "updated just now"
+        return "updated <1h ago"
     if hours < 24:
         return f"updated {hours}h ago"
     days = max(1, round(hours / 24))
@@ -703,10 +703,10 @@ def repo_age_days(item: dict[str, Any]) -> float:
 def repo_age_label(item: dict[str, Any]) -> str:
     age_days = repo_age_days(item)
     if age_days <= 1.5:
-        return "new today"
+        return "created today"
     if age_days < 14:
-        return f"{max(2, round(age_days))}d old"
-    return f"{round(age_days)}d old"
+        return f"created {max(2, round(age_days))}d ago"
+    return f"created {round(age_days)}d ago"
 
 
 def repo_rate_label(item: dict[str, Any]) -> str | None:
