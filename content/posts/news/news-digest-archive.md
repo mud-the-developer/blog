@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every Daily AI News Digest post."
-date: 2026-03-31
+date: 2026-04-01
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every Daily AI News Digest, grouped by month so older issues stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/notes/news/2026-03-31-ai-news-digest/">Latest digest</a>
+        <a class="post-cta-link" href="/notes/news/2026-04-01-ai-news-digest/">Latest digest</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-03-31T23:58:13.017795+09:00">Mar 31, 2026 · 11:58 PM KST</time></strong>
+        <strong><time datetime="2026-04-01T01:17:24.900086+09:00">Apr 1, 2026 · 1:17 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>8</strong>
+        <strong>9</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-03-31">Mar 31, 2026</time></strong>
+        <strong><time datetime="2026-04-01">Apr 1, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,10 +36,20 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by langgenius/dify; paper attention is clustering around Gen-Searcher: Reinforcing Agentic Search for Image Generation; social attention is tilting toward Codex plugin for Claude Code by OpenAI; biggest mover: Make Geometry Matter for Spatial Reasoning (+27). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by huggingface/transformers; paper attention is clustering around Gen-Searcher: Reinforcing Agentic Search for Image Generation; social attention is tilting toward PDF Paper RAG, is text alone enough? - Gemini embedding 002 embedding search experiment; biggest mover: Towards a Medical AI Scientist (+32). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
+        <summary class="news-digest-month-summary"><span>April 2026</span><span class="news-digest-month-count">1 digests</span></summary>
+        <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/notes/news/2026-04-01-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-04-01</span>
+            <strong>Daily AI News Digest — 2026-04-01</strong>
+            <span>GitHub velocity is led by huggingface/transformers; paper attention is clustering around Gen-Searcher: Reinforcing Agentic Search for Image Generation; social attention is tilting toward PDF Paper RAG, is text alone enough? - Gemini embedding 002 embedding search experiment; biggest mover: Towards a Medical AI Scientist (+32). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+          </a>
+        </div>
+      </details>
+      <details class="news-digest-month-group">
         <summary class="news-digest-month-summary"><span>March 2026</span><span class="news-digest-month-count">8 digests</span></summary>
         <div class="news-digest-month-list">
           <a class="news-digest-archive-item" href="/notes/news/2026-03-31-ai-news-digest/">
