@@ -710,7 +710,10 @@ def repo_age_label(item: dict[str, Any]) -> str:
 
 
 def repo_rate_label(item: dict[str, Any]) -> str | None:
+    recent_7 = int(item.get("recentStars7d") or 0)
     recent_30 = int(item.get("recentStars30d") or 0)
+    if recent_7 > 0:
+        return f"+{recent_7}/7d"
     if recent_30 > 0:
         return f"+{recent_30}/30d"
     age_days = repo_age_days(item)
