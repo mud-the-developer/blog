@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-03-31T11:38:22.952214+09:00",
-  "generated_label": "Mar 31, 2026 · 11:38 AM KST",
+  "generated_at": "2026-03-31T11:39:59.847671+09:00",
+  "generated_label": "Mar 31, 2026 · 11:39 AM KST",
   "issue_date": "2026-03-31",
   "issue_label": "Mar 31, 2026",
-  "summary": "GitHub velocity is led by comet-ml/opik; paper attention is clustering around PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference; social attention is tilting toward Codex plugin for Claude Code by OpenAI; biggest mover: SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks (+56). 10 repo signals, 10 paper picks, and 10 community items made today's cut.",
+  "summary": "GitHub velocity is led by comet-ml/opik; paper attention is clustering around Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models; social attention is tilting toward Codex plugin for Claude Code by OpenAI; biggest mover: Know3D: Prompting 3D Generation with Knowledge from Vision-Language Models (+34). 10 repo signals, 10 paper picks, and 10 community items made today's cut.",
   "top_cards": [
     {
       "headline": "comet-ml/opik",
@@ -25,23 +25,23 @@
       "rank_delta": null
     },
     {
-      "headline": "PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference",
-      "title": "PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference",
-      "url": "https://huggingface.co/papers/2603.25730",
+      "headline": "Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models",
+      "title": "Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models",
+      "url": "https://huggingface.co/papers/2603.25716",
       "source": "huggingface.co",
       "tags": [
         "AI"
       ],
-      "score": 6.575,
-      "raw_score": 3.408,
-      "published_hours_ago": 23,
+      "score": 6.925,
+      "raw_score": 3.786,
+      "published_hours_ago": 26,
       "stars": 0,
-      "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25730.png",
+      "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25716.png",
       "badge": "Paper",
-      "deck": "PackForcing enables efficient long-video generation through hierarchical KV-cache management and spatiotemporal compression while maintaining temporal consistency and reducing memory usage.…",
-      "meta": "Hugging Face Papers · 23h ago · up 11 · signal 6.58",
-      "rank": 14,
-      "rank_delta": 11
+      "deck": "Hybrid Memory enables video world models to maintain consistent tracking of dynamic subjects during occlusion by combining archival storage for static backgrounds with active tracking for m…",
+      "meta": "Hugging Face Papers · 1d ago · up 16 · signal 6.92",
+      "rank": 7,
+      "rank_delta": 16
     },
     {
       "headline": "Codex plugin for Claude Code by OpenAI",
@@ -51,34 +51,34 @@
       "tags": [
         "social"
       ],
-      "score": 5.45,
-      "raw_score": 2.764,
+      "score": 5.431,
+      "raw_score": 2.694,
       "published_hours_ago": 2,
       "stars": 0,
       "image_url": "/news/assets/thumb-ai.svg",
       "badge": "Social",
-      "deck": "Community signal picked up on GeekNews 2h ago.",
-      "meta": "GeekNews · 2h ago · signal 5.45",
-      "rank": 24,
-      "rank_delta": null
+      "deck": "Community signal picked up on GeekNews 2h ago. Up 2 spots from the previous run.",
+      "meta": "GeekNews · 2h ago · up 2 · signal 5.43",
+      "rank": 32,
+      "rank_delta": 2
     },
     {
-      "headline": "People change jobs because they are afraid of AI, the career pivot of American youth",
-      "title": "People change jobs because they are afraid of AI, the career pivot of American youth",
-      "url": "https://news.hada.io/topic?id=28032",
-      "source": "geeknews",
+      "headline": "ResAdapt: Adaptive Resolution for Efficient Multimodal Reasoning",
+      "title": "ResAdapt: Adaptive Resolution for Efficient Multimodal Reasoning",
+      "url": "http://arxiv.org/abs/2603.28610v1",
+      "source": "arxiv.org",
       "tags": [
-        "social"
+        "AI"
       ],
-      "score": 4.49,
-      "raw_score": 2.233,
-      "published_hours_ago": 1,
+      "score": 5.682,
+      "raw_score": 3.242,
+      "published_hours_ago": 10,
       "stars": 0,
-      "image_url": "/news/assets/thumb-ai.svg",
-      "badge": "Social",
-      "deck": "Community signal picked up on GeekNews 1h ago.",
-      "meta": "GeekNews · 1h ago · signal 4.49",
-      "rank": 46,
+      "image_url": "/news/assets/thumb-paper.svg",
+      "badge": "Paper",
+      "deck": "Fresh arXiv paper from the ai cluster, posted 10h ago.",
+      "meta": "arXiv · 10h ago · signal 5.68",
+      "rank": 11,
       "rank_delta": null
     }
   ],
@@ -160,6 +160,25 @@
       "rank_delta": null
     },
     {
+      "headline": "joungminsung/OpenDocuments",
+      "title": "joungminsung/OpenDocuments — Open source RAG tool for AI document search - connect GitHub, Notion, Google Drive and ask questions with cited answers. Self-hosted with Ollama/OpenAI/Claude.",
+      "url": "https://github.com/joungminsung/OpenDocuments",
+      "source": "github.com",
+      "tags": [
+        "AI"
+      ],
+      "score": 9.013,
+      "raw_score": 5.538,
+      "published_hours_ago": 0,
+      "stars": 51,
+      "image_url": "https://opengraph.githubassets.com/1/joungminsung/OpenDocuments",
+      "badge": "Repo",
+      "deck": "Open source RAG tool for AI document search - connect GitHub, Notion, Google Drive and ask questions with cited answers. Self-hosted with Ollama/OpenAI/Claude. Updated just now. 51 stars, +…",
+      "meta": "GitHub · 51 stars · +51/30d · 4d old · updated just now · signal 9.01",
+      "rank": 1,
+      "rank_delta": null
+    },
+    {
       "headline": "HomericIntelligence/ProjectMnemosyne",
       "title": "HomericIntelligence/ProjectMnemosyne — ProjectMnemosyne is a skills marketplace for the HomericIntelligence agentic ecosystem. Named after Mnemosyne, the Greek goddess of memory, this repository serves as the collective memory where team learnings are preserved and made searchable.",
       "url": "https://github.com/HomericIntelligence/ProjectMnemosyne",
@@ -215,25 +234,6 @@
       "meta": "GitHub · 1441 stars · new today · updated just now · signal 8.92",
       "rank": 3,
       "rank_delta": null
-    },
-    {
-      "headline": "inclusionAI/AReaL",
-      "title": "inclusionAI/AReaL — Lightning-Fast RL for LLM Reasoning and Agents. Made Simple & Flexible.",
-      "url": "https://github.com/inclusionAI/AReaL",
-      "source": "github.com",
-      "tags": [
-        "AI"
-      ],
-      "score": 8.824,
-      "raw_score": 4.566,
-      "published_hours_ago": 0,
-      "stars": 4950,
-      "image_url": "https://opengraph.githubassets.com/1/inclusionAI/AReaL",
-      "badge": "Repo",
-      "deck": "Lightning-Fast RL for LLM Reasoning and Agents. Made Simple & Flexible. Updated just now. 4950 stars, +800/30d, 400d old.",
-      "meta": "GitHub · 4950 stars · +800/30d · 400d old · updated just now · signal 8.82",
-      "rank": 4,
-      "rank_delta": null
     }
   ],
   "sections": [
@@ -262,60 +262,60 @@
           "rank_delta": null
         },
         {
-          "headline": "PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference",
-          "title": "PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference",
-          "url": "https://huggingface.co/papers/2603.25730",
+          "headline": "Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models",
+          "title": "Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models",
+          "url": "https://huggingface.co/papers/2603.25716",
           "source": "huggingface.co",
           "tags": [
             "AI"
           ],
-          "score": 6.575,
-          "raw_score": 3.408,
-          "published_hours_ago": 23,
+          "score": 6.925,
+          "raw_score": 3.786,
+          "published_hours_ago": 26,
           "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25730.png",
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25716.png",
           "badge": "Paper",
-          "deck": "PackForcing enables efficient long-video generation through hierarchical KV-cache management and spatiotemporal compression while maintaining temporal consistency and reducing memory usage.…",
-          "meta": "Hugging Face Papers · 23h ago · up 11 · signal 6.58",
-          "rank": 14,
-          "rank_delta": 11
+          "deck": "Hybrid Memory enables video world models to maintain consistent tracking of dynamic subjects during occlusion by combining archival storage for static backgrounds with active tracking for m…",
+          "meta": "Hugging Face Papers · 1d ago · up 16 · signal 6.92",
+          "rank": 7,
+          "rank_delta": 16
         },
         {
-          "headline": "Composer 2 Technical Report",
-          "title": "Composer 2 Technical Report",
-          "url": "https://huggingface.co/papers/2603.24477",
+          "headline": "LongTail Driving Scenarios with Reasoning Traces: The KITScenes LongTail Dataset",
+          "title": "LongTail Driving Scenarios with Reasoning Traces: The KITScenes LongTail Dataset",
+          "url": "https://huggingface.co/papers/2603.23607",
           "source": "huggingface.co",
           "tags": [
             "AI"
           ],
-          "score": 6.018,
-          "raw_score": 3.423,
+          "score": 6.876,
+          "raw_score": 3.54,
+          "published_hours_ago": 18,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.23607.png",
+          "badge": "Paper",
+          "deck": "A new long-tail driving dataset with multi-view video, trajectories, and multilingual reasoning traces is introduced to improve few-shot generalization and evaluate multimodal models' instr…",
+          "meta": "Hugging Face Papers · 18h ago · up 18 · signal 6.88",
+          "rank": 8,
+          "rank_delta": 18
+        },
+        {
+          "headline": "ResAdapt: Adaptive Resolution for Efficient Multimodal Reasoning",
+          "title": "ResAdapt: Adaptive Resolution for Efficient Multimodal Reasoning",
+          "url": "http://arxiv.org/abs/2603.28610v1",
+          "source": "arxiv.org",
+          "tags": [
+            "AI"
+          ],
+          "score": 5.682,
+          "raw_score": 3.242,
           "published_hours_ago": 10,
           "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24477.png",
+          "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Composer 2 is a specialized coding model trained through phased learning approaches that demonstrates superior performance on real-world software engineering tasks. Surfaced via Hugging Fac…",
-          "meta": "Hugging Face Papers · 10h ago · signal 6.02",
-          "rank": 13,
-          "rank_delta": null
-        },
-        {
-          "headline": "Codex plugin for Claude Code by OpenAI",
-          "title": "Codex plugin for Claude Code by OpenAI",
-          "url": "https://news.hada.io/topic?id=28023",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 5.45,
-          "raw_score": 2.764,
-          "published_hours_ago": 2,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews 2h ago.",
-          "meta": "GeekNews · 2h ago · signal 5.45",
-          "rank": 24,
+          "deck": "Fresh arXiv paper from the ai cluster, posted 10h ago.",
+          "meta": "arXiv · 10h ago · signal 5.68",
+          "rank": 11,
           "rank_delta": null
         }
       ]
@@ -402,6 +402,25 @@
           "rank_delta": null
         },
         {
+          "headline": "joungminsung/OpenDocuments",
+          "title": "joungminsung/OpenDocuments — Open source RAG tool for AI document search - connect GitHub, Notion, Google Drive and ask questions with cited answers. Self-hosted with Ollama/OpenAI/Claude.",
+          "url": "https://github.com/joungminsung/OpenDocuments",
+          "source": "github.com",
+          "tags": [
+            "AI"
+          ],
+          "score": 9.013,
+          "raw_score": 5.538,
+          "published_hours_ago": 0,
+          "stars": 51,
+          "image_url": "https://opengraph.githubassets.com/1/joungminsung/OpenDocuments",
+          "badge": "Repo",
+          "deck": "Open source RAG tool for AI document search - connect GitHub, Notion, Google Drive and ask questions with cited answers. Self-hosted with Ollama/OpenAI/Claude. Updated just now. 51 stars, +…",
+          "meta": "GitHub · 51 stars · +51/30d · 4d old · updated just now · signal 9.01",
+          "rank": 1,
+          "rank_delta": null
+        },
+        {
           "headline": "HomericIntelligence/ProjectMnemosyne",
           "title": "HomericIntelligence/ProjectMnemosyne — ProjectMnemosyne is a skills marketplace for the HomericIntelligence agentic ecosystem. Named after Mnemosyne, the Greek goddess of memory, this repository serves as the collective memory where team learnings are preserved and made searchable.",
           "url": "https://github.com/HomericIntelligence/ProjectMnemosyne",
@@ -459,41 +478,20 @@
           "rank_delta": null
         },
         {
-          "headline": "inclusionAI/AReaL",
-          "title": "inclusionAI/AReaL — Lightning-Fast RL for LLM Reasoning and Agents. Made Simple & Flexible.",
-          "url": "https://github.com/inclusionAI/AReaL",
+          "headline": "breadboard-ai/breadboard",
+          "title": "breadboard-ai/breadboard — A library for prototyping generative AI applications.",
+          "url": "https://github.com/breadboard-ai/breadboard",
           "source": "github.com",
-          "tags": [
-            "AI"
-          ],
-          "score": 8.824,
-          "raw_score": 4.566,
-          "published_hours_ago": 0,
-          "stars": 4950,
-          "image_url": "https://opengraph.githubassets.com/1/inclusionAI/AReaL",
-          "badge": "Repo",
-          "deck": "Lightning-Fast RL for LLM Reasoning and Agents. Made Simple & Flexible. Updated just now. 4950 stars, +800/30d, 400d old.",
-          "meta": "GitHub · 4950 stars · +800/30d · 400d old · updated just now · signal 8.82",
-          "rank": 4,
-          "rank_delta": null
-        },
-        {
-          "headline": "Nixtla/nixtla",
-          "title": "Nixtla/nixtla — TimeGPT-1: production ready pre-trained Time Series Foundation Model for forecasting and anomaly detection. Generative pretrained transformer for time series trained on over 100B data points. It's capable of accurately predicting various domains such as retail, electricity, finance, and IoT with just a few lines of code 🚀.",
-          "url": "https://github.com/Nixtla/nixtla",
-          "source": "github.com",
-          "tags": [
-            "AI"
-          ],
-          "score": 8.518,
+          "tags": [],
+          "score": 6.988,
           "raw_score": 4.345,
           "published_hours_ago": 0,
-          "stars": 3806,
-          "image_url": "https://opengraph.githubassets.com/1/Nixtla/nixtla",
+          "stars": 389,
+          "image_url": "https://opengraph.githubassets.com/1/breadboard-ai/breadboard",
           "badge": "Repo",
-          "deck": "TimeGPT-1: production ready pre-trained Time Series Foundation Model for forecasting and anomaly detection. Generative pretrained transformer for time series trained on over 100B data point…",
-          "meta": "GitHub · 3806 stars · new today · updated just now · signal 8.52",
-          "rank": 6,
+          "deck": "A library for prototyping generative AI applications. Updated just now. 389 stars, +4/30d, 839d old.",
+          "meta": "GitHub · 389 stars · +4/30d · 839d old · updated just now · signal 6.99",
+          "rank": 3,
           "rank_delta": null
         },
         {
@@ -502,16 +500,16 @@
           "url": "https://github.com/FabrizioCafolla/openai-crawlers-ip-ranges",
           "source": "github.com",
           "tags": [],
-          "score": 4.518,
-          "raw_score": 2.604,
+          "score": 5.223,
+          "raw_score": 2.544,
           "published_hours_ago": 17,
           "stars": 23,
           "image_url": "https://opengraph.githubassets.com/1/FabrizioCafolla/openai-crawlers-ip-ranges",
           "badge": "Repo",
-          "deck": "OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses. Updated 17h ago. 23 stars, avg 0.1/day, 434d old. Down 29 spots from the previous run.",
-          "meta": "GitHub · 23 stars · avg 0.1/day · 434d old · updated 17h ago · down 29 · signal 4.52",
-          "rank": 33,
-          "rank_delta": -29
+          "deck": "OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses. Updated 17h ago. 23 stars, avg 0.1/day, 434d old. Up 11 spots from the previous run.",
+          "meta": "GitHub · 23 stars · avg 0.1/day · 434d old · updated 17h ago · up 11 · signal 5.22",
+          "rank": 44,
+          "rank_delta": 11
         }
       ]
     },
@@ -521,6 +519,44 @@
       "description": "New research worth bookmarking for a deeper read.",
       "items": [
         {
+          "headline": "Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models",
+          "title": "Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models",
+          "url": "https://huggingface.co/papers/2603.25716",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 6.925,
+          "raw_score": 3.786,
+          "published_hours_ago": 26,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25716.png",
+          "badge": "Paper",
+          "deck": "Hybrid Memory enables video world models to maintain consistent tracking of dynamic subjects during occlusion by combining archival storage for static backgrounds with active tracking for m…",
+          "meta": "Hugging Face Papers · 1d ago · up 16 · signal 6.92",
+          "rank": 7,
+          "rank_delta": 16
+        },
+        {
+          "headline": "LongTail Driving Scenarios with Reasoning Traces: The KITScenes LongTail Dataset",
+          "title": "LongTail Driving Scenarios with Reasoning Traces: The KITScenes LongTail Dataset",
+          "url": "https://huggingface.co/papers/2603.23607",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 6.876,
+          "raw_score": 3.54,
+          "published_hours_ago": 18,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.23607.png",
+          "badge": "Paper",
+          "deck": "A new long-tail driving dataset with multi-view video, trajectories, and multilingual reasoning traces is introduced to improve few-shot generalization and evaluate multimodal models' instr…",
+          "meta": "Hugging Face Papers · 18h ago · up 18 · signal 6.88",
+          "rank": 8,
+          "rank_delta": 18
+        },
+        {
           "headline": "PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference",
           "title": "PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference",
           "url": "https://huggingface.co/papers/2603.25730",
@@ -528,35 +564,16 @@
           "tags": [
             "AI"
           ],
-          "score": 6.575,
-          "raw_score": 3.408,
+          "score": 6.615,
+          "raw_score": 3.334,
           "published_hours_ago": 23,
           "stars": 0,
           "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25730.png",
           "badge": "Paper",
           "deck": "PackForcing enables efficient long-video generation through hierarchical KV-cache management and spatiotemporal compression while maintaining temporal consistency and reducing memory usage.…",
-          "meta": "Hugging Face Papers · 23h ago · up 11 · signal 6.58",
-          "rank": 14,
-          "rank_delta": 11
-        },
-        {
-          "headline": "Composer 2 Technical Report",
-          "title": "Composer 2 Technical Report",
-          "url": "https://huggingface.co/papers/2603.24477",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 6.018,
-          "raw_score": 3.423,
-          "published_hours_ago": 10,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24477.png",
-          "badge": "Paper",
-          "deck": "Composer 2 is a specialized coding model trained through phased learning approaches that demonstrates superior performance on real-world software engineering tasks. Surfaced via Hugging Fac…",
-          "meta": "Hugging Face Papers · 10h ago · signal 6.02",
-          "rank": 13,
-          "rank_delta": null
+          "meta": "Hugging Face Papers · 23h ago · up 13 · signal 6.62",
+          "rank": 9,
+          "rank_delta": 13
         },
         {
           "headline": "Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills",
@@ -566,146 +583,129 @@
           "tags": [
             "AI"
           ],
-          "score": 5.833,
-          "raw_score": 2.898,
+          "score": 6.598,
+          "raw_score": 3.217,
           "published_hours_ago": 24,
           "stars": 0,
           "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25158.png",
           "badge": "Paper",
           "deck": "Trace2Skill enables scalable skill generation for LLM agents by analyzing diverse execution traces in parallel and consolidating them into transferable, declarative skills without parameter…",
-          "meta": "Hugging Face Papers · 1d ago · up 5 · signal 5.83",
-          "rank": 19,
-          "rank_delta": 5
+          "meta": "Hugging Face Papers · 1d ago · up 14 · signal 6.60",
+          "rank": 13,
+          "rank_delta": 14
         },
         {
-          "headline": "Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models",
-          "title": "Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models",
-          "url": "https://huggingface.co/papers/2603.25716",
+          "headline": "MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies",
+          "title": "MedOpenClaw: Auditable Medical Imaging Agents Reasoning over Uncurated Full Studies",
+          "url": "https://huggingface.co/papers/2603.24649",
           "source": "huggingface.co",
           "tags": [
             "AI"
           ],
-          "score": 5.79,
-          "raw_score": 3.199,
-          "published_hours_ago": 26,
+          "score": 6.536,
+          "raw_score": 3.163,
+          "published_hours_ago": 19,
           "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25716.png",
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24649.png",
           "badge": "Paper",
-          "deck": "Hybrid Memory enables video world models to maintain consistent tracking of dynamic subjects during occlusion by combining archival storage for static backgrounds with active tracking for m…",
-          "meta": "Hugging Face Papers · 1d ago · up 6 · signal 5.79",
-          "rank": 15,
-          "rank_delta": 6
+          "deck": "MEDOPENCLAW and MEDFLOWBENCH enable evaluation of vision-language models in medical imaging by allowing dynamic interaction with 3D medical volumes through standard viewers, revealing limit…",
+          "meta": "Hugging Face Papers · 19h ago · up 14 · signal 6.54",
+          "rank": 14,
+          "rank_delta": 14
         },
         {
-          "headline": "ShotStream: Streaming Multi-Shot Video Generation for Interactive Storytelling",
-          "title": "ShotStream: Streaming Multi-Shot Video Generation for Interactive Storytelling",
-          "url": "https://huggingface.co/papers/2603.25746",
+          "headline": "Know3D: Prompting 3D Generation with Knowledge from Vision-Language Models",
+          "title": "Know3D: Prompting 3D Generation with Knowledge from Vision-Language Models",
+          "url": "https://huggingface.co/papers/2603.22782",
           "source": "huggingface.co",
-          "tags": [],
-          "score": 5.743,
-          "raw_score": 3.102,
-          "published_hours_ago": 26,
+          "tags": [
+            "AI"
+          ],
+          "score": 6.125,
+          "raw_score": 3.012,
+          "published_hours_ago": 25,
           "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.25746.png",
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.22782.png",
           "badge": "Paper",
-          "deck": "ShotStream enables real-time interactive multi-shot video generation through causal architecture design, dual-cache memory mechanisms, and two-stage distillation to maintain visual consiste…",
-          "meta": "Hugging Face Papers · 1d ago · up 10 · signal 5.74",
+          "deck": "Know3D integrates multimodal large language models with 3D generation through latent hidden-state injection, enabling language-controlled back-view synthesis by bridging semantic understand…",
+          "meta": "Hugging Face Papers · 1d ago · up 34 · signal 6.12",
           "rank": 16,
-          "rank_delta": 10
+          "rank_delta": 34
         },
         {
-          "headline": "SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks",
-          "title": "SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks",
-          "url": "https://huggingface.co/papers/2603.24755",
-          "source": "huggingface.co",
+          "headline": "ResAdapt: Adaptive Resolution for Efficient Multimodal Reasoning",
+          "title": "ResAdapt: Adaptive Resolution for Efficient Multimodal Reasoning",
+          "url": "http://arxiv.org/abs/2603.28610v1",
+          "source": "arxiv.org",
           "tags": [
             "AI"
           ],
           "score": 5.682,
-          "raw_score": 3.025,
-          "published_hours_ago": 97,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.24755.png",
-          "badge": "Paper",
-          "deck": "Software development is iterative, yet agentic coding benchmarks overwhelmingly evaluate single-shot solutions against complete specifications. Code can pass the test suite but become progr…",
-          "meta": "Hugging Face Papers · 4d ago · up 56 · signal 5.68",
-          "rank": 17,
-          "rank_delta": 56
-        },
-        {
-          "headline": "Safer Builders, Risky Maintainers: A Comparative Study of Breaking Changes in Human vs Agentic…",
-          "title": "Safer Builders, Risky Maintainers: A Comparative Study of Breaking Changes in Human vs Agentic PRs",
-          "url": "http://arxiv.org/abs/2603.27524v1",
-          "source": "arxiv.org",
-          "tags": [
-            "AI"
-          ],
-          "score": 4.881,
-          "raw_score": 2.759,
-          "published_hours_ago": 45,
+          "raw_score": 3.242,
+          "published_hours_ago": 10,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 2d ago.",
-          "meta": "arXiv · 2d ago · signal 4.88",
-          "rank": 25,
+          "deck": "Fresh arXiv paper from the ai cluster, posted 10h ago.",
+          "meta": "arXiv · 10h ago · signal 5.68",
+          "rank": 11,
           "rank_delta": null
         },
         {
-          "headline": "Expert Streaming: Accelerating Low-Batch MoE Inference via Multi-chiplet Architecture and Dynam…",
-          "title": "Expert Streaming: Accelerating Low-Batch MoE Inference via Multi-chiplet Architecture and Dynamic Expert Trajectory Scheduling",
-          "url": "http://arxiv.org/abs/2603.27624v1",
+          "headline": "Courtroom-Style Multi-Agent Debate with Progressive RAG and Role-Switching for Controversial Cl…",
+          "title": "Courtroom-Style Multi-Agent Debate with Progressive RAG and Role-Switching for Controversial Claim Verification",
+          "url": "http://arxiv.org/abs/2603.28488v1",
           "source": "arxiv.org",
           "tags": [
             "AI"
           ],
-          "score": 4.351,
-          "raw_score": 2.432,
-          "published_hours_ago": 39,
+          "score": 5.319,
+          "raw_score": 2.933,
+          "published_hours_ago": 12,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 2d ago.",
-          "meta": "arXiv · 2d ago · signal 4.35",
-          "rank": 39,
+          "deck": "Fresh arXiv paper from the ai cluster, posted 12h ago.",
+          "meta": "arXiv · 12h ago · signal 5.32",
+          "rank": 18,
           "rank_delta": null
         },
         {
-          "headline": "Gated Condition Injection without Multimodal Attention: Towards Controllable Linear-Attention T…",
-          "title": "Gated Condition Injection without Multimodal Attention: Towards Controllable Linear-Attention Transformers",
-          "url": "http://arxiv.org/abs/2603.27666v1",
+          "headline": "Entropic Claim Resolution: Uncertainty-Driven Evidence Selection for RAG",
+          "title": "Entropic Claim Resolution: Uncertainty-Driven Evidence Selection for RAG",
+          "url": "http://arxiv.org/abs/2603.28444v1",
           "source": "arxiv.org",
           "tags": [
             "AI"
           ],
-          "score": 3.888,
-          "raw_score": 2.097,
-          "published_hours_ago": 38,
+          "score": 5.215,
+          "raw_score": 2.933,
+          "published_hours_ago": 12,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 2d ago.",
-          "meta": "arXiv · 2d ago · signal 3.89",
-          "rank": 66,
+          "deck": "Fresh arXiv paper from the ai cluster, posted 12h ago.",
+          "meta": "arXiv · 12h ago · signal 5.21",
+          "rank": 19,
           "rank_delta": null
         },
         {
-          "headline": "Drag or Traction: Understanding How Designers Appropriate Friction in AI Ideation Outputs",
-          "title": "Drag or Traction: Understanding How Designers Appropriate Friction in AI Ideation Outputs",
-          "url": "http://arxiv.org/abs/2603.27550v1",
+          "headline": "Critic-Free Deep Reinforcement Learning for Maritime Coverage Path Planning on Irregular Hexago…",
+          "title": "Critic-Free Deep Reinforcement Learning for Maritime Coverage Path Planning on Irregular Hexagonal Grids",
+          "url": "http://arxiv.org/abs/2603.28385v1",
           "source": "arxiv.org",
           "tags": [
             "AI"
           ],
-          "score": 3.884,
-          "raw_score": 2.038,
-          "published_hours_ago": 43,
+          "score": 5.141,
+          "raw_score": 2.872,
+          "published_hours_ago": 13,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 2d ago.",
-          "meta": "arXiv · 2d ago · signal 3.88",
-          "rank": 73,
+          "deck": "Fresh arXiv paper from the ai cluster, posted 13h ago.",
+          "meta": "arXiv · 13h ago · signal 5.14",
+          "rank": 21,
           "rank_delta": null
         }
       ]
@@ -723,92 +723,16 @@
           "tags": [
             "social"
           ],
-          "score": 5.45,
-          "raw_score": 2.764,
+          "score": 5.431,
+          "raw_score": 2.694,
           "published_hours_ago": 2,
           "stars": 0,
           "image_url": "/news/assets/thumb-ai.svg",
           "badge": "Social",
-          "deck": "Community signal picked up on GeekNews 2h ago.",
-          "meta": "GeekNews · 2h ago · signal 5.45",
-          "rank": 24,
-          "rank_delta": null
-        },
-        {
-          "headline": "People change jobs because they are afraid of AI, the career pivot of American youth",
-          "title": "People change jobs because they are afraid of AI, the career pivot of American youth",
-          "url": "https://news.hada.io/topic?id=28032",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 4.49,
-          "raw_score": 2.233,
-          "published_hours_ago": 1,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews 1h ago.",
-          "meta": "GeekNews · 1h ago · signal 4.49",
-          "rank": 46,
-          "rank_delta": null
-        },
-        {
-          "headline": "Don’t leave writing to AI",
-          "title": "Don’t leave writing to AI",
-          "url": "https://news.hada.io/topic?id=28031",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 4.386,
-          "raw_score": 2.233,
-          "published_hours_ago": 1,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews 1h ago.",
-          "meta": "GeekNews · 1h ago · signal 4.39",
-          "rank": 47,
-          "rank_delta": null
-        },
-        {
-          "headline": "How the AI ​​Bubble Collapses",
-          "title": "How the AI ​​Bubble Collapses",
-          "url": "https://news.hada.io/topic?id=28029",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 4.377,
-          "raw_score": 2.233,
-          "published_hours_ago": 1,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews 1h ago.",
-          "meta": "GeekNews · 1h ago · signal 4.38",
-          "rank": 49,
-          "rank_delta": null
-        },
-        {
-          "headline": "Qwen3.5-Omni: Release of a fully omnimodal LLM that processes text, images, audio, and video.",
-          "title": "Qwen3.5-Omni: Release of a fully omnimodal LLM that processes text, images, audio, and video.",
-          "url": "https://news.hada.io/topic?id=28027",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 4.369,
-          "raw_score": 2.233,
-          "published_hours_ago": 1,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews 1h ago.",
-          "meta": "GeekNews · 1h ago · signal 4.37",
-          "rank": 51,
-          "rank_delta": null
+          "deck": "Community signal picked up on GeekNews 2h ago. Up 2 spots from the previous run.",
+          "meta": "GeekNews · 2h ago · up 2 · signal 5.43",
+          "rank": 32,
+          "rank_delta": 2
         },
         {
           "headline": "Miasma: A tool that traps AI web scrapers in an endless loop of contamination",
@@ -830,6 +754,82 @@
           "rank_delta": -8
         },
         {
+          "headline": "15 Hidden Powerful Features of Claude Code",
+          "title": "15 Hidden Powerful Features of Claude Code",
+          "url": "https://news.hada.io/topic?id=28021",
+          "source": "geeknews",
+          "tags": [
+            "social"
+          ],
+          "score": 4.212,
+          "raw_score": 2.13,
+          "published_hours_ago": 3,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on GeekNews 3h ago.",
+          "meta": "GeekNews · 3h ago · signal 4.21",
+          "rank": 62,
+          "rank_delta": null
+        },
+        {
+          "headline": "Claude Code running Git reset --hard origin/main every 10 minutes on the project repository",
+          "title": "Claude Code running Git reset --hard origin/main every 10 minutes on the project repository",
+          "url": "https://news.hada.io/topic?id=28020",
+          "source": "geeknews",
+          "tags": [
+            "social"
+          ],
+          "score": 4.106,
+          "raw_score": 1.989,
+          "published_hours_ago": 6,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on GeekNews 6h ago.",
+          "meta": "GeekNews · 6h ago · signal 4.11",
+          "rank": 75,
+          "rank_delta": null
+        },
+        {
+          "headline": "AI coding agents could make free software important again",
+          "title": "AI coding agents could make free software important again",
+          "url": "https://news.hada.io/topic?id=28019",
+          "source": "geeknews",
+          "tags": [
+            "social"
+          ],
+          "score": 4.101,
+          "raw_score": 1.989,
+          "published_hours_ago": 6,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on GeekNews 6h ago.",
+          "meta": "GeekNews · 6h ago · signal 4.10",
+          "rank": 76,
+          "rank_delta": null
+        },
+        {
+          "headline": "People change jobs because they are afraid of AI, the career pivot of American youth",
+          "title": "People change jobs because they are afraid of AI, the career pivot of American youth",
+          "url": "https://news.hada.io/topic?id=28032",
+          "source": "geeknews",
+          "tags": [
+            "social"
+          ],
+          "score": 3.982,
+          "raw_score": 2.233,
+          "published_hours_ago": 1,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on GeekNews 1h ago. Down 56 spots from the previous run.",
+          "meta": "GeekNews · 1h ago · down 56 · signal 3.98",
+          "rank": 91,
+          "rank_delta": -56
+        },
+        {
           "headline": "ARC-AGI-3 is out now! We've designed the benchmark to evaluate agentic intelligence via interac…",
           "title": "ARC-AGI-3 is out now! We've designed the benchmark to evaluate agentic intelligence via interactive reasoning environments. Beating ARC-AGI-3 will be achieved when an AI system matches or exceeds human-level action efficiency on all environments, upo",
           "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFBmVHg1ZXdqZUx6VGJwa2tRc3czX3g2N1p0c1E3d2Y2LWVRWHZUQV9YZmkyVGJnRW93TmRPSVBaRUtNdGExa2RFN2VFZnQ5TnVubS1DUW92Y2djM2Zob3c?oc=5",
@@ -837,48 +837,6 @@
           "tags": [
             "AI",
             "social"
-          ],
-          "score": 3.461,
-          "raw_score": 2.106,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X 3d ago. Down 32 spots from the previous run.",
-          "meta": "X · 3d ago · down 32 · signal 3.46",
-          "rank": 64,
-          "rank_delta": -32
-        },
-        {
-          "headline": "ARC-AGI-3 is out now! We've designed the benchmark to evaluate agentic intelligence via interac…",
-          "title": "ARC-AGI-3 is out now! We've designed the benchmark to evaluate agentic intelligence via interactive reasoning environments. Beating ARC-AGI-3 will be achieved when an AI system matches or exceeds human-level action efficiency on all environments, upo",
-          "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFBmVHg1ZXdqZUx6VGJwa2tRc3czX3g2N1p0c1E3d2Y2LWVRWHZUQV9YZmkyVGJnRW93TmRPSVBaRUtNdGExa2RFN2VFZnQ5TnVubS1DUW92Y2djM2Zob3c?oc=5#rebalance-x.com-1",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social",
-            "supplemental"
-          ],
-          "score": 3.461,
-          "raw_score": 2.106,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X 3d ago. Down 32 spots from the previous run.",
-          "meta": "X · 3d ago · down 32 · signal 3.46",
-          "rank": 64,
-          "rank_delta": -32
-        },
-        {
-          "headline": "ARC-AGI-3 is out now! We've designed the benchmark to evaluate agentic intelligence via interac…",
-          "title": "ARC-AGI-3 is out now! We've designed the benchmark to evaluate agentic intelligence via interactive reasoning environments. Beating ARC-AGI-3 will be achieved when an AI system matches or exceeds human-level action efficiency on all environments, upo",
-          "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFBmVHg1ZXdqZUx6VGJwa2tRc3czX3g2N1p0c1E3d2Y2LWVRWHZUQV9YZmkyVGJnRW93TmRPSVBaRUtNdGExa2RFN2VFZnQ5TnVubS1DUW92Y2djM2Zob3c?oc=5#rebalance-x.com-4",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social",
-            "supplemental"
           ],
           "score": 3.461,
           "raw_score": 2.106,
@@ -909,6 +867,45 @@
           "meta": "X · 3d ago · signal 3.37",
           "rank": 63,
           "rank_delta": null
+        },
+        {
+          "headline": "Persuasion has two sides. This chart shows how easy each model is to move as a target.",
+          "title": "Persuasion has two sides. This chart shows how easy each model is to move as a target. Xiaomi MiMo V2 Pro and Gemini 3.1 Pro Preview are the softest targets. Grok 4.20 Beta 0309 (Reasoning) is nearly immovable on average.",
+          "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE85d1RTYnhaQ0NRRWFrYml0NG5XR1BZYjVQUWRndHJBR2VyY1hqTjNNWlFmWXU0d2ZNeFN4ajlMZDZBNVZLZkRVVVJrMGd1NzNiUXVRUmtLbHlYV0VlX3BJ?oc=5",
+          "source": "x.com",
+          "tags": [
+            "social"
+          ],
+          "score": 3.323,
+          "raw_score": 2.055,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X 3d ago. Down 25 spots from the previous run.",
+          "meta": "X · 3d ago · down 25 · signal 3.32",
+          "rank": 57,
+          "rank_delta": -25
+        },
+        {
+          "headline": "Announcing ARC-AGI-3 The only unsaturated agentic intelligence benchmark in the world Humans sc…",
+          "title": "Announcing ARC-AGI-3 The only unsaturated agentic intelligence benchmark in the world Humans score 100%, AI",
+          "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFBGUDM4ZHhTUm13T2dMd3M4RFVHdjJzU0NpaDU0aUx0X19oQ3ZDOGE4NXVPeURNLV9fa29WdVF0TVZGbEtVa0RVTmRhcHp4Um9XaGE2SmtiUkpDREZQZHc?oc=5",
+          "source": "x.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 3.309,
+          "raw_score": 1.859,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X 3d ago.",
+          "meta": "X · 3d ago · signal 3.31",
+          "rank": 100,
+          "rank_delta": null
         }
       ]
     }
@@ -938,7 +935,7 @@
   "digest": {
     "title": "Daily AI News Digest — 2026-03-31",
     "url": "/notes/news/2026-03-31-ai-news-digest/",
-    "description": "GitHub velocity is led by comet-ml/opik; paper attention is clustering around PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference; social attention is tilting toward Codex plugin for Claude Code by OpenAI; biggest mover: SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks (+56). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+    "description": "GitHub velocity is led by comet-ml/opik; paper attention is clustering around Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models; social attention is tilting toward Codex plugin for Claude Code by OpenAI; biggest mover: Know3D: Prompting 3D Generation with Knowledge from Vision-Language Models (+34). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
   },
   "archive_url": "/notes/news/news-digest-archive/",
   "archives": [
@@ -946,7 +943,7 @@
       "title": "Daily AI News Digest — 2026-03-31",
       "url": "/notes/news/2026-03-31-ai-news-digest/",
       "date_label": "2026-03-31",
-      "description": "GitHub velocity is led by comet-ml/opik; paper attention is clustering around PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference; social attention is tilting toward Codex plugin for Claude Code by OpenAI; biggest mover: SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks (+56). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+      "description": "GitHub velocity is led by comet-ml/opik; paper attention is clustering around Out of Sight but Not Out of Mind: Hybrid Memory for Dynamic Video World Models; social attention is tilting toward Codex plugin for Claude Code by OpenAI; biggest mover: Know3D: Prompting 3D Generation with Knowledge from Vision-Language Models (+34). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
     },
     {
       "title": "Daily AI News Digest — 2026-03-30",
