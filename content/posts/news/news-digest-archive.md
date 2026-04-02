@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every Daily AI News Digest post."
-date: 2026-04-02
+date: 2026-04-03
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every Daily AI News Digest, grouped by month so older issues stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/notes/news/2026-04-02-ai-news-digest/">Latest digest</a>
+        <a class="post-cta-link" href="/notes/news/2026-04-03-ai-news-digest/">Latest digest</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-04-02T01:14:42.425707+09:00">Apr 2, 2026 · 1:14 AM KST</time></strong>
+        <strong><time datetime="2026-04-03T01:13:21.866685+09:00">Apr 3, 2026 · 1:13 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>10</strong>
+        <strong>11</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-04-02">Apr 2, 2026</time></strong>
+        <strong><time datetime="2026-04-03">Apr 3, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by huggingface/transformers; paper attention is clustering around Unify-Agent: A Unified Multimodal Agent for World-Grounded Image Synthesis; social attention is tilting toward Show GN: Please create a workflow-tool that I created because I wanted claude code and gemini-c…; biggest mover: marktsec/Ransomware_Official_Domains (+43). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by comet-ml/opik; paper attention is clustering around MiroEval: Benchmarking Multimodal Deep Research Agents in Process and Outcome; social attention is tilting toward Anthropic&#x27;s profitability is worse than Kimbap Heaven; biggest mover: MonitorBench: A Comprehensive Benchmark for Chain-of-Thought Monitorability in Large Language M… (+37). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>April 2026</span><span class="news-digest-month-count">2 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>April 2026</span><span class="news-digest-month-count">3 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/notes/news/2026-04-03-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-04-03</span>
+            <strong>Daily AI News Digest — 2026-04-03</strong>
+            <span>GitHub velocity is led by comet-ml/opik; paper attention is clustering around MiroEval: Benchmarking Multimodal Deep Research Agents in Process and Outcome; social attention is tilting toward Anthropic&#x27;s profitability is worse than Kimbap Heaven; biggest mover: MonitorBench: A Comprehensive Benchmark for Chain-of-Thought Monitorability in Large Language M… (+37). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+          </a>
           <a class="news-digest-archive-item" href="/notes/news/2026-04-02-ai-news-digest/">
             <span class="news-digest-archive-date">2026-04-02</span>
             <strong>Daily AI News Digest — 2026-04-02</strong>
