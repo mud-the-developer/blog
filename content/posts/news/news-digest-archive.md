@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every Daily AI News Digest post."
-date: 2026-04-05
+date: 2026-04-06
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every Daily AI News Digest, grouped by month so older issues stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/notes/news/2026-04-05-ai-news-digest/">Latest digest</a>
+        <a class="post-cta-link" href="/notes/news/2026-04-06-ai-news-digest/">Latest digest</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-04-05T00:48:54.615645+09:00">Apr 5, 2026 · 12:48 AM KST</time></strong>
+        <strong><time datetime="2026-04-06T00:48:42.113173+09:00">Apr 6, 2026 · 12:48 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>13</strong>
+        <strong>14</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-04-05">Apr 5, 2026</time></strong>
+        <strong><time datetime="2026-04-06">Apr 6, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by comet-ml/opik; paper attention is clustering around VOID: Video Object and Interaction Deletion; social attention is tilting toward PyPI Security Team Official Supply Chain Attack Incident Report: LiteLLM·Telnyx Malicious Packa…; biggest mover: UniDriveVLA: Unifying Understanding, Perception, and Action Planning for Autonomous Driving (+39). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by comet-ml/opik; paper attention is clustering around CORAL: Towards Autonomous Multi-Agent Evolution for Open-Ended Discovery; social attention is tilting toward Show GN: Ravenclaw - an open source system for managing the task context of AI coding agents.; biggest mover: LOME: Learning Human-Object Manipulation with Action-Conditioned Egocentric World Model (+41). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>April 2026</span><span class="news-digest-month-count">5 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>April 2026</span><span class="news-digest-month-count">6 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/notes/news/2026-04-06-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-04-06</span>
+            <strong>Daily AI News Digest — 2026-04-06</strong>
+            <span>GitHub velocity is led by comet-ml/opik; paper attention is clustering around CORAL: Towards Autonomous Multi-Agent Evolution for Open-Ended Discovery; social attention is tilting toward Show GN: Ravenclaw - an open source system for managing the task context of AI coding agents.; biggest mover: LOME: Learning Human-Object Manipulation with Action-Conditioned Egocentric World Model (+41). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+          </a>
           <a class="news-digest-archive-item" href="/notes/news/2026-04-05-ai-news-digest/">
             <span class="news-digest-archive-date">2026-04-05</span>
             <strong>Daily AI News Digest — 2026-04-05</strong>
