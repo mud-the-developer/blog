@@ -616,16 +616,6 @@ struct PostCard {
 }
 
 #[derive(Debug, Clone)]
-struct HomePostFeature {
-    markdown_html: String,
-    date_display: String,
-    updated_display: Option<String>,
-    reading_time_min: usize,
-    tags: Vec<TagEntry>,
-    content_classes: String,
-}
-
-#[derive(Debug, Clone)]
 struct FolderSummary {
     name: String,
 }
@@ -673,8 +663,6 @@ struct Backlink {
 #[template(path = "index.html")]
 struct IndexTemplate {
     layout: LayoutContext,
-    home_post: Option<HomePostFeature>,
-    load_home_rich_css: bool,
     total_notes: usize,
     featured_posts: Vec<PostCard>,
     news_spotlight: Option<HomeNewsSpotlight>,
@@ -715,27 +703,11 @@ struct NotFoundTemplate {
     layout: LayoutContext,
 }
 
-#[derive(Debug, Clone, Default, Deserialize)]
-struct NewsSpotlightCard {
-    #[serde(default)]
-    badge: String,
-    #[serde(default)]
-    headline: String,
-    #[serde(default)]
-    url: String,
-    #[serde(default)]
-    deck: String,
-    #[serde(default)]
-    meta: String,
-}
-
 #[derive(Debug, Clone)]
 struct HomeNewsSpotlight {
     issue_label: String,
-    generated_label: String,
     summary: String,
     url: String,
-    top_cards: Vec<NewsSpotlightCard>,
 }
 
 #[derive(Template)]
@@ -749,15 +721,11 @@ struct MissingNoteTemplate {
 #[derive(Debug, Clone, Default, Deserialize)]
 struct NewsHubData {
     #[serde(default)]
-    generated_label: String,
-    #[serde(default)]
     issue_label: String,
     #[serde(default)]
     summary: String,
     #[serde(default)]
     digest: NewsDigestLink,
-    #[serde(default)]
-    top_cards: Vec<NewsSpotlightCard>,
     #[serde(default)]
     archives: Vec<NewsArchiveEntry>,
 }
@@ -1074,7 +1042,6 @@ fn render_index(
     visible_posts.sort_by(|a, b| sort_posts_by_recency(a, b));
 
     let total_notes = visible_posts.len();
-    let home_post = visible_posts.iter().copied().find(|post| post.is_home);
     let featured_posts = visible_posts
         .iter()
         .copied()
@@ -1087,8 +1054,6 @@ fn render_index(
 
     let template = IndexTemplate {
         layout,
-        home_post: home_post.map(home_post_to_feature),
-        load_home_rich_css: home_post.is_some_and(|post| post.has_rich_note_styles),
         total_notes,
         featured_posts,
         news_spotlight,
@@ -4241,28 +4206,6 @@ fn post_to_card(post: &Post) -> PostCard {
     }
 }
 
-fn home_post_to_feature(post: &Post) -> HomePostFeature {
-    HomePostFeature {
-        markdown_html: post.markdown_html.clone(),
-        date_display: post
-            .date
-            .map(|date| date.format("%Y-%m-%d").to_string())
-            .unwrap_or_else(|| "Undated".to_string()),
-        updated_display: post.updated.map(|date| date.format("%Y-%m-%d").to_string()),
-        reading_time_min: post.reading_time_min,
-        tags: post
-            .tags
-            .iter()
-            .map(|tag| TagEntry {
-                slug: slugify(tag),
-                name: tag.clone(),
-                count: 0,
-            })
-            .collect(),
-        content_classes: post.content_classes.join(" "),
-    }
-}
-
 fn build_home_news_spotlight(news: NewsHubData) -> Option<HomeNewsSpotlight> {
     let url = resolve_news_digest_url(&news);
     let summary = if news.summary.trim().is_empty() {
@@ -4279,23 +4222,14 @@ fn build_home_news_spotlight(news: NewsHubData) -> Option<HomeNewsSpotlight> {
     } else {
         news.issue_label.trim().to_string()
     };
-    let generated_label = news.generated_label.trim().to_string();
-    let top_cards = news
-        .top_cards
-        .into_iter()
-        .filter(|card| !card.url.trim().is_empty() && !card.headline.trim().is_empty())
-        .take(3)
-        .collect::<Vec<_>>();
-    if url.trim().is_empty() && summary.trim().is_empty() && top_cards.is_empty() {
+    if url.trim().is_empty() && summary.trim().is_empty() {
         return None;
     }
 
     Some(HomeNewsSpotlight {
         issue_label,
-        generated_label,
         summary,
         url,
-        top_cards,
     })
 }
 
@@ -6522,6 +6456,10 @@ Not published.
             "export const fixture = true;\n",
         );
         write_text(
+            &static_dir.join("assets/pretext-note-web.mjs"),
+            "export const fixture = true;\n",
+        );
+        write_text(
             &static_dir.join("assets/style-editorial.css"),
             ":root { --fixture-editorial: 1; }\n",
         );
@@ -6591,6 +6529,7 @@ Not published.
         assert!(output_dir.join("assets/pretext-masonry.mjs").exists());
         assert!(output_dir.join("assets/pretext-home-hero.mjs").exists());
         assert!(output_dir.join("assets/editorial-motion.js").exists());
+        assert!(output_dir.join("assets/pretext-note-web.mjs").exists());
         assert!(output_dir.join("assets/style-editorial.css").exists());
         assert!(output_dir.join("assets/style-home-editorial.css").exists());
         assert!(output_dir.join("assets/style-note-editorial.css").exists());
@@ -6622,9 +6561,7 @@ Not published.
         assert!(index_html.contains(r#"src="/assets/pretext-runtime.mjs?v="#));
         assert!(index_html.contains(r#"href="/assets/style-editorial.css?v="#));
         assert!(index_html.contains(r#"src="/assets/site-runtime.js""#));
-        assert!(index_html.contains(r#"src="/assets/pretext-masonry.mjs?v="#));
-        assert!(index_html.contains(r#"src="/assets/pretext-home-hero.mjs?v="#));
-        assert!(index_html.contains(r#"src="/assets/editorial-motion.js?v="#));
+        assert!(index_html.contains(r#"src="/assets/pretext-note-web.mjs?v="#));
         assert!(index_html.contains("window.__BLOG_RUNTIME_CONFIG__"));
         assert!(index_html.contains("graphDataUrl:"));
         assert!(index_html.contains("/graph.json"));
@@ -6678,7 +6615,7 @@ Not published.
         assert!(second_html.contains("article-featured"));
 
         assert!(!index_html.contains(r#"id="side-graph-stage""#));
-        assert!(index_html.contains(r#"src="/assets/pretext-masonry.mjs?v="#));
+        assert!(index_html.contains(r#"src="/assets/pretext-note-web.mjs?v="#));
 
         let graph_html = fs::read_to_string(output_dir.join("graph/index.html"))?;
         assert!(graph_html.contains("id=\"global-graph-stage\""));

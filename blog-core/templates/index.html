@@ -1,181 +1,108 @@
 {% extends "base.html" %}
 
 {% block extra_styles %}
-  <link rel="stylesheet" href="/assets/style-note-core.css?v={{ layout.asset_version }}" />
-  {% if load_home_rich_css %}
-  <link rel="stylesheet" href="/assets/style-note.css?v={{ layout.asset_version }}" />
-  {% endif %}
   <link rel="stylesheet" href="/assets/style-home-editorial.css?v={{ layout.asset_version }}" />
 {% endblock %}
 
 {% block content %}
   <div class="site-main-stack site-main-stack--home">
-    <section class="panel home-cover">
-      <div class="home-cover-top">
-        <div>
-          <p class="section-kicker">Kinetic editorial notebook</p>
-          <p class="home-cover-label">Static writing, live signal, responsive type.</p>
-        </div>
-        <div class="home-cover-links">
-          <a class="button button--ghost" href="/news/">Latest digest</a>
-          <a class="button button--ghost" href="/graph/">Constellation map</a>
-        </div>
-      </div>
-
-      <div class="home-cover-grid">
-        <div id="home-hero-stage" class="home-hero-stage" data-home-hero
-          data-kicker="Signal notebook"
-          data-headline="Notes in motion"
-          data-deck="{{ layout.site_description }}">
-          <div class="home-hero-fallback">
-            <p class="home-hero-fallback-kicker">Signal notebook</p>
-            <h1 class="home-hero-fallback-title">Notes in motion</h1>
-            <p class="home-hero-fallback-deck">{{ layout.site_description }}</p>
+    <section class="panel home-intro-panel">
+      <div class="home-intro-grid">
+        <div class="home-intro-copy">
+          <p class="section-kicker">Interaction web</p>
+          <h1 class="home-intro-title">Browse every markdown note as a living web.</h1>
+          <p class="home-intro-deck">Pretext handles the note labels and card sizing; hover a note to trace its neighbors and jump directly into the writing.</p>
+          <div class="hero-actions">
+            <a class="button button--primary" href="/graph/">Open full graph</a>
+            <a class="button" href="/news/">Open latest digest</a>
           </div>
         </div>
 
-        <aside class="home-cover-rail">
-          <dl class="home-cover-stats" aria-label="Garden statistics">
-            <div class="home-cover-stat">
+        <div class="home-intro-meta">
+          <dl class="home-intro-stats" aria-label="Garden statistics">
+            <div class="home-intro-stat">
               <dt>Notes</dt>
               <dd>{{ total_notes }}</dd>
             </div>
-            <div class="home-cover-stat">
+            <div class="home-intro-stat">
               <dt>Tags</dt>
               <dd>{{ tags.len() }}</dd>
             </div>
-            <div class="home-cover-stat">
+            <div class="home-intro-stat">
               <dt>Folders</dt>
               <dd>{{ folders.len() }}</dd>
             </div>
-            <div class="home-cover-stat">
-              <dt>Graph</dt>
-              <dd>{% if layout.show_graph_module %}Live{% else %}Off{% endif %}</dd>
+            <div class="home-intro-stat">
+              <dt>Search</dt>
+              <dd>{% if layout.show_search %}On{% else %}Off{% endif %}</dd>
             </div>
           </dl>
 
           {% if let Some(news) = news_spotlight %}
-          <section class="home-cover-issue">
-            <p class="section-kicker">Issue</p>
+          <section class="home-issue-card">
+            <p class="section-kicker">Current issue</p>
             <h2>{{ news.issue_label }}</h2>
-            {% if news.generated_label.len() > 0 %}
-            <p class="home-cover-issue-meta">Updated {{ news.generated_label }}</p>
-            {% endif %}
-            <p class="home-cover-issue-summary">{{ news.summary }}</p>
-            <a class="button button--primary" href="{{ news.url }}">Read the digest</a>
+            <p class="home-issue-summary">{{ news.summary }}</p>
+            <a class="button button--compact" href="{{ news.url }}">Read digest</a>
           </section>
           {% endif %}
+        </div>
+      </div>
+    </section>
+
+    <section class="panel note-web-panel">
+      <div class="section-head-inline section-head-inline--wide">
+        <div>
+          <p class="section-kicker">Markdown network</p>
+          <h2>Interaction web</h2>
+        </div>
+        <p class="section-copy">Each note is rendered as a Pretext-sized card. Hover to inspect local links, click to open the underlying markdown page.</p>
+      </div>
+
+      <div class="note-web-layout">
+        <div id="note-web-stage" class="note-web-stage" data-note-web data-graph-url="/graph.json"></div>
+        <aside class="note-web-detail" aria-live="polite">
+          <p class="section-kicker">Selected note</p>
+          <h3 id="note-web-detail-title">Hover a note</h3>
+          <p id="note-web-detail-copy">Connections light up here so the archive feels explorable instead of just sortable.</p>
+          <a id="note-web-detail-link" class="button button--compact" href="/" hidden>Open note</a>
         </aside>
       </div>
     </section>
 
-    <section class="home-editorial-grid">
-      {% if let Some(home_post) = home_post %}
-      <article class="panel home-feature-panel{% if home_post.content_classes.len() > 0 %} {{ home_post.content_classes }}{% endif %}">
-        <header class="home-feature-head">
-          <p class="section-kicker">Featured note</p>
-          <div class="post-meta" aria-label="Homepage note metadata">
-            <span class="post-meta-chip">{{ home_post.date_display }}</span>
-            {% if let Some(updated) = home_post.updated_display %}
-            <span class="post-meta-chip">Updated {{ updated }}</span>
-            {% endif %}
-            <span class="post-meta-chip">{{ home_post.reading_time_min }} min read</span>
-          </div>
-          {% if home_post.tags.len() > 0 %}
-          <div class="tag-wrap editorial-tag-wrap">
-            {% for tag in home_post.tags %}
-            <a class="tag" href="/tags/{{ tag.slug }}/">#{{ tag.name }}</a>
-            {% endfor %}
-          </div>
-          {% endif %}
-        </header>
-        <div class="home-feature-body note-body">{{ home_post.markdown_html|safe }}</div>
-      </article>
-      {% endif %}
-
-      {% if let Some(news) = news_spotlight %}
-      <aside class="panel news-pulse news-pulse--cover" aria-label="Latest news digest">
-        <div class="news-pulse-head">
-          <p class="section-kicker">News pulse</p>
-          <h2 data-pretext-target>{{ news.issue_label }}</h2>
-          {% if news.generated_label.len() > 0 %}
-          <p class="news-pulse-generated">Updated {{ news.generated_label }}</p>
-          {% endif %}
-        </div>
-        <p class="news-pulse-summary" data-pretext-target>{{ news.summary }}</p>
-        {% if news.top_cards.len() > 0 %}
-        <div class="news-pulse-list">
-          {% for card in news.top_cards %}
-          <article class="news-pulse-card" data-reveal>
-            <p class="news-pulse-card-badge">{{ card.badge }}</p>
-            <h3 class="news-pulse-card-title" data-pretext-target><a href="{{ card.url }}">{{ card.headline }}</a></h3>
-            <p class="news-pulse-card-deck">{{ card.deck }}</p>
-            <p class="news-pulse-card-meta">{{ card.meta }}</p>
-          </article>
-          {% endfor %}
-        </div>
-        {% endif %}
-      </aside>
-      {% endif %}
-    </section>
-
-    {% if featured_posts.len() > 0 %}
-    <section class="panel home-stream-panel">
-      <div class="section-head-inline section-head-inline--wide">
-        <div>
-          <p class="section-kicker">Editorial stream</p>
-          <h2>Recent writing</h2>
-        </div>
-        <p class="section-copy">Measured with Pretext, then packed into a responsive archive wall.</p>
-      </div>
-      <div class="signal-stream" data-pretext-masonry>
-        {% for post in featured_posts %}
-        <article class="signal-card" data-masonry-card data-reveal>
-          <div class="signal-card-meta">
-            <span class="signal-card-folder">{{ post.folder_label }}</span>
-            <span class="signal-card-date">{{ post.date_display }}</span>
-          </div>
-          <h2 class="signal-card-title" data-pretext-target data-masonry-title>
-            <a class="signal-card-title-link" href="{{ post.url }}">{% if let Some(icon) = post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}{{ post.title }}</a>
-          </h2>
-          <p class="signal-card-excerpt" data-pretext-target data-masonry-deck>{{ post.excerpt }}</p>
-          <div class="signal-card-footer">
-            <span>{{ post.reading_time_min }} min read</span>
-            <a href="{{ post.url }}">Open note ↗</a>
-          </div>
-        </article>
-        {% endfor %}
-      </div>
-    </section>
-    {% endif %}
-
-    <section class="home-meta-grid">
-      <section class="panel home-browser-panel">
+    <section class="home-secondary-grid">
+      {% if featured_posts.len() > 0 %}
+      <section class="panel home-list-panel">
         <div class="section-head-inline">
           <div>
-            <p class="section-kicker">Notebook index</p>
-            <h2>Browse selected notes</h2>
+            <p class="section-kicker">Recent writing</p>
+            <h2>Latest notes</h2>
           </div>
         </div>
-        <div class="home-browser-list">
-          {% for tab in layout.page_tabs %}
-          {% if loop.index <= 8 %}
-          <a class="home-browser-link{% if tab.active %} is-active{% endif %}" href="{{ tab.url }}">
-            <span class="home-browser-link-title">{{ tab.title }}</span>
-            <span class="home-browser-link-preview">{{ tab.preview }}</span>
-          </a>
+        <div class="home-list">
+          {% for post in featured_posts %}
+          {% if loop.index <= 6 %}
+          <article class="home-list-item">
+            <div class="home-list-item-meta">
+              <span>{{ post.folder_label }}</span>
+              <span>{{ post.date_display }}</span>
+            </div>
+            <h3><a href="{{ post.url }}">{% if let Some(icon) = post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}{{ post.title }}</a></h3>
+            <p>{{ post.excerpt }}</p>
+          </article>
           {% endif %}
           {% endfor %}
         </div>
       </section>
+      {% endif %}
 
-      <div class="home-atlas-grid">
+      <div class="home-side-panels">
         {% if folders.len() > 0 %}
         <section class="panel atlas-panel">
           <div class="section-head-inline">
             <div>
-              <p class="section-kicker">Structure</p>
-              <h2>Folder atlas</h2>
+              <p class="section-kicker">Folders</p>
+              <h2>Structure</h2>
             </div>
           </div>
           <div class="atlas-pill-wrap">
@@ -190,13 +117,15 @@
         <section class="panel atlas-panel">
           <div class="section-head-inline">
             <div>
-              <p class="section-kicker">Taxonomy</p>
-              <h2>Tag atlas</h2>
+              <p class="section-kicker">Tags</p>
+              <h2>Topics</h2>
             </div>
           </div>
           <div class="tag-wrap editorial-tag-wrap">
             {% for tag in tags %}
+            {% if loop.index <= 18 %}
             <a class="tag" href="/tags/{{ tag.slug }}/">#{{ tag.name }}{% if tag.count > 0 %} ({{ tag.count }}){% endif %}</a>
+            {% endif %}
             {% endfor %}
           </div>
         </section>
@@ -207,7 +136,5 @@
 {% endblock %}
 
 {% block extra_scripts %}
-  <script type="module" src="/assets/pretext-masonry.mjs?v={{ layout.asset_version }}"></script>
-  <script type="module" src="/assets/pretext-home-hero.mjs?v={{ layout.asset_version }}"></script>
-  <script defer src="/assets/editorial-motion.js?v={{ layout.asset_version }}"></script>
+  <script type="module" src="/assets/pretext-note-web.mjs?v={{ layout.asset_version }}"></script>
 {% endblock %}
