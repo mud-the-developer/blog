@@ -1,33 +1,49 @@
 {% extends "base.html" %}
 
 {% block extra_styles %}
-  <link rel="stylesheet" href="/assets/style-listing.css?v={{ layout.asset_version }}" />
+  <link rel="stylesheet" href="/assets/style-collection-editorial.css?v={{ layout.asset_version }}" />
 {% endblock %}
 
 {% block content %}
-  <section class="panel tag-hero content-shell content-shell--browse">
-    <p class="section-kicker">Tag Archive</p>
-    <h1>#{{ tag_name }}</h1>
-    <p class="post-meta">{{ posts.len() }} note{% if posts.len() != 1 %}s{% endif %} tagged with this topic</p>
-  </section>
+  <div class="site-main-stack site-main-stack--collection">
+    <section class="panel collection-hero">
+      <p class="section-kicker">Tag archive</p>
+      <h1 data-pretext-target>#{{ tag_name }}</h1>
+      <p class="collection-hero-copy" data-pretext-target>{{ posts.len() }} note{% if posts.len() != 1 %}s{% endif %} connected through this topic.</p>
+    </section>
 
-  <section class="post-list content-shell content-shell--browse">
-    <header class="section-head">
-      <p class="section-kicker">Browse</p>
-      <h2>Tagged Notes</h2>
-    </header>
-    {% for post in posts %}
-    <article class="panel post-item">
-      <div class="post-item-rail">
-        <p class="post-item-label">Published</p>
-        <p class="post-meta">{{ post.date_display }}{% if let Some(updated) = post.updated_display %} • updated {{ updated }}{% endif %} • {{ post.reading_time_min }} min read</p>
+    {% if posts.len() > 0 %}
+    <section class="panel content-block content-block--stream">
+      <div class="section-head-inline section-head-inline--wide">
+        <div>
+          <p class="section-kicker">Browse</p>
+          <h2>Tagged notes</h2>
+        </div>
+        <p class="section-copy" data-pretext-target>Each card is pre-measured and repacked so title and summary lengths can stay expressive without wrecking the rhythm of the page.</p>
       </div>
-      <div class="post-item-body">
-        <h3><a class="title-link" href="{{ post.url }}">{% if let Some(icon) = post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}{{ post.title }}</a></h3>
-        <p class="post-excerpt">{{ post.excerpt }}</p>
-        <p class="post-cta"><a class="post-cta-link" href="{{ post.url }}">Open Note →</a></p>
+      <div class="signal-stream" data-pretext-masonry>
+        {% for post in posts %}
+        <article class="signal-card" data-masonry-card>
+          <div class="signal-card-meta">
+            <span class="signal-card-folder">{{ post.folder_label }}</span>
+            <span class="signal-card-date">{{ post.date_display }}</span>
+          </div>
+          <h2 class="signal-card-title" data-pretext-target data-masonry-title>
+            <a class="signal-card-title-link" href="{{ post.url }}">{% if let Some(icon) = post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}{{ post.title }}</a>
+          </h2>
+          <p class="signal-card-excerpt" data-pretext-target data-masonry-deck>{{ post.excerpt }}</p>
+          <div class="signal-card-footer">
+            <span>{{ post.reading_time_min }} min read</span>
+            <a href="{{ post.url }}">Open note ↗</a>
+          </div>
+        </article>
+        {% endfor %}
       </div>
-    </article>
-    {% endfor %}
-  </section>
+    </section>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block extra_scripts %}
+  <script type="module" src="/assets/pretext-masonry.mjs?v={{ layout.asset_version }}"></script>
 {% endblock %}

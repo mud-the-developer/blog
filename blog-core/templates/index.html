@@ -1,90 +1,187 @@
 {% extends "base.html" %}
 
 {% block extra_styles %}
-  <link rel="stylesheet" href="/assets/style-listing.css?v={{ layout.asset_version }}" />
   <link rel="stylesheet" href="/assets/style-note-core.css?v={{ layout.asset_version }}" />
   {% if load_home_rich_css %}
   <link rel="stylesheet" href="/assets/style-note.css?v={{ layout.asset_version }}" />
   {% endif %}
-  <link rel="preload" href="/assets/style-home.css?v={{ layout.asset_version }}" as="style" />
-  <link
-    rel="stylesheet"
-    href="/assets/style-home.css?v={{ layout.asset_version }}"
-    media="print"
-    onload="this.media='all'"
-  />
-  <noscript><link rel="stylesheet" href="/assets/style-home.css?v={{ layout.asset_version }}" /></noscript>
+  <link rel="stylesheet" href="/assets/style-home-editorial.css?v={{ layout.asset_version }}" />
 {% endblock %}
 
 {% block content %}
-  {% if let Some(home_post) = home_post %}
-  <article class="panel note home-feature content-shell content-shell--reading{% if home_post.content_classes.len() > 0 %} {{ home_post.content_classes }}{% endif %}">
-    <header class="note-header home-feature-head">
-      <p class="section-kicker" data-pretext-target>Homepage Note</p>
-      <h1>{% if let Some(icon) = home_post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}<span class="note-title-text" data-pretext-target>{{ home_post.title }}</span></h1>
-      <div class="post-meta" aria-label="Homepage note metadata">
-        <span class="post-meta-chip" data-pretext-target>{{ home_post.date_display }}</span>
-        {% if let Some(updated) = home_post.updated_display %}
-        <span class="post-meta-chip" data-pretext-target>Updated {{ updated }}</span>
+  <div class="site-main-stack site-main-stack--home">
+    <section class="panel home-hero">
+      <div class="home-hero-copy">
+        <p class="section-kicker" data-pretext-target>Notebook redesign</p>
+        <h1 class="home-hero-title" data-pretext-target>{{ layout.site_title }}</h1>
+        {% if layout.site_description.len() > 0 %}
+        <p class="home-hero-deck" data-pretext-target>{{ layout.site_description }}</p>
         {% endif %}
-        <span class="post-meta-chip" data-pretext-target>{{ home_post.reading_time_min }} min read</span>
+
+        {% if let Some(home_post) = home_post %}
+        <div class="home-hero-meta" aria-label="Homepage note metadata">
+          <span class="post-meta-chip" data-pretext-target>{{ home_post.date_display }}</span>
+          {% if let Some(updated) = home_post.updated_display %}
+          <span class="post-meta-chip" data-pretext-target>Updated {{ updated }}</span>
+          {% endif %}
+          <span class="post-meta-chip" data-pretext-target>{{ home_post.reading_time_min }} min read</span>
+        </div>
+        {% if home_post.tags.len() > 0 %}
+        <div class="tag-wrap editorial-tag-wrap">
+          {% for tag in home_post.tags %}
+          <a class="tag" href="/tags/{{ tag.slug }}/">#{{ tag.name }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <div class="home-hero-note note-body{% if home_post.content_classes.len() > 0 %} {{ home_post.content_classes }}{% endif %}">
+          {{ home_post.markdown_html|safe }}
+        </div>
+        {% endif %}
+
+        <div class="hero-actions">
+          <a class="button button--primary" href="/news/">Open News Radar</a>
+          <a class="button" href="/graph/">Explore the graph</a>
+        </div>
       </div>
-      {% if home_post.tags.len() > 0 %}
-      <div class="tag-wrap">
-        {% for tag in home_post.tags %}
-        <a class="tag" href="/tags/{{ tag.slug }}/">#{{ tag.name }}</a>
+
+      <div class="home-hero-side">
+        <dl class="home-hero-stats" aria-label="Garden statistics">
+          <div class="home-hero-stat">
+            <dt data-pretext-target>Notes</dt>
+            <dd data-pretext-target>{{ total_notes }}</dd>
+          </div>
+          <div class="home-hero-stat">
+            <dt data-pretext-target>Tags</dt>
+            <dd data-pretext-target>{{ tags.len() }}</dd>
+          </div>
+          <div class="home-hero-stat">
+            <dt data-pretext-target>Folders</dt>
+            <dd data-pretext-target>{{ folders.len() }}</dd>
+          </div>
+          <div class="home-hero-stat">
+            <dt data-pretext-target>Graph</dt>
+            <dd data-pretext-target>{% if layout.show_graph_module %}Live{% else %}Off{% endif %}</dd>
+          </div>
+        </dl>
+
+        {% if let Some(news) = news_spotlight %}
+        <section class="news-pulse" aria-label="Latest news digest">
+          <div class="news-pulse-head">
+            <p class="section-kicker">News pulse</p>
+            <h2 data-pretext-target>{{ news.issue_label }}</h2>
+            {% if news.generated_label.len() > 0 %}
+            <p class="news-pulse-generated">Updated {{ news.generated_label }}</p>
+            {% endif %}
+          </div>
+          <p class="news-pulse-summary" data-pretext-target>{{ news.summary }}</p>
+          <div class="news-pulse-actions">
+            <a class="button button--primary button--compact" href="{{ news.url }}">Read current digest</a>
+            <a class="button button--compact" href="/news/">Digest hub</a>
+          </div>
+          {% if news.top_cards.len() > 0 %}
+          <div class="news-pulse-list">
+            {% for card in news.top_cards %}
+            <article class="news-pulse-card">
+              <p class="news-pulse-card-badge">{{ card.badge }}</p>
+              <h3 class="news-pulse-card-title" data-pretext-target><a href="{{ card.url }}">{{ card.headline }}</a></h3>
+              <p class="news-pulse-card-deck" data-pretext-target>{{ card.deck }}</p>
+              <p class="news-pulse-card-meta">{{ card.meta }}</p>
+            </article>
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% if news.archives.len() > 0 %}
+          <div class="news-pulse-archive">
+            <p class="news-pulse-archive-label">Recent issues</p>
+            <ul>
+              {% for archive in news.archives %}
+              <li><a href="{{ archive.url }}">{{ archive.date_label }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+        </section>
+        {% else %}
+        <section class="news-pulse news-pulse--empty">
+          <div class="news-pulse-head">
+            <p class="section-kicker">News pulse</p>
+            <h2 data-pretext-target>Daily AI digest</h2>
+          </div>
+          <p class="news-pulse-summary" data-pretext-target>Latest repo, paper, and community signals are published separately and linked back into the notebook.</p>
+          <div class="news-pulse-actions">
+            <a class="button button--primary button--compact" href="/news/">Open news</a>
+          </div>
+        </section>
+        {% endif %}
+      </div>
+    </section>
+
+    {% if featured_posts.len() > 0 %}
+    <section class="panel content-block content-block--stream">
+      <div class="section-head-inline section-head-inline--wide">
+        <div>
+          <p class="section-kicker">Signal stream</p>
+          <h2>Recent writing</h2>
+        </div>
+        <p class="section-copy" data-pretext-target>Pretext-powered cards measure headline and excerpt copy up front, then repack the grid like a lightweight editorial masonry engine.</p>
+      </div>
+      <div class="signal-stream" data-pretext-masonry>
+        {% for post in featured_posts %}
+        <article class="signal-card" data-masonry-card>
+          <div class="signal-card-meta">
+            <span class="signal-card-folder">{{ post.folder_label }}</span>
+            <span class="signal-card-date">{{ post.date_display }}</span>
+          </div>
+          <h2 class="signal-card-title" data-pretext-target data-masonry-title>
+            <a class="signal-card-title-link" href="{{ post.url }}">{% if let Some(icon) = post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}{{ post.title }}</a>
+          </h2>
+          <p class="signal-card-excerpt" data-pretext-target data-masonry-deck>{{ post.excerpt }}</p>
+          <div class="signal-card-footer">
+            <span>{{ post.reading_time_min }} min read</span>
+            <a href="{{ post.url }}">Open note ↗</a>
+          </div>
+        </article>
         {% endfor %}
       </div>
+    </section>
+    {% endif %}
+
+    <div class="home-bottom-grid">
+      {% if folders.len() > 0 %}
+      <section class="panel atlas-panel">
+        <div class="section-head-inline">
+          <div>
+            <p class="section-kicker">Structure</p>
+            <h2>Folder atlas</h2>
+          </div>
+        </div>
+        <div class="atlas-pill-wrap">
+          {% for folder in folders %}
+          <span class="atlas-pill">{{ folder.name }}</span>
+          {% endfor %}
+        </div>
+      </section>
       {% endif %}
-    </header>
 
-    <div class="note-body home-feature-body">{{ home_post.markdown_html|safe }}</div>
-
-    <dl class="home-feature-stats" aria-label="Garden statistics">
-      <div class="home-feature-stat">
-        <dt data-pretext-target>Notes</dt>
-        <dd data-pretext-target>{{ total_notes }}</dd>
-      </div>
-      <div class="home-feature-stat">
-        <dt data-pretext-target>Tags</dt>
-        <dd data-pretext-target>{{ tags.len() }}</dd>
-      </div>
-      <div class="home-feature-stat">
-        <dt data-pretext-target>Graph</dt>
-        <dd data-pretext-target>{% if layout.show_graph_module %}On{% else %}Off{% endif %}</dd>
-      </div>
-      <div class="home-feature-stat">
-        <dt data-pretext-target>Folders</dt>
-        <dd data-pretext-target>{{ folders.len() }}</dd>
-      </div>
-    </dl>
-  </article>
-  {% endif %}
-
-  {% if folders.len() > 0 %}
-  <section id="folders" class="panel folder-list-panel content-shell content-shell--reading" aria-label="Folders">
-    <header class="section-head">
-      <h2>Folders</h2>
-    </header>
-    <div class="folder-chip-wrap">
-    {% for folder in folders %}
-      <span class="folder-chip">{{ folder.name }}</span>
-    {% endfor %}
+      {% if tags.len() > 0 %}
+      <section class="panel atlas-panel">
+        <div class="section-head-inline">
+          <div>
+            <p class="section-kicker">Taxonomy</p>
+            <h2>Tag atlas</h2>
+          </div>
+        </div>
+        <div class="tag-wrap editorial-tag-wrap">
+          {% for tag in tags %}
+          <a class="tag" href="/tags/{{ tag.slug }}/">#{{ tag.name }}{% if tag.count > 0 %} ({{ tag.count }}){% endif %}</a>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
     </div>
-  </section>
-  {% endif %}
+  </div>
+{% endblock %}
 
-  {% if tags.len() > 0 %}
-  <section class="panel tag-cloud-panel content-shell content-shell--reading">
-    <div class="section-head-inline">
-      <p class="section-kicker">Taxonomy</p>
-      <h2>Tags</h2>
-    </div>
-    <div class="tag-wrap">
-      {% for tag in tags %}
-      <a class="tag" href="/tags/{{ tag.slug }}/">#{{ tag.name }}{% if tag.count > 0 %} ({{ tag.count }}){% endif %}</a>
-      {% endfor %}
-    </div>
-  </section>
-  {% endif %}
+{% block extra_scripts %}
+  <script type="module" src="/assets/pretext-masonry.mjs?v={{ layout.asset_version }}"></script>
 {% endblock %}

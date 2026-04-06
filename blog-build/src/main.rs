@@ -76,7 +76,6 @@ fn main() -> Result<()> {
                 backlinks_empty: cli.backlinks_empty,
             },
             dataviewjs_mode: parse_dataviewjs_mode(&cli.dataviewjs_mode),
-            ..SiteConfig::default()
         },
         publish_policy: parse_publish_policy(&cli.publish_policy),
     };

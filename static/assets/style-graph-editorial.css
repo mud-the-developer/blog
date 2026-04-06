@@ -1,0 +1,21 @@
+.site-main-stack--graph {
+  gap: 24px;
+}
+
+.graph-hero {
+  display: grid;
+  gap: 16px;
+}
+
+.graph-hero h1 {
+  font-size: clamp(2.8rem, 4vw, 4.8rem);
+}
+
+.graph-panel--editorial {
+  display: grid;
+  gap: 18px;
+}
+
+.graph-panel--editorial .graph-stage {
+  min-height: 640px;
+}

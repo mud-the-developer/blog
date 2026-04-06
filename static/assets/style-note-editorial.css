@@ -1,0 +1,120 @@
+.note-shell {
+  display: grid;
+  gap: 26px;
+}
+
+.note-hero {
+  display: grid;
+  gap: 16px;
+}
+
+.note-hero-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.note-hero-title {
+  margin: 0;
+  font-family: var(--editorial-serif);
+  font-size: clamp(2.8rem, 4vw, 4.8rem);
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+}
+
+.note-hero-deck {
+  max-width: 34ch;
+  margin: 0;
+  color: var(--editorial-muted-strong);
+  font-size: clamp(1.06rem, 0.98rem + 0.4vw, 1.24rem);
+  line-height: 1.48;
+}
+
+.note-route {
+  margin: 0;
+  padding: 0 14px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--editorial-border-strong) 84%, transparent);
+  background: color-mix(in srgb, var(--editorial-surface-soft) 84%, transparent);
+}
+
+.note-route--standalone {
+  width: fit-content;
+}
+
+.note-content-frame {
+  display: grid;
+  gap: 24px;
+}
+
+.note-body {
+  max-width: 68ch;
+}
+
+.note-body h2,
+.note-body h3,
+.note-body h4 {
+  scroll-margin-top: 120px;
+}
+
+.backlinks {
+  display: grid;
+  gap: 16px;
+  max-width: 72ch;
+  padding-top: 8px;
+}
+
+.backlinks > h2,
+.backlinks > p {
+  margin: 0;
+}
+
+.backlinks ul {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.backlinks li {
+  padding: 18px;
+  border-radius: 22px;
+  border: 1px solid color-mix(in srgb, var(--editorial-border-strong) 78%, transparent);
+  background: color-mix(in srgb, var(--editorial-surface-soft) 82%, transparent);
+}
+
+.backlinks-item-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.backlinks-item-head a {
+  font-family: var(--editorial-serif);
+  font-size: 1.15rem;
+  line-height: 1.15;
+  text-decoration: none;
+}
+
+.backlinks-item-date {
+  color: var(--editorial-muted);
+  font-size: 0.88rem;
+}
+
+@media (max-width: 760px) {
+  .note-hero-top,
+  .backlinks-item-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .note-hero-title {
+    font-size: clamp(2.4rem, 11vw, 3.6rem);
+  }
+}

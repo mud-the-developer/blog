@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="robots" content="index,follow" />
-  <meta name="theme-color" content="#eee6d8" />
+  <meta name="theme-color" content="#0c111b" />
   <title>{{ layout.page_title }}</title>
   <meta name="description" content="{{ layout.page_description }}" />
   <link rel="canonical" href="{{ layout.canonical_url }}" />
@@ -55,6 +55,7 @@
   {% if layout.show_side_graph %}
   <link rel="stylesheet" href="/assets/style-graph.css?v={{ layout.asset_version }}" />
   {% endif %}
+  <link rel="stylesheet" href="/assets/style-editorial.css?v={{ layout.asset_version }}" />
   {% block extra_styles %}{% endblock %}
   {% if layout.obsidian_theme_css_url.len() > 0 %}
   <link rel="stylesheet" href="{{ layout.obsidian_theme_css_url }}" />
@@ -76,53 +77,28 @@
 
 <body>
   <a href="#main-content" class="sr-only skip-link">Skip to content</a>
+  <div class="site-ambient" aria-hidden="true">
+    <div class="site-ambient-glow site-ambient-glow--left"></div>
+    <div class="site-ambient-glow site-ambient-glow--right"></div>
+    <div class="site-ambient-grid"></div>
+  </div>
   <div class="site-shell">
     <header class="site-header">
       <div class="site-brand">
-        <p class="site-kicker" data-pretext-target>Signal Desk</p>
-        <p class="site-title"><a class="site-title-link" href="/">{{ layout.site_title }}</a></p>
+        <a class="site-brand-link" href="/">
+          <span class="site-kicker" data-pretext-target>Connected notes · research journal · news radar</span>
+          <span class="site-title" data-pretext-target>{{ layout.site_title }}</span>
+        </a>
         {% if layout.site_description.len() > 0 %}
         <p class="site-tagline" data-pretext-target>{{ layout.site_description }}</p>
         {% endif %}
       </div>
-      <div class="site-actions">
+      <div class="site-header-actions">
         <nav class="site-nav" aria-label="Main navigation">
-          <a class="site-nav-icon-link" href="/" aria-label="Blog Home" title="Blog Home">
-            <svg class="site-nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path d="M3 10.5 12 3l9 7.5"></path>
-              <path d="M5 9.5V21h14V9.5"></path>
-              <path d="M9.5 21v-6h5v6"></path>
-            </svg>
-            <span class="sr-only">Blog Home</span>
-          </a>
-          <a class="site-nav-icon-link" href="/rss.xml" aria-label="RSS Feed" title="RSS Feed">
-            <svg class="site-nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <circle cx="6.5" cy="17.5" r="1.8"></circle>
-              <path d="M5 11a8 8 0 0 1 8 8"></path>
-              <path d="M5 6a13 13 0 0 1 13 13"></path>
-            </svg>
-            <span class="sr-only">RSS Feed</span>
-          </a>
-          <a class="site-nav-icon-link" href="/graph/" aria-label="Graph View" title="Graph View">
-            <svg class="site-nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <circle cx="5.5" cy="7" r="2"></circle>
-              <circle cx="18.5" cy="6" r="2"></circle>
-              <circle cx="12" cy="18" r="2"></circle>
-              <path d="M7.4 7.6 10.4 16"></path>
-              <path d="M16.6 6.6 13.6 16"></path>
-              <path d="M7.5 7h9"></path>
-            </svg>
-            <span class="sr-only">Graph View</span>
-          </a>
-          <a class="site-nav-icon-link" href="/news/" aria-label="News Radar" title="News Radar">
-            <svg class="site-nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <rect x="4.5" y="5" width="15" height="14" rx="2"></rect>
-              <path d="M8 9h8"></path>
-              <path d="M8 12h8"></path>
-              <path d="M8 15h5"></path>
-            </svg>
-            <span class="sr-only">News Radar</span>
-          </a>
+          <a class="site-nav-link" href="/">Home</a>
+          <a class="site-nav-link" href="/news/">News Radar</a>
+          <a class="site-nav-link" href="/graph/">Graph</a>
+          <a class="site-nav-link" href="/rss.xml">RSS</a>
           <button id="theme-mode-toggle" class="site-nav-icon-link site-nav-icon-button" type="button"
             aria-label="Switch to dark mode" title="Switch to dark mode">
             <svg class="site-nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -134,37 +110,58 @@
       </div>
     </header>
 
-    <div class="site-layout">
-      <aside class="panel page-tabs" aria-label="Page tabs">
+    <div class="site-layout{% if layout.show_side_graph %} site-layout--with-context{% endif %}">
+      <aside class="site-rail site-rail--library" aria-label="Site library">
         {% if layout.show_search %}
-        <div class="site-search">
-          <label class="sr-only" for="note-search-input">Search notes</label>
-          <input id="note-search-input" name="q" type="search" placeholder="{{ layout.search_placeholder }}"
-            autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false"
-            aria-controls="note-search-results" aria-haspopup="listbox" hx-get="/api/search/view?limit=8"
-            hx-trigger="focus, input changed delay:120ms, search" hx-target="#note-search-results" hx-swap="innerHTML"
-            hx-push-url="false" />
-          <p id="note-search-shortcut" class="search-shortcut" aria-hidden="true"></p>
-          <div id="note-search-results" class="search-results" role="listbox" hidden></div>
-        </div>
+        <section class="rail-panel rail-panel--search">
+          <div class="rail-panel-head rail-panel-head--compact">
+            <p class="rail-kicker">Search</p>
+          </div>
+          <div class="site-search">
+            <label class="sr-only" for="note-search-input">Search notes</label>
+            <input id="note-search-input" name="q" type="search" placeholder="{{ layout.search_placeholder }}"
+              autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false"
+              aria-controls="note-search-results" aria-haspopup="listbox" hx-get="/api/search/view?limit=8"
+              hx-trigger="focus, input changed delay:120ms, search" hx-target="#note-search-results" hx-swap="innerHTML"
+              hx-push-url="false" />
+            <p id="note-search-shortcut" class="search-shortcut" aria-hidden="true"></p>
+            <div id="note-search-results" class="search-results" role="listbox" hidden></div>
+          </div>
+        </section>
         {% endif %}
-        <details id="page-tabs-details" class="page-tabs-collapsible" open>
-          <summary class="page-tabs-head">
-            <h2 id="page-tabs-heading" data-pretext-target>{{ layout.pages_heading }}</h2>
-            <span class="page-tabs-toggle" aria-hidden="true">▾</span>
-          </summary>
-          <nav id="filetree-root" class="page-tabs-list" aria-labelledby="page-tabs-heading">
+
+        <section class="rail-panel rail-panel--manifest">
+          <div class="rail-panel-head rail-panel-head--compact">
+            <p class="rail-kicker" data-pretext-target>Format</p>
+          </div>
+          <p class="rail-copy" data-pretext-target>Markdown-first posts and daily AI news digests, remixed into an editorial reading surface with live graph navigation.</p>
+          <div class="rail-quicklinks" aria-label="Quick links">
+            <a class="rail-quicklink" href="/news/">Latest digest</a>
+            <a class="rail-quicklink" href="/graph/">Knowledge map</a>
+            <a class="rail-quicklink" href="{{ layout.site_url }}">Canonical URL</a>
+          </div>
+        </section>
+
+        <section class="rail-panel rail-panel--library-index">
+          <div class="rail-panel-head">
+            <div>
+              <p class="rail-kicker" data-pretext-target>{{ layout.pages_heading }}</p>
+              <h2 class="rail-title">Browse the notebook</h2>
+            </div>
+            <span class="rail-count">{{ layout.page_tabs.len() }}</span>
+          </div>
+          <nav id="filetree-root" class="page-tabs-list" aria-label="Published notes">
             {% for tab in layout.page_tabs %}
             <a class="page-tab{% if tab.active %} is-active{% endif %}" href="{{ tab.url }}">
-              <span class="page-tab-title">
-                {% if let Some(icon) = tab.note_icon %}<span class="note-icon">{{ icon }}</span>{% endif %}
-                {{ tab.title }}
+              <span class="page-tab-title-row">
+                {% if let Some(icon) = tab.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}
+                <span class="page-tab-title" data-pretext-target>{{ tab.title }}</span>
               </span>
               <span class="page-tab-preview">{{ tab.preview }}</span>
             </a>
             {% endfor %}
           </nav>
-        </details>
+        </section>
       </aside>
 
       <main class="site-main" id="main-content">
@@ -172,54 +169,63 @@
       </main>
 
       {% if layout.show_side_graph %}
-      <aside class="panel live-graph" aria-label="Graph preview">
+      <aside class="site-rail site-rail--context" aria-label="Context rail">
         {% if layout.show_graph_module %}
-        <div class="live-graph-head">
-          <h2>Graph</h2>
-        </div>
-        <div class="graph-stage-wrap graph-stage-wrap--side">
-          <div id="side-graph-stage" class="graph-stage graph-stage--side">
-            <svg id="side-graph-svg" width="540" height="420" viewBox="0 0 540 420" aria-label="Site graph preview">
-              <g id="side-graph-link-layer"></g>
-              <g id="side-graph-node-layer"></g>
-            </svg>
-          </div>
-          <p id="side-graph-status" class="graph-status" role="status" aria-live="polite">Loading graph preview…</p>
-          <div class="graph-zoom-control graph-zoom-control--side">
-            <button id="side-graph-reset" class="graph-icon-button graph-zoom-button" type="button"
-              aria-label="Reset graph view" title="Reset graph view">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M20 11a8 8 0 1 0-2.3 5.7"></path>
-                <path d="M20 4v7h-7"></path>
-              </svg>
-              <span class="sr-only">Reset graph view</span>
-            </button>
-            <div class="graph-zoom-buttons" role="group" aria-label="Graph zoom controls">
-              <button id="side-graph-zoom-in" class="graph-icon-button graph-zoom-button" type="button"
-                aria-label="Zoom in" title="Zoom in">
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M12 5v14"></path>
-                  <path d="M5 12h14"></path>
-                </svg>
-                <span class="sr-only">Zoom in</span>
-              </button>
-              <button id="side-graph-zoom-out" class="graph-icon-button graph-zoom-button" type="button"
-                aria-label="Zoom out" title="Zoom out">
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M5 12h14"></path>
-                </svg>
-                <span class="sr-only">Zoom out</span>
-              </button>
+        <section class="rail-panel rail-panel--graph">
+          <div class="rail-panel-head">
+            <div>
+              <p class="rail-kicker">Live graph</p>
+              <h2 class="rail-title">Context map</h2>
             </div>
           </div>
-        </div>
-        <p id="side-graph-detail" class="graph-detail graph-detail--side" role="status" aria-live="polite">
-          Hover nodes to inspect relationships.
-        </p>
+          <div class="graph-stage-wrap graph-stage-wrap--side">
+            <div id="side-graph-stage" class="graph-stage graph-stage--side">
+              <svg id="side-graph-svg" width="540" height="420" viewBox="0 0 540 420" aria-label="Site graph preview">
+                <g id="side-graph-link-layer"></g>
+                <g id="side-graph-node-layer"></g>
+              </svg>
+            </div>
+            <p id="side-graph-status" class="graph-status" role="status" aria-live="polite">Loading graph preview…</p>
+            <div class="graph-zoom-control graph-zoom-control--side">
+              <button id="side-graph-reset" class="graph-icon-button graph-zoom-button" type="button"
+                aria-label="Reset graph view" title="Reset graph view">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M20 11a8 8 0 1 0-2.3 5.7"></path>
+                  <path d="M20 4v7h-7"></path>
+                </svg>
+                <span class="sr-only">Reset graph view</span>
+              </button>
+              <div class="graph-zoom-buttons" role="group" aria-label="Graph zoom controls">
+                <button id="side-graph-zoom-in" class="graph-icon-button graph-zoom-button" type="button"
+                  aria-label="Zoom in" title="Zoom in">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 5v14"></path>
+                    <path d="M5 12h14"></path>
+                  </svg>
+                  <span class="sr-only">Zoom in</span>
+                </button>
+                <button id="side-graph-zoom-out" class="graph-icon-button graph-zoom-button" type="button"
+                  aria-label="Zoom out" title="Zoom out">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M5 12h14"></path>
+                  </svg>
+                  <span class="sr-only">Zoom out</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <p id="side-graph-detail" class="graph-detail graph-detail--side" role="status" aria-live="polite">
+            Hover nodes to inspect relationships.
+          </p>
+        </section>
         {% endif %}
+
         {% if layout.toc_items.len() > 0 %}
-        <section class="toc-panel" aria-label="Table of contents">
-          <h3>{{ layout.toc_heading }}</h3>
+        <section class="rail-panel toc-panel" aria-label="Table of contents">
+          <div class="rail-panel-head rail-panel-head--compact">
+            <p class="rail-kicker">On this page</p>
+            <h2 class="rail-title">{{ layout.toc_heading }}</h2>
+          </div>
           <nav class="toc-list">
             {% for item in layout.toc_items %}
             <a class="toc-link toc-depth-{{ item.depth }}" href="#{{ item.id }}">{{ item.title }}</a>
@@ -232,7 +238,15 @@
     </div>
 
     <footer class="site-footer">
-      <p>{{ layout.site_title }} • <a href="{{ layout.site_url }}">{{ layout.site_url }}</a></p>
+      <div>
+        <p class="site-footer-title">{{ layout.site_title }}</p>
+        <p class="site-footer-copy">Static notes, graph-native browsing, and daily signal summaries.</p>
+      </div>
+      <div class="site-footer-links">
+        <a href="{{ layout.site_url }}">{{ layout.site_url }}</a>
+        <a href="/rss.xml">RSS</a>
+        <a href="/news/">News</a>
+      </div>
     </footer>
   </div>
 

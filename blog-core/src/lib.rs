@@ -277,28 +277,18 @@ impl Default for BuildConfig {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum PublishPolicy {
+    #[default]
     OptIn,
     Permissive,
 }
 
-impl Default for PublishPolicy {
-    fn default() -> Self {
-        Self::OptIn
-    }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum DataviewJsMode {
+    #[default]
     Disabled,
     TagPages,
-}
-
-impl Default for DataviewJsMode {
-    fn default() -> Self {
-        Self::Disabled
-    }
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -614,7 +604,10 @@ struct PostCard {
     note_icon: Option<String>,
     title: String,
     url: String,
+    description: String,
     excerpt: String,
+    folder_label: String,
+    path_label: String,
     date_display: String,
     updated_display: Option<String>,
     reading_time_min: usize,
@@ -623,8 +616,6 @@ struct PostCard {
 
 #[derive(Debug, Clone)]
 struct HomePostFeature {
-    note_icon: Option<String>,
-    title: String,
     markdown_html: String,
     date_display: String,
     updated_display: Option<String>,
@@ -684,6 +675,8 @@ struct IndexTemplate {
     home_post: Option<HomePostFeature>,
     load_home_rich_css: bool,
     total_notes: usize,
+    featured_posts: Vec<PostCard>,
+    news_spotlight: Option<HomeNewsSpotlight>,
     tags: Vec<TagEntry>,
     folders: Vec<FolderSummary>,
 }
@@ -721,6 +714,30 @@ struct NotFoundTemplate {
     layout: LayoutContext,
 }
 
+#[derive(Debug, Clone, Default, Deserialize)]
+struct NewsSpotlightCard {
+    #[serde(default)]
+    badge: String,
+    #[serde(default)]
+    headline: String,
+    #[serde(default)]
+    url: String,
+    #[serde(default)]
+    deck: String,
+    #[serde(default)]
+    meta: String,
+}
+
+#[derive(Debug, Clone)]
+struct HomeNewsSpotlight {
+    issue_label: String,
+    generated_label: String,
+    summary: String,
+    url: String,
+    top_cards: Vec<NewsSpotlightCard>,
+    archives: Vec<NewsArchiveEntry>,
+}
+
 #[derive(Template)]
 #[template(path = "missing-note.html")]
 struct MissingNoteTemplate {
@@ -732,9 +749,15 @@ struct MissingNoteTemplate {
 #[derive(Debug, Clone, Default, Deserialize)]
 struct NewsHubData {
     #[serde(default)]
+    generated_label: String,
+    #[serde(default)]
+    issue_label: String,
+    #[serde(default)]
     summary: String,
     #[serde(default)]
     digest: NewsDigestLink,
+    #[serde(default)]
+    top_cards: Vec<NewsSpotlightCard>,
     #[serde(default)]
     archives: Vec<NewsArchiveEntry>,
 }
@@ -1052,13 +1075,23 @@ fn render_index(
 
     let total_notes = visible_posts.len();
     let home_post = visible_posts.iter().copied().find(|post| post.is_home);
+    let featured_posts = visible_posts
+        .iter()
+        .copied()
+        .filter(|post| !post.is_home)
+        .take(8)
+        .map(post_to_card)
+        .collect();
     let folders = build_folder_summaries(posts);
+    let news_spotlight = load_generated_news_hub_data(posts)?.and_then(build_home_news_spotlight);
 
     let template = IndexTemplate {
         layout,
         home_post: home_post.map(home_post_to_feature),
         load_home_rich_css: home_post.is_some_and(|post| post.has_rich_note_styles),
         total_notes,
+        featured_posts,
+        news_spotlight,
         tags: tags.to_vec(),
         folders,
     };
@@ -1453,7 +1486,7 @@ fn file_tree_folder_icons(folder_name: &str) -> (&'static str, &'static str) {
         .split(|ch: char| !ch.is_ascii_alphanumeric())
         .filter(|token| !token.is_empty())
         .collect::<Vec<_>>();
-    let has = |needle: &str| tokens.iter().any(|token| *token == needle);
+    let has = |needle: &str| tokens.contains(&needle);
 
     if has("workflow") || has("workflows") || key == "gh-workflows" {
         return ("folder-gh-workflows.svg", "folder-gh-workflows-open.svg");
@@ -1625,7 +1658,7 @@ fn file_tree_note_icon(file_name: &str) -> &'static str {
         .split(|ch: char| !ch.is_ascii_alphanumeric())
         .filter(|token| !token.is_empty())
         .collect::<Vec<_>>();
-    let has = |needle: &str| tokens.iter().any(|token| *token == needle);
+    let has = |needle: &str| tokens.contains(&needle);
 
     if normalized == "readme.md" || stem == "readme" {
         return "readme.svg";
@@ -2288,18 +2321,18 @@ fn collect_markdown_files(content_dir: &Path) -> Result<Vec<PathBuf>> {
 }
 
 fn split_frontmatter(raw: &str) -> Option<(&str, &str)> {
-    if raw.starts_with("---\n") {
-        if let Some(end) = raw[4..].find("\n---\n") {
-            let frontmatter = &raw[4..4 + end];
-            let body = &raw[4 + end + 5..];
+    if let Some(stripped) = raw.strip_prefix("---\n") {
+        if let Some(end) = stripped.find("\n---\n") {
+            let frontmatter = &stripped[..end];
+            let body = &stripped[end + 5..];
             return Some((frontmatter, body));
         }
     }
 
-    if raw.starts_with("---\r\n") {
-        if let Some(end) = raw[5..].find("\r\n---\r\n") {
-            let frontmatter = &raw[5..5 + end];
-            let body = &raw[5 + end + 8..];
+    if let Some(stripped) = raw.strip_prefix("---\r\n") {
+        if let Some(end) = stripped.find("\r\n---\r\n") {
+            let frontmatter = &stripped[..end];
+            let body = &stripped[end + 8..];
             return Some((frontmatter, body));
         }
     }
@@ -2515,7 +2548,7 @@ fn extension_matches(target: &str, extensions: &[&str]) -> bool {
         .unwrap_or(target.as_str())
         .trim_end_matches('.');
     let ext = path.rsplit('.').next().unwrap_or(path);
-    extensions.iter().any(|item| ext == *item)
+    extensions.contains(&ext)
 }
 
 fn build_embed_asset_url(target_raw: &str, heading: Option<&str>) -> String {
@@ -2591,8 +2624,7 @@ fn humanize_missing_note_slug(slug: &str) -> String {
         .split('/')
         .next_back()
         .unwrap_or(slug)
-        .replace('-', " ")
-        .replace('_', " ");
+        .replace(['-', '_'], " ");
     let mut words = tail
         .split_whitespace()
         .map(|word| {
@@ -3164,10 +3196,7 @@ fn parse_dataview_query(
     Some((kind, source, options))
 }
 
-fn dataview_filter_value_for_field<'a>(
-    entry: &'a DataviewMatch,
-    field: DataviewFilterField,
-) -> Vec<&'a str> {
+fn dataview_filter_value_for_field(entry: &DataviewMatch, field: DataviewFilterField) -> Vec<&str> {
     match field {
         DataviewFilterField::Title => vec![entry.title.as_str()],
         DataviewFilterField::Tag => entry.tags.iter().map(|tag| tag.as_str()).collect(),
@@ -4190,7 +4219,10 @@ fn post_to_card(post: &Post) -> PostCard {
         note_icon: post.note_icon.clone(),
         title: post.title.clone(),
         url: format!("/notes/{}/", post.slug),
+        description: post.description.clone(),
         excerpt: post.excerpt.clone(),
+        folder_label: display_section_name_from_slug(&post.slug),
+        path_label: post.source_rel_path.clone(),
         date_display: post
             .date
             .map(|date| date.format("%Y-%m-%d").to_string())
@@ -4211,8 +4243,6 @@ fn post_to_card(post: &Post) -> PostCard {
 
 fn home_post_to_feature(post: &Post) -> HomePostFeature {
     HomePostFeature {
-        note_icon: post.note_icon.clone(),
-        title: post.title.clone(),
         markdown_html: post.markdown_html.clone(),
         date_display: post
             .date
@@ -4231,6 +4261,84 @@ fn home_post_to_feature(post: &Post) -> HomePostFeature {
             .collect(),
         content_classes: post.content_classes.join(" "),
     }
+}
+
+fn build_home_news_spotlight(news: NewsHubData) -> Option<HomeNewsSpotlight> {
+    let url = resolve_news_digest_url(&news);
+    let summary = if news.summary.trim().is_empty() {
+        "Daily repo, paper, and community signal digest.".to_string()
+    } else {
+        news.summary.trim().to_string()
+    };
+    let issue_label = if news.issue_label.trim().is_empty() {
+        news.archives
+            .first()
+            .map(|entry| entry.date_label.clone())
+            .filter(|label| !label.trim().is_empty())
+            .unwrap_or_else(|| "Current issue".to_string())
+    } else {
+        news.issue_label.trim().to_string()
+    };
+    let generated_label = news.generated_label.trim().to_string();
+    let top_cards = news
+        .top_cards
+        .into_iter()
+        .filter(|card| !card.url.trim().is_empty() && !card.headline.trim().is_empty())
+        .take(3)
+        .collect::<Vec<_>>();
+    let archives = news.archives.into_iter().take(4).collect::<Vec<_>>();
+
+    if url.trim().is_empty() && summary.trim().is_empty() && top_cards.is_empty() {
+        return None;
+    }
+
+    Some(HomeNewsSpotlight {
+        issue_label,
+        generated_label,
+        summary,
+        url,
+        top_cards,
+        archives,
+    })
+}
+
+fn resolve_news_digest_url(news: &NewsHubData) -> String {
+    if !news.digest.url.trim().is_empty() {
+        return news.digest.url.trim().to_string();
+    }
+
+    news.archives
+        .first()
+        .map(|entry| entry.url.trim().to_string())
+        .filter(|url| !url.is_empty())
+        .unwrap_or_else(|| "/news/".to_string())
+}
+
+fn display_section_name_from_slug(slug: &str) -> String {
+    slug.split('/')
+        .next()
+        .filter(|segment| !segment.trim().is_empty() && *segment != slug)
+        .map(humanize_slug_segment)
+        .unwrap_or_else(|| "Note".to_string())
+}
+
+fn humanize_slug_segment(segment: &str) -> String {
+    segment
+        .split(['-', '_'])
+        .filter(|part| !part.trim().is_empty())
+        .map(|part| {
+            let mut characters = part.chars();
+            match characters.next() {
+                Some(first) => {
+                    let mut label = first.to_uppercase().collect::<String>();
+                    label.push_str(&characters.as_str().to_lowercase());
+                    label
+                }
+                None => String::new(),
+            }
+        })
+        .collect::<Vec<_>>()
+        .join(" ")
 }
 
 fn is_news_digest_post(post: &Post) -> bool {
@@ -4262,6 +4370,7 @@ fn build_folder_summaries(posts: &[Post]) -> Vec<FolderSummary> {
         .collect()
 }
 
+#[allow(clippy::too_many_arguments)]
 fn website_layout(
     config: &BuildConfig,
     posts: &[Post],
@@ -4344,9 +4453,19 @@ fn normalize_page_description(value: String, fallback: &str) -> String {
 }
 
 fn build_page_tabs(posts: &[Post], page_path: &str) -> Vec<PageTab> {
-    posts
+    let mut visible_posts = posts
         .iter()
         .filter(|post| !post.hidden && !is_news_digest_post(post))
+        .collect::<Vec<_>>();
+
+    visible_posts.sort_by(|a, b| match (a.is_home, b.is_home) {
+        (true, false) => Ordering::Less,
+        (false, true) => Ordering::Greater,
+        _ => sort_posts_by_recency(a, b),
+    });
+
+    visible_posts
+        .into_iter()
         .map(|post| {
             let url = format!("/notes/{}/", post.slug);
             PageTab {
@@ -5176,7 +5295,7 @@ fn parse_frontmatter_metatags(raw: Option<&YamlValue>) -> Vec<MetaTag> {
 fn collect_metatags(value: &YamlValue, tags: &mut Vec<MetaTag>) {
     match value {
         YamlValue::String(raw) => {
-            for token in raw.split(|ch| ch == ',' || ch == '\n') {
+            for token in raw.split([',', '\n']) {
                 let token = token.trim();
                 if token.is_empty() {
                     continue;
@@ -6377,6 +6496,30 @@ Not published.
             "export const fixture = true;\n",
         );
         write_text(
+            &static_dir.join("assets/pretext-masonry.mjs"),
+            "export const fixture = true;\n",
+        );
+        write_text(
+            &static_dir.join("assets/style-editorial.css"),
+            ":root { --fixture-editorial: 1; }\n",
+        );
+        write_text(
+            &static_dir.join("assets/style-home-editorial.css"),
+            ".fixture-home { display: block; }\n",
+        );
+        write_text(
+            &static_dir.join("assets/style-note-editorial.css"),
+            ".fixture-note { display: block; }\n",
+        );
+        write_text(
+            &static_dir.join("assets/style-collection-editorial.css"),
+            ".fixture-collection { display: block; }\n",
+        );
+        write_text(
+            &static_dir.join("assets/style-graph-editorial.css"),
+            ".fixture-graph { display: block; }\n",
+        );
+        write_text(
             &static_dir.join("_headers"),
             "/*\n  X-Robots-Tag: index, follow\n",
         );
@@ -6423,6 +6566,14 @@ Not published.
         assert!(output_dir.join("local-graph/isolated.json").exists());
         assert!(output_dir.join("assets/pretext-runtime.mjs").exists());
         assert!(output_dir.join("assets/vendor/pretext/layout.mjs").exists());
+        assert!(output_dir.join("assets/pretext-masonry.mjs").exists());
+        assert!(output_dir.join("assets/style-editorial.css").exists());
+        assert!(output_dir.join("assets/style-home-editorial.css").exists());
+        assert!(output_dir.join("assets/style-note-editorial.css").exists());
+        assert!(output_dir
+            .join("assets/style-collection-editorial.css")
+            .exists());
+        assert!(output_dir.join("assets/style-graph-editorial.css").exists());
         assert!(output_dir.join("tags/architecture/index.html").exists());
         assert!(!output_dir.join("notes/draft-note/index.html").exists());
         assert!(!output_dir.join("notes/hidden-note/index.html").exists());
@@ -6445,7 +6596,9 @@ Not published.
         assert!(index_html.contains(":root{--note-accent:#2c6fa8;}"));
         assert!(index_html.contains(r#"[data-theme="dark"]{--bg:#101820;--text:#e7edf4;}"#));
         assert!(index_html.contains(r#"src="/assets/pretext-runtime.mjs?v="#));
+        assert!(index_html.contains(r#"href="/assets/style-editorial.css?v="#));
         assert!(index_html.contains(r#"src="/assets/site-runtime.js""#));
+        assert!(index_html.contains(r#"src="/assets/pretext-masonry.mjs?v="#));
         assert!(index_html.contains("window.__BLOG_RUNTIME_CONFIG__"));
         assert!(index_html.contains("graphDataUrl:"));
         assert!(index_html.contains("/graph.json"));
@@ -6494,7 +6647,7 @@ Not published.
         assert!(second_html.contains("DataviewJS block is not executed"));
         assert!(second_html.contains(r#"<meta name="robots" content="max-image-preview:large" />"#));
         assert!(second_html.contains(r#"<meta property="og:locale" content="ko_KR" />"#));
-        assert!(second_html.contains(r#"class="panel note "#));
+        assert!(second_html.contains(r#"class="panel note-shell "#));
         assert!(second_html.contains("focus-mode"));
         assert!(second_html.contains("article-featured"));
 
@@ -6591,9 +6744,9 @@ Not published.
         assert!(!rss_xml.contains("/notes/isolated/"));
 
         let not_found_html = fs::read_to_string(output_dir.join("404.html"))?;
-        assert!(not_found_html.contains("Page Not Found"));
+        assert!(not_found_html.contains("Page not found"));
         let missing_note_html = fs::read_to_string(output_dir.join("notes/ghost-note/index.html"))?;
-        assert!(missing_note_html.contains("not published"));
+        assert!(missing_note_html.contains("not been published"));
 
         Ok(())
     }

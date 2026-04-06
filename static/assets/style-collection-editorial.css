@@ -1,0 +1,21 @@
+.site-main-stack--collection {
+  gap: 24px;
+}
+
+.collection-hero {
+  display: grid;
+  gap: 14px;
+}
+
+.collection-hero h1 {
+  font-size: clamp(2.8rem, 4vw, 4.8rem);
+}
+
+.collection-hero--empty {
+  justify-items: start;
+}
+
+.collection-hero-copy {
+  max-width: 52ch;
+  font-size: 1.04rem;
+}
