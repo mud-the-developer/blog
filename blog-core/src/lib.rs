@@ -561,6 +561,7 @@ struct DataviewQueryOptions {
 
 #[derive(Debug, Clone)]
 struct LayoutContext {
+    body_class: String,
     site_title: String,
     site_description: String,
     site_url: String,
@@ -735,7 +736,6 @@ struct HomeNewsSpotlight {
     summary: String,
     url: String,
     top_cards: Vec<NewsSpotlightCard>,
-    archives: Vec<NewsArchiveEntry>,
 }
 
 #[derive(Template)]
@@ -4286,8 +4286,6 @@ fn build_home_news_spotlight(news: NewsHubData) -> Option<HomeNewsSpotlight> {
         .filter(|card| !card.url.trim().is_empty() && !card.headline.trim().is_empty())
         .take(3)
         .collect::<Vec<_>>();
-    let archives = news.archives.into_iter().take(4).collect::<Vec<_>>();
-
     if url.trim().is_empty() && summary.trim().is_empty() && top_cards.is_empty() {
         return None;
     }
@@ -4298,7 +4296,6 @@ fn build_home_news_spotlight(news: NewsHubData) -> Option<HomeNewsSpotlight> {
         summary,
         url,
         top_cards,
-        archives,
     })
 }
 
@@ -4397,6 +4394,7 @@ fn website_layout(
     let page_description = normalize_page_description(page_description, &config.site.title);
 
     LayoutContext {
+        body_class: body_class_for_path(page_path).to_string(),
         site_title: config.site.title.clone(),
         site_description: config.site.description.clone(),
         site_url: normalize_base_url(&config.site.base_url),
@@ -4426,6 +4424,22 @@ fn website_layout(
         graph_center_id,
         show_side_graph,
         asset_version: asset_version.to_string(),
+    }
+}
+
+fn body_class_for_path(page_path: &str) -> &'static str {
+    if page_path == "/" {
+        "page-home"
+    } else if page_path == "/graph/" {
+        "page-graph"
+    } else if page_path.starts_with("/tags/") {
+        "page-tag"
+    } else if page_path == "/404.html" || page_path.starts_with("/notes/ghost-note") {
+        "page-system"
+    } else if page_path.starts_with("/notes/") {
+        "page-note"
+    } else {
+        "page-site"
     }
 }
 
@@ -6500,6 +6514,14 @@ Not published.
             "export const fixture = true;\n",
         );
         write_text(
+            &static_dir.join("assets/pretext-home-hero.mjs"),
+            "export const fixture = true;\n",
+        );
+        write_text(
+            &static_dir.join("assets/editorial-motion.js"),
+            "export const fixture = true;\n",
+        );
+        write_text(
             &static_dir.join("assets/style-editorial.css"),
             ":root { --fixture-editorial: 1; }\n",
         );
@@ -6567,6 +6589,8 @@ Not published.
         assert!(output_dir.join("assets/pretext-runtime.mjs").exists());
         assert!(output_dir.join("assets/vendor/pretext/layout.mjs").exists());
         assert!(output_dir.join("assets/pretext-masonry.mjs").exists());
+        assert!(output_dir.join("assets/pretext-home-hero.mjs").exists());
+        assert!(output_dir.join("assets/editorial-motion.js").exists());
         assert!(output_dir.join("assets/style-editorial.css").exists());
         assert!(output_dir.join("assets/style-home-editorial.css").exists());
         assert!(output_dir.join("assets/style-note-editorial.css").exists());
@@ -6599,6 +6623,8 @@ Not published.
         assert!(index_html.contains(r#"href="/assets/style-editorial.css?v="#));
         assert!(index_html.contains(r#"src="/assets/site-runtime.js""#));
         assert!(index_html.contains(r#"src="/assets/pretext-masonry.mjs?v="#));
+        assert!(index_html.contains(r#"src="/assets/pretext-home-hero.mjs?v="#));
+        assert!(index_html.contains(r#"src="/assets/editorial-motion.js?v="#));
         assert!(index_html.contains("window.__BLOG_RUNTIME_CONFIG__"));
         assert!(index_html.contains("graphDataUrl:"));
         assert!(index_html.contains("/graph.json"));

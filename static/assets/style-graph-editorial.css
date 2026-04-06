@@ -1,21 +1,48 @@
 .site-main-stack--graph {
-  gap: 24px;
+  width: min(100%, 1440px);
 }
 
 .graph-hero {
   display: grid;
-  gap: 16px;
+  gap: 18px;
 }
 
 .graph-hero h1 {
-  font-size: clamp(2.8rem, 4vw, 4.8rem);
+  font-size: clamp(3rem, 5vw, 5.5rem);
 }
 
 .graph-panel--editorial {
   display: grid;
   gap: 18px;
+  background: linear-gradient(180deg, rgba(10,14,21,0.94) 0%, rgba(7,10,16,0.98) 100%);
+  color: var(--site-ink);
+  border-color: var(--line);
+  box-shadow: var(--shadow-dark);
 }
 
 .graph-panel--editorial .graph-stage {
   min-height: 640px;
+}
+
+.graph-panel--editorial .graph-detail,
+.graph-panel--editorial .graph-status,
+.graph-hero-copy,
+.graph-stat-strip dt {
+  color: var(--site-muted-strong);
+}
+
+.graph-stat-strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin: 0;
+}
+
+.graph-stat-strip dt,
+.graph-stat-strip dd { margin: 0; }
+.graph-stat-strip dd {
+  margin-top: 8px;
+  font-family: var(--display);
+  font-size: clamp(2rem, 1.4rem + 1vw, 3rem);
+  line-height: 1;
 }

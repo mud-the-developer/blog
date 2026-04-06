@@ -133,6 +133,9 @@ function renderContainer(container) {
   container.classList.add('is-masonry-enhanced');
 
   for (const card of cards) {
+    if (!card.dataset.masonryReady) {
+      card.dataset.masonryReady = 'false';
+    }
     const state = getCardState(card);
     const textWidth = Math.max(columnWidth - padding * 2, 120);
     const titleHeight = measureTextBlock(card.querySelector(TITLE_SELECTOR), textWidth, state.title);
@@ -160,7 +163,9 @@ function renderContainer(container) {
     card.style.inset = '0 auto auto 0';
     card.style.width = `${columnWidth}px`;
     card.style.height = `${Math.ceil(cardHeight)}px`;
+    card.style.transitionDelay = `${Math.min(targetColumn * 70 + y * 0.02, 240)}ms`;
     card.style.transform = `translate(${x}px, ${y}px)`;
+    card.dataset.masonryReady = 'true';
 
     columnHeights[targetColumn] += cardHeight + gap;
   }
