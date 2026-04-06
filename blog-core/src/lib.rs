@@ -1059,10 +1059,10 @@ fn render_index(
         website_json_ld(config),
         Vec::new(),
         true,
-        true,
+        false,
         "/graph.json".to_string(),
         String::new(),
-        true,
+        false,
         Vec::new(),
         asset_version,
     );
@@ -1192,10 +1192,10 @@ fn render_tag_pages(
             website_json_ld(config),
             Vec::new(),
             true,
-            true,
+            false,
             "/graph.json".to_string(),
             String::new(),
-            true,
+            false,
             Vec::new(),
             asset_version,
         );
@@ -6651,7 +6651,8 @@ Not published.
         assert!(second_html.contains("focus-mode"));
         assert!(second_html.contains("article-featured"));
 
-        assert!(index_html.contains(r#"id="side-graph-stage""#));
+        assert!(!index_html.contains(r#"id="side-graph-stage""#));
+        assert!(index_html.contains(r#"src="/assets/pretext-masonry.mjs?v="#));
 
         let graph_html = fs::read_to_string(output_dir.join("graph/index.html"))?;
         assert!(graph_html.contains("id=\"global-graph-stage\""));
