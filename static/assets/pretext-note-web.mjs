@@ -9,6 +9,7 @@ const CARD_PADDING_Y = 14;
 const CARD_LINE_HEIGHT = 24;
 const CARD_MAX_LINES = 3;
 const ITERATIONS = 180;
+const COMPACT_BREAKPOINT = 720;
 const DEFAULT_DETAIL_TITLE = 'Hover a note';
 const DEFAULT_DETAIL_COPY =
   'Connections light up here so the archive feels explorable instead of just sortable.';
@@ -34,22 +35,39 @@ async function render(stage, graphUrl) {
   const height = Math.floor(stage.clientHeight || stage.getBoundingClientRect().height);
   if (width <= 0 || height <= 0) return;
 
-  const sizedNodes = data.nodes.map(node => sizeNode(node));
-  const positions = solveLayout(sizedNodes, data.links, width, height);
+  const compact = width < COMPACT_BREAKPOINT;
+  const sizing = compact
+    ? { minWidth: 112, maxWidth: 164, lineHeight: 19, maxLines: 3, fontSize: 24 }
+    : { minWidth: CARD_MIN_WIDTH, maxWidth: CARD_MAX_WIDTH, lineHeight: CARD_LINE_HEIGHT, maxLines: CARD_MAX_LINES, fontSize: 33 };
+
+  const sizedNodes = data.nodes
+    .slice(0, compact ? 8 : MAX_NODES)
+    .map(node => sizeNode(node, sizing));
+  const filteredLinks = data.links.filter(
+    link => sizedNodes.some(node => node.id === link.source) && sizedNodes.some(node => node.id === link.target),
+  );
+  const positions = compact
+    ? solveCompactLayout(sizedNodes, width)
+    : solveLayout(sizedNodes, filteredLinks, width, height);
+  const compactHeight = Math.max(
+    ...Array.from(positions.values()).map(position => position.y + position.h),
+    0,
+  ) + 24;
 
   stage.textContent = '';
+  stage.style.height = compact ? `${compactHeight}px` : '';
 
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('class', 'note-web-svg');
-  svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  svg.setAttribute('viewBox', `0 0 ${width} ${compact ? compactHeight : height}`);
   stage.appendChild(svg);
 
   const fragment = document.createDocumentFragment();
   const nodeById = new Map();
-  const neighborMap = buildNeighborMap(data.links);
+  const neighborMap = buildNeighborMap(filteredLinks);
   const lines = [];
 
-  for (const link of data.links) {
+  for (const link of filteredLinks) {
     const source = positions.get(link.source);
     const target = positions.get(link.target);
     if (!source || !target) continue;
@@ -95,6 +113,11 @@ async function render(stage, graphUrl) {
     card.addEventListener('focus', () => setActive(node.id));
     card.addEventListener('pointerleave', clearActive);
     card.addEventListener('blur', clearActive);
+    card.addEventListener('pointerdown', () => {
+      if (compact) {
+        setActive(node.id);
+      }
+    });
 
     nodeById.set(node.id, { node, card });
     fragment.appendChild(card);
@@ -215,14 +238,14 @@ function buildNeighborMap(links) {
   return map;
 }
 
-function sizeNode(node) {
-  const font = '700 33px "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif';
+function sizeNode(node, sizing) {
+  const font = `700 ${sizing.fontSize}px "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif`;
   const prepared = prepareWithSegments(node.title, font);
   let chosen = null;
 
-  for (let width = CARD_MIN_WIDTH; width <= CARD_MAX_WIDTH; width += 8) {
-    const layout = layoutWithLines(prepared, width - CARD_PADDING_X * 2, CARD_LINE_HEIGHT);
-    if (layout.lineCount <= CARD_MAX_LINES) {
+  for (let width = sizing.minWidth; width <= sizing.maxWidth; width += 8) {
+    const layout = layoutWithLines(prepared, width - CARD_PADDING_X * 2, sizing.lineHeight);
+    if (layout.lineCount <= sizing.maxLines) {
       chosen = { width, layout };
       break;
     }
@@ -230,12 +253,8 @@ function sizeNode(node) {
 
   if (!chosen) {
     chosen = {
-      width: CARD_MAX_WIDTH,
-      layout: layoutWithLines(
-        prepared,
-        CARD_MAX_WIDTH - CARD_PADDING_X * 2,
-        CARD_LINE_HEIGHT,
-      ),
+      width: sizing.maxWidth,
+      layout: layoutWithLines(prepared, sizing.maxWidth - CARD_PADDING_X * 2, sizing.lineHeight),
     };
   }
 
@@ -244,9 +263,35 @@ function sizeNode(node) {
     title: node.title,
     url: node.url,
     w: chosen.width,
-    h: CARD_PADDING_Y * 2 + chosen.layout.lineCount * CARD_LINE_HEIGHT + 22,
-    lines: chosen.layout.lines.slice(0, CARD_MAX_LINES).map(line => line.text),
+    h: CARD_PADDING_Y * 2 + chosen.layout.lineCount * sizing.lineHeight + 22,
+    lines: chosen.layout.lines.slice(0, sizing.maxLines).map(line => line.text),
   };
+}
+
+function solveCompactLayout(nodes, width) {
+  const positions = new Map();
+  const columns = 2;
+  const sidePadding = 18;
+  const gap = 14;
+  const columnWidth = (width - sidePadding * 2 - gap) / columns;
+  const columnHeights = Array.from({ length: columns }, () => 22);
+
+  nodes.forEach((node, index) => {
+    const column = index % columns;
+    const x = sidePadding + column * (columnWidth + gap) + (columnWidth - node.w) / 2;
+    const y = columnHeights[column];
+    positions.set(node.id, {
+      x,
+      y,
+      w: node.w,
+      h: node.h,
+      vx: 0,
+      vy: 0,
+    });
+    columnHeights[column] += node.h + gap;
+  });
+
+  return positions;
 }
 
 function solveLayout(nodes, links, width, height) {
