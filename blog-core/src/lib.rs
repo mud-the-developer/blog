@@ -6448,14 +6448,6 @@ Not published.
             "export const fixture = true;\n",
         );
         write_text(
-            &static_dir.join("assets/pretext-home-hero.mjs"),
-            "export const fixture = true;\n",
-        );
-        write_text(
-            &static_dir.join("assets/editorial-motion.js"),
-            "export const fixture = true;\n",
-        );
-        write_text(
             &static_dir.join("assets/pretext-note-web.mjs"),
             "export const fixture = true;\n",
         );
@@ -6527,8 +6519,6 @@ Not published.
         assert!(output_dir.join("assets/pretext-runtime.mjs").exists());
         assert!(output_dir.join("assets/vendor/pretext/layout.mjs").exists());
         assert!(output_dir.join("assets/pretext-masonry.mjs").exists());
-        assert!(output_dir.join("assets/pretext-home-hero.mjs").exists());
-        assert!(output_dir.join("assets/editorial-motion.js").exists());
         assert!(output_dir.join("assets/pretext-note-web.mjs").exists());
         assert!(output_dir.join("assets/style-editorial.css").exists());
         assert!(output_dir.join("assets/style-home-editorial.css").exists());

@@ -1,46 +1,43 @@
 .note-shell {
   display: grid;
-  gap: 30px;
+  gap: 26px;
 }
 
 .note-hero {
   display: grid;
-  gap: 18px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--paper-line);
+  gap: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
 }
 
 .note-hero-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
+  gap: 16px;
 }
 
 .note-hero-title {
-  font-size: clamp(3rem, 4.4vw, 5.6rem);
+  font-size: clamp(2.8rem, 4.2vw, 5rem);
 }
 
 .note-hero-deck {
-  max-width: 26ch;
-  margin: 0;
-  font-size: clamp(1.08rem, 0.94rem + 0.4vw, 1.3rem);
-  color: var(--paper-muted);
-  line-height: 1.42;
+  max-width: 28ch;
+  font-size: 1.06rem;
+  line-height: 1.55;
 }
 
 .note-route {
   margin: 0;
-  padding: 0 14px;
+  padding: 0 12px;
   min-height: 36px;
   border-radius: 999px;
-  border: 1px solid var(--paper-line);
-  background: rgba(0,0,0,0.03);
+  border: 1px solid var(--line);
 }
 
 .note-content-frame {
   display: grid;
-  gap: 26px;
+  gap: 22px;
 }
 
 .note-body {
@@ -58,41 +55,41 @@
 }
 
 .note-body h2 {
-  margin-top: 2.6rem;
+  margin-top: 2.4rem;
   font-family: var(--display);
-  font-size: clamp(2rem, 1.2rem + 1vw, 2.8rem);
-  line-height: 0.98;
+  font-size: clamp(1.8rem, 1.2rem + 0.8vw, 2.6rem);
+  line-height: 1;
   letter-spacing: -0.04em;
 }
 
 .note-body p,
 .note-body li {
-  font-size: 1.03rem;
+  font-size: 1.02rem;
   line-height: 1.75;
 }
 
 .backlinks {
   display: grid;
-  gap: 18px;
-  padding-top: 8px;
-  border-top: 1px solid var(--paper-line);
+  gap: 16px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
 }
 
 .backlinks > * { margin: 0; }
 
 .backlinks ul {
   display: grid;
-  gap: 14px;
+  gap: 12px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .backlinks li {
-  padding: 18px 20px;
-  border-radius: 22px;
-  border: 1px solid var(--paper-line);
-  background: rgba(255,255,255,0.44);
+  padding: 16px 18px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
 }
 
 .backlinks-item-head {
@@ -104,12 +101,15 @@
 
 .backlinks-item-head a {
   font-family: var(--display);
-  font-size: 1.2rem;
+  font-size: 1.16rem;
   line-height: 1.05;
   text-decoration: none;
 }
 
-.backlinks-item-date { color: var(--paper-muted); font-size: 0.88rem; }
+.backlinks-item-date {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
 
 @media (max-width: 760px) {
   .note-hero-top,
@@ -119,6 +119,6 @@
   }
 
   .note-hero-title {
-    font-size: clamp(2.6rem, 12vw, 4rem);
+    font-size: clamp(2.4rem, 11vw, 3.8rem);
   }
 }

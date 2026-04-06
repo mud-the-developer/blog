@@ -4,14 +4,14 @@
 
 .collection-hero {
   display: grid;
-  gap: 16px;
+  gap: 14px;
 }
 
 .collection-hero h1 {
-  font-size: clamp(3.2rem, 5vw, 6rem);
+  font-size: clamp(3rem, 5vw, 5rem);
 }
 
 .collection-hero-copy {
-  max-width: 46ch;
-  font-size: 1.06rem;
+  max-width: 44ch;
+  font-size: 1.04rem;
 }
