@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="robots" content="index,follow" />
-  <meta name="theme-color" content="#0c111b" />
+  <meta name="theme-color" content="#090b0c" />
   <title>{{ layout.page_title }}</title>
   <meta name="description" content="{{ layout.page_description }}" />
   <link rel="canonical" href="{{ layout.canonical_url }}" />
@@ -40,11 +40,9 @@
   <script>
     (() => {
       const root = document.documentElement;
-      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const theme = prefersDark ? "dark" : "light";
       root.setAttribute("data-theme-mode", "system");
-      root.setAttribute("data-theme", theme);
-      root.setAttribute("data-theme-preset", theme === "dark" ? "d02-carbon" : "l04-rose-ink");
+      root.setAttribute("data-theme", "dark");
+      root.setAttribute("data-theme-preset", "d02-carbon");
     })();
   </script>
   <link rel="alternate" type="application/rss+xml" title="{{ layout.site_title }} RSS" href="/rss.xml" />

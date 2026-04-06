@@ -44,7 +44,7 @@ async function render(stage, graphUrl) {
   svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
   stage.appendChild(svg);
 
-  const fragments = document.createDocumentFragment();
+  const fragment = document.createDocumentFragment();
   const nodeById = new Map();
   const neighborMap = buildNeighborMap(data.links);
   const lines = [];
@@ -93,14 +93,14 @@ async function render(stage, graphUrl) {
 
     card.addEventListener('pointerenter', () => setActive(node.id));
     card.addEventListener('focus', () => setActive(node.id));
-    card.addEventListener('pointerleave', () => clearActive());
-    card.addEventListener('blur', () => clearActive());
+    card.addEventListener('pointerleave', clearActive);
+    card.addEventListener('blur', clearActive);
 
     nodeById.set(node.id, { node, card });
-    fragments.appendChild(card);
+    fragment.appendChild(card);
   }
 
-  stage.appendChild(fragments);
+  stage.appendChild(fragment);
 
   const detailTitle = document.getElementById('note-web-detail-title');
   const detailCopy = document.getElementById('note-web-detail-copy');
@@ -162,6 +162,7 @@ function buildSubset(graph) {
   const nodes = Array.isArray(graph.nodes) ? graph.nodes : [];
   const links = Array.isArray(graph.links) ? graph.links : [];
   const degree = new Map();
+
   for (const node of nodes) degree.set(node.id, 0);
   for (const link of links) {
     degree.set(link.source, (degree.get(link.source) || 0) + 1);
@@ -179,7 +180,10 @@ function buildSubset(graph) {
     if (!id || visited.has(id) || !nodeById.has(id)) continue;
     visited.add(id);
     selected.push(nodeById.get(id));
-    const neighbors = Array.from(adjacency.get(id) || []).sort((a, b) => (degree.get(b) || 0) - (degree.get(a) || 0));
+
+    const neighbors = Array.from(adjacency.get(id) || []).sort(
+      (a, b) => (degree.get(b) || 0) - (degree.get(a) || 0),
+    );
     queue.push(...neighbors);
   }
 
@@ -215,6 +219,7 @@ function sizeNode(node) {
   const font = '700 33px "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif';
   const prepared = prepareWithSegments(node.title, font);
   let chosen = null;
+
   for (let width = CARD_MIN_WIDTH; width <= CARD_MAX_WIDTH; width += 8) {
     const layout = layoutWithLines(prepared, width - CARD_PADDING_X * 2, CARD_LINE_HEIGHT);
     if (layout.lineCount <= CARD_MAX_LINES) {
@@ -222,12 +227,18 @@ function sizeNode(node) {
       break;
     }
   }
+
   if (!chosen) {
     chosen = {
       width: CARD_MAX_WIDTH,
-      layout: layoutWithLines(prepared, CARD_MAX_WIDTH - CARD_PADDING_X * 2, CARD_LINE_HEIGHT),
+      layout: layoutWithLines(
+        prepared,
+        CARD_MAX_WIDTH - CARD_PADDING_X * 2,
+        CARD_LINE_HEIGHT,
+      ),
     };
   }
+
   return {
     id: node.id,
     title: node.title,
