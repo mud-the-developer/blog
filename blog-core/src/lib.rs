@@ -4089,11 +4089,11 @@ fn render_post_body_with_maud(
             (PreEscaped(markdown_html))
         }
         section class="backlinks" {
-            h2 { (site_text.backlinks_heading) }
+            h2 data-pretext-target="" { (site_text.backlinks_heading) }
             @if backlinks.is_empty() {
-                p class="backlinks-empty" { (site_text.backlinks_empty) }
+                p class="backlinks-empty" data-pretext-target="" { (site_text.backlinks_empty) }
             } @else {
-                p class="backlinks-meta" {
+                p class="backlinks-meta" data-pretext-target="" {
                     (format!(
                         "{} linked note{} · sorted by recency",
                         backlinks.len(),
@@ -4560,8 +4560,8 @@ fn compact_embedded_news_payload(raw: &str) -> Result<String> {
         "paperCount": paper_count,
     });
 
-    let mut body =
-        serde_json::to_string(&compact).with_context(|| "failed to serialize embedded news payload")?;
+    let mut body = serde_json::to_string(&compact)
+        .with_context(|| "failed to serialize embedded news payload")?;
     body.push('\n');
     Ok(body)
 }
@@ -4618,7 +4618,10 @@ fn copy_embedded_news_site(output_dir: &Path) -> Result<()> {
             }
             Some("json") if rel == Path::new("data/latest.json") => {
                 let raw = fs::read_to_string(entry_path).with_context(|| {
-                    format!("failed to read embedded news payload {}", entry_path.display())
+                    format!(
+                        "failed to read embedded news payload {}",
+                        entry_path.display()
+                    )
                 })?;
                 write_file(dest, compact_embedded_news_payload(&raw)?)?;
             }
@@ -6366,6 +6369,14 @@ Not published.
 }"##,
         );
         write_text(
+            &static_dir.join("assets/pretext-runtime.mjs"),
+            "export const fixture = true;\n",
+        );
+        write_text(
+            &static_dir.join("assets/vendor/pretext/layout.mjs"),
+            "export const fixture = true;\n",
+        );
+        write_text(
             &static_dir.join("_headers"),
             "/*\n  X-Robots-Tag: index, follow\n",
         );
@@ -6410,6 +6421,8 @@ Not published.
         assert!(output_dir.join("content/attachments/preview.png").exists());
         assert!(output_dir.join("local-graph/second-brain.json").exists());
         assert!(output_dir.join("local-graph/isolated.json").exists());
+        assert!(output_dir.join("assets/pretext-runtime.mjs").exists());
+        assert!(output_dir.join("assets/vendor/pretext/layout.mjs").exists());
         assert!(output_dir.join("tags/architecture/index.html").exists());
         assert!(!output_dir.join("notes/draft-note/index.html").exists());
         assert!(!output_dir.join("notes/hidden-note/index.html").exists());
@@ -6431,11 +6444,13 @@ Not published.
         assert!(index_html.contains(r#"href="/user-overrides.css""#));
         assert!(index_html.contains(":root{--note-accent:#2c6fa8;}"));
         assert!(index_html.contains(r#"[data-theme="dark"]{--bg:#101820;--text:#e7edf4;}"#));
+        assert!(index_html.contains(r#"src="/assets/pretext-runtime.mjs?v="#));
         assert!(index_html.contains(r#"src="/assets/site-runtime.js""#));
         assert!(index_html.contains("window.__BLOG_RUNTIME_CONFIG__"));
         assert!(index_html.contains("graphDataUrl:"));
         assert!(index_html.contains("/graph.json"));
         assert!(index_html.contains("note-icon"));
+        assert!(index_html.contains("data-pretext-target"));
         assert!(!index_html.contains("Isolated"));
 
         let home_html = fs::read_to_string(output_dir.join("notes/home/index.html"))?;

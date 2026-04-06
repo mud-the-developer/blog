@@ -79,10 +79,10 @@
   <div class="site-shell">
     <header class="site-header">
       <div class="site-brand">
-        <p class="site-kicker">Signal Desk</p>
+        <p class="site-kicker" data-pretext-target>Signal Desk</p>
         <p class="site-title"><a class="site-title-link" href="/">{{ layout.site_title }}</a></p>
         {% if layout.site_description.len() > 0 %}
-        <p class="site-tagline">{{ layout.site_description }}</p>
+        <p class="site-tagline" data-pretext-target>{{ layout.site_description }}</p>
         {% endif %}
       </div>
       <div class="site-actions">
@@ -150,7 +150,7 @@
         {% endif %}
         <details id="page-tabs-details" class="page-tabs-collapsible" open>
           <summary class="page-tabs-head">
-            <h2 id="page-tabs-heading">{{ layout.pages_heading }}</h2>
+            <h2 id="page-tabs-heading" data-pretext-target>{{ layout.pages_heading }}</h2>
             <span class="page-tabs-toggle" aria-hidden="true">▾</span>
           </summary>
           <nav id="filetree-root" class="page-tabs-list" aria-labelledby="page-tabs-heading">
@@ -274,6 +274,7 @@
     })();
   </script>
   {% endif %}
+  <script type="module" src="/assets/pretext-runtime.mjs?v={{ layout.asset_version }}"></script>
   <script defer src="/assets/site-runtime.js"></script>
   <script defer src="/assets/graph-autoload.min.js"></script>
   <script>

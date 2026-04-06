@@ -20,9 +20,15 @@
   {% if let Some(home_post) = home_post %}
   <article class="panel note home-feature content-shell content-shell--reading{% if home_post.content_classes.len() > 0 %} {{ home_post.content_classes }}{% endif %}">
     <header class="note-header home-feature-head">
-      <p class="section-kicker">Homepage Note</p>
-      <h1>{% if let Some(icon) = home_post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}{{ home_post.title }}</h1>
-      <p class="post-meta">{{ home_post.date_display }}{% if let Some(updated) = home_post.updated_display %} • updated {{ updated }}{% endif %} • {{ home_post.reading_time_min }} min read</p>
+      <p class="section-kicker" data-pretext-target>Homepage Note</p>
+      <h1>{% if let Some(icon) = home_post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}<span class="note-title-text" data-pretext-target>{{ home_post.title }}</span></h1>
+      <div class="post-meta" aria-label="Homepage note metadata">
+        <span class="post-meta-chip" data-pretext-target>{{ home_post.date_display }}</span>
+        {% if let Some(updated) = home_post.updated_display %}
+        <span class="post-meta-chip" data-pretext-target>Updated {{ updated }}</span>
+        {% endif %}
+        <span class="post-meta-chip" data-pretext-target>{{ home_post.reading_time_min }} min read</span>
+      </div>
       {% if home_post.tags.len() > 0 %}
       <div class="tag-wrap">
         {% for tag in home_post.tags %}
@@ -36,20 +42,20 @@
 
     <dl class="home-feature-stats" aria-label="Garden statistics">
       <div class="home-feature-stat">
-        <dt>Notes</dt>
-        <dd>{{ total_notes }}</dd>
+        <dt data-pretext-target>Notes</dt>
+        <dd data-pretext-target>{{ total_notes }}</dd>
       </div>
       <div class="home-feature-stat">
-        <dt>Tags</dt>
-        <dd>{{ tags.len() }}</dd>
+        <dt data-pretext-target>Tags</dt>
+        <dd data-pretext-target>{{ tags.len() }}</dd>
       </div>
       <div class="home-feature-stat">
-        <dt>Graph</dt>
-        <dd>{% if layout.show_graph_module %}On{% else %}Off{% endif %}</dd>
+        <dt data-pretext-target>Graph</dt>
+        <dd data-pretext-target>{% if layout.show_graph_module %}On{% else %}Off{% endif %}</dd>
       </div>
       <div class="home-feature-stat">
-        <dt>Folders</dt>
-        <dd>{{ folders.len() }}</dd>
+        <dt data-pretext-target>Folders</dt>
+        <dd data-pretext-target>{{ folders.len() }}</dd>
       </div>
     </dl>
   </article>
