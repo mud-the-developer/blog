@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every Daily AI News Digest post."
-date: 2026-03-31
+date: 2026-04-06
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every Daily AI News Digest, grouped by month so older issues stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/notes/news/2026-03-31-ai-news-digest/">Latest digest</a>
+        <a class="post-cta-link" href="/notes/news/2026-04-06-ai-news-digest/">Latest digest</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-03-31T23:57:29.656835+09:00">Mar 31, 2026 · 11:57 PM KST</time></strong>
+        <strong><time datetime="2026-04-06T00:48:42.113173+09:00">Apr 6, 2026 · 12:48 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>8</strong>
+        <strong>14</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-03-31">Mar 31, 2026</time></strong>
+        <strong><time datetime="2026-04-06">Apr 6, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,10 +36,45 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by langgenius/dify; paper attention is clustering around Gen-Searcher: Reinforcing Agentic Search for Image Generation; social attention is tilting toward Codex plugin for Claude Code by OpenAI; biggest mover: Make Geometry Matter for Spatial Reasoning (+27). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by comet-ml/opik; paper attention is clustering around CORAL: Towards Autonomous Multi-Agent Evolution for Open-Ended Discovery; social attention is tilting toward Show GN: Ravenclaw - an open source system for managing the task context of AI coding agents.; biggest mover: LOME: Learning Human-Object Manipulation with Action-Conditioned Egocentric World Model (+41). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
+        <summary class="news-digest-month-summary"><span>April 2026</span><span class="news-digest-month-count">6 digests</span></summary>
+        <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/notes/news/2026-04-06-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-04-06</span>
+            <strong>Daily AI News Digest — 2026-04-06</strong>
+            <span>GitHub velocity is led by comet-ml/opik; paper attention is clustering around CORAL: Towards Autonomous Multi-Agent Evolution for Open-Ended Discovery; social attention is tilting toward Show GN: Ravenclaw - an open source system for managing the task context of AI coding agents.; biggest mover: LOME: Learning Human-Object Manipulation with Action-Conditioned Egocentric World Model (+41). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/notes/news/2026-04-05-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-04-05</span>
+            <strong>Daily AI News Digest — 2026-04-05</strong>
+            <span>GitHub velocity is led by comet-ml/opik; paper attention is clustering around VOID: Video Object and Interaction Deletion; social attention is tilting toward PyPI Security Team Official Supply Chain Attack Incident Report: LiteLLM·Telnyx Malicious Packa…; biggest mover: UniDriveVLA: Unifying Understanding, Perception, and Action Planning for Autonomous Driving (+39). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/notes/news/2026-04-04-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-04-04</span>
+            <strong>Daily AI News Digest — 2026-04-04</strong>
+            <span>GitHub velocity is led by comet-ml/opik; paper attention is clustering around Steerable Visual Representations; social attention is tilting toward PyPI Security Team Official Supply Chain Attack Incident Report: LiteLLM·Telnyx Malicious Packa…; biggest mover: sunrainyg/RandOpt (+1). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/notes/news/2026-04-03-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-04-03</span>
+            <strong>Daily AI News Digest — 2026-04-03</strong>
+            <span>GitHub velocity is led by comet-ml/opik; paper attention is clustering around MiroEval: Benchmarking Multimodal Deep Research Agents in Process and Outcome; social attention is tilting toward Anthropic&#x27;s profitability is worse than Kimbap Heaven; biggest mover: MonitorBench: A Comprehensive Benchmark for Chain-of-Thought Monitorability in Large Language M… (+37). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/notes/news/2026-04-02-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-04-02</span>
+            <strong>Daily AI News Digest — 2026-04-02</strong>
+            <span>GitHub velocity is led by huggingface/transformers; paper attention is clustering around Unify-Agent: A Unified Multimodal Agent for World-Grounded Image Synthesis; social attention is tilting toward Show GN: Please create a workflow-tool that I created because I wanted claude code and gemini-c…; biggest mover: marktsec/Ransomware_Official_Domains (+43). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/notes/news/2026-04-01-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-04-01</span>
+            <strong>Daily AI News Digest — 2026-04-01</strong>
+            <span>GitHub velocity is led by huggingface/transformers; paper attention is clustering around Gen-Searcher: Reinforcing Agentic Search for Image Generation; social attention is tilting toward PDF Paper RAG, is text alone enough? - Gemini embedding 002 embedding search experiment; biggest mover: Towards a Medical AI Scientist (+32). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+          </a>
+        </div>
+      </details>
+      <details class="news-digest-month-group">
         <summary class="news-digest-month-summary"><span>March 2026</span><span class="news-digest-month-count">8 digests</span></summary>
         <div class="news-digest-month-list">
           <a class="news-digest-archive-item" href="/notes/news/2026-03-31-ai-news-digest/">
