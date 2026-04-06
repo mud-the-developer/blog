@@ -9,6 +9,9 @@ const CARD_PADDING_Y = 14;
 const CARD_LINE_HEIGHT = 24;
 const CARD_MAX_LINES = 3;
 const ITERATIONS = 180;
+const DEFAULT_DETAIL_TITLE = 'Hover a note';
+const DEFAULT_DETAIL_COPY =
+  'Connections light up here so the archive feels explorable instead of just sortable.';
 
 function boot() {
   const stage = document.querySelector(STAGE_SELECTOR);
@@ -103,6 +106,16 @@ async function render(stage, graphUrl) {
   const detailCopy = document.getElementById('note-web-detail-copy');
   const detailLink = document.getElementById('note-web-detail-link');
 
+  const applyDetailState = ({ title, copy, href, hidden }) => {
+    if (detailTitle) detailTitle.textContent = title;
+    if (detailCopy) detailCopy.textContent = copy;
+    if (detailLink instanceof HTMLAnchorElement) {
+      detailLink.hidden = hidden;
+      detailLink.href = href;
+      detailLink.textContent = 'Open note';
+    }
+  };
+
   function setActive(nodeId) {
     const active = nodeById.get(nodeId);
     if (!active) return;
@@ -118,17 +131,15 @@ async function render(stage, graphUrl) {
       line.classList.toggle('is-active', source === nodeId || target === nodeId);
     }
 
-    if (detailTitle) detailTitle.textContent = active.node.title;
-    if (detailCopy) {
-      detailCopy.textContent = neighbors.size > 0
-        ? `${neighbors.size} connected note${neighbors.size === 1 ? '' : 's'} in this local web.`
-        : 'No local links in the current subset.';
-    }
-    if (detailLink instanceof HTMLAnchorElement) {
-      detailLink.hidden = false;
-      detailLink.href = active.node.url;
-      detailLink.textContent = 'Open note';
-    }
+    applyDetailState({
+      title: active.node.title,
+      copy:
+        neighbors.size > 0
+          ? `${neighbors.size} connected note${neighbors.size === 1 ? '' : 's'} in this local web.`
+          : 'No local links in the current subset.',
+      href: active.node.url,
+      hidden: false,
+    });
   }
 
   function clearActive() {
@@ -138,13 +149,12 @@ async function render(stage, graphUrl) {
     for (const line of lines) {
       line.classList.remove('is-active');
     }
-    if (detailTitle) detailTitle.textContent = 'Hover a note';
-    if (detailCopy) detailCopy.textContent = 'Connections light up here so the archive feels explorable instead of just sortable.';
-    if (detailLink instanceof HTMLAnchorElement) {
-      detailLink.hidden = true;
-      detailLink.href = '/';
-      detailLink.textContent = 'Open note';
-    }
+    applyDetailState({
+      title: DEFAULT_DETAIL_TITLE,
+      copy: DEFAULT_DETAIL_COPY,
+      href: '/',
+      hidden: true,
+    });
   }
 }
 

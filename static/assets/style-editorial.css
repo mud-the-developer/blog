@@ -56,8 +56,6 @@ body {
 a { color: inherit; }
 img, svg, canvas, video { max-width: 100%; }
 
-.site-ambient { display: none; }
-
 .site-shell {
   max-width: var(--shell);
   margin: 0 auto;
@@ -86,7 +84,6 @@ img, svg, canvas, video { max-width: 100%; }
 .section-kicker,
 .rail-kicker,
 .signal-card-folder,
-.news-pulse-card-badge,
 .note-web-card-meta,
 .home-list-item-meta {
   margin: 0;
@@ -122,9 +119,7 @@ img, svg, canvas, video { max-width: 100%; }
 .rail-quicklink,
 .post-meta-chip,
 .tag,
-.atlas-pill,
-.home-browser-link,
-.news-pulse-archive li a {
+.atlas-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -144,9 +139,7 @@ img, svg, canvas, video { max-width: 100%; }
 .site-nav-icon-link:hover,
 .rail-quicklink:hover,
 .tag:hover,
-.atlas-pill:hover,
-.home-browser-link:hover,
-.news-pulse-archive li a:hover {
+.atlas-pill:hover {
   border-color: var(--line-strong);
   background: var(--surface-soft);
 }
@@ -254,7 +247,6 @@ img, svg, canvas, video { max-width: 100%; }
 .tag-wrap,
 .editorial-tag-wrap,
 .hero-actions,
-.news-pulse-actions,
 .atlas-pill-wrap {
   display: flex;
   flex-wrap: wrap;
@@ -402,7 +394,6 @@ img, svg, canvas, video { max-width: 100%; }
 .note-route,
 .news-pulse-generated,
 .news-pulse-card-meta,
-.home-cover-issue-meta,
 .note-web-card-meta,
 .home-list-item-meta {
   color: var(--muted);
@@ -452,28 +443,15 @@ img, svg, canvas, video { max-width: 100%; }
 .toc-depth-2 { padding-left: 20px; }
 .toc-depth-3 { padding-left: 30px; }
 
-.page-home .site-layout,
-.page-home .site-layout--with-context,
-.page-tag .site-layout,
-.page-tag .site-layout--with-context,
-.page-graph .site-layout,
-.page-graph .site-layout--with-context,
-.page-system .site-layout,
-.page-system .site-layout--with-context {
+:is(.page-home, .page-tag, .page-graph, .page-system) :is(.site-layout, .site-layout--with-context) {
   grid-template-columns: minmax(0, 1fr);
 }
 
-.page-home .site-rail,
-.page-tag .site-rail,
-.page-graph .site-rail,
-.page-system .site-rail {
+:is(.page-home, .page-tag, .page-graph, .page-system) .site-rail {
   display: none;
 }
 
-.page-home .site-main-stack,
-.page-tag .site-main-stack,
-.page-graph .site-main-stack,
-.page-system .site-main-stack {
+:is(.page-home, .page-tag, .page-graph, .page-system) .site-main-stack {
   width: min(100%, 1360px);
 }
 
