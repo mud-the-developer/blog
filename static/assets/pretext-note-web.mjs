@@ -33,6 +33,7 @@ const PHYSICS_REST_LENGTH = 168;
 const PHYSICS_COLLISION_PUSH = 0.12;
 const PHYSICS_CENTERING = 0.0011;
 const PHYSICS_SETTLE_EPSILON = 0.11;
+const SIZE_RETRY_FRAMES = 24;
 const START_CURSOR = Object.freeze({ segmentIndex: 0, graphemeIndex: 0 });
 const FIELD_TERMS = [
   'GPT-5.4',
@@ -85,6 +86,18 @@ function boot() {
   if (!(stage instanceof HTMLElement)) return;
 
   const graphUrl = stage.dataset.graphUrl || '/graph.json';
+  scheduleRender(stage, graphUrl);
+}
+
+function scheduleRender(stage, graphUrl, attempts = 0) {
+  const width = Math.floor(stage.clientWidth || stage.getBoundingClientRect().width);
+  const height = Math.floor(stage.clientHeight || stage.getBoundingClientRect().height);
+
+  if ((width <= 0 || height <= 0) && attempts < SIZE_RETRY_FRAMES) {
+    window.requestAnimationFrame(() => scheduleRender(stage, graphUrl, attempts + 1));
+    return;
+  }
+
   render(stage, graphUrl).catch(() => {
     stage.textContent = '';
   });
