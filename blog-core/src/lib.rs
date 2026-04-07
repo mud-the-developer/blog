@@ -1240,7 +1240,7 @@ fn render_news_page(config: &BuildConfig, posts: &[Post]) -> Result<()> {
     write_file(
         config.output_dir.join("news").join("index.html"),
         render_news_redirect_html(
-            &format!("News Radar | {}", config.site.title),
+            &format!("News | {}", config.site.title),
             if news.summary.trim().is_empty() {
                 "Daily repo, paper, and social signal digest."
             } else {
@@ -4563,7 +4563,7 @@ fn rewrite_embedded_news_html(input: &str) -> String {
         "<p class='news-bridge-title'>Mud's Blog</p>",
         "</a>",
         "<div class='news-bridge-links'>",
-        "<a class='news-bridge-link news-bridge-link--primary' href='/news/'>News Radar</a>",
+        "<a class='news-bridge-link news-bridge-link--primary' href='/news/'>News</a>",
         "<a class='news-bridge-link' href='/'>Notes</a>",
         "<a class='news-bridge-link' href='/graph/'>Graph</a>",
         "<a class='news-bridge-link' href='/news/data/latest.json' target='_blank' rel='noreferrer'>JSON</a>",

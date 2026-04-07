@@ -1306,7 +1306,7 @@ def render_markdown(
         '<div class="news-digest-shell">',
         '  <section class="news-digest-hero">',
         '    <div class="news-digest-hero-copy">',
-        '      <p class="section-kicker">News Radar</p>',
+        '      <p class="section-kicker">News</p>',
         f"      <h1>{safe_text(title)}</h1>",
         f'      <p class="news-digest-lead">{safe_text(summary)}</p>',
         '      <div class="news-digest-actions" role="group" aria-label="News actions">',

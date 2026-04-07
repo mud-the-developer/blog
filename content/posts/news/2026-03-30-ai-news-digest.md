@@ -9,7 +9,7 @@ content-classes: [news-digest-note]
 <div class="news-digest-shell">
   <section class="news-digest-hero">
     <div class="news-digest-hero-copy">
-      <p class="section-kicker">News Radar</p>
+      <p class="section-kicker">News</p>
       <h1>Daily AI News Digest — 2026-03-30</h1>
       <p class="news-digest-lead">GitHub velocity is led by ggml-org/llama.cpp; paper attention is clustering around Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills; social attention is tilting toward Miasma: A tool that traps AI web scrapers in an endless loop of contamination; biggest mover: Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills (+16). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
       <div class="news-digest-actions" role="group" aria-label="News actions">

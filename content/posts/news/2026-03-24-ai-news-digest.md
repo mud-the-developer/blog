@@ -9,7 +9,7 @@ content-classes: [news-digest-note]
 <div class="news-digest-shell">
   <section class="news-digest-hero">
     <div class="news-digest-hero-copy">
-      <p class="section-kicker">News Radar</p>
+      <p class="section-kicker">News</p>
       <h1>Daily AI News Digest — 2026-03-24</h1>
       <p class="news-digest-lead">Repo momentum is led by ceedaragents/cyrus; paper attention is clustering around OfficeQA Pro: An Enterprise Benchmark for End-to-End Grounded Reasoning; community chatter is moving through GeekNews. 4 repo signals, 4 paper picks, and 4 community items made today&#x27;s cut.</p>
       <div class="news-digest-actions" role="group" aria-label="News actions">

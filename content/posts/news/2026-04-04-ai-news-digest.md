@@ -9,7 +9,7 @@ content-classes: [news-digest-note]
 <div class="news-digest-shell">
   <section class="news-digest-hero">
     <div class="news-digest-hero-copy">
-      <p class="section-kicker">News Radar</p>
+      <p class="section-kicker">News</p>
       <h1>Daily AI News Digest — 2026-04-04</h1>
       <p class="news-digest-lead">GitHub velocity is led by comet-ml/opik; paper attention is clustering around Steerable Visual Representations; social attention is tilting toward PyPI Security Team Official Supply Chain Attack Incident Report: LiteLLM·Telnyx Malicious Packa…; biggest mover: sunrainyg/RandOpt (+1). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
       <div class="news-digest-actions" role="group" aria-label="News actions">

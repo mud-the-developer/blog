@@ -9,7 +9,7 @@ content-classes: [news-digest-note]
 <div class="news-digest-shell">
   <section class="news-digest-hero">
     <div class="news-digest-hero-copy">
-      <p class="section-kicker">News Radar</p>
+      <p class="section-kicker">News</p>
       <h1>Daily AI News Digest — 2026-03-25</h1>
       <p class="news-digest-lead">GitHub velocity is led by comet-ml/opik; paper attention is clustering around SpecEyes: Accelerating Agentic Multimodal LLMs via Speculative Perception and Planning; social attention is tilting toward OpenAI, Sora service terminated. 8 repo signals, 6 paper picks, and 3 community items made today&#x27;s cut.</p>
       <div class="news-digest-actions" role="group" aria-label="News actions">
