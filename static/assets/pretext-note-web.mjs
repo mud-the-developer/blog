@@ -1,7 +1,8 @@
-import { layoutWithLines, prepareWithSegments } from './vendor/pretext/layout.mjs';
+import { layoutNextLine, layoutWithLines, prepareWithSegments } from './vendor/pretext/layout.mjs';
 
 const STAGE_SELECTOR = '[data-note-web]';
 const MAX_NODES = 14;
+const MOBILE_NODES = 8;
 const CARD_MIN_WIDTH = 128;
 const CARD_MAX_WIDTH = 210;
 const CARD_PADDING_X = 15;
@@ -10,10 +11,65 @@ const CARD_LINE_HEIGHT = 24;
 const CARD_MAX_LINES = 3;
 const ITERATIONS = 180;
 const COMPACT_BREAKPOINT = 720;
-const PARTICLE_COUNT = 24;
-const DEFAULT_DETAIL_TITLE = 'Hover a note';
+const DEFAULT_DETAIL_TITLE = 'Archive structure';
 const DEFAULT_DETAIL_COPY =
-  'Connections light up here so the archive feels explorable instead of just sortable.';
+  'Pick any note to read its local cluster without losing the full graph.';
+const FIELD_TOP = 22;
+const FIELD_SIDE = 20;
+const FIELD_GUTTER = 18;
+const FIELD_MIN_SPAN = 88;
+const FIELD_FONT_SIZE = 14;
+const FIELD_LINE_HEIGHT = 20;
+const FIELD_FONT = '500 14px "JetBrains Mono", "SFMono-Regular", Consolas, monospace';
+const MOBILE_FIELD_FONT_SIZE = 12;
+const MOBILE_FIELD_LINE_HEIGHT = 17;
+const MOBILE_FIELD_FONT = '500 12px "JetBrains Mono", "SFMono-Regular", Consolas, monospace';
+const START_CURSOR = Object.freeze({ segmentIndex: 0, graphemeIndex: 0 });
+const FIELD_TERMS = [
+  'GPT-5.4',
+  'GPT-4.1',
+  'GPT-4o',
+  'Claude Opus 4.1',
+  'Claude Sonnet 4.5',
+  'Gemini 2.5 Pro',
+  'Gemini 2.5 Flash',
+  'Llama 4 Maverick',
+  'Llama 3.3 70B',
+  'DeepSeek R1',
+  'Qwen 3',
+  'Mistral Large',
+  'Mixtral',
+  'Command R',
+  'Phi-4',
+  'srsRAN',
+  'OpenAirInterface',
+  'O-RAN SC',
+  'FlexRIC',
+  'Near-RT RIC',
+  'Non-RT RIC',
+  'xApp',
+  'rApp',
+  'E2AP',
+  'E2SM-KPM',
+  'E2SM-RC',
+  'A1',
+  'O1',
+  'F1',
+  'CU',
+  'DU',
+  'RU',
+  'vRAN',
+  'Open RAN',
+  'semantic communications',
+  'beamforming',
+  'scheduler',
+  'MAC',
+  'PHY',
+  'inference',
+  'reasoning',
+  'retrieval',
+  'distillation',
+];
 
 function boot() {
   const stage = document.querySelector(STAGE_SELECTOR);
@@ -38,11 +94,23 @@ async function render(stage, graphUrl) {
 
   const compact = width < COMPACT_BREAKPOINT;
   const sizing = compact
-    ? { minWidth: 112, maxWidth: 164, lineHeight: 19, maxLines: 3, fontSize: 24 }
-    : { minWidth: CARD_MIN_WIDTH, maxWidth: CARD_MAX_WIDTH, lineHeight: CARD_LINE_HEIGHT, maxLines: CARD_MAX_LINES, fontSize: 33 };
+    ? {
+        minWidth: 112,
+        maxWidth: 164,
+        lineHeight: 19,
+        maxLines: 3,
+        fontSize: 24,
+      }
+    : {
+        minWidth: CARD_MIN_WIDTH,
+        maxWidth: CARD_MAX_WIDTH,
+        lineHeight: CARD_LINE_HEIGHT,
+        maxLines: CARD_MAX_LINES,
+        fontSize: 33,
+      };
 
   const sizedNodes = data.nodes
-    .slice(0, compact ? 8 : MAX_NODES)
+    .slice(0, compact ? MOBILE_NODES : MAX_NODES)
     .map(node => sizeNode(node, sizing));
   const filteredLinks = data.links.filter(
     link => sizedNodes.some(node => node.id === link.source) && sizedNodes.some(node => node.id === link.target),
@@ -50,24 +118,22 @@ async function render(stage, graphUrl) {
   const positions = compact
     ? solveCompactLayout(sizedNodes, width)
     : solveLayout(sizedNodes, filteredLinks, width, height);
-  const compactHeight = Math.max(
-    ...Array.from(positions.values()).map(position => position.y + position.h),
-    0,
-  ) + 24;
+  const compactHeight =
+    Math.max(...Array.from(positions.values()).map(position => position.y + position.h), 0) + 24;
 
   stage.textContent = '';
   stage.style.height = compact ? `${compactHeight}px` : '';
 
-  const particles = document.createElement('div');
-  particles.className = 'note-web-particles';
-  stage.appendChild(particles);
+  const sceneHeight = compact ? compactHeight : height;
+
+  const textLayer = document.createElement('div');
+  textLayer.className = 'note-web-text-layer';
+  stage.appendChild(textLayer);
 
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('class', 'note-web-svg');
-  svg.setAttribute('viewBox', `0 0 ${width} ${compact ? compactHeight : height}`);
+  svg.setAttribute('viewBox', `0 0 ${width} ${sceneHeight}`);
   stage.appendChild(svg);
-
-  renderParticles(particles, width, compact ? compactHeight : height);
 
   const fragment = document.createDocumentFragment();
   const nodeById = new Map();
@@ -76,12 +142,16 @@ async function render(stage, graphUrl) {
   const state = {
     compact,
     width,
-    height: compact ? compactHeight : height,
+    height: sceneHeight,
+    textLayer,
+    textPreparedDesktop: prepareWithSegments(buildFieldText(false), FIELD_FONT),
+    textPreparedMobile: prepareWithSegments(buildFieldText(true), MOBILE_FIELD_FONT),
     nodes: sizedNodes.map(node => ({ ...node, position: positions.get(node.id) })),
     links: filteredLinks,
     svgLines: lines,
     activeId: '',
     dragging: null,
+    skipClickId: '',
   };
 
   for (const link of filteredLinks) {
@@ -127,7 +197,7 @@ async function render(stage, graphUrl) {
       title: active.title,
       copy:
         neighbors.size > 0
-          ? `${neighbors.size} connected note${neighbors.size === 1 ? '' : 's'} around this node.`
+          ? `${neighbors.size} connected note${neighbors.size === 1 ? '' : 's'} around this cluster.`
           : 'No local links in the current subset.',
       href: active.url,
       hidden: false,
@@ -178,6 +248,13 @@ async function render(stage, graphUrl) {
     card.addEventListener('pointerleave', clearActive);
     card.addEventListener('blur', clearActive);
     card.addEventListener('pointerdown', event => startDrag(event, node.id));
+    card.addEventListener('click', () => {
+      if (state.skipClickId === node.id) {
+        state.skipClickId = '';
+        return;
+      }
+      window.location.href = node.url;
+    });
 
     node.el = card;
     nodeById.set(node.id, node);
@@ -191,12 +268,14 @@ async function render(stage, graphUrl) {
     const node = nodeById.get(nodeId);
     if (!node) return;
     const rect = node.el.getBoundingClientRect();
-    const stageRect = stage.getBoundingClientRect();
     state.dragging = {
       id: nodeId,
       pointerId: event.pointerId,
       offsetX: event.clientX - rect.left,
       offsetY: event.clientY - rect.top,
+      startClientX: event.clientX,
+      startClientY: event.clientY,
+      moved: false,
     };
     node.el.setPointerCapture?.(event.pointerId);
     setActive(nodeId);
@@ -206,9 +285,14 @@ async function render(stage, graphUrl) {
   stage.addEventListener('pointermove', event => {
     if (!state.dragging || state.dragging.pointerId !== event.pointerId) return;
     const node = nodeById.get(state.dragging.id);
-    const stageRect = stage.getBoundingClientRect();
-    const x = event.clientX - stageRect.left - state.dragging.offsetX;
-    const y = event.clientY - stageRect.top - state.dragging.offsetY;
+    if (!node) return;
+    const x = event.clientX - stage.getBoundingClientRect().left - state.dragging.offsetX;
+    const y = event.clientY - stage.getBoundingClientRect().top - state.dragging.offsetY;
+    if (
+      Math.hypot(event.clientX - state.dragging.startClientX, event.clientY - state.dragging.startClientY) > 4
+    ) {
+      state.dragging.moved = true;
+    }
     node.position.x = clamp(x, 18, state.width - node.w - 18);
     node.position.y = clamp(y, 18, state.height - node.h - 18);
     renderScene(state, neighborMap);
@@ -218,7 +302,14 @@ async function render(stage, graphUrl) {
     if (!state.dragging || state.dragging.pointerId !== event.pointerId) return;
     const node = nodeById.get(state.dragging.id);
     node?.el.releasePointerCapture?.(event.pointerId);
+    const moved = state.dragging.moved;
+    const dragId = state.dragging.id;
     state.dragging = null;
+    if (!moved) {
+      setActive(node?.id || '');
+    } else {
+      state.skipClickId = dragId;
+    }
   };
 
   stage.addEventListener('pointerup', endDrag);
@@ -226,14 +317,99 @@ async function render(stage, graphUrl) {
 }
 
 function renderScene(state, neighborMap) {
+  renderText(state);
   renderLines(state);
+  const activeNeighbors = state.activeId ? neighborMap.get(state.activeId) || new Set() : new Set();
+
   for (const node of state.nodes) {
     node.el.style.transform = `translate(${node.position.x}px, ${node.position.y}px)`;
-    node.el.classList.toggle(
-      'is-active',
-      state.activeId === node.id || (state.activeId && (neighborMap.get(state.activeId) || new Set()).has(node.id)),
-    );
+    node.el.classList.toggle('is-active', state.activeId === node.id || activeNeighbors.has(node.id));
   }
+}
+
+function renderText(state) {
+  const lineHeight = state.compact ? MOBILE_FIELD_LINE_HEIGHT : FIELD_LINE_HEIGHT;
+  const fontSize = state.compact ? MOBILE_FIELD_FONT_SIZE : FIELD_FONT_SIZE;
+  const prepared = state.compact ? state.textPreparedMobile : state.textPreparedDesktop;
+  const rows = Math.floor((state.height - FIELD_TOP * 2) / lineHeight);
+  const fragment = document.createDocumentFragment();
+  let cursor = START_CURSOR;
+
+  for (let row = 0; row < rows; row += 1) {
+    const y = FIELD_TOP + row * lineHeight;
+    const spans = buildSpans(state.nodes, y, lineHeight, state.width, state.compact);
+    for (const span of spans) {
+      let line = layoutNextLine(prepared, cursor, span.width);
+      if (line === null) {
+        cursor = START_CURSOR;
+        line = layoutNextLine(prepared, cursor, span.width);
+      }
+      if (line === null || line.text.trim().length === 0) continue;
+      const element = document.createElement('span');
+      element.className = 'note-web-text-line';
+      element.textContent = line.text;
+      element.style.left = `${span.x}px`;
+      element.style.top = `${y}px`;
+      element.style.fontSize = `${fontSize}px`;
+      fragment.appendChild(element);
+      cursor = line.end;
+    }
+  }
+
+  state.textLayer.replaceChildren(fragment);
+}
+
+function buildSpans(nodes, y, lineHeight, width, compact) {
+  const bandTop = y - 4;
+  const bandBottom = y + lineHeight + 4;
+  const padding = compact ? 10 : FIELD_GUTTER;
+  const minX = FIELD_SIDE;
+  const maxX = width - FIELD_SIDE;
+  const intervals = [];
+
+  for (const node of nodes) {
+    const top = node.position.y - padding;
+    const bottom = node.position.y + node.h + padding;
+    if (bottom <= bandTop || top >= bandBottom) continue;
+    intervals.push({
+      start: clamp(node.position.x - padding, minX, maxX),
+      end: clamp(node.position.x + node.w + padding, minX, maxX),
+    });
+  }
+
+  intervals.sort((a, b) => a.start - b.start);
+  const merged = [];
+  for (const interval of intervals) {
+    const last = merged.at(-1);
+    if (!last || interval.start > last.end) {
+      merged.push({ ...interval });
+    } else {
+      last.end = Math.max(last.end, interval.end);
+    }
+  }
+
+  const spans = [];
+  let cursor = minX;
+  for (const interval of merged) {
+    if (interval.start - cursor >= FIELD_MIN_SPAN) {
+      spans.push({ x: cursor, width: interval.start - cursor });
+    }
+    cursor = Math.max(cursor, interval.end);
+  }
+  if (maxX - cursor >= FIELD_MIN_SPAN) {
+    spans.push({ x: cursor, width: maxX - cursor });
+  }
+  return spans;
+}
+
+function buildFieldText(compact) {
+  const separator = compact ? ' · ' : '  ·  ';
+  const targetLength = compact ? 1400 : 3200;
+  let text = '';
+  while (text.length < targetLength) {
+    text += `${FIELD_TERMS.join(separator)}${separator}`;
+  }
+  return text;
 }
 
 function renderLines(state) {
@@ -246,28 +422,6 @@ function renderLines(state) {
     linkEl.setAttribute('x2', `${target.position.x + target.w / 2}`);
     linkEl.setAttribute('y2', `${target.position.y + target.h / 2}`);
   }
-}
-
-function renderParticles(container, width, height) {
-  container.textContent = '';
-  const fragment = document.createDocumentFragment();
-  const columns = width < COMPACT_BREAKPOINT ? 6 : 8;
-  const rows = Math.max(3, Math.floor(PARTICLE_COUNT / columns));
-
-  for (let i = 0; i < PARTICLE_COUNT; i += 1) {
-    const particle = document.createElement('span');
-    particle.className = 'note-web-particle';
-    const column = i % columns;
-    const row = Math.floor(i / columns);
-    const x = 18 + ((width - 36) / Math.max(columns - 1, 1)) * column;
-    const y = 18 + ((height - 36) / Math.max(rows, 1)) * row;
-    particle.style.left = `${x}px`;
-    particle.style.top = `${y}px`;
-    particle.style.animationDelay = `${(i % 7) * 0.45}s`;
-    fragment.appendChild(particle);
-  }
-
-  container.appendChild(fragment);
 }
 
 function buildSubset(graph) {
@@ -358,9 +512,9 @@ function sizeNode(node, sizing) {
 
 function solveLayout(nodes, links, width, height) {
   const positions = new Map();
-  const centerX = width * 0.68;
-  const centerY = height * 0.48;
-  const radius = Math.min(width, height) * 0.18;
+  const centerX = width * 0.52;
+  const centerY = height * 0.5;
+  const radius = Math.min(width, height) * 0.24;
 
   nodes.forEach((node, index) => {
     const angle = (Math.PI * 2 * index) / nodes.length - Math.PI / 2;
@@ -410,7 +564,7 @@ function solveLayout(nodes, links, width, height) {
       let dx = target.x + target.w / 2 - (source.x + source.w / 2);
       let dy = target.y + target.h / 2 - (source.y + source.h / 2);
       const dist = Math.max(Math.hypot(dx, dy), 1);
-      const desired = 150;
+      const desired = 170;
       const force = (dist - desired) * 0.0032;
       dx /= dist;
       dy /= dist;
@@ -428,7 +582,7 @@ function solveLayout(nodes, links, width, height) {
       position.vy += (centerY - cy) * 0.001;
       position.x += position.vx;
       position.y += position.vy;
-      position.x = clamp(position.x, width * 0.38, width - position.w - 22);
+      position.x = clamp(position.x, 22, width - position.w - 22);
       position.y = clamp(position.y, 22, height - position.h - 22);
     }
   }
