@@ -5361,7 +5361,9 @@ fn extract_excerpt(markdown: &str, max_chars: usize) -> String {
         })
         .to_string();
 
-    let stripped = rewritten
+    let without_html = HTML_TAG_RE.replace_all(&rewritten, " ").to_string();
+
+    let stripped = without_html
         .lines()
         .map(|line| line.trim())
         .filter(|line| !line.is_empty())
@@ -5593,6 +5595,19 @@ mod tests {
         assert!(excerpt.contains("seo performance guide"));
         assert!(!excerpt.contains('|'));
         assert!(!excerpt.contains("[["));
+    }
+
+    #[test]
+    fn extract_excerpt_strips_html_tags() {
+        let excerpt = extract_excerpt(
+            r#"<section class="news"><h1>Daily AI News</h1><p>Signals stay coherent.</p></section>"#,
+            180,
+        );
+
+        assert!(excerpt.contains("Daily AI News"));
+        assert!(excerpt.contains("Signals stay coherent."));
+        assert!(!excerpt.contains("<section"));
+        assert!(!excerpt.contains("</p>"));
     }
 
     #[test]
