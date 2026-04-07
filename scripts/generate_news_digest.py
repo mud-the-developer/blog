@@ -54,6 +54,16 @@ SOURCE_LABELS = {
     "endigest.dev": "Endigest",
 }
 
+SOURCE_MARKS = {
+    "github.com": "GH",
+    "arxiv.org": "ARX",
+    "huggingface.co": "HF",
+    "x.com": "X",
+    "linkedin.com": "in",
+    "geeknews": "GN",
+    "endigest.dev": "ED",
+}
+
 SOCIAL_SOURCES = {"x.com", "linkedin.com", "geeknews", "endigest.dev"}
 
 SOURCE_SCORE_BONUS = {
@@ -225,6 +235,21 @@ def render_card_image(card: NewsItem) -> str:
         'loading="lazy" decoding="async" referrerpolicy="no-referrer" '
         f'onerror="this.onerror=null;this.src=\'{safe_text(fallback)}\';" />'
     )
+
+
+def source_mark(source: str) -> str:
+    return SOURCE_MARKS.get(source, "•")
+
+
+def source_class_suffix_from_source(source: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", source.lower()).strip("-") or "source"
+
+
+def meta_without_source(meta: str, source: str) -> str:
+    prefix = f"{source_label(source)} · "
+    if meta.startswith(prefix):
+        return meta[len(prefix) :]
+    return meta
 
 
 def clean_title(value: str) -> str:
@@ -730,15 +755,22 @@ def render_digest_card_lines(card: NewsItem, *, extra_classes: str = "") -> list
         card_classes += f" {extra_classes}"
 
     badge_suffix = badge_class_suffix(card.badge)
+    source_suffix = source_class_suffix_from_source(card.source)
+    source_name = source_label(card.source)
     return [
         f'      <a class="{card_classes}" href="{safe_text(card.url)}" target="_blank" rel="noreferrer">',
-        f"        {render_card_image(card)}",
         '        <div class="news-digest-card-copy">',
-        '          <div class="news-digest-card-eyebrow">',
+        '          <div class="news-digest-card-topline">',
+        f'            <span class="news-digest-source-chip news-digest-source-chip--{source_suffix}">',
+        f'              <span class="news-digest-source-mark" aria-hidden="true">{safe_text(source_mark(card.source))}</span>',
+        f'              <span class="news-digest-source-label">{safe_text(source_name)}</span>',
+        "            </span>",
         f'            <span class="news-digest-card-badge news-digest-card-badge--{badge_suffix}">{safe_text(card.badge)}</span>',
-        f'            <span class="news-digest-card-meta">{safe_text(card.meta)}</span>',
         "          </div>",
-        f"          <h3>{safe_text(card.headline or card.title)}</h3>",
+        '          <div class="news-digest-card-eyebrow">',
+        f'            <span class="news-digest-card-meta">{safe_text(meta_without_source(card.meta, card.source))}</span>',
+        "          </div>",
+        f'          <h3 data-pretext-target>{safe_text(card.headline or card.title)}</h3>',
         f'          <p class="news-digest-card-deck">{safe_text(card.deck)}</p>',
         "        </div>",
         "      </a>",

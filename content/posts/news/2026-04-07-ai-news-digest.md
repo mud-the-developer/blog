@@ -139,46 +139,66 @@ content-classes: [news-digest-note]
     </header>
     <div class="news-digest-top-grid">
       <a class="news-digest-card news-digest-card--repo news-digest-top-card" href="https://github.com/comet-ml/opik" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/comet-ml/opik" alt="comet-ml/opik — Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--github">
+              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
+              <span class="news-digest-source-label">GitHub</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 18673 stars · +141/7d · created 1062d ago · updated 1h ago · signal 10.08</span>
           </div>
-          <h3>comet-ml/opik</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">18673 stars · +141/7d · created 1062d ago · updated 1h ago · signal 10.08</span>
+          </div>
+          <h3 data-pretext-target>comet-ml/opik</h3>
           <p class="news-digest-card-deck">Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards. Updated 1h ago. 18…</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--paper news-digest-top-card" href="https://huggingface.co/papers/2603.27183" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.27183.png" alt="Communicating about Space: Language-Mediated Spatial Integration Across Partial Views" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--hugging-face-papers">
+              <span class="news-digest-source-mark" aria-hidden="true">HF</span>
+              <span class="news-digest-source-label">Hugging Face Papers</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 1h ago · signal 7.03</span>
           </div>
-          <h3>Communicating about Space: Language-Mediated Spatial Integration Across Partial Views</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">1h ago · signal 7.03</span>
+          </div>
+          <h3 data-pretext-target>Communicating about Space: Language-Mediated Spatial Integration Across Partial Views</h3>
           <p class="news-digest-card-deck">MLLMs demonstrate limited capability in collaborative spatial communication tasks, achieving only 72% accuracy compared to humans&#x27; 95%, with models struggling to build consistent shared men…</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--social news-digest-top-card" href="https://news.google.com/rss/articles/CBMiZkFVX3lxTE9BVFFGZm9IMkhTMzFGQTNNdnJTUWExYjV2ampBR09DaXQydGFXYmtEY2ZQYkRpUElqbUhvNmFpOHZ2UmlsYzBaN3pubEU5S2ZneEd1X0psU05qRE14ZXVHdlVuWE5GZw?oc=5" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Meet Gemma 4: our new family of open models you can run on your own hardware. Built for advanced reasoning and agentic workflows, we’re releasing them under an Apache 2.0 license. Here’s what’s new 🧵" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--x">
+              <span class="news-digest-source-mark" aria-hidden="true">X</span>
+              <span class="news-digest-source-label">X</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">X · 3d ago · signal 4.21</span>
           </div>
-          <h3>Meet Gemma 4: our new family of open models you can run on your own hardware.</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">3d ago · signal 4.21</span>
+          </div>
+          <h3 data-pretext-target>Meet Gemma 4: our new family of open models you can run on your own hardware.</h3>
           <p class="news-digest-card-deck">Community signal picked up on X 3d ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--paper news-digest-top-card" href="http://arxiv.org/abs/2604.03074v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Speaker-Reasoner: Scaling Interaction Turns and Reasoning Patterns for Timestamped Speaker-Attributed ASR" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--arxiv">
+              <span class="news-digest-source-mark" aria-hidden="true">ARX</span>
+              <span class="news-digest-source-label">arXiv</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">arXiv · 3d ago · signal 3.35</span>
           </div>
-          <h3>Speaker-Reasoner: Scaling Interaction Turns and Reasoning Patterns for Timestamped Speaker-Attr…</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">3d ago · signal 3.35</span>
+          </div>
+          <h3 data-pretext-target>Speaker-Reasoner: Scaling Interaction Turns and Reasoning Patterns for Timestamped Speaker-Attr…</h3>
           <p class="news-digest-card-deck">Fresh arXiv paper posted 3d ago and surfacing in the current feed.</p>
         </div>
       </a>
@@ -193,46 +213,66 @@ content-classes: [news-digest-note]
     <p class="news-digest-section-description" data-pretext-target>The fastest-moving items across repos, papers, and community chatter.</p>
     <div class="news-digest-grid">
       <a class="news-digest-card news-digest-card--repo" href="https://github.com/comet-ml/opik" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/comet-ml/opik" alt="comet-ml/opik — Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--github">
+              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
+              <span class="news-digest-source-label">GitHub</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 18673 stars · +141/7d · created 1062d ago · updated 1h ago · signal 10.08</span>
           </div>
-          <h3>comet-ml/opik</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">18673 stars · +141/7d · created 1062d ago · updated 1h ago · signal 10.08</span>
+          </div>
+          <h3 data-pretext-target>comet-ml/opik</h3>
           <p class="news-digest-card-deck">Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards. Updated 1h ago. 18…</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--repo" href="https://github.com/study8677/antigravity-workspace-template" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/study8677/antigravity-workspace-template" alt="study8677/antigravity-workspace-template — 🪐 The ultimate starter kit for AI IDEs, Claude code，codex, and other agentic coding environments." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--github">
+              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
+              <span class="news-digest-source-label">GitHub</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 1103 stars · +32/7d · created 138d ago · updated 2h ago · signal 9.03</span>
           </div>
-          <h3>study8677/antigravity-workspace-template</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">1103 stars · +32/7d · created 138d ago · updated 2h ago · signal 9.03</span>
+          </div>
+          <h3 data-pretext-target>study8677/antigravity-workspace-template</h3>
           <p class="news-digest-card-deck">🪐 The ultimate starter kit for AI IDEs, Claude code，codex, and other agentic coding environments. Updated 2h ago. 1103 stars, +32/7d, created 138d ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--paper" href="https://huggingface.co/papers/2603.27183" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.27183.png" alt="Communicating about Space: Language-Mediated Spatial Integration Across Partial Views" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--hugging-face-papers">
+              <span class="news-digest-source-mark" aria-hidden="true">HF</span>
+              <span class="news-digest-source-label">Hugging Face Papers</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 1h ago · signal 7.03</span>
           </div>
-          <h3>Communicating about Space: Language-Mediated Spatial Integration Across Partial Views</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">1h ago · signal 7.03</span>
+          </div>
+          <h3 data-pretext-target>Communicating about Space: Language-Mediated Spatial Integration Across Partial Views</h3>
           <p class="news-digest-card-deck">MLLMs demonstrate limited capability in collaborative spatial communication tasks, achieving only 72% accuracy compared to humans&#x27; 95%, with models struggling to build consistent shared men…</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--paper" href="https://huggingface.co/papers/2604.02870" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.02870.png" alt="Token Warping Helps MLLMs Look from Nearby Viewpoints" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--hugging-face-papers">
+              <span class="news-digest-source-mark" aria-hidden="true">HF</span>
+              <span class="news-digest-source-label">Hugging Face Papers</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 11h ago · signal 6.40</span>
           </div>
-          <h3>Token Warping Helps MLLMs Look from Nearby Viewpoints</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">11h ago · signal 6.40</span>
+          </div>
+          <h3 data-pretext-target>Token Warping Helps MLLMs Look from Nearby Viewpoints</h3>
           <p class="news-digest-card-deck">Token-level warping in vision-language models demonstrates superior stability and semantic coherence for viewpoint transformation compared to pixel-wise methods, achieving better visual rea…</p>
         </div>
       </a>
@@ -247,112 +287,162 @@ content-classes: [news-digest-note]
     <p class="news-digest-section-description" data-pretext-target>Fresh GitHub projects worth scanning before the feed turns over.</p>
     <div class="news-digest-grid">
       <a class="news-digest-card news-digest-card--repo" href="https://github.com/comet-ml/opik" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/comet-ml/opik" alt="comet-ml/opik — Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--github">
+              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
+              <span class="news-digest-source-label">GitHub</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 18673 stars · +141/7d · created 1062d ago · updated 1h ago · signal 10.08</span>
           </div>
-          <h3>comet-ml/opik</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">18673 stars · +141/7d · created 1062d ago · updated 1h ago · signal 10.08</span>
+          </div>
+          <h3 data-pretext-target>comet-ml/opik</h3>
           <p class="news-digest-card-deck">Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards. Updated 1h ago. 18…</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--repo" href="https://github.com/study8677/antigravity-workspace-template" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/study8677/antigravity-workspace-template" alt="study8677/antigravity-workspace-template — 🪐 The ultimate starter kit for AI IDEs, Claude code，codex, and other agentic coding environments." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--github">
+              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
+              <span class="news-digest-source-label">GitHub</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 1103 stars · +32/7d · created 138d ago · updated 2h ago · signal 9.03</span>
           </div>
-          <h3>study8677/antigravity-workspace-template</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">1103 stars · +32/7d · created 138d ago · updated 2h ago · signal 9.03</span>
+          </div>
+          <h3 data-pretext-target>study8677/antigravity-workspace-template</h3>
           <p class="news-digest-card-deck">🪐 The ultimate starter kit for AI IDEs, Claude code，codex, and other agentic coding environments. Updated 2h ago. 1103 stars, +32/7d, created 138d ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--repo" href="https://github.com/block/goose" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/block/goose" alt="block/goose — an open source, extensible AI agent that goes beyond code suggestions - install, execute, edit, and test with any LLM" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--github">
+              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
+              <span class="news-digest-source-label">GitHub</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 37774 stars · +800/7d · created 591d ago · updated 1h ago · signal 8.94</span>
           </div>
-          <h3>block/goose</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">37774 stars · +800/7d · created 591d ago · updated 1h ago · signal 8.94</span>
+          </div>
+          <h3 data-pretext-target>block/goose</h3>
           <p class="news-digest-card-deck">an open source, extensible AI agent that goes beyond code suggestions - install, execute, edit, and test with any LLM. Updated 1h ago. 37774 stars, +800/7d, created 591d ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--repo" href="https://github.com/openai/codex" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/openai/codex" alt="openai/codex — Lightweight coding agent that runs in your terminal" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--github">
+              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
+              <span class="news-digest-source-label">GitHub</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 73433 stars · +800/7d · created 358d ago · updated 1h ago · signal 8.87</span>
           </div>
-          <h3>openai/codex</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">73433 stars · +800/7d · created 358d ago · updated 1h ago · signal 8.87</span>
+          </div>
+          <h3 data-pretext-target>openai/codex</h3>
           <p class="news-digest-card-deck">Lightweight coding agent that runs in your terminal. Updated 1h ago. 73433 stars, +800/7d, created 358d ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--repo" href="https://github.com/trvon/yams" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/trvon/yams" alt="trvon/yams — Persistent memory for LLMs and apps. Content-addressed storage with dedupe, compression, full-text and vector search." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--github">
+              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
+              <span class="news-digest-source-label">GitHub</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 368 stars · +1/7d · created 256d ago · updated 1h ago · signal 7.62</span>
           </div>
-          <h3>trvon/yams</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">368 stars · +1/7d · created 256d ago · updated 1h ago · signal 7.62</span>
+          </div>
+          <h3 data-pretext-target>trvon/yams</h3>
           <p class="news-digest-card-deck">Persistent memory for LLMs and apps. Content-addressed storage with dedupe, compression, full-text and vector search. Updated 1h ago. 368 stars, +1/7d, created 256d ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--repo" href="https://github.com/Ivy-Interactive/Ivy-Framework" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/Ivy-Interactive/Ivy-Framework" alt="Ivy-Interactive/Ivy-Framework — The ultimate framework for building internal tools with LLM code generation by unifying front-end and back-end into a single C# codebase." width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--github">
+              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
+              <span class="news-digest-source-label">GitHub</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 393 stars · +24/7d · created 343d ago · updated 1h ago · signal 7.18</span>
           </div>
-          <h3>Ivy-Interactive/Ivy-Framework</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">393 stars · +24/7d · created 343d ago · updated 1h ago · signal 7.18</span>
+          </div>
+          <h3 data-pretext-target>Ivy-Interactive/Ivy-Framework</h3>
           <p class="news-digest-card-deck">The ultimate framework for building internal tools with LLM code generation by unifying front-end and back-end into a single C# codebase. Updated 1h ago. 393 stars, +24/7d, created 343d ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--repo" href="https://github.com/bostonaholic/reflect" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/bostonaholic/reflect" alt="bostonaholic/reflect — An AI tool to generate your brag document" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--github">
+              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
+              <span class="news-digest-source-label">GitHub</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 36 stars · avg 0.1/day · created 369d ago · updated &lt;1h ago · signal 6.53</span>
           </div>
-          <h3>bostonaholic/reflect</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">36 stars · avg 0.1/day · created 369d ago · updated &lt;1h ago · signal 6.53</span>
+          </div>
+          <h3 data-pretext-target>bostonaholic/reflect</h3>
           <p class="news-digest-card-deck">An AI tool to generate your brag document. Updated &lt;1h ago. 36 stars, avg 0.1/day, created 369d ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--repo" href="https://github.com/wuhangxian/hxinfer" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/wuhangxian/hxinfer" alt="wuhangxian/hxinfer — high-performance LLM inference framework based on C++" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--github">
+              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
+              <span class="news-digest-source-label">GitHub</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 29 stars · avg 0.5/day · created 55d ago · updated &lt;1h ago · signal 6.38</span>
           </div>
-          <h3>wuhangxian/hxinfer</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">29 stars · avg 0.5/day · created 55d ago · updated &lt;1h ago · signal 6.38</span>
+          </div>
+          <h3 data-pretext-target>wuhangxian/hxinfer</h3>
           <p class="news-digest-card-deck">high-performance LLM inference framework based on C++. Updated &lt;1h ago. 29 stars, avg 0.5/day, created 55d ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--repo" href="https://github.com/FabrizioCafolla/openai-crawlers-ip-ranges" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/FabrizioCafolla/openai-crawlers-ip-ranges" alt="FabrizioCafolla/openai-crawlers-ip-ranges — OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--github">
+              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
+              <span class="news-digest-source-label">GitHub</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 23 stars · avg 0.1/day · created 440d ago · updated 6h ago · signal 5.33</span>
           </div>
-          <h3>FabrizioCafolla/openai-crawlers-ip-ranges</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">23 stars · avg 0.1/day · created 440d ago · updated 6h ago · signal 5.33</span>
+          </div>
+          <h3 data-pretext-target>FabrizioCafolla/openai-crawlers-ip-ranges</h3>
           <p class="news-digest-card-deck">OpenAI crawlers IP ranges. Here are the complete and updated lists of OpenAI IP addresses. Updated 6h ago. 23 stars, avg 0.1/day, created 440d ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--repo" href="https://github.com/xiv3r/top-github-users-ranking" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://opengraph.githubassets.com/1/xiv3r/top-github-users-ranking" alt="xiv3r/top-github-users-ranking — Daily github global users ranking" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-repo.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--github">
+              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
+              <span class="news-digest-source-label">GitHub</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-            <span class="news-digest-card-meta">GitHub · 10 stars · avg 0.0/day · created 463d ago · updated &lt;1h ago · signal 4.89</span>
           </div>
-          <h3>xiv3r/top-github-users-ranking</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">10 stars · avg 0.0/day · created 463d ago · updated &lt;1h ago · signal 4.89</span>
+          </div>
+          <h3 data-pretext-target>xiv3r/top-github-users-ranking</h3>
           <p class="news-digest-card-deck">Daily github global users ranking. Updated &lt;1h ago. 10 stars, avg 0.0/day, created 463d ago.</p>
         </div>
       </a>
@@ -367,112 +457,162 @@ content-classes: [news-digest-note]
     <p class="news-digest-section-description" data-pretext-target>New research worth bookmarking for a deeper read.</p>
     <div class="news-digest-grid">
       <a class="news-digest-card news-digest-card--paper" href="https://huggingface.co/papers/2603.27183" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2603.27183.png" alt="Communicating about Space: Language-Mediated Spatial Integration Across Partial Views" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--hugging-face-papers">
+              <span class="news-digest-source-mark" aria-hidden="true">HF</span>
+              <span class="news-digest-source-label">Hugging Face Papers</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 1h ago · signal 7.03</span>
           </div>
-          <h3>Communicating about Space: Language-Mediated Spatial Integration Across Partial Views</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">1h ago · signal 7.03</span>
+          </div>
+          <h3 data-pretext-target>Communicating about Space: Language-Mediated Spatial Integration Across Partial Views</h3>
           <p class="news-digest-card-deck">MLLMs demonstrate limited capability in collaborative spatial communication tasks, achieving only 72% accuracy compared to humans&#x27; 95%, with models struggling to build consistent shared men…</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--paper" href="https://huggingface.co/papers/2604.03016" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.03016.png" alt="Agentic-MME: What Agentic Capability Really Brings to Multimodal Intelligence?" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--hugging-face-papers">
+              <span class="news-digest-source-mark" aria-hidden="true">HF</span>
+              <span class="news-digest-source-label">Hugging Face Papers</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 15h ago · signal 6.68</span>
           </div>
-          <h3>Agentic-MME: What Agentic Capability Really Brings to Multimodal Intelligence?</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">15h ago · signal 6.68</span>
+          </div>
+          <h3 data-pretext-target>Agentic-MME: What Agentic Capability Really Brings to Multimodal Intelligence?</h3>
           <p class="news-digest-card-deck">A new benchmark evaluates multimodal agentic capabilities by verifying tool usage and process efficiency rather than just final answers, revealing significant challenges in real-world multi…</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--paper" href="https://huggingface.co/papers/2604.01487" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.01487.png" alt="AgentSocialBench: Evaluating Privacy Risks in Human-Centered Agentic Social Networks" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--hugging-face-papers">
+              <span class="news-digest-source-mark" aria-hidden="true">HF</span>
+              <span class="news-digest-source-label">Hugging Face Papers</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 6h ago · signal 6.54</span>
           </div>
-          <h3>AgentSocialBench: Evaluating Privacy Risks in Human-Centered Agentic Social Networks</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">6h ago · signal 6.54</span>
+          </div>
+          <h3 data-pretext-target>AgentSocialBench: Evaluating Privacy Risks in Human-Centered Agentic Social Networks</h3>
           <p class="news-digest-card-deck">Human-centered agentic social networks pose unique privacy challenges where multi-agent coordination and information mediation create persistent leakage pressures despite explicit privacy p…</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--paper" href="https://huggingface.co/papers/2604.02870" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.02870.png" alt="Token Warping Helps MLLMs Look from Nearby Viewpoints" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--hugging-face-papers">
+              <span class="news-digest-source-mark" aria-hidden="true">HF</span>
+              <span class="news-digest-source-label">Hugging Face Papers</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 11h ago · signal 6.40</span>
           </div>
-          <h3>Token Warping Helps MLLMs Look from Nearby Viewpoints</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">11h ago · signal 6.40</span>
+          </div>
+          <h3 data-pretext-target>Token Warping Helps MLLMs Look from Nearby Viewpoints</h3>
           <p class="news-digest-card-deck">Token-level warping in vision-language models demonstrates superior stability and semantic coherence for viewpoint transformation compared to pixel-wise methods, achieving better visual rea…</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--paper" href="https://huggingface.co/papers/2604.00356" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.00356.png" alt="Signals: Trajectory Sampling and Triage for Agentic Interactions" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--hugging-face-papers">
+              <span class="news-digest-source-mark" aria-hidden="true">HF</span>
+              <span class="news-digest-source-label">Hugging Face Papers</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 3d ago · up 28 · signal 5.73</span>
           </div>
-          <h3>Signals: Trajectory Sampling and Triage for Agentic Interactions</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">3d ago · up 28 · signal 5.73</span>
+          </div>
+          <h3 data-pretext-target>Signals: Trajectory Sampling and Triage for Agentic Interactions</h3>
           <p class="news-digest-card-deck">A signal-based framework for efficiently triaging agentic interaction trajectories by computing low-cost indicators that identify informative samples without impacting online agent behavior…</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--paper" href="https://huggingface.co/papers/2604.03144" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.03144.png" alt="InCoder-32B-Thinking: Industrial Code World Model for Thinking" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--hugging-face-papers">
+              <span class="news-digest-source-mark" aria-hidden="true">HF</span>
+              <span class="news-digest-source-label">Hugging Face Papers</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">Hugging Face Papers · 15h ago · signal 5.47</span>
           </div>
-          <h3>InCoder-32B-Thinking: Industrial Code World Model for Thinking</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">15h ago · signal 5.47</span>
+          </div>
+          <h3 data-pretext-target>InCoder-32B-Thinking: Industrial Code World Model for Thinking</h3>
           <p class="news-digest-card-deck">Industrial software development lacks expert reasoning traces for hardware constraints, so a model was trained on error-driven reasoning chains and domain-specific execution traces to gener…</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--paper" href="http://arxiv.org/abs/2604.03201v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Coupled Control, Structured Memory, and Verifiable Action in Agentic AI (SCRAT -- Stochastic Control with Retrieval and Auditable Trajectories): A Comparative Perspective from Squirrel Locomotion and Scatter-Hoarding" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--arxiv">
+              <span class="news-digest-source-mark" aria-hidden="true">ARX</span>
+              <span class="news-digest-source-label">arXiv</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">arXiv · 3d ago · signal 4.09</span>
           </div>
-          <h3>Coupled Control, Structured Memory, and Verifiable Action in Agentic AI (SCRAT -- Stochastic Co…</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">3d ago · signal 4.09</span>
+          </div>
+          <h3 data-pretext-target>Coupled Control, Structured Memory, and Verifiable Action in Agentic AI (SCRAT -- Stochastic Co…</h3>
           <p class="news-digest-card-deck">Fresh arXiv paper from the ai cluster, posted 3d ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--paper" href="http://arxiv.org/abs/2604.02945v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="MSAO: Adaptive Modality Sparsity-Aware Offloading with Edge-Cloud Collaboration for Efficient Multimodal LLM Inference" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--arxiv">
+              <span class="news-digest-source-mark" aria-hidden="true">ARX</span>
+              <span class="news-digest-source-label">arXiv</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">arXiv · 3d ago · signal 3.65</span>
           </div>
-          <h3>MSAO: Adaptive Modality Sparsity-Aware Offloading with Edge-Cloud Collaboration for Efficient M…</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">3d ago · signal 3.65</span>
+          </div>
+          <h3 data-pretext-target>MSAO: Adaptive Modality Sparsity-Aware Offloading with Edge-Cloud Collaboration for Efficient M…</h3>
           <p class="news-digest-card-deck">Fresh arXiv paper from the ai cluster, posted 3d ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--paper" href="http://arxiv.org/abs/2604.03074v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Speaker-Reasoner: Scaling Interaction Turns and Reasoning Patterns for Timestamped Speaker-Attributed ASR" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--arxiv">
+              <span class="news-digest-source-mark" aria-hidden="true">ARX</span>
+              <span class="news-digest-source-label">arXiv</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">arXiv · 3d ago · signal 3.35</span>
           </div>
-          <h3>Speaker-Reasoner: Scaling Interaction Turns and Reasoning Patterns for Timestamped Speaker-Attr…</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">3d ago · signal 3.35</span>
+          </div>
+          <h3 data-pretext-target>Speaker-Reasoner: Scaling Interaction Turns and Reasoning Patterns for Timestamped Speaker-Attr…</h3>
           <p class="news-digest-card-deck">Fresh arXiv paper posted 3d ago and surfacing in the current feed.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--paper" href="http://arxiv.org/abs/2604.03145v1" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="Causal Inference for Quantifying Noisy Neighbor Effects in Multi-Tenant Cloud Environments" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-paper.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--arxiv">
+              <span class="news-digest-source-mark" aria-hidden="true">ARX</span>
+              <span class="news-digest-source-label">arXiv</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
-            <span class="news-digest-card-meta">arXiv · 3d ago · signal 3.04</span>
           </div>
-          <h3>Causal Inference for Quantifying Noisy Neighbor Effects in Multi-Tenant Cloud Environments</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">3d ago · signal 3.04</span>
+          </div>
+          <h3 data-pretext-target>Causal Inference for Quantifying Noisy Neighbor Effects in Multi-Tenant Cloud Environments</h3>
           <p class="news-digest-card-deck">Fresh arXiv paper posted 3d ago and surfacing in the current feed.</p>
         </div>
       </a>
@@ -487,112 +627,162 @@ content-classes: [news-digest-note]
     <p class="news-digest-section-description" data-pretext-target>Directional signals from discussion-heavy sources.</p>
     <div class="news-digest-grid">
       <a class="news-digest-card news-digest-card--social" href="https://news.google.com/rss/articles/CBMiZkFVX3lxTE9BVFFGZm9IMkhTMzFGQTNNdnJTUWExYjV2ampBR09DaXQydGFXYmtEY2ZQYkRpUElqbUhvNmFpOHZ2UmlsYzBaN3pubEU5S2ZneEd1X0psU05qRE14ZXVHdlVuWE5GZw?oc=5" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Meet Gemma 4: our new family of open models you can run on your own hardware. Built for advanced reasoning and agentic workflows, we’re releasing them under an Apache 2.0 license. Here’s what’s new 🧵" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--x">
+              <span class="news-digest-source-mark" aria-hidden="true">X</span>
+              <span class="news-digest-source-label">X</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">X · 3d ago · signal 4.21</span>
           </div>
-          <h3>Meet Gemma 4: our new family of open models you can run on your own hardware.</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">3d ago · signal 4.21</span>
+          </div>
+          <h3 data-pretext-target>Meet Gemma 4: our new family of open models you can run on your own hardware.</h3>
           <p class="news-digest-card-deck">Community signal picked up on X 3d ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--social" href="https://news.google.com/rss/articles/CBMiW0FVX3lxTE45cl9aanEzbzZFU3B4NFVqM2dJOHVTdUNveTM5ZGZGa2NvZXU2YWM1ZzNSVHBkQUsxQjIzUXRwWVhvWVhnMlZ3V0JpNThRQ1RMY3Q3ejVxV2NSOWM?oc=5" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="We just released Gemma 4 — our most intelligent open models to date. Built from the same world-class research as Gemini 3, Gemma 4 brings breakthrough intelligence directly to your own hardware for advanced reasoning and agentic workflows. Released" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--x">
+              <span class="news-digest-source-mark" aria-hidden="true">X</span>
+              <span class="news-digest-source-label">X</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">X · 3d ago · signal 3.92</span>
           </div>
-          <h3>We just released Gemma 4 — our most intelligent open models to date.</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">3d ago · signal 3.92</span>
+          </div>
+          <h3 data-pretext-target>We just released Gemma 4 — our most intelligent open models to date.</h3>
           <p class="news-digest-card-deck">Community signal picked up on X 3d ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--social" href="https://news.hada.io/topic?id=28257" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Show GN: ROACH PI – An open source extension that brings engineering discipline to AI coding agents" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--geeknews">
+              <span class="news-digest-source-mark" aria-hidden="true">GN</span>
+              <span class="news-digest-source-label">GeekNews</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">GeekNews · 8h ago · signal 3.84</span>
           </div>
-          <h3>Show GN: ROACH PI – An open source extension that brings engineering discipline to AI coding ag…</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">8h ago · signal 3.84</span>
+          </div>
+          <h3 data-pretext-target>Show GN: ROACH PI – An open source extension that brings engineering discipline to AI coding ag…</h3>
           <p class="news-digest-card-deck">Community signal picked up on GeekNews 8h ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--social" href="https://news.google.com/rss/articles/CBMibEFVX3lxTE5RanpPbVQ0ODFKR0p4d04tZF9KT2taSDhjMFZOajdBZTdQZG92em9hZlNxQTRQQjBESkdmQlVVWnZrQlFlWmpIak4yZ1FqS1J3ZmRnbUdHVFQtdWZ3WlhIQmpuZGpqcTk1MGpSNg?oc=5" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Anthropic made a big change for OpenClaw users yesterday: starting April 4-5, 2026, Claude Pro and Max subscriptions no longer cover usage through third-party tools like OpenClaw. What used to feel like unlimited agentic workflows suddenly became pay-a - twitter.com" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--x">
+              <span class="news-digest-source-mark" aria-hidden="true">X</span>
+              <span class="news-digest-source-label">X</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">X · 3d ago · signal 3.66</span>
           </div>
-          <h3>Anthropic made a big change for OpenClaw users yesterday: starting April 4-5, 2026, Claude Pro…</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">3d ago · signal 3.66</span>
+          </div>
+          <h3 data-pretext-target>Anthropic made a big change for OpenClaw users yesterday: starting April 4-5, 2026, Claude Pro…</h3>
           <p class="news-digest-card-deck">Community signal picked up on X 3d ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--social" href="https://news.hada.io/topic?id=28252" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="If you&#x27;re having a hard time with Claude Blue" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--geeknews">
+              <span class="news-digest-source-mark" aria-hidden="true">GN</span>
+              <span class="news-digest-source-label">GeekNews</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">GeekNews · 10h ago · signal 3.50</span>
           </div>
-          <h3>If you&#x27;re having a hard time with Claude Blue</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">10h ago · signal 3.50</span>
+          </div>
+          <h3 data-pretext-target>If you&#x27;re having a hard time with Claude Blue</h3>
           <p class="news-digest-card-deck">Community signal picked up on GeekNews 10h ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--social" href="https://news.hada.io/topic?id=28242" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Google AI Edge Gallery - Open source completely offline LLM gallery app" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--geeknews">
+              <span class="news-digest-source-mark" aria-hidden="true">GN</span>
+              <span class="news-digest-source-label">GeekNews</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">GeekNews · 14h ago · signal 3.39</span>
           </div>
-          <h3>Google AI Edge Gallery - Open source completely offline LLM gallery app</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">14h ago · signal 3.39</span>
+          </div>
+          <h3 data-pretext-target>Google AI Edge Gallery - Open source completely offline LLM gallery app</h3>
           <p class="news-digest-card-deck">Community signal picked up on GeekNews 14h ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--social" href="https://news.hada.io/topic?id=28245" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="rtk - CLI proxy that reduces LLM token consumption by 60-90%" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--geeknews">
+              <span class="news-digest-source-mark" aria-hidden="true">GN</span>
+              <span class="news-digest-source-label">GeekNews</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">GeekNews · 14h ago · signal 3.20</span>
           </div>
-          <h3>rtk - CLI proxy that reduces LLM token consumption by 60-90%</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">14h ago · signal 3.20</span>
+          </div>
+          <h3 data-pretext-target>rtk - CLI proxy that reduces LLM token consumption by 60-90%</h3>
           <p class="news-digest-card-deck">Community signal picked up on GeekNews 14h ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--social" href="https://news.hada.io/topic?id=28244" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="BrowserStack is leaking user email addresses" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--geeknews">
+              <span class="news-digest-source-mark" aria-hidden="true">GN</span>
+              <span class="news-digest-source-label">GeekNews</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">GeekNews · 14h ago · signal 3.20</span>
           </div>
-          <h3>BrowserStack is leaking user email addresses</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">14h ago · signal 3.20</span>
+          </div>
+          <h3 data-pretext-target>BrowserStack is leaking user email addresses</h3>
           <p class="news-digest-card-deck">Community signal picked up on GeekNews 14h ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--social" href="https://news.hada.io/topic?id=28239" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="8 years of longing, 3 months of completion - the formula for side projects changed by AI" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--geeknews">
+              <span class="news-digest-source-mark" aria-hidden="true">GN</span>
+              <span class="news-digest-source-label">GeekNews</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">GeekNews · 14h ago · signal 3.18</span>
           </div>
-          <h3>8 years of longing, 3 months of completion - the formula for side projects changed by AI</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">14h ago · signal 3.18</span>
+          </div>
+          <h3 data-pretext-target>8 years of longing, 3 months of completion - the formula for side projects changed by AI</h3>
           <p class="news-digest-card-deck">Community signal picked up on GeekNews 14h ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--social" href="https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9tWjBGTlZuOENqcUhjYW9fNGY3S0k3XzhzbU1YTzNoOWpRUWhYcHJ6UXJud0o3bWZfdDFubWtCQUJfQ1U0TzJuOTQ2MV80YzNMNG9waDFKakNzZTdmUkY3LUFfcV9CczA?oc=5" target="_blank" rel="noreferrer">
-        <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="Google has released Gemma 4, four open weights models with multimodality support. The flagship 31B model (39 on the Intelligence Index) uses ~2.5x fewer output tokens than Qwen3.5 27B (Reasoning, 42) but trails it by 3 points on intelligence @GoogleDe" width="1200" height="675" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/news/assets/thumb-ai.svg';" />
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-eyebrow">
+                <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--x">
+              <span class="news-digest-source-mark" aria-hidden="true">X</span>
+              <span class="news-digest-source-label">X</span>
+            </span>
             <span class="news-digest-card-badge news-digest-card-badge--social">Social</span>
-            <span class="news-digest-card-meta">X · 3d ago · signal 3.16</span>
           </div>
-          <h3>Google has released Gemma 4, four open weights models with multimodality support.</h3>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">3d ago · signal 3.16</span>
+          </div>
+          <h3 data-pretext-target>Google has released Gemma 4, four open weights models with multimodality support.</h3>
           <p class="news-digest-card-deck">Community signal picked up on X 3d ago.</p>
         </div>
       </a>
