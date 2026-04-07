@@ -19,7 +19,7 @@ use serde_json::json;
 use serde_yaml::Value as YamlValue;
 use slug::slugify;
 use std::cmp::Ordering;
-use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet, VecDeque};
+use std::collections::{BTreeMap, HashMap, HashSet, VecDeque};
 use std::fmt::Write as _;
 use std::fs;
 use std::panic::{catch_unwind, AssertUnwindSafe};
@@ -616,15 +616,9 @@ struct PostCard {
 }
 
 #[derive(Debug, Clone)]
-struct FolderSummary {
-    name: String,
-}
-
-#[derive(Debug, Clone)]
 struct TagEntry {
     name: String,
     slug: String,
-    count: usize,
 }
 
 #[derive(Debug, Clone)]
@@ -663,11 +657,8 @@ struct Backlink {
 #[template(path = "index.html")]
 struct IndexTemplate {
     layout: LayoutContext,
-    total_notes: usize,
     featured_posts: Vec<PostCard>,
     news_spotlight: Option<HomeNewsSpotlight>,
-    tags: Vec<TagEntry>,
-    folders: Vec<FolderSummary>,
 }
 
 #[derive(Template)]
@@ -1010,7 +1001,7 @@ fn render_posts(
 fn render_index(
     config: &BuildConfig,
     posts: &[Post],
-    tags: &[TagEntry],
+    _tags: &[TagEntry],
     theme_assets: &ThemeAssets,
     asset_version: &str,
 ) -> Result<()> {
@@ -1041,7 +1032,6 @@ fn render_index(
         .collect();
     visible_posts.sort_by(|a, b| sort_posts_by_recency(a, b));
 
-    let total_notes = visible_posts.len();
     let featured_posts = visible_posts
         .iter()
         .copied()
@@ -1049,16 +1039,12 @@ fn render_index(
         .take(8)
         .map(post_to_card)
         .collect();
-    let folders = build_folder_summaries(posts);
     let news_spotlight = load_generated_news_hub_data(posts)?.and_then(build_home_news_spotlight);
 
     let template = IndexTemplate {
         layout,
-        total_notes,
         featured_posts,
         news_spotlight,
-        tags: tags.to_vec(),
-        folders,
     };
 
     write_file(config.output_dir.join("index.html"), template.render()?)
@@ -4170,11 +4156,10 @@ fn build_tag_index(posts: &[Post]) -> Vec<TagEntry> {
     }
 
     counts
-        .into_iter()
-        .map(|(name, count)| TagEntry {
+        .into_keys()
+        .map(|name| TagEntry {
             slug: slugify(&name),
             name,
-            count,
         })
         .collect()
 }
@@ -4200,7 +4185,6 @@ fn post_to_card(post: &Post) -> PostCard {
             .map(|tag| TagEntry {
                 slug: slugify(tag),
                 name: tag.clone(),
-                count: 0,
             })
             .collect(),
     }
@@ -4278,27 +4262,6 @@ fn is_news_digest_post(post: &Post) -> bool {
             .tags
             .iter()
             .any(|tag| tag.eq_ignore_ascii_case("news-digest"))
-}
-
-fn build_folder_summaries(posts: &[Post]) -> Vec<FolderSummary> {
-    let mut names: BTreeSet<String> = BTreeSet::new();
-
-    for post in posts
-        .iter()
-        .filter(|post| !post.hidden && !is_news_digest_post(post))
-    {
-        if let Some((folder, _)) = post.slug.split_once('/') {
-            let trimmed = folder.trim();
-            if !trimmed.is_empty() {
-                names.insert(trimmed.to_string());
-            }
-        }
-    }
-
-    names
-        .into_iter()
-        .map(|name| FolderSummary { name })
-        .collect()
 }
 
 #[allow(clippy::too_many_arguments)]

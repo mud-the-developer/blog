@@ -6,54 +6,123 @@
 
 {% block content %}
   <div class="site-main-stack site-main-stack--home">
-    <section class="panel home-intro-panel">
-      <div class="home-intro-grid">
-        <div class="home-intro-copy">
-          <p class="section-kicker">Interaction web</p>
-          <h1 class="home-intro-title">Browse every markdown note as a living web.</h1>
-          <p class="home-intro-deck">Pretext handles the note labels and card sizing; hover a note to trace its neighbors and jump directly into the writing.</p>
-          <div class="hero-actions">
-            <a class="button button--primary" href="/graph/">Open full graph</a>
-            <a class="button" href="/news/">Open latest digest</a>
+    <section class="panel home-hero-card">
+      <div class="home-hero-top">
+        <div class="home-hero-copy">
+          <p class="section-kicker">Product systems · connected notes · front-end craft</p>
+          <h1 class="home-hero-title" data-pretext-target>Connected notes, daily AI radar, and research writing that stay coherent.</h1>
+          <p class="home-hero-deck">This blog is where design-system thinking, AI papers, semantic communications, and daily signal tracking are organized into a single readable archive.</p>
+          <div class="home-signal-tags" aria-label="Focus areas">
+            <span class="signal-chip signal-chip--yellow">Connected notes</span>
+            <span class="signal-chip signal-chip--violet">Daily AI radar</span>
+            <span class="signal-chip signal-chip--blue">Research synthesis</span>
+            <span class="signal-chip signal-chip--green">Systems thinking</span>
           </div>
         </div>
 
-        <div class="home-intro-meta">
-          <dl class="home-intro-stats" aria-label="Garden statistics">
-            <div class="home-intro-stat">
-              <dt>Notes</dt>
-              <dd>{{ total_notes }}</dd>
+        <aside class="home-profile-card">
+          <div class="pixel-frame" aria-hidden="true">
+            <div class="pixel-avatar">
+              <span class="pixel-row pixel-row--1"></span>
+              <span class="pixel-row pixel-row--2"></span>
+              <span class="pixel-row pixel-row--3"></span>
+              <span class="pixel-row pixel-row--4"></span>
+              <span class="pixel-row pixel-row--5"></span>
+              <span class="pixel-row pixel-row--6"></span>
             </div>
-            <div class="home-intro-stat">
-              <dt>Tags</dt>
-              <dd>{{ tags.len() }}</dd>
-            </div>
-            <div class="home-intro-stat">
-              <dt>Folders</dt>
-              <dd>{{ folders.len() }}</dd>
-            </div>
-            <div class="home-intro-stat">
-              <dt>Search</dt>
-              <dd>{% if layout.show_search %}On{% else %}Off{% endif %}</dd>
-            </div>
-          </dl>
+          </div>
+          <p class="home-profile-copy">Jinhyuk Kim — PhD research, semantic communications, LLMs, and connected writing.</p>
+          <a class="button button--compact" href="/notes/jinhyuk-kim/">Sobre mim / About</a>
+        </aside>
+      </div>
 
-          {% if let Some(news) = news_spotlight %}
-          <section class="home-issue-card">
-            <p class="section-kicker">Current issue</p>
-            <h2>{{ news.issue_label }}</h2>
-            <p class="home-issue-summary">{{ news.summary }}</p>
-            <a class="button button--compact" href="{{ news.url }}">Read digest</a>
-          </section>
-          {% endif %}
+      <div class="home-capability-grid">
+        <article class="capability-card">
+          <p class="capability-icon">◷</p>
+          <h2>Reading surfaces</h2>
+          <p>Long-form note pages tuned for research writing, backlinks, and structured references.</p>
+        </article>
+        <article class="capability-card">
+          <p class="capability-icon">⌘</p>
+          <h2>Interaction web</h2>
+          <p>Pretext-sized note cards reveal the local graph without sending the layout into chaos.</p>
+        </article>
+        <article class="capability-card">
+          <p class="capability-icon">⌂</p>
+          <h2>Daily radar</h2>
+          <p>News digests keep repo, paper, and community signals tied back to the broader notebook.</p>
+        </article>
+        <article class="capability-card">
+          <p class="capability-icon">✶</p>
+          <h2>Systematic archive</h2>
+          <p>Tags, folders, and graph navigation keep the site useful as the note count grows.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel home-highlight-panel">
+      <div class="section-head-inline">
+        <div>
+          <p class="section-kicker">Highlights</p>
+          <h2>Selected notes and current issue</h2>
         </div>
+      </div>
+      <div class="home-highlight-grid">
+        {% if let Some(news) = news_spotlight %}
+        <article class="issue-spotlight-card">
+          <p class="section-kicker">Current issue</p>
+          <h3>{{ news.issue_label }}</h3>
+          <p>{{ news.summary }}</p>
+          <a class="button button--primary button--compact" href="{{ news.url }}">Read digest</a>
+        </article>
+        {% endif %}
+
+        <div class="home-featured-strip">
+          {% for post in featured_posts %}
+          {% if loop.index <= 4 %}
+          <article class="featured-note-card">
+            <div class="featured-note-thumb">
+              <span>{{ post.folder_label }}</span>
+            </div>
+            <div class="featured-note-body">
+              <p class="featured-note-meta">{{ post.date_display }}</p>
+              <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+              <p>{{ post.excerpt }}</p>
+            </div>
+          </article>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <section class="panel home-articles-panel">
+      <div class="section-head-inline">
+        <div>
+          <p class="section-kicker">Latest writing</p>
+          <h2>Notes from the archive</h2>
+        </div>
+      </div>
+      <div class="article-list">
+        {% for post in featured_posts %}
+        <article class="article-list-item">
+          <div class="article-list-thumb">
+            <span class="article-list-thumb-label">{{ post.folder_label }}</span>
+          </div>
+          <div class="article-list-body">
+            <p class="article-list-meta">{{ post.date_display }} · {{ post.reading_time_min }} min</p>
+            <h3><a href="{{ post.url }}">{% if let Some(icon) = post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}{{ post.title }}</a></h3>
+            <p>{{ post.excerpt }}</p>
+          </div>
+        </article>
+        {% endfor %}
       </div>
     </section>
 
     <section class="panel note-web-panel">
       <div class="section-head-inline section-head-inline--wide">
         <div>
-          <p class="section-kicker">Markdown network</p>
+          <p class="section-kicker">Connected notes</p>
           <h2>Interaction web</h2>
         </div>
         <p class="section-copy">Each note is rendered as a Pretext-sized card. Hover to inspect local links, click to open the underlying markdown page.</p>
@@ -67,69 +136,6 @@
           <p id="note-web-detail-copy">Connections light up here so the archive feels explorable instead of just sortable.</p>
           <a id="note-web-detail-link" class="button button--compact" href="/" hidden>Open note</a>
         </aside>
-      </div>
-    </section>
-
-    <section class="home-secondary-grid">
-      {% if featured_posts.len() > 0 %}
-      <section class="panel home-list-panel">
-        <div class="section-head-inline">
-          <div>
-            <p class="section-kicker">Recent writing</p>
-            <h2>Latest notes</h2>
-          </div>
-        </div>
-        <div class="home-list">
-          {% for post in featured_posts %}
-          {% if loop.index <= 6 %}
-          <article class="home-list-item">
-            <div class="home-list-item-meta">
-              <span>{{ post.folder_label }}</span>
-              <span>{{ post.date_display }}</span>
-            </div>
-            <h3><a href="{{ post.url }}">{% if let Some(icon) = post.note_icon %}<span class="note-icon" aria-hidden="true">{{ icon }}</span>{% endif %}{{ post.title }}</a></h3>
-            <p>{{ post.excerpt }}</p>
-          </article>
-          {% endif %}
-          {% endfor %}
-        </div>
-      </section>
-      {% endif %}
-
-      <div class="home-side-panels">
-        {% if folders.len() > 0 %}
-        <section class="panel atlas-panel">
-          <div class="section-head-inline">
-            <div>
-              <p class="section-kicker">Folders</p>
-              <h2>Structure</h2>
-            </div>
-          </div>
-          <div class="atlas-pill-wrap">
-            {% for folder in folders %}
-            <span class="atlas-pill">{{ folder.name }}</span>
-            {% endfor %}
-          </div>
-        </section>
-        {% endif %}
-
-        {% if tags.len() > 0 %}
-        <section class="panel atlas-panel">
-          <div class="section-head-inline">
-            <div>
-              <p class="section-kicker">Tags</p>
-              <h2>Topics</h2>
-            </div>
-          </div>
-          <div class="tag-wrap editorial-tag-wrap">
-            {% for tag in tags %}
-            {% if loop.index <= 18 %}
-            <a class="tag" href="/tags/{{ tag.slug }}/">#{{ tag.name }}{% if tag.count > 0 %} ({{ tag.count }}){% endif %}</a>
-            {% endif %}
-            {% endfor %}
-          </div>
-        </section>
-        {% endif %}
       </div>
     </section>
   </div>
