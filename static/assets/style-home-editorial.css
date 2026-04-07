@@ -16,6 +16,7 @@
 .home-hero-card {
   display: grid;
   gap: 22px;
+  overflow: hidden;
 }
 
 .home-hero-top {
@@ -28,10 +29,14 @@
 .home-hero-copy {
   display: grid;
   gap: 16px;
+  min-width: 0;
 }
 
 .home-hero-title {
+  max-width: 12ch;
   font-size: clamp(3.3rem, 5.6vw, 5.8rem);
+  text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .home-hero-deck {
@@ -70,6 +75,8 @@
   display: grid;
   gap: 14px;
   padding: 16px;
+  min-width: 0;
+  overflow: hidden;
   border: 1.8px solid var(--line);
   background: color-mix(in srgb, var(--surface) 74%, #f2dfe8 26%);
   box-shadow: 2px 2px 0 0 var(--line);
@@ -152,6 +159,7 @@
 
 .issue-spotlight-card {
   padding: 18px;
+  overflow: hidden;
   border: 1.8px solid var(--line);
   background: var(--surface-muted);
   box-shadow: 2px 2px 0 0 var(--line);
@@ -169,6 +177,10 @@
   background: var(--surface);
   overflow: hidden;
   box-shadow: 2px 2px 0 0 var(--line);
+}
+.featured-note-body h3,
+.featured-note-body p {
+  overflow-wrap: anywhere;
 }
 
 .featured-note-thumb {
@@ -213,6 +225,7 @@
 
 .article-list-item {
   display: grid;
+  overflow: hidden;
   grid-template-columns: 140px minmax(0, 1fr);
   gap: 16px;
   align-items: stretch;
@@ -299,6 +312,7 @@
 
 .note-web-card {
   position: absolute;
+  overflow: hidden;
   display: grid;
   gap: 10px;
   padding: 14px 15px;
@@ -330,6 +344,7 @@
 
 .note-web-detail {
   display: grid;
+  min-width: 0;
   gap: 12px;
   padding: 18px;
   border-radius: 18px;

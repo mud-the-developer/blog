@@ -74,6 +74,7 @@ img, svg, canvas, video { max-width: 100%; }
 
 .site-header {
   display: flex;
+  overflow: hidden;
   align-items: flex-start;
   justify-content: space-between;
   gap: 18px;
@@ -83,6 +84,7 @@ img, svg, canvas, video { max-width: 100%; }
 
 .site-brand-link {
   display: inline-grid;
+  min-width: 0;
   gap: 8px;
   text-decoration: none;
 }
@@ -115,6 +117,7 @@ img, svg, canvas, video { max-width: 100%; }
 }
 
 .site-title {
+  max-width: 12ch;
   font-family: var(--display);
   font-size: clamp(2.7rem, 2.5vw + 1rem, 4.2rem);
   line-height: 0.9;
@@ -123,6 +126,7 @@ img, svg, canvas, video { max-width: 100%; }
 
 .site-tagline {
   margin: 0;
+  overflow-wrap: anywhere;
   max-width: 50ch;
   color: color-mix(in srgb, var(--text) 70%, var(--muted));
   font-size: 1rem;
@@ -210,6 +214,7 @@ img, svg, canvas, video { max-width: 100%; }
 
 .panel,
 .rail-panel {
+  overflow: hidden;
   border: 1.8px solid var(--line);
   border-radius: var(--radius-xl);
   background: var(--surface);
