@@ -10,8 +10,8 @@ content-classes: [news-digest-note, news-digest-archive-note]
   <section class="news-digest-hero">
     <div class="news-digest-hero-copy">
       <p class="section-kicker">News Archive</p>
-      <h1>Daily AI News Archive</h1>
-      <p class="news-digest-lead">Every Daily AI News Digest, grouped by month so older issues stay skimmable.</p>
+      <h1 data-pretext-target>Daily AI News Archive</h1>
+      <p class="news-digest-lead" data-pretext-target>Every Daily AI News Digest, grouped by month so older issues stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
         <a class="post-cta-link" href="/notes/news/2026-04-08-ai-news-digest/">Latest digest</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
@@ -35,8 +35,8 @@ content-classes: [news-digest-note, news-digest-archive-note]
   <section class="news-digest-archive news-digest-archive-months">
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
-      <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by vllm-project/vllm; paper attention is clustering around PLUME: Latent Reasoning Based Universal Multimodal Embedding; social attention is tilting toward When I asked the AI ​​chatbot about fake diseases... “It’s a real illness,” he replied.; biggest mover: Token Warping Helps MLLMs Look from Nearby Viewpoints (+9). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <h2 data-pretext-target>Digest archive</h2>
+      <p class="news-digest-section-description" data-pretext-target>GitHub velocity is led by vllm-project/vllm; paper attention is clustering around PLUME: Latent Reasoning Based Universal Multimodal Embedding; social attention is tilting toward When I asked the AI ​​chatbot about fake diseases... “It’s a real illness,” he replied.; biggest mover: Token Warping Helps MLLMs Look from Nearby Viewpoints (+9). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>

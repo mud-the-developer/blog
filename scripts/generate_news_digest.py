@@ -1307,8 +1307,8 @@ def render_markdown(
         '  <section class="news-digest-hero">',
         '    <div class="news-digest-hero-copy">',
         '      <p class="section-kicker">News</p>',
-        f"      <h1>{safe_text(title)}</h1>",
-        f'      <p class="news-digest-lead">{safe_text(summary)}</p>',
+        f'      <h1 data-pretext-target>{safe_text(title)}</h1>',
+        f'      <p class="news-digest-lead" data-pretext-target>{safe_text(summary)}</p>',
         '      <div class="news-digest-actions" role="group" aria-label="News actions">',
         '        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>',
         '        <a class="post-cta-link" href="#digest-archive">Digest archive</a>',
@@ -1339,9 +1339,9 @@ def render_markdown(
                 '  <section class="news-digest-score-shell" aria-label="Repository momentum board">',
                 '    <header class="news-digest-section-head">',
                 '      <p class="section-kicker">Signal Board</p>',
-                "      <h2>Repo momentum board</h2>",
+                '      <h2 data-pretext-target>Repo momentum board</h2>',
                 "    </header>",
-                '    <p class="news-digest-section-description">Local signal score blends freshness, feed rank, keyword relevance, and GitHub star velocity.</p>',
+                '    <p class="news-digest-section-description" data-pretext-target>Local signal score blends freshness, feed rank, keyword relevance, and GitHub star velocity.</p>',
                 '    <div class="news-digest-scoreboard">',
             ]
         )
@@ -1370,7 +1370,7 @@ def render_markdown(
                 '  <section class="news-digest-top-shell" aria-label="Top signals">',
                 '    <header class="news-digest-section-head">',
                 '      <p class="section-kicker">Highlights</p>',
-                "      <h2>Top signals</h2>",
+                '      <h2 data-pretext-target>Top signals</h2>',
                 "    </header>",
                 '    <div class="news-digest-top-grid">',
             ]
@@ -1385,9 +1385,9 @@ def render_markdown(
                 f'  <section id="digest-{safe_text(slug)}" class="news-digest-section">',
                 '    <header class="news-digest-section-head">',
                 '      <p class="section-kicker">Section</p>',
-                f"      <h2>{safe_text(heading)}</h2>",
+                f'      <h2 data-pretext-target>{safe_text(heading)}</h2>',
                 "    </header>",
-                f'    <p class="news-digest-section-description">{safe_text(description)}</p>',
+                f'    <p class="news-digest-section-description" data-pretext-target>{safe_text(description)}</p>',
                 '    <div class="news-digest-grid">',
             ]
         )
@@ -1400,7 +1400,7 @@ def render_markdown(
             '  <section id="digest-archive" class="news-digest-archive">',
             '    <header class="news-digest-section-head">',
             '      <p class="section-kicker">Archive</p>',
-            "      <h2>Recent Digest Posts</h2>",
+            '      <h2 data-pretext-target>Recent Digest Posts</h2>',
             "    </header>",
             '    <div class="news-digest-archive-list">',
         ]

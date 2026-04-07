@@ -10,8 +10,8 @@ content-classes: [news-digest-note]
   <section class="news-digest-hero">
     <div class="news-digest-hero-copy">
       <p class="section-kicker">News</p>
-      <h1>Daily AI News Digest — 2026-03-26</h1>
-      <p class="news-digest-lead">GitHub velocity is led by comet-ml/opik; paper attention is clustering around SpecEyes: Accelerating Agentic Multimodal LLMs via Speculative Perception and Planning; social attention is tilting toward OpenAI, Sora service terminated. 8 repo signals, 6 paper picks, and 3 community items made today&#x27;s cut.</p>
+      <h1 data-pretext-target>Daily AI News Digest — 2026-03-26</h1>
+      <p class="news-digest-lead" data-pretext-target>GitHub velocity is led by comet-ml/opik; paper attention is clustering around SpecEyes: Accelerating Agentic Multimodal LLMs via Speculative Perception and Planning; social attention is tilting toward OpenAI, Sora service terminated. 8 repo signals, 6 paper picks, and 3 community items made today&#x27;s cut.</p>
       <div class="news-digest-actions" role="group" aria-label="News actions">
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
         <a class="post-cta-link" href="#digest-archive">Digest archive</a>
@@ -36,9 +36,9 @@ content-classes: [news-digest-note]
   <section class="news-digest-score-shell" aria-label="Repository momentum board">
     <header class="news-digest-section-head">
       <p class="section-kicker">Signal Board</p>
-      <h2>Repo momentum board</h2>
+      <h2 data-pretext-target>Repo momentum board</h2>
     </header>
-    <p class="news-digest-section-description">Local signal score blends freshness, feed rank, keyword relevance, and GitHub star velocity.</p>
+    <p class="news-digest-section-description" data-pretext-target>Local signal score blends freshness, feed rank, keyword relevance, and GitHub star velocity.</p>
     <div class="news-digest-scoreboard">
       <a class="news-digest-score-row" href="https://github.com/comet-ml/opik" target="_blank" rel="noreferrer">
         <div class="news-digest-score-copy">
@@ -112,7 +112,7 @@ content-classes: [news-digest-note]
   <section class="news-digest-top-shell" aria-label="Top signals">
     <header class="news-digest-section-head">
       <p class="section-kicker">Highlights</p>
-      <h2>Top signals</h2>
+      <h2 data-pretext-target>Top signals</h2>
     </header>
     <div class="news-digest-top-grid">
       <a class="news-digest-card news-digest-top-card" href="https://github.com/comet-ml/opik" target="_blank" rel="noreferrer">
@@ -145,9 +145,9 @@ content-classes: [news-digest-note]
   <section id="digest-hot24" class="news-digest-section">
     <header class="news-digest-section-head">
       <p class="section-kicker">Section</p>
-      <h2>Hot in 24 Hours</h2>
+      <h2 data-pretext-target>Hot in 24 Hours</h2>
     </header>
-    <p class="news-digest-section-description">The fastest-moving items across repos, papers, and community chatter.</p>
+    <p class="news-digest-section-description" data-pretext-target>The fastest-moving items across repos, papers, and community chatter.</p>
     <div class="news-digest-grid">
       <a class="news-digest-card" href="https://github.com/comet-ml/opik" target="_blank" rel="noreferrer">
         <img class="news-digest-image" src="https://opengraph.githubassets.com/1/comet-ml/opik" alt="comet-ml/opik — Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards." width="1200" height="675" loading="lazy" decoding="async" />
@@ -179,9 +179,9 @@ content-classes: [news-digest-note]
   <section id="digest-repos" class="news-digest-section">
     <header class="news-digest-section-head">
       <p class="section-kicker">Section</p>
-      <h2>Repository Momentum</h2>
+      <h2 data-pretext-target>Repository Momentum</h2>
     </header>
-    <p class="news-digest-section-description">Fresh GitHub projects worth scanning before the feed turns over.</p>
+    <p class="news-digest-section-description" data-pretext-target>Fresh GitHub projects worth scanning before the feed turns over.</p>
     <div class="news-digest-grid">
       <a class="news-digest-card" href="https://github.com/comet-ml/opik" target="_blank" rel="noreferrer">
         <img class="news-digest-image" src="https://opengraph.githubassets.com/1/comet-ml/opik" alt="comet-ml/opik — Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards." width="1200" height="675" loading="lazy" decoding="async" />
@@ -237,9 +237,9 @@ content-classes: [news-digest-note]
   <section id="digest-papers" class="news-digest-section">
     <header class="news-digest-section-head">
       <p class="section-kicker">Section</p>
-      <h2>Fresh Papers</h2>
+      <h2 data-pretext-target>Fresh Papers</h2>
     </header>
-    <p class="news-digest-section-description">New research worth bookmarking for a deeper read.</p>
+    <p class="news-digest-section-description" data-pretext-target>New research worth bookmarking for a deeper read.</p>
     <div class="news-digest-grid">
       <a class="news-digest-card" href="http://arxiv.org/abs/2603.23483v1" target="_blank" rel="noreferrer">
         <img class="news-digest-image" src="/news/assets/thumb-paper.svg" alt="SpecEyes: Accelerating Agentic Multimodal LLMs via Speculative Perception and Planning" width="1200" height="675" loading="lazy" decoding="async" />
@@ -283,9 +283,9 @@ content-classes: [news-digest-note]
   <section id="digest-social" class="news-digest-section">
     <header class="news-digest-section-head">
       <p class="section-kicker">Section</p>
-      <h2>Community Chatter</h2>
+      <h2 data-pretext-target>Community Chatter</h2>
     </header>
-    <p class="news-digest-section-description">Directional signals from discussion-heavy sources.</p>
+    <p class="news-digest-section-description" data-pretext-target>Directional signals from discussion-heavy sources.</p>
     <div class="news-digest-grid">
       <a class="news-digest-card" href="https://news.hada.io/topic?id=27839" target="_blank" rel="noreferrer">
         <img class="news-digest-image" src="/news/assets/thumb-ai.svg" alt="OpenAI, Sora service terminated" width="1200" height="675" loading="lazy" decoding="async" />
@@ -311,7 +311,7 @@ content-classes: [news-digest-note]
   <section id="digest-archive" class="news-digest-archive">
     <header class="news-digest-section-head">
       <p class="section-kicker">Archive</p>
-      <h2>Digest Posts</h2>
+      <h2 data-pretext-target>Digest Posts</h2>
     </header>
     <div class="news-digest-archive-list">
       <a class="news-digest-archive-item" href="/notes/news/2026-03-26-ai-news-digest/">
