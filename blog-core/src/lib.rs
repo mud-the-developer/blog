@@ -657,6 +657,9 @@ struct Backlink {
 #[template(path = "index.html")]
 struct IndexTemplate {
     layout: LayoutContext,
+    total_notes: usize,
+    total_tags: usize,
+    total_folders: usize,
     featured_posts: Vec<PostCard>,
     news_spotlight: Option<HomeNewsSpotlight>,
 }
@@ -1001,7 +1004,7 @@ fn render_posts(
 fn render_index(
     config: &BuildConfig,
     posts: &[Post],
-    _tags: &[TagEntry],
+    tags: &[TagEntry],
     theme_assets: &ThemeAssets,
     asset_version: &str,
 ) -> Result<()> {
@@ -1040,9 +1043,21 @@ fn render_index(
         .map(post_to_card)
         .collect();
     let news_spotlight = load_generated_news_hub_data(posts)?.and_then(build_home_news_spotlight);
+    let total_notes = visible_posts.len();
+    let total_tags = tags.len();
+    let total_folders = posts
+        .iter()
+        .filter(|post| !post.hidden && !is_news_digest_post(post))
+        .filter_map(|post| post.slug.split_once('/').map(|(folder, _)| folder.trim()))
+        .filter(|folder| !folder.is_empty())
+        .collect::<HashSet<_>>()
+        .len();
 
     let template = IndexTemplate {
         layout,
+        total_notes,
+        total_tags,
+        total_folders,
         featured_posts,
         news_spotlight,
     };
@@ -6415,6 +6430,10 @@ Not published.
             "export const fixture = true;\n",
         );
         write_text(
+            &static_dir.join("assets/pretext-dragon-reflow.mjs"),
+            "export const fixture = true;\n",
+        );
+        write_text(
             &static_dir.join("assets/style-editorial.css"),
             ":root { --fixture-editorial: 1; }\n",
         );
@@ -6483,6 +6502,7 @@ Not published.
         assert!(output_dir.join("assets/vendor/pretext/layout.mjs").exists());
         assert!(output_dir.join("assets/pretext-masonry.mjs").exists());
         assert!(output_dir.join("assets/pretext-note-web.mjs").exists());
+        assert!(output_dir.join("assets/pretext-dragon-reflow.mjs").exists());
         assert!(output_dir.join("assets/style-editorial.css").exists());
         assert!(output_dir.join("assets/style-home-editorial.css").exists());
         assert!(output_dir.join("assets/style-note-editorial.css").exists());
@@ -6514,6 +6534,7 @@ Not published.
         assert!(index_html.contains(r#"src="/assets/pretext-runtime.mjs?v="#));
         assert!(index_html.contains(r#"href="/assets/style-editorial.css?v="#));
         assert!(index_html.contains(r#"src="/assets/site-runtime.js""#));
+        assert!(index_html.contains(r#"src="/assets/pretext-dragon-reflow.mjs?v="#));
         assert!(index_html.contains(r#"src="/assets/pretext-note-web.mjs?v="#));
         assert!(index_html.contains("window.__BLOG_RUNTIME_CONFIG__"));
         assert!(index_html.contains("graphDataUrl:"));
@@ -6568,6 +6589,7 @@ Not published.
         assert!(second_html.contains("article-featured"));
 
         assert!(!index_html.contains(r#"id="side-graph-stage""#));
+        assert!(index_html.contains(r#"src="/assets/pretext-dragon-reflow.mjs?v="#));
         assert!(index_html.contains(r#"src="/assets/pretext-note-web.mjs?v="#));
 
         let graph_html = fs::read_to_string(output_dir.join("graph/index.html"))?;
