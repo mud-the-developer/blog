@@ -35,15 +35,15 @@
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #111015;
-  --header-band: #2a2208;
-  --surface: #1c1a21;
-  --surface-soft: #25222b;
-  --surface-muted: #2e263b;
-  --text: #f4efe7;
-  --muted: #c9c2b8;
-  --line: #f4efe7;
-  --line-soft: rgba(244, 239, 231, 0.18);
+  --bg: #0d1218;
+  --header-band: #1c1706;
+  --surface: #141c25;
+  --surface-soft: #1a2430;
+  --surface-muted: #2b2740;
+  --text: #f7f4ee;
+  --muted: #d1d9e2;
+  --line: #dce4ee;
+  --line-soft: rgba(220, 228, 238, 0.24);
   --accent: oklch(0.800 0.140 179);
   --accent-strong: oklch(0.860 0.120 179);
   --accent-soft: color-mix(in oklab, var(--accent) 20%, black 80%);
@@ -56,11 +56,60 @@ body {
 }
 
 body {
+  position: relative;
+  isolation: isolate;
   margin: 0;
   color: var(--text);
   font-family: var(--sans);
   line-height: 1.65;
   background: linear-gradient(180deg, var(--header-band) 0 112px, var(--bg) 112px 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--accent) 14%, transparent) 0, transparent 18%),
+    radial-gradient(circle at 82% 8%, color-mix(in srgb, #ffd053 10%, transparent) 0, transparent 18%),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 15px,
+      color-mix(in srgb, var(--line) 6%, transparent) 15px,
+      color-mix(in srgb, var(--line) 6%, transparent) 16px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 15px,
+      color-mix(in srgb, var(--line) 6%, transparent) 15px,
+      color-mix(in srgb, var(--line) 6%, transparent) 16px
+    );
+  opacity: 0.55;
+}
+
+:root[data-theme="dark"] body::before {
+  background:
+    radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--accent) 18%, transparent) 0, transparent 18%),
+    radial-gradient(circle at 82% 8%, color-mix(in srgb, #ffd053 8%, transparent) 0, transparent 18%),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 15px,
+      color-mix(in srgb, var(--line) 8%, transparent) 15px,
+      color-mix(in srgb, var(--line) 8%, transparent) 16px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 15px,
+      color-mix(in srgb, var(--line) 8%, transparent) 15px,
+      color-mix(in srgb, var(--line) 8%, transparent) 16px
+    );
+  opacity: 0.42;
 }
 
 a { color: inherit; }

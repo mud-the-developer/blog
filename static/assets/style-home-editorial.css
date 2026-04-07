@@ -125,6 +125,30 @@
   pointer-events: none;
 }
 
+.note-web-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 10%, transparent) 0%, transparent 28%),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 7px,
+      color-mix(in srgb, var(--line) 5%, transparent) 7px,
+      color-mix(in srgb, var(--line) 5%, transparent) 8px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 7px,
+      color-mix(in srgb, var(--line) 5%, transparent) 7px,
+      color-mix(in srgb, var(--line) 5%, transparent) 8px
+    );
+  opacity: 0.6;
+}
+
 .note-web-svg {
   position: absolute;
   inset: 0;
@@ -151,6 +175,10 @@
   user-select: none;
 }
 
+:root[data-theme="dark"] .note-web-text-line {
+  color: color-mix(in srgb, var(--text) 34%, var(--surface) 66%);
+}
+
 .note-web-link {
   stroke: rgba(23, 23, 23, 0.12);
   stroke-width: 1.5;
@@ -161,6 +189,11 @@
 .note-web-link.is-active {
   stroke: var(--accent-strong);
   opacity: 1;
+}
+
+:root[data-theme="dark"] .note-web-link {
+  stroke: color-mix(in srgb, var(--text) 28%, transparent);
+  stroke-opacity: 0.42;
 }
 
 .note-web-card {
@@ -184,6 +217,11 @@
 .note-web-card.is-active {
   transform: translateY(-2px);
   background: #fff6d9;
+}
+
+:root[data-theme="dark"] .note-web-card:hover,
+:root[data-theme="dark"] .note-web-card.is-active {
+  background: color-mix(in srgb, var(--surface-soft) 78%, var(--accent-soft));
 }
 
 .note-web-card-label { display: block; }

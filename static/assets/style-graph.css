@@ -326,12 +326,33 @@ html[data-theme="dark"] .graph-stage {
     );
 }
 
+html[data-theme="dark"] .graph-link {
+  stroke: color-mix(in srgb, var(--text) 34%, transparent);
+  stroke-opacity: 0.34;
+}
+
+html[data-theme="dark"] .graph-link.is-active {
+  stroke: var(--accent-strong);
+  stroke-opacity: 0.92;
+}
+
 .graph-node text {
   font-family: var(--font-body);
 }
 
+html[data-theme="dark"] .graph-node text {
+  fill: var(--text);
+  stroke: color-mix(in srgb, #091018 88%, transparent);
+  stroke-width: 3.2;
+}
+
 .graph-node circle {
   stroke-width: 1.65;
+}
+
+html[data-theme="dark"] .graph-node circle {
+  fill: color-mix(in srgb, var(--surface) 88%, #0b1118);
+  stroke: var(--accent-strong);
 }
 
 .graph-detail {
@@ -345,6 +366,11 @@ html[data-theme="dark"] .graph-stage {
   font-size: 0.82rem;
   line-height: 1.42;
   color: color-mix(in srgb, var(--muted) 88%, var(--text));
+}
+
+html[data-theme="dark"] .graph-detail {
+  color: color-mix(in srgb, var(--muted) 94%, var(--text));
+  background: color-mix(in srgb, var(--surface-soft) 94%, transparent);
 }
 
 .graph-detail strong {
