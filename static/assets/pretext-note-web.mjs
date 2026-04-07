@@ -1,4 +1,4 @@
-import { layoutNextLine, layoutWithLines, prepareWithSegments } from './vendor/pretext/layout.mjs';
+import { layoutWithLines, prepareWithSegments } from './vendor/pretext/layout.mjs';
 
 const STAGE_SELECTOR = '[data-note-web]';
 const MAX_NODES = 14;
@@ -10,14 +10,7 @@ const CARD_LINE_HEIGHT = 24;
 const CARD_MAX_LINES = 3;
 const ITERATIONS = 180;
 const COMPACT_BREAKPOINT = 720;
-const TEXT_DESKTOP =
-  'This archive keeps design-system thinking, AI papers, semantic communications, and daily signal tracking in one readable place. Drag the note cards and the introduction will continuously reflow around the graph.';
-const TEXT_MOBILE =
-  'Drag the note cards and the intro copy will reflow around the graph.';
-const TEXT_FONT = '700 28px "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif';
-const TEXT_LINE_HEIGHT = 36;
-const MOBILE_TEXT_FONT = '700 19px "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif';
-const MOBILE_TEXT_LINE_HEIGHT = 25;
+const PARTICLE_COUNT = 24;
 const DEFAULT_DETAIL_TITLE = 'Hover a note';
 const DEFAULT_DETAIL_COPY =
   'Connections light up here so the archive feels explorable instead of just sortable.';
@@ -65,19 +58,16 @@ async function render(stage, graphUrl) {
   stage.textContent = '';
   stage.style.height = compact ? `${compactHeight}px` : '';
 
+  const particles = document.createElement('div');
+  particles.className = 'note-web-particles';
+  stage.appendChild(particles);
+
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('class', 'note-web-svg');
   svg.setAttribute('viewBox', `0 0 ${width} ${compact ? compactHeight : height}`);
   stage.appendChild(svg);
 
-  const textLayer = document.createElement('div');
-  textLayer.className = 'note-web-text-layer';
-  stage.appendChild(textLayer);
-
-  const label = document.createElement('div');
-  label.className = 'note-web-text-label';
-  label.textContent = compact ? 'Move notes' : 'Drag notes to change the flow';
-  stage.appendChild(label);
+  renderParticles(particles, width, compact ? compactHeight : height);
 
   const fragment = document.createDocumentFragment();
   const nodeById = new Map();
@@ -87,15 +77,11 @@ async function render(stage, graphUrl) {
     compact,
     width,
     height: compact ? compactHeight : height,
-    textLayer,
-    label,
     nodes: sizedNodes.map(node => ({ ...node, position: positions.get(node.id) })),
     links: filteredLinks,
     svgLines: lines,
     activeId: '',
     dragging: null,
-    preparedDesktop: prepareWithSegments(TEXT_DESKTOP, TEXT_FONT),
-    preparedMobile: prepareWithSegments(TEXT_MOBILE, MOBILE_TEXT_FONT),
   };
 
   for (const link of filteredLinks) {
@@ -240,7 +226,6 @@ async function render(stage, graphUrl) {
 }
 
 function renderScene(state, neighborMap) {
-  renderText(state);
   renderLines(state);
   for (const node of state.nodes) {
     node.el.style.transform = `translate(${node.position.x}px, ${node.position.y}px)`;
@@ -263,69 +248,26 @@ function renderLines(state) {
   }
 }
 
-function renderText(state) {
-  const mobile = state.compact;
-  const font = mobile ? MOBILE_TEXT_FONT : TEXT_FONT;
-  const lineHeight = mobile ? MOBILE_TEXT_LINE_HEIGHT : TEXT_LINE_HEIGHT;
-  const prepared = mobile ? state.preparedMobile : state.preparedDesktop;
-  const paddingX = mobile ? 22 : 28;
-  const paddingTop = mobile ? 18 : 24;
-  const paddingBottom = mobile ? 20 : 24;
+function renderParticles(container, width, height) {
+  container.textContent = '';
   const fragment = document.createDocumentFragment();
-  let cursor = { segmentIndex: 0, graphemeIndex: 0 };
-  let y = paddingTop;
-  const obstacles = state.nodes.map(node => ({
-    left: node.position.x - 10,
-    right: node.position.x + node.w + 10,
-    top: node.position.y - 8,
-    bottom: node.position.y + node.h + 8,
-  }));
+  const columns = width < COMPACT_BREAKPOINT ? 6 : 8;
+  const rows = Math.max(3, Math.floor(PARTICLE_COUNT / columns));
 
-  state.textLayer.textContent = '';
-
-  while (y + lineHeight <= state.height - paddingBottom) {
-    const spans = buildSpans(state.width, paddingX, y, lineHeight, obstacles);
-    if (spans.length === 0) break;
-    const span = spans.sort((a, b) => (b.right - b.left) - (a.right - a.left))[0];
-    const maxWidth = Math.max(120, span.right - span.left);
-    const line = layoutNextLine(prepared, cursor, maxWidth);
-    if (!line) break;
-
-    const el = document.createElement('span');
-    el.className = 'dragon-reflow-line';
-    el.textContent = line.text.length > 0 ? line.text : '\u00A0';
-    el.style.left = `${span.left}px`;
-    el.style.top = `${y}px`;
-    el.style.font = font;
-    fragment.appendChild(el);
-    cursor = line.end;
-    y += lineHeight;
+  for (let i = 0; i < PARTICLE_COUNT; i += 1) {
+    const particle = document.createElement('span');
+    particle.className = 'note-web-particle';
+    const column = i % columns;
+    const row = Math.floor(i / columns);
+    const x = 18 + ((width - 36) / Math.max(columns - 1, 1)) * column;
+    const y = 18 + ((height - 36) / Math.max(rows, 1)) * row;
+    particle.style.left = `${x}px`;
+    particle.style.top = `${y}px`;
+    particle.style.animationDelay = `${(i % 7) * 0.45}s`;
+    fragment.appendChild(particle);
   }
 
-  state.textLayer.appendChild(fragment);
-  const labelX = state.nodes[0] ? state.nodes[0].position.x : paddingX;
-  const labelY = state.nodes[0] ? Math.max(18, state.nodes[0].position.y - 24) : 12;
-  state.label.style.left = `${labelX}px`;
-  state.label.style.top = `${labelY}px`;
-}
-
-function buildSpans(width, paddingX, y, lineHeight, obstacles) {
-  let spans = [{ left: paddingX, right: width - paddingX }];
-  const bandTop = y;
-  const bandBottom = y + lineHeight;
-
-  for (const obstacle of obstacles) {
-    if (bandBottom <= obstacle.top || bandTop >= obstacle.bottom) continue;
-    spans = spans.flatMap(span => {
-      if (obstacle.right <= span.left || obstacle.left >= span.right) return [span];
-      const next = [];
-      if (obstacle.left - span.left > 88) next.push({ left: span.left, right: obstacle.left });
-      if (span.right - obstacle.right > 88) next.push({ left: obstacle.right, right: span.right });
-      return next;
-    });
-  }
-
-  return spans;
+  container.appendChild(fragment);
 }
 
 function buildSubset(graph) {
