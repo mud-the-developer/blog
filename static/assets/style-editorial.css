@@ -210,7 +210,15 @@ img, svg, canvas, video { max-width: 100%; }
 
 .site-main { min-width: 0; display: flex; justify-content: center; }
 .site-main-stack { width: min(100%, var(--content)); display: grid; gap: 24px; }
-.site-rail { display: grid; gap: 16px; position: sticky; top: 20px; }
+.site-rail {
+  display: grid;
+  gap: 16px;
+  position: sticky;
+  top: 20px;
+  align-self: start;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
 
 .panel,
 .rail-panel {
@@ -230,6 +238,11 @@ img, svg, canvas, video { max-width: 100%; }
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
+}
+
+.rail-panel-head {
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .rail-panel-head > *,
@@ -321,6 +334,8 @@ img, svg, canvas, video { max-width: 100%; }
   gap: 10px;
   max-height: min(68vh, 840px);
   overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable both-edges;
 }
 
 .page-tab {
