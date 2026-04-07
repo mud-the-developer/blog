@@ -12,13 +12,13 @@ MAX_SINGLE_GRAPH_JS=24576
 MAX_SINGLE_FILETREE_JS=8192
 MAX_TOTAL_JS=131072
 MAX_TOTAL_JSON=131072
-MAX_SHARED_CSS=40960
-MAX_LISTING_BUNDLE_CSS=49152
-MAX_READING_BUNDLE_CSS=61440
-MAX_RICH_READING_BUNDLE_CSS=73728
-MAX_HOME_BUNDLE_CSS=69632
-MAX_RICH_HOME_BUNDLE_CSS=77824
-MAX_NEWS_BRIDGE_BUNDLE_CSS=53248
+MAX_SHARED_EDITORIAL_CSS=49152
+MAX_COLLECTION_EDITORIAL_CSS=49152
+MAX_HOME_EDITORIAL_CSS=53248
+MAX_GRAPH_EDITORIAL_CSS=57344
+MAX_READING_EDITORIAL_CSS=81920
+MAX_RICH_READING_EDITORIAL_CSS=90112
+MAX_NEWS_BRIDGE_CSS=16384
 
 warn_count=0
 
@@ -100,64 +100,60 @@ total_json="$(sum_bytes '*.json')"
 warn_if_over "Total JS" "$total_js" "$MAX_TOTAL_JS"
 warn_if_over "Total JSON" "$total_json" "$MAX_TOTAL_JSON"
 
-shared_css="$(sum_selected_bytes \
+shared_editorial_css="$(sum_selected_bytes \
   assets/style-core.css \
   assets/style-search-pane.css \
   assets/style-touch-targets.css \
-  assets/style-graph.css)"
-listing_bundle_css="$(sum_selected_bytes \
+  assets/style-editorial.css)"
+collection_editorial_css="$(sum_selected_bytes \
+  assets/style-core.css \
+  assets/style-search-pane.css \
+  assets/style-touch-targets.css \
+  assets/style-editorial.css \
+  assets/style-collection-editorial.css)"
+home_editorial_css="$(sum_selected_bytes \
+  assets/style-core.css \
+  assets/style-search-pane.css \
+  assets/style-touch-targets.css \
+  assets/style-editorial.css \
+  assets/style-home-editorial.css)"
+graph_editorial_css="$(sum_selected_bytes \
   assets/style-core.css \
   assets/style-search-pane.css \
   assets/style-touch-targets.css \
   assets/style-graph.css \
-  assets/style-listing.css)"
-reading_bundle_css="$(sum_selected_bytes \
-  assets/style-core.css \
-  assets/style-search-pane.css \
-  assets/style-touch-targets.css \
-  assets/style-graph.css \
-  assets/style-note-core.css)"
-rich_reading_bundle_css="$(sum_selected_bytes \
+  assets/style-editorial.css \
+  assets/style-graph-editorial.css)"
+reading_editorial_css="$(sum_selected_bytes \
   assets/style-core.css \
   assets/style-search-pane.css \
   assets/style-touch-targets.css \
   assets/style-graph.css \
   assets/style-note-core.css \
-  assets/style-note.css)"
-home_bundle_css="$(sum_selected_bytes \
+  assets/style-editorial.css \
+  assets/style-note-editorial.css)"
+rich_reading_editorial_css="$(sum_selected_bytes \
   assets/style-core.css \
   assets/style-search-pane.css \
   assets/style-touch-targets.css \
   assets/style-graph.css \
-  assets/style-listing.css \
   assets/style-note-core.css \
-  assets/style-home.css)"
-rich_home_bundle_css="$(sum_selected_bytes \
-  assets/style-core.css \
-  assets/style-search-pane.css \
-  assets/style-touch-targets.css \
-  assets/style-graph.css \
-  assets/style-listing.css \
-  assets/style-note-core.css \
-  assets/style-home.css \
-  assets/style-note.css)"
-news_bridge_bundle_css="$(sum_selected_bytes \
-  assets/style-core.css \
-  assets/style-search-pane.css \
-  assets/style-touch-targets.css \
-  assets/style-graph.css \
+  assets/style-editorial.css \
+  assets/style-note.css \
+  assets/style-note-editorial.css)"
+news_bridge_css="$(sum_selected_bytes \
   assets/style-news-bridge.css)"
 
-warn_if_over "Shared CSS bundle" "$shared_css" "$MAX_SHARED_CSS"
-warn_if_over "Listing CSS bundle" "$listing_bundle_css" "$MAX_LISTING_BUNDLE_CSS"
-warn_if_over "Reading CSS bundle" "$reading_bundle_css" "$MAX_READING_BUNDLE_CSS"
-warn_if_over "Rich reading CSS bundle" "$rich_reading_bundle_css" "$MAX_RICH_READING_BUNDLE_CSS"
-warn_if_over "Home CSS bundle" "$home_bundle_css" "$MAX_HOME_BUNDLE_CSS"
-warn_if_over "Rich home CSS bundle" "$rich_home_bundle_css" "$MAX_RICH_HOME_BUNDLE_CSS"
-warn_if_over "News bridge CSS bundle" "$news_bridge_bundle_css" "$MAX_NEWS_BRIDGE_BUNDLE_CSS"
+warn_if_over "Shared editorial CSS bundle" "$shared_editorial_css" "$MAX_SHARED_EDITORIAL_CSS"
+warn_if_over "Collection editorial CSS bundle" "$collection_editorial_css" "$MAX_COLLECTION_EDITORIAL_CSS"
+warn_if_over "Home editorial CSS bundle" "$home_editorial_css" "$MAX_HOME_EDITORIAL_CSS"
+warn_if_over "Graph editorial CSS bundle" "$graph_editorial_css" "$MAX_GRAPH_EDITORIAL_CSS"
+warn_if_over "Reading editorial CSS bundle" "$reading_editorial_css" "$MAX_READING_EDITORIAL_CSS"
+warn_if_over "Rich reading editorial CSS bundle" "$rich_reading_editorial_css" "$MAX_RICH_READING_EDITORIAL_CSS"
+warn_if_over "News bridge CSS bundle" "$news_bridge_css" "$MAX_NEWS_BRIDGE_CSS"
 
 echo "Performance budget summary: JS=$(human_size "$total_js"), aggregate CSS=$(human_size "$total_css"), JSON=$(human_size "$total_json")."
-echo "CSS bundle summary: shared=$(human_size "$shared_css"), listing=$(human_size "$listing_bundle_css"), reading=$(human_size "$reading_bundle_css"), rich-reading=$(human_size "$rich_reading_bundle_css"), home=$(human_size "$home_bundle_css"), rich-home=$(human_size "$rich_home_bundle_css"), news-bridge=$(human_size "$news_bridge_bundle_css")."
+echo "CSS bundle summary: shared-editorial=$(human_size "$shared_editorial_css"), collection-editorial=$(human_size "$collection_editorial_css"), home-editorial=$(human_size "$home_editorial_css"), graph-editorial=$(human_size "$graph_editorial_css"), reading-editorial=$(human_size "$reading_editorial_css"), rich-reading-editorial=$(human_size "$rich_reading_editorial_css"), news-bridge=$(human_size "$news_bridge_css")."
 
 if (( warn_count > 0 )); then
   echo "::warning::Performance budget check completed with $warn_count warning(s)."
