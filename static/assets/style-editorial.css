@@ -117,11 +117,11 @@ img, svg, canvas, video { max-width: 100%; }
 }
 
 .site-title {
-  max-width: 12ch;
   font-family: var(--display);
-  font-size: clamp(2.7rem, 2.5vw + 1rem, 4.2rem);
+  font-size: clamp(2.6rem, 2.1vw + 1rem, 4rem);
   line-height: 0.9;
   letter-spacing: -0.05em;
+  text-wrap: balance;
 }
 
 .site-tagline {
@@ -486,5 +486,5 @@ img, svg, canvas, video { max-width: 100%; }
   .site-header { flex-direction: column; }
   .site-nav { justify-content: flex-start; }
   .panel { padding: 18px; }
-  .site-title { font-size: clamp(2.3rem, 10vw, 3.5rem); }
+  .site-title { font-size: clamp(2.2rem, 9vw, 3.2rem); }
 }
