@@ -16,14 +16,23 @@ const DEFAULT_DETAIL_COPY =
   'Pick any note to read its local cluster without losing the full graph.';
 const FIELD_TOP = 22;
 const FIELD_SIDE = 20;
-const FIELD_GUTTER = 18;
-const FIELD_MIN_SPAN = 88;
+const FIELD_GUTTER = 8;
+const FIELD_VERTICAL_GUTTER = 2;
+const FIELD_MIN_SPAN = 52;
 const FIELD_FONT_SIZE = 14;
 const FIELD_LINE_HEIGHT = 20;
 const FIELD_FONT = '500 14px "JetBrains Mono", "SFMono-Regular", Consolas, monospace';
 const MOBILE_FIELD_FONT_SIZE = 12;
 const MOBILE_FIELD_LINE_HEIGHT = 17;
 const MOBILE_FIELD_FONT = '500 12px "JetBrains Mono", "SFMono-Regular", Consolas, monospace';
+const DRAG_THRESHOLD = 4;
+const PHYSICS_DAMPING = 0.84;
+const PHYSICS_REPULSION = 8200;
+const PHYSICS_SPRING = 0.0034;
+const PHYSICS_REST_LENGTH = 168;
+const PHYSICS_COLLISION_PUSH = 0.12;
+const PHYSICS_CENTERING = 0.0011;
+const PHYSICS_SETTLE_EPSILON = 0.11;
 const START_CURSOR = Object.freeze({ segmentIndex: 0, graphemeIndex: 0 });
 const FIELD_TERMS = [
   'GPT-5.4',
@@ -143,15 +152,20 @@ async function render(stage, graphUrl) {
     compact,
     width,
     height: sceneHeight,
+    centerX: width * 0.52,
+    centerY: sceneHeight * 0.5,
     textLayer,
     textPreparedDesktop: prepareWithSegments(buildFieldText(false), FIELD_FONT),
     textPreparedMobile: prepareWithSegments(buildFieldText(true), MOBILE_FIELD_FONT),
     nodes: sizedNodes.map(node => ({ ...node, position: positions.get(node.id) })),
     links: filteredLinks,
+    neighborMap,
+    linkPairs: filteredLinks.map(link => [link.source, link.target]),
     svgLines: lines,
     activeId: '',
     dragging: null,
     skipClickId: '',
+    animationFrame: 0,
   };
 
   for (const link of filteredLinks) {
@@ -275,10 +289,13 @@ async function render(stage, graphUrl) {
       offsetY: event.clientY - rect.top,
       startClientX: event.clientX,
       startClientY: event.clientY,
+      targetX: node.position.x,
+      targetY: node.position.y,
       moved: false,
     };
     node.el.setPointerCapture?.(event.pointerId);
     setActive(nodeId);
+    ensurePhysicsLoop(state);
     event.preventDefault();
   }
 
@@ -289,13 +306,20 @@ async function render(stage, graphUrl) {
     const x = event.clientX - stage.getBoundingClientRect().left - state.dragging.offsetX;
     const y = event.clientY - stage.getBoundingClientRect().top - state.dragging.offsetY;
     if (
-      Math.hypot(event.clientX - state.dragging.startClientX, event.clientY - state.dragging.startClientY) > 4
+      Math.hypot(event.clientX - state.dragging.startClientX, event.clientY - state.dragging.startClientY) >
+      DRAG_THRESHOLD
     ) {
       state.dragging.moved = true;
     }
-    node.position.x = clamp(x, 18, state.width - node.w - 18);
-    node.position.y = clamp(y, 18, state.height - node.h - 18);
-    renderScene(state, neighborMap);
+    state.dragging.targetX = clamp(x, 18, state.width - node.w - 18);
+    state.dragging.targetY = clamp(y, 18, state.height - node.h - 18);
+    if (state.compact) {
+      node.position.x = state.dragging.targetX;
+      node.position.y = state.dragging.targetY;
+      renderScene(state, neighborMap);
+    } else {
+      ensurePhysicsLoop(state);
+    }
   });
 
   const endDrag = event => {
@@ -310,6 +334,7 @@ async function render(stage, graphUrl) {
     } else {
       state.skipClickId = dragId;
     }
+    ensurePhysicsLoop(state);
   };
 
   stage.addEventListener('pointerup', endDrag);
@@ -360,9 +385,9 @@ function renderText(state) {
 }
 
 function buildSpans(nodes, y, lineHeight, width, compact) {
-  const bandTop = y - 4;
-  const bandBottom = y + lineHeight + 4;
-  const padding = compact ? 10 : FIELD_GUTTER;
+  const bandTop = y - FIELD_VERTICAL_GUTTER;
+  const bandBottom = y + lineHeight + FIELD_VERTICAL_GUTTER;
+  const padding = compact ? 6 : FIELD_GUTTER;
   const minX = FIELD_SIDE;
   const maxX = width - FIELD_SIDE;
   const intervals = [];
@@ -588,6 +613,118 @@ function solveLayout(nodes, links, width, height) {
   }
 
   return positions;
+}
+
+function ensurePhysicsLoop(state) {
+  if (state.compact || state.animationFrame) return;
+  const tick = () => {
+    state.animationFrame = 0;
+    const moving = stepPhysics(state);
+    renderScene(state, state.neighborMap);
+    if (state.dragging || moving) {
+      state.animationFrame = window.requestAnimationFrame(tick);
+    }
+  };
+  state.animationFrame = window.requestAnimationFrame(tick);
+}
+
+function stepPhysics(state) {
+  const draggingId = state.dragging?.id || '';
+  const draggedNode = draggingId ? state.nodes.find(node => node.id === draggingId) : null;
+  if (draggedNode && state.dragging) {
+    draggedNode.position.x = state.dragging.targetX;
+    draggedNode.position.y = state.dragging.targetY;
+    draggedNode.position.vx = 0;
+    draggedNode.position.vy = 0;
+  }
+
+  for (const node of state.nodes) {
+    if (node.id === draggingId) continue;
+    node.position.vx *= PHYSICS_DAMPING;
+    node.position.vy *= PHYSICS_DAMPING;
+  }
+
+  for (let a = 0; a < state.nodes.length; a += 1) {
+    for (let b = a + 1; b < state.nodes.length; b += 1) {
+      const nodeA = state.nodes[a];
+      const nodeB = state.nodes[b];
+      const pa = nodeA.position;
+      const pb = nodeB.position;
+      const ax = pa.x + nodeA.w / 2;
+      const ay = pa.y + nodeA.h / 2;
+      const bx = pb.x + nodeB.w / 2;
+      const by = pb.y + nodeB.h / 2;
+      let dx = bx - ax;
+      let dy = by - ay;
+      const dist = Math.max(Math.hypot(dx, dy), 1);
+      const force = PHYSICS_REPULSION / (dist * dist);
+      dx /= dist;
+      dy /= dist;
+      if (nodeA.id !== draggingId) {
+        pa.vx -= dx * force;
+        pa.vy -= dy * force;
+      }
+      if (nodeB.id !== draggingId) {
+        pb.vx += dx * force;
+        pb.vy += dy * force;
+      }
+
+      const overlapX = Math.min(pa.x + nodeA.w, pb.x + nodeB.w) - Math.max(pa.x, pb.x);
+      const overlapY = Math.min(pa.y + nodeA.h, pb.y + nodeB.h) - Math.max(pa.y, pb.y);
+      if (overlapX > 0 && overlapY > 0) {
+        if (overlapX < overlapY) {
+          const push = overlapX * PHYSICS_COLLISION_PUSH;
+          const direction = ax < bx ? -1 : 1;
+          if (nodeA.id !== draggingId) pa.vx += direction * push;
+          if (nodeB.id !== draggingId) pb.vx -= direction * push;
+        } else {
+          const push = overlapY * PHYSICS_COLLISION_PUSH;
+          const direction = ay < by ? -1 : 1;
+          if (nodeA.id !== draggingId) pa.vy += direction * push;
+          if (nodeB.id !== draggingId) pb.vy -= direction * push;
+        }
+      }
+    }
+  }
+
+  for (const [sourceId, targetId] of state.linkPairs) {
+    const sourceNode = state.nodes.find(node => node.id === sourceId);
+    const targetNode = state.nodes.find(node => node.id === targetId);
+    if (!sourceNode || !targetNode) continue;
+    const source = sourceNode.position;
+    const target = targetNode.position;
+    let dx = target.x + targetNode.w / 2 - (source.x + sourceNode.w / 2);
+    let dy = target.y + targetNode.h / 2 - (source.y + sourceNode.h / 2);
+    const dist = Math.max(Math.hypot(dx, dy), 1);
+    const force = (dist - PHYSICS_REST_LENGTH) * PHYSICS_SPRING;
+    dx /= dist;
+    dy /= dist;
+    if (sourceId !== draggingId) {
+      source.vx += dx * force;
+      source.vy += dy * force;
+    }
+    if (targetId !== draggingId) {
+      target.vx -= dx * force;
+      target.vy -= dy * force;
+    }
+  }
+
+  let maxMotion = 0;
+  for (const node of state.nodes) {
+    if (node.id === draggingId) continue;
+    const position = node.position;
+    const cx = position.x + node.w / 2;
+    const cy = position.y + node.h / 2;
+    position.vx += (state.centerX - cx) * PHYSICS_CENTERING;
+    position.vy += (state.centerY - cy) * PHYSICS_CENTERING;
+    position.x += position.vx;
+    position.y += position.vy;
+    position.x = clamp(position.x, 18, state.width - node.w - 18);
+    position.y = clamp(position.y, 18, state.height - node.h - 18);
+    maxMotion = Math.max(maxMotion, Math.abs(position.vx), Math.abs(position.vy));
+  }
+
+  return maxMotion > PHYSICS_SETTLE_EPSILON;
 }
 
 function solveCompactLayout(nodes, width) {
