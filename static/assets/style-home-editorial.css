@@ -24,12 +24,13 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) 292px;
   gap: 18px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .graph-main-side {
   display: grid;
   gap: 16px;
+  align-content: start;
 }
 
 .selected-note-card,

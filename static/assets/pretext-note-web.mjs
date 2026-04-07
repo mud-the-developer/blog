@@ -115,6 +115,7 @@ async function render(stage, graphUrl) {
   if (width <= 0 || height <= 0) return;
 
   const compact = width < COMPACT_BREAKPOINT;
+  const desktopHeight = compact ? height : getDesktopStageHeight(stage, height);
   const sizing = compact
     ? {
         minWidth: 140,
@@ -139,14 +140,14 @@ async function render(stage, graphUrl) {
   );
   const positions = compact
     ? solveCompactLayout(sizedNodes, width)
-    : solveLayout(sizedNodes, filteredLinks, width, height);
+    : solveLayout(sizedNodes, filteredLinks, width, desktopHeight);
   const compactHeight =
     Math.max(...Array.from(positions.values()).map(position => position.y + position.h), 0) + 24;
 
   stage.textContent = '';
-  stage.style.height = compact ? `${compactHeight}px` : '';
+  stage.style.height = `${compact ? compactHeight : desktopHeight}px`;
 
-  const sceneHeight = compact ? compactHeight : height;
+  const sceneHeight = compact ? compactHeight : desktopHeight;
 
   const textLayer = document.createElement('div');
   textLayer.className = 'note-web-text-layer';
@@ -444,6 +445,15 @@ function buildFieldText(compact) {
     text += `${FIELD_TERMS.join(separator)}${separator}`;
   }
   return text;
+}
+
+function getDesktopStageHeight(stage, fallbackHeight) {
+  const layout = stage.closest('.graph-main-layout');
+  if (!(layout instanceof HTMLElement)) return fallbackHeight;
+  const side = layout.querySelector('.graph-main-side');
+  if (!(side instanceof HTMLElement)) return fallbackHeight;
+  const sideHeight = Math.ceil(side.getBoundingClientRect().height);
+  return sideHeight > 0 ? sideHeight : fallbackHeight;
 }
 
 function renderLines(state) {
