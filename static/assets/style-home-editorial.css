@@ -139,7 +139,8 @@
 .note-web-card {
   position: absolute;
   display: grid;
-  gap: 10px;
+  align-content: start;
+  gap: 0;
   padding: 14px 15px;
   border-radius: 18px;
   border: 1.8px solid var(--line);
@@ -160,15 +161,11 @@
 
 .note-web-card-label { display: block; }
 
-.note-web-card-meta {
-  display: block;
-}
-
 .note-web-card-line {
   display: block;
   font-family: var(--display);
-  font-size: 1.3rem;
-  line-height: 1;
+  font-size: var(--note-web-card-font-size, 1.35rem);
+  line-height: 1.06;
   letter-spacing: -0.04em;
 }
 

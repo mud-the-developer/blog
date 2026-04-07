@@ -3,12 +3,12 @@ import { layoutNextLine, layoutWithLines, prepareWithSegments } from './vendor/p
 const STAGE_SELECTOR = '[data-note-web]';
 const MAX_NODES = 14;
 const MOBILE_NODES = 8;
-const CARD_MIN_WIDTH = 128;
-const CARD_MAX_WIDTH = 210;
+const CARD_MIN_WIDTH = 144;
+const CARD_MAX_WIDTH = 244;
 const CARD_PADDING_X = 15;
 const CARD_PADDING_Y = 14;
 const CARD_LINE_HEIGHT = 24;
-const CARD_MAX_LINES = 3;
+const CARD_TARGET_LINES = 4;
 const ITERATIONS = 180;
 const COMPACT_BREAKPOINT = 720;
 const DEFAULT_DETAIL_TITLE = 'Archive structure';
@@ -104,18 +104,18 @@ async function render(stage, graphUrl) {
   const compact = width < COMPACT_BREAKPOINT;
   const sizing = compact
     ? {
-        minWidth: 112,
-        maxWidth: 164,
-        lineHeight: 19,
-        maxLines: 3,
-        fontSize: 24,
+        minWidth: 140,
+        maxWidth: 272,
+        lineHeight: 20,
+        preferredLines: 3,
+        fontSize: 20,
       }
     : {
         minWidth: CARD_MIN_WIDTH,
         maxWidth: CARD_MAX_WIDTH,
         lineHeight: CARD_LINE_HEIGHT,
-        maxLines: CARD_MAX_LINES,
-        fontSize: 33,
+        preferredLines: CARD_TARGET_LINES,
+        fontSize: 22,
       };
 
   const sizedNodes = data.nodes
@@ -211,8 +211,8 @@ async function render(stage, graphUrl) {
       title: active.title,
       copy:
         neighbors.size > 0
-          ? `${neighbors.size} connected note${neighbors.size === 1 ? '' : 's'} around this cluster.`
-          : 'No local links in the current subset.',
+          ? 'Open this note to read the full entry inside its local cluster.'
+          : 'Open this note to read the full entry in the archive.',
       href: active.url,
       hidden: false,
     });
@@ -244,6 +244,7 @@ async function render(stage, graphUrl) {
 
     const labelWrap = document.createElement('span');
     labelWrap.className = 'note-web-card-label';
+    card.style.setProperty('--note-web-card-font-size', `${node.fontSize}px`);
     for (const lineText of node.lines) {
       const line = document.createElement('span');
       line.className = 'note-web-card-line';
@@ -251,11 +252,6 @@ async function render(stage, graphUrl) {
       labelWrap.appendChild(line);
     }
     card.appendChild(labelWrap);
-
-    const meta = document.createElement('span');
-    meta.className = 'note-web-card-meta';
-    meta.textContent = `${neighborMap.get(node.id)?.size ?? 0} links`;
-    card.appendChild(meta);
 
     card.addEventListener('pointerenter', () => setActive(node.id));
     card.addEventListener('focus', () => setActive(node.id));
@@ -512,7 +508,7 @@ function sizeNode(node, sizing) {
 
   for (let width = sizing.minWidth; width <= sizing.maxWidth; width += 8) {
     const layout = layoutWithLines(prepared, width - CARD_PADDING_X * 2, sizing.lineHeight);
-    if (layout.lineCount <= sizing.maxLines) {
+    if (layout.lineCount <= sizing.preferredLines) {
       chosen = { width, layout };
       break;
     }
@@ -529,9 +525,10 @@ function sizeNode(node, sizing) {
     id: node.id,
     title: node.title,
     url: node.url,
+    fontSize: sizing.fontSize,
     w: chosen.width,
-    h: CARD_PADDING_Y * 2 + chosen.layout.lineCount * sizing.lineHeight + 22,
-    lines: chosen.layout.lines.slice(0, sizing.maxLines).map(line => line.text),
+    h: CARD_PADDING_Y * 2 + chosen.layout.lineCount * sizing.lineHeight + 6,
+    lines: chosen.layout.lines.map(line => line.text),
   };
 }
 
@@ -729,10 +726,10 @@ function stepPhysics(state) {
 
 function solveCompactLayout(nodes, width) {
   const positions = new Map();
-  const columns = 2;
+  const columns = width < 430 ? 1 : 2;
   const sidePadding = 18;
   const gap = 14;
-  const columnWidth = (width - sidePadding * 2 - gap) / columns;
+  const columnWidth = (width - sidePadding * 2 - gap * (columns - 1)) / columns;
   const columnHeights = Array.from({ length: columns }, () => 160);
 
   nodes.forEach((node, index) => {
