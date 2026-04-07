@@ -1,4 +1,4 @@
-import { layoutNextLine, prepareWithSegments } from './vendor/pretext/layout.mjs';
+import { layoutNextLine, layoutWithLines, prepareWithSegments } from './vendor/pretext/layout.mjs';
 
 const STAGE_SELECTOR = '[data-note-web]';
 const MAX_NODES = 14;
