@@ -201,6 +201,10 @@
   gap: 18px;
 }
 
+.home-articles-panel .section-head-inline {
+  align-items: baseline;
+}
+
 .article-list {
   display: grid;
   gap: 14px;
@@ -288,6 +292,15 @@
     min-height: 540px;
   }
 
+  .home-articles-panel {
+    gap: 16px;
+  }
+
+  .home-articles-panel .section-head-inline {
+    gap: 10px;
+    padding-inline: 14px;
+  }
+
   .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -298,5 +311,32 @@
 
   .graph-main-side .button {
     width: 100%;
+  }
+}
+
+@media (max-width: 920px) and (max-height: 520px) {
+  .site-shell {
+    padding-bottom: 28px;
+  }
+
+  .site-header {
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .graph-main-panel,
+  .home-articles-panel {
+    gap: 14px;
+  }
+
+  .selected-note-card,
+  .issue-card,
+  .compact-stat-card,
+  .article-list-item {
+    padding: 16px;
+  }
+
+  .note-web-stage {
+    min-height: 440px;
   }
 }
