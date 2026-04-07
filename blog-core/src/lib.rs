@@ -6534,7 +6534,6 @@ Not published.
         assert!(index_html.contains(r#"src="/assets/pretext-runtime.mjs?v="#));
         assert!(index_html.contains(r#"href="/assets/style-editorial.css?v="#));
         assert!(index_html.contains(r#"src="/assets/site-runtime.js""#));
-        assert!(index_html.contains(r#"src="/assets/pretext-dragon-reflow.mjs?v="#));
         assert!(index_html.contains(r#"src="/assets/pretext-note-web.mjs?v="#));
         assert!(index_html.contains("window.__BLOG_RUNTIME_CONFIG__"));
         assert!(index_html.contains("graphDataUrl:"));
@@ -6589,7 +6588,6 @@ Not published.
         assert!(second_html.contains("article-featured"));
 
         assert!(!index_html.contains(r#"id="side-graph-stage""#));
-        assert!(index_html.contains(r#"src="/assets/pretext-dragon-reflow.mjs?v="#));
         assert!(index_html.contains(r#"src="/assets/pretext-note-web.mjs?v="#));
 
         let graph_html = fs::read_to_string(output_dir.join("graph/index.html"))?;

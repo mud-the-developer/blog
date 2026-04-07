@@ -1,7 +1,7 @@
-import { layoutWithLines, prepareWithSegments } from './vendor/pretext/layout.mjs';
+import { layoutNextLine, prepareWithSegments } from './vendor/pretext/layout.mjs';
 
 const STAGE_SELECTOR = '[data-note-web]';
-const MAX_NODES = 16;
+const MAX_NODES = 14;
 const CARD_MIN_WIDTH = 128;
 const CARD_MAX_WIDTH = 210;
 const CARD_PADDING_X = 15;
@@ -10,6 +10,14 @@ const CARD_LINE_HEIGHT = 24;
 const CARD_MAX_LINES = 3;
 const ITERATIONS = 180;
 const COMPACT_BREAKPOINT = 720;
+const TEXT_DESKTOP =
+  'This archive keeps design-system thinking, AI papers, semantic communications, and daily signal tracking in one readable place. Drag the note cards and the introduction will continuously reflow around the graph.';
+const TEXT_MOBILE =
+  'Drag the note cards and the intro copy will reflow around the graph.';
+const TEXT_FONT = '700 28px "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif';
+const TEXT_LINE_HEIGHT = 36;
+const MOBILE_TEXT_FONT = '700 19px "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif';
+const MOBILE_TEXT_LINE_HEIGHT = 25;
 const DEFAULT_DETAIL_TITLE = 'Hover a note';
 const DEFAULT_DETAIL_COPY =
   'Connections light up here so the archive feels explorable instead of just sortable.';
@@ -62,68 +70,42 @@ async function render(stage, graphUrl) {
   svg.setAttribute('viewBox', `0 0 ${width} ${compact ? compactHeight : height}`);
   stage.appendChild(svg);
 
+  const textLayer = document.createElement('div');
+  textLayer.className = 'note-web-text-layer';
+  stage.appendChild(textLayer);
+
+  const label = document.createElement('div');
+  label.className = 'note-web-text-label';
+  label.textContent = compact ? 'Move notes' : 'Drag notes to change the flow';
+  stage.appendChild(label);
+
   const fragment = document.createDocumentFragment();
   const nodeById = new Map();
   const neighborMap = buildNeighborMap(filteredLinks);
   const lines = [];
+  const state = {
+    compact,
+    width,
+    height: compact ? compactHeight : height,
+    textLayer,
+    label,
+    nodes: sizedNodes.map(node => ({ ...node, position: positions.get(node.id) })),
+    links: filteredLinks,
+    svgLines: lines,
+    activeId: '',
+    dragging: null,
+    preparedDesktop: prepareWithSegments(TEXT_DESKTOP, TEXT_FONT),
+    preparedMobile: prepareWithSegments(TEXT_MOBILE, MOBILE_TEXT_FONT),
+  };
 
   for (const link of filteredLinks) {
-    const source = positions.get(link.source);
-    const target = positions.get(link.target);
-    if (!source || !target) continue;
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     line.setAttribute('class', 'note-web-link');
     line.dataset.source = link.source;
     line.dataset.target = link.target;
-    line.setAttribute('x1', `${source.x + source.w / 2}`);
-    line.setAttribute('y1', `${source.y + source.h / 2}`);
-    line.setAttribute('x2', `${target.x + target.w / 2}`);
-    line.setAttribute('y2', `${target.y + target.h / 2}`);
     svg.appendChild(line);
     lines.push(line);
   }
-
-  for (const node of sizedNodes) {
-    const position = positions.get(node.id);
-    if (!position) continue;
-    const card = document.createElement('a');
-    card.className = 'note-web-card';
-    card.href = node.url;
-    card.style.width = `${position.w}px`;
-    card.style.height = `${position.h}px`;
-    card.style.transform = `translate(${position.x}px, ${position.y}px)`;
-    card.dataset.nodeId = node.id;
-
-    const label = document.createElement('span');
-    label.className = 'note-web-card-label';
-    for (const lineText of node.lines) {
-      const line = document.createElement('span');
-      line.className = 'note-web-card-line';
-      line.textContent = lineText.length > 0 ? lineText : '\u00A0';
-      label.appendChild(line);
-    }
-    card.appendChild(label);
-
-    const meta = document.createElement('span');
-    meta.className = 'note-web-card-meta';
-    meta.textContent = `${neighborMap.get(node.id)?.size ?? 0} links`;
-    card.appendChild(meta);
-
-    card.addEventListener('pointerenter', () => setActive(node.id));
-    card.addEventListener('focus', () => setActive(node.id));
-    card.addEventListener('pointerleave', clearActive);
-    card.addEventListener('blur', clearActive);
-    card.addEventListener('pointerdown', () => {
-      if (compact) {
-        setActive(node.id);
-      }
-    });
-
-    nodeById.set(node.id, { node, card });
-    fragment.appendChild(card);
-  }
-
-  stage.appendChild(fragment);
 
   const detailTitle = document.getElementById('note-web-detail-title');
   const detailCopy = document.getElementById('note-web-detail-copy');
@@ -139,13 +121,14 @@ async function render(stage, graphUrl) {
     }
   };
 
-  function setActive(nodeId) {
+  const setActive = nodeId => {
     const active = nodeById.get(nodeId);
     if (!active) return;
+    state.activeId = nodeId;
     const neighbors = neighborMap.get(nodeId) || new Set();
 
     for (const [id, entry] of nodeById.entries()) {
-      entry.card.classList.toggle('is-active', id === nodeId || neighbors.has(id));
+      entry.el.classList.toggle('is-active', id === nodeId || neighbors.has(id));
     }
 
     for (const line of lines) {
@@ -155,19 +138,21 @@ async function render(stage, graphUrl) {
     }
 
     applyDetailState({
-      title: active.node.title,
+      title: active.title,
       copy:
         neighbors.size > 0
-          ? `${neighbors.size} connected note${neighbors.size === 1 ? '' : 's'} in this local web.`
+          ? `${neighbors.size} connected note${neighbors.size === 1 ? '' : 's'} around this node.`
           : 'No local links in the current subset.',
-      href: active.node.url,
+      href: active.url,
       hidden: false,
     });
-  }
+  };
 
-  function clearActive() {
+  const clearActive = () => {
+    if (state.dragging) return;
+    state.activeId = '';
     for (const [, entry] of nodeById.entries()) {
-      entry.card.classList.remove('is-active');
+      entry.el.classList.remove('is-active');
     }
     for (const line of lines) {
       line.classList.remove('is-active');
@@ -178,7 +163,169 @@ async function render(stage, graphUrl) {
       href: '/',
       hidden: true,
     });
+  };
+
+  for (const node of state.nodes) {
+    const card = document.createElement('button');
+    card.className = 'note-web-card';
+    card.type = 'button';
+    card.style.width = `${node.w}px`;
+    card.style.height = `${node.h}px`;
+
+    const labelWrap = document.createElement('span');
+    labelWrap.className = 'note-web-card-label';
+    for (const lineText of node.lines) {
+      const line = document.createElement('span');
+      line.className = 'note-web-card-line';
+      line.textContent = lineText.length > 0 ? lineText : '\u00A0';
+      labelWrap.appendChild(line);
+    }
+    card.appendChild(labelWrap);
+
+    const meta = document.createElement('span');
+    meta.className = 'note-web-card-meta';
+    meta.textContent = `${neighborMap.get(node.id)?.size ?? 0} links`;
+    card.appendChild(meta);
+
+    card.addEventListener('pointerenter', () => setActive(node.id));
+    card.addEventListener('focus', () => setActive(node.id));
+    card.addEventListener('pointerleave', clearActive);
+    card.addEventListener('blur', clearActive);
+    card.addEventListener('pointerdown', event => startDrag(event, node.id));
+
+    node.el = card;
+    nodeById.set(node.id, node);
+    fragment.appendChild(card);
   }
+
+  stage.appendChild(fragment);
+  renderScene(state, neighborMap);
+
+  function startDrag(event, nodeId) {
+    const node = nodeById.get(nodeId);
+    if (!node) return;
+    const rect = node.el.getBoundingClientRect();
+    const stageRect = stage.getBoundingClientRect();
+    state.dragging = {
+      id: nodeId,
+      pointerId: event.pointerId,
+      offsetX: event.clientX - rect.left,
+      offsetY: event.clientY - rect.top,
+    };
+    node.el.setPointerCapture?.(event.pointerId);
+    setActive(nodeId);
+    event.preventDefault();
+  }
+
+  stage.addEventListener('pointermove', event => {
+    if (!state.dragging || state.dragging.pointerId !== event.pointerId) return;
+    const node = nodeById.get(state.dragging.id);
+    const stageRect = stage.getBoundingClientRect();
+    const x = event.clientX - stageRect.left - state.dragging.offsetX;
+    const y = event.clientY - stageRect.top - state.dragging.offsetY;
+    node.position.x = clamp(x, 18, state.width - node.w - 18);
+    node.position.y = clamp(y, 18, state.height - node.h - 18);
+    renderScene(state, neighborMap);
+  });
+
+  const endDrag = event => {
+    if (!state.dragging || state.dragging.pointerId !== event.pointerId) return;
+    const node = nodeById.get(state.dragging.id);
+    node?.el.releasePointerCapture?.(event.pointerId);
+    state.dragging = null;
+  };
+
+  stage.addEventListener('pointerup', endDrag);
+  stage.addEventListener('pointercancel', endDrag);
+}
+
+function renderScene(state, neighborMap) {
+  renderText(state);
+  renderLines(state);
+  for (const node of state.nodes) {
+    node.el.style.transform = `translate(${node.position.x}px, ${node.position.y}px)`;
+    node.el.classList.toggle(
+      'is-active',
+      state.activeId === node.id || (state.activeId && (neighborMap.get(state.activeId) || new Set()).has(node.id)),
+    );
+  }
+}
+
+function renderLines(state) {
+  for (const linkEl of state.svgLines) {
+    const source = state.nodes.find(node => node.id === linkEl.dataset.source);
+    const target = state.nodes.find(node => node.id === linkEl.dataset.target);
+    if (!source || !target) continue;
+    linkEl.setAttribute('x1', `${source.position.x + source.w / 2}`);
+    linkEl.setAttribute('y1', `${source.position.y + source.h / 2}`);
+    linkEl.setAttribute('x2', `${target.position.x + target.w / 2}`);
+    linkEl.setAttribute('y2', `${target.position.y + target.h / 2}`);
+  }
+}
+
+function renderText(state) {
+  const mobile = state.compact;
+  const font = mobile ? MOBILE_TEXT_FONT : TEXT_FONT;
+  const lineHeight = mobile ? MOBILE_TEXT_LINE_HEIGHT : TEXT_LINE_HEIGHT;
+  const prepared = mobile ? state.preparedMobile : state.preparedDesktop;
+  const paddingX = mobile ? 22 : 28;
+  const paddingTop = mobile ? 18 : 24;
+  const paddingBottom = mobile ? 20 : 24;
+  const fragment = document.createDocumentFragment();
+  let cursor = { segmentIndex: 0, graphemeIndex: 0 };
+  let y = paddingTop;
+  const obstacles = state.nodes.map(node => ({
+    left: node.position.x - 10,
+    right: node.position.x + node.w + 10,
+    top: node.position.y - 8,
+    bottom: node.position.y + node.h + 8,
+  }));
+
+  state.textLayer.textContent = '';
+
+  while (y + lineHeight <= state.height - paddingBottom) {
+    const spans = buildSpans(state.width, paddingX, y, lineHeight, obstacles);
+    if (spans.length === 0) break;
+    const span = spans.sort((a, b) => (b.right - b.left) - (a.right - a.left))[0];
+    const maxWidth = Math.max(120, span.right - span.left);
+    const line = layoutNextLine(prepared, cursor, maxWidth);
+    if (!line) break;
+
+    const el = document.createElement('span');
+    el.className = 'dragon-reflow-line';
+    el.textContent = line.text.length > 0 ? line.text : '\u00A0';
+    el.style.left = `${span.left}px`;
+    el.style.top = `${y}px`;
+    el.style.font = font;
+    fragment.appendChild(el);
+    cursor = line.end;
+    y += lineHeight;
+  }
+
+  state.textLayer.appendChild(fragment);
+  const labelX = state.nodes[0] ? state.nodes[0].position.x : paddingX;
+  const labelY = state.nodes[0] ? Math.max(18, state.nodes[0].position.y - 24) : 12;
+  state.label.style.left = `${labelX}px`;
+  state.label.style.top = `${labelY}px`;
+}
+
+function buildSpans(width, paddingX, y, lineHeight, obstacles) {
+  let spans = [{ left: paddingX, right: width - paddingX }];
+  const bandTop = y;
+  const bandBottom = y + lineHeight;
+
+  for (const obstacle of obstacles) {
+    if (bandBottom <= obstacle.top || bandTop >= obstacle.bottom) continue;
+    spans = spans.flatMap(span => {
+      if (obstacle.right <= span.left || obstacle.left >= span.right) return [span];
+      const next = [];
+      if (obstacle.left - span.left > 88) next.push({ left: span.left, right: obstacle.left });
+      if (span.right - obstacle.right > 88) next.push({ left: obstacle.right, right: span.right });
+      return next;
+    });
+  }
+
+  return spans;
 }
 
 function buildSubset(graph) {
@@ -203,7 +350,6 @@ function buildSubset(graph) {
     if (!id || visited.has(id) || !nodeById.has(id)) continue;
     visited.add(id);
     selected.push(nodeById.get(id));
-
     const neighbors = Array.from(adjacency.get(id) || []).sort(
       (a, b) => (degree.get(b) || 0) - (degree.get(a) || 0),
     );
@@ -268,37 +414,11 @@ function sizeNode(node, sizing) {
   };
 }
 
-function solveCompactLayout(nodes, width) {
-  const positions = new Map();
-  const columns = 2;
-  const sidePadding = 18;
-  const gap = 14;
-  const columnWidth = (width - sidePadding * 2 - gap) / columns;
-  const columnHeights = Array.from({ length: columns }, () => 22);
-
-  nodes.forEach((node, index) => {
-    const column = index % columns;
-    const x = sidePadding + column * (columnWidth + gap) + (columnWidth - node.w) / 2;
-    const y = columnHeights[column];
-    positions.set(node.id, {
-      x,
-      y,
-      w: node.w,
-      h: node.h,
-      vx: 0,
-      vy: 0,
-    });
-    columnHeights[column] += node.h + gap;
-  });
-
-  return positions;
-}
-
 function solveLayout(nodes, links, width, height) {
   const positions = new Map();
-  const centerX = width / 2;
-  const centerY = height / 2;
-  const radius = Math.min(width, height) * 0.28;
+  const centerX = width * 0.68;
+  const centerY = height * 0.48;
+  const radius = Math.min(width, height) * 0.18;
 
   nodes.forEach((node, index) => {
     const angle = (Math.PI * 2 * index) / nodes.length - Math.PI / 2;
@@ -348,8 +468,8 @@ function solveLayout(nodes, links, width, height) {
       let dx = target.x + target.w / 2 - (source.x + source.w / 2);
       let dy = target.y + target.h / 2 - (source.y + source.h / 2);
       const dist = Math.max(Math.hypot(dx, dy), 1);
-      const desired = 170;
-      const force = (dist - desired) * 0.0028;
+      const desired = 150;
+      const force = (dist - desired) * 0.0032;
       dx /= dist;
       dy /= dist;
       source.vx += dx * force;
@@ -362,14 +482,40 @@ function solveLayout(nodes, links, width, height) {
       const position = positions.get(node.id);
       const cx = position.x + position.w / 2;
       const cy = position.y + position.h / 2;
-      position.vx += (centerX - cx) * 0.0009;
-      position.vy += (centerY - cy) * 0.0009;
+      position.vx += (centerX - cx) * 0.001;
+      position.vy += (centerY - cy) * 0.001;
       position.x += position.vx;
       position.y += position.vy;
-      position.x = clamp(position.x, 18, width - position.w - 18);
-      position.y = clamp(position.y, 18, height - position.h - 18);
+      position.x = clamp(position.x, width * 0.38, width - position.w - 22);
+      position.y = clamp(position.y, 22, height - position.h - 22);
     }
   }
+
+  return positions;
+}
+
+function solveCompactLayout(nodes, width) {
+  const positions = new Map();
+  const columns = 2;
+  const sidePadding = 18;
+  const gap = 14;
+  const columnWidth = (width - sidePadding * 2 - gap) / columns;
+  const columnHeights = Array.from({ length: columns }, () => 160);
+
+  nodes.forEach((node, index) => {
+    const column = index % columns;
+    const x = sidePadding + column * (columnWidth + gap) + (columnWidth - node.w) / 2;
+    const y = columnHeights[column];
+    positions.set(node.id, {
+      x,
+      y,
+      w: node.w,
+      h: node.h,
+      vx: 0,
+      vy: 0,
+    });
+    columnHeights[column] += node.h + gap;
+  });
 
   return positions;
 }

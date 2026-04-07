@@ -6,38 +6,28 @@
 
 {% block content %}
   <div class="site-main-stack site-main-stack--home">
-    <section class="panel dragon-reflow-panel">
+    <section class="panel graph-main-panel">
       <div class="section-head-inline section-head-inline--wide">
         <div>
-          <p class="section-kicker">Pretext obstacle flow</p>
-          <h2>Dragon reflow</h2>
+          <p class="section-kicker">Connected notes</p>
+          <h1 class="graph-main-title">Graph-first homepage</h1>
         </div>
-        <p class="section-copy">Text is laid out line by line around a movable obstacle so the page feels alive without sacrificing readability.</p>
+        <p class="section-copy">Drag note cards and watch the opening copy reflow around the graph in real time. This keeps the homepage alive without turning it into a toy.</p>
       </div>
 
-      <div class="dragon-reflow-layout">
-        <div
-          id="dragon-reflow-stage"
-          class="dragon-reflow-stage"
-          data-dragon-reflow
-          data-text="This archive keeps design-system thinking, AI papers, semantic communications, and daily signal tracking in one readable place. Drag the dragon block and the text will continuously reflow around it."
-        >
-          <div class="dragon-reflow-fallback">
-            <p>This blog organizes design-system thinking, AI papers, semantic communications, and daily signal tracking into one readable archive.</p>
-            <p>Drag the dragon block and the copy reflows around it.</p>
-          </div>
-          <button class="dragon-obstacle" type="button" aria-label="Drag dragon block">
-            <span class="dragon-obstacle-label">Drag</span>
-            <span class="dragon-obstacle-pixel dragon-obstacle-pixel--1"></span>
-            <span class="dragon-obstacle-pixel dragon-obstacle-pixel--2"></span>
-            <span class="dragon-obstacle-pixel dragon-obstacle-pixel--3"></span>
-            <span class="dragon-obstacle-pixel dragon-obstacle-pixel--4"></span>
-          </button>
-        </div>
+      <div class="graph-main-layout">
+        <div id="note-web-stage" class="note-web-stage note-web-stage--hero" data-note-web data-graph-url="/graph.json"></div>
 
-        <aside class="dragon-side-stack">
+        <aside class="graph-main-side">
+          <article class="selected-note-card" aria-live="polite">
+            <p class="section-kicker">Selected note</p>
+            <h3 id="note-web-detail-title">Hover a note</h3>
+            <p id="note-web-detail-copy">Connections light up here so the archive feels explorable instead of just sortable.</p>
+            <a id="note-web-detail-link" class="button button--compact" href="/" hidden>Open note</a>
+          </article>
+
           {% if let Some(news) = news_spotlight %}
-          <article class="issue-spotlight-card">
+          <article class="issue-card">
             <p class="section-kicker">Current issue</p>
             <h3>{{ news.issue_label }}</h3>
             <p>{{ news.summary }}</p>
@@ -45,7 +35,7 @@
           </article>
           {% endif %}
 
-          <div class="home-stats-grid" aria-label="Archive stats">
+          <div class="stats-grid" aria-label="Archive stats">
             <article class="compact-stat-card">
               <p class="section-kicker">Notes</p>
               <strong>{{ total_notes }}</strong>
@@ -63,26 +53,6 @@
               <strong>{% if layout.show_search %}On{% else %}Off{% endif %}</strong>
             </article>
           </div>
-        </aside>
-      </div>
-    </section>
-
-    <section class="panel note-web-panel">
-      <div class="section-head-inline section-head-inline--wide">
-        <div>
-          <p class="section-kicker">Connected notes</p>
-          <h2>Interaction web</h2>
-        </div>
-        <p class="section-copy">Each note is rendered as a Pretext-sized card. Hover to inspect local links, click to open the underlying markdown page.</p>
-      </div>
-
-      <div class="note-web-layout">
-        <div id="note-web-stage" class="note-web-stage" data-note-web data-graph-url="/graph.json"></div>
-        <aside class="note-web-detail" aria-live="polite">
-          <p class="section-kicker">Selected note</p>
-          <h3 id="note-web-detail-title">Hover a note</h3>
-          <p id="note-web-detail-copy">Connections light up here so the archive feels explorable instead of just sortable.</p>
-          <a id="note-web-detail-link" class="button button--compact" href="/" hidden>Open note</a>
         </aside>
       </div>
     </section>
@@ -113,6 +83,5 @@
 {% endblock %}
 
 {% block extra_scripts %}
-  <script type="module" src="/assets/pretext-dragon-reflow.mjs?v={{ layout.asset_version }}"></script>
   <script type="module" src="/assets/pretext-note-web.mjs?v={{ layout.asset_version }}"></script>
 {% endblock %}
