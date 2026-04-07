@@ -46,6 +46,13 @@
   background: var(--surface-muted);
 }
 
+.selected-note-card {
+  display: grid;
+  align-content: start;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  min-height: 228px;
+}
+
 .selected-note-card h3,
 .issue-card h3 {
   margin: 0;
@@ -54,10 +61,29 @@
   line-height: 1;
 }
 
+.selected-note-card h3 {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
 .selected-note-card p,
 .issue-card p {
   margin: 10px 0 0;
   color: var(--muted);
+}
+
+.selected-note-card p {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.selected-note-card .button {
+  margin-top: 12px;
+  align-self: end;
 }
 
 .stats-grid {
@@ -252,6 +278,10 @@
 @media (max-width: 720px) {
   .graph-main-title {
     max-width: none;
+  }
+
+  .selected-note-card {
+    min-height: 210px;
   }
 
   .note-web-stage {
