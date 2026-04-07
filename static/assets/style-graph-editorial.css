@@ -46,6 +46,24 @@
   }
 
   .graph-panel--editorial .graph-stage {
-    min-height: 520px;
+    min-height: 460px;
+  }
+}
+
+@media (max-width: 920px) and (max-height: 520px) {
+  .graph-hero {
+    gap: 12px;
+  }
+
+  .graph-hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+  }
+
+  .graph-panel--editorial {
+    gap: 14px;
+  }
+
+  .graph-panel--editorial .graph-stage {
+    min-height: 360px;
   }
 }

@@ -566,3 +566,35 @@ body:is(.page-home, .page-tag, .page-graph, .page-system) .site-main-stack {
     align-items: flex-start;
   }
 }
+
+@media (max-width: 920px) and (max-height: 520px) {
+  .site-shell {
+    padding: 12px 14px 24px;
+  }
+
+  .site-header {
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .site-title {
+    font-size: clamp(1.95rem, 5vw, 2.7rem);
+  }
+
+  .site-tagline {
+    font-size: 0.94rem;
+  }
+
+  .site-nav {
+    gap: 8px;
+  }
+
+  .site-nav-link-label {
+    display: none;
+  }
+
+  .site-nav-link {
+    width: 44px;
+    padding: 0;
+  }
+}

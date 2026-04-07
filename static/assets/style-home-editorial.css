@@ -326,7 +326,15 @@
 
   .graph-main-panel,
   .home-articles-panel {
+    gap: 12px;
+  }
+
+  .graph-main-layout {
     gap: 14px;
+  }
+
+  .graph-main-side {
+    gap: 12px;
   }
 
   .selected-note-card,
@@ -336,7 +344,15 @@
     padding: 16px;
   }
 
+  .selected-note-card {
+    min-height: 188px;
+  }
+
+  .stats-grid {
+    gap: 10px;
+  }
+
   .note-web-stage {
-    min-height: 440px;
+    min-height: 380px;
   }
 }
