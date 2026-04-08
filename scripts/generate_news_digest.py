@@ -1631,6 +1631,7 @@ def render_markdown(
     repo_scoreboard: list[NewsItem],
     sections: list[tuple[str, str, str, list[NewsItem]]],
     archives: list[dict[str, str]],
+    beta_stem: str | None = None,
 ) -> tuple[str, str]:
     issue_date = issue_dt.strftime("%Y-%m-%d")
     stem = f"{issue_date}-ai-news-digest"
@@ -1661,6 +1662,7 @@ def render_markdown(
         '        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>',
         '        <a class="post-cta-link" href="#digest-archive">Digest archive</a>',
         f'        <a class="post-cta-link" href="{safe_text(ARCHIVE_URL)}">Monthly archive</a>',
+        *( [f'        <a class="post-cta-link" href="/notes/news/{beta_stem}/">Open beta brief</a>'] if beta_stem else [] ),
         "      </div>",
         "    </div>",
         '    <div class="news-digest-meta-grid">',
@@ -1864,7 +1866,7 @@ def render_archive_markdown(
     return frontmatter + "\n".join(body)
 
 
-def write_post(issue_dt: datetime, generated_dt: datetime, context: DigestContext) -> str:
+def write_post(issue_dt: datetime, generated_dt: datetime, context: DigestContext, beta_stem: str | None = None) -> str:
     stem = f"{issue_dt.strftime('%Y-%m-%d')}-ai-news-digest"
     archives = recent_archive_entries(stem, context.summary)
     markdown, stem = render_markdown(
@@ -1875,6 +1877,7 @@ def write_post(issue_dt: datetime, generated_dt: datetime, context: DigestContex
         context.repo_scoreboard,
         context.sections,
         archives,
+        beta_stem,
     )
     target = POSTS_DIR / f"{stem}.md"
     target.write_text(markdown)
@@ -1937,8 +1940,8 @@ def main() -> None:
     write_source_snapshot(payload)
     generated_dt = datetime.now(tz=KST)
     context = build_digest_context(payload, args.limit)
-    digest_stem = write_post(issue_dt, generated_dt, context)
     beta_stem = write_beta_post(issue_dt, generated_dt, context)
+    digest_stem = write_post(issue_dt, generated_dt, context, beta_stem)
     write_archive_post(issue_dt, generated_dt, context.summary, digest_stem)
     write_hub_json(issue_dt, generated_dt, context, digest_stem, beta_stem)
     save_translation_cache()

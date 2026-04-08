@@ -16,6 +16,7 @@ content-classes: [news-digest-note]
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
         <a class="post-cta-link" href="#digest-archive">Digest archive</a>
         <a class="post-cta-link" href="/notes/news/news-digest-archive/">Monthly archive</a>
+        <a class="post-cta-link" href="/notes/news/2026-04-09-ai-news-beta-digest/">Open beta brief</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
@@ -25,7 +26,7 @@ content-classes: [news-digest-note]
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Generated</span>
-        <strong><time datetime="2026-04-09T03:40:59.326061+09:00">Apr 9, 2026 · 3:40 AM KST</time></strong>
+        <strong><time datetime="2026-04-09T04:02:07.100061+09:00">Apr 9, 2026 · 4:02 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Sections</span>
@@ -798,7 +799,7 @@ content-classes: [news-digest-note]
       <a class="news-digest-archive-item" href="/notes/news/2026-04-09-ai-news-digest/">
         <span class="news-digest-archive-date">2026-04-09</span>
         <strong>Daily AI News Digest — 2026-04-09</strong>
-        <span>GitHub velocity is led by openai/codex; paper attention is clustering around Learning to Retrieve from Agent Trajectories; social attention is tilting toward Claude Code source code analysis reviewed by backend coding agent developers (AutoBe vs Claude…; biggest mover: langfuse/langfuse (+6). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+        <span>GitHub velocity is led by vllm-project/vllm; paper attention is clustering around Learning to Retrieve from Agent Trajectories; social attention is tilting toward Claude Code source code analysis reviewed by backend coding agent developers (AutoBe vs Claude…; biggest mover: NousResearch/hermes-agent (+1). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
       </a>
       <a class="news-digest-archive-item" href="/notes/news/2026-04-08-ai-news-digest/">
         <span class="news-digest-archive-date">2026-04-08</span>
