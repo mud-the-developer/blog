@@ -20,6 +20,9 @@ jobs:
       TZ: Asia/Seoul
       NEWS_REPO_TOKEN: ${{ secrets.NEWS_REPO_TOKEN }}
       GH_TOKEN: ${{ github.token }}
+      GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}
+      GOOGLE_AI_MODEL: ${{ vars.GOOGLE_AI_MODEL }}
+      ENABLE_GEMMA_BETA_DIGEST: ${{ vars.ENABLE_GEMMA_BETA_DIGEST }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -104,7 +107,7 @@ jobs:
       - name: Commit, push, and trigger deploy
         run: |
           set -euo pipefail
-          paths=(content/generated/news content/posts/news static/news/data)
+          paths=(content/generated/news content/posts/news static/news/data static/news/assets)
 
           if [[ -n "${NEWS_REPO_TOKEN}" ]]; then
             paths=(vendor/blog_news "${paths[@]}")
