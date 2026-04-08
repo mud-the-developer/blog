@@ -20,7 +20,7 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-04-09T03:35:43.194670+09:00">Apr 9, 2026 · 3:35 AM KST</time></strong>
+        <strong><time datetime="2026-04-09T03:40:59.326061+09:00">Apr 9, 2026 · 3:40 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
@@ -36,7 +36,7 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by openai/codex; paper attention is clustering around Learning to Retrieve from Agent Trajectories; social attention is tilting toward Claude Code source code analysis reviewed by backend coding agent developers (AutoBe vs Claude…; biggest mover: langfuse/langfuse (+6). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by vllm-project/vllm; paper attention is clustering around Learning to Retrieve from Agent Trajectories; social attention is tilting toward Claude Code source code analysis reviewed by backend coding agent developers (AutoBe vs Claude…; biggest mover: NousResearch/hermes-agent (+1). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
@@ -45,7 +45,7 @@ content-classes: [news-digest-note, news-digest-archive-note]
           <a class="news-digest-archive-item" href="/notes/news/2026-04-09-ai-news-digest/">
             <span class="news-digest-archive-date">2026-04-09</span>
             <strong>Daily AI News Digest — 2026-04-09</strong>
-            <span>GitHub velocity is led by openai/codex; paper attention is clustering around Learning to Retrieve from Agent Trajectories; social attention is tilting toward Claude Code source code analysis reviewed by backend coding agent developers (AutoBe vs Claude…; biggest mover: langfuse/langfuse (+6). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+            <span>GitHub velocity is led by vllm-project/vllm; paper attention is clustering around Learning to Retrieve from Agent Trajectories; social attention is tilting toward Claude Code source code analysis reviewed by backend coding agent developers (AutoBe vs Claude…; biggest mover: NousResearch/hermes-agent (+1). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
           </a>
           <a class="news-digest-archive-item" href="/notes/news/2026-04-08-ai-news-digest/">
             <span class="news-digest-archive-date">2026-04-08</span>

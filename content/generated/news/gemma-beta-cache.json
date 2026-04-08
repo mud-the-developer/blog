@@ -1,4 +1,21 @@
 {
+  "8bce6ef0790067732550a8c6ee4d480f3cc3dce37b67cd6e6ff16b228d0f71c6": {
+    "closing": "The shift from prompt-based tools to full agentic harnesses is now evident across both repo and research signals.",
+    "dek": "High-throughput serving and terminal-based coding agents dominate today's signals.",
+    "lead": "The ecosystem is seeing a concentrated push toward agentic autonomy, with vLLM leading inference efficiency and a surge in terminal-integrated coding tools. Research is shifting from static retrieval to learning directly from agent interaction trajectories to improve search accuracy.",
+    "section_notes": {
+      "hot24": "vLLM and OpenAI Codex are the primary drivers of immediate momentum across the board.",
+      "papers": "Key focus on agentic skill retrieval and the introduction of DISCO for multimodal protein design.",
+      "repos": "Strong velocity in terminal-based coding agents and the growth of the Hermes-agent project.",
+      "social": "Intense community analysis of Claude Code's source code and the rollout of Gemma 4 open models."
+    },
+    "takeaways": [
+      "vLLM and Ray remain the primary anchors for high-throughput AI compute and serving infrastructure.",
+      "Agentic research is pivoting toward 'trajectory mining' to train retrieval models on multi-step interaction data.",
+      "The coding agent landscape is diversifying with the rise of open-source alternatives like OpenCode and specialized skill libraries for Claude Code."
+    ],
+    "title": "Agentic Infrastructure & Inference Velocity"
+  },
   "cad86e97ff0acc11d55aae1e6be4c6ecd300d5a6625e817660f54734e483e6c1": {
     "closing": "AI agents are rapidly evolving from simple prompt-based interactions into complex, skill-driven harnesses.",
     "dek": "Terminal-based agents and trajectory-based retrieval dominate today's AI signal.",
