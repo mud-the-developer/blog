@@ -11,8 +11,10 @@ Pipeline:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
+import os
 import re
 from collections import Counter, defaultdict
 from dataclasses import dataclass
@@ -21,6 +23,7 @@ from html import escape as html_escape
 from pathlib import Path
 from typing import Any
 from urllib.parse import quote
+import urllib.request
 from urllib.request import urlopen
 from zoneinfo import ZoneInfo
 
@@ -31,9 +34,11 @@ SNAPSHOT_PATH = ROOT / "static" / "news" / "data" / "latest.json"
 GENERATED_DIR = ROOT / "content" / "generated" / "news"
 POSTS_DIR = ROOT / "content" / "posts" / "news"
 TRANSLATION_CACHE_PATH = GENERATED_DIR / "translation-cache.json"
+BETA_DIGEST_CACHE_PATH = GENERATED_DIR / "gemma-beta-cache.json"
 KST = ZoneInfo("Asia/Seoul")
 ARCHIVE_STEM = "news-digest-archive"
 ARCHIVE_URL = f"/notes/news/{ARCHIVE_STEM}/"
+NEWS_ASSET_DIR = ROOT / "static" / "news" / "assets"
 
 SECTION_SPECS = [
     ("hot24", "Hot in 24 Hours", "The fastest-moving items across repos, papers, and community chatter."),
@@ -140,6 +145,17 @@ class NewsItem:
 
 
 TRANSLATION_CACHE: dict[str, str] = {}
+BETA_DIGEST_CACHE: dict[str, Any] = {}
+
+
+@dataclass
+class BetaDigest:
+    title: str
+    dek: str
+    lead: str
+    takeaways: list[str]
+    section_notes: dict[str, str]
+    closing: str
 
 
 def parse_args() -> argparse.Namespace:
@@ -176,6 +192,7 @@ def ensure_dirs() -> None:
     GENERATED_DIR.mkdir(parents=True, exist_ok=True)
     POSTS_DIR.mkdir(parents=True, exist_ok=True)
     SNAPSHOT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    NEWS_ASSET_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def snapshot_feed_payload(payload: dict[str, Any]) -> dict[str, Any]:
@@ -208,6 +225,37 @@ def load_translation_cache() -> None:
 def save_translation_cache() -> None:
     TRANSLATION_CACHE_PATH.write_text(
         json.dumps(TRANSLATION_CACHE, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    )
+
+
+def load_beta_digest_cache() -> None:
+    BETA_DIGEST_CACHE.clear()
+    if BETA_DIGEST_CACHE_PATH.exists():
+        BETA_DIGEST_CACHE.update(json.loads(BETA_DIGEST_CACHE_PATH.read_text()))
+
+
+def save_beta_digest_cache() -> None:
+    BETA_DIGEST_CACHE_PATH.write_text(
+        json.dumps(BETA_DIGEST_CACHE, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    )
+
+
+def gemma_beta_enabled() -> bool:
+    flag = (os.getenv("ENABLE_GEMMA_BETA_DIGEST") or "").strip().lower()
+    if flag in {"0", "false", "no", "off"}:
+        return False
+    return bool(os.getenv("GOOGLE_AI_API_KEY", "").strip())
+
+
+def gemma_model_name() -> str:
+    model = (os.getenv("GOOGLE_AI_MODEL") or "").strip() or "models/gemma-4-31b-it"
+    return model if model.startswith("models/") else f"models/{model}"
+
+
+def gemma_api_url() -> str:
+    return (
+        f"https://generativelanguage.googleapis.com/v1beta/"
+        f"{gemma_model_name()}:generateContent?key={os.getenv('GOOGLE_AI_API_KEY','').strip()}"
     )
 
 
@@ -1264,6 +1312,274 @@ def build_digest_context(payload: dict[str, Any], limit: int) -> DigestContext:
     )
 
 
+def beta_digest_cache_key(issue_dt: datetime, context: DigestContext) -> str:
+    raw = json.dumps(
+        {
+            "date": issue_dt.strftime("%Y-%m-%d"),
+            "summary": context.summary,
+            "top_cards": [card.__dict__ for card in context.top_cards],
+            "repo_scoreboard": [card.__dict__ for card in context.repo_scoreboard],
+            "sections": [
+                {
+                    "slug": slug,
+                    "title": title,
+                    "description": description,
+                    "items": [card.__dict__ for card in cards[:6]],
+                }
+                for slug, title, description, cards in context.sections
+            ],
+        },
+        ensure_ascii=False,
+        sort_keys=True,
+    )
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+
+def parse_llm_json(text: str) -> dict[str, Any]:
+    raw = text.strip()
+    if raw.startswith("```"):
+        raw = re.sub(r"^```(?:json)?\s*", "", raw)
+        raw = re.sub(r"\s*```$", "", raw)
+    if not raw:
+        raise ValueError("empty llm response")
+    first_json = min([idx for idx in [raw.find("{"), raw.find("[")] if idx != -1], default=-1)
+    if first_json > 0:
+        raw = raw[first_json:]
+    return json.loads(raw)
+
+
+def gemma_prompt_payload(issue_dt: datetime, context: DigestContext) -> dict[str, Any]:
+    return {
+        "task": "Write a concise, high-signal beta daily AI news digest in JSON.",
+        "date": issue_dt.strftime("%Y-%m-%d"),
+        "constraints": [
+            "Treat this as a human-readable editorial brief, not a raw list.",
+            "Be concrete and compact.",
+            "Do not invent facts, counts, or sources.",
+            "Do not mention ranking formulas or hidden scoring internals.",
+            "Return strict JSON only.",
+        ],
+        "schema": {
+            "title": "short editorial title",
+            "dek": "1 sentence overview",
+            "lead": "2-4 sentence opening brief",
+            "takeaways": ["3 bullet takeaways"],
+            "section_notes": {
+                "hot24": "1-2 sentence note",
+                "repos": "1-2 sentence note",
+                "papers": "1-2 sentence note",
+                "social": "1-2 sentence note",
+            },
+            "closing": "short closing note",
+        },
+        "digest": {
+            "summary": context.summary,
+            "source_counts": context.source_counts,
+            "top_cards": [card.__dict__ for card in context.top_cards],
+            "repo_scoreboard": [card.__dict__ for card in context.repo_scoreboard[:5]],
+            "sections": [
+                {
+                    "slug": slug,
+                    "title": title,
+                    "description": description,
+                    "items": [card.__dict__ for card in cards[:6]],
+                }
+                for slug, title, description, cards in context.sections
+            ],
+        },
+    }
+
+
+def generate_gemma_beta_digest(issue_dt: datetime, context: DigestContext) -> BetaDigest | None:
+    if not gemma_beta_enabled():
+        return None
+    cache_key = beta_digest_cache_key(issue_dt, context)
+    cached = BETA_DIGEST_CACHE.get(cache_key)
+    if isinstance(cached, dict):
+        return BetaDigest(**cached)
+
+    request_body = {
+        "contents": [
+            {
+                "role": "user",
+                "parts": [{"text": json.dumps(gemma_prompt_payload(issue_dt, context), ensure_ascii=False)}],
+            }
+        ],
+        "generationConfig": {
+            "temperature": 0.35,
+            "responseMimeType": "application/json",
+        },
+    }
+    req = urllib.request.Request(
+        gemma_api_url(),
+        data=json.dumps(request_body).encode("utf-8"),
+        headers={"Content-Type": "application/json", "User-Agent": "blog-news-digest/1.0"},
+    )
+    with urllib.request.urlopen(req, timeout=45) as response:
+        payload = json.loads(response.read().decode("utf-8"))
+    parts = (((payload.get("candidates") or [{}])[0].get("content") or {}).get("parts") or [])
+    response_text = ""
+    for part in parts:
+        if part.get("thought"):
+            continue
+        response_text = part.get("text", "")
+        if response_text:
+            break
+    parsed = parse_llm_json(response_text)
+    beta = BetaDigest(
+        title=str(parsed.get("title") or f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}").strip(),
+        dek=str(parsed.get("dek") or context.summary).strip(),
+        lead=str(parsed.get("lead") or context.summary).strip(),
+        takeaways=[str(item).strip() for item in (parsed.get("takeaways") or []) if str(item).strip()][:3],
+        section_notes={
+            str(key): str(value).strip()
+            for key, value in (parsed.get("section_notes") or {}).items()
+            if str(value).strip()
+        },
+        closing=str(parsed.get("closing") or "").strip(),
+    )
+    BETA_DIGEST_CACHE[cache_key] = beta.__dict__
+    return beta
+
+
+def write_beta_cover_svg(issue_dt: datetime, context: DigestContext, beta: BetaDigest) -> str:
+    asset_name = f"beta-digest-{issue_dt.strftime('%Y-%m-%d')}.svg"
+    path = NEWS_ASSET_DIR / asset_name
+    top_labels = " · ".join(card.headline for card in context.top_cards[:3])
+    counts = " / ".join(f"{row['label']}: {row['value']}" for row in context.source_counts[:4])
+    path.write_text(
+        f"""<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='720' viewBox='0 0 1200 720'>
+<defs>
+  <linearGradient id='bg' x1='0' y1='0' x2='1' y2='1'>
+    <stop offset='0%' stop-color='#121a24'/>
+    <stop offset='100%' stop-color='#1f2d3b'/>
+  </linearGradient>
+</defs>
+<rect width='1200' height='720' fill='url(#bg)'/>
+<rect x='42' y='42' width='1116' height='636' rx='32' fill='rgba(255,253,250,0.06)' stroke='rgba(255,255,255,0.16)'/>
+<text x='78' y='110' font-family='Inter,system-ui' font-size='18' letter-spacing='6' fill='#9fb6d1'>MUD&apos;S BLOG · BETA DAILY BRIEF</text>
+<text x='78' y='212' font-family='Inter,system-ui' font-size='68' font-weight='800' fill='#f8fbff'>{html_escape(beta.title)}</text>
+<text x='78' y='286' font-family='Inter,system-ui' font-size='28' fill='#c7d6e9'>{html_escape(beta.dek)}</text>
+<text x='78' y='388' font-family='Inter,system-ui' font-size='20' fill='#84d2ff'>TOP MOVERS</text>
+<text x='78' y='426' font-family='Inter,system-ui' font-size='28' fill='#f8fbff'>{html_escape(top_labels[:100])}</text>
+<text x='78' y='558' font-family='Inter,system-ui' font-size='20' fill='#84d2ff'>SOURCE MIX</text>
+<text x='78' y='596' font-family='Inter,system-ui' font-size='26' fill='#f8fbff'>{html_escape(counts)}</text>
+<text x='78' y='650' font-family='Inter,system-ui' font-size='18' fill='#9fb6d1'>{issue_dt.strftime('%Y-%m-%d')}</text>
+</svg>""",
+        encoding="utf-8",
+    )
+    return f"/news/assets/{asset_name}"
+
+
+def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: DigestContext, beta: BetaDigest, cover_url: str) -> tuple[str, str]:
+    stem = f"{issue_dt.strftime('%Y-%m-%d')}-ai-news-beta-digest"
+    title = beta.title or f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}"
+    frontmatter = "\n".join(
+        [
+            "---",
+            f"title: {yaml_quote(title)}",
+            f"description: {yaml_quote(beta.dek or context.summary)}",
+            f"date: {issue_dt.strftime('%Y-%m-%d')}",
+            "tags: [news, news-digest, ai, beta]",
+            "publish: true",
+            "content-classes: [news-digest-note, news-digest-beta-note]",
+            "---",
+            "",
+        ]
+    )
+    body = [
+        '<div class="news-digest-shell news-digest-beta-shell">',
+        '  <section class="news-digest-hero">',
+        '    <div class="news-digest-hero-copy">',
+        '      <p class="section-kicker">Beta Brief</p>',
+        f'      <h1 data-pretext-target>{safe_text(title)}</h1>',
+        f'      <p class="news-digest-lead" data-pretext-target>{safe_text(beta.dek)}</p>',
+        f'      <p class="news-digest-section-description" data-pretext-target>{safe_text(beta.lead)}</p>',
+        '      <div class="news-digest-actions" role="group" aria-label="Beta digest actions">',
+        f'        <a class="post-cta-link" href="/notes/news/{issue_dt.strftime("%Y-%m-%d")}-ai-news-digest/">Open structured digest</a>',
+        '        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>',
+        "      </div>",
+        "    </div>",
+        '    <div class="news-digest-meta-grid">',
+        '      <div class="news-digest-meta-card">',
+        '        <span class="news-digest-meta-label">Issue date</span>',
+        f'        <strong><time datetime="{issue_dt.strftime("%Y-%m-%d")}">{safe_text(issue_date_label(issue_dt))}</time></strong>',
+        "      </div>",
+        '      <div class="news-digest-meta-card">',
+        '        <span class="news-digest-meta-label">Generated</span>',
+        f'        <strong><time datetime="{generated_dt.isoformat()}">{safe_text(generated_timestamp_label(generated_dt))}</time></strong>',
+        "      </div>",
+        '      <div class="news-digest-meta-card">',
+        '        <span class="news-digest-meta-label">Mode</span>',
+        "        <strong>Gemma 4 beta</strong>",
+        "      </div>",
+        "    </div>",
+        "  </section>",
+        f'  <section class="news-digest-top-shell"><img class="news-digest-image" src="{safe_text(cover_url)}" alt="{safe_text(title)}" width="1200" height="720" loading="lazy" decoding="async" /></section>',
+    ]
+    if beta.takeaways:
+        body.extend(
+            [
+                '  <section class="news-digest-section">',
+                '    <header class="news-digest-section-head">',
+                '      <p class="section-kicker">Takeaways</p>',
+                '      <h2 data-pretext-target>What matters today</h2>',
+                '    </header>',
+                '    <div class="news-digest-archive-list">',
+            ]
+        )
+        for item in beta.takeaways:
+            body.extend(
+                [
+                    '      <div class="news-digest-archive-item">',
+                    f'        <strong>{safe_text(item)}</strong>',
+                    "      </div>",
+                ]
+            )
+        body.extend(["    </div>", "  </section>"])
+    for slug, heading, _description, cards in context.sections:
+        note = beta.section_notes.get(slug, "")
+        body.extend(
+            [
+                '  <section class="news-digest-section">',
+                '    <header class="news-digest-section-head">',
+                '      <p class="section-kicker">Section</p>',
+                f'      <h2 data-pretext-target>{safe_text(heading)}</h2>',
+                '    </header>',
+            ]
+        )
+        if note:
+            body.append(f'    <p class="news-digest-section-description" data-pretext-target>{safe_text(note)}</p>')
+        body.append('    <div class="news-digest-grid">')
+        for card in cards[:4]:
+            body.extend(render_digest_card_lines(card))
+        body.extend(["    </div>", "  </section>"])
+    if beta.closing:
+        body.extend(
+            [
+                '  <section class="news-digest-archive">',
+                '    <header class="news-digest-section-head">',
+                '      <p class="section-kicker">Closing</p>',
+                '      <h2 data-pretext-target>Editor note</h2>',
+                '    </header>',
+                f'    <p class="news-digest-section-description" data-pretext-target>{safe_text(beta.closing)}</p>',
+                "  </section>",
+            ]
+        )
+    body.extend(["</div>", ""])
+    return frontmatter + "\n".join(body), stem
+
+
+def write_beta_post(issue_dt: datetime, generated_dt: datetime, context: DigestContext) -> str | None:
+    beta = generate_gemma_beta_digest(issue_dt, context)
+    if beta is None:
+        return None
+    cover_url = write_beta_cover_svg(issue_dt, context, beta)
+    markdown, stem = render_beta_markdown(issue_dt, generated_dt, context, beta, cover_url)
+    (POSTS_DIR / f"{stem}.md").write_text(markdown)
+    return stem
+
+
 def archive_entries(current_stem: str, current_summary: str) -> list[dict[str, str]]:
     entries: list[dict[str, str]] = []
     for path in sorted(POSTS_DIR.glob("*-ai-news-digest.md"), reverse=True):
@@ -1571,7 +1887,7 @@ def write_archive_post(issue_dt: datetime, generated_dt: datetime, current_summa
     (POSTS_DIR / f"{ARCHIVE_STEM}.md").write_text(markdown)
 
 
-def write_hub_json(issue_dt: datetime, generated_dt: datetime, context: DigestContext, digest_stem: str) -> None:
+def write_hub_json(issue_dt: datetime, generated_dt: datetime, context: DigestContext, digest_stem: str, beta_stem: str | None) -> None:
     generated_at = generated_dt.isoformat()
     sections = [
         {
@@ -1597,6 +1913,14 @@ def write_hub_json(issue_dt: datetime, generated_dt: datetime, context: DigestCo
             "url": f"/notes/news/{digest_stem}/",
             "description": context.summary,
         },
+        "beta_digest": (
+            {
+                "title": f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}",
+                "url": f"/notes/news/{beta_stem}/",
+            }
+            if beta_stem
+            else None
+        ),
         "archive_url": ARCHIVE_URL,
         "archives": recent_archive_entries(digest_stem, context.summary),
     }
@@ -1607,16 +1931,21 @@ def main() -> None:
     args = parse_args()
     ensure_dirs()
     load_translation_cache()
+    load_beta_digest_cache()
     issue_dt = issue_date_from_args(args.date)
     payload = load_source_feed()
     write_source_snapshot(payload)
     generated_dt = datetime.now(tz=KST)
     context = build_digest_context(payload, args.limit)
     digest_stem = write_post(issue_dt, generated_dt, context)
+    beta_stem = write_beta_post(issue_dt, generated_dt, context)
     write_archive_post(issue_dt, generated_dt, context.summary, digest_stem)
-    write_hub_json(issue_dt, generated_dt, context, digest_stem)
+    write_hub_json(issue_dt, generated_dt, context, digest_stem, beta_stem)
     save_translation_cache()
+    save_beta_digest_cache()
     print(f"Generated news digest post: content/posts/news/{digest_stem}.md")
+    if beta_stem:
+        print(f"Generated beta digest post: content/posts/news/{beta_stem}.md")
     print(f"Generated archive post: content/posts/news/{ARCHIVE_STEM}.md")
     print("Generated hub data: content/generated/news/latest.json")
     print("Updated raw feed snapshot: static/news/data/latest.json")
