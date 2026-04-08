@@ -1,4 +1,30 @@
 {
+  "6f230e238377b2505c3e78221b63158e45909754430d4b4f805db05d4ae23f03": {
+    "closing": "Infrastructure for agentic autonomy continues to mature across both open and closed ecosystems.",
+    "dek": "High-throughput inference engines and agentic skill retrieval dominate today's technical signals.",
+    "lead": "Today's activity centers on the optimization of agentic workflows and the infrastructure required to serve them. From vLLM's continued momentum in inference to new research on mining supervision from agent trajectories, the focus has shifted toward operational efficiency and real-world skill deployment.",
+    "section_bodies": {
+      "hot24": [
+        "vLLM leads the 24-hour cycle as the primary high-throughput inference engine for LLMs. Parallel momentum is seen in the coding agent space, where OpenAI's Codex and new research on agent trajectories are surfacing as top interests."
+      ],
+      "papers": [
+        "Recent research emphasizes the gap between theoretical accuracy and real-world agent performance. Key papers introduce the PTE metric for reasoning efficiency and propose new paradigms for training retrieval models using multi-step agent trajectories."
+      ],
+      "repos": [
+        "GitHub activity is heavily skewed toward agentic tooling. Beyond vLLM and Ray, there is significant growth in specialized libraries like Antigravity's skill collection and the OpenCode project, reflecting a trend toward modular, installable agent capabilities."
+      ],
+      "social": [
+        "Discussion is currently focused on the technical internals of Claude Code and the accessibility of large models. The release of Gemma 4 and the 2-bit quantization of GLM-5.1 are driving conversations around local hardware deployment for agentic workflows."
+      ]
+    },
+    "takeaways": [
+      "vLLM and Ray maintain strong momentum as core AI compute and serving engines.",
+      "Research is pivoting toward agentic search, focusing on how models retrieve information from interaction histories.",
+      "Community attention is shifting toward the technical auditing of coding agents, specifically Claude Code and OpenCode.",
+      "New open-model releases, including Gemma 4 and GLM-5.1, are expanding local execution capabilities for reasoning."
+    ],
+    "title": "AI Agentic Infrastructure and Retrieval"
+  },
   "8bce6ef0790067732550a8c6ee4d480f3cc3dce37b67cd6e6ff16b228d0f71c6": {
     "closing": "The shift from prompt-based tools to full agentic harnesses is now evident across both repo and research signals.",
     "dek": "High-throughput serving and terminal-based coding agents dominate today's signals.",

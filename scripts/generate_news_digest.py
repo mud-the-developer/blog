@@ -154,8 +154,7 @@ class BetaDigest:
     dek: str
     lead: str
     takeaways: list[str]
-    section_notes: dict[str, str]
-    lead_notes: list[str]
+    section_bodies: dict[str, list[str]]
     closing: str
 
 
@@ -1318,7 +1317,7 @@ def build_digest_context(payload: dict[str, Any], limit: int) -> DigestContext:
 def beta_digest_cache_key(issue_dt: datetime, context: DigestContext) -> str:
     raw = json.dumps(
         {
-            "version": 2,
+            "version": 3,
             "date": issue_dt.strftime("%Y-%m-%d"),
             "summary": context.summary,
             "top_cards": [card.__dict__ for card in context.top_cards],
@@ -1362,7 +1361,7 @@ def gemma_prompt_payload(issue_dt: datetime, context: DigestContext) -> dict[str
             "Be concrete, compact, and readable at a glance.",
             "Do not invent facts, counts, or sources.",
             "Do not mention ranking formulas or hidden scoring internals.",
-            "Lead notes should be short one-sentence angles aligned to the top_cards order.",
+            "Section bodies should read like short article copy, not bullets rewritten as prose.",
             "Return strict JSON only.",
         ],
         "schema": {
@@ -1370,12 +1369,11 @@ def gemma_prompt_payload(issue_dt: datetime, context: DigestContext) -> dict[str
             "dek": "1 sentence overview",
             "lead": "2-4 sentence opening brief",
             "takeaways": ["3-4 sharp takeaway lines"],
-            "lead_notes": ["up to 4 short notes aligned to top_cards order"],
-            "section_notes": {
-                "hot24": "1-2 sentence note",
-                "repos": "1-2 sentence note",
-                "papers": "1-2 sentence note",
-                "social": "1-2 sentence note",
+            "section_bodies": {
+                "hot24": ["paragraph 1", "paragraph 2"],
+                "repos": ["paragraph 1", "paragraph 2"],
+                "papers": ["paragraph 1", "paragraph 2"],
+                "social": ["paragraph 1", "paragraph 2"]
             },
             "closing": "short closing note",
         },
@@ -1395,6 +1393,33 @@ def gemma_prompt_payload(issue_dt: datetime, context: DigestContext) -> dict[str
             ],
         },
     }
+
+
+def normalize_section_bodies(parsed: dict[str, Any], context: DigestContext) -> dict[str, list[str]]:
+    raw_bodies = parsed.get("section_bodies") or {}
+    raw_notes = parsed.get("section_notes") or {}
+    normalized: dict[str, list[str]] = {}
+
+    for slug, _title, description, _cards in context.sections:
+        paragraphs: list[str] = []
+        candidate = raw_bodies.get(slug)
+
+        if isinstance(candidate, list):
+            paragraphs = [str(item).strip() for item in candidate if str(item).strip()]
+        elif isinstance(candidate, str) and candidate.strip():
+            paragraphs = [candidate.strip()]
+
+        if not paragraphs:
+            note = raw_notes.get(slug)
+            if isinstance(note, str) and note.strip():
+                paragraphs = [note.strip()]
+
+        if not paragraphs and description:
+            paragraphs = [description]
+
+        normalized[slug] = paragraphs[:2]
+
+    return normalized
 
 
 def generate_gemma_beta_digest(issue_dt: datetime, context: DigestContext) -> BetaDigest | None:
@@ -1438,12 +1463,7 @@ def generate_gemma_beta_digest(issue_dt: datetime, context: DigestContext) -> Be
         dek=str(parsed.get("dek") or context.summary).strip(),
         lead=str(parsed.get("lead") or context.summary).strip(),
         takeaways=[str(item).strip() for item in (parsed.get("takeaways") or []) if str(item).strip()][:4],
-        lead_notes=[str(item).strip() for item in (parsed.get("lead_notes") or []) if str(item).strip()][:4],
-        section_notes={
-            str(key): str(value).strip()
-            for key, value in (parsed.get("section_notes") or {}).items()
-            if str(value).strip()
-        },
+        section_bodies=normalize_section_bodies(parsed, context),
         closing=str(parsed.get("closing") or "").strip(),
     )
     BETA_DIGEST_CACHE[cache_key] = beta.__dict__
@@ -1509,7 +1529,7 @@ def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: Di
     if beta.takeaways:
         body.extend(
             [
-                '  <section class="news-digest-section news-digest-beta-wire">',
+                '  <section class="news-digest-section news-digest-beta-standfirst">',
                 '    <header class="news-digest-section-head">',
                 '      <p class="section-kicker">Morning line</p>',
                 '      <h2 data-pretext-target>What to scan first</h2>',
@@ -1517,7 +1537,7 @@ def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: Di
                 '    <div class="news-digest-beta-wire-grid">',
                 '      <div class="news-digest-archive-list news-digest-beta-bullets">',
             ]
-        )
+            )
         for item in beta.takeaways:
             body.extend(
                 [
@@ -1527,43 +1547,36 @@ def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: Di
                 ]
             )
         body.extend(["      </div>", *source_pills, "    </div>", "  </section>"])
-    if context.top_cards:
-        body.extend(
-            [
-                '  <section class="news-digest-section news-digest-beta-top-shell" aria-label="Lead stories">',
-                '    <header class="news-digest-section-head">',
-                '      <p class="section-kicker">Lead stories</p>',
-                '      <h2 data-pretext-target>Top lines</h2>',
-                '    </header>',
-                '    <div class="news-digest-top-grid news-digest-top-grid--beta">',
-            ]
-        )
-        for index, card in enumerate(context.top_cards):
-            lead_note = beta.lead_notes[index] if index < len(beta.lead_notes) else None
-            body.extend(
-                render_digest_card_lines(
-                    card,
-                    extra_classes="news-digest-top-card",
-                    lead_note=lead_note,
-                )
-            )
-        body.extend(["    </div>", "  </section>"])
     for slug, heading, _description, cards in context.sections:
-        note = beta.section_notes.get(slug, "")
+        story_paragraphs = beta.section_bodies.get(slug) or []
+        card_subset = cards[:2]
         body.extend(
             [
-                '  <section class="news-digest-section">',
+                f'  <section class="news-digest-section news-digest-beta-story" id="beta-{safe_text(slug)}">',
                 '    <header class="news-digest-section-head">',
                 '      <p class="section-kicker">Section</p>',
                 f'      <h2 data-pretext-target>{safe_text(heading)}</h2>',
                 '    </header>',
+                '    <div class="news-digest-beta-story-layout">',
+                '      <div class="news-digest-beta-story-body">',
             ]
         )
-        if note:
-            body.append(f'    <p class="news-digest-section-description" data-pretext-target>{safe_text(note)}</p>')
-        body.append('    <div class="news-digest-grid">')
-        for card in cards[:4]:
-            body.extend(render_digest_card_lines(card))
+        for paragraph in story_paragraphs:
+            body.append(f'        <p class="news-digest-beta-story-copy" data-pretext-target>{safe_text(paragraph)}</p>')
+        body.append("      </div>")
+        if card_subset:
+            body.append('      <aside class="news-digest-beta-story-rail" aria-label="Referenced items">')
+            for index, card in enumerate(card_subset):
+                body.extend(
+                    render_digest_card_lines(
+                        card,
+                        extra_classes=(
+                            "news-digest-inline-card"
+                            + (" news-digest-inline-card--primary" if index == 0 else "")
+                        ),
+                    )
+                )
+            body.append("      </aside>")
         body.extend(["    </div>", "  </section>"])
     if beta.closing:
         body.extend(
