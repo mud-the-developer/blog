@@ -25,7 +25,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Generated</span>
-        <strong><time datetime="2026-04-09T04:22:30.801188+09:00">Apr 9, 2026 · 4:22 AM KST</time></strong>
+        <strong><time datetime="2026-04-09T04:24:49.065022+09:00">Apr 9, 2026 · 4:24 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Mode</span>
