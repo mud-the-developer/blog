@@ -16,6 +16,30 @@
     ],
     "title": "Agentic Infrastructure & Inference Velocity"
   },
+  "bd219ddfa6be5f77f835a7aded5a52d7ced3eec04a80c3814f1797fd2cd1c7d6": {
+    "closing": "Monitoring the shift from prompt-based to harness-based agentic patterns.",
+    "dek": "High-throughput serving engines and agent-trajectory research dominate today's signals.",
+    "lead": "Today's activity centers on the optimization of LLM serving and the evolution of agentic workflows. GitHub momentum is led by vLLM and Ray, while research shifts toward mining supervision from agent interaction data. Community discussions are focused on the practical implementation and analysis of coding agents.",
+    "lead_notes": [
+      "vLLM continues to lead as a high-throughput inference engine.",
+      "New paradigms emerge for training retrieval models via agent trajectories.",
+      "Research analyzes how query rewriting affects biases in RAG systems.",
+      "Ray remains a core distributed runtime for accelerating ML workloads."
+    ],
+    "section_notes": {
+      "hot24": "vLLM and OpenAI Codex lead the 24-hour velocity across repositories.",
+      "papers": "Research is pivoting toward agentic skill benchmarking and multimodal embeddings.",
+      "repos": "Strong momentum observed in coding agents and distributed compute engines.",
+      "social": "Discussions are centered on local model execution and coding agent source analysis."
+    },
+    "takeaways": [
+      "vLLM and Ray maintain strong momentum as primary infrastructure for high-throughput AI serving.",
+      "New research proposes training retrieval models directly from multi-step agent trajectories to improve agentic search.",
+      "The coding agent landscape is seeing increased scrutiny, with developers comparing Claude Code against alternatives like AutoBe.",
+      "Hardware-aware metrics like PTE are being introduced to better measure efficiency in tool-integrated reasoning."
+    ],
+    "title": "AI Daily Briefing: Inference Efficiency and Agentic Retrieval"
+  },
   "cad86e97ff0acc11d55aae1e6be4c6ecd300d5a6625e817660f54734e483e6c1": {
     "closing": "AI agents are rapidly evolving from simple prompt-based interactions into complex, skill-driven harnesses.",
     "dek": "Terminal-based agents and trajectory-based retrieval dominate today's AI signal.",

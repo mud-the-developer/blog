@@ -155,6 +155,7 @@ class BetaDigest:
     lead: str
     takeaways: list[str]
     section_notes: dict[str, str]
+    lead_notes: list[str]
     closing: str
 
 
@@ -273,16 +274,6 @@ def fallback_image_url(source: str, badge: str) -> str:
     if badge == "vRAN":
         return "/news/assets/thumb-vran.svg"
     return "/news/assets/thumb-ai.svg"
-
-
-def render_card_image(card: NewsItem) -> str:
-    fallback = fallback_image_url(card.source, card.badge)
-    return (
-        f'<img class="news-digest-image" src="{safe_text(card.image_url)}" '
-        f'alt="{safe_text(card.title)}" width="1200" height="675" '
-        'loading="lazy" decoding="async" referrerpolicy="no-referrer" '
-        f'onerror="this.onerror=null;this.src=\'{safe_text(fallback)}\';" />'
-    )
 
 
 def source_mark(source: str) -> str:
@@ -796,7 +787,12 @@ def repo_rate_label(item: dict[str, Any]) -> str | None:
     return f"avg {stars_per_day:.1f}/day"
 
 
-def render_digest_card_lines(card: NewsItem, *, extra_classes: str = "") -> list[str]:
+def render_digest_card_lines(
+    card: NewsItem,
+    *,
+    extra_classes: str = "",
+    lead_note: str | None = None,
+) -> list[str]:
     card_classes = "news-digest-card"
     card_classes += f" news-digest-card--{badge_class_suffix(card.badge)}"
     if extra_classes:
@@ -805,7 +801,7 @@ def render_digest_card_lines(card: NewsItem, *, extra_classes: str = "") -> list
     badge_suffix = badge_class_suffix(card.badge)
     source_suffix = source_class_suffix_from_source(card.source)
     source_name = source_label(card.source)
-    return [
+    lines = [
         f'      <a class="{card_classes}" href="{safe_text(card.url)}" target="_blank" rel="noreferrer">',
         '        <div class="news-digest-card-copy">',
         '          <div class="news-digest-card-topline">',
@@ -818,11 +814,18 @@ def render_digest_card_lines(card: NewsItem, *, extra_classes: str = "") -> list
         '          <div class="news-digest-card-eyebrow">',
         f'            <span class="news-digest-card-meta">{safe_text(meta_without_source(card.meta, card.source))}</span>',
         "          </div>",
-        f'          <h3 data-pretext-target>{safe_text(card.headline or card.title)}</h3>',
-        f'          <p class="news-digest-card-deck">{safe_text(card.deck)}</p>',
-        "        </div>",
-        "      </a>",
     ]
+    if lead_note:
+        lines.append(f'          <p class="news-digest-card-note" data-pretext-target>{safe_text(lead_note)}</p>')
+    lines.extend(
+        [
+            f'          <h3 data-pretext-target>{safe_text(card.headline or card.title)}</h3>',
+            f'          <p class="news-digest-card-deck" data-pretext-target>{safe_text(card.deck)}</p>',
+            "        </div>",
+            "      </a>",
+        ]
+    )
+    return lines
 
 
 def description_from_post(path: Path) -> str:
@@ -1315,6 +1318,7 @@ def build_digest_context(payload: dict[str, Any], limit: int) -> DigestContext:
 def beta_digest_cache_key(issue_dt: datetime, context: DigestContext) -> str:
     raw = json.dumps(
         {
+            "version": 2,
             "date": issue_dt.strftime("%Y-%m-%d"),
             "summary": context.summary,
             "top_cards": [card.__dict__ for card in context.top_cards],
@@ -1350,20 +1354,23 @@ def parse_llm_json(text: str) -> dict[str, Any]:
 
 def gemma_prompt_payload(issue_dt: datetime, context: DigestContext) -> dict[str, Any]:
     return {
-        "task": "Write a concise, high-signal beta daily AI news digest in JSON.",
+        "task": "Write a concise, newsroom-style beta daily AI news digest in JSON.",
         "date": issue_dt.strftime("%Y-%m-%d"),
         "constraints": [
-            "Treat this as a human-readable editorial brief, not a raw list.",
-            "Be concrete and compact.",
+            "Treat this as a human-readable editorial briefing page, not a raw list.",
+            "Use restrained newsroom language, not hype.",
+            "Be concrete, compact, and readable at a glance.",
             "Do not invent facts, counts, or sources.",
             "Do not mention ranking formulas or hidden scoring internals.",
+            "Lead notes should be short one-sentence angles aligned to the top_cards order.",
             "Return strict JSON only.",
         ],
         "schema": {
             "title": "short editorial title",
             "dek": "1 sentence overview",
             "lead": "2-4 sentence opening brief",
-            "takeaways": ["3 bullet takeaways"],
+            "takeaways": ["3-4 sharp takeaway lines"],
+            "lead_notes": ["up to 4 short notes aligned to top_cards order"],
             "section_notes": {
                 "hot24": "1-2 sentence note",
                 "repos": "1-2 sentence note",
@@ -1430,7 +1437,8 @@ def generate_gemma_beta_digest(issue_dt: datetime, context: DigestContext) -> Be
         title=str(parsed.get("title") or f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}").strip(),
         dek=str(parsed.get("dek") or context.summary).strip(),
         lead=str(parsed.get("lead") or context.summary).strip(),
-        takeaways=[str(item).strip() for item in (parsed.get("takeaways") or []) if str(item).strip()][:3],
+        takeaways=[str(item).strip() for item in (parsed.get("takeaways") or []) if str(item).strip()][:4],
+        lead_notes=[str(item).strip() for item in (parsed.get("lead_notes") or []) if str(item).strip()][:4],
         section_notes={
             str(key): str(value).strip()
             for key, value in (parsed.get("section_notes") or {}).items()
@@ -1442,36 +1450,7 @@ def generate_gemma_beta_digest(issue_dt: datetime, context: DigestContext) -> Be
     return beta
 
 
-def write_beta_cover_svg(issue_dt: datetime, context: DigestContext, beta: BetaDigest) -> str:
-    asset_name = f"beta-digest-{issue_dt.strftime('%Y-%m-%d')}.svg"
-    path = NEWS_ASSET_DIR / asset_name
-    top_labels = " · ".join(card.headline for card in context.top_cards[:3])
-    counts = " / ".join(f"{row['label']}: {row['value']}" for row in context.source_counts[:4])
-    path.write_text(
-        f"""<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='720' viewBox='0 0 1200 720'>
-<defs>
-  <linearGradient id='bg' x1='0' y1='0' x2='1' y2='1'>
-    <stop offset='0%' stop-color='#121a24'/>
-    <stop offset='100%' stop-color='#1f2d3b'/>
-  </linearGradient>
-</defs>
-<rect width='1200' height='720' fill='url(#bg)'/>
-<rect x='42' y='42' width='1116' height='636' rx='32' fill='rgba(255,253,250,0.06)' stroke='rgba(255,255,255,0.16)'/>
-<text x='78' y='110' font-family='Inter,system-ui' font-size='18' letter-spacing='6' fill='#9fb6d1'>MUD&apos;S BLOG · BETA DAILY BRIEF</text>
-<text x='78' y='212' font-family='Inter,system-ui' font-size='68' font-weight='800' fill='#f8fbff'>{html_escape(beta.title)}</text>
-<text x='78' y='286' font-family='Inter,system-ui' font-size='28' fill='#c7d6e9'>{html_escape(beta.dek)}</text>
-<text x='78' y='388' font-family='Inter,system-ui' font-size='20' fill='#84d2ff'>TOP MOVERS</text>
-<text x='78' y='426' font-family='Inter,system-ui' font-size='28' fill='#f8fbff'>{html_escape(top_labels[:100])}</text>
-<text x='78' y='558' font-family='Inter,system-ui' font-size='20' fill='#84d2ff'>SOURCE MIX</text>
-<text x='78' y='596' font-family='Inter,system-ui' font-size='26' fill='#f8fbff'>{html_escape(counts)}</text>
-<text x='78' y='650' font-family='Inter,system-ui' font-size='18' fill='#9fb6d1'>{issue_dt.strftime('%Y-%m-%d')}</text>
-</svg>""",
-        encoding="utf-8",
-    )
-    return f"/news/assets/{asset_name}"
-
-
-def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: DigestContext, beta: BetaDigest, cover_url: str) -> tuple[str, str]:
+def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: DigestContext, beta: BetaDigest) -> tuple[str, str]:
     stem = f"{issue_dt.strftime('%Y-%m-%d')}-ai-news-beta-digest"
     title = beta.title or f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}"
     frontmatter = "\n".join(
@@ -1487,6 +1466,17 @@ def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: Di
             "",
         ]
     )
+    source_pills = [
+        "      <div class=\"news-digest-beta-source-pills\" aria-label=\"Source mix\">",
+        *[
+            (
+                "        <span class=\"news-digest-beta-source-pill\">"
+                f"<span>{safe_text(str(row['label']))}</span><strong>{int(row['value'])}</strong></span>"
+            )
+            for row in context.source_counts[:5]
+        ],
+        "      </div>",
+    ]
     body = [
         '<div class="news-digest-shell news-digest-beta-shell">',
         '  <section class="news-digest-hero">',
@@ -1515,26 +1505,47 @@ def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: Di
         "      </div>",
         "    </div>",
         "  </section>",
-        f'  <section class="news-digest-top-shell"><img class="news-digest-image" src="{safe_text(cover_url)}" alt="{safe_text(title)}" width="1200" height="720" loading="lazy" decoding="async" /></section>',
     ]
     if beta.takeaways:
         body.extend(
             [
-                '  <section class="news-digest-section">',
+                '  <section class="news-digest-section news-digest-beta-wire">',
                 '    <header class="news-digest-section-head">',
-                '      <p class="section-kicker">Takeaways</p>',
-                '      <h2 data-pretext-target>What matters today</h2>',
+                '      <p class="section-kicker">Morning line</p>',
+                '      <h2 data-pretext-target>What to scan first</h2>',
                 '    </header>',
-                '    <div class="news-digest-archive-list">',
+                '    <div class="news-digest-beta-wire-grid">',
+                '      <div class="news-digest-archive-list news-digest-beta-bullets">',
             ]
         )
         for item in beta.takeaways:
             body.extend(
                 [
                     '      <div class="news-digest-archive-item">',
-                    f'        <strong>{safe_text(item)}</strong>',
+                    f'        <strong data-pretext-target>{safe_text(item)}</strong>',
                     "      </div>",
                 ]
+            )
+        body.extend(["      </div>", *source_pills, "    </div>", "  </section>"])
+    if context.top_cards:
+        body.extend(
+            [
+                '  <section class="news-digest-section news-digest-beta-top-shell" aria-label="Lead stories">',
+                '    <header class="news-digest-section-head">',
+                '      <p class="section-kicker">Lead stories</p>',
+                '      <h2 data-pretext-target>Top lines</h2>',
+                '    </header>',
+                '    <div class="news-digest-top-grid news-digest-top-grid--beta">',
+            ]
+        )
+        for index, card in enumerate(context.top_cards):
+            lead_note = beta.lead_notes[index] if index < len(beta.lead_notes) else None
+            body.extend(
+                render_digest_card_lines(
+                    card,
+                    extra_classes="news-digest-top-card",
+                    lead_note=lead_note,
+                )
             )
         body.extend(["    </div>", "  </section>"])
     for slug, heading, _description, cards in context.sections:
@@ -1574,8 +1585,7 @@ def write_beta_post(issue_dt: datetime, generated_dt: datetime, context: DigestC
     beta = generate_gemma_beta_digest(issue_dt, context)
     if beta is None:
         return None
-    cover_url = write_beta_cover_svg(issue_dt, context, beta)
-    markdown, stem = render_beta_markdown(issue_dt, generated_dt, context, beta, cover_url)
+    markdown, stem = render_beta_markdown(issue_dt, generated_dt, context, beta)
     (POSTS_DIR / f"{stem}.md").write_text(markdown)
     return stem
 
