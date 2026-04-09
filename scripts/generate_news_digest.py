@@ -387,6 +387,10 @@ def ensure_terminal_punctuation(value: str) -> str:
     return value + "."
 
 
+def collapse_whitespace(value: str) -> str:
+    return re.sub(r"\s+", " ", value or "").strip()
+
+
 def yaml_quote(value: str) -> str:
     return json.dumps(value, ensure_ascii=False)
 
@@ -1514,6 +1518,8 @@ def normalize_overview(parsed: dict[str, Any], issue_dt: datetime, context: Dige
     if not article_body:
         article_body = [str(parsed.get("lead") or context.summary).strip()]
 
+    article_body = rebalance_article_paragraphs(article_body)
+
     return BetaDigest(
         title=str(parsed.get("title") or f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}").strip(),
         dek=str(parsed.get("dek") or context.summary).strip(),
@@ -1524,6 +1530,32 @@ def normalize_overview(parsed: dict[str, Any], issue_dt: datetime, context: Dige
         section_bodies={},
         closing=str(parsed.get("closing") or "").strip(),
     )
+
+
+def rebalance_article_paragraphs(paragraphs: list[str]) -> list[str]:
+    cleaned = [collapse_whitespace(paragraph) for paragraph in paragraphs if collapse_whitespace(paragraph)]
+    if len(cleaned) >= 2:
+        return cleaned[:5]
+
+    if not cleaned:
+        return []
+
+    sentences = [
+        sentence.strip()
+        for sentence in re.split(r"(?<=[.!?])\s+", cleaned[0])
+        if sentence.strip()
+    ]
+
+    if len(sentences) <= 2:
+        return cleaned[:5]
+
+    buckets: list[list[str]] = [[] for _ in range(min(3, len(sentences)))]
+    for index, sentence in enumerate(sentences):
+        bucket_index = min(len(buckets) - 1, index // max(1, math.ceil(len(sentences) / len(buckets))))
+        buckets[bucket_index].append(sentence)
+
+    rebalanced = [" ".join(bucket).strip() for bucket in buckets if bucket]
+    return rebalanced[:5] if rebalanced else cleaned[:5]
 
 
 def choose_beta_reference_cards(

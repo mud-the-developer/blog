@@ -58,6 +58,14 @@
     ],
     "title": "High-Throughput Serving and Agentic Research"
   },
+  "4997a134aef86ae3d025005e407b0678ff93d9ec18fd5ea4b838c227e1be37b0": {
+    "paragraphs": [
+      "High-throughput infrastructure continues to lead the current cycle, with vLLM maintaining its position as a memory-efficient serving engine for LLMs. Alongside these backend efficiencies, the utility of lightweight, terminal-based coding agents remains a focal point of community activity, as evidenced by the ongoing traction of OpenAI's Codex.",
+      "On the research front, a new paradigm for agentic search is emerging via the paper \"Learning to Retrieve from Agent Trajectories.\" The research proposes training retrieval models directly from agent interaction data, mining supervision from multi-step trajectories to improve the accuracy of retrieval models.",
+      "Evaluation standards are also evolving with the introduction of Video-MME-v2. This comprehensive benchmark for video understanding employs a progressive hierarchy and group-based evaluation to more accurately assess the robustness and faithfulness of multimodal models."
+    ],
+    "title": "Inference Scaling and Agentic Retrieval"
+  },
   "4c7f9b8d8fd6ba70cbfd47527ab0d6d47b594c4f01bd3fc0694a4b5e54ba2349": {
     "paragraphs": [
       "The vllm-project/vllm repository continues to lead in inference efficiency, serving as a high-throughput and memory-efficient engine for LLMs. With 75,720 stars and a recent gain of 800 stars over the last seven days, it remains a critical piece of infrastructure for optimized serving.",
@@ -116,6 +124,68 @@
     ],
     "title": "Agentic Infrastructure & Inference Velocity"
   },
+  "9acd595a9ece8e7ae215dd99fec5c3e8a38f7aaa4b35566f2d28953a16889748": {
+    "article_body": [
+      "In the infrastructure layer, vLLM continues to lead in high-throughput and memory-efficient inference, maintaining significant momentum alongside the Ray compute engine. These tools remain central to the deployment of large-scale models, providing the necessary backbone for the current shift toward more complex, agentic workloads.",
+      "Research attention is clustering around the optimization of agentic search. A notable shift is appearing in how retrieval models are trained, with new proposals suggesting that supervision should be mined directly from multi-step agent trajectories rather than static datasets. This is complemented by new benchmarks assessing how agentic skills perform in realistic, 'in the wild' settings where retrieval and refinement are required.",
+      "The developer community is currently focused on the analysis of coding agents, specifically comparing the source code and performance of tools like Claude Code and AutoBe. This interest is mirrored in the repository trends, where terminal-based agents and extensive libraries of installable agentic skills are seeing increased activity.",
+      "Beyond coding and retrieval, multimodal advancements are diversifying. New benchmarks like Video-MME-v2 are pushing the boundaries of comprehensive video understanding, while generative models like DISCO are applying multimodal design to specialized fields such as protein sequence and 3D structure co-design."
+    ],
+    "closing": "End of briefing for April 10, 2026.",
+    "dek": "Infrastructure momentum for vLLM and Ray pairs with new research into agentic trajectory mining.",
+    "lead": "The AI landscape is increasingly focused on the operational efficiency of agentic execution. Today's signals show a strong intersection between high-throughput serving engines and a new research paradigm for training retrieval models using agent interaction data.",
+    "section_bodies": {
+      "hot24": [
+        "High-throughput infrastructure continues to lead the current cycle, with vLLM maintaining its position as a memory-efficient serving engine for LLMs. Alongside these backend efficiencies, the utility of lightweight, terminal-based coding agents remains a focal point of community activity, as evidenced by the ongoing traction of OpenAI's Codex.",
+        "On the research front, a new paradigm for agentic search is emerging via the paper \"Learning to Retrieve from Agent Trajectories.\" The research proposes training retrieval models directly from agent interaction data, mining supervision from multi-step trajectories to improve the accuracy of retrieval models.",
+        "Evaluation standards are also evolving with the introduction of Video-MME-v2. This comprehensive benchmark for video understanding employs a progressive hierarchy and group-based evaluation to more accurately assess the robustness and faithfulness of multimodal models."
+      ],
+      "papers": [
+        "Recent research is shifting toward a new paradigm for agentic search, proposing that retrieval models be trained directly from multi-step agent interaction data. This approach aims to mine supervision from agent trajectories to improve accuracy, addressing a critical gap highlighted by benchmarks showing that LLM skill utilization degrades significantly in realistic settings where skills must be retrieved and refined rather than handcrafted.",
+        "Parallel efforts are focusing on the operational costs of reasoning and the evaluation of multimodal capabilities. A new hardware-aware metric, Prefill Token Equivalents (PTE), has been introduced to better correlate with actual inference efficiency in tool-integrated reasoning scenarios. Simultaneously, the Video-MME-v2 benchmark is pushing the boundaries of video understanding by implementing a progressive hierarchy and group-based evaluation to measure model robustness and faithfulness."
+      ],
+      "repos": [
+        "The current repository landscape is anchored by vLLM, which continues to define the standard for high-throughput and memory-efficient inference and serving engines for LLMs. With over 75,000 stars and updates as recent as one hour ago, it remains a cornerstone for those optimizing the serving layer of the AI stack.",
+        "Simultaneously, coding agents are seeing significant traction across different implementation styles. anomalyco/opencode stands out as a massive open-source project with over 139,000 stars, while openai/codex offers a more focused, lightweight experience for developers operating directly within the terminal.",
+        "Beyond specialized coding tools, NousResearch's hermes-agent is gaining visibility as an agent designed to grow with its user, reflecting a broader trend toward more adaptive and personalized agentic frameworks."
+      ],
+      "social": [
+        "Backend coding agent developers are currently engaged in deep source code analysis, specifically comparing the implementations of Claude Code and AutoBe. This community focus highlights a growing interest in the portability and structural efficiency of agentic skill libraries.",
+        "The landscape for local execution is also expanding with the release of new open models optimized for agentic workflows. Google has introduced the Gemma 4 family under an Apache 2.0 license, while GLM-5.1 has been made accessible for local hardware via Dynamic 2-bit compression, reducing its size from 1.65TB to 220GB to fit on 256GB RAM or VRAM setups."
+      ]
+    },
+    "section_titles": {
+      "hot24": "Inference Scaling and Agentic Retrieval",
+      "papers": "Mining Agent Trajectories and Tool Efficiency",
+      "repos": "Inference Efficiency and Agentic Coding Tools",
+      "social": "Agentic Coding and Local Model Momentum"
+    },
+    "takeaways": [
+      "vLLM and Ray maintain a dominant position in the inference and compute infrastructure stack.",
+      "Research is pivoting toward mining supervision from agent trajectories to improve retrieval accuracy.",
+      "Coding agent discourse is centering on source code analysis and the portability of agentic skill libraries.",
+      "Multimodal breakthroughs are extending into specialized domains, including protein design and video benchmarking."
+    ],
+    "title": "AI Beta Brief: Agentic Retrieval and Inference Scaling"
+  },
+  "9acd595a9ece8e7ae215dd99fec5c3e8a38f7aaa4b35566f2d28953a16889748::overview": {
+    "article_body": [
+      "In the infrastructure layer, vLLM continues to lead in high-throughput and memory-efficient inference, maintaining significant momentum alongside the Ray compute engine. These tools remain central to the deployment of large-scale models, providing the necessary backbone for the current shift toward more complex, agentic workloads.",
+      "Research attention is clustering around the optimization of agentic search. A notable shift is appearing in how retrieval models are trained, with new proposals suggesting that supervision should be mined directly from multi-step agent trajectories rather than static datasets. This is complemented by new benchmarks assessing how agentic skills perform in realistic, 'in the wild' settings where retrieval and refinement are required.",
+      "The developer community is currently focused on the analysis of coding agents, specifically comparing the source code and performance of tools like Claude Code and AutoBe. This interest is mirrored in the repository trends, where terminal-based agents and extensive libraries of installable agentic skills are seeing increased activity.",
+      "Beyond coding and retrieval, multimodal advancements are diversifying. New benchmarks like Video-MME-v2 are pushing the boundaries of comprehensive video understanding, while generative models like DISCO are applying multimodal design to specialized fields such as protein sequence and 3D structure co-design."
+    ],
+    "closing": "End of briefing for April 10, 2026.",
+    "dek": "Infrastructure momentum for vLLM and Ray pairs with new research into agentic trajectory mining.",
+    "lead": "The AI landscape is increasingly focused on the operational efficiency of agentic execution. Today's signals show a strong intersection between high-throughput serving engines and a new research paradigm for training retrieval models using agent interaction data.",
+    "takeaways": [
+      "vLLM and Ray maintain a dominant position in the inference and compute infrastructure stack.",
+      "Research is pivoting toward mining supervision from agent trajectories to improve retrieval accuracy.",
+      "Coding agent discourse is centering on source code analysis and the portability of agentic skill libraries.",
+      "Multimodal breakthroughs are extending into specialized domains, including protein design and video benchmarking."
+    ],
+    "title": "AI Beta Brief: Agentic Retrieval and Inference Scaling"
+  },
   "bd219ddfa6be5f77f835a7aded5a52d7ced3eec04a80c3814f1797fd2cd1c7d6": {
     "closing": "Monitoring the shift from prompt-based to harness-based agentic patterns.",
     "dek": "High-throughput serving engines and agent-trajectory research dominate today's signals.",
@@ -140,6 +210,13 @@
     ],
     "title": "AI Daily Briefing: Inference Efficiency and Agentic Retrieval"
   },
+  "bfd020afa1c23e482bd592df223424461abce60a77322fa54b126be9f46a08a1": {
+    "paragraphs": [
+      "Recent research is shifting toward a new paradigm for agentic search, proposing that retrieval models be trained directly from multi-step agent interaction data. This approach aims to mine supervision from agent trajectories to improve accuracy, addressing a critical gap highlighted by benchmarks showing that LLM skill utilization degrades significantly in realistic settings where skills must be retrieved and refined rather than handcrafted.",
+      "Parallel efforts are focusing on the operational costs of reasoning and the evaluation of multimodal capabilities. A new hardware-aware metric, Prefill Token Equivalents (PTE), has been introduced to better correlate with actual inference efficiency in tool-integrated reasoning scenarios. Simultaneously, the Video-MME-v2 benchmark is pushing the boundaries of video understanding by implementing a progressive hierarchy and group-based evaluation to measure model robustness and faithfulness."
+    ],
+    "title": "Mining Agent Trajectories and Tool Efficiency"
+  },
   "c2daa3b36d6acc21a73c91e7cfbddad0fa9fd3f98f2f9e1ce6a1f7b37978c64b": {
     "paragraphs": [
       "Recent research is addressing the gap between handcrafted skill sets and real-world agent performance. While one study demonstrates that LLM skill utilization degrades significantly in realistic settings where skills must be retrieved and refined, a new paradigm proposes improving these retrieval models by mining supervision directly from multi-step agent trajectories.",
@@ -163,5 +240,20 @@
       "The 'agentic skill' ecosystem is scaling rapidly, with libraries now offering over 1,300 installable skills for various LLM agents."
     ],
     "title": "Agentic Coding & Retrieval Shifts"
+  },
+  "e7546ecd13b7846219e6084074b22eac84dafd0edacd08f7daaff9323fbf5aea": {
+    "paragraphs": [
+      "The current repository landscape is anchored by vLLM, which continues to define the standard for high-throughput and memory-efficient inference and serving engines for LLMs. With over 75,000 stars and updates as recent as one hour ago, it remains a cornerstone for those optimizing the serving layer of the AI stack.",
+      "Simultaneously, coding agents are seeing significant traction across different implementation styles. anomalyco/opencode stands out as a massive open-source project with over 139,000 stars, while openai/codex offers a more focused, lightweight experience for developers operating directly within the terminal.",
+      "Beyond specialized coding tools, NousResearch's hermes-agent is gaining visibility as an agent designed to grow with its user, reflecting a broader trend toward more adaptive and personalized agentic frameworks."
+    ],
+    "title": "Inference Efficiency and Agentic Coding Tools"
+  },
+  "ff1a6e25bf338d2acb4f92a70d0056e570de65ef52e6232eeedc02aef8cbb70b": {
+    "paragraphs": [
+      "Backend coding agent developers are currently engaged in deep source code analysis, specifically comparing the implementations of Claude Code and AutoBe. This community focus highlights a growing interest in the portability and structural efficiency of agentic skill libraries.",
+      "The landscape for local execution is also expanding with the release of new open models optimized for agentic workflows. Google has introduced the Gemma 4 family under an Apache 2.0 license, while GLM-5.1 has been made accessible for local hardware via Dynamic 2-bit compression, reducing its size from 1.65TB to 220GB to fit on 256GB RAM or VRAM setups."
+    ],
+    "title": "Agentic Coding and Local Model Momentum"
   }
 }
