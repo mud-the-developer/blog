@@ -61,7 +61,7 @@ body {
       180deg,
       color-mix(in srgb, var(--news-bg) 92%, #ffffff 8%) 0%,
       color-mix(in srgb, var(--news-bg-spot) 95%, #dfe9fa 5%) 100%
-    ) !important;
+    );
 }
 
 body::before {
@@ -204,25 +204,25 @@ details {
 }
 
 .wrap {
-  max-width: 1180px !important;
-  gap: 1rem !important;
+  max-width: 1180px;
+  gap: 1rem;
 }
 
 .hero {
-  padding: 1.3rem 1.35rem !important;
-  border-radius: 32px !important;
+  padding: 1.3rem 1.35rem;
+  border-radius: 32px;
   background:
     radial-gradient(48% 54% at 0% 0%, color-mix(in srgb, var(--news-accent-soft) 24%, transparent) 0%, transparent 72%),
     radial-gradient(36% 40% at 100% 8%, color-mix(in srgb, var(--news-accent-warm) 10%, transparent) 0%, transparent 70%),
-    linear-gradient(180deg, color-mix(in srgb, var(--news-panel) 96%, #ffffff 4%) 0%, color-mix(in srgb, var(--news-panel-soft) 98%, transparent) 100%) !important;
-  box-shadow: var(--news-shadow-strong) !important;
-  backdrop-filter: none !important;
+    linear-gradient(180deg, color-mix(in srgb, var(--news-panel) 96%, #ffffff 4%) 0%, color-mix(in srgb, var(--news-panel-soft) 98%, transparent) 100%);
+  box-shadow: var(--news-shadow-strong);
+  backdrop-filter: none;
 }
 
 .hero h1 {
-  margin: 0 !important;
+  margin: 0;
   font-family: var(--news-font-display);
-  font-size: clamp(2.1rem, 2.8vw + 0.9rem, 3.8rem) !important;
+  font-size: clamp(2.1rem, 2.8vw + 0.9rem, 3.8rem);
   font-weight: 800;
   line-height: 0.94;
   letter-spacing: -0.07em;
@@ -231,36 +231,36 @@ details {
 .sub {
   margin-top: 0.52rem;
   max-width: 62ch;
-  color: color-mix(in srgb, var(--news-text) 80%, var(--news-muted)) !important;
-  font-size: 1rem !important;
+  color: color-mix(in srgb, var(--news-text) 80%, var(--news-muted));
+  font-size: 1rem;
   line-height: 1.68;
 }
 
 .tabs {
   position: sticky;
-  top: 1rem !important;
+  top: 1rem;
   z-index: 5;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.55rem !important;
-  margin-top: 1rem !important;
+  gap: 0.55rem;
+  margin-top: 1rem;
   padding: 0.7rem;
   border-radius: 24px;
   background:
-    linear-gradient(145deg, color-mix(in srgb, var(--news-glass) 82%, #ffffff 18%) 0%, color-mix(in srgb, var(--news-glass-soft) 96%, transparent) 100%) !important;
-  border-color: var(--news-glass-edge) !important;
+    linear-gradient(145deg, color-mix(in srgb, var(--news-glass) 82%, #ffffff 18%) 0%, color-mix(in srgb, var(--news-glass-soft) 96%, transparent) 100%);
+  border-color: var(--news-glass-edge);
   backdrop-filter: blur(16px) saturate(1.14);
 }
 
 .tab,
 .btn {
-  border-radius: 999px !important;
-  padding: 0.7rem 1rem !important;
-  border: 1px solid color-mix(in srgb, var(--news-panel-border) 84%, transparent) !important;
-  background: color-mix(in srgb, var(--news-panel-soft) 92%, transparent) !important;
-  color: var(--news-text) !important;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--news-panel-border) 84%, transparent);
+  background: color-mix(in srgb, var(--news-panel-soft) 92%, transparent);
+  color: var(--news-text);
   font-family: var(--news-font);
-  font-size: 0.76rem !important;
+  font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -275,24 +275,24 @@ details {
 .tab:hover,
 .btn:hover {
   transform: translateY(-1px);
-  border-color: color-mix(in srgb, var(--news-accent) 54%, var(--news-panel-border)) !important;
-  background: color-mix(in srgb, var(--news-accent-soft) 56%, var(--news-panel)) !important;
+  border-color: color-mix(in srgb, var(--news-accent) 54%, var(--news-panel-border));
+  background: color-mix(in srgb, var(--news-accent-soft) 56%, var(--news-panel));
   box-shadow: 0 12px 24px color-mix(in srgb, var(--news-accent) 12%, transparent);
 }
 
 .tab.active {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--news-accent) 84%, #ffffff 16%) 0%, color-mix(in srgb, var(--news-accent-warm) 54%, var(--news-accent)) 100%) !important;
-  border-color: color-mix(in srgb, var(--news-accent) 20%, transparent) !important;
-  color: #ffffff !important;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--news-accent) 84%, #ffffff 16%) 0%, color-mix(in srgb, var(--news-accent-warm) 54%, var(--news-accent)) 100%);
+  border-color: color-mix(in srgb, var(--news-accent) 20%, transparent);
+  color: #ffffff;
 }
 
 .actions {
-  gap: 0.7rem !important;
-  margin-top: 0.9rem !important;
+  gap: 0.7rem;
+  margin-top: 0.9rem;
 }
 
 .actions small {
-  color: var(--news-muted) !important;
+  color: var(--news-muted);
   font-size: 0.84rem;
 }
 
@@ -317,19 +317,19 @@ details ul {
 }
 
 .feed {
-  max-height: none !important;
-  overflow: visible !important;
-  gap: 0.92rem !important;
-  padding-right: 0 !important;
+  max-height: none;
+  overflow: visible;
+  gap: 0.92rem;
+  padding-right: 0;
 }
 
 .card {
   display: grid;
-  grid-template-columns: 196px minmax(0, 1fr) !important;
-  gap: 1rem !important;
-  padding: 1rem !important;
-  border-radius: 28px !important;
-  color: var(--news-text) !important;
+  grid-template-columns: 196px minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 28px;
+  color: var(--news-text);
   text-decoration: none;
   transition:
     transform 180ms ease,
@@ -340,25 +340,25 @@ details ul {
 
 .card:hover {
   transform: translateY(-3px);
-  border-color: color-mix(in srgb, var(--news-accent) 48%, var(--news-panel-border)) !important;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--news-panel) 96%, #ffffff 4%) 0%, color-mix(in srgb, var(--news-accent-soft) 18%, var(--news-panel-soft)) 100%) !important;
+  border-color: color-mix(in srgb, var(--news-accent) 48%, var(--news-panel-border));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--news-panel) 96%, #ffffff 4%) 0%, color-mix(in srgb, var(--news-accent-soft) 18%, var(--news-panel-soft)) 100%);
   box-shadow: 0 18px 34px color-mix(in srgb, var(--news-accent) 12%, transparent), var(--news-shadow);
 }
 
 .thumb {
   width: 100%;
-  height: 132px !important;
-  border-radius: 18px !important;
+  height: 132px;
+  border-radius: 18px;
   border: 1px solid color-mix(in srgb, var(--news-panel-border) 74%, transparent);
-  background: linear-gradient(135deg, color-mix(in srgb, var(--news-accent) 84%, #ffffff 16%) 0%, color-mix(in srgb, var(--news-accent-warm) 54%, var(--news-accent)) 100%) !important;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--news-accent) 84%, #ffffff 16%) 0%, color-mix(in srgb, var(--news-accent-warm) 54%, var(--news-accent)) 100%);
 }
 
 .head {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.48rem !important;
-  margin-bottom: 0.5rem !important;
+  gap: 0.48rem;
+  margin-bottom: 0.5rem;
 }
 
 .score,
@@ -367,37 +367,37 @@ details ul {
   display: inline-flex;
   align-items: center;
   min-height: 1.8rem;
-  padding: 0.2rem 0.62rem !important;
-  border-radius: 999px !important;
+  padding: 0.2rem 0.62rem;
+  border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--news-panel-border) 76%, transparent);
-  background: color-mix(in srgb, var(--news-panel-soft) 92%, transparent) !important;
-  color: color-mix(in srgb, var(--news-text) 86%, var(--news-muted)) !important;
-  font-size: 0.72rem !important;
+  background: color-mix(in srgb, var(--news-panel-soft) 92%, transparent);
+  color: color-mix(in srgb, var(--news-text) 86%, var(--news-muted));
+  font-size: 0.72rem;
 }
 
 .platform {
-  color: color-mix(in srgb, var(--news-accent) 88%, var(--news-text)) !important;
+  color: color-mix(in srgb, var(--news-accent) 88%, var(--news-text));
 }
 
 .title {
-  color: var(--news-text) !important;
+  color: var(--news-text);
   font-family: var(--news-font-display);
-  font-size: 1.08rem !important;
+  font-size: 1.08rem;
   font-weight: 700;
-  line-height: 1.42 !important;
+  line-height: 1.42;
   letter-spacing: -0.02em;
-  -webkit-line-clamp: 3 !important;
+  -webkit-line-clamp: 3;
 }
 
 .chips {
-  gap: 0.42rem !important;
-  margin-top: 0.7rem !important;
+  gap: 0.42rem;
+  margin-top: 0.7rem;
 }
 
 .meta {
-  margin-top: 0.82rem !important;
-  color: var(--news-muted) !important;
-  font-size: 0.84rem !important;
+  margin-top: 0.82rem;
+  color: var(--news-muted);
+  font-size: 0.84rem;
 }
 
 @media (max-width: 920px) {
@@ -412,11 +412,11 @@ details ul {
   }
 
   .card {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: 1fr;
   }
 
   .thumb {
-    height: 180px !important;
+    height: 180px;
   }
 }
 
@@ -431,12 +431,12 @@ details ul {
   }
 
   .hero {
-    padding: 1rem !important;
-    border-radius: 26px !important;
+    padding: 1rem;
+    border-radius: 26px;
   }
 
   .hero h1 {
-    font-size: clamp(1.84rem, 9vw, 2.7rem) !important;
+    font-size: clamp(1.84rem, 9vw, 2.7rem);
   }
 
   .tabs {
@@ -452,19 +452,19 @@ details ul {
   }
 
   .feed {
-    gap: 0.76rem !important;
+    gap: 0.76rem;
   }
 
   .card {
-    padding: 0.9rem !important;
-    border-radius: 22px !important;
+    padding: 0.9rem;
+    border-radius: 22px;
   }
 
   .thumb {
-    height: 168px !important;
+    height: 168px;
   }
 
   .title {
-    font-size: 1rem !important;
+    font-size: 1rem;
   }
 }

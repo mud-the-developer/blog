@@ -4632,10 +4632,22 @@ fn rewrite_embedded_news_html(input: &str) -> String {
         "</div>"
     );
 
-    if with_head.contains("news-bridge-bar") {
-        with_head
+    let with_body_class = if with_head.contains("<body class=") {
+        with_head.replacen("<body class=\"", "<body class=\"news-bridge-page ", 1)
+    } else if with_head.contains("<body class='") {
+        with_head.replacen("<body class='", "<body class='news-bridge-page ", 1)
     } else {
-        with_head.replacen("<body>", &format!("<body>{bridge_bar}"), 1)
+        with_head.replacen("<body>", "<body class='news-bridge-page'>", 1)
+    };
+
+    if with_body_class.contains("news-bridge-bar") {
+        with_body_class
+    } else {
+        with_body_class.replacen(
+            "<body class='news-bridge-page'>",
+            &format!("<body class='news-bridge-page'>{bridge_bar}"),
+            1,
+        )
     }
 }
 
