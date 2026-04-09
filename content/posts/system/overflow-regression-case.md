@@ -2,7 +2,7 @@
 title: "Overflow Regression Case With An Intentionally Long Editorial Headline About Retrieval Systems, Archive Navigation, and Static Publishing Constraints"
 description: "Fixture note used to catch long-title, long-token, and embedded-content overflow regressions across the publication layout."
 date: 2026-04-10
-tags: [regression, layout, overflow]
+tags: [ai]
 aliases:
   - "A deliberately elongated alias string for archive-layout-regression-observation-and-measurement"
 publish: true
