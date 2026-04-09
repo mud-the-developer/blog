@@ -154,6 +154,7 @@ class BetaDigest:
     dek: str
     lead: str
     takeaways: list[str]
+    section_titles: dict[str, str]
     section_bodies: dict[str, list[str]]
     closing: str
 
@@ -1317,7 +1318,7 @@ def build_digest_context(payload: dict[str, Any], limit: int) -> DigestContext:
 def beta_digest_cache_key(issue_dt: datetime, context: DigestContext) -> str:
     raw = json.dumps(
         {
-            "version": 3,
+            "version": 4,
             "date": issue_dt.strftime("%Y-%m-%d"),
             "summary": context.summary,
             "top_cards": [card.__dict__ for card in context.top_cards],
@@ -1351,17 +1352,17 @@ def parse_llm_json(text: str) -> dict[str, Any]:
     return json.loads(raw)
 
 
-def gemma_prompt_payload(issue_dt: datetime, context: DigestContext) -> dict[str, Any]:
+def gemma_overview_payload(issue_dt: datetime, context: DigestContext) -> dict[str, Any]:
     return {
-        "task": "Write a concise, newsroom-style beta daily AI news digest in JSON.",
+        "task": "Write the front matter for a newsroom-style daily AI beta brief in JSON.",
         "date": issue_dt.strftime("%Y-%m-%d"),
         "constraints": [
-            "Treat this as a human-readable editorial briefing page, not a raw list.",
+            "Treat this as a human-readable editorial briefing page, not a raw list or tweet thread.",
             "Use restrained newsroom language, not hype.",
             "Be concrete, compact, and readable at a glance.",
             "Do not invent facts, counts, or sources.",
             "Do not mention ranking formulas or hidden scoring internals.",
-            "Section bodies should read like short article copy, not bullets rewritten as prose.",
+            "The lead should read like the opening of a short article.",
             "Return strict JSON only.",
         ],
         "schema": {
@@ -1369,12 +1370,6 @@ def gemma_prompt_payload(issue_dt: datetime, context: DigestContext) -> dict[str
             "dek": "1 sentence overview",
             "lead": "2-4 sentence opening brief",
             "takeaways": ["3-4 sharp takeaway lines"],
-            "section_bodies": {
-                "hot24": ["paragraph 1", "paragraph 2"],
-                "repos": ["paragraph 1", "paragraph 2"],
-                "papers": ["paragraph 1", "paragraph 2"],
-                "social": ["paragraph 1", "paragraph 2"]
-            },
             "closing": "short closing note",
         },
         "digest": {
@@ -1395,31 +1390,127 @@ def gemma_prompt_payload(issue_dt: datetime, context: DigestContext) -> dict[str
     }
 
 
-def normalize_section_bodies(parsed: dict[str, Any], context: DigestContext) -> dict[str, list[str]]:
-    raw_bodies = parsed.get("section_bodies") or {}
-    raw_notes = parsed.get("section_notes") or {}
-    normalized: dict[str, list[str]] = {}
+def gemma_section_payload(
+    issue_dt: datetime,
+    slug: str,
+    heading: str,
+    description: str,
+    cards: list[NewsItem],
+    overview: BetaDigest,
+) -> dict[str, Any]:
+    return {
+        "task": "Write one short newsroom section for a daily AI beta brief in JSON.",
+        "date": issue_dt.strftime("%Y-%m-%d"),
+        "section": slug,
+        "constraints": [
+            "Write like a short article section, not a bullet list.",
+            "Use 2 or 3 paragraphs.",
+            "Keep the angle specific to the supplied cards.",
+            "Do not invent facts, counts, or relationships that are not present.",
+            "Return strict JSON only.",
+        ],
+        "schema": {
+            "title": "tight editorial subhead, 3-8 words",
+            "paragraphs": ["paragraph 1", "paragraph 2", "optional paragraph 3"],
+        },
+        "brief_context": {
+            "title": overview.title,
+            "dek": overview.dek,
+            "lead": overview.lead,
+            "takeaways": overview.takeaways,
+        },
+        "section_context": {
+            "heading": heading,
+            "description": description,
+            "items": [card.__dict__ for card in cards[:4]],
+        },
+    }
 
-    for slug, _title, description, _cards in context.sections:
-        paragraphs: list[str] = []
-        candidate = raw_bodies.get(slug)
 
-        if isinstance(candidate, list):
-            paragraphs = [str(item).strip() for item in candidate if str(item).strip()]
-        elif isinstance(candidate, str) and candidate.strip():
-            paragraphs = [candidate.strip()]
+def normalize_section_story(
+    parsed: dict[str, Any],
+    heading: str,
+    description: str,
+) -> tuple[str, list[str]]:
+    title = str(parsed.get("title") or heading).strip() or heading
+    raw_paragraphs = parsed.get("paragraphs") or []
+    paragraphs: list[str] = []
 
-        if not paragraphs:
-            note = raw_notes.get(slug)
-            if isinstance(note, str) and note.strip():
-                paragraphs = [note.strip()]
+    if isinstance(raw_paragraphs, list):
+        paragraphs = [str(item).strip() for item in raw_paragraphs if str(item).strip()]
+    elif isinstance(raw_paragraphs, str) and raw_paragraphs.strip():
+        paragraphs = [raw_paragraphs.strip()]
 
-        if not paragraphs and description:
-            paragraphs = [description]
+    if not paragraphs:
+        paragraphs = [description]
 
-        normalized[slug] = paragraphs[:2]
+    return title, paragraphs[:3]
 
-    return normalized
+
+def overview_cache_key(issue_dt: datetime, context: DigestContext) -> str:
+    return f"{beta_digest_cache_key(issue_dt, context)}::overview"
+
+
+def section_cache_key(issue_dt: datetime, context: DigestContext, slug: str, cards: list[NewsItem]) -> str:
+    raw = json.dumps(
+        {
+            "base": beta_digest_cache_key(issue_dt, context),
+            "slug": slug,
+            "cards": [card.__dict__ for card in cards[:4]],
+        },
+        ensure_ascii=False,
+        sort_keys=True,
+    )
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+
+def gemma_json_request(cache_key: str, payload: dict[str, Any], *, temperature: float = 0.35) -> dict[str, Any]:
+    cached = BETA_DIGEST_CACHE.get(cache_key)
+    if isinstance(cached, dict):
+        return cached
+
+    request_body = {
+        "contents": [
+            {
+                "role": "user",
+                "parts": [{"text": json.dumps(payload, ensure_ascii=False)}],
+            }
+        ],
+        "generationConfig": {
+            "temperature": temperature,
+            "responseMimeType": "application/json",
+        },
+    }
+    req = urllib.request.Request(
+        gemma_api_url(),
+        data=json.dumps(request_body).encode("utf-8"),
+        headers={"Content-Type": "application/json", "User-Agent": "blog-news-digest/1.0"},
+    )
+    with urllib.request.urlopen(req, timeout=45) as response:
+        api_payload = json.loads(response.read().decode("utf-8"))
+    parts = (((api_payload.get("candidates") or [{}])[0].get("content") or {}).get("parts") or [])
+    response_text = ""
+    for part in parts:
+        if part.get("thought"):
+            continue
+        response_text = part.get("text", "")
+        if response_text:
+            break
+    parsed = parse_llm_json(response_text)
+    BETA_DIGEST_CACHE[cache_key] = parsed
+    return parsed
+
+
+def normalize_overview(parsed: dict[str, Any], issue_dt: datetime, context: DigestContext) -> BetaDigest:
+    return BetaDigest(
+        title=str(parsed.get("title") or f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}").strip(),
+        dek=str(parsed.get("dek") or context.summary).strip(),
+        lead=str(parsed.get("lead") or context.summary).strip(),
+        takeaways=[str(item).strip() for item in (parsed.get("takeaways") or []) if str(item).strip()][:4],
+        section_titles={},
+        section_bodies={},
+        closing=str(parsed.get("closing") or "").strip(),
+    )
 
 
 def choose_beta_reference_cards(
@@ -1460,49 +1551,130 @@ def choose_beta_reference_cards(
     return selected
 
 
+def render_beta_bar_value(value: float, max_value: float) -> str:
+    if max_value <= 0:
+        return "24.0%"
+    width = max(24.0, min(100.0, round((value / max_value) * 100.0, 1)))
+    return f"{width:.1f}%"
+
+
+def render_beta_source_mix(rows: list[dict[str, Any]]) -> list[str]:
+    max_value = max((int(row["value"]) for row in rows[:5]), default=1)
+    lines = [
+        '      <section class="news-digest-beta-visual-card" aria-label="Source mix">',
+        '        <p class="section-kicker">Source mix</p>',
+        '        <div class="news-digest-beta-bars">',
+    ]
+    for row in rows[:5]:
+        label = str(row["label"])
+        value = int(row["value"])
+        lines.extend(
+            [
+                '          <div class="news-digest-beta-bar-row">',
+                f'            <span class="news-digest-beta-bar-label" data-pretext-target>{safe_text(label)}</span>',
+                '            <span class="news-digest-beta-bar-track" aria-hidden="true">',
+                f'              <span style="width: {render_beta_bar_value(value, max_value)}"></span>',
+                "            </span>",
+                f'            <strong>{value}</strong>',
+                "          </div>",
+            ]
+        )
+    lines.extend(["        </div>", "      </section>"])
+    return lines
+
+
+def render_beta_section_mix(sections: list[tuple[str, str, str, list[NewsItem]]]) -> list[str]:
+    max_value = max((len(cards) for _slug, _heading, _description, cards in sections), default=1)
+    lines = [
+        '      <section class="news-digest-beta-visual-card" aria-label="Section mix">',
+        '        <p class="section-kicker">Section load</p>',
+        '        <div class="news-digest-beta-bars">',
+    ]
+    for slug, heading, _description, cards in sections:
+        value = len(cards)
+        lines.extend(
+            [
+                '          <div class="news-digest-beta-bar-row">',
+                f'            <span class="news-digest-beta-bar-label" data-pretext-target>{safe_text(heading)}</span>',
+                '            <span class="news-digest-beta-bar-track" aria-hidden="true">',
+                f'              <span style="width: {render_beta_bar_value(value, max_value)}"></span>',
+                "            </span>",
+                f'            <strong>{value}</strong>',
+                "          </div>",
+            ]
+        )
+    lines.extend(["        </div>", "      </section>"])
+    return lines
+
+
+def render_beta_signal_map(context: DigestContext) -> list[str]:
+    max_signal = max((card.score for card in context.repo_scoreboard[:4]), default=1.0)
+    lines = [
+        '  <section class="news-digest-section news-digest-beta-signal-map">',
+        '    <header class="news-digest-section-head">',
+        '      <p class="section-kicker">Signal map</p>',
+        '      <h2 data-pretext-target>How today breaks down</h2>',
+        '    </header>',
+        '    <div class="news-digest-beta-visual-grid">',
+        *render_beta_source_mix(context.source_counts),
+        *render_beta_section_mix(context.sections),
+        '      <section class="news-digest-beta-visual-card" aria-label="Top repo signals">',
+        '        <p class="section-kicker">Top repo signals</p>',
+        '        <div class="news-digest-beta-bars">',
+    ]
+    for card in context.repo_scoreboard[:4]:
+        lines.extend(
+            [
+                '          <div class="news-digest-beta-bar-row">',
+                f'            <span class="news-digest-beta-bar-label" data-pretext-target>{safe_text(card.headline or card.title)}</span>',
+                '            <span class="news-digest-beta-bar-track" aria-hidden="true">',
+                f'              <span style="width: {render_beta_bar_value(card.score, max_signal)}"></span>',
+                "            </span>",
+                f'            <strong>{card.score:.1f}</strong>',
+                "          </div>",
+            ]
+        )
+    lines.extend(["        </div>", "      </section>", "    </div>", "  </section>"])
+    return lines
+
+
 def generate_gemma_beta_digest(issue_dt: datetime, context: DigestContext) -> BetaDigest | None:
     if not gemma_beta_enabled():
         return None
     cache_key = beta_digest_cache_key(issue_dt, context)
     cached = BETA_DIGEST_CACHE.get(cache_key)
     if isinstance(cached, dict):
-        return BetaDigest(**cached)
+        try:
+            return BetaDigest(**cached)
+        except TypeError:
+            pass
 
-    request_body = {
-        "contents": [
-            {
-                "role": "user",
-                "parts": [{"text": json.dumps(gemma_prompt_payload(issue_dt, context), ensure_ascii=False)}],
-            }
-        ],
-        "generationConfig": {
-            "temperature": 0.35,
-            "responseMimeType": "application/json",
-        },
-    }
-    req = urllib.request.Request(
-        gemma_api_url(),
-        data=json.dumps(request_body).encode("utf-8"),
-        headers={"Content-Type": "application/json", "User-Agent": "blog-news-digest/1.0"},
+    overview = normalize_overview(
+        gemma_json_request(overview_cache_key(issue_dt, context), gemma_overview_payload(issue_dt, context), temperature=0.42),
+        issue_dt,
+        context,
     )
-    with urllib.request.urlopen(req, timeout=45) as response:
-        payload = json.loads(response.read().decode("utf-8"))
-    parts = (((payload.get("candidates") or [{}])[0].get("content") or {}).get("parts") or [])
-    response_text = ""
-    for part in parts:
-        if part.get("thought"):
-            continue
-        response_text = part.get("text", "")
-        if response_text:
-            break
-    parsed = parse_llm_json(response_text)
+
+    section_titles: dict[str, str] = {}
+    section_bodies: dict[str, list[str]] = {}
+    for slug, heading, description, cards in context.sections:
+        parsed = gemma_json_request(
+            section_cache_key(issue_dt, context, slug, cards),
+            gemma_section_payload(issue_dt, slug, heading, description, cards, overview),
+            temperature=0.5,
+        )
+        section_title, paragraphs = normalize_section_story(parsed, heading, description)
+        section_titles[slug] = section_title
+        section_bodies[slug] = paragraphs
+
     beta = BetaDigest(
-        title=str(parsed.get("title") or f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}").strip(),
-        dek=str(parsed.get("dek") or context.summary).strip(),
-        lead=str(parsed.get("lead") or context.summary).strip(),
-        takeaways=[str(item).strip() for item in (parsed.get("takeaways") or []) if str(item).strip()][:4],
-        section_bodies=normalize_section_bodies(parsed, context),
-        closing=str(parsed.get("closing") or "").strip(),
+        title=overview.title,
+        dek=overview.dek,
+        lead=overview.lead,
+        takeaways=overview.takeaways,
+        section_titles=section_titles,
+        section_bodies=section_bodies,
+        closing=overview.closing,
     )
     BETA_DIGEST_CACHE[cache_key] = beta.__dict__
     return beta
@@ -1586,7 +1758,9 @@ def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: Di
                 ]
             )
         body.extend(["      </div>", *source_pills, "    </div>", "  </section>"])
+    body.extend(render_beta_signal_map(context))
     for slug, heading, _description, cards in context.sections:
+        story_heading = beta.section_titles.get(slug) or heading
         story_paragraphs = beta.section_bodies.get(slug) or []
         card_subset = choose_beta_reference_cards(cards, beta_used_urls, limit=2)
         beta_used_urls.update(card.url for card in card_subset)
@@ -1595,7 +1769,7 @@ def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: Di
                 f'  <section class="news-digest-section news-digest-beta-story" id="beta-{safe_text(slug)}">',
                 '    <header class="news-digest-section-head">',
                 '      <p class="section-kicker">Section</p>',
-                f'      <h2 data-pretext-target>{safe_text(heading)}</h2>',
+                f'      <h2 data-pretext-target>{safe_text(story_heading)}</h2>',
                 '    </header>',
                 '    <div class="news-digest-beta-story-layout">',
                 '      <div class="news-digest-beta-story-body">',

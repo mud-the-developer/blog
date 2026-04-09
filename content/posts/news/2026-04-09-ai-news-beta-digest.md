@@ -1,6 +1,6 @@
 ---
-title: "AI Agentic Infrastructure and Retrieval"
-description: "High-throughput inference engines and agentic skill retrieval dominate today's technical signals."
+title: "AI Beta Brief: Agentic Workflows and Inference Efficiency"
+description: "High-throughput inference and agentic retrieval patterns lead today's technical signals."
 date: 2026-04-09
 tags: [news, news-digest, ai, beta]
 publish: true
@@ -10,9 +10,9 @@ content-classes: [news-digest-note, news-digest-beta-note]
   <section class="news-digest-hero">
     <div class="news-digest-hero-copy">
       <p class="section-kicker">Beta Brief</p>
-      <h1 data-pretext-target>AI Agentic Infrastructure and Retrieval</h1>
-      <p class="news-digest-lead" data-pretext-target>High-throughput inference engines and agentic skill retrieval dominate today&#x27;s technical signals.</p>
-      <p class="news-digest-section-description" data-pretext-target>Today&#x27;s activity centers on the optimization of agentic workflows and the infrastructure required to serve them. From vLLM&#x27;s continued momentum in inference to new research on mining supervision from agent trajectories, the focus has shifted toward operational efficiency and real-world skill deployment.</p>
+      <h1 data-pretext-target>AI Beta Brief: Agentic Workflows and Inference Efficiency</h1>
+      <p class="news-digest-lead" data-pretext-target>High-throughput inference and agentic retrieval patterns lead today&#x27;s technical signals.</p>
+      <p class="news-digest-section-description" data-pretext-target>The AI ecosystem is shifting focus toward the practical deployment of agentic workflows and the optimization of inference engines. Recent activity highlights a surge in high-throughput serving via vLLM and a research pivot toward mining supervision from agent trajectories. Simultaneously, developer discourse is centering on the source code analysis of emerging coding agents.</p>
       <div class="news-digest-actions" role="group" aria-label="Beta digest actions">
         <a class="post-cta-link" href="/notes/news/2026-04-09-ai-news-digest/">Open structured digest</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
@@ -25,7 +25,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Generated</span>
-        <strong><time datetime="2026-04-09T12:44:20.852086+09:00">Apr 9, 2026 · 12:44 PM KST</time></strong>
+        <strong><time datetime="2026-04-09T20:05:23.203659+09:00">Apr 9, 2026 · 8:05 PM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Mode</span>
@@ -41,16 +41,16 @@ content-classes: [news-digest-note, news-digest-beta-note]
     <div class="news-digest-beta-wire-grid">
       <div class="news-digest-archive-list news-digest-beta-bullets">
       <div class="news-digest-archive-item">
-        <strong data-pretext-target>vLLM and Ray maintain strong momentum as core AI compute and serving engines.</strong>
+        <strong data-pretext-target>vLLM maintains strong GitHub velocity as a primary engine for memory-efficient LLM serving.</strong>
       </div>
       <div class="news-digest-archive-item">
-        <strong data-pretext-target>Research is pivoting toward agentic search, focusing on how models retrieve information from interaction histories.</strong>
+        <strong data-pretext-target>Research is clustering around improving retrieval models by training directly from multi-step agent interaction data.</strong>
       </div>
       <div class="news-digest-archive-item">
-        <strong data-pretext-target>Community attention is shifting toward the technical auditing of coding agents, specifically Claude Code and OpenCode.</strong>
+        <strong data-pretext-target>Developer attention is shifting toward comparative source code analysis of coding agents, specifically Claude Code and AutoBe.</strong>
       </div>
       <div class="news-digest-archive-item">
-        <strong data-pretext-target>New open-model releases, including Gemma 4 and GLM-5.1, are expanding local execution capabilities for reasoning.</strong>
+        <strong data-pretext-target>Open-model accessibility expands with the release of Gemma 4 and local deployment capabilities for GLM-5.1.</strong>
       </div>
       </div>
       <div class="news-digest-beta-source-pills" aria-label="Source mix">
@@ -62,14 +62,129 @@ content-classes: [news-digest-note, news-digest-beta-note]
       </div>
     </div>
   </section>
+  <section class="news-digest-section news-digest-beta-signal-map">
+    <header class="news-digest-section-head">
+      <p class="section-kicker">Signal map</p>
+      <h2 data-pretext-target>How today breaks down</h2>
+    </header>
+    <div class="news-digest-beta-visual-grid">
+      <section class="news-digest-beta-visual-card" aria-label="Source mix">
+        <p class="section-kicker">Source mix</p>
+        <div class="news-digest-beta-bars">
+          <div class="news-digest-beta-bar-row">
+            <span class="news-digest-beta-bar-label" data-pretext-target>GitHub</span>
+            <span class="news-digest-beta-bar-track" aria-hidden="true">
+              <span style="width: 100.0%"></span>
+            </span>
+            <strong>10</strong>
+          </div>
+          <div class="news-digest-beta-bar-row">
+            <span class="news-digest-beta-bar-label" data-pretext-target>Hugging Face Papers</span>
+            <span class="news-digest-beta-bar-track" aria-hidden="true">
+              <span style="width: 70.0%"></span>
+            </span>
+            <strong>7</strong>
+          </div>
+          <div class="news-digest-beta-bar-row">
+            <span class="news-digest-beta-bar-label" data-pretext-target>GeekNews</span>
+            <span class="news-digest-beta-bar-track" aria-hidden="true">
+              <span style="width: 60.0%"></span>
+            </span>
+            <strong>6</strong>
+          </div>
+          <div class="news-digest-beta-bar-row">
+            <span class="news-digest-beta-bar-label" data-pretext-target>X</span>
+            <span class="news-digest-beta-bar-track" aria-hidden="true">
+              <span style="width: 40.0%"></span>
+            </span>
+            <strong>4</strong>
+          </div>
+          <div class="news-digest-beta-bar-row">
+            <span class="news-digest-beta-bar-label" data-pretext-target>arXiv</span>
+            <span class="news-digest-beta-bar-track" aria-hidden="true">
+              <span style="width: 30.0%"></span>
+            </span>
+            <strong>3</strong>
+          </div>
+        </div>
+      </section>
+      <section class="news-digest-beta-visual-card" aria-label="Section mix">
+        <p class="section-kicker">Section load</p>
+        <div class="news-digest-beta-bars">
+          <div class="news-digest-beta-bar-row">
+            <span class="news-digest-beta-bar-label" data-pretext-target>Hot in 24 Hours</span>
+            <span class="news-digest-beta-bar-track" aria-hidden="true">
+              <span style="width: 40.0%"></span>
+            </span>
+            <strong>4</strong>
+          </div>
+          <div class="news-digest-beta-bar-row">
+            <span class="news-digest-beta-bar-label" data-pretext-target>Repository Momentum</span>
+            <span class="news-digest-beta-bar-track" aria-hidden="true">
+              <span style="width: 100.0%"></span>
+            </span>
+            <strong>10</strong>
+          </div>
+          <div class="news-digest-beta-bar-row">
+            <span class="news-digest-beta-bar-label" data-pretext-target>Fresh Papers</span>
+            <span class="news-digest-beta-bar-track" aria-hidden="true">
+              <span style="width: 100.0%"></span>
+            </span>
+            <strong>10</strong>
+          </div>
+          <div class="news-digest-beta-bar-row">
+            <span class="news-digest-beta-bar-label" data-pretext-target>Community Chatter</span>
+            <span class="news-digest-beta-bar-track" aria-hidden="true">
+              <span style="width: 100.0%"></span>
+            </span>
+            <strong>10</strong>
+          </div>
+        </div>
+      </section>
+      <section class="news-digest-beta-visual-card" aria-label="Top repo signals">
+        <p class="section-kicker">Top repo signals</p>
+        <div class="news-digest-beta-bars">
+          <div class="news-digest-beta-bar-row">
+            <span class="news-digest-beta-bar-label" data-pretext-target>vllm-project/vllm</span>
+            <span class="news-digest-beta-bar-track" aria-hidden="true">
+              <span style="width: 100.0%"></span>
+            </span>
+            <strong>25.4</strong>
+          </div>
+          <div class="news-digest-beta-bar-row">
+            <span class="news-digest-beta-bar-label" data-pretext-target>openai/codex</span>
+            <span class="news-digest-beta-bar-track" aria-hidden="true">
+              <span style="width: 98.2%"></span>
+            </span>
+            <strong>25.0</strong>
+          </div>
+          <div class="news-digest-beta-bar-row">
+            <span class="news-digest-beta-bar-label" data-pretext-target>NousResearch/hermes-agent</span>
+            <span class="news-digest-beta-bar-track" aria-hidden="true">
+              <span style="width: 96.4%"></span>
+            </span>
+            <strong>24.5</strong>
+          </div>
+          <div class="news-digest-beta-bar-row">
+            <span class="news-digest-beta-bar-label" data-pretext-target>anomalyco/opencode</span>
+            <span class="news-digest-beta-bar-track" aria-hidden="true">
+              <span style="width: 96.3%"></span>
+            </span>
+            <strong>24.5</strong>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
   <section class="news-digest-section news-digest-beta-story" id="beta-hot24">
     <header class="news-digest-section-head">
       <p class="section-kicker">Section</p>
-      <h2 data-pretext-target>Hot in 24 Hours</h2>
+      <h2 data-pretext-target>High-Throughput Serving and Agentic Research</h2>
     </header>
     <div class="news-digest-beta-story-layout">
       <div class="news-digest-beta-story-body">
-        <p class="news-digest-beta-story-copy" data-pretext-target>vLLM leads the 24-hour cycle as the primary high-throughput inference engine for LLMs. Parallel momentum is seen in the coding agent space, where OpenAI&#x27;s Codex and new research on agent trajectories are surfacing as top interests.</p>
+        <p class="news-digest-beta-story-copy" data-pretext-target>The latest activity in the developer ecosystem is dominated by high-performance tooling, with vLLM maintaining strong momentum as a high-throughput and memory-efficient inference engine for LLMs. Simultaneously, OpenAI&#x27;s Codex is seeing significant interest as a lightweight coding agent designed to run directly within the terminal.</p>
+        <p class="news-digest-beta-story-copy" data-pretext-target>On the research front, new methodologies are emerging to optimize agentic search. A recent paper proposes that retrieval models be trained directly from multi-step agent trajectories to mine better supervision. Meanwhile, the Video-MME-v2 benchmark has been introduced to advance the evaluation of comprehensive video understanding through a progressive hierarchy and group-based evaluation.</p>
       </div>
       <aside class="news-digest-beta-story-rail" aria-label="Referenced items">
       <a class="news-digest-card news-digest-card--repo news-digest-inline-card news-digest-inline-card--primary" href="https://github.com/vllm-project/vllm" target="_blank" rel="noreferrer">
@@ -110,11 +225,13 @@ content-classes: [news-digest-note, news-digest-beta-note]
   <section class="news-digest-section news-digest-beta-story" id="beta-repos">
     <header class="news-digest-section-head">
       <p class="section-kicker">Section</p>
-      <h2 data-pretext-target>Repository Momentum</h2>
+      <h2 data-pretext-target>High-Throughput Serving and Agentic Tooling</h2>
     </header>
     <div class="news-digest-beta-story-layout">
       <div class="news-digest-beta-story-body">
-        <p class="news-digest-beta-story-copy" data-pretext-target>GitHub activity is heavily skewed toward agentic tooling. Beyond vLLM and Ray, there is significant growth in specialized libraries like Antigravity&#x27;s skill collection and the OpenCode project, reflecting a trend toward modular, installable agent capabilities.</p>
+        <p class="news-digest-beta-story-copy" data-pretext-target>The vllm-project/vllm repository continues to lead in inference efficiency, serving as a high-throughput and memory-efficient engine for LLMs. With 75,720 stars and a recent gain of 800 stars over the last seven days, it remains a critical piece of infrastructure for optimized serving.</p>
+        <p class="news-digest-beta-story-copy" data-pretext-target>Coding agents are seeing significant traction, particularly through anomalyco/opencode, an open-source project boasting 139,332 stars. Similarly, openai/codex is gaining attention as a lightweight coding agent designed to run directly in the terminal, also adding 800 stars this week.</p>
+        <p class="news-digest-beta-story-copy" data-pretext-target>Beyond coding, the agentic landscape is expanding with projects like NousResearch/hermes-agent. Positioned as an agent that grows with the user, it has reached 33,706 stars, reflecting a broader trend toward versatile, evolving AI agents.</p>
       </div>
       <aside class="news-digest-beta-story-rail" aria-label="Referenced items">
       <a class="news-digest-card news-digest-card--repo news-digest-inline-card news-digest-inline-card--primary" href="https://github.com/openai/codex" target="_blank" rel="noreferrer">
@@ -155,11 +272,12 @@ content-classes: [news-digest-note, news-digest-beta-note]
   <section class="news-digest-section news-digest-beta-story" id="beta-papers">
     <header class="news-digest-section-head">
       <p class="section-kicker">Section</p>
-      <h2 data-pretext-target>Fresh Papers</h2>
+      <h2 data-pretext-target>Optimizing Agentic Retrieval and Reasoning Efficiency</h2>
     </header>
     <div class="news-digest-beta-story-layout">
       <div class="news-digest-beta-story-body">
-        <p class="news-digest-beta-story-copy" data-pretext-target>Recent research emphasizes the gap between theoretical accuracy and real-world agent performance. Key papers introduce the PTE metric for reasoning efficiency and propose new paradigms for training retrieval models using multi-step agent trajectories.</p>
+        <p class="news-digest-beta-story-copy" data-pretext-target>Recent research is addressing the gap between handcrafted skill sets and real-world agent performance. While one study demonstrates that LLM skill utilization degrades significantly in realistic settings where skills must be retrieved and refined, a new paradigm proposes improving these retrieval models by mining supervision directly from multi-step agent trajectories.</p>
+        <p class="news-digest-beta-story-copy" data-pretext-target>Parallel efforts are focusing on more precise measurement of model efficiency and capability. Researchers have introduced Prefill Token Equivalents (PTE), a hardware-aware metric designed to better correlate with actual inference in tool-integrated reasoning scenarios. Additionally, the release of Video-MME-v2 establishes a comprehensive benchmark for video understanding, utilizing a progressive hierarchy and group-based evaluation to assess robustness and faithfulness.</p>
       </div>
       <aside class="news-digest-beta-story-rail" aria-label="Referenced items">
       <a class="news-digest-card news-digest-card--paper news-digest-inline-card news-digest-inline-card--primary" href="https://huggingface.co/papers/2604.05015" target="_blank" rel="noreferrer">
@@ -200,11 +318,12 @@ content-classes: [news-digest-note, news-digest-beta-note]
   <section class="news-digest-section news-digest-beta-story" id="beta-social">
     <header class="news-digest-section-head">
       <p class="section-kicker">Section</p>
-      <h2 data-pretext-target>Community Chatter</h2>
+      <h2 data-pretext-target>Developer Analysis of Agentic Coding Models</h2>
     </header>
     <div class="news-digest-beta-story-layout">
       <div class="news-digest-beta-story-body">
-        <p class="news-digest-beta-story-copy" data-pretext-target>Discussion is currently focused on the technical internals of Claude Code and the accessibility of large models. The release of Gemma 4 and the 2-bit quantization of GLM-5.1 are driving conversations around local hardware deployment for agentic workflows.</p>
+        <p class="news-digest-beta-story-copy" data-pretext-target>Community discourse is currently centering on the technical architecture of coding agents. Backend developers are conducting source code analyses to compare the implementations of Claude Code and AutoBe, signaling a deeper interest in the underlying mechanics of these agentic tools.</p>
+        <p class="news-digest-beta-story-copy" data-pretext-target>Simultaneously, the accessibility of high-performance models is expanding. Google has released Gemma 4, a family of open models under an Apache 2.0 license designed for advanced reasoning and agentic workflows. In a similar move toward local deployment, GLM-5.1 has been optimized via Dynamic 2-bit quantization, shrinking the 744B model from 1.65TB to 220GB to enable execution on 256GB Mac or RAM/VRAM setups.</p>
       </div>
       <aside class="news-digest-beta-story-rail" aria-label="Referenced items">
       <a class="news-digest-card news-digest-card--social news-digest-inline-card news-digest-inline-card--primary" href="https://news.hada.io/topic?id=28315" target="_blank" rel="noreferrer">
@@ -247,6 +366,6 @@ content-classes: [news-digest-note, news-digest-beta-note]
       <p class="section-kicker">Closing</p>
       <h2 data-pretext-target>Editor note</h2>
     </header>
-    <p class="news-digest-section-description" data-pretext-target>Infrastructure for agentic autonomy continues to mature across both open and closed ecosystems.</p>
+    <p class="news-digest-section-description" data-pretext-target>Full signal breakdown follows.</p>
   </section>
 </div>
