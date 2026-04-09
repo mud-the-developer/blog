@@ -5,9 +5,9 @@ const BODY_SELECTOR = '[data-news-brief-body]';
 const RAIL_SELECTOR = '[data-news-brief-rail]';
 const FLOW_BREAKPOINT = 980;
 const FLOW_PADDING_X = 2;
-const FLOW_GAP_X = 16;
-const FLOW_GAP_Y = 8;
-const FLOW_MIN_SPAN = 220;
+const FLOW_GAP_X = 10;
+const FLOW_GAP_Y = 4;
+const FLOW_MIN_SPAN = 168;
 const PARAGRAPH_GAP_RATIO = 0.72;
 const START_CURSOR = Object.freeze({ segmentIndex: 0, graphemeIndex: 0 });
 

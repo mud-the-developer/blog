@@ -955,6 +955,27 @@ html[data-theme="dark"] .note-body li code {
   align-items: start;
 }
 
+.note-body .news-digest-beta-overview .news-digest-section-head h2,
+.note-body .news-digest-beta-tail .news-digest-section-head h2 {
+  max-width: 22ch;
+  text-wrap: pretty;
+}
+
+.note-body .news-digest-beta-signal-map .news-digest-section-head h2 {
+  max-width: 26ch;
+  text-wrap: pretty;
+}
+
+.note-body .news-digest-beta-story .news-digest-section-head h2 {
+  max-width: 26ch;
+  text-wrap: pretty;
+}
+
+.note-body .news-digest-beta-story,
+.note-body .news-digest-beta-tail {
+  overflow: visible;
+}
+
 .note-body .news-digest-beta-story-layout.is-pretext-flow {
   display: block;
   position: relative;
@@ -1010,8 +1031,8 @@ html[data-theme="dark"] .note-body li code {
   position: absolute;
   top: 0;
   right: 0;
-  width: min(34%, 360px);
-  max-width: 360px;
+  width: min(44%, 468px);
+  max-width: 468px;
 }
 
 .note-body .news-digest-inline-card {
@@ -1021,7 +1042,7 @@ html[data-theme="dark"] .note-body li code {
 
 .note-body .news-digest-inline-card .news-digest-card-copy {
   gap: 0.46rem;
-  padding: 0.92rem 0.96rem 1rem;
+  padding: 0.9rem 1rem 1rem;
 }
 
 .note-body .news-digest-inline-card h3 {
@@ -1036,6 +1057,10 @@ html[data-theme="dark"] .note-body li code {
 
 .note-body .news-digest-inline-card--primary {
   transform: rotate(-1deg);
+}
+
+.note-body .news-digest-tail-card {
+  min-height: 100%;
 }
 
 .note-body .news-digest-beta-story-rail > .news-digest-inline-card + .news-digest-inline-card {
@@ -1491,6 +1516,13 @@ html[data-theme="dark"] .note-body li code {
     max-width: none;
   }
 
+  .note-body .news-digest-beta-overview .news-digest-section-head h2,
+  .note-body .news-digest-beta-signal-map .news-digest-section-head h2,
+  .note-body .news-digest-beta-tail .news-digest-section-head h2,
+  .note-body .news-digest-beta-story .news-digest-section-head h2 {
+    max-width: none;
+  }
+
   .note-body .news-digest-beta-flow-layer {
     display: none;
   }
@@ -1546,6 +1578,13 @@ html[data-theme="dark"] .note-body li code {
   .note-body .news-digest-beta-story-layout.is-pretext-flow .news-digest-beta-story-rail {
     position: static;
     width: auto;
+    max-width: none;
+  }
+
+  .note-body .news-digest-beta-overview .news-digest-section-head h2,
+  .note-body .news-digest-beta-signal-map .news-digest-section-head h2,
+  .note-body .news-digest-beta-tail .news-digest-section-head h2,
+  .note-body .news-digest-beta-story .news-digest-section-head h2 {
     max-width: none;
   }
 
