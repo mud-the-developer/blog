@@ -586,6 +586,7 @@ struct LayoutContext {
     style_settings_css_url: String,
     user_overrides_css_url: String,
     style_settings_inline_css: String,
+    show_library_rail: bool,
     show_search: bool,
     show_graph_module: bool,
     graph_data_url: String,
@@ -4387,6 +4388,9 @@ fn website_layout(
         style_settings_css_url: theme_assets.style_settings_css_url.clone(),
         user_overrides_css_url: theme_assets.user_overrides_css_url.clone(),
         style_settings_inline_css: theme_assets.style_settings_inline_css.clone(),
+        show_library_rail: !matches!(page_path, "/" | "/graph/")
+            && !page_path.starts_with("/tags/")
+            && !page_path.starts_with("/system/"),
         show_search,
         show_graph_module,
         graph_data_url,

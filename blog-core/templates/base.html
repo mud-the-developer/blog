@@ -163,6 +163,7 @@
     </header>
 
     <div class="site-layout{% if layout.show_side_graph %} site-layout--with-context{% endif %}">
+      {% if layout.show_library_rail %}
       <aside class="site-rail site-rail--library" aria-label="Site library">
         {% if layout.show_search %}
         <section class="rail-panel rail-panel--search">
@@ -215,6 +216,7 @@
           </nav>
         </section>
       </aside>
+      {% endif %}
 
       <main class="site-main" id="main-content">
         {% block content %}{% endblock %}

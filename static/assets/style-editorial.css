@@ -616,19 +616,15 @@ img, svg, canvas, video { max-width: 100%; }
 .toc-depth-2 { padding-left: 20px; }
 .toc-depth-3 { padding-left: 30px; }
 
-body:is(.page-home, .page-tag, .page-graph, .page-system) .site-layout,
-body:is(.page-home, .page-tag, .page-graph, .page-system) .site-layout.site-layout--with-context {
-  grid-template-columns: minmax(0, 1fr) !important;
-  grid-template-areas: "main" !important;
+.site-layout:not(.site-layout--with-context):not(:has(> .site-rail--library)):has(> .site-main) {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "main";
 }
-body:is(.page-home, .page-tag, .page-graph, .page-system) .site-main {
+.site-layout:not(.site-layout--with-context):not(:has(> .site-rail--library)):has(> .site-main) .site-main {
   width: 100%;
   justify-content: stretch;
 }
-body:is(.page-home, .page-tag, .page-graph, .page-system) .site-rail {
-  display: none;
-}
-body:is(.page-home, .page-tag, .page-graph, .page-system) .site-main-stack {
+.site-layout:not(.site-layout--with-context):not(:has(> .site-rail--library)):has(> .site-main) .site-main-stack {
   width: min(100%, 1360px);
 }
 .page-note .site-main-stack { width: min(100%, 980px); }
