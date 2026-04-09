@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="robots" content="index,follow" />
-  <meta name="theme-color" content="#F5F1E8" />
+  <meta id="theme-color-meta" name="theme-color" content="#F5F1E8" />
   <title>{{ layout.page_title }}</title>
   <meta name="description" content="{{ layout.page_description }}" />
   <link rel="canonical" href="{{ layout.canonical_url }}" />
@@ -40,8 +40,37 @@
   <script>
     (() => {
       const root = document.documentElement;
-      root.setAttribute("data-theme-mode", "system");
-      root.setAttribute("data-theme", "light");
+      const themeConfig = {
+        storageKey: "theme-preference",
+        colors: {
+          light: "#F5F1E8",
+          dark: "#111318"
+        }
+      };
+      window.__BLOG_THEME__ = themeConfig;
+
+      let storedPreference = null;
+      try {
+        const raw = localStorage.getItem(themeConfig.storageKey);
+        if (raw === "light" || raw === "dark") {
+          storedPreference = raw;
+        }
+      } catch (_error) {}
+
+      const systemTheme =
+        window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+      const resolvedTheme = storedPreference || systemTheme;
+
+      root.setAttribute("data-theme-mode", storedPreference ? "explicit" : "system");
+      root.setAttribute("data-theme", resolvedTheme);
+      root.style.colorScheme = resolvedTheme;
+
+      const themeColorMeta = document.getElementById("theme-color-meta");
+      if (themeColorMeta instanceof HTMLMetaElement) {
+        themeColorMeta.content = themeConfig.colors[resolvedTheme];
+      }
     })();
   </script>
   <link rel="alternate" type="application/rss+xml" title="{{ layout.site_title }} RSS" href="/rss.xml" />
@@ -276,7 +305,8 @@
   <script>
     window.__BLOG_RUNTIME_CONFIG__ = {
       graphDataUrl: "{{ layout.graph_data_url }}",
-      graphCenterId: "{{ layout.graph_center_id }}"
+      graphCenterId: "{{ layout.graph_center_id }}",
+      themeStorageKey: "theme-preference"
     };
   </script>
   {% if layout.show_search %}

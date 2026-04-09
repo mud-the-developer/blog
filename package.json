@@ -1,0 +1,20 @@
+{
+  "name": "mud-blog-tooling",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Linting, formatting, and layout regression tooling for the Rust static blog",
+  "scripts": {
+    "lint": "npm run lint:rust && npm run lint:js && npm run lint:css",
+    "lint:rust": "cargo fmt --check && cargo clippy --all-targets --all-features -- -D warnings",
+    "lint:js": "biome check package.json package-lock.json biome.json playwright.config.js tests/playwright static/assets/site-runtime.js static/assets/pretext-note-web.mjs static/assets/pretext-news-brief.mjs",
+    "lint:css": "stylelint \"static/assets/**/*.css\"",
+    "format": "cargo fmt --all && biome format --write . && stylelint \"static/assets/**/*.css\" --fix",
+    "test:overflow": "cargo run -q -p blog-build -- --site-url http://127.0.0.1:4173 --title \"Mud's Blog\" --description \"AI research notes, connected writing, and daily news radar.\" && playwright test --config=playwright.config.js"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.10",
+    "@playwright/test": "^1.59.1",
+    "stylelint": "^17.6.0",
+    "stylelint-config-standard": "^40.0.0"
+  }
+}

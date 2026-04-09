@@ -1,0 +1,44 @@
+name: Lint and Layout Guards
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@v2
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install JS tooling
+        run: npm ci
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Rust lint
+        run: npm run lint:rust
+
+      - name: JS and JSON lint
+        run: npm run lint:js
+
+      - name: CSS lint
+        run: npm run lint:css
+
+      - name: Overflow regression test
+        run: npm run test:overflow
