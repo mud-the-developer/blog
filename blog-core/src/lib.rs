@@ -1283,7 +1283,7 @@ fn render_news_redirect_html(title: &str, description: &str, target: &str) -> St
 <body>
   <noscript>
     <main>
-      <a href="{safe_target}">Continue to the current Daily AI News Digest</a>
+      <a href="{safe_target}">Continue to the current AI news brief</a>
     </main>
   </noscript>
 </body>
@@ -4244,6 +4244,29 @@ fn resolve_news_digest_url(news: &NewsHubData) -> String {
         .unwrap_or_else(|| "/news/".to_string())
 }
 
+fn is_beta_news_digest_post(post: &Post) -> bool {
+    post.slug.ends_with("-ai-news-beta-digest")
+        || post
+            .content_classes
+            .iter()
+            .any(|class_name| class_name == "news-digest-beta-note")
+}
+
+fn is_archive_news_digest_post(post: &Post) -> bool {
+    post.slug.ends_with("news-digest-archive")
+        || post
+            .content_classes
+            .iter()
+            .any(|class_name| class_name == "news-digest-archive-note")
+}
+
+fn is_structured_news_digest_post(post: &Post) -> bool {
+    post.slug.starts_with("news/")
+        && post.slug.ends_with("-ai-news-digest")
+        && !is_beta_news_digest_post(post)
+        && !is_archive_news_digest_post(post)
+}
+
 fn display_section_name_from_slug(slug: &str) -> String {
     slug.split('/')
         .next()
@@ -4507,7 +4530,7 @@ fn load_generated_news_hub_data(posts: &[Post]) -> Result<Option<NewsHubData>> {
 
     let mut archives = posts
         .iter()
-        .filter(|post| is_news_digest_post(post))
+        .filter(|post| is_structured_news_digest_post(post))
         .map(|post| {
             let url = format!("/notes/{}/", post.slug);
             let fallback = archive_by_url.get(&url);

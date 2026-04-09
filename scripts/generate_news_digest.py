@@ -1638,6 +1638,42 @@ def render_beta_signal_map(context: DigestContext) -> list[str]:
     return lines
 
 
+def render_beta_remaining_signals(context: DigestContext, used_urls: set[str], structured_url: str) -> list[str]:
+    remaining: list[NewsItem] = []
+    seen_urls: set[str] = set()
+    for _slug, _heading, _description, cards in context.sections:
+        for card in cards:
+            if card.url in used_urls or card.url in seen_urls:
+                continue
+            remaining.append(card)
+            seen_urls.add(card.url)
+    if not remaining:
+        return []
+
+    lines = [
+        '  <section class="news-digest-section news-digest-beta-tail" id="beta-more-signals">',
+        '    <header class="news-digest-section-head">',
+        '      <p class="section-kicker">More signals</p>',
+        '      <h2 data-pretext-target>Everything else on the wire</h2>',
+        '      <p class="news-digest-section-description" data-pretext-target>These are the remaining repo, paper, and community items that made the cut but did not drive the main article narrative.</p>',
+        '    </header>',
+        '    <div class="news-digest-grid news-digest-grid--tail">',
+    ]
+    for card in remaining:
+        lines.extend(render_digest_card_lines(card, extra_classes="news-digest-tail-card"))
+    lines.extend(
+        [
+            "    </div>",
+            '    <div class="news-digest-actions" role="group" aria-label="Remaining signal actions">',
+            f'      <a class="post-cta-link" href="{safe_text(structured_url)}">Open structured digest</a>',
+            f'      <a class="post-cta-link" href="{safe_text(ARCHIVE_URL)}">Browse digest archive</a>',
+            "    </div>",
+            "  </section>",
+        ]
+    )
+    return lines
+
+
 def generate_gemma_beta_digest(issue_dt: datetime, context: DigestContext) -> BetaDigest | None:
     if not gemma_beta_enabled():
         return None
@@ -1682,6 +1718,7 @@ def generate_gemma_beta_digest(issue_dt: datetime, context: DigestContext) -> Be
 
 def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: DigestContext, beta: BetaDigest) -> tuple[str, str]:
     stem = f"{issue_dt.strftime('%Y-%m-%d')}-ai-news-beta-digest"
+    structured_url = f"/notes/news/{issue_dt.strftime('%Y-%m-%d')}-ai-news-digest/"
     title = beta.title or f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}"
     frontmatter = "\n".join(
         [
@@ -1716,7 +1753,7 @@ def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: Di
         f'      <p class="news-digest-lead" data-pretext-target>{safe_text(beta.dek)}</p>',
         f'      <p class="news-digest-section-description" data-pretext-target>{safe_text(beta.lead)}</p>',
         '      <div class="news-digest-actions" role="group" aria-label="Beta digest actions">',
-        f'        <a class="post-cta-link" href="/notes/news/{issue_dt.strftime("%Y-%m-%d")}-ai-news-digest/">Open structured digest</a>',
+        f'        <a class="post-cta-link" href="{safe_text(structured_url)}">Open structured digest</a>',
         '        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>',
         "      </div>",
         "    </div>",
@@ -1804,6 +1841,7 @@ def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: Di
                 "  </section>",
             ]
         )
+    body.extend(render_beta_remaining_signals(context, beta_used_urls, structured_url))
     body.extend(["</div>", ""])
     return frontmatter + "\n".join(body), stem
 
@@ -2024,12 +2062,14 @@ def render_archive_markdown(
     generated_dt: datetime,
     current_summary: str,
     entries: list[dict[str, str]],
+    beta_stem: str | None = None,
 ) -> str:
     title = "Daily AI News Archive"
     issue_label = issue_date_label(issue_dt)
     generated_label = generated_timestamp_label(generated_dt)
     grouped = grouped_archive_entries(entries)
-    latest_url = entries[0]["url"] if entries else f"/notes/news/{issue_dt.strftime('%Y-%m-%d')}-ai-news-digest/"
+    latest_digest_url = entries[0]["url"] if entries else f"/notes/news/{issue_dt.strftime('%Y-%m-%d')}-ai-news-digest/"
+    latest_brief_url = f"/notes/news/{beta_stem}/" if beta_stem else latest_digest_url
     frontmatter = "\n".join(
         [
             "---",
@@ -2051,7 +2091,8 @@ def render_archive_markdown(
         f"      <h1>{safe_text(title)}</h1>",
         '      <p class="news-digest-lead">Every Daily AI News Digest, grouped by month so older issues stay skimmable.</p>',
         '      <div class="news-digest-actions" role="group" aria-label="Archive actions">',
-        f'        <a class="post-cta-link" href="{safe_text(latest_url)}">Latest digest</a>',
+        f'        <a class="post-cta-link" href="{safe_text(latest_brief_url)}">Latest brief</a>',
+        f'        <a class="post-cta-link" href="{safe_text(latest_digest_url)}">Structured digest</a>',
         '        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>',
         "      </div>",
         "    </div>",
@@ -2121,9 +2162,15 @@ def write_post(issue_dt: datetime, generated_dt: datetime, context: DigestContex
     return stem
 
 
-def write_archive_post(issue_dt: datetime, generated_dt: datetime, current_summary: str, digest_stem: str) -> None:
+def write_archive_post(
+    issue_dt: datetime,
+    generated_dt: datetime,
+    current_summary: str,
+    digest_stem: str,
+    beta_stem: str | None = None,
+) -> None:
     entries = archive_entries(digest_stem, current_summary)
-    markdown = render_archive_markdown(issue_dt, generated_dt, current_summary, entries)
+    markdown = render_archive_markdown(issue_dt, generated_dt, current_summary, entries, beta_stem)
     (POSTS_DIR / f"{ARCHIVE_STEM}.md").write_text(markdown)
 
 
@@ -2148,7 +2195,20 @@ def write_hub_json(issue_dt: datetime, generated_dt: datetime, context: DigestCo
         "repo_scoreboard": [card.__dict__ for card in context.repo_scoreboard],
         "sections": sections,
         "source_counts": context.source_counts,
-        "digest": {
+        "digest": (
+            {
+                "title": f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}",
+                "url": f"/notes/news/{beta_stem}/",
+                "description": context.summary,
+            }
+            if beta_stem
+            else {
+                "title": f"Daily AI News Digest — {issue_dt.strftime('%Y-%m-%d')}",
+                "url": f"/notes/news/{digest_stem}/",
+                "description": context.summary,
+            }
+        ),
+        "structured_digest": {
             "title": f"Daily AI News Digest — {issue_dt.strftime('%Y-%m-%d')}",
             "url": f"/notes/news/{digest_stem}/",
             "description": context.summary,
@@ -2179,7 +2239,7 @@ def main() -> None:
     context = build_digest_context(payload, args.limit)
     beta_stem = write_beta_post(issue_dt, generated_dt, context)
     digest_stem = write_post(issue_dt, generated_dt, context, beta_stem)
-    write_archive_post(issue_dt, generated_dt, context.summary, digest_stem)
+    write_archive_post(issue_dt, generated_dt, context.summary, digest_stem, beta_stem)
     write_hub_json(issue_dt, generated_dt, context, digest_stem, beta_stem)
     save_translation_cache()
     save_beta_digest_cache()

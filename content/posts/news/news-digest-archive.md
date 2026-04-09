@@ -13,14 +13,15 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every Daily AI News Digest, grouped by month so older issues stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/notes/news/2026-04-09-ai-news-digest/">Latest digest</a>
+        <a class="post-cta-link" href="/notes/news/2026-04-09-ai-news-beta-digest/">Latest brief</a>
+        <a class="post-cta-link" href="/notes/news/2026-04-09-ai-news-digest/">Structured digest</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-04-09T20:05:23.203659+09:00">Apr 9, 2026 · 8:05 PM KST</time></strong>
+        <strong><time datetime="2026-04-09T20:40:25.212179+09:00">Apr 9, 2026 · 8:40 PM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
