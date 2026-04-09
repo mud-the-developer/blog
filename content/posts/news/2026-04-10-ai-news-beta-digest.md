@@ -25,7 +25,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Generated</span>
-        <strong><time datetime="2026-04-10T01:25:02.934391+09:00">Apr 10, 2026 · 1:25 AM KST</time></strong>
+        <strong><time datetime="2026-04-10T01:35:48.216033+09:00">Apr 10, 2026 · 1:35 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Mode</span>
@@ -68,10 +68,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
       <h2>The day in one pass</h2>
     </header>
     <div class="news-digest-beta-story-body">
-      <p class="news-digest-beta-story-copy" data-pretext-target>In the infrastructure layer, vLLM continues to lead in high-throughput and memory-efficient inference, maintaining significant momentum alongside the Ray compute engine. These tools remain central to the deployment of large-scale models, providing the necessary backbone for the current shift toward more complex, agentic workloads.</p>
-      <p class="news-digest-beta-story-copy" data-pretext-target>Research attention is clustering around the optimization of agentic search. A notable shift is appearing in how retrieval models are trained, with new proposals suggesting that supervision should be mined directly from multi-step agent trajectories rather than static datasets. This is complemented by new benchmarks assessing how agentic skills perform in realistic, &#x27;in the wild&#x27; settings where retrieval and refinement are required.</p>
-      <p class="news-digest-beta-story-copy" data-pretext-target>The developer community is currently focused on the analysis of coding agents, specifically comparing the source code and performance of tools like Claude Code and AutoBe. This interest is mirrored in the repository trends, where terminal-based agents and extensive libraries of installable agentic skills are seeing increased activity.</p>
-      <p class="news-digest-beta-story-copy" data-pretext-target>Beyond coding and retrieval, multimodal advancements are diversifying. New benchmarks like Video-MME-v2 are pushing the boundaries of comprehensive video understanding, while generative models like DISCO are applying multimodal design to specialized fields such as protein sequence and 3D structure co-design.</p>
+      <p class="news-digest-beta-story-copy news-digest-beta-overview-copy" data-pretext-target>In the infrastructure layer, vLLM continues to lead in high-throughput and memory-efficient inference, maintaining significant momentum alongside the Ray compute engine. These tools remain central to the deployment of large-scale models, providing the necessary backbone for the current shift toward more complex, agentic workloads. Research attention is clustering around the optimization of agentic search. A notable shift is appearing in how retrieval models are trained, with new proposals suggesting that supervision should be mined directly from multi-step agent trajectories rather than static datasets. This is complemented by new benchmarks assessing how agentic skills perform in realistic, &#x27;in the wild&#x27; settings where retrieval and refinement are required. The developer community is currently focused on the analysis of coding agents, specifically comparing the source code and performance of tools like Claude Code and AutoBe. This interest is mirrored in the repository trends, where terminal-based agents and extensive libraries of installable agentic skills are seeing increased activity. Beyond coding and retrieval, multimodal advancements are diversifying. New benchmarks like Video-MME-v2 are pushing the boundaries of comprehensive video understanding, while generative models like DISCO are applying multimodal design to specialized fields such as protein sequence and 3D structure co-design.</p>
     </div>
   </section>
   <section class="news-digest-section news-digest-beta-signal-map">

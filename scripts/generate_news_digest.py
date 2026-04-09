@@ -1842,6 +1842,7 @@ def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: Di
             )
         body.extend(["      </div>", *source_pills, "    </div>", "  </section>"])
     if beta.article_body:
+        overview_copy = " ".join(paragraph.strip() for paragraph in beta.article_body if paragraph.strip())
         body.extend(
             [
                 '  <section class="news-digest-section news-digest-beta-overview">',
@@ -1850,11 +1851,11 @@ def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: Di
                 '      <h2>The day in one pass</h2>',
                 '    </header>',
                 '    <div class="news-digest-beta-story-body">',
+                f'      <p class="news-digest-beta-story-copy news-digest-beta-overview-copy" data-pretext-target>{safe_text(overview_copy)}</p>',
+                "    </div>",
+                "  </section>",
             ]
         )
-        for paragraph in beta.article_body:
-            body.append(f'      <p class="news-digest-beta-story-copy" data-pretext-target>{safe_text(paragraph)}</p>')
-        body.extend(["    </div>", "  </section>"])
     body.extend(render_beta_signal_map(context))
     for slug, heading, _description, cards in context.sections:
         story_heading = beta.section_titles.get(slug) or heading

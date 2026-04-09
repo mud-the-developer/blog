@@ -1004,6 +1004,14 @@ html[data-theme="dark"] .note-body li code {
   text-wrap: pretty;
 }
 
+.note-body .news-digest-beta-overview .news-digest-beta-story-body {
+  max-inline-size: none;
+}
+
+.note-body .news-digest-beta-overview-copy {
+  max-width: 92ch;
+}
+
 .note-body .news-digest-beta-flow-layer {
   position: absolute;
   inset: 0;
