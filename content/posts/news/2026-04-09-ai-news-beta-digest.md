@@ -25,7 +25,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Generated</span>
-        <strong><time datetime="2026-04-09T20:40:25.212179+09:00">Apr 9, 2026 · 8:40 PM KST</time></strong>
+        <strong><time datetime="2026-04-09T20:54:53.607264+09:00">Apr 9, 2026 · 8:54 PM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Mode</span>
@@ -181,12 +181,12 @@ content-classes: [news-digest-note, news-digest-beta-note]
       <p class="section-kicker">Section</p>
       <h2 data-pretext-target>High-Throughput Serving and Agentic Research</h2>
     </header>
-    <div class="news-digest-beta-story-layout">
-      <div class="news-digest-beta-story-body">
-        <p class="news-digest-beta-story-copy" data-pretext-target>The latest activity in the developer ecosystem is dominated by high-performance tooling, with vLLM maintaining strong momentum as a high-throughput and memory-efficient inference engine for LLMs. Simultaneously, OpenAI&#x27;s Codex is seeing significant interest as a lightweight coding agent designed to run directly within the terminal.</p>
-        <p class="news-digest-beta-story-copy" data-pretext-target>On the research front, new methodologies are emerging to optimize agentic search. A recent paper proposes that retrieval models be trained directly from multi-step agent trajectories to mine better supervision. Meanwhile, the Video-MME-v2 benchmark has been introduced to advance the evaluation of comprehensive video understanding through a progressive hierarchy and group-based evaluation.</p>
+    <div class="news-digest-beta-story-layout" data-news-brief-flow>
+      <div class="news-digest-beta-story-body" data-news-brief-body>
+        <p class="news-digest-beta-story-copy">The latest activity in the developer ecosystem is dominated by high-performance tooling, with vLLM maintaining strong momentum as a high-throughput and memory-efficient inference engine for LLMs. Simultaneously, OpenAI&#x27;s Codex is seeing significant interest as a lightweight coding agent designed to run directly within the terminal.</p>
+        <p class="news-digest-beta-story-copy">On the research front, new methodologies are emerging to optimize agentic search. A recent paper proposes that retrieval models be trained directly from multi-step agent trajectories to mine better supervision. Meanwhile, the Video-MME-v2 benchmark has been introduced to advance the evaluation of comprehensive video understanding through a progressive hierarchy and group-based evaluation.</p>
       </div>
-      <aside class="news-digest-beta-story-rail" aria-label="Referenced items">
+      <aside class="news-digest-beta-story-rail" aria-label="Referenced items" data-news-brief-rail>
       <a class="news-digest-card news-digest-card--repo news-digest-inline-card news-digest-inline-card--primary" href="https://github.com/vllm-project/vllm" target="_blank" rel="noreferrer">
         <div class="news-digest-card-copy">
           <div class="news-digest-card-topline">
@@ -227,13 +227,13 @@ content-classes: [news-digest-note, news-digest-beta-note]
       <p class="section-kicker">Section</p>
       <h2 data-pretext-target>High-Throughput Serving and Agentic Tooling</h2>
     </header>
-    <div class="news-digest-beta-story-layout">
-      <div class="news-digest-beta-story-body">
-        <p class="news-digest-beta-story-copy" data-pretext-target>The vllm-project/vllm repository continues to lead in inference efficiency, serving as a high-throughput and memory-efficient engine for LLMs. With 75,720 stars and a recent gain of 800 stars over the last seven days, it remains a critical piece of infrastructure for optimized serving.</p>
-        <p class="news-digest-beta-story-copy" data-pretext-target>Coding agents are seeing significant traction, particularly through anomalyco/opencode, an open-source project boasting 139,332 stars. Similarly, openai/codex is gaining attention as a lightweight coding agent designed to run directly in the terminal, also adding 800 stars this week.</p>
-        <p class="news-digest-beta-story-copy" data-pretext-target>Beyond coding, the agentic landscape is expanding with projects like NousResearch/hermes-agent. Positioned as an agent that grows with the user, it has reached 33,706 stars, reflecting a broader trend toward versatile, evolving AI agents.</p>
+    <div class="news-digest-beta-story-layout" data-news-brief-flow>
+      <div class="news-digest-beta-story-body" data-news-brief-body>
+        <p class="news-digest-beta-story-copy">The vllm-project/vllm repository continues to lead in inference efficiency, serving as a high-throughput and memory-efficient engine for LLMs. With 75,720 stars and a recent gain of 800 stars over the last seven days, it remains a critical piece of infrastructure for optimized serving.</p>
+        <p class="news-digest-beta-story-copy">Coding agents are seeing significant traction, particularly through anomalyco/opencode, an open-source project boasting 139,332 stars. Similarly, openai/codex is gaining attention as a lightweight coding agent designed to run directly in the terminal, also adding 800 stars this week.</p>
+        <p class="news-digest-beta-story-copy">Beyond coding, the agentic landscape is expanding with projects like NousResearch/hermes-agent. Positioned as an agent that grows with the user, it has reached 33,706 stars, reflecting a broader trend toward versatile, evolving AI agents.</p>
       </div>
-      <aside class="news-digest-beta-story-rail" aria-label="Referenced items">
+      <aside class="news-digest-beta-story-rail" aria-label="Referenced items" data-news-brief-rail>
       <a class="news-digest-card news-digest-card--repo news-digest-inline-card news-digest-inline-card--primary" href="https://github.com/openai/codex" target="_blank" rel="noreferrer">
         <div class="news-digest-card-copy">
           <div class="news-digest-card-topline">
@@ -274,12 +274,12 @@ content-classes: [news-digest-note, news-digest-beta-note]
       <p class="section-kicker">Section</p>
       <h2 data-pretext-target>Optimizing Agentic Retrieval and Reasoning Efficiency</h2>
     </header>
-    <div class="news-digest-beta-story-layout">
-      <div class="news-digest-beta-story-body">
-        <p class="news-digest-beta-story-copy" data-pretext-target>Recent research is addressing the gap between handcrafted skill sets and real-world agent performance. While one study demonstrates that LLM skill utilization degrades significantly in realistic settings where skills must be retrieved and refined, a new paradigm proposes improving these retrieval models by mining supervision directly from multi-step agent trajectories.</p>
-        <p class="news-digest-beta-story-copy" data-pretext-target>Parallel efforts are focusing on more precise measurement of model efficiency and capability. Researchers have introduced Prefill Token Equivalents (PTE), a hardware-aware metric designed to better correlate with actual inference in tool-integrated reasoning scenarios. Additionally, the release of Video-MME-v2 establishes a comprehensive benchmark for video understanding, utilizing a progressive hierarchy and group-based evaluation to assess robustness and faithfulness.</p>
+    <div class="news-digest-beta-story-layout" data-news-brief-flow>
+      <div class="news-digest-beta-story-body" data-news-brief-body>
+        <p class="news-digest-beta-story-copy">Recent research is addressing the gap between handcrafted skill sets and real-world agent performance. While one study demonstrates that LLM skill utilization degrades significantly in realistic settings where skills must be retrieved and refined, a new paradigm proposes improving these retrieval models by mining supervision directly from multi-step agent trajectories.</p>
+        <p class="news-digest-beta-story-copy">Parallel efforts are focusing on more precise measurement of model efficiency and capability. Researchers have introduced Prefill Token Equivalents (PTE), a hardware-aware metric designed to better correlate with actual inference in tool-integrated reasoning scenarios. Additionally, the release of Video-MME-v2 establishes a comprehensive benchmark for video understanding, utilizing a progressive hierarchy and group-based evaluation to assess robustness and faithfulness.</p>
       </div>
-      <aside class="news-digest-beta-story-rail" aria-label="Referenced items">
+      <aside class="news-digest-beta-story-rail" aria-label="Referenced items" data-news-brief-rail>
       <a class="news-digest-card news-digest-card--paper news-digest-inline-card news-digest-inline-card--primary" href="https://huggingface.co/papers/2604.05015" target="_blank" rel="noreferrer">
         <div class="news-digest-card-copy">
           <div class="news-digest-card-topline">
@@ -320,12 +320,12 @@ content-classes: [news-digest-note, news-digest-beta-note]
       <p class="section-kicker">Section</p>
       <h2 data-pretext-target>Developer Analysis of Agentic Coding Models</h2>
     </header>
-    <div class="news-digest-beta-story-layout">
-      <div class="news-digest-beta-story-body">
-        <p class="news-digest-beta-story-copy" data-pretext-target>Community discourse is currently centering on the technical architecture of coding agents. Backend developers are conducting source code analyses to compare the implementations of Claude Code and AutoBe, signaling a deeper interest in the underlying mechanics of these agentic tools.</p>
-        <p class="news-digest-beta-story-copy" data-pretext-target>Simultaneously, the accessibility of high-performance models is expanding. Google has released Gemma 4, a family of open models under an Apache 2.0 license designed for advanced reasoning and agentic workflows. In a similar move toward local deployment, GLM-5.1 has been optimized via Dynamic 2-bit quantization, shrinking the 744B model from 1.65TB to 220GB to enable execution on 256GB Mac or RAM/VRAM setups.</p>
+    <div class="news-digest-beta-story-layout" data-news-brief-flow>
+      <div class="news-digest-beta-story-body" data-news-brief-body>
+        <p class="news-digest-beta-story-copy">Community discourse is currently centering on the technical architecture of coding agents. Backend developers are conducting source code analyses to compare the implementations of Claude Code and AutoBe, signaling a deeper interest in the underlying mechanics of these agentic tools.</p>
+        <p class="news-digest-beta-story-copy">Simultaneously, the accessibility of high-performance models is expanding. Google has released Gemma 4, a family of open models under an Apache 2.0 license designed for advanced reasoning and agentic workflows. In a similar move toward local deployment, GLM-5.1 has been optimized via Dynamic 2-bit quantization, shrinking the 744B model from 1.65TB to 220GB to enable execution on 256GB Mac or RAM/VRAM setups.</p>
       </div>
-      <aside class="news-digest-beta-story-rail" aria-label="Referenced items">
+      <aside class="news-digest-beta-story-rail" aria-label="Referenced items" data-news-brief-rail>
       <a class="news-digest-card news-digest-card--social news-digest-inline-card news-digest-inline-card--primary" href="https://news.hada.io/topic?id=28315" target="_blank" rel="noreferrer">
         <div class="news-digest-card-copy">
           <div class="news-digest-card-topline">
