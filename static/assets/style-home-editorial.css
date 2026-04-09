@@ -1,6 +1,6 @@
 .site-main-stack--home {
   width: min(100%, 1360px);
-  gap: 24px;
+  gap: 28px;
 }
 
 .graph-main-panel,
@@ -8,22 +8,23 @@
 .issue-card,
 .compact-stat-card,
 .home-articles-panel {
-  border-radius: 22px;
+  border-radius: 14px;
 }
 
 .graph-main-panel {
   display: grid;
-  gap: 18px;
+  gap: 22px;
 }
 
 .graph-main-title {
-  max-width: 12ch;
+  max-width: 10ch;
+  font-size: clamp(3.2rem, 4vw, 5.2rem);
 }
 
 .graph-main-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 292px;
-  gap: 18px;
+  grid-template-columns: minmax(0, 1fr) 304px;
+  gap: 20px;
   align-items: stretch;
 }
 
@@ -36,14 +37,14 @@
 .selected-note-card,
 .issue-card,
 .compact-stat-card {
-  padding: 18px;
-  border: 1.8px solid var(--line);
-  background: var(--surface);
-  box-shadow: 2px 2px 0 0 var(--line);
+  padding: 20px;
+  border: 1px solid color-mix(in srgb, var(--line) 52%, transparent);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  box-shadow: none;
 }
 
 .issue-card {
-  background: var(--surface-muted);
+  background: color-mix(in srgb, var(--surface-soft) 78%, var(--surface));
 }
 
 .selected-note-card {
@@ -57,8 +58,9 @@
 .issue-card h3 {
   margin: 0;
   font-family: var(--display);
-  font-size: 1.9rem;
-  line-height: 1;
+  font-size: 1.65rem;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
 }
 
 .selected-note-card h3 {
@@ -107,10 +109,11 @@
 
 .note-web-stage {
   position: relative;
-  min-height: 680px;
-  border-radius: 20px;
-  border: 1.8px solid var(--line);
-  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-soft) 100%);
+  min-height: 700px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--line) 46%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface) 92%, white 8%) 0%, color-mix(in srgb, var(--surface-soft) 78%, var(--surface)) 100%);
   overflow: hidden;
 }
 
@@ -119,10 +122,11 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(90deg, color-mix(in srgb, var(--line) 7%, transparent) 1px, transparent 1px),
-    linear-gradient(180deg, color-mix(in srgb, var(--line) 7%, transparent) 1px, transparent 1px);
-  background-size: 28px 28px;
+    linear-gradient(90deg, color-mix(in srgb, var(--line) 9%, transparent) 1px, transparent 1px),
+    linear-gradient(180deg, color-mix(in srgb, var(--line) 9%, transparent) 1px, transparent 1px);
+  background-size: 42px 42px;
   pointer-events: none;
+  opacity: 0.55;
 }
 
 .note-web-stage::after {
@@ -131,22 +135,10 @@
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--accent) 10%, transparent) 0%, transparent 28%),
-    repeating-linear-gradient(
-      90deg,
-      transparent 0,
-      transparent 7px,
-      color-mix(in srgb, var(--line) 5%, transparent) 7px,
-      color-mix(in srgb, var(--line) 5%, transparent) 8px
-    ),
-    repeating-linear-gradient(
-      0deg,
-      transparent 0,
-      transparent 7px,
-      color-mix(in srgb, var(--line) 5%, transparent) 7px,
-      color-mix(in srgb, var(--line) 5%, transparent) 8px
-    );
-  opacity: 0.6;
+    radial-gradient(circle at 18% 14%, color-mix(in srgb, var(--accent) 8%, transparent) 0, transparent 18%),
+    radial-gradient(circle at 82% 20%, color-mix(in srgb, var(--accent-warm) 7%, transparent) 0, transparent 18%),
+    linear-gradient(180deg, rgba(255,255,255,0.25) 0%, transparent 26%);
+  opacity: 0.8;
 }
 
 .note-web-svg {
@@ -167,11 +159,10 @@
 .note-web-text-line {
   position: absolute;
   white-space: pre;
-  color: color-mix(in srgb, var(--text) 24%, var(--surface) 76%);
-  font-family: var(--mono);
+  color: color-mix(in srgb, var(--text) 14%, var(--surface) 86%);
+  font-family: var(--display);
   line-height: 1;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
   user-select: none;
 }
 
@@ -180,15 +171,21 @@
 }
 
 .note-web-link {
-  stroke: rgba(23, 23, 23, 0.12);
-  stroke-width: 1.5;
+  stroke: color-mix(in srgb, var(--text) 18%, transparent);
+  stroke-width: 1.15;
   fill: none;
-  transition: stroke 160ms ease, opacity 160ms ease;
+  stroke-linecap: round;
+  transition: stroke 160ms ease, opacity 160ms ease, stroke-width 160ms ease;
 }
 
 .note-web-link.is-active {
-  stroke: var(--accent-strong);
+  stroke: color-mix(in srgb, var(--accent) 74%, var(--text));
+  stroke-width: 1.5;
   opacity: 1;
+}
+
+.note-web-link.is-dim {
+  opacity: 0.08;
 }
 
 :root[data-theme="dark"] .note-web-link {
@@ -200,23 +197,28 @@
   position: absolute;
   display: grid;
   align-content: start;
-  gap: 0;
-  padding: 14px 15px;
-  border-radius: 18px;
-  border: 1.8px solid var(--line);
-  background: var(--surface);
-  box-shadow: 2px 2px 0 0 var(--line);
+  gap: 6px;
+  padding: 12px 14px 13px;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--line) 56%, transparent);
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  box-shadow: 0 10px 22px rgba(28, 21, 13, 0.05);
   cursor: pointer;
   text-decoration: none;
   color: var(--text);
-  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease, opacity 260ms ease;
+  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease, opacity 260ms ease;
   z-index: 2;
 }
 
 .note-web-card:hover,
 .note-web-card.is-active {
-  transform: translateY(-2px);
-  background: #fff6d9;
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent) 38%, var(--line));
+  background: color-mix(in srgb, var(--surface-soft) 72%, var(--surface));
+}
+
+.note-web-card.is-dim {
+  opacity: 0.2;
 }
 
 :root[data-theme="dark"] .note-web-card:hover,
@@ -226,12 +228,51 @@
 
 .note-web-card-label { display: block; }
 
+.note-web-card-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: color-mix(in srgb, var(--muted) 86%, var(--text));
+  font-family: var(--mono);
+  font-size: 0.67rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .note-web-card-line {
   display: block;
   font-family: var(--display);
-  font-size: var(--note-web-card-font-size, 1.35rem);
-  line-height: 1.06;
-  letter-spacing: -0.04em;
+  font-size: var(--note-web-card-font-size, 1.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+}
+
+.note-web-card-excerpt {
+  display: -webkit-box;
+  overflow: hidden;
+  color: color-mix(in srgb, var(--muted) 84%, var(--text));
+  font-family: var(--display);
+  font-size: 0.88rem;
+  line-height: 1.42;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.note-web-card--hub {
+  background: color-mix(in srgb, var(--surface-soft) 80%, var(--surface));
+}
+
+.note-web-card--hub .note-web-card-line {
+  font-size: var(--note-web-card-font-size, 1.45rem);
+}
+
+.note-web-card--leaf .note-web-card-excerpt {
+  display: none;
+}
+
+.note-web-card--leaf {
+  background: color-mix(in srgb, var(--surface) 84%, transparent);
 }
 
 .home-articles-panel {
@@ -253,20 +294,19 @@
   grid-template-columns: 140px minmax(0, 1fr);
   gap: 16px;
   align-items: stretch;
-  padding: 14px;
-  border: 1.8px solid var(--line);
-  border-radius: 18px;
-  background: var(--surface);
-  box-shadow: 2px 2px 0 0 var(--line);
+  padding: 16px 0;
+  border-top: 1px solid color-mix(in srgb, var(--line) 36%, transparent);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .article-list-thumb {
-  display: grid;
-  place-items: end start;
-  padding: 12px;
-  border-radius: 16px;
-  border: 1.5px solid var(--line);
-  background: linear-gradient(135deg, #ffd053 0%, #f8efe4 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 0 0 0 14px;
+  border-left: 2px solid color-mix(in srgb, var(--accent-warm) 48%, var(--line));
+  background: transparent;
 }
 
 .article-list-thumb-label,
@@ -294,9 +334,10 @@
 }
 
 .article-list-body h3 {
-  font-family: var(--sans);
-  font-size: 1.3rem;
-  line-height: 1.15;
+  font-family: var(--display);
+  font-size: 1.55rem;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
 }
 
 .article-list-body h3 a {

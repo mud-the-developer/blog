@@ -365,6 +365,7 @@ struct Post {
     description: String,
     excerpt: String,
     tags: Vec<String>,
+    aliases: Vec<String>,
     date: Option<DateTime<Utc>>,
     updated: Option<DateTime<Utc>>,
     markdown_html: String,
@@ -621,6 +622,16 @@ struct TagEntry {
     slug: String,
 }
 
+#[derive(Debug, Clone, Serialize)]
+struct ArchiveFieldEntry {
+    title: String,
+    url: String,
+    folder: String,
+    tags: Vec<String>,
+    aliases: Vec<String>,
+    excerpt: String,
+}
+
 #[derive(Debug, Clone)]
 struct PageTab {
     note_icon: Option<String>,
@@ -662,6 +673,7 @@ struct IndexTemplate {
     total_folders: usize,
     featured_posts: Vec<PostCard>,
     news_spotlight: Option<HomeNewsSpotlight>,
+    archive_field_json: String,
 }
 
 #[derive(Template)]
@@ -977,6 +989,7 @@ fn render_posts(
                 description,
                 excerpt,
                 tags: seed.tags.clone(),
+                aliases: seed.aliases.clone(),
                 date: seed.date,
                 updated: seed.updated,
                 markdown_html,
@@ -1052,6 +1065,15 @@ fn render_index(
         .filter(|folder| !folder.is_empty())
         .collect::<HashSet<_>>()
         .len();
+    let archive_field_json = serde_json::to_string(
+        &visible_posts
+            .iter()
+            .copied()
+            .take(28)
+            .map(post_to_archive_field_entry)
+            .collect::<Vec<_>>(),
+    )
+    .with_context(|| "failed to serialize homepage archive field data")?;
 
     let template = IndexTemplate {
         layout,
@@ -1060,6 +1082,7 @@ fn render_index(
         total_folders,
         featured_posts,
         news_spotlight,
+        archive_field_json,
     };
 
     write_file(config.output_dir.join("index.html"), template.render()?)
@@ -4202,6 +4225,17 @@ fn post_to_card(post: &Post) -> PostCard {
                 name: tag.clone(),
             })
             .collect(),
+    }
+}
+
+fn post_to_archive_field_entry(post: &Post) -> ArchiveFieldEntry {
+    ArchiveFieldEntry {
+        title: post.title.clone(),
+        url: format!("/notes/{}/", post.slug),
+        folder: display_section_name_from_slug(&post.slug),
+        tags: post.tags.clone(),
+        aliases: post.aliases.clone(),
+        excerpt: post.excerpt.clone(),
     }
 }
 

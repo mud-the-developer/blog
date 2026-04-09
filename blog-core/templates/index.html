@@ -6,13 +6,14 @@
 
 {% block content %}
   <div class="site-main-stack site-main-stack--home">
+    <script id="archive-field-data" type="application/json">{{ archive_field_json|safe }}</script>
     <section class="panel graph-main-panel">
       <div class="section-head-inline section-head-inline--wide">
         <div>
-          <p class="section-kicker">Connected notes</p>
-          <h1 class="graph-main-title">Archive graph</h1>
+          <p class="section-kicker">Cover story</p>
+          <h1 class="graph-main-title">Archive atlas</h1>
         </div>
-        <p class="section-copy">Model families, radio systems, and notes sit in one readable field.</p>
+        <p class="section-copy">A living index of essays, briefs, and notebook fragments. Move across the archive to reveal the nearby cluster, then enter a note from its local thread.</p>
       </div>
 
       <div class="graph-main-layout">
@@ -20,15 +21,15 @@
 
         <aside class="graph-main-side">
           <article class="selected-note-card" aria-live="polite">
-            <p class="section-kicker">Selection</p>
-            <h3 id="note-web-detail-title">Archive structure</h3>
-            <p id="note-web-detail-copy">Pick any note to read its local cluster without losing the full graph.</p>
+            <p class="section-kicker">Current thread</p>
+            <h3 id="note-web-detail-title">A quiet atlas of notes</h3>
+            <p id="note-web-detail-copy">Select a slip from the map to read its surrounding cluster without losing the broader archive.</p>
             <a id="note-web-detail-link" class="button button--compact" href="/" hidden>Open note</a>
           </article>
 
           {% if let Some(news) = news_spotlight %}
           <article class="issue-card">
-            <p class="section-kicker">Current issue</p>
+            <p class="section-kicker">Current edition</p>
             <h3>{{ news.issue_label }}</h3>
             <p>{{ news.summary }}</p>
             <a class="button button--primary button--compact" href="{{ news.url }}">Read brief</a>
@@ -60,9 +61,10 @@
     <section class="panel home-articles-panel">
       <div class="section-head-inline">
         <div>
-          <p class="section-kicker">Latest writing</p>
-          <h2>Notes from the archive</h2>
+          <p class="section-kicker">Recent essays</p>
+          <h2>From the notebook</h2>
         </div>
+        <p class="section-copy">Long-form notes, build memos, and working references from the same archive.</p>
       </div>
       <div class="article-list">
         {% for post in featured_posts %}

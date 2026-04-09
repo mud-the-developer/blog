@@ -1,29 +1,31 @@
 .site-main-stack--graph {
   width: min(100%, 1320px);
+  gap: 28px;
 }
 
 .graph-hero {
   display: grid;
-  gap: 16px;
+  gap: 18px;
 }
 
 .graph-hero h1 {
-  font-size: clamp(2.8rem, 4.4vw, 4.8rem);
+  max-width: 10ch;
+  font-size: clamp(3rem, 4.8vw, 5.4rem);
 }
 
 .graph-panel--editorial {
   display: grid;
-  gap: 18px;
+  gap: 20px;
 }
 
 .graph-panel--editorial .graph-stage {
-  min-height: 640px;
+  min-height: 680px;
 }
 
 .graph-stat-strip {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+  gap: 16px;
   margin: 0;
 }
 
@@ -35,8 +37,9 @@
 .graph-stat-strip dd {
   margin-top: 8px;
   font-family: var(--display);
-  font-size: clamp(1.9rem, 1.2rem + 1vw, 2.8rem);
-  line-height: 1;
+  font-size: clamp(2rem, 1.3rem + 1vw, 3rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
 }
 
 @media (max-width: 760px) {

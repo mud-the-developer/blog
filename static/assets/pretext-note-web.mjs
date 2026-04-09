@@ -11,9 +11,9 @@ const CARD_LINE_HEIGHT = 24;
 const CARD_TARGET_LINES = 4;
 const ITERATIONS = 180;
 const COMPACT_BREAKPOINT = 720;
-const DEFAULT_DETAIL_TITLE = 'Archive structure';
+const DEFAULT_DETAIL_TITLE = 'Archive atlas';
 const DEFAULT_DETAIL_COPY =
-  'Pick any note to read its local cluster without losing the full graph.';
+  'Move through the slips to reveal one local thread at a time, then open the note from its nearby cluster.';
 const FIELD_TOP = 22;
 const FIELD_SIDE = 20;
 const FIELD_GUTTER = 8;
@@ -21,10 +21,10 @@ const FIELD_VERTICAL_GUTTER = 2;
 const FIELD_MIN_SPAN = 52;
 const FIELD_FONT_SIZE = 14;
 const FIELD_LINE_HEIGHT = 20;
-const FIELD_FONT = '500 14px "JetBrains Mono", "SFMono-Regular", Consolas, monospace';
+const FIELD_FONT = '500 14px "Iowan Old Style", "Palatino Linotype", Georgia, serif';
 const MOBILE_FIELD_FONT_SIZE = 12;
 const MOBILE_FIELD_LINE_HEIGHT = 17;
-const MOBILE_FIELD_FONT = '500 12px "JetBrains Mono", "SFMono-Regular", Consolas, monospace';
+const MOBILE_FIELD_FONT = '500 12px "Iowan Old Style", "Palatino Linotype", Georgia, serif';
 const DRAG_THRESHOLD = 4;
 const PHYSICS_DAMPING = 0.84;
 const PHYSICS_REPULSION = 8200;
@@ -35,79 +35,52 @@ const PHYSICS_CENTERING = 0.0011;
 const PHYSICS_SETTLE_EPSILON = 0.11;
 const SIZE_RETRY_FRAMES = 24;
 const START_CURSOR = Object.freeze({ segmentIndex: 0, graphemeIndex: 0 });
-const FIELD_TERMS = [
-  'GPT-5.4',
-  'GPT-4.1',
-  'GPT-4o',
-  'Claude Opus 4.1',
-  'Claude Sonnet 4.5',
-  'Gemini 2.5 Pro',
-  'Gemini 2.5 Flash',
-  'Llama 4 Maverick',
-  'Llama 3.3 70B',
-  'DeepSeek R1',
-  'Qwen 3',
-  'Mistral Large',
-  'Mixtral',
-  'Command R',
-  'Phi-4',
-  'srsRAN',
-  'OpenAirInterface',
-  'O-RAN SC',
-  'FlexRIC',
-  'Near-RT RIC',
-  'Non-RT RIC',
-  'xApp',
-  'rApp',
-  'E2AP',
-  'E2SM-KPM',
-  'E2SM-RC',
-  'A1',
-  'O1',
-  'F1',
-  'CU',
-  'DU',
-  'RU',
-  'vRAN',
-  'Open RAN',
-  'semantic communications',
-  'beamforming',
-  'scheduler',
-  'MAC',
-  'PHY',
-  'inference',
-  'reasoning',
-  'retrieval',
-  'distillation',
-];
+const DEFAULT_FIELD_TERMS = ['archive', 'notes', 'graph', 'brief', 'references'];
+
+function readArchiveFieldEntries() {
+  const element = document.getElementById('archive-field-data');
+  if (!(element instanceof HTMLScriptElement)) return [];
+  try {
+    const parsed = JSON.parse(element.textContent || '[]');
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function collapseWhitespace(value) {
+  return String(value || '').replace(/\s+/g, ' ').trim();
+}
 
 function boot() {
   const stage = document.querySelector(STAGE_SELECTOR);
   if (!(stage instanceof HTMLElement)) return;
 
   const graphUrl = stage.dataset.graphUrl || '/graph.json';
-  scheduleRender(stage, graphUrl);
+  const archiveField = readArchiveFieldEntries();
+  scheduleRender(stage, graphUrl, archiveField);
 }
 
-function scheduleRender(stage, graphUrl, attempts = 0) {
+function scheduleRender(stage, graphUrl, archiveField, attempts = 0) {
   const width = Math.floor(stage.clientWidth || stage.getBoundingClientRect().width);
   const height = Math.floor(stage.clientHeight || stage.getBoundingClientRect().height);
 
   if ((width <= 0 || height <= 0) && attempts < SIZE_RETRY_FRAMES) {
-    window.requestAnimationFrame(() => scheduleRender(stage, graphUrl, attempts + 1));
+    window.requestAnimationFrame(() => scheduleRender(stage, graphUrl, archiveField, attempts + 1));
     return;
   }
 
-  render(stage, graphUrl).catch(() => {
+  render(stage, graphUrl, archiveField).catch(error => {
+    console.error('note-web render failed', error);
     stage.textContent = '';
   });
 }
 
-async function render(stage, graphUrl) {
+async function render(stage, graphUrl, archiveField) {
   const response = await fetch(graphUrl, { credentials: 'same-origin' });
   if (!response.ok) throw new Error('failed to load graph');
   const graph = await response.json();
-  const data = buildSubset(graph);
+  const data = buildSubset(graph, archiveField);
   if (data.nodes.length === 0) return;
 
   const width = Math.floor(stage.clientWidth || stage.getBoundingClientRect().width);
@@ -169,8 +142,8 @@ async function render(stage, graphUrl) {
     centerX: width * 0.52,
     centerY: sceneHeight * 0.5,
     textLayer,
-    textPreparedDesktop: prepareWithSegments(buildFieldText(false), FIELD_FONT),
-    textPreparedMobile: prepareWithSegments(buildFieldText(true), MOBILE_FIELD_FONT),
+    textPreparedDesktop: prepareWithSegments(buildFieldText(archiveField, false), FIELD_FONT),
+    textPreparedMobile: prepareWithSegments(buildFieldText(archiveField, true), MOBILE_FIELD_FONT),
     nodes: sizedNodes.map(node => ({ ...node, position: positions.get(node.id) })),
     links: filteredLinks,
     neighborMap,
@@ -183,12 +156,12 @@ async function render(stage, graphUrl) {
   };
 
   for (const link of filteredLinks) {
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line.setAttribute('class', 'note-web-link');
-    line.dataset.source = link.source;
-    line.dataset.target = link.target;
-    svg.appendChild(line);
-    lines.push(line);
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('class', 'note-web-link');
+    path.dataset.source = link.source;
+    path.dataset.target = link.target;
+    svg.appendChild(path);
+    lines.push(path);
   }
 
   const detailTitle = document.getElementById('note-web-detail-title');
@@ -210,23 +183,29 @@ async function render(stage, graphUrl) {
     if (!active) return;
     state.activeId = nodeId;
     const neighbors = neighborMap.get(nodeId) || new Set();
+    const hasActive = Boolean(nodeId);
 
     for (const [id, entry] of nodeById.entries()) {
-      entry.el.classList.toggle('is-active', id === nodeId || neighbors.has(id));
+      const visible = id === nodeId || neighbors.has(id);
+      entry.el.classList.toggle('is-active', visible);
+      entry.el.classList.toggle('is-dim', hasActive && !visible);
     }
 
     for (const line of lines) {
       const source = line.dataset.source;
       const target = line.dataset.target;
-      line.classList.toggle('is-active', source === nodeId || target === nodeId);
+      const visible = source === nodeId || target === nodeId;
+      line.classList.toggle('is-active', visible);
+      line.classList.toggle('is-dim', hasActive && !visible);
     }
 
     applyDetailState({
       title: active.title,
       copy:
-        neighbors.size > 0
+        active.excerpt ||
+        (neighbors.size > 0
           ? 'Open this note to read the full entry inside its local cluster.'
-          : 'Open this note to read the full entry in the archive.',
+          : 'Open this note to read the full entry in the archive.'),
       href: active.url,
       hidden: false,
     });
@@ -237,9 +216,11 @@ async function render(stage, graphUrl) {
     state.activeId = '';
     for (const [, entry] of nodeById.entries()) {
       entry.el.classList.remove('is-active');
+      entry.el.classList.remove('is-dim');
     }
     for (const line of lines) {
       line.classList.remove('is-active');
+      line.classList.remove('is-dim');
     }
     applyDetailState({
       title: DEFAULT_DETAIL_TITLE,
@@ -251,10 +232,19 @@ async function render(stage, graphUrl) {
 
   for (const node of state.nodes) {
     const card = document.createElement('button');
-    card.className = 'note-web-card';
+    card.className = `note-web-card note-web-card--${node.tier}`;
     card.type = 'button';
     card.style.width = `${node.w}px`;
     card.style.height = `${node.h}px`;
+
+    const kicker = document.createElement('span');
+    kicker.className = 'note-web-card-kicker';
+    const folder = document.createElement('span');
+    folder.textContent = node.folder || 'notes';
+    const taxon = document.createElement('span');
+    taxon.textContent = node.tags?.[0] || node.aliases?.[0] || node.tier;
+    kicker.append(folder, taxon);
+    card.appendChild(kicker);
 
     const labelWrap = document.createElement('span');
     labelWrap.className = 'note-web-card-label';
@@ -266,6 +256,13 @@ async function render(stage, graphUrl) {
       labelWrap.appendChild(line);
     }
     card.appendChild(labelWrap);
+
+    if (node.excerpt && node.tier !== 'leaf') {
+      const excerpt = document.createElement('span');
+      excerpt.className = 'note-web-card-excerpt';
+      excerpt.textContent = node.excerpt;
+      card.appendChild(excerpt);
+    }
 
     card.addEventListener('pointerenter', () => setActive(node.id));
     card.addEventListener('focus', () => setActive(node.id));
@@ -437,14 +434,40 @@ function buildSpans(nodes, y, lineHeight, width, compact) {
   return spans;
 }
 
-function buildFieldText(compact) {
+function buildFieldText(entries, compact) {
   const separator = compact ? ' · ' : '  ·  ';
-  const targetLength = compact ? 1400 : 3200;
+  const targetLength = compact ? 1800 : 4200;
+  const terms = collectFieldTerms(entries, compact);
   let text = '';
   while (text.length < targetLength) {
-    text += `${FIELD_TERMS.join(separator)}${separator}`;
+    text += `${terms.join(separator)}${separator}`;
   }
   return text;
+}
+
+function collectFieldTerms(entries, compact) {
+  const terms = [];
+  const pushTerm = value => {
+    const cleaned = collapseWhitespace(String(value || ''))
+      .replace(/[^\p{L}\p{N}\s\-–—/:&]/gu, '')
+      .trim();
+    if (!cleaned || cleaned.length < 3) return;
+    if (terms.some(term => term.toLowerCase() === cleaned.toLowerCase())) return;
+    terms.push(cleaned);
+  };
+
+  for (const entry of entries) {
+    pushTerm(entry.title);
+    pushTerm(entry.folder);
+    for (const tag of entry.tags || []) pushTerm(tag);
+    for (const alias of entry.aliases || []) pushTerm(alias);
+    const excerptWords = collapseWhitespace(entry.excerpt || '').split(/\s+/).slice(0, compact ? 10 : 16);
+    if (excerptWords.length > 2) {
+      pushTerm(excerptWords.join(' '));
+    }
+  }
+
+  return terms.length > 0 ? terms : DEFAULT_FIELD_TERMS;
 }
 
 function getDesktopStageHeight(stage, fallbackHeight) {
@@ -461,17 +484,26 @@ function renderLines(state) {
     const source = state.nodes.find(node => node.id === linkEl.dataset.source);
     const target = state.nodes.find(node => node.id === linkEl.dataset.target);
     if (!source || !target) continue;
-    linkEl.setAttribute('x1', `${source.position.x + source.w / 2}`);
-    linkEl.setAttribute('y1', `${source.position.y + source.h / 2}`);
-    linkEl.setAttribute('x2', `${target.position.x + target.w / 2}`);
-    linkEl.setAttribute('y2', `${target.position.y + target.h / 2}`);
+    const x1 = source.position.x + source.w / 2;
+    const y1 = source.position.y + source.h / 2;
+    const x2 = target.position.x + target.w / 2;
+    const y2 = target.position.y + target.h / 2;
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const curve = Math.max(12, Math.min(48, Math.hypot(dx, dy) * 0.12));
+    const cx = x1 + dx * 0.5 + (Math.abs(dy) < Math.abs(dx) ? 0 : (dx >= 0 ? curve : -curve));
+    const cy = y1 + dy * 0.5 - (dx >= 0 ? curve : -curve);
+    linkEl.setAttribute('d', `M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`);
   }
 }
 
-function buildSubset(graph) {
+function buildSubset(graph, archiveField) {
   const nodes = Array.isArray(graph.nodes) ? graph.nodes : [];
   const links = Array.isArray(graph.links) ? graph.links : [];
   const degree = new Map();
+  const metaByUrl = new Map(
+    archiveField.map(entry => [String(entry.url || '').replace(/\/+$/, '') + '/', entry]),
+  );
 
   for (const node of nodes) degree.set(node.id, 0);
   for (const link of links) {
@@ -489,7 +521,8 @@ function buildSubset(graph) {
     const id = queue.shift();
     if (!id || visited.has(id) || !nodeById.has(id)) continue;
     visited.add(id);
-    selected.push(nodeById.get(id));
+    const rawNode = nodeById.get(id);
+    selected.push(enrichNode(rawNode, metaByUrl, degree.get(id) || 0));
     const neighbors = Array.from(adjacency.get(id) || []).sort(
       (a, b) => (degree.get(b) || 0) - (degree.get(a) || 0),
     );
@@ -500,7 +533,11 @@ function buildSubset(graph) {
     const remaining = nodes
       .filter(node => !visited.has(node.id))
       .sort((a, b) => (degree.get(b.id) || 0) - (degree.get(a.id) || 0));
-    selected.push(...remaining.slice(0, MAX_NODES - selected.length));
+    selected.push(
+      ...remaining
+        .slice(0, MAX_NODES - selected.length)
+        .map(node => enrichNode(node, metaByUrl, degree.get(node.id) || 0)),
+    );
   }
 
   const ids = new Set(selected.map(node => node.id));
@@ -511,6 +548,31 @@ function buildSubset(graph) {
     nodes: sortedNodes,
     links: filteredLinks,
   };
+}
+
+function enrichNode(node, metaByUrl, degree) {
+  const meta = metaByUrl.get(String(node.url || '').replace(/\/+$/, '') + '/') || {};
+  return {
+    ...node,
+    folder: meta.folder || inferFolder(node.id),
+    tags: Array.isArray(meta.tags) ? meta.tags : [],
+    aliases: Array.isArray(meta.aliases) ? meta.aliases : [],
+    excerpt: meta.excerpt || '',
+    degree,
+    tier: nodeTier(node.id, degree),
+  };
+}
+
+function inferFolder(id) {
+  if (id === 'home') return 'home';
+  const [folder] = String(id || '').split('/');
+  return folder || 'notes';
+}
+
+function nodeTier(id, degree) {
+  if (id === 'home' || degree >= 4) return 'hub';
+  if (degree >= 2) return 'branch';
+  return 'leaf';
 }
 
 function buildNeighborMap(links) {
@@ -525,13 +587,17 @@ function buildNeighborMap(links) {
 }
 
 function sizeNode(node, sizing) {
-  const font = `700 ${sizing.fontSize}px "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif`;
+  const tierScale =
+    node.tier === 'hub' ? { min: 232, max: 318, font: sizing.fontSize + 2, lines: sizing.preferredLines + 1 } :
+    node.tier === 'branch' ? { min: 184, max: 272, font: sizing.fontSize, lines: sizing.preferredLines } :
+    { min: sizing.minWidth, max: 232, font: sizing.fontSize - 1, lines: Math.max(3, sizing.preferredLines - 1) };
+  const font = `700 ${tierScale.font}px "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif`;
   const prepared = prepareWithSegments(node.title, font);
   let chosen = null;
 
-  for (let width = sizing.minWidth; width <= sizing.maxWidth; width += 8) {
+  for (let width = tierScale.min; width <= tierScale.max; width += 8) {
     const layout = layoutWithLines(prepared, width - CARD_PADDING_X * 2, sizing.lineHeight);
-    if (layout.lineCount <= sizing.preferredLines) {
+    if (layout.lineCount <= tierScale.lines) {
       chosen = { width, layout };
       break;
     }
@@ -539,8 +605,8 @@ function sizeNode(node, sizing) {
 
   if (!chosen) {
     chosen = {
-      width: sizing.maxWidth,
-      layout: layoutWithLines(prepared, sizing.maxWidth - CARD_PADDING_X * 2, sizing.lineHeight),
+      width: tierScale.max,
+      layout: layoutWithLines(prepared, tierScale.max - CARD_PADDING_X * 2, sizing.lineHeight),
     };
   }
 
@@ -548,30 +614,49 @@ function sizeNode(node, sizing) {
     id: node.id,
     title: node.title,
     url: node.url,
-    fontSize: sizing.fontSize,
+    folder: node.folder,
+    tags: node.tags,
+    aliases: node.aliases,
+    excerpt: node.excerpt,
+    degree: node.degree,
+    tier: node.tier,
+    fontSize: tierScale.font,
     w: chosen.width,
-    h: CARD_PADDING_Y * 2 + chosen.layout.lineCount * sizing.lineHeight + 6,
+    h:
+      CARD_PADDING_Y * 2 +
+      chosen.layout.lineCount * sizing.lineHeight +
+      (node.tier === 'leaf' ? 20 : 52),
     lines: chosen.layout.lines.map(line => line.text),
   };
 }
 
 function solveLayout(nodes, links, width, height) {
   const positions = new Map();
-  const centerX = width * 0.52;
-  const centerY = height * 0.5;
-  const radius = Math.min(width, height) * 0.24;
+  const hubNodes = nodes.filter(node => node.tier === 'hub');
+  const branchNodes = nodes.filter(node => node.tier === 'branch');
+  const leafNodes = nodes.filter(node => node.tier === 'leaf');
 
-  nodes.forEach((node, index) => {
-    const angle = (Math.PI * 2 * index) / nodes.length - Math.PI / 2;
-    positions.set(node.id, {
-      x: centerX + Math.cos(angle) * radius - node.w / 2,
-      y: centerY + Math.sin(angle) * radius - node.h / 2,
-      w: node.w,
-      h: node.h,
-      vx: 0,
-      vy: 0,
+  const placeBand = (group, xCenter, top, bottom) => {
+    const span = bottom - top;
+    group.forEach((node, index) => {
+      const ratio = group.length === 1 ? 0.5 : index / (group.length - 1);
+      const yCenter = top + span * ratio;
+      positions.set(node.id, {
+        x: xCenter - node.w / 2,
+        y: yCenter - node.h / 2,
+        anchorX: xCenter - node.w / 2,
+        anchorY: yCenter - node.h / 2,
+        w: node.w,
+        h: node.h,
+        vx: 0,
+        vy: 0,
+      });
     });
-  });
+  };
+
+  placeBand(hubNodes, width * 0.26, 110, height - 130);
+  placeBand(branchNodes, width * 0.53, 72, height - 96);
+  placeBand(leafNodes, width * 0.76, 54, height - 78);
 
   const linkPairs = links.map(link => [link.source, link.target]);
 
@@ -621,10 +706,8 @@ function solveLayout(nodes, links, width, height) {
 
     for (const node of nodes) {
       const position = positions.get(node.id);
-      const cx = position.x + position.w / 2;
-      const cy = position.y + position.h / 2;
-      position.vx += (centerX - cx) * 0.001;
-      position.vy += (centerY - cy) * 0.001;
+      position.vx += (position.anchorX - position.x) * 0.008;
+      position.vy += (position.anchorY - position.y) * 0.008;
       position.x += position.vx;
       position.y += position.vy;
       position.x = clamp(position.x, 22, width - position.w - 22);
@@ -733,10 +816,10 @@ function stepPhysics(state) {
   for (const node of state.nodes) {
     if (node.id === draggingId) continue;
     const position = node.position;
-    const cx = position.x + node.w / 2;
-    const cy = position.y + node.h / 2;
-    position.vx += (state.centerX - cx) * PHYSICS_CENTERING;
-    position.vy += (state.centerY - cy) * PHYSICS_CENTERING;
+    const anchorX = position.anchorX ?? position.x;
+    const anchorY = position.anchorY ?? position.y;
+    position.vx += (anchorX - position.x) * (PHYSICS_CENTERING * 6);
+    position.vy += (anchorY - position.y) * (PHYSICS_CENTERING * 6);
     position.x += position.vx;
     position.y += position.vy;
     position.x = clamp(position.x, 18, state.width - node.w - 18);

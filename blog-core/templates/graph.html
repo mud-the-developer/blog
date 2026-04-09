@@ -8,16 +8,16 @@
 {% block content %}
   <div class="site-main-stack site-main-stack--graph">
     <section class="panel graph-hero">
-      <p class="section-kicker">Knowledge map</p>
-      <h1 data-pretext-target>Graph view</h1>
-      <p class="graph-hero-copy" data-pretext-target>Trace relationships across notes, jump between clusters, and use the live preview as an alternate index into the blog.</p>
+      <p class="section-kicker">Atlas</p>
+      <h1 data-pretext-target>Archive atlas</h1>
+      <p class="graph-hero-copy" data-pretext-target>Follow the notebook as an index of threads, not a dashboard of nodes. Hover to read the immediate neighborhood, then open the note from its local cluster.</p>
       <dl class="graph-stat-strip" aria-label="Graph statistics">
         <div>
-          <dt data-pretext-target>Nodes</dt>
+          <dt data-pretext-target>Published notes</dt>
           <dd data-pretext-target>{{ total_nodes }}</dd>
         </div>
         <div>
-          <dt data-pretext-target>Links</dt>
+          <dt data-pretext-target>Cross references</dt>
           <dd data-pretext-target>{{ total_links }}</dd>
         </div>
       </dl>
@@ -31,7 +31,7 @@
             <g id="global-graph-node-layer"></g>
           </svg>
         </div>
-        <p id="global-graph-status" class="graph-status" role="status" aria-live="polite">Loading graph map…</p>
+        <p id="global-graph-status" class="graph-status" role="status" aria-live="polite">Loading archive atlas…</p>
         <div class="graph-zoom-control">
           <button
             id="global-graph-reset"
@@ -76,7 +76,7 @@
         </div>
       </div>
       <p id="global-graph-detail" class="graph-detail" role="status" aria-live="polite">
-        Hover nodes to inspect relationships.
+        Hover a note to inspect its immediate context.
       </p>
     </section>
   </div>

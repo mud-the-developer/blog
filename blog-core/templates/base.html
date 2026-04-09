@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="robots" content="index,follow" />
-  <meta name="theme-color" content="#ffbf17" />
+  <meta name="theme-color" content="#F5F1E8" />
   <title>{{ layout.page_title }}</title>
   <meta name="description" content="{{ layout.page_description }}" />
   <link rel="canonical" href="{{ layout.canonical_url }}" />
@@ -42,7 +42,6 @@
       const root = document.documentElement;
       root.setAttribute("data-theme-mode", "system");
       root.setAttribute("data-theme", "light");
-      root.setAttribute("data-theme-preset", "l04-rose-ink");
     })();
   </script>
   <link rel="alternate" type="application/rss+xml" title="{{ layout.site_title }} RSS" href="/rss.xml" />
@@ -79,7 +78,7 @@
     <header class="site-header">
       <div class="site-brand">
         <a class="site-brand-link" href="/">
-          <span class="site-kicker" data-pretext-target>Connected notes · research journal · news</span>
+          <span class="site-kicker" data-pretext-target>Field notes · research archive · daily briefings</span>
           <span class="site-title" data-pretext-target>{{ layout.site_title }}</span>
         </a>
         {% if layout.site_description.len() > 0 %}
@@ -156,12 +155,12 @@
 
         <section class="rail-panel rail-panel--manifest">
           <div class="rail-panel-head rail-panel-head--compact">
-            <p class="rail-kicker" data-pretext-target>Format</p>
+            <p class="rail-kicker" data-pretext-target>Publication</p>
           </div>
-          <p class="rail-copy" data-pretext-target>Markdown-first posts and daily AI news digests, remixed into an editorial reading surface with live graph navigation.</p>
+          <p class="rail-copy" data-pretext-target>Essays, briefings, and working notes arranged as one quiet publication rather than a feed of isolated pages.</p>
           <div class="rail-quicklinks" aria-label="Quick links">
-            <a class="rail-quicklink" href="/news/">Latest digest</a>
-            <a class="rail-quicklink" href="/graph/">Knowledge map</a>
+            <a class="rail-quicklink" href="/news/">Current brief</a>
+            <a class="rail-quicklink" href="/graph/">Archive atlas</a>
             <a class="rail-quicklink" href="{{ layout.site_url }}">Canonical URL</a>
           </div>
         </section>
@@ -170,7 +169,7 @@
           <div class="rail-panel-head">
             <div>
               <p class="rail-kicker" data-pretext-target>{{ layout.pages_heading }}</p>
-              <h2 class="rail-title">Browse the notebook</h2>
+              <h2 class="rail-title">Archive index</h2>
             </div>
             <span class="rail-count">{{ layout.page_tabs.len() }}</span>
           </div>
