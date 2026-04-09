@@ -1,20 +1,20 @@
-(function () {
+(() => {
   function initLinkPreview(options) {
     const opts = options || {};
-    const containerSelector = opts.containerSelector || ".note-body";
+    const containerSelector = opts.containerSelector || '.note-body';
     const containers = Array.from(document.querySelectorAll(containerSelector));
     if (!containers.length) {
       return;
     }
 
-    if (window.matchMedia && window.matchMedia("(pointer: coarse)").matches) {
+    if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) {
       return;
     }
 
-    const indexUrl = opts.indexUrl || "/search-index.json";
+    const indexUrl = opts.indexUrl || '/search-index.json';
     const currentPath = normalizePath(window.location.pathname);
-    const card = document.createElement("aside");
-    card.className = "link-preview-card";
+    const card = document.createElement('aside');
+    card.className = 'link-preview-card';
     card.hidden = true;
     document.body.appendChild(card);
 
@@ -27,25 +27,28 @@
     let positionRaf = 0;
 
     function normalizePath(raw) {
-      const path = String(raw || "").split("#")[0].split("?")[0] || "/";
-      return path.endsWith("/") ? path : path + "/";
+      const path =
+        String(raw || '')
+          .split('#')[0]
+          .split('?')[0] || '/';
+      return path.endsWith('/') ? path : path + '/';
     }
 
     function pathFromHref(href) {
       try {
         const parsed = new URL(href, window.location.origin);
         if (parsed.origin !== window.location.origin) {
-          return "";
+          return '';
         }
         return normalizePath(parsed.pathname);
       } catch (_) {
-        return "";
+        return '';
       }
     }
 
     function isInternalNoteLink(anchor) {
-      const path = pathFromHref(anchor && anchor.href ? anchor.href : "");
-      return path.startsWith("/notes/") && path !== currentPath;
+      const path = pathFromHref(anchor && anchor.href ? anchor.href : '');
+      return path.startsWith('/notes/') && path !== currentPath;
     }
 
     function loadIndexMap() {
@@ -59,7 +62,7 @@
       loadPromise = fetch(indexUrl)
         .then((response) => {
           if (!response.ok) {
-            throw new Error("search index unavailable");
+            throw new Error('search index unavailable');
           }
           return response.json();
         })
@@ -67,7 +70,7 @@
           const items = Array.isArray(payload) ? payload : [];
           const map = new Map();
           items.forEach((item) => {
-            const key = normalizePath(item && item.url ? item.url : "");
+            const key = normalizePath(item && item.url ? item.url : '');
             if (key && !map.has(key)) {
               map.set(key, item);
             }
@@ -105,8 +108,8 @@
         top = window.scrollY + margin;
       }
 
-      card.style.left = Math.round(left) + "px";
-      card.style.top = Math.round(top) + "px";
+      card.style.left = Math.round(left) + 'px';
+      card.style.top = Math.round(top) + 'px';
     }
 
     function requestPosition(anchor) {
@@ -127,52 +130,57 @@
 
     function recordFromAnchor(anchor, path) {
       const titleText = String(
-        (anchor.querySelector(".page-tab-title") && anchor.querySelector(".page-tab-title").textContent) ||
+        (anchor.querySelector('.page-tab-title') &&
+          anchor.querySelector('.page-tab-title').textContent) ||
           anchor.textContent ||
-          "Linked note"
+          'Linked note',
       )
-        .replace(/\s+/g, " ")
+        .replace(/\s+/g, ' ')
         .trim();
 
       const previewText = String(
-        (anchor.querySelector(".page-tab-preview") && anchor.querySelector(".page-tab-preview").textContent) || ""
+        (anchor.querySelector('.page-tab-preview') &&
+          anchor.querySelector('.page-tab-preview').textContent) ||
+          '',
       )
-        .replace(/\s+/g, " ")
+        .replace(/\s+/g, ' ')
         .trim();
 
       return {
-        title: titleText || "Linked note",
-        excerpt: previewText || "Preview not available.",
+        title: titleText || 'Linked note',
+        excerpt: previewText || 'Preview not available.',
         tags: [],
         url: path,
       };
     }
 
     function renderCard(record, path) {
-      const title = document.createElement("p");
-      title.className = "link-preview-title";
-      title.textContent = record && record.title ? record.title : "Linked note";
+      const title = document.createElement('p');
+      title.className = 'link-preview-title';
+      title.textContent = record && record.title ? record.title : 'Linked note';
 
-      const pathMeta = document.createElement("p");
-      pathMeta.className = "link-preview-path";
-      pathMeta.textContent = String(path || "")
-        .replace(/^\/notes\//, "")
-        .replace(/\/$/, "");
+      const pathMeta = document.createElement('p');
+      pathMeta.className = 'link-preview-path';
+      pathMeta.textContent = String(path || '')
+        .replace(/^\/notes\//, '')
+        .replace(/\/$/, '');
 
-      const excerpt = document.createElement("p");
-      excerpt.className = "link-preview-excerpt";
-      excerpt.textContent = record && record.excerpt ? record.excerpt : "Preview not available.";
+      const excerpt = document.createElement('p');
+      excerpt.className = 'link-preview-excerpt';
+      excerpt.textContent = record && record.excerpt ? record.excerpt : 'Preview not available.';
 
       card.replaceChildren(title, pathMeta, excerpt);
 
-      const tags = Array.isArray(record && record.tags) ? record.tags.filter(Boolean).slice(0, 4) : [];
+      const tags = Array.isArray(record && record.tags)
+        ? record.tags.filter(Boolean).slice(0, 4)
+        : [];
       if (tags.length) {
-        const tagWrap = document.createElement("div");
-        tagWrap.className = "link-preview-tags";
+        const tagWrap = document.createElement('div');
+        tagWrap.className = 'link-preview-tags';
         tags.forEach((tag) => {
-          const chip = document.createElement("span");
-          chip.className = "link-preview-tag";
-          chip.textContent = "#" + tag;
+          const chip = document.createElement('span');
+          chip.className = 'link-preview-tag';
+          chip.textContent = '#' + tag;
           tagWrap.appendChild(chip);
         });
         card.appendChild(tagWrap);
@@ -180,7 +188,7 @@
     }
 
     function showForAnchor(anchor) {
-      const path = pathFromHref(anchor && anchor.href ? anchor.href : "");
+      const path = pathFromHref(anchor && anchor.href ? anchor.href : '');
       if (!path || path === currentPath) {
         return;
       }
@@ -229,7 +237,7 @@
       if (!(target instanceof Element)) {
         return null;
       }
-      const anchor = target.closest("a[href]");
+      const anchor = target.closest('a[href]');
       if (!(anchor instanceof HTMLAnchorElement)) {
         return null;
       }
@@ -237,7 +245,7 @@
     }
 
     containers.forEach((container) => {
-      container.addEventListener("pointerover", (event) => {
+      container.addEventListener('pointerover', (event) => {
         const anchor = findAnchor(event.target);
         if (!anchor || !isInternalNoteLink(anchor)) {
           return;
@@ -248,7 +256,7 @@
         scheduleShow(anchor);
       });
 
-      container.addEventListener("pointerout", (event) => {
+      container.addEventListener('pointerout', (event) => {
         const anchor = findAnchor(event.target);
         if (!anchor || !isInternalNoteLink(anchor)) {
           return;
@@ -259,7 +267,7 @@
         scheduleHide(anchor);
       });
 
-      container.addEventListener("focusin", (event) => {
+      container.addEventListener('focusin', (event) => {
         const anchor = findAnchor(event.target);
         if (!anchor || !isInternalNoteLink(anchor)) {
           return;
@@ -267,7 +275,7 @@
         scheduleShow(anchor);
       });
 
-      container.addEventListener("focusout", (event) => {
+      container.addEventListener('focusout', (event) => {
         const anchor = findAnchor(event.target);
         if (!anchor || !isInternalNoteLink(anchor)) {
           return;
@@ -275,27 +283,27 @@
         scheduleHide(anchor);
       });
 
-      container.addEventListener("click", hideCard);
+      container.addEventListener('click', hideCard);
     });
 
     document.addEventListener(
-      "scroll",
+      'scroll',
       () => {
         if (activeAnchor && !card.hidden) {
           requestPosition(activeAnchor);
         }
       },
-      { passive: true }
+      { passive: true },
     );
 
-    window.addEventListener("resize", () => {
+    window.addEventListener('resize', () => {
       if (activeAnchor && !card.hidden) {
         requestPosition(activeAnchor);
       }
     });
 
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
         activeAnchor = null;
         hideCard();
       }

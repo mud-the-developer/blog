@@ -1,7 +1,7 @@
-(function () {
+(() => {
   function initTocTracker(options) {
     const opts = options || {};
-    const panelSelector = opts.panelSelector || ".toc-panel";
+    const panelSelector = opts.panelSelector || '.toc-panel';
     const panel = document.querySelector(panelSelector);
     if (!panel) {
       return;
@@ -14,7 +14,7 @@
 
     const entries = links
       .map((link) => {
-        const id = decodeURIComponent((link.getAttribute("href") || "").slice(1));
+        const id = decodeURIComponent((link.getAttribute('href') || '').slice(1));
         const heading = id ? document.getElementById(id) : null;
         if (!heading) {
           return null;
@@ -27,7 +27,7 @@
       return;
     }
 
-    let activeId = "";
+    let activeId = '';
     let rafId = 0;
 
     const setActive = (id) => {
@@ -36,7 +36,7 @@
       }
       activeId = id;
       entries.forEach((entry) => {
-        entry.link.classList.toggle("is-active", entry.id === id);
+        entry.link.classList.toggle('is-active', entry.id === id);
       });
     };
 
@@ -67,16 +67,16 @@
     };
 
     links.forEach((link) => {
-      link.addEventListener("click", () => {
-        const targetId = decodeURIComponent((link.getAttribute("href") || "").slice(1));
+      link.addEventListener('click', () => {
+        const targetId = decodeURIComponent((link.getAttribute('href') || '').slice(1));
         if (targetId) {
           setActive(targetId);
         }
       });
     });
 
-    document.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
+    document.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
     requestUpdate();
   }
 

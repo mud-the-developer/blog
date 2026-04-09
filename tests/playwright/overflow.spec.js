@@ -11,6 +11,7 @@ const VIEWPORTS = [
 
 const PAGES = [
   { name: 'home', path: '/' },
+  { name: 'news', path: '/news/' },
   { name: 'graph', path: '/graph/' },
   { name: 'note-long', path: '/notes/system/overflow-regression-case/' },
   { name: 'tag-ai', path: '/tags/ai/' },

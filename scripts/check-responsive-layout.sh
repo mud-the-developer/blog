@@ -21,6 +21,26 @@ assert_regex() {
 
 content="$(cat "$STYLE_FILE")"
 
+if [[ "$STYLE_FILE" == *"style-news-bridge.css" ]]; then
+  assert_regex \
+    "$content" \
+    '@media\s*\(max-width:\s*920px\)\s*\{[\s\S]*?\.news-bridge-bar\s*\{[^}]*flex-direction:\s*column;[^}]*align-items:\s*flex-start;?' \
+    "920px news bridge breakpoint must stack the bridge bar vertically."
+
+  assert_regex \
+    "$content" \
+    '@media\s*\(max-width:\s*920px\)\s*\{[\s\S]*?\.card\s*\{[^}]*grid-template-columns:\s*1fr;?' \
+    "920px news bridge breakpoint must collapse cards to one column."
+
+  assert_regex \
+    "$content" \
+    '@media\s*\(max-width:\s*760px\)\s*\{[\s\S]*?\.hero\s*\{[^}]*padding:\s*1rem' \
+    "760px news bridge breakpoint must tighten the hero padding."
+
+  echo "Responsive layout guard check passed."
+  exit 0
+fi
+
 assert_regex \
   "$content" \
   '@media\s*\(max-width:\s*1360px\)\s*\{[\s\S]*?grid-template-areas:\s*"tabs main"\s*"graph graph";?' \

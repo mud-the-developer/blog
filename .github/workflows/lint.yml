@@ -42,3 +42,14 @@ jobs:
 
       - name: Overflow regression test
         run: npm run test:overflow
+
+      - name: Check responsive layout guards
+        run: |
+          ./scripts/check-responsive-layout.sh static/assets/style-core.css
+          ./scripts/check-responsive-layout.sh static/assets/style-news-bridge.css
+
+      - name: Check performance budgets
+        run: ./scripts/check-performance-budget.sh dist
+
+      - name: Check internal HTML links
+        run: ./scripts/check-html-links.sh dist
