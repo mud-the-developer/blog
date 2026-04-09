@@ -25,7 +25,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Generated</span>
-        <strong><time datetime="2026-04-09T04:35:07.572923+09:00">Apr 9, 2026 · 4:35 AM KST</time></strong>
+        <strong><time datetime="2026-04-09T12:44:20.852086+09:00">Apr 9, 2026 · 12:44 PM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Mode</span>
@@ -88,81 +88,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
           <p class="news-digest-card-deck" data-pretext-target>A high-throughput and memory-efficient inference and serving engine for LLMs. Updated 1h ago. 75720 stars, +800/7d, created 1154d ago.</p>
         </div>
       </a>
-      <a class="news-digest-card news-digest-card--repo news-digest-inline-card" href="https://github.com/openai/codex" target="_blank" rel="noreferrer">
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-topline">
-            <span class="news-digest-source-chip news-digest-source-chip--github-com">
-              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
-              <span class="news-digest-source-label">GitHub</span>
-            </span>
-            <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-          </div>
-          <div class="news-digest-card-eyebrow">
-            <span class="news-digest-card-meta">73793 stars · +800/7d · created 360d ago · updated 9h ago · down 1 · signal 24.99</span>
-          </div>
-          <h3 data-pretext-target>openai/codex</h3>
-          <p class="news-digest-card-deck" data-pretext-target>Lightweight coding agent that runs in your terminal. Updated 9h ago. 73793 stars, +800/7d, created 360d ago. Down 1 spots from the previous run.</p>
-        </div>
-      </a>
-      </aside>
-    </div>
-  </section>
-  <section class="news-digest-section news-digest-beta-story" id="beta-repos">
-    <header class="news-digest-section-head">
-      <p class="section-kicker">Section</p>
-      <h2 data-pretext-target>Repository Momentum</h2>
-    </header>
-    <div class="news-digest-beta-story-layout">
-      <div class="news-digest-beta-story-body">
-        <p class="news-digest-beta-story-copy" data-pretext-target>GitHub activity is heavily skewed toward agentic tooling. Beyond vLLM and Ray, there is significant growth in specialized libraries like Antigravity&#x27;s skill collection and the OpenCode project, reflecting a trend toward modular, installable agent capabilities.</p>
-      </div>
-      <aside class="news-digest-beta-story-rail" aria-label="Referenced items">
-      <a class="news-digest-card news-digest-card--repo news-digest-inline-card news-digest-inline-card--primary" href="https://github.com/vllm-project/vllm" target="_blank" rel="noreferrer">
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-topline">
-            <span class="news-digest-source-chip news-digest-source-chip--github-com">
-              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
-              <span class="news-digest-source-label">GitHub</span>
-            </span>
-            <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-          </div>
-          <div class="news-digest-card-eyebrow">
-            <span class="news-digest-card-meta">75720 stars · +800/7d · created 1154d ago · updated 1h ago · signal 25.44</span>
-          </div>
-          <h3 data-pretext-target>vllm-project/vllm</h3>
-          <p class="news-digest-card-deck" data-pretext-target>A high-throughput and memory-efficient inference and serving engine for LLMs. Updated 1h ago. 75720 stars, +800/7d, created 1154d ago.</p>
-        </div>
-      </a>
-      <a class="news-digest-card news-digest-card--repo news-digest-inline-card" href="https://github.com/openai/codex" target="_blank" rel="noreferrer">
-        <div class="news-digest-card-copy">
-          <div class="news-digest-card-topline">
-            <span class="news-digest-source-chip news-digest-source-chip--github-com">
-              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
-              <span class="news-digest-source-label">GitHub</span>
-            </span>
-            <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
-          </div>
-          <div class="news-digest-card-eyebrow">
-            <span class="news-digest-card-meta">73793 stars · +800/7d · created 360d ago · updated 9h ago · down 1 · signal 24.99</span>
-          </div>
-          <h3 data-pretext-target>openai/codex</h3>
-          <p class="news-digest-card-deck" data-pretext-target>Lightweight coding agent that runs in your terminal. Updated 9h ago. 73793 stars, +800/7d, created 360d ago. Down 1 spots from the previous run.</p>
-        </div>
-      </a>
-      </aside>
-    </div>
-  </section>
-  <section class="news-digest-section news-digest-beta-story" id="beta-papers">
-    <header class="news-digest-section-head">
-      <p class="section-kicker">Section</p>
-      <h2 data-pretext-target>Fresh Papers</h2>
-    </header>
-    <div class="news-digest-beta-story-layout">
-      <div class="news-digest-beta-story-body">
-        <p class="news-digest-beta-story-copy" data-pretext-target>Recent research emphasizes the gap between theoretical accuracy and real-world agent performance. Key papers introduce the PTE metric for reasoning efficiency and propose new paradigms for training retrieval models using multi-step agent trajectories.</p>
-      </div>
-      <aside class="news-digest-beta-story-rail" aria-label="Referenced items">
-      <a class="news-digest-card news-digest-card--paper news-digest-inline-card news-digest-inline-card--primary" href="https://huggingface.co/papers/2604.04949" target="_blank" rel="noreferrer">
+      <a class="news-digest-card news-digest-card--paper news-digest-inline-card" href="https://huggingface.co/papers/2604.04949" target="_blank" rel="noreferrer">
         <div class="news-digest-card-copy">
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
@@ -178,7 +104,65 @@ content-classes: [news-digest-note, news-digest-beta-note]
           <p class="news-digest-card-deck" data-pretext-target>Retrieval models for agentic search should be trained directly from agent interaction data using a new paradigm that mines supervision from multi-step agent trajectories and incorporates re…</p>
         </div>
       </a>
-      <a class="news-digest-card news-digest-card--paper news-digest-inline-card" href="https://huggingface.co/papers/2604.05015" target="_blank" rel="noreferrer">
+      </aside>
+    </div>
+  </section>
+  <section class="news-digest-section news-digest-beta-story" id="beta-repos">
+    <header class="news-digest-section-head">
+      <p class="section-kicker">Section</p>
+      <h2 data-pretext-target>Repository Momentum</h2>
+    </header>
+    <div class="news-digest-beta-story-layout">
+      <div class="news-digest-beta-story-body">
+        <p class="news-digest-beta-story-copy" data-pretext-target>GitHub activity is heavily skewed toward agentic tooling. Beyond vLLM and Ray, there is significant growth in specialized libraries like Antigravity&#x27;s skill collection and the OpenCode project, reflecting a trend toward modular, installable agent capabilities.</p>
+      </div>
+      <aside class="news-digest-beta-story-rail" aria-label="Referenced items">
+      <a class="news-digest-card news-digest-card--repo news-digest-inline-card news-digest-inline-card--primary" href="https://github.com/openai/codex" target="_blank" rel="noreferrer">
+        <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--github-com">
+              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
+              <span class="news-digest-source-label">GitHub</span>
+            </span>
+            <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
+          </div>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">73793 stars · +800/7d · created 360d ago · updated 9h ago · down 1 · signal 24.99</span>
+          </div>
+          <h3 data-pretext-target>openai/codex</h3>
+          <p class="news-digest-card-deck" data-pretext-target>Lightweight coding agent that runs in your terminal. Updated 9h ago. 73793 stars, +800/7d, created 360d ago. Down 1 spots from the previous run.</p>
+        </div>
+      </a>
+      <a class="news-digest-card news-digest-card--repo news-digest-inline-card" href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noreferrer">
+        <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--github-com">
+              <span class="news-digest-source-mark" aria-hidden="true">GH</span>
+              <span class="news-digest-source-label">GitHub</span>
+            </span>
+            <span class="news-digest-card-badge news-digest-card-badge--repo">Repo</span>
+          </div>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">33706 stars · +800/7d · created 260d ago · updated 10h ago · up 1 · signal 24.52</span>
+          </div>
+          <h3 data-pretext-target>NousResearch/hermes-agent</h3>
+          <p class="news-digest-card-deck" data-pretext-target>The agent that grows with you. Updated 10h ago. 33706 stars, +800/7d, created 260d ago. Up 1 spots from the previous run.</p>
+        </div>
+      </a>
+      </aside>
+    </div>
+  </section>
+  <section class="news-digest-section news-digest-beta-story" id="beta-papers">
+    <header class="news-digest-section-head">
+      <p class="section-kicker">Section</p>
+      <h2 data-pretext-target>Fresh Papers</h2>
+    </header>
+    <div class="news-digest-beta-story-layout">
+      <div class="news-digest-beta-story-body">
+        <p class="news-digest-beta-story-copy" data-pretext-target>Recent research emphasizes the gap between theoretical accuracy and real-world agent performance. Key papers introduce the PTE metric for reasoning efficiency and propose new paradigms for training retrieval models using multi-step agent trajectories.</p>
+      </div>
+      <aside class="news-digest-beta-story-rail" aria-label="Referenced items">
+      <a class="news-digest-card news-digest-card--paper news-digest-inline-card news-digest-inline-card--primary" href="https://huggingface.co/papers/2604.05015" target="_blank" rel="noreferrer">
         <div class="news-digest-card-copy">
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
@@ -192,6 +176,22 @@ content-classes: [news-digest-note, news-digest-beta-note]
           </div>
           <h3 data-pretext-target>Video-MME-v2: Towards the Next Stage in Benchmarks for Comprehensive Video Understanding</h3>
           <p class="news-digest-card-deck" data-pretext-target>Video-MME-v2 presents a comprehensive benchmark for evaluating video understanding models through a progressive hierarchy and group-based evaluation to assess robustness and faithfulness. S…</p>
+        </div>
+      </a>
+      <a class="news-digest-card news-digest-card--paper news-digest-inline-card" href="https://huggingface.co/papers/2604.05404" target="_blank" rel="noreferrer">
+        <div class="news-digest-card-copy">
+          <div class="news-digest-card-topline">
+            <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
+              <span class="news-digest-source-mark" aria-hidden="true">HF</span>
+              <span class="news-digest-source-label">Hugging Face Papers</span>
+            </span>
+            <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
+          </div>
+          <div class="news-digest-card-eyebrow">
+            <span class="news-digest-card-meta">15h ago · down 131 · signal 5.98</span>
+          </div>
+          <h3 data-pretext-target>Beyond Accuracy: Unveiling Inefficiency Patterns in Tool-Integrated Reasoning</h3>
+          <p class="news-digest-card-deck" data-pretext-target>Researchers introduce PTE (Prefill Token Equivalents), a hardware-aware metric for measuring efficiency in Tool-Integrated Reasoning scenarios, which better correlates with actual inference…</p>
         </div>
       </a>
       </aside>

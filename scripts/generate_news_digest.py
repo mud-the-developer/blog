@@ -1422,6 +1422,44 @@ def normalize_section_bodies(parsed: dict[str, Any], context: DigestContext) -> 
     return normalized
 
 
+def choose_beta_reference_cards(
+    cards: list[NewsItem],
+    seen_urls: set[str],
+    *,
+    limit: int = 2,
+) -> list[NewsItem]:
+    selected: list[NewsItem] = []
+    selected_urls: set[str] = set()
+    selected_badges: set[str] = set()
+
+    for card in cards:
+        if card.url in seen_urls or card.url in selected_urls or card.badge in selected_badges:
+            continue
+        selected.append(card)
+        selected_urls.add(card.url)
+        selected_badges.add(card.badge)
+        if len(selected) >= limit:
+            return selected
+
+    for card in cards:
+        if card.url in seen_urls or card.url in selected_urls:
+            continue
+        selected.append(card)
+        selected_urls.add(card.url)
+        if len(selected) >= limit:
+            return selected
+
+    for card in cards:
+        if card.url in selected_urls:
+            continue
+        selected.append(card)
+        selected_urls.add(card.url)
+        if len(selected) >= limit:
+            break
+
+    return selected
+
+
 def generate_gemma_beta_digest(issue_dt: datetime, context: DigestContext) -> BetaDigest | None:
     if not gemma_beta_enabled():
         return None
@@ -1526,6 +1564,7 @@ def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: Di
         "    </div>",
         "  </section>",
     ]
+    beta_used_urls: set[str] = set()
     if beta.takeaways:
         body.extend(
             [
@@ -1549,7 +1588,8 @@ def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: Di
         body.extend(["      </div>", *source_pills, "    </div>", "  </section>"])
     for slug, heading, _description, cards in context.sections:
         story_paragraphs = beta.section_bodies.get(slug) or []
-        card_subset = cards[:2]
+        card_subset = choose_beta_reference_cards(cards, beta_used_urls, limit=2)
+        beta_used_urls.update(card.url for card in card_subset)
         body.extend(
             [
                 f'  <section class="news-digest-section news-digest-beta-story" id="beta-{safe_text(slug)}">',
