@@ -153,6 +153,7 @@ class BetaDigest:
     title: str
     dek: str
     lead: str
+    article_body: list[str]
     takeaways: list[str]
     section_titles: dict[str, str]
     section_bodies: dict[str, list[str]]
@@ -1369,6 +1370,7 @@ def gemma_overview_payload(issue_dt: datetime, context: DigestContext) -> dict[s
             "title": "short editorial title",
             "dek": "1 sentence overview",
             "lead": "2-4 sentence opening brief",
+            "article_body": ["3-5 fuller article paragraphs that explain the day end-to-end"],
             "takeaways": ["3-4 sharp takeaway lines"],
             "closing": "short closing note",
         },
@@ -1502,10 +1504,21 @@ def gemma_json_request(cache_key: str, payload: dict[str, Any], *, temperature: 
 
 
 def normalize_overview(parsed: dict[str, Any], issue_dt: datetime, context: DigestContext) -> BetaDigest:
+    raw_article_body = parsed.get("article_body") or []
+    article_body: list[str] = []
+    if isinstance(raw_article_body, list):
+        article_body = [str(item).strip() for item in raw_article_body if str(item).strip()]
+    elif isinstance(raw_article_body, str) and raw_article_body.strip():
+        article_body = [raw_article_body.strip()]
+
+    if not article_body:
+        article_body = [str(parsed.get("lead") or context.summary).strip()]
+
     return BetaDigest(
         title=str(parsed.get("title") or f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}").strip(),
         dek=str(parsed.get("dek") or context.summary).strip(),
         lead=str(parsed.get("lead") or context.summary).strip(),
+        article_body=article_body[:5],
         takeaways=[str(item).strip() for item in (parsed.get("takeaways") or []) if str(item).strip()][:4],
         section_titles={},
         section_bodies={},
@@ -1707,6 +1720,7 @@ def generate_gemma_beta_digest(issue_dt: datetime, context: DigestContext) -> Be
         title=overview.title,
         dek=overview.dek,
         lead=overview.lead,
+        article_body=overview.article_body,
         takeaways=overview.takeaways,
         section_titles=section_titles,
         section_bodies=section_bodies,
@@ -1795,6 +1809,20 @@ def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: Di
                 ]
             )
         body.extend(["      </div>", *source_pills, "    </div>", "  </section>"])
+    if beta.article_body:
+        body.extend(
+            [
+                '  <section class="news-digest-section news-digest-beta-overview">',
+                '    <header class="news-digest-section-head">',
+                '      <p class="section-kicker">Today in AI</p>',
+                '      <h2 data-pretext-target>The day in one pass</h2>',
+                '    </header>',
+                '    <div class="news-digest-beta-story-body">',
+            ]
+        )
+        for paragraph in beta.article_body:
+            body.append(f'      <p class="news-digest-beta-story-copy" data-pretext-target>{safe_text(paragraph)}</p>')
+        body.extend(["    </div>", "  </section>"])
     body.extend(render_beta_signal_map(context))
     for slug, heading, _description, cards in context.sections:
         story_heading = beta.section_titles.get(slug) or heading

@@ -25,7 +25,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Generated</span>
-        <strong><time datetime="2026-04-09T20:54:53.607264+09:00">Apr 9, 2026 · 8:54 PM KST</time></strong>
+        <strong><time datetime="2026-04-09T21:12:37.845149+09:00">Apr 9, 2026 · 9:12 PM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Mode</span>
@@ -60,6 +60,15 @@ content-classes: [news-digest-note, news-digest-beta-note]
         <span class="news-digest-beta-source-pill"><span>X</span><strong>4</strong></span>
         <span class="news-digest-beta-source-pill"><span>arXiv</span><strong>3</strong></span>
       </div>
+    </div>
+  </section>
+  <section class="news-digest-section news-digest-beta-overview">
+    <header class="news-digest-section-head">
+      <p class="section-kicker">Today in AI</p>
+      <h2 data-pretext-target>The day in one pass</h2>
+    </header>
+    <div class="news-digest-beta-story-body">
+      <p class="news-digest-beta-story-copy" data-pretext-target>The AI ecosystem is shifting focus toward the practical deployment of agentic workflows and the optimization of inference engines. Recent activity highlights a surge in high-throughput serving via vLLM and a research pivot toward mining supervision from agent trajectories. Simultaneously, developer discourse is centering on the source code analysis of emerging coding agents.</p>
     </div>
   </section>
   <section class="news-digest-section news-digest-beta-signal-map">
