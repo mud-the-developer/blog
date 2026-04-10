@@ -1882,15 +1882,15 @@ def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: Di
                 '      <p class="section-kicker">Section</p>',
                 f'      <h2>{safe_text(story_heading)}</h2>',
                 '    </header>',
-                '    <div class="news-digest-beta-story-layout" data-news-brief-flow>',
-                '      <div class="news-digest-beta-story-body" data-news-brief-body>',
+                '    <div class="note-flow-layout news-digest-beta-story-layout" data-note-flow>',
+                '      <div class="note-flow-body news-digest-beta-story-body" data-note-flow-body>',
             ]
         )
         for paragraph in story_paragraphs:
             body.append(f'        <p class="news-digest-beta-story-copy">{safe_text(paragraph)}</p>')
         body.append("      </div>")
         if card_subset:
-            body.append('      <aside class="news-digest-beta-story-rail" aria-label="Referenced items" data-news-brief-rail>')
+            body.append('      <aside class="news-digest-beta-story-rail" aria-label="Referenced items" data-note-flow-rail>')
             for index, card in enumerate(card_subset):
                 body.extend(
                     render_digest_card_lines(

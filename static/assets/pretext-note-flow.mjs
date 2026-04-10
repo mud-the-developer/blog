@@ -122,7 +122,7 @@ function connectFlows(root) {
       body,
       rail,
       layer: null,
-      prepared: null,
+      prepared: [],
       prepareKey: '',
       lastKey: '',
     };
@@ -160,25 +160,25 @@ function renderFlow(layout) {
     return;
   }
 
-  const paragraph = state.body.querySelector('p');
-  if (!(paragraph instanceof HTMLElement)) {
+  const paragraphs = readParagraphs(state.body);
+  if (paragraphs.length === 0) {
     teardown(layout, state);
     return;
   }
 
-  const text = collapseWhitespace(paragraph.textContent || '');
-  if (!text) {
+  const sample = state.body.querySelector('p');
+  if (!(sample instanceof HTMLElement)) {
     teardown(layout, state);
     return;
   }
 
-  const style = window.getComputedStyle(paragraph);
+  const style = window.getComputedStyle(sample);
   const font = resolveCanvasFont(style);
   const lineHeight = resolveLineHeight(style);
-  const prepareKey = `${font}__${text}`;
+  const prepareKey = `${font}__${paragraphs.join('¶')}`;
 
   if (prepareKey !== state.prepareKey) {
-    state.prepared = prepareWithSegments(text, font);
+    state.prepared = paragraphs.map((text) => prepareWithSegments(text, font));
     state.prepareKey = prepareKey;
     state.lastKey = '';
   }
@@ -201,10 +201,11 @@ function renderFlow(layout) {
   const obstacles = measureObstacles(layout, state.rail);
   const fragment = document.createDocumentFragment();
   let y = 0;
+  let paragraphIndex = 0;
   let cursor = START_CURSOR;
   let guard = 0;
 
-  while (guard < 1200) {
+  while (paragraphIndex < state.prepared.length && guard < 2400) {
     guard += 1;
     const spans = buildSpans(obstacles, y, lineHeight, width);
     if (spans.length === 0) {
@@ -213,8 +214,15 @@ function renderFlow(layout) {
     }
 
     const span = spans.sort((a, b) => b.width - a.width)[0];
-    const line = layoutNextLine(state.prepared, cursor, span.width);
-    if (!line) break;
+    const line = layoutNextLine(state.prepared[paragraphIndex], cursor, span.width);
+    if (!line) {
+      paragraphIndex += 1;
+      cursor = START_CURSOR;
+      if (paragraphIndex < state.prepared.length) {
+        y += FLOW_PARAGRAPH_GAP;
+      }
+      continue;
+    }
 
     const lineElement = document.createElement('span');
     lineElement.className = 'note-flow-line';
@@ -257,6 +265,12 @@ function measureObstacles(layout, rail) {
       right: rect.right - layoutRect.left + FLOW_GAP_X,
     },
   ];
+}
+
+function readParagraphs(body) {
+  return Array.from(body.querySelectorAll('p'))
+    .map((element) => collapseWhitespace(element.textContent || ''))
+    .filter(Boolean);
 }
 
 function buildSpans(obstacles, y, lineHeight, width) {

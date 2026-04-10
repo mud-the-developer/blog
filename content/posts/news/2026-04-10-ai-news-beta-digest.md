@@ -25,7 +25,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Generated</span>
-        <strong><time datetime="2026-04-10T17:43:50.369132+09:00">Apr 10, 2026 · 5:43 PM KST</time></strong>
+        <strong><time datetime="2026-04-10T20:37:18.151766+09:00">Apr 10, 2026 · 8:37 PM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Mode</span>
@@ -199,12 +199,12 @@ content-classes: [news-digest-note, news-digest-beta-note]
       <p class="section-kicker">Section</p>
       <h2>Production Agents and Reasoning Stability</h2>
     </header>
-    <div class="news-digest-beta-story-layout" data-news-brief-flow>
-      <div class="news-digest-beta-story-body" data-news-brief-body>
+    <div class="note-flow-layout news-digest-beta-story-layout" data-note-flow>
+      <div class="note-flow-body news-digest-beta-story-body" data-note-flow-body>
         <p class="news-digest-beta-story-copy">The push toward operationalizing AI agents is gaining momentum with the rise of production-ready platforms. Langgenius&#x27;s Dify is emerging as a key framework for agentic workflow development, while OpenAI&#x27;s Codex provides a lightweight coding agent designed specifically for terminal environments.</p>
         <p class="news-digest-beta-story-copy">Parallel to these deployments, researchers are uncovering critical vulnerabilities in agentic reasoning. The RAGEN-2 paper identifies &#x27;reasoning collapse&#x27; as a hidden failure mode in multi-turn LLM agents, noting that template collapse can occur without being detected by entropy. To counter inefficiencies in reasoning, another new framework utilizes graph-based chain-of-thought pruning to identify and remove redundant reflections in LLMs.</p>
       </div>
-      <aside class="news-digest-beta-story-rail" aria-label="Referenced items" data-news-brief-rail>
+      <aside class="news-digest-beta-story-rail" aria-label="Referenced items" data-note-flow-rail>
       <a class="news-digest-card news-digest-card--repo news-digest-inline-card news-digest-inline-card--primary" href="https://github.com/langgenius/dify" target="_blank" rel="noreferrer">
         <div class="news-digest-card-copy">
           <div class="news-digest-card-topline">
@@ -245,12 +245,12 @@ content-classes: [news-digest-note, news-digest-beta-note]
       <p class="section-kicker">Section</p>
       <h2>Scaling Production-Ready Agentic Frameworks</h2>
     </header>
-    <div class="news-digest-beta-story-layout" data-news-brief-flow>
-      <div class="news-digest-beta-story-body" data-news-brief-body>
+    <div class="note-flow-layout news-digest-beta-story-layout" data-note-flow>
+      <div class="note-flow-body news-digest-beta-story-body" data-note-flow-body>
         <p class="news-digest-beta-story-copy">Recent repository momentum highlights a decisive shift toward the operationalization of AI agents. Langgenius&#x27;s Dify is emerging as a primary production-ready platform for agentic workflow development, while more specialized tools like OpenAI&#x27;s Codex bring lightweight coding agency directly into the terminal. This movement toward functional utility is further exemplified by NousResearch&#x27;s Hermes-agent, which is positioned as an agent that grows with the user.</p>
         <p class="news-digest-beta-story-copy">Underpinning these agentic workflows is a continued emphasis on infrastructure efficiency. The vLLM project continues to be a critical component of the ecosystem, providing a high-throughput and memory-efficient inference and serving engine for LLMs to ensure that complex agentic deployments remain performant and scalable.</p>
       </div>
-      <aside class="news-digest-beta-story-rail" aria-label="Referenced items" data-news-brief-rail>
+      <aside class="news-digest-beta-story-rail" aria-label="Referenced items" data-note-flow-rail>
       <a class="news-digest-card news-digest-card--repo news-digest-inline-card news-digest-inline-card--primary" href="https://github.com/openai/codex" target="_blank" rel="noreferrer">
         <div class="news-digest-card-copy">
           <div class="news-digest-card-topline">
@@ -291,13 +291,13 @@ content-classes: [news-digest-note, news-digest-beta-note]
       <p class="section-kicker">Section</p>
       <h2>Addressing Stability in Agentic Reasoning</h2>
     </header>
-    <div class="news-digest-beta-story-layout" data-news-brief-flow>
-      <div class="news-digest-beta-story-body" data-news-brief-body>
+    <div class="note-flow-layout news-digest-beta-story-layout" data-note-flow>
+      <div class="note-flow-body news-digest-beta-story-body" data-note-flow-body>
         <p class="news-digest-beta-story-copy">New research is highlighting critical failure modes in agentic reinforcement learning. The RAGEN-2 paper identifies &quot;reasoning collapse,&quot; specifically template collapse in multi-turn LLM agents, as a hidden failure mode that standard entropy metrics cannot detect. To combat this, researchers propose using mutual information proxies and SNR-aware filtering to stabilize reasoning.</p>
         <p class="news-digest-beta-story-copy">Other efforts are focusing on the verification and efficiency of autonomous systems. SEVerA introduces Formally Guarded Generative Models to ensure safe and correct agentic code generation by pairing formal specifications with soft objectives. Simultaneously, a new graph-based framework aims to optimize chain-of-thought reasoning by pruning redundant reflections to eliminate repetitive thinking patterns.</p>
         <p class="news-digest-beta-story-copy">Expanding the scope of agentic capabilities, AgentGL leverages reinforcement learning to help LLMs navigate complex relational data. By integrating graph-native tools and curriculum learning, the framework enables more sophisticated reasoning over structured graph environments.</p>
       </div>
-      <aside class="news-digest-beta-story-rail" aria-label="Referenced items" data-news-brief-rail>
+      <aside class="news-digest-beta-story-rail" aria-label="Referenced items" data-note-flow-rail>
       <a class="news-digest-card news-digest-card--paper news-digest-inline-card news-digest-inline-card--primary" href="https://huggingface.co/papers/2603.25111" target="_blank" rel="noreferrer">
         <div class="news-digest-card-copy">
           <div class="news-digest-card-topline">
@@ -338,12 +338,12 @@ content-classes: [news-digest-note, news-digest-beta-note]
       <p class="section-kicker">Section</p>
       <h2>Community Tools for Agentic Stability</h2>
     </header>
-    <div class="news-digest-beta-story-layout" data-news-brief-flow>
-      <div class="news-digest-beta-story-body" data-news-brief-body>
+    <div class="note-flow-layout news-digest-beta-story-layout" data-note-flow>
+      <div class="note-flow-body news-digest-beta-story-body" data-note-flow-body>
         <p class="news-digest-beta-story-copy">The developer community is increasingly focused on the practicalities of agent deployment, with new utilities surfacing to streamline creation and quality control. The Spring AI Playground has emerged as a desktop solution for MCP tool creation, testing, and external integration, while the AI-SLOP Detector 3.1.1 provides a necessary check against the &quot;spaghetti code&quot; often produced by autonomous agents.</p>
         <p class="news-digest-beta-story-copy">On the model front, Muse Spark is being positioned as a foundational step for scaling multimodal perception and reasoning within agentic tasks. This push toward capability is complemented by Meta&#x27;s latest announcement regarding the release of a new open-source AI model, further expanding the available toolkit for the ecosystem.</p>
       </div>
-      <aside class="news-digest-beta-story-rail" aria-label="Referenced items" data-news-brief-rail>
+      <aside class="news-digest-beta-story-rail" aria-label="Referenced items" data-note-flow-rail>
       <a class="news-digest-card news-digest-card--social news-digest-inline-card news-digest-inline-card--primary" href="https://news.hada.io/topic?id=28355" target="_blank" rel="noreferrer">
         <div class="news-digest-card-copy">
           <div class="news-digest-card-topline">
