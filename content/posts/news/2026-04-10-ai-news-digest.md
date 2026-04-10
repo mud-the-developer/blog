@@ -26,7 +26,7 @@ content-classes: [news-digest-note]
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Generated</span>
-        <strong><time datetime="2026-04-10T01:43:27.883123+09:00">Apr 10, 2026 · 1:43 AM KST</time></strong>
+        <strong><time datetime="2026-04-10T17:43:50.369132+09:00">Apr 10, 2026 · 5:43 PM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Sections</span>
@@ -799,7 +799,7 @@ content-classes: [news-digest-note]
       <a class="news-digest-archive-item" href="/notes/news/2026-04-10-ai-news-digest/">
         <span class="news-digest-archive-date">2026-04-10</span>
         <strong>Daily AI News Digest — 2026-04-10</strong>
-        <span>GitHub velocity is led by vllm-project/vllm; paper attention is clustering around Learning to Retrieve from Agent Trajectories; social attention is tilting toward Claude Code source code analysis reviewed by backend coding agent developers (AutoBe vs Claude…; biggest mover: NousResearch/hermes-agent (+1). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+        <span>GitHub velocity is led by langgenius/dify; paper attention is clustering around RAGEN-2: Reasoning Collapse in Agentic RL; social attention is tilting toward Show GN: Spring AI Playground - Desktop app that supports MCP tool creation, testing, and exter…; biggest mover: NVIDIA/NemoClaw (+5). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
       </a>
       <a class="news-digest-archive-item" href="/notes/news/2026-04-09-ai-news-digest/">
         <span class="news-digest-archive-date">2026-04-09</span>

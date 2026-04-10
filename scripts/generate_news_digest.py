@@ -1850,8 +1850,21 @@ def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: Di
                 '      <p class="section-kicker">Today in AI</p>',
                 '      <h2>The day in one pass</h2>',
                 '    </header>',
-                '    <div class="news-digest-beta-story-body">',
-                f'      <p class="news-digest-beta-story-copy news-digest-beta-overview-copy" data-pretext-target>{safe_text(overview_copy)}</p>',
+                '    <div class="note-flow-layout news-digest-beta-overview-layout" data-note-flow>',
+                '      <div class="note-flow-body news-digest-beta-story-body" data-note-flow-body>',
+                f'        <p class="news-digest-beta-story-copy news-digest-beta-overview-copy" data-pretext-target>{safe_text(overview_copy)}</p>',
+                "      </div>",
+                '      <aside class="note-aside-card note-aside-card--beta" data-note-flow-rail aria-label="Brief takeaways">',
+                '        <p class="section-kicker">Key takeaways</p>',
+                '        <ul class="note-aside-list">',
+            ]
+        )
+        for item in beta.takeaways[:2]:
+            body.append(f'          <li data-pretext-target>{safe_text(item)}</li>')
+        body.extend(
+            [
+                "        </ul>",
+                "      </aside>",
                 "    </div>",
                 "  </section>",
             ]

@@ -21,7 +21,7 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-04-10T01:43:27.883123+09:00">Apr 10, 2026 · 1:43 AM KST</time></strong>
+        <strong><time datetime="2026-04-10T17:43:50.369132+09:00">Apr 10, 2026 · 5:43 PM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>

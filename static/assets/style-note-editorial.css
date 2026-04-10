@@ -153,6 +153,29 @@
   gap: 0.5rem;
 }
 
+.note-aside-card {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.9rem 0.96rem;
+  border: 1px solid color-mix(in srgb, var(--line) 36%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--surface-soft) 72%, var(--surface));
+}
+
+.note-aside-list {
+  display: grid;
+  gap: 0.46rem;
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.note-aside-list li {
+  font-family: var(--display);
+  font-size: 0.96rem;
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--text) 84%, var(--muted));
+}
+
 .note-flow-layout {
   position: relative;
 }
@@ -188,7 +211,8 @@
 }
 
 .note-flow-layout.is-pretext-flow .pullquote,
-.note-flow-layout.is-pretext-flow .note-figure--aside {
+.note-flow-layout.is-pretext-flow .note-figure--aside,
+.note-flow-layout.is-pretext-flow .note-aside-card {
   position: absolute;
   top: 0;
   right: 0;
@@ -198,6 +222,10 @@
 
 .note-flow-layout.is-pretext-flow .note-figure--aside img {
   margin: 0;
+}
+
+.news-digest-beta-overview-layout {
+  max-inline-size: var(--page-reading-max);
 }
 
 .backlinks {
@@ -266,7 +294,8 @@
   }
 
   .note-flow-layout.is-pretext-flow .pullquote,
-  .note-flow-layout.is-pretext-flow .note-figure--aside {
+  .note-flow-layout.is-pretext-flow .note-figure--aside,
+  .note-flow-layout.is-pretext-flow .note-aside-card {
     position: static;
     width: auto;
     max-width: none;
