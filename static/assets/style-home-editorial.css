@@ -18,7 +18,7 @@
 
 .graph-main-title {
   max-width: 10ch;
-  font-size: clamp(3.2rem, 4vw, 5.2rem);
+  font-size: clamp(var(--atlas-hero-min), 2.8vw, var(--atlas-hero-max));
 }
 
 .graph-main-layout {
@@ -109,7 +109,7 @@
 
 .note-web-stage {
   position: relative;
-  min-height: 700px;
+  min-height: var(--atlas-stage-min-height);
   border-radius: 12px;
   border: 1px solid color-mix(in srgb, var(--line) 46%, transparent);
   background:
@@ -164,6 +164,7 @@
   line-height: 1;
   letter-spacing: 0.02em;
   user-select: none;
+  opacity: var(--atlas-field-opacity);
 }
 
 :root[data-theme="dark"] .note-web-text-line {
@@ -243,7 +244,7 @@
 .note-web-card-line {
   display: block;
   font-family: var(--display);
-  font-size: var(--note-web-card-font-size, 1.2rem);
+  font-size: var(--note-web-card-font-size, 1.05rem);
   line-height: 1.02;
   letter-spacing: -0.05em;
 }

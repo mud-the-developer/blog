@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "npm run lint:rust && npm run lint:js && npm run lint:css",
     "lint:rust": "cargo fmt --check && cargo clippy --all-targets --all-features -- -D warnings",
-    "lint:js": "biome check package.json package-lock.json biome.json playwright.config.js tests/playwright static/assets/site-runtime.js static/assets/pretext-note-web.mjs static/assets/pretext-news-brief.mjs static/assets/search-htmx.js static/assets/publication-widget.js",
+    "lint:js": "biome check package.json package-lock.json biome.json playwright.config.js tests/playwright static/assets/site-runtime.js static/assets/pretext-note-web.mjs static/assets/pretext-note-flow.mjs static/assets/pretext-news-brief.mjs static/assets/search-htmx.js static/assets/publication-widget.js",
     "lint:css": "stylelint \"static/assets/**/*.css\"",
     "format": "cargo fmt --all && biome format --write . && stylelint \"static/assets/**/*.css\" --fix",
     "test:overflow": "cargo run -q -p blog-build -- --site-url http://127.0.0.1:4173 --title \"Mud's Blog\" --description \"AI research notes, connected writing, and daily news radar.\" && playwright test --config=playwright.config.js"

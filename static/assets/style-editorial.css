@@ -34,6 +34,18 @@
   --masonry-body-gap: 14px;
   --masonry-footer-gap: 16px;
   --masonry-footer-height: 20px;
+  --atlas-hero-min: 2.55rem;
+  --atlas-hero-max: 4.2rem;
+  --atlas-card-font-base: 18;
+  --atlas-card-font-hub: 20;
+  --atlas-card-font-branch: 18;
+  --atlas-card-font-leaf: 16;
+  --atlas-card-min-width: 132;
+  --atlas-card-max-width: 228;
+  --atlas-stage-min-height: 620px;
+  --atlas-field-font-size: 12.5;
+  --atlas-field-font-size-mobile: 11.25;
+  --atlas-field-opacity: 0.12;
   --font-display: var(--display);
   --font-body: var(--sans);
   --font-mono: var(--mono);

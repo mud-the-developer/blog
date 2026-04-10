@@ -2,12 +2,9 @@ import { layoutWithLines, prepareWithSegments } from './vendor/pretext/layout.mj
 
 const AUTO_TARGET_SELECTORS = [
   '[data-pretext-target]',
-  '.note-body > p',
   '.note-body > h2',
   '.note-body > h3',
   '.note-body > h4',
-  '.note-body > li',
-  '.note-body li',
   '.note-body figcaption',
   '.note-body blockquote > p',
   '.backlinks > h2',

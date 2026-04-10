@@ -3,12 +3,12 @@ import { layoutNextLine, layoutWithLines, prepareWithSegments } from './vendor/p
 const STAGE_SELECTOR = '[data-note-web]';
 const MAX_NODES = 14;
 const MOBILE_NODES = 8;
-const CARD_MIN_WIDTH = 144;
-const CARD_MAX_WIDTH = 244;
-const CARD_PADDING_X = 15;
-const CARD_PADDING_Y = 14;
-const CARD_LINE_HEIGHT = 24;
-const CARD_TARGET_LINES = 4;
+const CARD_MIN_WIDTH = 132;
+const CARD_MAX_WIDTH = 228;
+const CARD_PADDING_X = 12;
+const CARD_PADDING_Y = 12;
+const CARD_LINE_HEIGHT = 22;
+const CARD_TARGET_LINES = 3;
 const ITERATIONS = 180;
 const COMPACT_BREAKPOINT = 720;
 const DEFAULT_DETAIL_TITLE = 'Archive atlas';
@@ -19,12 +19,10 @@ const FIELD_SIDE = 20;
 const FIELD_GUTTER = 8;
 const FIELD_VERTICAL_GUTTER = 2;
 const FIELD_MIN_SPAN = 52;
-const FIELD_FONT_SIZE = 14;
-const FIELD_LINE_HEIGHT = 20;
-const FIELD_FONT = '500 14px "Iowan Old Style", "Palatino Linotype", Georgia, serif';
-const MOBILE_FIELD_FONT_SIZE = 12;
-const MOBILE_FIELD_LINE_HEIGHT = 17;
-const MOBILE_FIELD_FONT = '500 12px "Iowan Old Style", "Palatino Linotype", Georgia, serif';
+const FIELD_FONT_SIZE = 12.5;
+const FIELD_LINE_HEIGHT = 18;
+const MOBILE_FIELD_FONT_SIZE = 11.25;
+const MOBILE_FIELD_LINE_HEIGHT = 16;
 const DRAG_THRESHOLD = 4;
 const PHYSICS_DAMPING = 0.84;
 const PHYSICS_REPULSION = 8200;
@@ -50,6 +48,29 @@ function readArchiveFieldEntries() {
 
 function collapseWhitespace(value) {
   return String(value || '').replace(/\s+/g, ' ').trim();
+}
+
+function readRootNumber(name, fallback) {
+  const raw = window.getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const value = Number.parseFloat(raw);
+  return Number.isFinite(value) ? value : fallback;
+}
+
+function atlasTuning() {
+  return {
+    cardMinWidth: readRootNumber('--atlas-card-min-width', CARD_MIN_WIDTH),
+    cardMaxWidth: readRootNumber('--atlas-card-max-width', CARD_MAX_WIDTH),
+    fontBase: readRootNumber('--atlas-card-font-base', 18),
+    fontHub: readRootNumber('--atlas-card-font-hub', 20),
+    fontBranch: readRootNumber('--atlas-card-font-branch', 18),
+    fontLeaf: readRootNumber('--atlas-card-font-leaf', 16),
+    fieldFontSize: readRootNumber('--atlas-field-font-size', FIELD_FONT_SIZE),
+    fieldFontSizeMobile: readRootNumber('--atlas-field-font-size-mobile', MOBILE_FIELD_FONT_SIZE),
+  };
+}
+
+function atlasFieldFont(size) {
+  return `500 ${size}px "Iowan Old Style", "Palatino Linotype", Georgia, serif`;
 }
 
 function boot() {
@@ -88,21 +109,22 @@ async function render(stage, graphUrl, archiveField) {
   if (width <= 0 || height <= 0) return;
 
   const compact = width < COMPACT_BREAKPOINT;
+  const tuning = atlasTuning();
   const desktopHeight = compact ? height : getDesktopStageHeight(stage, height);
   const sizing = compact
     ? {
-        minWidth: 140,
-        maxWidth: 272,
+        minWidth: Math.max(132, tuning.cardMinWidth),
+        maxWidth: Math.min(248, tuning.cardMaxWidth + 18),
         lineHeight: 20,
         preferredLines: 3,
-        fontSize: 20,
+        fontSize: tuning.fontBranch,
       }
     : {
-        minWidth: CARD_MIN_WIDTH,
-        maxWidth: CARD_MAX_WIDTH,
+        minWidth: tuning.cardMinWidth,
+        maxWidth: tuning.cardMaxWidth,
         lineHeight: CARD_LINE_HEIGHT,
         preferredLines: CARD_TARGET_LINES,
-        fontSize: 22,
+        fontSize: tuning.fontBase,
       };
 
   const sizedNodes = data.nodes
@@ -142,8 +164,8 @@ async function render(stage, graphUrl, archiveField) {
     centerX: width * 0.52,
     centerY: sceneHeight * 0.5,
     textLayer,
-    textPreparedDesktop: prepareWithSegments(buildFieldText(archiveField, false), FIELD_FONT),
-    textPreparedMobile: prepareWithSegments(buildFieldText(archiveField, true), MOBILE_FIELD_FONT),
+    textPreparedDesktop: prepareWithSegments(buildFieldText(archiveField, false), atlasFieldFont(tuning.fieldFontSize)),
+    textPreparedMobile: prepareWithSegments(buildFieldText(archiveField, true), atlasFieldFont(tuning.fieldFontSizeMobile)),
     nodes: sizedNodes.map(node => ({ ...node, position: positions.get(node.id) })),
     links: filteredLinks,
     neighborMap,
@@ -360,8 +382,9 @@ function renderScene(state, neighborMap) {
 }
 
 function renderText(state) {
+  const tuning = atlasTuning();
   const lineHeight = state.compact ? MOBILE_FIELD_LINE_HEIGHT : FIELD_LINE_HEIGHT;
-  const fontSize = state.compact ? MOBILE_FIELD_FONT_SIZE : FIELD_FONT_SIZE;
+  const fontSize = state.compact ? tuning.fieldFontSizeMobile : tuning.fieldFontSize;
   const prepared = state.compact ? state.textPreparedMobile : state.textPreparedDesktop;
   const rows = Math.floor((state.height - FIELD_TOP * 2) / lineHeight);
   const fragment = document.createDocumentFragment();
@@ -587,10 +610,13 @@ function buildNeighborMap(links) {
 }
 
 function sizeNode(node, sizing) {
+  const tuning = atlasTuning();
   const tierScale =
-    node.tier === 'hub' ? { min: 232, max: 318, font: sizing.fontSize + 2, lines: sizing.preferredLines + 1 } :
-    node.tier === 'branch' ? { min: 184, max: 272, font: sizing.fontSize, lines: sizing.preferredLines } :
-    { min: sizing.minWidth, max: 232, font: sizing.fontSize - 1, lines: Math.max(3, sizing.preferredLines - 1) };
+    node.tier === 'hub'
+      ? { min: Math.max(sizing.minWidth + 32, 184), max: Math.min(sizing.maxWidth + 44, 276), font: tuning.fontHub, lines: sizing.preferredLines + 1 }
+      : node.tier === 'branch'
+        ? { min: Math.max(sizing.minWidth + 18, 156), max: Math.min(sizing.maxWidth + 20, 244), font: tuning.fontBranch, lines: sizing.preferredLines }
+        : { min: sizing.minWidth, max: Math.min(sizing.maxWidth - 8, 212), font: tuning.fontLeaf, lines: Math.max(2, sizing.preferredLines - 1) };
   const font = `700 ${tierScale.font}px "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif`;
   const prepared = prepareWithSegments(node.title, font);
   let chosen = null;

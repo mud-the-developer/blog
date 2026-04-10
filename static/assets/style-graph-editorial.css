@@ -5,12 +5,14 @@
 
 .graph-hero {
   display: grid;
-  gap: 18px;
+  gap: 20px;
+  grid-template-columns: minmax(0, 1.15fr) minmax(220px, 0.75fr);
+  align-items: end;
 }
 
 .graph-hero h1 {
   max-width: 10ch;
-  font-size: clamp(3rem, 4.8vw, 5.4rem);
+  font-size: clamp(var(--atlas-hero-min), 3vw, var(--atlas-hero-max));
 }
 
 .graph-panel--editorial {
@@ -27,6 +29,7 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
   margin: 0;
+  align-self: end;
 }
 
 .graph-stat-strip dt,
@@ -43,6 +46,10 @@
 }
 
 @media (max-width: 760px) {
+  .graph-hero {
+    grid-template-columns: 1fr;
+  }
+
   .graph-stat-strip {
     grid-template-columns: 1fr;
     gap: 12px;
