@@ -16,14 +16,17 @@ import json
 import math
 import os
 import re
+import sys
+import time
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from datetime import datetime
 from html import escape as html_escape
 from pathlib import Path
 from typing import Any
-from urllib.parse import quote
+import urllib.error
 import urllib.request
+from urllib.parse import quote
 from urllib.request import urlopen
 from zoneinfo import ZoneInfo
 
@@ -39,6 +42,8 @@ KST = ZoneInfo("Asia/Seoul")
 ARCHIVE_STEM = "news-digest-archive"
 ARCHIVE_URL = f"/notes/news/{ARCHIVE_STEM}/"
 NEWS_ASSET_DIR = ROOT / "static" / "news" / "assets"
+DEFAULT_GEMMA_REQUEST_TIMEOUT_SECONDS = 35.0
+DEFAULT_GEMMA_REQUEST_ATTEMPTS = 2
 
 SECTION_SPECS = [
     ("hot24", "Hot in 24 Hours", "The fastest-moving items across repos, papers, and community chatter."),
@@ -160,6 +165,10 @@ class BetaDigest:
     closing: str
 
 
+class GemmaRequestError(RuntimeError):
+    """Raised when the optional Gemma beta layer fails after retries."""
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate the blog news digest artifacts.")
     parser.add_argument("--date", help="Issue date in YYYY-MM-DD. Defaults to current date in Asia/Seoul.")
@@ -259,6 +268,30 @@ def gemma_api_url() -> str:
         f"https://generativelanguage.googleapis.com/v1beta/"
         f"{gemma_model_name()}:generateContent?key={os.getenv('GOOGLE_AI_API_KEY','').strip()}"
     )
+
+
+def gemma_request_timeout_seconds() -> float:
+    raw = (os.getenv("GOOGLE_AI_TIMEOUT_SECONDS") or "").strip()
+    if raw:
+        try:
+            return max(10.0, min(float(raw), 120.0))
+        except ValueError:
+            pass
+    return DEFAULT_GEMMA_REQUEST_TIMEOUT_SECONDS
+
+
+def gemma_request_attempts() -> int:
+    raw = (os.getenv("GOOGLE_AI_MAX_ATTEMPTS") or "").strip()
+    if raw:
+        try:
+            return max(1, min(int(raw), 4))
+        except ValueError:
+            pass
+    return DEFAULT_GEMMA_REQUEST_ATTEMPTS
+
+
+def warn_digest(message: str) -> None:
+    print(f"[news-digest] {message}", file=sys.stderr)
 
 
 def normalize_image(url: str) -> str:
@@ -1357,6 +1390,110 @@ def parse_llm_json(text: str) -> dict[str, Any]:
     return json.loads(raw)
 
 
+def join_phrases(parts: list[str]) -> str:
+    cleaned = [part.strip() for part in parts if part and part.strip()]
+    if not cleaned:
+        return ""
+    if len(cleaned) == 1:
+        return cleaned[0]
+    if len(cleaned) == 2:
+        return f"{cleaned[0]} and {cleaned[1]}"
+    return f"{', '.join(cleaned[:-1])}, and {cleaned[-1]}"
+
+
+def fallback_takeaways(context: DigestContext) -> list[str]:
+    lines: list[str] = []
+    for card in context.top_cards[:4]:
+        meta_bits = [source_label(card.source)]
+        if card.rank_delta is not None and card.rank_delta != 0:
+            direction = "up" if card.rank_delta > 0 else "down"
+            meta_bits.append(f"{direction} {abs(card.rank_delta)}")
+        elif card.published_hours_ago >= 0:
+            meta_bits.append(relative_hours_label(card.published_hours_ago))
+        meta = join_phrases(meta_bits[:2])
+        line = f"{card.badge}: {card.headline}"
+        if meta:
+            line += f" ({meta})"
+        lines.append(line)
+    return lines or [context.summary]
+
+
+def fallback_section_story(
+    heading: str,
+    description: str,
+    cards: list[NewsItem],
+) -> tuple[str, list[str]]:
+    if not cards:
+        return heading, [description]
+
+    lead_cards = cards[:3]
+    lead_labels = join_phrases(
+        [f"{card.headline} from {source_label(card.source)}" for card in lead_cards]
+    )
+    story = [ensure_terminal_punctuation(f"{description} {lead_labels} are setting the pace.")]
+
+    followups: list[str] = []
+    for card in lead_cards[:2]:
+        followups.append(
+            f"{card.headline} lands as a {card.badge.lower()} signal with {card.meta.lower()}."
+        )
+    if followups:
+        story.append(ensure_terminal_punctuation(" ".join(followups)))
+
+    return heading, story[:2]
+
+
+def fallback_beta_digest(issue_dt: datetime, context: DigestContext) -> BetaDigest:
+    takeaways = fallback_takeaways(context)
+    section_titles: dict[str, str] = {}
+    section_bodies: dict[str, list[str]] = {}
+
+    for slug, heading, description, cards in context.sections:
+        title, paragraphs = fallback_section_story(heading, description, cards)
+        section_titles[slug] = title
+        section_bodies[slug] = paragraphs
+
+    repo_count = next((int(row["value"]) for row in context.source_counts if row["label"] == "GitHub"), 0)
+    top_story_labels = join_phrases([card.headline for card in context.top_cards[:3]])
+    article_body = [
+        ensure_terminal_punctuation(context.summary),
+        ensure_terminal_punctuation(
+            f"The quickest scan starts with {top_story_labels or 'the top-ranked repo, paper, and community items'}, "
+            f"while {repo_count} GitHub-led signals anchor the repo side of the brief."
+        ),
+        ensure_terminal_punctuation(
+            "Use the structured digest below when you need the full wire, raw links, and the longer tail of items that did not make the front narrative."
+        ),
+    ]
+    lead = ensure_terminal_punctuation(
+        f"{context.summary} This fallback brief keeps the page live when the optional Gemma pass times out."
+    )
+    return BetaDigest(
+        title=f"AI News Brief — {issue_dt.strftime('%b %d')}",
+        dek=context.summary,
+        lead=lead,
+        article_body=article_body,
+        takeaways=takeaways,
+        section_titles=section_titles,
+        section_bodies=section_bodies,
+        closing="The structured digest remains the complete reference layer for the rest of the wire.",
+    )
+
+
+def is_retryable_gemma_error(error: Exception) -> bool:
+    if isinstance(error, TimeoutError):
+        return True
+    if isinstance(error, urllib.error.HTTPError):
+        return error.code in {408, 429, 500, 502, 503, 504}
+    if isinstance(error, urllib.error.URLError):
+        return True
+    if isinstance(error, json.JSONDecodeError):
+        return True
+    if isinstance(error, ValueError):
+        return True
+    return False
+
+
 def gemma_overview_payload(issue_dt: datetime, context: DigestContext) -> dict[str, Any]:
     return {
         "task": "Write the front matter for a newsroom-style daily AI beta brief in JSON.",
@@ -1492,19 +1629,38 @@ def gemma_json_request(cache_key: str, payload: dict[str, Any], *, temperature: 
         data=json.dumps(request_body).encode("utf-8"),
         headers={"Content-Type": "application/json", "User-Agent": "blog-news-digest/1.0"},
     )
-    with urllib.request.urlopen(req, timeout=45) as response:
-        api_payload = json.loads(response.read().decode("utf-8"))
-    parts = (((api_payload.get("candidates") or [{}])[0].get("content") or {}).get("parts") or [])
-    response_text = ""
-    for part in parts:
-        if part.get("thought"):
-            continue
-        response_text = part.get("text", "")
-        if response_text:
+    last_error: Exception | None = None
+    attempts = gemma_request_attempts()
+
+    for attempt in range(1, attempts + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=gemma_request_timeout_seconds()) as response:
+                api_payload = json.loads(response.read().decode("utf-8"))
+            parts = (((api_payload.get("candidates") or [{}])[0].get("content") or {}).get("parts") or [])
+            response_text = ""
+            for part in parts:
+                if part.get("thought"):
+                    continue
+                response_text = part.get("text", "")
+                if response_text:
+                    break
+            parsed = parse_llm_json(response_text)
+            BETA_DIGEST_CACHE[cache_key] = parsed
+            return parsed
+        except Exception as error:
+            last_error = error
+            retryable = is_retryable_gemma_error(error)
+            if attempt < attempts and retryable:
+                backoff_seconds = min(8.0, 1.5 * (2 ** (attempt - 1)))
+                warn_digest(
+                    f"Gemma request attempt {attempt}/{attempts} failed ({type(error).__name__}); retrying in {backoff_seconds:.1f}s."
+                )
+                time.sleep(backoff_seconds)
+                continue
             break
-    parsed = parse_llm_json(response_text)
-    BETA_DIGEST_CACHE[cache_key] = parsed
-    return parsed
+
+    detail = f"{type(last_error).__name__}: {last_error}" if last_error else "unknown error"
+    raise GemmaRequestError(f"Gemma request failed after {attempts} attempt(s): {detail}")
 
 
 def normalize_overview(parsed: dict[str, Any], issue_dt: datetime, context: DigestContext) -> BetaDigest:
@@ -1730,21 +1886,33 @@ def generate_gemma_beta_digest(issue_dt: datetime, context: DigestContext) -> Be
         except TypeError:
             pass
 
-    overview = normalize_overview(
-        gemma_json_request(overview_cache_key(issue_dt, context), gemma_overview_payload(issue_dt, context), temperature=0.42),
-        issue_dt,
-        context,
-    )
+    try:
+        overview = normalize_overview(
+            gemma_json_request(
+                overview_cache_key(issue_dt, context),
+                gemma_overview_payload(issue_dt, context),
+                temperature=0.42,
+            ),
+            issue_dt,
+            context,
+        )
+    except GemmaRequestError as error:
+        warn_digest(f"Gemma overview failed; using deterministic beta fallback. {error}")
+        return fallback_beta_digest(issue_dt, context)
 
     section_titles: dict[str, str] = {}
     section_bodies: dict[str, list[str]] = {}
     for slug, heading, description, cards in context.sections:
-        parsed = gemma_json_request(
-            section_cache_key(issue_dt, context, slug, cards),
-            gemma_section_payload(issue_dt, slug, heading, description, cards, overview),
-            temperature=0.5,
-        )
-        section_title, paragraphs = normalize_section_story(parsed, heading, description)
+        try:
+            parsed = gemma_json_request(
+                section_cache_key(issue_dt, context, slug, cards),
+                gemma_section_payload(issue_dt, slug, heading, description, cards, overview),
+                temperature=0.5,
+            )
+            section_title, paragraphs = normalize_section_story(parsed, heading, description)
+        except GemmaRequestError as error:
+            warn_digest(f"Gemma section '{slug}' failed; using local fallback. {error}")
+            section_title, paragraphs = fallback_section_story(heading, description, cards)
         section_titles[slug] = section_title
         section_bodies[slug] = paragraphs
 

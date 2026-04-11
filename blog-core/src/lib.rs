@@ -564,7 +564,6 @@ struct DataviewQueryOptions {
 struct LayoutContext {
     body_class: String,
     site_title: String,
-    site_description: String,
     site_url: String,
     lang: String,
     page_title: String,
@@ -4366,7 +4365,6 @@ fn website_layout(
     LayoutContext {
         body_class: body_class_for_path(page_path).to_string(),
         site_title: config.site.title.clone(),
-        site_description: config.site.description.clone(),
         site_url: normalize_base_url(&config.site.base_url),
         lang: config.site.language.clone(),
         page_title,
