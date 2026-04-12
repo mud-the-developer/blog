@@ -19,14 +19,14 @@ import re
 import sys
 import time
 from collections import Counter, defaultdict
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
-from html import escape as html_escape
+from html import escape as html_escape, unescape as html_unescape
 from pathlib import Path
 from typing import Any
 import urllib.error
 import urllib.request
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
 from urllib.request import urlopen
 from zoneinfo import ZoneInfo
 
@@ -44,6 +44,7 @@ ARCHIVE_URL = f"/notes/news/{ARCHIVE_STEM}/"
 NEWS_ASSET_DIR = ROOT / "static" / "news" / "assets"
 DEFAULT_GEMMA_REQUEST_TIMEOUT_SECONDS = 35.0
 DEFAULT_GEMMA_REQUEST_ATTEMPTS = 2
+RECENT_DIGEST_LOOKBACK_DAYS = 5
 
 SECTION_SPECS = [
     ("hot24", "Hot in 24 Hours", "The fastest-moving items across repos, papers, and community chatter."),
@@ -169,6 +170,17 @@ class GemmaRequestError(RuntimeError):
     """Raised when the optional Gemma beta layer fails after retries."""
 
 
+@dataclass
+class RecentDigestMemory:
+    urls: Counter[str] = field(default_factory=Counter)
+    canonical_keys: Counter[str] = field(default_factory=Counter)
+    topics: Counter[str] = field(default_factory=Counter)
+    sources: Counter[str] = field(default_factory=Counter)
+
+
+RECENT_DIGEST_MEMORY = RecentDigestMemory()
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate the blog news digest artifacts.")
     parser.add_argument("--date", help="Issue date in YYYY-MM-DD. Defaults to current date in Asia/Seoul.")
@@ -188,6 +200,21 @@ def issue_date_label(issue_dt: datetime) -> str:
 
 def generated_timestamp_label(generated_at: datetime) -> str:
     return generated_at.strftime("%b %-d, %Y · %-I:%M %p KST")
+
+
+def recent_digest_paths(issue_dt: datetime, lookback_days: int = RECENT_DIGEST_LOOKBACK_DAYS) -> list[Path]:
+    dated_paths: list[tuple[datetime, Path]] = []
+    for path in POSTS_DIR.glob("*-ai-news-digest.md"):
+        stem = path.stem.removesuffix("-ai-news-digest")
+        try:
+            entry_dt = datetime.strptime(stem, "%Y-%m-%d").replace(tzinfo=KST)
+        except ValueError:
+            continue
+        delta_days = (issue_dt.date() - entry_dt.date()).days
+        if 1 <= delta_days <= lookback_days:
+            dated_paths.append((entry_dt, path))
+    dated_paths.sort(reverse=True)
+    return [path for _, path in dated_paths]
 
 
 def load_source_feed() -> dict[str, Any]:
@@ -518,6 +545,14 @@ def primary_topic(item: dict[str, Any]) -> str:
     return item_badge(item).lower()
 
 
+def topic_from_text(text: str, *, fallback_badge: str = "signal") -> str:
+    lowered = text.lower()
+    for topic, keywords in TOPIC_BUCKETS.items():
+        if any(keyword in lowered for keyword in keywords):
+            return topic
+    return fallback_badge.lower()
+
+
 def canonical_key(item: dict[str, Any]) -> str:
     cached = item.get("_canonical_key")
     if isinstance(cached, str) and cached:
@@ -533,6 +568,59 @@ def canonical_key(item: dict[str, Any]) -> str:
             return f"repo::{repo_name.lower()}"
     normalized = re.sub(r"[^a-z0-9]+", " ", title.lower()).strip()
     return " ".join(normalized.split()[:14])
+
+
+def canonical_key_from_url_and_title(url: str, title: str) -> str:
+    normalized_url = url.strip().lower()
+    if "github.com/" in normalized_url:
+        match = re.search(r"github\.com/([^/?#]+/[^/?#]+)", normalized_url)
+        if match:
+            return f"repo::{match.group(1).lower()}"
+    normalized = re.sub(r"[^a-z0-9]+", " ", title.lower()).strip()
+    return " ".join(normalized.split()[:14])
+
+
+def source_from_url(url: str) -> str:
+    host = urlparse(url).netloc.lower()
+    if host.startswith("www."):
+        host = host[4:]
+    if host == "news.hada.io":
+        return "geeknews"
+    return host or "unknown"
+
+
+def load_recent_digest_memory(issue_dt: datetime) -> RecentDigestMemory:
+    memory = RecentDigestMemory()
+    card_pattern = re.compile(
+        r'<a class="news-digest-card[^"]*" href="([^"]+)"[^>]*>.*?<h3[^>]*>(.*?)</h3>',
+        re.DOTALL,
+    )
+    for path in recent_digest_paths(issue_dt):
+        raw = path.read_text()
+        day_urls: set[str] = set()
+        day_keys: set[str] = set()
+        day_topics: set[str] = set()
+        day_sources: set[str] = set()
+        for url, title_html in card_pattern.findall(raw):
+            if not url.startswith("http"):
+                continue
+            title = html_unescape(re.sub(r"<[^>]+>", "", title_html)).strip()
+            if not title:
+                continue
+            day_urls.add(url)
+            day_keys.add(canonical_key_from_url_and_title(url, title))
+            day_topics.add(topic_from_text(title))
+            day_sources.add(source_from_url(url))
+        memory.urls.update(day_urls)
+        memory.canonical_keys.update(day_keys)
+        memory.topics.update(day_topics)
+        memory.sources.update(day_sources)
+    return memory
+
+
+def set_recent_digest_memory(issue_dt: datetime) -> None:
+    global RECENT_DIGEST_MEMORY
+    RECENT_DIGEST_MEMORY = load_recent_digest_memory(issue_dt)
 
 
 def freshness_bonus(hours: int) -> float:
@@ -758,6 +846,42 @@ def local_signal_score(item: dict[str, Any]) -> float:
         score -= 0.18
 
     return round(score, 3)
+
+
+def recent_digest_penalty(item: dict[str, Any]) -> float:
+    key = canonical_key(item)
+    url = str(item.get("url") or "").strip()
+    topic = primary_topic(item)
+    source = str(item.get("source") or "").strip().lower()
+
+    key_hits = RECENT_DIGEST_MEMORY.canonical_keys.get(key, 0)
+    url_hits = RECENT_DIGEST_MEMORY.urls.get(url, 0)
+    topic_hits = RECENT_DIGEST_MEMORY.topics.get(topic, 0)
+    source_hits = RECENT_DIGEST_MEMORY.sources.get(source, 0)
+
+    penalty = 0.0
+    penalty += key_hits * 3.1
+    penalty += max(0, url_hits - key_hits) * 1.1
+    penalty += max(0, topic_hits - 1) * 0.35
+    penalty += max(0, source_hits - 2) * 0.08
+
+    if key_hits == 0 and url_hits == 0:
+        penalty -= 0.22
+    return penalty
+
+
+def recent_repeat_count(item: dict[str, Any]) -> int:
+    return max(
+        RECENT_DIGEST_MEMORY.canonical_keys.get(canonical_key(item), 0),
+        RECENT_DIGEST_MEMORY.urls.get(str(item.get("url") or "").strip(), 0),
+    )
+
+
+def selection_signal_score(item: dict[str, Any]) -> float:
+    cached = item.get("_selection_score")
+    if isinstance(cached, (float, int)):
+        return float(cached)
+    return round(local_signal_score(item) - recent_digest_penalty(item), 3)
 
 
 def clamp_text(value: str, limit: int) -> str:
@@ -1021,6 +1145,7 @@ def annotated_item(raw: dict[str, Any]) -> dict[str, Any]:
     item["_topic"] = primary_topic(item)
     item["_canonical_key"] = canonical_key(item)
     item["_signal_score"] = local_signal_score(item)
+    item["_selection_score"] = selection_signal_score(item)
     return item
 
 
@@ -1035,12 +1160,12 @@ def prepare_candidates(payload: dict[str, Any], *, relaxed: bool = False) -> lis
             continue
         key = canonical_key(item)
         current = deduped.get(key)
-        if current is None or local_signal_score(item) > local_signal_score(current):
+        if current is None or selection_signal_score(item) > selection_signal_score(current):
             deduped[key] = item
     return sorted(
         deduped.values(),
         key=lambda item: (
-            -local_signal_score(item),
+            -selection_signal_score(item),
             int(item.get("rank") or 999),
             int(item.get("publishedHoursAgo") or 999),
             item_title(item),
@@ -1100,7 +1225,7 @@ def select_diverse_items(
             if badge_limit is not None and badge_counts[badge] >= badge_limit:
                 continue
             redundancy = max((item_similarity(item, existing) for existing in selected), default=0.0)
-            marginal = local_signal_score(item) - (0.55 * redundancy)
+            marginal = selection_signal_score(item) - (0.55 * redundancy)
             if winner_score is None or marginal > winner_score:
                 winner = item
                 winner_score = marginal
@@ -1128,7 +1253,7 @@ def select_diverse_items(
 
 def sort_key(item: dict[str, Any]) -> tuple[float, int, int, str]:
     return (
-        -local_signal_score(item),
+        -selection_signal_score(item),
         int(item.get("rank") or 999),
         int(item.get("publishedHoursAgo") or 999),
         item_title(item),
@@ -1138,7 +1263,7 @@ def sort_key(item: dict[str, Any]) -> tuple[float, int, int, str]:
 def prune_section_items(slug: str, items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     if not items:
         return []
-    best_score = local_signal_score(items[0])
+    best_score = selection_signal_score(items[0])
     min_keep = {"hot24": 4, **SECTION_MINIMUMS}.get(slug, 3)
     floor = {
         "hot24": max(4.4, best_score - 2.4),
@@ -1146,7 +1271,7 @@ def prune_section_items(slug: str, items: list[dict[str, Any]]) -> list[dict[str
         "papers": max(4.1, best_score - 1.9),
         "social": max(3.3, best_score - 2.1),
     }.get(slug, 0.0)
-    filtered = [item for item in items if local_signal_score(item) >= floor]
+    filtered = [item for item in items if selection_signal_score(item) >= floor]
     if len(filtered) >= min_keep:
         return filtered
     return items[: min(min_keep, len(items))]
@@ -1308,10 +1433,18 @@ def build_digest_context(payload: dict[str, Any], limit: int) -> DigestContext:
     featured_raw: list[dict[str, Any]] = []
     for slug in ("repos", "papers", "social"):
         if curated_raw[slug]:
-            lead = curated_raw[slug][0]
+            lead = next(
+                (
+                    item
+                    for item in curated_raw[slug]
+                    if recent_repeat_count(item) == 0
+                    and (item_badge(item) != "Social" or local_signal_score(item) >= 4.0)
+                ),
+                curated_raw[slug][0],
+            )
             if item_badge(lead) != "Social" or local_signal_score(lead) >= 4.0:
                 featured_raw.append(lead)
-    extras_pool = sorted(
+    extras_pool_all = sorted(
         [
             item
             for slug in ("hot24", "repos", "papers", "social")
@@ -1320,13 +1453,19 @@ def build_digest_context(payload: dict[str, Any], limit: int) -> DigestContext:
         ],
         key=sort_key,
     )
-    extras = select_diverse_items(
-        extras_pool,
-        4,
-        max_per_source=1,
-        max_per_topic=1,
-        max_per_badge=2,
-    )
+    extras_pool = [item for item in extras_pool_all if recent_repeat_count(item) == 0]
+    extras = select_diverse_items(extras_pool, 4, max_per_source=1, max_per_topic=1, max_per_badge=2)
+    if len(extras) < 4:
+        refill = select_diverse_items(extras_pool_all, 4, max_per_source=1, max_per_topic=1, max_per_badge=2)
+        seen_extra = {canonical_key(item) for item in extras}
+        for item in refill:
+            key = canonical_key(item)
+            if key in seen_extra:
+                continue
+            extras.append(item)
+            seen_extra.add(key)
+            if len(extras) >= 4:
+                break
     for item in extras:
         key = canonical_key(item)
         if any(canonical_key(existing) == key for existing in featured_raw):
@@ -2478,6 +2617,7 @@ def main() -> None:
     payload = load_source_feed()
     write_source_snapshot(payload)
     generated_dt = datetime.now(tz=KST)
+    set_recent_digest_memory(issue_dt)
     context = build_digest_context(payload, args.limit)
     beta_stem = write_beta_post(issue_dt, generated_dt, context)
     digest_stem = write_post(issue_dt, generated_dt, context, beta_stem)
