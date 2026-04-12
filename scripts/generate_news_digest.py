@@ -2039,30 +2039,14 @@ def generate_gemma_beta_digest(issue_dt: datetime, context: DigestContext) -> Be
         warn_digest(f"Gemma overview failed; using deterministic beta fallback. {error}")
         return fallback_beta_digest(issue_dt, context)
 
-    section_titles: dict[str, str] = {}
-    section_bodies: dict[str, list[str]] = {}
-    for slug, heading, description, cards in context.sections:
-        try:
-            parsed = gemma_json_request(
-                section_cache_key(issue_dt, context, slug, cards),
-                gemma_section_payload(issue_dt, slug, heading, description, cards, overview),
-                temperature=0.5,
-            )
-            section_title, paragraphs = normalize_section_story(parsed, heading, description)
-        except GemmaRequestError as error:
-            warn_digest(f"Gemma section '{slug}' failed; using local fallback. {error}")
-            section_title, paragraphs = fallback_section_story(heading, description, cards)
-        section_titles[slug] = section_title
-        section_bodies[slug] = paragraphs
-
     beta = BetaDigest(
         title=overview.title,
         dek=overview.dek,
         lead=overview.lead,
         article_body=overview.article_body,
         takeaways=overview.takeaways,
-        section_titles=section_titles,
-        section_bodies=section_bodies,
+        section_titles={},
+        section_bodies={},
         closing=overview.closing,
     )
     BETA_DIGEST_CACHE[cache_key] = beta.__dict__
@@ -2241,7 +2225,7 @@ def archive_entries(current_stem: str, current_summary: str) -> list[dict[str, s
     for path in sorted(POSTS_DIR.glob("*-ai-news-digest.md"), reverse=True):
         stem = path.stem
         date_label = stem.removesuffix("-ai-news-digest")
-        title = f"Daily AI News Digest — {date_label}"
+        title = f"AI News Brief — {date_label}"
         entries.append(
             {
                 "title": title,
@@ -2255,7 +2239,7 @@ def archive_entries(current_stem: str, current_summary: str) -> list[dict[str, s
         entries.insert(
             0,
             {
-                "title": f"Daily AI News Digest — {date_label}",
+                "title": f"AI News Brief — {date_label}",
                 "url": f"/notes/news/{current_stem}/",
                 "date_label": date_label,
                 "description": current_summary,
@@ -2279,28 +2263,52 @@ def grouped_archive_entries(entries: list[dict[str, str]]) -> list[tuple[str, st
     return [(month_key, labels[month_key], grouped[month_key]) for month_key in sorted(grouped.keys(), reverse=True)]
 
 
+def render_top_inventory_list(cards: list[NewsItem], *, compact: bool = False) -> list[str]:
+    lines = ['    <div class="news-digest-top-grid">']
+    card_class = "news-digest-top-card"
+    if compact:
+        card_class += " news-digest-top-card--compact"
+    for card in cards:
+        lines.extend(render_digest_card_lines(card, extra_classes=card_class))
+    lines.append("    </div>")
+    return lines
+
+
+def cards_for_section(
+    sections: list[tuple[str, str, str, list[NewsItem]]],
+    slug: str,
+) -> tuple[str, str, list[NewsItem]]:
+    for section_slug, title, description, cards in sections:
+        if section_slug == slug:
+            return title, description, cards
+    return slug, "", []
+
+
 def render_markdown(
     issue_dt: datetime,
     generated_dt: datetime,
-    summary: str,
-    top_cards: list[NewsItem],
-    repo_scoreboard: list[NewsItem],
-    sections: list[tuple[str, str, str, list[NewsItem]]],
+    context: DigestContext,
+    brief: BetaDigest,
     archives: list[dict[str, str]],
-    beta_stem: str | None = None,
 ) -> tuple[str, str]:
     issue_date = issue_dt.strftime("%Y-%m-%d")
     stem = f"{issue_date}-ai-news-digest"
-    title = f"Daily AI News Digest — {issue_date}"
+    title = brief.title or f"AI News Brief — {issue_date}"
     issue_label = issue_date_label(issue_dt)
     generated_label = generated_timestamp_label(generated_dt)
+    repo_title, repo_description, repo_cards = cards_for_section(context.sections, "repos")
+    paper_title, paper_description, paper_cards = cards_for_section(context.sections, "papers")
+    social_title, social_description, social_cards = cards_for_section(context.sections, "social")
+    article_paragraphs = [paragraph.strip() for paragraph in brief.article_body if paragraph.strip()][:4]
+    if not article_paragraphs:
+        article_paragraphs = [context.summary]
     frontmatter = "\n".join(
         [
             "---",
             f"title: {yaml_quote(title)}",
-            f"description: {yaml_quote(summary)}",
+            f"description: {yaml_quote(brief.dek or context.summary)}",
             f"date: {issue_date}",
-            "tags: [news, news-digest, ai, radar]",
+            "tags: [news, news-brief, ai, radar]",
             "publish: true",
             "content-classes: [news-digest-note]",
             "---",
@@ -2313,12 +2321,12 @@ def render_markdown(
         '    <div class="news-digest-hero-copy">',
         '      <p class="section-kicker">News</p>',
         f'      <h1 data-pretext-target>{safe_text(title)}</h1>',
-        f'      <p class="news-digest-lead" data-pretext-target>{safe_text(summary)}</p>',
+        f'      <p class="news-digest-lead" data-pretext-target>{safe_text(brief.dek or context.summary)}</p>',
+        f'      <p class="news-digest-section-description" data-pretext-target>{safe_text(brief.lead or context.summary)}</p>',
         '      <div class="news-digest-actions" role="group" aria-label="News actions">',
         '        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>',
         '        <a class="post-cta-link" href="#digest-archive">Digest archive</a>',
         f'        <a class="post-cta-link" href="{safe_text(ARCHIVE_URL)}">Monthly archive</a>',
-        *( [f'        <a class="post-cta-link" href="/notes/news/{beta_stem}/">Open beta brief</a>'] if beta_stem else [] ),
         "      </div>",
         "    </div>",
         '    <div class="news-digest-meta-grid">',
@@ -2331,73 +2339,75 @@ def render_markdown(
         f'        <strong><time datetime="{generated_dt.isoformat()}">{safe_text(generated_label)}</time></strong>',
         "      </div>",
         '      <div class="news-digest-meta-card">',
-        '        <span class="news-digest-meta-label">Sections</span>',
-        f"        <strong>{len(sections)}</strong>",
+        '        <span class="news-digest-meta-label">Signals</span>',
+        f"        <strong>{len(repo_cards)} repos · {len(paper_cards)} papers</strong>",
         "      </div>",
         "    </div>",
         "  </section>",
         "",
     ]
-    if repo_scoreboard:
-        max_score = max(card.score for card in repo_scoreboard) or 1.0
+
+    if repo_cards or paper_cards:
         body.extend(
             [
-                '  <section class="news-digest-score-shell" aria-label="Repository momentum board">',
+                '  <section class="news-digest-top-shell" aria-label="Primary repo and paper lists">',
                 '    <header class="news-digest-section-head">',
                 '      <p class="section-kicker">Signal Board</p>',
-                '      <h2 data-pretext-target>Repo momentum board</h2>',
+                '      <h2 data-pretext-target>Repositories and papers</h2>',
                 "    </header>",
-                '    <p class="news-digest-section-description" data-pretext-target>Local signal score blends freshness, feed rank, keyword relevance, and GitHub star velocity.</p>',
-                '    <div class="news-digest-scoreboard">',
+                '    <p class="news-digest-section-description" data-pretext-target>Keep the full repo and paper scan above the fold, then read the day as one short brief below.</p>',
             ]
         )
-        for index, card in enumerate(repo_scoreboard, start=1):
-            fill = max(18.0, min(100.0, round((card.score / max_score) * 100.0, 1)))
+        if repo_cards:
             body.extend(
                 [
-                    f'      <a class="news-digest-score-row" href="{safe_text(card.url)}" target="_blank" rel="noreferrer">',
-                    '        <div class="news-digest-score-copy">',
-                    f'          <span class="news-digest-score-rank">{index:02d}</span>',
-                    f'          <strong>{safe_text(card.headline or card.title)}</strong>',
-                    f'          <span>{safe_text(card.meta)}</span>',
-                    "        </div>",
-                    '        <div class="news-digest-score-bar" aria-hidden="true">',
-                    f'          <span style="width: {fill:.1f}%"></span>',
-                    "        </div>",
-                    f'        <strong class="news-digest-score-value">{card.score:.2f}</strong>',
-                    "      </a>",
+                    '    <div class="news-digest-section-head">',
+                    '      <p class="section-kicker">Top list</p>',
+                    f'      <h3 data-pretext-target>{safe_text(repo_title)}</h3>',
+                    f'      <p class="news-digest-section-description" data-pretext-target>{safe_text(repo_description)}</p>',
+                    "    </div>",
                 ]
             )
-        body.extend(["    </div>", "  </section>", ""])
+            body.extend(render_top_inventory_list(repo_cards))
+        if paper_cards:
+            body.extend(
+                [
+                    '    <div class="news-digest-section-head">',
+                    '      <p class="section-kicker">Top list</p>',
+                    f'      <h3 data-pretext-target>{safe_text(paper_title)}</h3>',
+                    f'      <p class="news-digest-section-description" data-pretext-target>{safe_text(paper_description)}</p>',
+                    "    </div>",
+                ]
+            )
+            body.extend(render_top_inventory_list(paper_cards, compact=True))
+        body.extend(["  </section>", ""])
 
-    if top_cards:
+    body.extend(
+        [
+            '  <section class="news-digest-section news-digest-beta-overview">',
+            '    <header class="news-digest-section-head">',
+            '      <p class="section-kicker">Today in AI</p>',
+            '      <h2>The day in one pass</h2>',
+            '    </header>',
+        ]
+    )
+    for paragraph in article_paragraphs:
+        body.append(f'    <p class="news-digest-section-description" data-pretext-target>{safe_text(paragraph)}</p>')
+    body.extend(["  </section>", ""])
+
+    if social_cards:
         body.extend(
             [
-                '  <section class="news-digest-top-shell" aria-label="Top signals">',
+                f'  <section id="digest-social" class="news-digest-section">',
                 '    <header class="news-digest-section-head">',
-                '      <p class="section-kicker">Highlights</p>',
-                '      <h2 data-pretext-target>Top signals</h2>',
+                '      <p class="section-kicker">Wire</p>',
+                f'      <h2 data-pretext-target>{safe_text(social_title)}</h2>',
                 "    </header>",
-                '    <div class="news-digest-top-grid">',
-            ]
-        )
-        for card in top_cards:
-            body.extend(render_digest_card_lines(card, extra_classes="news-digest-top-card"))
-        body.extend(["    </div>", "  </section>", ""])
-
-    for slug, heading, description, cards in sections:
-        body.extend(
-            [
-                f'  <section id="digest-{safe_text(slug)}" class="news-digest-section">',
-                '    <header class="news-digest-section-head">',
-                '      <p class="section-kicker">Section</p>',
-                f'      <h2 data-pretext-target>{safe_text(heading)}</h2>',
-                "    </header>",
-                f'    <p class="news-digest-section-description" data-pretext-target>{safe_text(description)}</p>',
+                f'    <p class="news-digest-section-description" data-pretext-target>{safe_text(social_description)}</p>',
                 '    <div class="news-digest-grid">',
             ]
         )
-        for card in cards:
+        for card in social_cards:
             body.extend(render_digest_card_lines(card))
         body.extend(["    </div>", "  </section>", ""])
 
@@ -2406,7 +2416,7 @@ def render_markdown(
             '  <section id="digest-archive" class="news-digest-archive">',
             '    <header class="news-digest-section-head">',
             '      <p class="section-kicker">Archive</p>',
-            '      <h2 data-pretext-target>Recent Digest Posts</h2>',
+            '      <h2 data-pretext-target>Recent issues</h2>',
             "    </header>",
             '    <div class="news-digest-archive-list">',
         ]
@@ -2430,7 +2440,7 @@ def render_markdown(
             f'    <a class="post-cta-link news-digest-archive-link" href="{safe_text(ARCHIVE_URL)}">Browse the monthly archive</a>',
             "  </section>",
             "",
-            f'  <p class="news-digest-footnote">Generated from the ranked feed for {safe_text(issue_label)}.</p>',
+            f'  <p class="news-digest-footnote">Generated from the ranked feed for {safe_text(issue_label)} as one single daily issue.</p>',
             "</div>",
             "",
         ]
@@ -2443,19 +2453,17 @@ def render_archive_markdown(
     generated_dt: datetime,
     current_summary: str,
     entries: list[dict[str, str]],
-    beta_stem: str | None = None,
 ) -> str:
     title = "Daily AI News Archive"
     issue_label = issue_date_label(issue_dt)
     generated_label = generated_timestamp_label(generated_dt)
     grouped = grouped_archive_entries(entries)
     latest_digest_url = entries[0]["url"] if entries else f"/notes/news/{issue_dt.strftime('%Y-%m-%d')}-ai-news-digest/"
-    latest_brief_url = f"/notes/news/{beta_stem}/" if beta_stem else latest_digest_url
     frontmatter = "\n".join(
         [
             "---",
             f"title: {yaml_quote(title)}",
-            f"description: {yaml_quote('Monthly archive of every Daily AI News Digest post.')}",
+            f"description: {yaml_quote('Monthly archive of every daily AI news issue.')}",
             f"date: {issue_dt.strftime('%Y-%m-%d')}",
             "tags: [news, news-digest, ai, archive]",
             "publish: true",
@@ -2470,10 +2478,9 @@ def render_archive_markdown(
         '    <div class="news-digest-hero-copy">',
         '      <p class="section-kicker">News Archive</p>',
         f"      <h1>{safe_text(title)}</h1>",
-        '      <p class="news-digest-lead">Every Daily AI News Digest, grouped by month so older issues stay skimmable.</p>',
+        '      <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>',
         '      <div class="news-digest-actions" role="group" aria-label="Archive actions">',
-        f'        <a class="post-cta-link" href="{safe_text(latest_brief_url)}">Latest brief</a>',
-        f'        <a class="post-cta-link" href="{safe_text(latest_digest_url)}">Structured digest</a>',
+        f'        <a class="post-cta-link" href="{safe_text(latest_digest_url)}">Latest issue</a>',
         '        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>',
         "      </div>",
         "    </div>",
@@ -2528,16 +2535,8 @@ def render_archive_markdown(
 def write_post(issue_dt: datetime, generated_dt: datetime, context: DigestContext, beta_stem: str | None = None) -> str:
     stem = f"{issue_dt.strftime('%Y-%m-%d')}-ai-news-digest"
     archives = recent_archive_entries(stem, context.summary)
-    markdown, stem = render_markdown(
-        issue_dt,
-        generated_dt,
-        context.summary,
-        context.top_cards,
-        context.repo_scoreboard,
-        context.sections,
-        archives,
-        beta_stem,
-    )
+    brief = generate_gemma_beta_digest(issue_dt, context) or fallback_beta_digest(issue_dt, context)
+    markdown, stem = render_markdown(issue_dt, generated_dt, context, brief, archives)
     target = POSTS_DIR / f"{stem}.md"
     target.write_text(markdown)
     return stem
@@ -2548,14 +2547,13 @@ def write_archive_post(
     generated_dt: datetime,
     current_summary: str,
     digest_stem: str,
-    beta_stem: str | None = None,
 ) -> None:
     entries = archive_entries(digest_stem, current_summary)
-    markdown = render_archive_markdown(issue_dt, generated_dt, current_summary, entries, beta_stem)
+    markdown = render_archive_markdown(issue_dt, generated_dt, current_summary, entries)
     (POSTS_DIR / f"{ARCHIVE_STEM}.md").write_text(markdown)
 
 
-def write_hub_json(issue_dt: datetime, generated_dt: datetime, context: DigestContext, digest_stem: str, beta_stem: str | None) -> None:
+def write_hub_json(issue_dt: datetime, generated_dt: datetime, context: DigestContext, digest_stem: str) -> None:
     generated_at = generated_dt.isoformat()
     sections = [
         {
@@ -2576,32 +2574,17 @@ def write_hub_json(issue_dt: datetime, generated_dt: datetime, context: DigestCo
         "repo_scoreboard": [card.__dict__ for card in context.repo_scoreboard],
         "sections": sections,
         "source_counts": context.source_counts,
-        "digest": (
-            {
-                "title": f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}",
-                "url": f"/notes/news/{beta_stem}/",
-                "description": context.summary,
-            }
-            if beta_stem
-            else {
-                "title": f"Daily AI News Digest — {issue_dt.strftime('%Y-%m-%d')}",
-                "url": f"/notes/news/{digest_stem}/",
-                "description": context.summary,
-            }
-        ),
-        "structured_digest": {
-            "title": f"Daily AI News Digest — {issue_dt.strftime('%Y-%m-%d')}",
+        "digest": {
+            "title": f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}",
             "url": f"/notes/news/{digest_stem}/",
             "description": context.summary,
         },
-        "beta_digest": (
-            {
-                "title": f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}",
-                "url": f"/notes/news/{beta_stem}/",
-            }
-            if beta_stem
-            else None
-        ),
+        "structured_digest": {
+            "title": f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}",
+            "url": f"/notes/news/{digest_stem}/",
+            "description": context.summary,
+        },
+        "beta_digest": None,
         "archive_url": ARCHIVE_URL,
         "archives": recent_archive_entries(digest_stem, context.summary),
     }
@@ -2619,15 +2602,12 @@ def main() -> None:
     generated_dt = datetime.now(tz=KST)
     set_recent_digest_memory(issue_dt)
     context = build_digest_context(payload, args.limit)
-    beta_stem = write_beta_post(issue_dt, generated_dt, context)
-    digest_stem = write_post(issue_dt, generated_dt, context, beta_stem)
-    write_archive_post(issue_dt, generated_dt, context.summary, digest_stem, beta_stem)
-    write_hub_json(issue_dt, generated_dt, context, digest_stem, beta_stem)
+    digest_stem = write_post(issue_dt, generated_dt, context)
+    write_archive_post(issue_dt, generated_dt, context.summary, digest_stem)
+    write_hub_json(issue_dt, generated_dt, context, digest_stem)
     save_translation_cache()
     save_beta_digest_cache()
     print(f"Generated news digest post: content/posts/news/{digest_stem}.md")
-    if beta_stem:
-        print(f"Generated beta digest post: content/posts/news/{beta_stem}.md")
     print(f"Generated archive post: content/posts/news/{ARCHIVE_STEM}.md")
     print("Generated hub data: content/generated/news/latest.json")
     print("Updated raw feed snapshot: static/news/data/latest.json")
