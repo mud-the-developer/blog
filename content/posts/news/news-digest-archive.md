@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-04-20
+date: 2026-04-21
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/notes/news/2026-04-20-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/notes/news/2026-04-21-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-04-20T00:55:56.948534+09:00">Apr 20, 2026 · 12:55 AM KST</time></strong>
+        <strong><time datetime="2026-04-21T01:37:10.120019+09:00">Apr 21, 2026 · 1:37 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>28</strong>
+        <strong>29</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-04-20">Apr 20, 2026</time></strong>
+        <strong><time datetime="2026-04-21">Apr 21, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by vllm-project/vllm; paper attention is clustering around Exploration and Exploitation Errors Are Measurable for Language Model Agents; social attention is tilting toward University instructor uses typewriter to reduce AI writing assignments; biggest mover: affaan-m/everything-claude-code (+7). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by aaif-goose/goose; paper attention is clustering around PersonaVLM: Long-Term Personalized Multimodal LLMs; social attention is tilting toward Graphs explaining the status of AI in 2026; biggest mover: rtk-ai/rtk (+22). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>April 2026</span><span class="news-digest-month-count">20 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>April 2026</span><span class="news-digest-month-count">21 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/notes/news/2026-04-21-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-04-21</span>
+            <strong>AI News Brief — 2026-04-21</strong>
+            <span>GitHub velocity is led by aaif-goose/goose; paper attention is clustering around PersonaVLM: Long-Term Personalized Multimodal LLMs; social attention is tilting toward Graphs explaining the status of AI in 2026; biggest mover: rtk-ai/rtk (+22). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+          </a>
           <a class="news-digest-archive-item" href="/notes/news/2026-04-20-ai-news-digest/">
             <span class="news-digest-archive-date">2026-04-20</span>
             <strong>AI News Brief — 2026-04-20</strong>
