@@ -1,122 +1,86 @@
 {
-  "generated_at": "2026-04-23T01:33:59.133967+09:00",
-  "generated_label": "Apr 23, 2026 · 1:33 AM KST",
-  "issue_date": "2026-04-23",
-  "issue_label": "Apr 23, 2026",
-  "summary": "GitHub velocity is led by google-gemini/gemini-cli; paper attention is clustering around Chat2Workflow: A Benchmark for Generating Executable Visual Workflows with Natural Language; social attention is tilting toward Anthropic - OpenClaw: Available again. 10 repo signals, 10 paper picks, and 10 community items made today's cut.",
+  "generated_at": "2026-04-24T01:53:58.021813+09:00",
+  "generated_label": "Apr 24, 2026 · 1:53 AM KST",
+  "issue_date": "2026-04-24",
+  "issue_label": "Apr 24, 2026",
+  "summary": "GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Micro Language Models Enable Instant Responses; social attention is tilting toward Show GN: Bizketch — Product Hunt global launch, a service where 5 AI agents write business plans; biggest mover: onyx-dot-app/onyx (+2). 10 repo signals, 10 paper picks, and 10 community items made today's cut.",
   "top_cards": [
     {
-      "headline": "google-gemini/gemini-cli",
-      "title": "google-gemini/gemini-cli — An open-source AI agent that brings the power of Gemini directly into your terminal.",
-      "url": "https://github.com/google-gemini/gemini-cli",
+      "headline": "thedotmack/claude-mem",
+      "title": "thedotmack/claude-mem — A Claude Code plugin that automatically captures everything Claude does during your coding sessions, compresses it with AI (using Claude's agent-sdk), and injects relevant context back into future sessions.",
+      "url": "https://github.com/thedotmack/claude-mem",
       "source": "github.com",
       "tags": [
         "AI"
       ],
-      "score": 24.149,
-      "raw_score": 18.843,
-      "published_hours_ago": 1,
-      "stars": 102117,
-      "image_url": "https://opengraph.githubassets.com/1/google-gemini/gemini-cli",
+      "score": 21.226,
+      "raw_score": 16.547,
+      "published_hours_ago": 16,
+      "stars": 65610,
+      "image_url": "https://opengraph.githubassets.com/1/thedotmack/claude-mem",
       "badge": "Repo",
-      "deck": "An open-source AI agent that brings the power of Gemini directly into your terminal. Updated 1h ago. 102117 stars, +800/7d, created 370d ago.",
-      "meta": "GitHub · 102117 stars · +800/7d · created 370d ago · updated 1h ago · signal 24.15",
-      "rank": 4,
-      "rank_delta": null
+      "deck": "A Claude Code plugin that automatically captures everything Claude does during your coding sessions, compresses it with AI (using Claude's agent-sdk), and injects relevant context back into…",
+      "meta": "GitHub · 65610 stars · +800/7d · created 234d ago · updated 16h ago · down 2 · signal 21.23",
+      "rank": 17,
+      "rank_delta": -2
     },
     {
-      "headline": "Chat2Workflow: A Benchmark for Generating Executable Visual Workflows with Natural Language",
-      "title": "Chat2Workflow: A Benchmark for Generating Executable Visual Workflows with Natural Language",
-      "url": "https://huggingface.co/papers/2604.19667",
+      "headline": "Micro Language Models Enable Instant Responses",
+      "title": "Micro Language Models Enable Instant Responses",
+      "url": "https://huggingface.co/papers/2604.19642",
       "source": "huggingface.co",
       "tags": [
         "AI"
       ],
-      "score": 6.286,
-      "raw_score": 3.781,
-      "published_hours_ago": 14,
+      "score": 5.436,
+      "raw_score": 3.118,
+      "published_hours_ago": 3,
       "stars": 0,
-      "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.19667.png",
+      "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.19642.png",
       "badge": "Paper",
-      "deck": "Chat2Workflow presents a benchmark and agentic framework for automating executable visual workflow generation from natural language, revealing significant challenges in achieving industrial…",
-      "meta": "Hugging Face Papers · 14h ago · signal 6.29",
-      "rank": 166,
+      "deck": "Micro language models enable instant on-device response initiation with cloud-based continuation, achieving low-latency interactive AI through asymmetric collaboration between edge and clou…",
+      "meta": "Hugging Face Papers · 3h ago · signal 5.44",
+      "rank": 204,
       "rank_delta": null
     },
     {
-      "headline": "Anthropic - OpenClaw: Available again",
-      "title": "Anthropic - OpenClaw: Available again",
-      "url": "https://news.hada.io/topic?id=28761",
-      "source": "geeknews",
-      "tags": [
-        "social"
-      ],
-      "score": 4.219,
-      "raw_score": 2.365,
-      "published_hours_ago": 15,
-      "stars": 0,
-      "image_url": "/news/assets/thumb-ai.svg",
-      "badge": "Social",
-      "deck": "Community signal picked up on GeekNews 15h ago.",
-      "meta": "GeekNews · 15h ago · signal 4.22",
-      "rank": 265,
-      "rank_delta": null
-    },
-    {
-      "headline": "UniMesh: Unifying 3D Mesh Understanding and Generation",
-      "title": "UniMesh: Unifying 3D Mesh Understanding and Generation",
-      "url": "https://huggingface.co/papers/2604.17472",
-      "source": "huggingface.co",
+      "headline": "InvestChat: Exploring Multimodal Interaction via Natural Language, Touch, and Pen in an Investm…",
+      "title": "InvestChat: Exploring Multimodal Interaction via Natural Language, Touch, and Pen in an Investment Dashboard",
+      "url": "http://arxiv.org/abs/2604.19537v1",
+      "source": "arxiv.org",
       "tags": [],
-      "score": 5.501,
-      "raw_score": 3.466,
-      "published_hours_ago": 15,
+      "score": 4.466,
+      "raw_score": 2.804,
+      "published_hours_ago": 24,
       "stars": 0,
-      "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.17472.png",
+      "image_url": "/news/assets/thumb-paper.svg",
       "badge": "Paper",
-      "deck": "UniMesh presents a unified framework that combines 3D generation and understanding tasks through novel components including a Mesh Head, Chain of Mesh for iterative editing, and a self-refl…",
-      "meta": "Hugging Face Papers · 15h ago · signal 5.50",
-      "rank": 181,
+      "deck": "Fresh arXiv paper posted 1d ago and surfacing in the current feed.",
+      "meta": "arXiv · 1d ago · signal 4.47",
+      "rank": 241,
       "rank_delta": null
+    },
+    {
+      "headline": "onyx-dot-app/onyx",
+      "title": "onyx-dot-app/onyx — Open Source AI Platform - AI Chat with advanced features that works with every LLM",
+      "url": "https://github.com/onyx-dot-app/onyx",
+      "source": "github.com",
+      "tags": [
+        "AI"
+      ],
+      "score": 12.9,
+      "raw_score": 8.512,
+      "published_hours_ago": 0,
+      "stars": 28012,
+      "image_url": "https://opengraph.githubassets.com/1/onyx-dot-app/onyx",
+      "badge": "Repo",
+      "deck": "Open Source AI Platform - AI Chat with advanced features that works with every LLM. Updated <1h ago. 28012 stars, avg 25.7/day, created 1091d ago. Up 2 spots from the previous run.",
+      "meta": "GitHub · 28012 stars · avg 25.7/day · created 1091d ago · updated <1h ago · up 2 · signal 12.90",
+      "rank": 43,
+      "rank_delta": 2
     }
   ],
   "repo_scoreboard": [
-    {
-      "headline": "google-gemini/gemini-cli",
-      "title": "google-gemini/gemini-cli — An open-source AI agent that brings the power of Gemini directly into your terminal.",
-      "url": "https://github.com/google-gemini/gemini-cli",
-      "source": "github.com",
-      "tags": [
-        "AI"
-      ],
-      "score": 24.149,
-      "raw_score": 18.843,
-      "published_hours_ago": 1,
-      "stars": 102117,
-      "image_url": "https://opengraph.githubassets.com/1/google-gemini/gemini-cli",
-      "badge": "Repo",
-      "deck": "An open-source AI agent that brings the power of Gemini directly into your terminal. Updated 1h ago. 102117 stars, +800/7d, created 370d ago.",
-      "meta": "GitHub · 102117 stars · +800/7d · created 370d ago · updated 1h ago · signal 24.15",
-      "rank": 4,
-      "rank_delta": null
-    },
-    {
-      "headline": "lobehub/lobehub",
-      "title": "lobehub/lobehub — The ultimate space for work and life — to find, build, and collaborate with agent teammates that grow with you. We are taking agent harness to the next level — enabling multi-agent collaboration, effortless agent team design, and introducing agents as the unit of work interaction.",
-      "url": "https://github.com/lobehub/lobehub",
-      "source": "github.com",
-      "tags": [],
-      "score": 23.0,
-      "raw_score": 18.343,
-      "published_hours_ago": 1,
-      "stars": 75487,
-      "image_url": "https://opengraph.githubassets.com/1/lobehub/lobehub",
-      "badge": "Repo",
-      "deck": "The ultimate space for work and life — to find, build, and collaborate with agent teammates that grow with you. We are taking agent harness to the next level — enabling multi-agent collabor…",
-      "meta": "GitHub · 75487 stars · +343/7d · created 1067d ago · updated 1h ago · signal 23.00",
-      "rank": 5,
-      "rank_delta": null
-    },
     {
       "headline": "NousResearch/hermes-agent",
       "title": "NousResearch/hermes-agent — The agent that grows with you",
@@ -133,25 +97,6 @@
       "meta": "GitHub · 110162 stars · +800/7d · created 274d ago · updated 1h ago · signal 25.10",
       "rank": 1,
       "rank_delta": 0
-    },
-    {
-      "headline": "CherryHQ/cherry-studio",
-      "title": "CherryHQ/cherry-studio — AI productivity studio with smart chat, autonomous agents, and 300+ assistants. Unified access to frontier LLMs",
-      "url": "https://github.com/CherryHQ/cherry-studio",
-      "source": "github.com",
-      "tags": [
-        "AI"
-      ],
-      "score": 21.638,
-      "raw_score": 16.584,
-      "published_hours_ago": 1,
-      "stars": 44070,
-      "image_url": "https://opengraph.githubassets.com/1/CherryHQ/cherry-studio",
-      "badge": "Repo",
-      "deck": "AI productivity studio with smart chat, autonomous agents, and 300+ assistants. Unified access to frontier LLMs. Updated 1h ago. 44070 stars, +596/7d, created 698d ago.",
-      "meta": "GitHub · 44070 stars · +596/7d · created 698d ago · updated 1h ago · signal 21.64",
-      "rank": 15,
-      "rank_delta": null
     },
     {
       "headline": "openai/codex",
@@ -173,6 +118,61 @@
       "rank_delta": 0
     },
     {
+      "headline": "thedotmack/claude-mem",
+      "title": "thedotmack/claude-mem — A Claude Code plugin that automatically captures everything Claude does during your coding sessions, compresses it with AI (using Claude's agent-sdk), and injects relevant context back into future sessions.",
+      "url": "https://github.com/thedotmack/claude-mem",
+      "source": "github.com",
+      "tags": [
+        "AI"
+      ],
+      "score": 21.226,
+      "raw_score": 16.547,
+      "published_hours_ago": 16,
+      "stars": 65610,
+      "image_url": "https://opengraph.githubassets.com/1/thedotmack/claude-mem",
+      "badge": "Repo",
+      "deck": "A Claude Code plugin that automatically captures everything Claude does during your coding sessions, compresses it with AI (using Claude's agent-sdk), and injects relevant context back into…",
+      "meta": "GitHub · 65610 stars · +800/7d · created 234d ago · updated 16h ago · down 2 · signal 21.23",
+      "rank": 17,
+      "rank_delta": -2
+    },
+    {
+      "headline": "anomalyco/opencode",
+      "title": "anomalyco/opencode — The open source coding agent.",
+      "url": "https://github.com/anomalyco/opencode",
+      "source": "github.com",
+      "tags": [],
+      "score": 24.477,
+      "raw_score": 19.471,
+      "published_hours_ago": 1,
+      "stars": 147599,
+      "image_url": "https://opengraph.githubassets.com/1/anomalyco/opencode",
+      "badge": "Repo",
+      "deck": "The open source coding agent. Updated 1h ago. 147599 stars, +800/7d, created 357d ago.",
+      "meta": "GitHub · 147599 stars · +800/7d · created 357d ago · updated 1h ago · signal 24.48",
+      "rank": 2,
+      "rank_delta": 0
+    },
+    {
+      "headline": "google-gemini/gemini-cli",
+      "title": "google-gemini/gemini-cli — An open-source AI agent that brings the power of Gemini directly into your terminal.",
+      "url": "https://github.com/google-gemini/gemini-cli",
+      "source": "github.com",
+      "tags": [
+        "AI"
+      ],
+      "score": 24.149,
+      "raw_score": 18.843,
+      "published_hours_ago": 1,
+      "stars": 102117,
+      "image_url": "https://opengraph.githubassets.com/1/google-gemini/gemini-cli",
+      "badge": "Repo",
+      "deck": "An open-source AI agent that brings the power of Gemini directly into your terminal. Updated 1h ago. 102117 stars, +800/7d, created 370d ago.",
+      "meta": "GitHub · 102117 stars · +800/7d · created 370d ago · updated 1h ago · signal 24.15",
+      "rank": 4,
+      "rank_delta": null
+    },
+    {
       "headline": "Significant-Gravitas/AutoGPT",
       "title": "Significant-Gravitas/AutoGPT — AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so that you can focus on what matters.",
       "url": "https://github.com/Significant-Gravitas/AutoGPT",
@@ -190,38 +190,42 @@
       "rank_delta": null
     },
     {
-      "headline": "google/langextract",
-      "title": "google/langextract — A Python library for extracting structured information from unstructured text using LLMs with precise source grounding and interactive visualization.",
-      "url": "https://github.com/google/langextract",
+      "headline": "huggingface/transformers",
+      "title": "huggingface/transformers — 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training.",
+      "url": "https://github.com/huggingface/transformers",
       "source": "github.com",
-      "tags": [],
-      "score": 16.132,
-      "raw_score": 12.258,
-      "published_hours_ago": 24,
-      "stars": 35708,
-      "image_url": "https://opengraph.githubassets.com/1/google/langextract",
+      "tags": [
+        "AI"
+      ],
+      "score": 23.21,
+      "raw_score": 17.917,
+      "published_hours_ago": 1,
+      "stars": 159748,
+      "image_url": "https://opengraph.githubassets.com/1/huggingface/transformers",
       "badge": "Repo",
-      "deck": "A Python library for extracting structured information from unstructured text using LLMs with precise source grounding and interactive visualization. Updated 1d ago. 35708 stars, +100/7d, c…",
-      "meta": "GitHub · 35708 stars · +100/7d · created 288d ago · updated 1d ago · signal 16.13",
-      "rank": 28,
-      "rank_delta": 0
+      "deck": "🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training. Updated 1h ago. 1…",
+      "meta": "GitHub · 159748 stars · +383/7d · created 2732d ago · updated 1h ago · down 1 · signal 23.21",
+      "rank": 7,
+      "rank_delta": -1
     },
     {
-      "headline": "forrestchang/andrej-karpathy-skills",
-      "title": "forrestchang/andrej-karpathy-skills — A single CLAUDE.md file to improve Claude Code behavior, derived from Andrej Karpathy's observations on LLM coding pitfalls.",
-      "url": "https://github.com/forrestchang/andrej-karpathy-skills",
+      "headline": "onyx-dot-app/onyx",
+      "title": "onyx-dot-app/onyx — Open Source AI Platform - AI Chat with advanced features that works with every LLM",
+      "url": "https://github.com/onyx-dot-app/onyx",
       "source": "github.com",
-      "tags": [],
-      "score": 15.724,
-      "raw_score": 12.119,
-      "published_hours_ago": 53,
-      "stars": 75259,
-      "image_url": "https://opengraph.githubassets.com/1/forrestchang/andrej-karpathy-skills",
+      "tags": [
+        "AI"
+      ],
+      "score": 12.9,
+      "raw_score": 8.512,
+      "published_hours_ago": 0,
+      "stars": 28012,
+      "image_url": "https://opengraph.githubassets.com/1/onyx-dot-app/onyx",
       "badge": "Repo",
-      "deck": "A single CLAUDE.md file to improve Claude Code behavior, derived from Andrej Karpathy's observations on LLM coding pitfalls. Updated 2d ago. 75259 stars, +800/7d, created 86d ago.",
-      "meta": "GitHub · 75259 stars · +800/7d · created 86d ago · updated 2d ago · signal 15.72",
-      "rank": 30,
-      "rank_delta": 0
+      "deck": "Open Source AI Platform - AI Chat with advanced features that works with every LLM. Updated <1h ago. 28012 stars, avg 25.7/day, created 1091d ago. Up 2 spots from the previous run.",
+      "meta": "GitHub · 28012 stars · avg 25.7/day · created 1091d ago · updated <1h ago · up 2 · signal 12.90",
+      "rank": 43,
+      "rank_delta": 2
     }
   ],
   "sections": [
@@ -230,121 +234,6 @@
       "title": "Hot in 24 Hours",
       "description": "The fastest-moving items across repos, papers, and community chatter.",
       "items": [
-        {
-          "headline": "google-gemini/gemini-cli",
-          "title": "google-gemini/gemini-cli — An open-source AI agent that brings the power of Gemini directly into your terminal.",
-          "url": "https://github.com/google-gemini/gemini-cli",
-          "source": "github.com",
-          "tags": [
-            "AI"
-          ],
-          "score": 24.149,
-          "raw_score": 18.843,
-          "published_hours_ago": 1,
-          "stars": 102117,
-          "image_url": "https://opengraph.githubassets.com/1/google-gemini/gemini-cli",
-          "badge": "Repo",
-          "deck": "An open-source AI agent that brings the power of Gemini directly into your terminal. Updated 1h ago. 102117 stars, +800/7d, created 370d ago.",
-          "meta": "GitHub · 102117 stars · +800/7d · created 370d ago · updated 1h ago · signal 24.15",
-          "rank": 4,
-          "rank_delta": null
-        },
-        {
-          "headline": "lobehub/lobehub",
-          "title": "lobehub/lobehub — The ultimate space for work and life — to find, build, and collaborate with agent teammates that grow with you. We are taking agent harness to the next level — enabling multi-agent collaboration, effortless agent team design, and introducing agents as the unit of work interaction.",
-          "url": "https://github.com/lobehub/lobehub",
-          "source": "github.com",
-          "tags": [],
-          "score": 23.0,
-          "raw_score": 18.343,
-          "published_hours_ago": 1,
-          "stars": 75487,
-          "image_url": "https://opengraph.githubassets.com/1/lobehub/lobehub",
-          "badge": "Repo",
-          "deck": "The ultimate space for work and life — to find, build, and collaborate with agent teammates that grow with you. We are taking agent harness to the next level — enabling multi-agent collabor…",
-          "meta": "GitHub · 75487 stars · +343/7d · created 1067d ago · updated 1h ago · signal 23.00",
-          "rank": 5,
-          "rank_delta": null
-        },
-        {
-          "headline": "Chat2Workflow: A Benchmark for Generating Executable Visual Workflows with Natural Language",
-          "title": "Chat2Workflow: A Benchmark for Generating Executable Visual Workflows with Natural Language",
-          "url": "https://huggingface.co/papers/2604.19667",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 6.286,
-          "raw_score": 3.781,
-          "published_hours_ago": 14,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.19667.png",
-          "badge": "Paper",
-          "deck": "Chat2Workflow presents a benchmark and agentic framework for automating executable visual workflow generation from natural language, revealing significant challenges in achieving industrial…",
-          "meta": "Hugging Face Papers · 14h ago · signal 6.29",
-          "rank": 166,
-          "rank_delta": null
-        },
-        {
-          "headline": "UniMesh: Unifying 3D Mesh Understanding and Generation",
-          "title": "UniMesh: Unifying 3D Mesh Understanding and Generation",
-          "url": "https://huggingface.co/papers/2604.17472",
-          "source": "huggingface.co",
-          "tags": [],
-          "score": 5.501,
-          "raw_score": 3.466,
-          "published_hours_ago": 15,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.17472.png",
-          "badge": "Paper",
-          "deck": "UniMesh presents a unified framework that combines 3D generation and understanding tasks through novel components including a Mesh Head, Chain of Mesh for iterative editing, and a self-refl…",
-          "meta": "Hugging Face Papers · 15h ago · signal 5.50",
-          "rank": 181,
-          "rank_delta": null
-        }
-      ]
-    },
-    {
-      "slug": "repos",
-      "title": "Repository Momentum",
-      "description": "Fresh GitHub projects worth scanning before the feed turns over.",
-      "items": [
-        {
-          "headline": "google-gemini/gemini-cli",
-          "title": "google-gemini/gemini-cli — An open-source AI agent that brings the power of Gemini directly into your terminal.",
-          "url": "https://github.com/google-gemini/gemini-cli",
-          "source": "github.com",
-          "tags": [
-            "AI"
-          ],
-          "score": 24.149,
-          "raw_score": 18.843,
-          "published_hours_ago": 1,
-          "stars": 102117,
-          "image_url": "https://opengraph.githubassets.com/1/google-gemini/gemini-cli",
-          "badge": "Repo",
-          "deck": "An open-source AI agent that brings the power of Gemini directly into your terminal. Updated 1h ago. 102117 stars, +800/7d, created 370d ago.",
-          "meta": "GitHub · 102117 stars · +800/7d · created 370d ago · updated 1h ago · signal 24.15",
-          "rank": 4,
-          "rank_delta": null
-        },
-        {
-          "headline": "lobehub/lobehub",
-          "title": "lobehub/lobehub — The ultimate space for work and life — to find, build, and collaborate with agent teammates that grow with you. We are taking agent harness to the next level — enabling multi-agent collaboration, effortless agent team design, and introducing agents as the unit of work interaction.",
-          "url": "https://github.com/lobehub/lobehub",
-          "source": "github.com",
-          "tags": [],
-          "score": 23.0,
-          "raw_score": 18.343,
-          "published_hours_ago": 1,
-          "stars": 75487,
-          "image_url": "https://opengraph.githubassets.com/1/lobehub/lobehub",
-          "badge": "Repo",
-          "deck": "The ultimate space for work and life — to find, build, and collaborate with agent teammates that grow with you. We are taking agent harness to the next level — enabling multi-agent collabor…",
-          "meta": "GitHub · 75487 stars · +343/7d · created 1067d ago · updated 1h ago · signal 23.00",
-          "rank": 5,
-          "rank_delta": null
-        },
         {
           "headline": "NousResearch/hermes-agent",
           "title": "NousResearch/hermes-agent — The agent that grows with you",
@@ -361,25 +250,6 @@
           "meta": "GitHub · 110162 stars · +800/7d · created 274d ago · updated 1h ago · signal 25.10",
           "rank": 1,
           "rank_delta": 0
-        },
-        {
-          "headline": "CherryHQ/cherry-studio",
-          "title": "CherryHQ/cherry-studio — AI productivity studio with smart chat, autonomous agents, and 300+ assistants. Unified access to frontier LLMs",
-          "url": "https://github.com/CherryHQ/cherry-studio",
-          "source": "github.com",
-          "tags": [
-            "AI"
-          ],
-          "score": 21.638,
-          "raw_score": 16.584,
-          "published_hours_ago": 1,
-          "stars": 44070,
-          "image_url": "https://opengraph.githubassets.com/1/CherryHQ/cherry-studio",
-          "badge": "Repo",
-          "deck": "AI productivity studio with smart chat, autonomous agents, and 300+ assistants. Unified access to frontier LLMs. Updated 1h ago. 44070 stars, +596/7d, created 698d ago.",
-          "meta": "GitHub · 44070 stars · +596/7d · created 698d ago · updated 1h ago · signal 21.64",
-          "rank": 15,
-          "rank_delta": null
         },
         {
           "headline": "openai/codex",
@@ -401,6 +271,142 @@
           "rank_delta": 0
         },
         {
+          "headline": "Micro Language Models Enable Instant Responses",
+          "title": "Micro Language Models Enable Instant Responses",
+          "url": "https://huggingface.co/papers/2604.19642",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 5.436,
+          "raw_score": 3.118,
+          "published_hours_ago": 3,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.19642.png",
+          "badge": "Paper",
+          "deck": "Micro language models enable instant on-device response initiation with cloud-based continuation, achieving low-latency interactive AI through asymmetric collaboration between edge and clou…",
+          "meta": "Hugging Face Papers · 3h ago · signal 5.44",
+          "rank": 204,
+          "rank_delta": null
+        },
+        {
+          "headline": "Mitigating Multimodal Hallucination via Phase-wise Self-reward",
+          "title": "Mitigating Multimodal Hallucination via Phase-wise Self-reward",
+          "url": "https://huggingface.co/papers/2604.17982",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 5.411,
+          "raw_score": 3.348,
+          "published_hours_ago": 10,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.17982.png",
+          "badge": "Paper",
+          "deck": "A new self-rewarding framework called PSRD is introduced for dynamic hallucination mitigation in large vision-language models during inference, using phase-wise self-reward signals and a di…",
+          "meta": "Hugging Face Papers · 10h ago · signal 5.41",
+          "rank": 188,
+          "rank_delta": null
+        }
+      ]
+    },
+    {
+      "slug": "repos",
+      "title": "Repository Momentum",
+      "description": "Fresh GitHub projects worth scanning before the feed turns over.",
+      "items": [
+        {
+          "headline": "NousResearch/hermes-agent",
+          "title": "NousResearch/hermes-agent — The agent that grows with you",
+          "url": "https://github.com/NousResearch/hermes-agent",
+          "source": "github.com",
+          "tags": [],
+          "score": 25.104,
+          "raw_score": 20.146,
+          "published_hours_ago": 1,
+          "stars": 110162,
+          "image_url": "https://opengraph.githubassets.com/1/NousResearch/hermes-agent",
+          "badge": "Repo",
+          "deck": "The agent that grows with you. Updated 1h ago. 110162 stars, +800/7d, created 274d ago.",
+          "meta": "GitHub · 110162 stars · +800/7d · created 274d ago · updated 1h ago · signal 25.10",
+          "rank": 1,
+          "rank_delta": 0
+        },
+        {
+          "headline": "openai/codex",
+          "title": "openai/codex — Lightweight coding agent that runs in your terminal",
+          "url": "https://github.com/openai/codex",
+          "source": "github.com",
+          "tags": [
+            "AI"
+          ],
+          "score": 24.916,
+          "raw_score": 19.468,
+          "published_hours_ago": 1,
+          "stars": 76990,
+          "image_url": "https://opengraph.githubassets.com/1/openai/codex",
+          "badge": "Repo",
+          "deck": "Lightweight coding agent that runs in your terminal. Updated 1h ago. 76990 stars, +800/7d, created 374d ago.",
+          "meta": "GitHub · 76990 stars · +800/7d · created 374d ago · updated 1h ago · signal 24.92",
+          "rank": 3,
+          "rank_delta": 0
+        },
+        {
+          "headline": "thedotmack/claude-mem",
+          "title": "thedotmack/claude-mem — A Claude Code plugin that automatically captures everything Claude does during your coding sessions, compresses it with AI (using Claude's agent-sdk), and injects relevant context back into future sessions.",
+          "url": "https://github.com/thedotmack/claude-mem",
+          "source": "github.com",
+          "tags": [
+            "AI"
+          ],
+          "score": 21.226,
+          "raw_score": 16.547,
+          "published_hours_ago": 16,
+          "stars": 65610,
+          "image_url": "https://opengraph.githubassets.com/1/thedotmack/claude-mem",
+          "badge": "Repo",
+          "deck": "A Claude Code plugin that automatically captures everything Claude does during your coding sessions, compresses it with AI (using Claude's agent-sdk), and injects relevant context back into…",
+          "meta": "GitHub · 65610 stars · +800/7d · created 234d ago · updated 16h ago · down 2 · signal 21.23",
+          "rank": 17,
+          "rank_delta": -2
+        },
+        {
+          "headline": "anomalyco/opencode",
+          "title": "anomalyco/opencode — The open source coding agent.",
+          "url": "https://github.com/anomalyco/opencode",
+          "source": "github.com",
+          "tags": [],
+          "score": 24.477,
+          "raw_score": 19.471,
+          "published_hours_ago": 1,
+          "stars": 147599,
+          "image_url": "https://opengraph.githubassets.com/1/anomalyco/opencode",
+          "badge": "Repo",
+          "deck": "The open source coding agent. Updated 1h ago. 147599 stars, +800/7d, created 357d ago.",
+          "meta": "GitHub · 147599 stars · +800/7d · created 357d ago · updated 1h ago · signal 24.48",
+          "rank": 2,
+          "rank_delta": 0
+        },
+        {
+          "headline": "google-gemini/gemini-cli",
+          "title": "google-gemini/gemini-cli — An open-source AI agent that brings the power of Gemini directly into your terminal.",
+          "url": "https://github.com/google-gemini/gemini-cli",
+          "source": "github.com",
+          "tags": [
+            "AI"
+          ],
+          "score": 24.149,
+          "raw_score": 18.843,
+          "published_hours_ago": 1,
+          "stars": 102117,
+          "image_url": "https://opengraph.githubassets.com/1/google-gemini/gemini-cli",
+          "badge": "Repo",
+          "deck": "An open-source AI agent that brings the power of Gemini directly into your terminal. Updated 1h ago. 102117 stars, +800/7d, created 370d ago.",
+          "meta": "GitHub · 102117 stars · +800/7d · created 370d ago · updated 1h ago · signal 24.15",
+          "rank": 4,
+          "rank_delta": null
+        },
+        {
           "headline": "Significant-Gravitas/AutoGPT",
           "title": "Significant-Gravitas/AutoGPT — AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so that you can focus on what matters.",
           "url": "https://github.com/Significant-Gravitas/AutoGPT",
@@ -418,38 +424,42 @@
           "rank_delta": null
         },
         {
-          "headline": "google/langextract",
-          "title": "google/langextract — A Python library for extracting structured information from unstructured text using LLMs with precise source grounding and interactive visualization.",
-          "url": "https://github.com/google/langextract",
+          "headline": "huggingface/transformers",
+          "title": "huggingface/transformers — 🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training.",
+          "url": "https://github.com/huggingface/transformers",
           "source": "github.com",
-          "tags": [],
-          "score": 16.132,
-          "raw_score": 12.258,
-          "published_hours_ago": 24,
-          "stars": 35708,
-          "image_url": "https://opengraph.githubassets.com/1/google/langextract",
+          "tags": [
+            "AI"
+          ],
+          "score": 23.21,
+          "raw_score": 17.917,
+          "published_hours_ago": 1,
+          "stars": 159748,
+          "image_url": "https://opengraph.githubassets.com/1/huggingface/transformers",
           "badge": "Repo",
-          "deck": "A Python library for extracting structured information from unstructured text using LLMs with precise source grounding and interactive visualization. Updated 1d ago. 35708 stars, +100/7d, c…",
-          "meta": "GitHub · 35708 stars · +100/7d · created 288d ago · updated 1d ago · signal 16.13",
-          "rank": 28,
-          "rank_delta": 0
+          "deck": "🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training. Updated 1h ago. 1…",
+          "meta": "GitHub · 159748 stars · +383/7d · created 2732d ago · updated 1h ago · down 1 · signal 23.21",
+          "rank": 7,
+          "rank_delta": -1
         },
         {
-          "headline": "forrestchang/andrej-karpathy-skills",
-          "title": "forrestchang/andrej-karpathy-skills — A single CLAUDE.md file to improve Claude Code behavior, derived from Andrej Karpathy's observations on LLM coding pitfalls.",
-          "url": "https://github.com/forrestchang/andrej-karpathy-skills",
+          "headline": "onyx-dot-app/onyx",
+          "title": "onyx-dot-app/onyx — Open Source AI Platform - AI Chat with advanced features that works with every LLM",
+          "url": "https://github.com/onyx-dot-app/onyx",
           "source": "github.com",
-          "tags": [],
-          "score": 15.724,
-          "raw_score": 12.119,
-          "published_hours_ago": 53,
-          "stars": 75259,
-          "image_url": "https://opengraph.githubassets.com/1/forrestchang/andrej-karpathy-skills",
+          "tags": [
+            "AI"
+          ],
+          "score": 12.9,
+          "raw_score": 8.512,
+          "published_hours_ago": 0,
+          "stars": 28012,
+          "image_url": "https://opengraph.githubassets.com/1/onyx-dot-app/onyx",
           "badge": "Repo",
-          "deck": "A single CLAUDE.md file to improve Claude Code behavior, derived from Andrej Karpathy's observations on LLM coding pitfalls. Updated 2d ago. 75259 stars, +800/7d, created 86d ago.",
-          "meta": "GitHub · 75259 stars · +800/7d · created 86d ago · updated 2d ago · signal 15.72",
-          "rank": 30,
-          "rank_delta": 0
+          "deck": "Open Source AI Platform - AI Chat with advanced features that works with every LLM. Updated <1h ago. 28012 stars, avg 25.7/day, created 1091d ago. Up 2 spots from the previous run.",
+          "meta": "GitHub · 28012 stars · avg 25.7/day · created 1091d ago · updated <1h ago · up 2 · signal 12.90",
+          "rank": 43,
+          "rank_delta": 2
         },
         {
           "headline": "Arthur-Ficial/apfel",
@@ -495,187 +505,187 @@
       "description": "New research worth bookmarking for a deeper read.",
       "items": [
         {
-          "headline": "Chat2Workflow: A Benchmark for Generating Executable Visual Workflows with Natural Language",
-          "title": "Chat2Workflow: A Benchmark for Generating Executable Visual Workflows with Natural Language",
-          "url": "https://huggingface.co/papers/2604.19667",
+          "headline": "Micro Language Models Enable Instant Responses",
+          "title": "Micro Language Models Enable Instant Responses",
+          "url": "https://huggingface.co/papers/2604.19642",
           "source": "huggingface.co",
           "tags": [
             "AI"
           ],
-          "score": 6.286,
-          "raw_score": 3.781,
-          "published_hours_ago": 14,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.19667.png",
-          "badge": "Paper",
-          "deck": "Chat2Workflow presents a benchmark and agentic framework for automating executable visual workflow generation from natural language, revealing significant challenges in achieving industrial…",
-          "meta": "Hugging Face Papers · 14h ago · signal 6.29",
-          "rank": 166,
-          "rank_delta": null
-        },
-        {
-          "headline": "UniMesh: Unifying 3D Mesh Understanding and Generation",
-          "title": "UniMesh: Unifying 3D Mesh Understanding and Generation",
-          "url": "https://huggingface.co/papers/2604.17472",
-          "source": "huggingface.co",
-          "tags": [],
-          "score": 5.501,
-          "raw_score": 3.466,
-          "published_hours_ago": 15,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.17472.png",
-          "badge": "Paper",
-          "deck": "UniMesh presents a unified framework that combines 3D generation and understanding tasks through novel components including a Mesh Head, Chain of Mesh for iterative editing, and a self-refl…",
-          "meta": "Hugging Face Papers · 15h ago · signal 5.50",
-          "rank": 181,
-          "rank_delta": null
-        },
-        {
-          "headline": "TEMPO: Scaling Test-time Training for Large Reasoning Models",
-          "title": "TEMPO: Scaling Test-time Training for Large Reasoning Models",
-          "url": "https://huggingface.co/papers/2604.19295",
-          "source": "huggingface.co",
-          "tags": [],
-          "score": 5.949,
-          "raw_score": 3.789,
-          "published_hours_ago": 14,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.19295.png",
-          "badge": "Paper",
-          "deck": "TEMPO is a test-time training framework that alternates policy refinement with critic recalibration to sustain performance improvements in language models without diversity collapse. Surfac…",
-          "meta": "Hugging Face Papers · 14h ago · signal 5.95",
-          "rank": 165,
-          "rank_delta": null
-        },
-        {
-          "headline": "CityRAG: Stepping Into a City via Spatially-Grounded Video Generation",
-          "title": "CityRAG: Stepping Into a City via Spatially-Grounded Video Generation",
-          "url": "https://huggingface.co/papers/2604.19741",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 5.894,
-          "raw_score": 3.62,
+          "score": 5.436,
+          "raw_score": 3.118,
           "published_hours_ago": 3,
           "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.19741.png",
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.19642.png",
           "badge": "Paper",
-          "deck": "CityRAG generates long-term, physically grounded video sequences that maintain environmental consistency and support complex navigation through real-world geography using geo-registered dat…",
-          "meta": "Hugging Face Papers · 3h ago · signal 5.89",
-          "rank": 173,
+          "deck": "Micro language models enable instant on-device response initiation with cloud-based continuation, achieving low-latency interactive AI through asymmetric collaboration between edge and clou…",
+          "meta": "Hugging Face Papers · 3h ago · signal 5.44",
+          "rank": 204,
           "rank_delta": null
         },
         {
-          "headline": "MM-JudgeBias: A Benchmark for Evaluating Compositional Biases in MLLM-as-a-Judge",
-          "title": "MM-JudgeBias: A Benchmark for Evaluating Compositional Biases in MLLM-as-a-Judge",
-          "url": "https://huggingface.co/papers/2604.18164",
+          "headline": "Mitigating Multimodal Hallucination via Phase-wise Self-reward",
+          "title": "Mitigating Multimodal Hallucination via Phase-wise Self-reward",
+          "url": "https://huggingface.co/papers/2604.17982",
           "source": "huggingface.co",
           "tags": [
             "AI"
           ],
-          "score": 5.625,
-          "raw_score": 3.211,
-          "published_hours_ago": 14,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.18164.png",
-          "badge": "Paper",
-          "deck": "Research identifies systematic biases in multimodal large language models used as automatic evaluators, revealing reliability issues and proposing a benchmark for measuring compositional bi…",
-          "meta": "Hugging Face Papers · 14h ago · signal 5.62",
-          "rank": 195,
-          "rank_delta": null
-        },
-        {
-          "headline": "The Cognitive Penalty: Ablating System 1 and System 2 Reasoning in Edge-Native SLMs for Decentr…",
-          "title": "The Cognitive Penalty: Ablating System 1 and System 2 Reasoning in Edge-Native SLMs for Decentralized Consensus",
-          "url": "https://huggingface.co/papers/2604.16913",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 5.466,
-          "raw_score": 3.355,
+          "score": 5.411,
+          "raw_score": 3.348,
           "published_hours_ago": 10,
           "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.16913.png",
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.17982.png",
           "badge": "Paper",
-          "deck": "Small Language Models deployed in decentralized autonomous organizations face challenges when using inference-time computation for adversarial governance scenarios, with simpler models show…",
-          "meta": "Hugging Face Papers · 10h ago · signal 5.47",
-          "rank": 187,
+          "deck": "A new self-rewarding framework called PSRD is introduced for dynamic hallucination mitigation in large vision-language models during inference, using phase-wise self-reward signals and a di…",
+          "meta": "Hugging Face Papers · 10h ago · signal 5.41",
+          "rank": 188,
           "rank_delta": null
         },
         {
-          "headline": "Cyber Defense Benchmark: Agentic Threat Hunting Evaluation for LLMs in SecOps",
-          "title": "Cyber Defense Benchmark: Agentic Threat Hunting Evaluation for LLMs in SecOps",
-          "url": "http://arxiv.org/abs/2604.19533v1",
+          "headline": "Mind's Eye: A Benchmark of Visual Abstraction, Transformation and Composition for Multimodal LL…",
+          "title": "Mind's Eye: A Benchmark of Visual Abstraction, Transformation and Composition for Multimodal LLMs",
+          "url": "https://huggingface.co/papers/2604.16054",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 5.323,
+          "raw_score": 3.147,
+          "published_hours_ago": 10,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.16054.png",
+          "badge": "Paper",
+          "deck": "Multimodal large language models demonstrate significant limitations in visuospatial reasoning tasks compared to human performance, revealing deficiencies in visual attention, perceptual ma…",
+          "meta": "Hugging Face Papers · 10h ago · signal 5.32",
+          "rank": 201,
+          "rank_delta": null
+        },
+        {
+          "headline": "When Background Matters: Breaking Medical Vision Language Models by Transferable Attack",
+          "title": "When Background Matters: Breaking Medical Vision Language Models by Transferable Attack",
+          "url": "https://huggingface.co/papers/2604.17318",
+          "source": "huggingface.co",
+          "tags": [],
+          "score": 5.277,
+          "raw_score": 3.173,
+          "published_hours_ago": 21,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.17318.png",
+          "badge": "Paper",
+          "deck": "MedFocusLeak enables transferable black-box attacks on vision-language models for medical imaging by injecting imperceptible perturbations that redirect model attention, demonstrating signi…",
+          "meta": "Hugging Face Papers · 21h ago · signal 5.28",
+          "rank": 197,
+          "rank_delta": null
+        },
+        {
+          "headline": "Integrating Anomaly Detection into Agentic AI for Proactive Risk Management in Human Activity",
+          "title": "Integrating Anomaly Detection into Agentic AI for Proactive Risk Management in Human Activity",
+          "url": "http://arxiv.org/abs/2604.19538v1",
           "source": "arxiv.org",
           "tags": [
             "AI"
           ],
-          "score": 5.31,
+          "score": 5.11,
           "raw_score": 3.099,
           "published_hours_ago": 24,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
           "deck": "Fresh arXiv paper from the ai cluster, posted 1d ago.",
-          "meta": "arXiv · 1d ago · signal 5.31",
-          "rank": 207,
+          "meta": "arXiv · 1d ago · signal 5.11",
+          "rank": 206,
           "rank_delta": null
         },
         {
-          "headline": "ReaLB: Real-Time Load Balancing for Multimodal MoE Inference",
-          "title": "ReaLB: Real-Time Load Balancing for Multimodal MoE Inference",
-          "url": "http://arxiv.org/abs/2604.19503v1",
-          "source": "arxiv.org",
+          "headline": "Speculative Decoding for Autoregressive Video Generation",
+          "title": "Speculative Decoding for Autoregressive Video Generation",
+          "url": "https://huggingface.co/papers/2604.17397",
+          "source": "huggingface.co",
+          "tags": [],
+          "score": 4.796,
+          "raw_score": 3.007,
+          "published_hours_ago": 14,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.17397.png",
+          "badge": "Paper",
+          "deck": "Speculative decoding is adapted to autoregressive video diffusion through a quality-based routing mechanism that maintains high visual quality while achieving significant speedup. Surfaced…",
+          "meta": "Hugging Face Papers · 14h ago · signal 4.80",
+          "rank": 218,
+          "rank_delta": null
+        },
+        {
+          "headline": "AgentSPEX: An Agent SPecification and EXecution Language",
+          "title": "AgentSPEX: An Agent SPecification and EXecution Language",
+          "url": "https://huggingface.co/papers/2604.13346",
+          "source": "huggingface.co",
           "tags": [
             "AI"
           ],
-          "score": 4.874,
-          "raw_score": 3.159,
-          "published_hours_ago": 25,
+          "score": 5.131,
+          "raw_score": 2.964,
+          "published_hours_ago": 15,
           "stars": 0,
-          "image_url": "/news/assets/thumb-paper.svg",
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2604.13346.png",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 1d ago.",
-          "meta": "arXiv · 1d ago · signal 4.87",
-          "rank": 199,
+          "deck": "AgentSPEX is a domain-specific language and framework for creating structured, modular, and interpretable large language model agent workflows with explicit control flow and state managemen…",
+          "meta": "Hugging Face Papers · 15h ago · signal 5.13",
+          "rank": 223,
           "rank_delta": null
         },
         {
-          "headline": "GenerativeMPC: VLM-RAG-guided Whole-Body MPC with Virtual Impedance for Bimanual Mobile Manipul…",
-          "title": "GenerativeMPC: VLM-RAG-guided Whole-Body MPC with Virtual Impedance for Bimanual Mobile Manipulation",
-          "url": "http://arxiv.org/abs/2604.19522v1",
+          "headline": "InvestChat: Exploring Multimodal Interaction via Natural Language, Touch, and Pen in an Investm…",
+          "title": "InvestChat: Exploring Multimodal Interaction via Natural Language, Touch, and Pen in an Investment Dashboard",
+          "url": "http://arxiv.org/abs/2604.19537v1",
           "source": "arxiv.org",
           "tags": [],
-          "score": 4.167,
-          "raw_score": 2.732,
-          "published_hours_ago": 25,
+          "score": 4.466,
+          "raw_score": 2.804,
+          "published_hours_ago": 24,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
           "deck": "Fresh arXiv paper posted 1d ago and surfacing in the current feed.",
-          "meta": "arXiv · 1d ago · signal 4.17",
-          "rank": 246,
+          "meta": "arXiv · 1d ago · signal 4.47",
+          "rank": 241,
           "rank_delta": null
         },
         {
-          "headline": "LePREC: Reasoning as Classification over Structured Factors for Assessing Relevance of Legal Is…",
-          "title": "LePREC: Reasoning as Classification over Structured Factors for Assessing Relevance of Legal Issues",
-          "url": "http://arxiv.org/abs/2604.19464v1",
+          "headline": "A-MAR: Agent-based Multimodal Art Retrieval for Fine-Grained Artwork Understanding",
+          "title": "A-MAR: Agent-based Multimodal Art Retrieval for Fine-Grained Artwork Understanding",
+          "url": "http://arxiv.org/abs/2604.19689v1",
           "source": "arxiv.org",
           "tags": [
             "AI"
           ],
-          "score": 4.492,
-          "raw_score": 2.875,
-          "published_hours_ago": 26,
+          "score": 4.763,
+          "raw_score": 2.82,
+          "published_hours_ago": 22,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-paper.svg",
+          "badge": "Paper",
+          "deck": "Fresh arXiv paper from the ai cluster, posted 22h ago.",
+          "meta": "arXiv · 22h ago · signal 4.76",
+          "rank": 240,
+          "rank_delta": null
+        },
+        {
+          "headline": "Revac: A Social Deduction Reasoning Agent",
+          "title": "Revac: A Social Deduction Reasoning Agent",
+          "url": "http://arxiv.org/abs/2604.19523v1",
+          "source": "arxiv.org",
+          "tags": [
+            "AI"
+          ],
+          "score": 4.601,
+          "raw_score": 2.883,
+          "published_hours_ago": 25,
           "stars": 0,
           "image_url": "/news/assets/thumb-paper.svg",
           "badge": "Paper",
           "deck": "Fresh arXiv paper from the ai cluster, posted 1d ago.",
-          "meta": "arXiv · 1d ago · signal 4.49",
-          "rank": 235,
+          "meta": "arXiv · 1d ago · signal 4.60",
+          "rank": 234,
           "rank_delta": null
         }
       ]
@@ -685,6 +695,85 @@
       "title": "Community Chatter",
       "description": "Directional signals from discussion-heavy sources.",
       "items": [
+        {
+          "headline": "Show GN: Bizketch — Product Hunt global launch, a service where 5 AI agents write business plans",
+          "title": "Show GN: Bizketch — Product Hunt global launch, a service where 5 AI agents write business plans",
+          "url": "https://news.hada.io/topic?id=28776",
+          "source": "geeknews",
+          "tags": [
+            "social"
+          ],
+          "score": 3.545,
+          "raw_score": 1.829,
+          "published_hours_ago": 8,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on GeekNews 8h ago.",
+          "meta": "GeekNews · 8h ago · signal 3.54",
+          "rank": 999,
+          "rank_delta": null
+        },
+        {
+          "headline": "As agentic workloads expand, the best orchestration hybridizes centralized servers and CPUs for…",
+          "title": "As agentic workloads expand, the best orchestration hybridizes centralized servers and CPUs for the ultimate continuity. Especially when you want your AI to use your local apps and messages.",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE5BUGJzdmpnTFRNT3N1R3I1U1BkTEpRUldXSUdvOU1wRzFPRVJ1MHlqWW1sTXY2OURlNHVIdmMySWpSY3JaOVRZN1laMWFNZnNXNmpYelBTYU4yTTdNcUozR1RUNA?oc=5",
+          "source": "x.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 3.289,
+          "raw_score": 2.052,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X 3d ago.",
+          "meta": "X · 3d ago · signal 3.29",
+          "rank": 999,
+          "rank_delta": null
+        },
+        {
+          "headline": "Moonshot’s Kimi K2.6 is the new leading open weights model.",
+          "title": "Moonshot’s Kimi K2.6 is the new leading open weights model. Kimi K2.6 lands at #4 on the Artificial Analysis Intelligence Index (54) behind only Anthropic, Google, and OpenAI (all 57) Key takeaways: ➤ Increase in performance on agentic tasks: @Kimi_Moon",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9LUXNwaTQyZV81aVNJWE9XaWNjcEUtaHE2RVZzWmpFWng0Z3ZQWkFGWUtQNVVYQmRTTWUwTVdtWl9aMTZFMTV6bU04ZzNPeV9aQkhoa1hEN3dwWEQ2VU1rNElZTW51YXM?oc=5",
+          "source": "x.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 3.834,
+          "raw_score": 2.196,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X 3d ago.",
+          "meta": "X · 3d ago · signal 3.83",
+          "rank": 999,
+          "rank_delta": null
+        },
+        {
+          "headline": "I get a lot of questions about Agentic RAG.",
+          "title": "I get a lot of questions about Agentic RAG. People expect it to be complicated. It really isn’t. And I made a video to prove it. We build a traditional RAG pipeline, then upgrade it to Agentic RAG in just a few lines of code. We start with a single-agent architecture, t",
+          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPU0JkVFdHcTJlOGhZZlBhZ0NvX0VMaGxrNzlydjJyS2c3VlpZdG5rMXh0UHZuelNveWtkYS1UaC1TNUJVM0k3elRkdl9raDlwN3lNaHV3SnlHTE9zN1dfVGFFVEZYSGY5Vmx2aTFVUlBvZUpTbzltQWNuMHBTX1dpRnV5Wlg4NHJCdTZMUW9hMnp4N2lvdXVuQmhGQklSUUtRMnhLeVpxelNmQ2VjNC00Z1Z1TC10UDA?oc=5",
+          "source": "linkedin.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 3.503,
+          "raw_score": 2.167,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on LinkedIn 3d ago.",
+          "meta": "LinkedIn · 3d ago · signal 3.50",
+          "rank": 999,
+          "rank_delta": null
+        },
         {
           "headline": "Anthropic - OpenClaw: Available again",
           "title": "Anthropic - OpenClaw: Available again",
@@ -743,104 +832,6 @@
           "rank_delta": null
         },
         {
-          "headline": "What Anthropic has done in the past month: • Nerfed Opus 4.6 • Blocked third-party agentic tool…",
-          "title": "What Anthropic has done in the past month: • Nerfed Opus 4.6 • Blocked third-party agentic tools from running through Pro/Max subscriptions • Forced users onto API billing • Released their worst model ever Opus 4.7 with adaptive thinking • Stripped Claude C",
-          "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFB4THlkZDJyNnRjY3ZSZlhIbFM1Wk90U0lYWi1ZemNHVkJCN2tvV3BoZEg3SGV3d1EzQjlRZ2U1elRZUDJNalZqekpNTExtUEpNS3o0cXJuUkY2S3RXMlpNTA?oc=5",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social"
-          ],
-          "score": 3.834,
-          "raw_score": 2.196,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X 3d ago.",
-          "meta": "X · 3d ago · signal 3.83",
-          "rank": 999,
-          "rank_delta": null
-        },
-        {
-          "headline": "“Skillify” by Garry Tan — A methodology that turns AI agent failures into permanent structural…",
-          "title": "“Skillify” by Garry Tan — A methodology that turns AI agent failures into permanent structural modifications",
-          "url": "https://news.hada.io/topic?id=28777",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 3.918,
-          "raw_score": 1.989,
-          "published_hours_ago": 6,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews 6h ago.",
-          "meta": "GeekNews · 6h ago · signal 3.92",
-          "rank": 999,
-          "rank_delta": null
-        },
-        {
-          "headline": "Agentic commerce is here, and it's being built on Base.",
-          "title": "Agentic commerce is here, and it's being built on Base. With over 167M x402 transactions already settled - and 85% on Base - Agentic(.)Market takes it to the next level with an agent-to-agent marketplace. The next stage in agentic acceleration, happening onc",
-          "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTFBJakRSS2tzSU5CcEtfSW8zY2I1S3htNjlMaHA0cE5xbnZuSUV0dkQwVG1ITkRieUY3QU41TjVHdDNWQU5SbzJuU21NLXN5MXRIQVZYODJJcEs?oc=5",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social"
-          ],
-          "score": 3.389,
-          "raw_score": 2.052,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X 3d ago.",
-          "meta": "X · 3d ago · signal 3.39",
-          "rank": 999,
-          "rank_delta": null
-        },
-        {
-          "headline": "Curious on OutSystems recent announcement on Agentic Systems Engineering?",
-          "title": "Curious on OutSystems recent announcement on Agentic Systems Engineering? This thought leader accurately explains how we will become the future of enterprise agentic systems.",
-          "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPU0xGQWNHTUJzMUg3eFRucWV6TjBRQUYtYWtYMXZzOUpKWlpiMkhPYUxVVjQtTWdPWVFkWmk2YUxMRDRoVzBoNG1lYlg3VGxoNlhVZ1J0YXdfbFFOQ21qdFZDWHVZS3dUQVE2dW80WnFac0RnMkdNYjFBX3VLeEhuVHNHeU9CYjhGbVozOVQ0XzMxR0lTWWIwS1dRV1MxN1hUSDV3cWRZSG9pVFpDSE5sWTVMdHo1LThtNVJHb2xFUnp0R2NJOEhNYUY2TQ?oc=5",
-          "source": "linkedin.com",
-          "tags": [
-            "AI",
-            "social"
-          ],
-          "score": 3.099,
-          "raw_score": 1.969,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on LinkedIn 3d ago.",
-          "meta": "LinkedIn · 3d ago · signal 3.10",
-          "rank": 999,
-          "rank_delta": null
-        },
-        {
-          "headline": "I was absolutely delighted to be part of a group of early testers of ChatGPT Images 2.0.",
-          "title": "I was absolutely delighted to be part of a group of early testers of ChatGPT Images 2.0. Images 2.0 is the first model I have ever tried that feels ready for real enterprise workflows. This is because: - It is a *reasoning* model, which means that it will search the we",
-          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5zU3VhVGduQm5zdk04OV8xMnNQZXNrdEpCZDZKY2EwT0twby0xM2l3OERONS1JdURsTWZlLWstbnc5UEY1X1l5V0hkQmt2V3FldEpSTkdUMlU5bWpuR1EwNFFpNGQ?oc=5",
-          "source": "x.com",
-          "tags": [
-            "social"
-          ],
-          "score": 2.956,
-          "raw_score": 1.797,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/news/assets/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X 3d ago.",
-          "meta": "X · 3d ago · signal 2.96",
-          "rank": 999,
-          "rank_delta": null
-        },
-        {
           "headline": "Introducing GPT-Rosalind, our frontier reasoning model built to support research across biology…",
           "title": "Introducing GPT-Rosalind, our frontier reasoning model built to support research across biology, drug discovery, and translational medicine.",
           "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE04WWpHRU4xRWNBOERPMzFZdElnNVZEMzRPTlQ3RllJVGNJaHNyZWd3bG90MldsMkhuZjRrOEVsTG1aVTY1QVlNcUVhUFh3aUFaZU95NWkwa0xrQVU?oc=5",
@@ -878,6 +869,25 @@
           "meta": "X · 3d ago · signal 2.96",
           "rank": 999,
           "rank_delta": null
+        },
+        {
+          "headline": "New post w/ random thoughts on AI (thread) I will probably get a # wrong, but here we go :) 1/1…",
+          "title": "New post w/ random thoughts on AI (thread) I will probably get a # wrong, but here we go :) 1/12 OpenAI & Anthropic now at 0.1% of US GDP *each* In a year, AI revenue likely to be 1-2% of US GDP What does AI mean for US GDP growth? Does productivity g",
+          "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE44WDZaa0hJOEVpc3NxbUdNTHMzcXBGcm1iNEhuZGxLa3Y3T1hDQU1JaUdVZ1JSOFRCTFluLU80YzM0Ykw1UmswZDNwSy1lQW1rRmoycUlPcTN4c21B?oc=5",
+          "source": "x.com",
+          "tags": [
+            "social"
+          ],
+          "score": 3.071,
+          "raw_score": 1.845,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/news/assets/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X 3d ago.",
+          "meta": "X · 3d ago · signal 3.07",
+          "rank": 999,
+          "rank_delta": null
         }
       ]
     }
@@ -909,18 +919,24 @@
     }
   ],
   "digest": {
-    "title": "AI News Brief — 2026-04-23",
-    "url": "/notes/news/2026-04-23-ai-news-digest/",
-    "description": "GitHub velocity is led by google-gemini/gemini-cli; paper attention is clustering around Chat2Workflow: A Benchmark for Generating Executable Visual Workflows with Natural Language; social attention is tilting toward Anthropic - OpenClaw: Available again. 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+    "title": "AI News Brief — 2026-04-24",
+    "url": "/notes/news/2026-04-24-ai-news-digest/",
+    "description": "GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Micro Language Models Enable Instant Responses; social attention is tilting toward Show GN: Bizketch — Product Hunt global launch, a service where 5 AI agents write business plans; biggest mover: onyx-dot-app/onyx (+2). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
   },
   "structured_digest": {
-    "title": "AI News Brief — 2026-04-23",
-    "url": "/notes/news/2026-04-23-ai-news-digest/",
-    "description": "GitHub velocity is led by google-gemini/gemini-cli; paper attention is clustering around Chat2Workflow: A Benchmark for Generating Executable Visual Workflows with Natural Language; social attention is tilting toward Anthropic - OpenClaw: Available again. 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+    "title": "AI News Brief — 2026-04-24",
+    "url": "/notes/news/2026-04-24-ai-news-digest/",
+    "description": "GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Micro Language Models Enable Instant Responses; social attention is tilting toward Show GN: Bizketch — Product Hunt global launch, a service where 5 AI agents write business plans; biggest mover: onyx-dot-app/onyx (+2). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
   },
   "beta_digest": null,
   "archive_url": "/notes/news/news-digest-archive/",
   "archives": [
+    {
+      "title": "AI News Brief — 2026-04-24",
+      "url": "/notes/news/2026-04-24-ai-news-digest/",
+      "date_label": "2026-04-24",
+      "description": "GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Micro Language Models Enable Instant Responses; social attention is tilting toward Show GN: Bizketch — Product Hunt global launch, a service where 5 AI agents write business plans; biggest mover: onyx-dot-app/onyx (+2). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+    },
     {
       "title": "AI News Brief — 2026-04-23",
       "url": "/notes/news/2026-04-23-ai-news-digest/",
@@ -962,12 +978,6 @@
       "url": "/notes/news/2026-04-17-ai-news-digest/",
       "date_label": "2026-04-17",
       "description": "GitHub velocity is led by ray-project/ray; paper attention is clustering around SpatialEvo: Self-Evolving Spatial Intelligence via Deterministic Geometric Environments; social attention is tilting toward With Swagger, AI creates the entire frontend. Swagger is the best context and harness.; biggest mover: openai/codex (+3). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
-    },
-    {
-      "title": "AI News Brief — 2026-04-16",
-      "url": "/notes/news/2026-04-16-ai-news-digest/",
-      "date_label": "2026-04-16",
-      "description": "GitHub velocity is led by badlogic/pi-mono; paper attention is clustering around Nemotron 3 Super: Open, Efficient Mixture-of-Experts Hybrid Mamba-Transformer Model for Agentic…; social attention is tilting toward OpenAI unveils ‘Trusted Access’ expansion strategy for cyber defense and GPT-5.4 Cyber; biggest mover: badlogic/pi-mono (+7). 10 repo signals, 10 paper picks, and 10 community items made today's cut."
     }
   ]
 }
