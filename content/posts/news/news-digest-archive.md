@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-05-11
+date: 2026-05-12
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/notes/news/2026-05-11-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/notes/news/2026-05-12-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-05-11T01:11:46.397022+09:00">May 11, 2026 · 1:11 AM KST</time></strong>
+        <strong><time datetime="2026-05-12T02:31:19.154815+09:00">May 12, 2026 · 2:31 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>49</strong>
+        <strong>50</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-05-11">May 11, 2026</time></strong>
+        <strong><time datetime="2026-05-12">May 12, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by warpdotdev/warp; paper attention is clustering around GeoStack: A Framework for Quasi-Abelian Knowledge Composition in VLMs; social attention is tilting toward AlphaEvolve: Gemini-based coding agent expanding influence across multiple sectors; biggest mover: ZhuLinsen/daily_stock_analysis (+2). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by openai/codex; paper attention is clustering around LLMs Improving LLMs: Agentic Discovery for Test-Time Scaling; social attention is tilting toward Ask GN: What do you think about services that involve human intervention in an environment wher…; biggest mover: affaan-m/everything-claude-code (+9). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>May 2026</span><span class="news-digest-month-count">11 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>May 2026</span><span class="news-digest-month-count">12 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/notes/news/2026-05-12-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-05-12</span>
+            <strong>AI News Brief — 2026-05-12</strong>
+            <span>GitHub velocity is led by openai/codex; paper attention is clustering around LLMs Improving LLMs: Agentic Discovery for Test-Time Scaling; social attention is tilting toward Ask GN: What do you think about services that involve human intervention in an environment wher…; biggest mover: affaan-m/everything-claude-code (+9). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
+          </a>
           <a class="news-digest-archive-item" href="/notes/news/2026-05-11-ai-news-digest/">
             <span class="news-digest-archive-date">2026-05-11</span>
             <strong>AI News Brief — 2026-05-11</strong>
