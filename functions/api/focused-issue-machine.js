@@ -92,16 +92,32 @@ function fallbackIssue({ date, keywords, sources, gemmaText }) {
   };
 }
 
+function isNoMatchIssue(issue) {
+  const text = [issue?.title, issue?.summary, issue?.markdown]
+    .map((value) => String(value || ''))
+    .join('\n')
+    .toLowerCase();
+  return /no matching news found|no relevant information|no relevant (?:news|results)|provided search results/.test(text);
+}
+
 function issueFromGemma({ gemma, date, keywords, sources }) {
   const parsed = parseMaybeJson(gemma.text);
-  return parsed?.markdown
-    ? {
-        title: sanitizeText(parsed.title || `${keywords.join(', ')} Focused Brief — ${date}`, 200),
-        summary: sanitizeText(parsed.summary || '', 800),
-        markdown: stripModelThinking(parsed.markdown || ''),
-        bullets: Array.isArray(parsed.bullets) ? parsed.bullets.map((item) => sanitizeText(item, 220)).slice(0, 6) : []
-      }
-    : fallbackIssue({ date, keywords, sources, gemmaText: sanitizeText(gemma.text, 1200) });
+  if (parsed?.markdown) {
+    const issue = {
+      title: sanitizeText(parsed.title || `${keywords.join(', ')} Focused Brief — ${date}`, 200),
+      summary: sanitizeText(parsed.summary || '', 800),
+      markdown: stripModelThinking(parsed.markdown || ''),
+      bullets: Array.isArray(parsed.bullets) ? parsed.bullets.map((item) => sanitizeText(item, 220)).slice(0, 6) : []
+    };
+    if (sources.length && isNoMatchIssue(issue)) {
+      return {
+        issue: fallbackIssue({ date, keywords, sources, gemmaText: '' }),
+        warning: 'Gemma returned a no-match draft despite selected source cards, so the server generated a source-backed fallback.'
+      };
+    }
+    return { issue };
+  }
+  return { issue: fallbackIssue({ date, keywords, sources, gemmaText: sanitizeText(gemma.text, 1200) }) };
 }
 
 function buildGemmaPayload({ date, keywords, hasSelectedCandidates, sources, blogContext }) {
@@ -166,7 +182,11 @@ export function focusedIssueReducer(state, event) {
   if (state.phase === 'drafting' && event.type === 'gemma.completed') {
     const { date, keywords } = state.request;
     const gemma = event.gemma || { text: '', usedGemma: false };
-    const issue = issueFromGemma({ gemma, date, keywords, sources: state.sources });
+    const draft = issueFromGemma({ gemma, date, keywords, sources: state.sources });
+    const warning = draft.warning
+      || (gemma.missingKey ? 'GOOGLE_AI_API_KEY/GOOGLE_API_KEY/GEMINI_API_KEY is not configured on the server.' : undefined)
+      || gemma.error
+      || undefined;
     return {
       state: {
         ...state,
@@ -176,10 +196,10 @@ export function focusedIssueReducer(state, event) {
           ok: true,
           date,
           keywords,
-          issue,
+          issue: draft.issue,
           sources: state.sources,
-          usedGemma: Boolean(gemma.usedGemma && !gemma.error),
-          warning: gemma.missingKey ? 'GOOGLE_AI_API_KEY/GOOGLE_API_KEY/GEMINI_API_KEY is not configured on the server.' : gemma.error || undefined
+          usedGemma: Boolean(gemma.usedGemma && !gemma.error && !draft.warning),
+          warning
         }
       },
       effects: []

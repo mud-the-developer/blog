@@ -272,6 +272,52 @@ test('Gemma draft fallback and API response do not leak model thinking into mark
   assert.ok(!body.issue.markdown.toLowerCase().includes('ignore the selected source'));
 });
 
+test('selected source drafts reject Gemma no-match output when candidate cards exist', async () => {
+  globalThis.fetch = async (url) => {
+    assert.match(String(url), /generativelanguage\.googleapis\.com/);
+    return Response.json({
+      candidates: [{ content: { parts: [{ text: JSON.stringify({
+        title: "No matching news found for 'deepseek ocr'",
+        summary: 'No relevant information was found in the provided search results.',
+        markdown: "No matching news found for 'deepseek ocr'\n\nNo relevant information was found in the provided search results.",
+        bullets: []
+      }) }] } }]
+    });
+  };
+
+  const selected = [
+    {
+      title: 'DeepSeek OCR paper adds document parsing benchmark',
+      url: 'https://selected.example/deepseek-ocr',
+      source: 'Selected Wire',
+      summary: 'Selected candidate card describes DeepSeek OCR for structured document extraction.',
+      origin: 'live-search'
+    },
+    {
+      title: 'DeepSeek OCR implementation notes',
+      url: 'https://github.com/example/deepseek-ocr',
+      source: 'GitHub',
+      summary: 'Repository notes for running DeepSeek OCR examples.',
+      origin: 'live-search'
+    }
+  ];
+
+  const response = await focusedIssuePost({
+    request: jsonRequest({ date: '2026-06-09', keywords: 'deepseek ocr', candidates: selected, limit: 2 }),
+    env: mockEnv()
+  });
+  const body = await response.json();
+
+  assert.equal(body.ok, true);
+  assert.equal(body.sources.length, 2);
+  assert.ok(!/no matching news found/i.test(body.issue.title));
+  assert.ok(!/no relevant information/i.test(body.issue.summary));
+  assert.match(body.issue.markdown, /DeepSeek OCR paper adds document parsing benchmark/);
+  assert.match(body.issue.markdown, /Selected candidate card describes DeepSeek OCR/);
+  assert.equal(body.usedGemma, false);
+  assert.match(body.warning, /Gemma returned a no-match draft/i);
+});
+
 test('Gemma API helper ignores thought parts returned by the model transport', async () => {
   let requestBody;
   globalThis.fetch = async (_url, init) => {
