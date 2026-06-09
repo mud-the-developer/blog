@@ -18,6 +18,15 @@ export function modelNameFromEnv(env = {}) {
   return raw.startsWith('models/') ? raw : `models/${raw}`;
 }
 
+export function modelNamesFromEnv(env = {}) {
+  const fallbackRaw = String(env.GOOGLE_AI_FALLBACK_MODELS || 'models/gemini-2.5-flash,models/gemini-2.0-flash,models/gemma-3-27b-it');
+  const names = [modelNameFromEnv(env), ...fallbackRaw.split(',')]
+    .map((raw) => String(raw || '').trim())
+    .filter(Boolean)
+    .map((raw) => (raw.startsWith('models/') ? raw : `models/${raw}`));
+  return [...new Set(names)];
+}
+
 export function normalizeKeywords(value) {
   const parts = Array.isArray(value) ? value : String(value || '').split(/[,;]/);
   const seen = new Set();
@@ -62,37 +71,48 @@ export async function callGemma(env, payload) {
   if (!apiKey) {
     return { text: '', usedGemma: false, missingKey: true };
   }
-  const model = modelNameFromEnv(env);
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
-  const response = await fetch(endpoint, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({
-      contents: [
-        {
-          role: 'user',
-          parts: [{ text: JSON.stringify(payload, null, 2) }]
+  const models = modelNamesFromEnv(env);
+  const attempted = [];
+  for (const model of models) {
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        contents: [
+          {
+            role: 'user',
+            parts: [{ text: JSON.stringify(payload, null, 2) }]
+          }
+        ],
+        generationConfig: {
+          temperature: 0.35,
+          topP: 0.9,
+          maxOutputTokens: 2400,
+          responseMimeType: 'application/json'
         }
-      ],
-      generationConfig: {
-        temperature: 0.35,
-        topP: 0.9,
-        maxOutputTokens: 2400,
-        responseMimeType: 'application/json'
-      }
-    })
-  });
-  if (!response.ok) {
-    return { text: '', usedGemma: true, error: `Gemma request failed: ${response.status}` };
+      })
+    });
+    attempted.push(`${model}:${response.status}`);
+    if (!response.ok) {
+      if (![404, 429, 500, 502, 503, 504].includes(response.status)) break;
+      continue;
+    }
+    const json = await response.json();
+    const text = stripModelThinking(
+      json?.candidates?.[0]?.content?.parts
+        ?.filter((part) => part?.thought !== true)
+        .map((part) => part.text || '')
+        .join('\n') || ''
+    );
+    return {
+      text,
+      usedGemma: true,
+      modelName: model,
+      modelFallbackFrom: model === models[0] ? undefined : models[0]
+    };
   }
-  const json = await response.json();
-  const text = stripModelThinking(
-    json?.candidates?.[0]?.content?.parts
-      ?.filter((part) => part?.thought !== true)
-      .map((part) => part.text || '')
-      .join('\n') || ''
-  );
-  return { text, usedGemma: true };
+  return { text: '', usedGemma: true, error: `Gemma request failed: ${attempted.join(', ')}`, modelName: models[0] };
 }
 
 export function parseMaybeJson(text) {
