@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { afterEach, test } from 'node:test';
 
-import { callGemma, modelNameFromEnv } from '../../functions/api/_shared.js';
+import { callGemma, modelNameFromEnv, modelNamesFromEnv } from '../../functions/api/_shared.js';
 import { onRequestPost as focusedIssuePost } from '../../functions/api/focused-issue.js';
 import { onRequestPost as newsSearchPost } from '../../functions/api/news-search.js';
 
@@ -97,6 +97,32 @@ function mockEnv() {
 test('Gemma calls default to a Gemma 4 model unless overridden', () => {
   assert.equal(modelNameFromEnv({}), 'models/gemma-4-31b-it');
   assert.equal(modelNameFromEnv({ GOOGLE_AI_MODEL: 'gemma-4-26b-a4b-it' }), 'models/gemma-4-26b-a4b-it');
+  assert.deepEqual(modelNamesFromEnv({ GOOGLE_AI_MODEL: 'models/gemma-4-31b-it', GOOGLE_AI_FALLBACK_MODELS: 'gemini-2.5-flash,models/gemma-3-27b-it' }), [
+    'models/gemma-4-31b-it',
+    'models/gemini-2.5-flash',
+    'models/gemma-3-27b-it'
+  ]);
+});
+
+test('Gemma API helper falls back to another Google model when the primary model is unavailable', async () => {
+  const urls = [];
+  globalThis.fetch = async (url) => {
+    urls.push(String(url));
+    if (String(url).includes('/models/gemma-4-31b-it:generateContent')) {
+      return new Response(JSON.stringify({ error: { message: 'temporarily unavailable' } }), { status: 503 });
+    }
+    return Response.json({ candidates: [{ content: { parts: [{ text: '{"title":"Fallback model draft","markdown":"## Fallback model draft"}' }] } }] });
+  };
+
+  const result = await callGemma({ ...mockEnv(), GOOGLE_AI_FALLBACK_MODELS: 'models/gemini-2.5-flash' }, { task: 'return json' });
+
+  assert.equal(urls.length, 2);
+  assert.ok(urls[0].includes('/models/gemma-4-31b-it:generateContent'));
+  assert.ok(urls[1].includes('/models/gemini-2.5-flash:generateContent'));
+  assert.equal(result.usedGemma, true);
+  assert.equal(result.modelName, 'models/gemini-2.5-flash');
+  assert.equal(result.modelFallbackFrom, 'models/gemma-4-31b-it');
+  assert.match(result.text, /Fallback model draft/);
 });
 
 test('focused issue function ranks keyword news, calls Gemma server-side, and never leaks the key', async () => {
@@ -135,6 +161,7 @@ test('focused issue function ranks keyword news, calls Gemma server-side, and ne
   assert.equal(body.ok, true);
   assert.deepEqual(body.keywords, ['open RAN', 'Gemma']);
   assert.match(body.issue.markdown, /Open RAN \+ Gemma/);
+  assert.equal(body.modelName, 'models/gemma-4-31b-it');
   assert.equal(body.overviewFigure, undefined);
   assert.equal(body.overview_figure, undefined);
   assert.equal(body.sources[0].url, 'https://example.test/oran-gemma');

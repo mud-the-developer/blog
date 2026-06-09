@@ -92,9 +92,12 @@ function renderFocusedIssue(output, data) {
   summary.textContent = data.issue?.summary || '';
   const metrics = document.createElement('div');
   metrics.className = 'generated-news-metrics';
+  const modelLabel = data.usedGemma
+    ? String(data.modelName || 'Gemma').replace(/^models\//, '')
+    : 'fallback';
   const metricRows = [
     ['sources', String((data.sources || []).length)],
-    ['model', data.usedGemma ? 'Gemma' : 'fallback'],
+    ['model', modelLabel],
     ['mode', 'review']
   ];
   for (const [label, value] of metricRows) {

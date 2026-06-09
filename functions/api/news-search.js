@@ -117,6 +117,8 @@ async function planSearchQuery(query, queryMode, env = {}) {
     searchQuery: searchQuery || query,
     keywords,
     usedGemma: gemma.usedGemma && !!parsed,
+    modelName: gemma.modelName,
+    modelFallbackFrom: gemma.modelFallbackFrom,
     warning: gemma.error || (gemma.missingKey ? 'Gemma keyword expansion is unavailable without a Google AI API key; using the exact query.' : undefined)
   };
 }

@@ -199,6 +199,8 @@ export function focusedIssueReducer(state, event) {
           issue: draft.issue,
           sources: state.sources,
           usedGemma: Boolean(gemma.usedGemma && !gemma.error && !draft.warning),
+          modelName: gemma.modelName,
+          modelFallbackFrom: gemma.modelFallbackFrom,
           warning
         }
       },
