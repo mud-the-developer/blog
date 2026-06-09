@@ -137,10 +137,6 @@ jobs:
           set -euo pipefail
           paths=(data/news posts/news static/news/data static/news/assets)
 
-          if [[ -n "${NEWS_REPO_TOKEN}" ]]; then
-            paths=(vendor/blog_news "${paths[@]}")
-          fi
-
           if git diff --quiet -- "${paths[@]}"; then
             echo "No news changes to commit."
             exit 0
@@ -154,4 +150,4 @@ jobs:
           git commit -m "Refresh the daily news digest for ${issue_date}"
           git push origin HEAD:main
 
-          echo "Pushed news artifacts to main; Deploy Cloudflare Pages is triggered by the main push workflow."
+          echo "Pushed news artifacts to main; Deploy Cloudflare Pages will run from the Update News Digest workflow_run event."

@@ -16,3 +16,6 @@ playwright-report/
 .discode/
 .playwright-cli/
 .playwright/
+
+# Private source checkout used by the daily news workflow/local generator.
+vendor/blog_news/

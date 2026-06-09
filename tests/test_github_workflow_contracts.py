@@ -44,7 +44,7 @@ class GithubWorkflowContractTests(unittest.TestCase):
         self.assertNotIn("content/posts/news", update)
         self.assertIn("git push origin HEAD:main", update)
 
-    def test_deploy_is_push_driven_and_keeps_build_verification_before_pages_deploy(self) -> None:
+    def test_deploy_runs_after_push_or_successful_news_generation_and_verifies_before_pages_deploy(self) -> None:
         update, deploy = self.read_workflows()
 
         self.assertNotIn("deploy-cloudflare-pages.yml/dispatches", update)
@@ -54,6 +54,10 @@ class GithubWorkflowContractTests(unittest.TestCase):
         self.assertNotIn("actions: write", update)
 
         self.assertIn("push:", deploy)
+        self.assertIn("workflow_run:", deploy)
+        self.assertIn("Update News Digest", deploy)
+        self.assertIn("github.event.workflow_run.conclusion == 'success'", deploy)
+        self.assertIn("ref: ${{ github.event_name == 'workflow_run' && 'main' || github.ref_name }}", deploy)
         self.assertIn("- main", deploy)
         self.assertLess(deploy.index("npm run build"), deploy.index("wrangler@4 pages deploy dist"))
         self.assertLess(deploy.index("npm test"), deploy.index("wrangler@4 pages deploy dist"))

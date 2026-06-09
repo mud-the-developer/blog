@@ -26,7 +26,7 @@ GitHub Actions runs `.github/workflows/update-news-digest.yml` every day at `20 
 2. validates source freshness and coverage,
 3. runs `python3 scripts/generate_news_digest.py`,
 4. writes `posts/news/<YYYY-MM-DD>-ai-news-digest.md`, `posts/news/news-digest-archive.md`, `data/news/latest.json`, and the raw source snapshot,
-5. commits the changed news artifacts to `main`; the Cloudflare Pages workflow deploys from that `main` push after its build/test/lint gates pass.
+5. commits the changed news artifacts to `main`; the Cloudflare Pages workflow then runs from the completed news workflow (`workflow_run`) and deploys after its build/test/lint gates pass. This extra trigger is required because GitHub suppresses normal `push` workflow triggers for commits created with the default `GITHUB_TOKEN`.
 
 The freshness/coverage gate is intentionally kept before generation: source data must be under 36 hours old, must not include GitHub/rate-limit hard errors, and must include at least 8 GitHub items plus 8 paper items.
 

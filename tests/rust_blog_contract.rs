@@ -1,8 +1,22 @@
-use std::{fs, path::PathBuf};
+use std::{
+    fs,
+    path::{Path, PathBuf},
+};
 
 use mud_blog::{build_static_site, render_posts_fragment};
 
-const PUBLIC_POST_COUNT: usize = 91;
+fn count_markdown_posts(dir: &Path) -> Result<usize, Box<dyn std::error::Error>> {
+    let mut count = 0;
+    for entry in fs::read_dir(dir)? {
+        let path = entry?.path();
+        if path.is_dir() {
+            count += count_markdown_posts(&path)?;
+        } else if path.extension().and_then(|ext| ext.to_str()) == Some("md") {
+            count += 1;
+        }
+    }
+    Ok(count)
+}
 
 fn test_output_dir(name: &str) -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
@@ -16,10 +30,11 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
 -> Result<(), Box<dyn std::error::Error>> {
     let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let out_dir = test_output_dir("public-polish");
+    let expected_post_count = count_markdown_posts(&root.join("posts"))?;
 
     let result = build_static_site(root.join("posts"), &out_dir).await?;
 
-    assert_eq!(result.posts.len(), PUBLIC_POST_COUNT);
+    assert_eq!(result.posts.len(), expected_post_count);
     assert!(out_dir.join("index.html").exists());
     assert!(out_dir.join("archive.json").exists());
     assert!(out_dir.join("robots.txt").exists());
@@ -45,7 +60,7 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(sitemap.contains("<loc>https://mud-blog.pages.dev/</loc>"));
     assert!(sitemap.contains("<loc>https://mud-blog.pages.dev/news/</loc>"));
     assert!(sitemap.contains("<loc>https://mud-blog.pages.dev/news/search/</loc>"));
-    assert_eq!(sitemap.matches("<url>").count(), PUBLIC_POST_COUNT + 3);
+    assert_eq!(sitemap.matches("<url>").count(), expected_post_count + 3);
 
     assert!(index.contains("<a href=\"/news/\"><span class=\"ui-icon\" data-icon=\"newspaper\""));
     assert!(index.contains("data-theme-toggle"));
@@ -60,7 +75,7 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(index.contains("<summary class=\"filetree-folder-label\""));
     assert_eq!(
         index.matches("class=\"filetree-file\"").count(),
-        PUBLIC_POST_COUNT
+        expected_post_count
     );
     assert!(index.contains("data-pretext-polish"));
     assert!(!index.contains("data-focused-issue-lab"));
@@ -133,7 +148,7 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(!news.contains("data-overview-figure"));
     assert!(!news.contains("data-blog-chat"));
     assert!(!news.contains("Gemma guide"));
-    assert!(news.contains("AI News Brief — Jun 09"));
+    assert!(news.contains("AI News Brief —"));
     assert!(news.contains("Daily AI News Archive"));
 
     let news_search = fs::read_to_string(out_dir.join("news/search/index.html"))?;
@@ -181,6 +196,7 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
 async fn loads_folder_posts_after_removing_duplicate_and_internal_scaffold_posts()
 -> Result<(), Box<dyn std::error::Error>> {
     let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    let expected_post_count = count_markdown_posts(&root.join("posts"))?;
 
     for folder in ["about", "blog", "news", "papers"] {
         assert!(
@@ -207,11 +223,15 @@ async fn loads_folder_posts_after_removing_duplicate_and_internal_scaffold_posts
         .map(|post| post.title.as_str())
         .collect::<Vec<_>>();
 
-    assert_eq!(result.posts.len(), PUBLIC_POST_COUNT);
+    assert_eq!(result.posts.len(), expected_post_count);
     assert!(titles.contains(&"Jinhyuk Kim"));
     assert!(titles.contains(&"Second Brain Architecture"));
     assert!(titles.contains(&"GitHub to Cloudflare Pipeline"));
-    assert!(titles.contains(&"AI News Brief — Jun 09"));
+    assert!(
+        titles
+            .iter()
+            .any(|title| title.starts_with("AI News Brief —"))
+    );
     assert!(titles.contains(&"Daily AI News Archive"));
     assert!(titles.contains(
         &"Uncertainty-Aware Hybrid Inference with On-Device Small and Remote Large Language Models"
@@ -277,6 +297,9 @@ async fn restores_news_digest_pipeline_for_the_new_posts_folder()
     assert!(!workflow.contains("Bearer ***"));
     assert!(!workflow.contains("actions: write"));
     assert!(deploy_workflow.contains("push:"));
+    assert!(deploy_workflow.contains("workflow_run:"));
+    assert!(deploy_workflow.contains("Update News Digest"));
+    assert!(deploy_workflow.contains("github.event.workflow_run.conclusion == 'success'"));
     assert!(deploy_workflow.contains("npm run build"));
     assert!(deploy_workflow.contains("npm test"));
     assert!(deploy_workflow.contains("npm run lint"));
