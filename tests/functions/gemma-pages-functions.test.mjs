@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { afterEach, test } from 'node:test';
 
-import { modelNameFromEnv } from '../../functions/api/_shared.js';
+import { callGemma, modelNameFromEnv } from '../../functions/api/_shared.js';
 import { onRequestPost as focusedIssuePost } from '../../functions/api/focused-issue.js';
 import { onRequestPost as newsSearchPost } from '../../functions/api/news-search.js';
 
@@ -208,4 +208,84 @@ test('news search function searches live-style sources before Gemma drafting use
   assert.equal(draftBody.sources[0].origin, 'live-search');
   assert.match(draftBody.issue.title, /Search-backed/);
   assert.ok(requests.some((url) => url.includes('news.google.com/rss/search')));
+});
+
+test('focused issue drafting treats selected search results as the authoritative source set', async () => {
+  let promptPayload;
+  globalThis.fetch = async (url, init) => {
+    assert.match(String(url), /generativelanguage\.googleapis\.com/);
+    const gemmaPayload = JSON.parse(init.body);
+    promptPayload = JSON.parse(gemmaPayload.contents[0].parts[0].text);
+    return Response.json({
+      candidates: [{ content: { parts: [{ text: JSON.stringify({ title: 'Selected Source Brief', summary: 'Only selected sources were used.', markdown: '## Selected Source Brief\n\nSelected source only.', bullets: [] }) }] } }]
+    });
+  };
+
+  const selected = [
+    {
+      title: 'Photonics compiler release notes',
+      url: 'https://selected.example/photonics-compiler',
+      source: 'Selected Wire',
+      summary: 'A selected search result about photonics compilers, not agent products.',
+      origin: 'live-search',
+      score: 0
+    }
+  ];
+
+  const response = await focusedIssuePost({
+    request: jsonRequest({ date: '2026-06-09', keywords: 'agent', candidates: selected, limit: 4 }),
+    env: mockEnv()
+  });
+  const body = await response.json();
+
+  assert.equal(response.status, 200);
+  assert.equal(body.ok, true);
+  assert.deepEqual(promptPayload.ranked_news_items.map((item) => item.url), ['https://selected.example/photonics-compiler']);
+  assert.deepEqual(body.sources.map((item) => item.url), ['https://selected.example/photonics-compiler']);
+  assert.ok(!JSON.stringify(promptPayload.ranked_news_items).includes('agent workflows'));
+  assert.ok(!JSON.stringify(promptPayload.blog_archive_context).includes('agent workflows'));
+});
+
+test('Gemma draft fallback and API response do not leak model thinking into markdown', async () => {
+  globalThis.fetch = async (url, init) => {
+    assert.match(String(url), /generativelanguage\.googleapis\.com/);
+    const gemmaPayload = JSON.parse(init.body);
+    assert.equal(gemmaPayload.generationConfig.responseMimeType, 'application/json');
+    return Response.json({
+      candidates: [{ content: { parts: [{ text: '<think>I will ignore the selected source and write about agents.</think>\nDraft prose that is not JSON.' }] } }]
+    });
+  };
+
+  const response = await focusedIssuePost({
+    request: jsonRequest({
+      date: '2026-06-09',
+      keywords: 'photonics compiler',
+      candidates: [{ title: 'Photonics compiler release notes', url: 'https://selected.example/photonics-compiler', source: 'Selected Wire', summary: 'Selected source summary.', origin: 'live-search' }],
+      limit: 1
+    }),
+    env: mockEnv()
+  });
+  const body = await response.json();
+
+  assert.equal(body.ok, true);
+  assert.ok(!body.issue.markdown.includes('<think>'));
+  assert.ok(!body.issue.markdown.toLowerCase().includes('ignore the selected source'));
+});
+
+test('Gemma API helper ignores thought parts returned by the model transport', async () => {
+  let requestBody;
+  globalThis.fetch = async (_url, init) => {
+    requestBody = JSON.parse(init.body);
+    return Response.json({
+      candidates: [{ content: { parts: [
+        { text: 'private chain of thought about agents', thought: true },
+        { text: '{"title":"Clean Draft","markdown":"## Clean Draft"}' }
+      ] } }]
+    });
+  };
+
+  const result = await callGemma(mockEnv(), { task: 'return json' });
+
+  assert.equal(requestBody.generationConfig.responseMimeType, 'application/json');
+  assert.equal(result.text, '{"title":"Clean Draft","markdown":"## Clean Draft"}');
 });

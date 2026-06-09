@@ -1,3 +1,5 @@
+import { createNewsDeskState, newsDeskReducer, runNewsDeskEffect } from './blog-lab-machine.mjs';
+
 function setStatus(node, message, kind = '') {
   if (!node) return;
   node.replaceChildren();
@@ -275,82 +277,74 @@ function setupFocusedIssueLab() {
   const draftButton = lab.querySelector('[data-draft-selected-news]');
   const downloadButtons = [...lab.querySelectorAll('[data-download-draft]')];
   const dateInput = lab.querySelector('[name="date"]');
-  let candidates = [];
-  let query = '';
-  let currentDraft = null;
   if (dateInput && !dateInput.value) dateInput.value = new Date().toISOString().slice(0, 10);
+
+  let currentDraft = null;
+  let state = createNewsDeskState({ date: dateInput?.value });
 
   const setDownloadEnabled = (enabled) => {
     for (const button of downloadButtons) button.disabled = !enabled;
   };
-  setDownloadEnabled(false);
+
+  const setDraftEnabled = (enabled) => {
+    if (draftButton) draftButton.disabled = !enabled;
+  };
 
   const selectedSources = () => [...lab.querySelectorAll('input[name="sources"]:checked')]
     .map((input) => input.value)
     .filter(Boolean);
 
-  const selectedCandidates = () => [...lab.querySelectorAll('[data-candidate-index]:checked')]
-    .map((checkbox) => candidates[Number(checkbox.dataset.candidateIndex)])
-    .filter(Boolean)
-    .slice(0, 8);
+  const selectedIndexes = () => [...lab.querySelectorAll('[data-candidate-index]:checked')]
+    .map((checkbox) => Number(checkbox.dataset.candidateIndex))
+    .filter((index) => Number.isInteger(index));
+
+  const applyEffect = async (effect) => {
+    if (effect.type === 'render-status') {
+      setStatus(status, effect.message, effect.kind);
+    } else if (effect.type === 'clear-output') {
+      output.textContent = '';
+      currentDraft = null;
+    } else if (effect.type === 'set-download-enabled') {
+      setDownloadEnabled(effect.enabled);
+    } else if (effect.type === 'set-draft-enabled') {
+      setDraftEnabled(effect.enabled);
+    } else if (effect.type === 'render-candidates') {
+      renderSearchResults(results, effect.candidates);
+    } else if (effect.type === 'render-draft') {
+      currentDraft = renderFocusedIssue(output, effect.data);
+    } else if (effect.type === 'post-json') {
+      const event = await runNewsDeskEffect(effect, { postJson });
+      if (event) await dispatch(event);
+    }
+  };
+
+  async function dispatch(event) {
+    const step = newsDeskReducer(state, event);
+    state = step.state;
+    for (const effect of step.effects) {
+      await applyEffect(effect);
+    }
+    lab.dataset.newsDeskPhase = state.phase;
+  }
 
   results?.addEventListener('change', () => {
-    if (draftButton) draftButton.disabled = selectedCandidates().length === 0;
+    dispatch({ type: 'candidate.selection.changed', selectedIndexes: selectedIndexes() });
   });
 
-  form?.addEventListener('submit', async (event) => {
+  form?.addEventListener('submit', (event) => {
     event.preventDefault();
     const formData = new FormData(form);
-    query = String(formData.get('query') || '').trim();
-    if (!query) {
-      setStatus(status, 'Enter a search query first.', 'error');
-      return;
-    }
-    const sources = selectedSources();
-    if (!sources.length) {
-      setStatus(status, 'Select at least one news source.', 'error');
-      return;
-    }
-    setStatus(status, `Searching ${sources.length} selected source${sources.length === 1 ? '' : 's'}…`, 'loading');
-    output.textContent = '';
-    currentDraft = null;
-    setDownloadEnabled(false);
-    if (draftButton) draftButton.disabled = true;
-    try {
-      const data = await postJson('/api/news-search', { query, date: formData.get('date'), sources, limit: 12 });
-      candidates = Array.isArray(data.candidates) ? data.candidates : [];
-      renderSearchResults(results, candidates);
-      if (draftButton) draftButton.disabled = selectedCandidates().length === 0;
-      const searched = Array.isArray(data.searched) ? data.searched.join(', ') : 'sources';
-      setStatus(status, data.warning || `Found ${candidates.length} candidates from ${searched}. Select sources, then draft.`, data.warning ? 'warning' : 'ready');
-    } catch (error) {
-      setStatus(status, error.message, 'error');
-    }
+    dispatch({
+      type: 'search.submitted',
+      query: formData.get('query'),
+      date: formData.get('date'),
+      sources: selectedSources()
+    });
   });
 
-  draftButton?.addEventListener('click', async () => {
-    const selected = selectedCandidates();
-    if (!selected.length) {
-      setStatus(status, 'Select at least one news candidate.', 'error');
-      return;
-    }
-    setStatus(status, 'Drafting selected sources with Gemma 4…', 'loading');
-    output.textContent = '';
-    currentDraft = null;
-    setDownloadEnabled(false);
-    try {
-      const data = await postJson('/api/focused-issue', {
-        date: dateInput?.value,
-        keywords: query,
-        candidates: selected,
-        limit: selected.length
-      });
-      currentDraft = renderFocusedIssue(output, data);
-      setDownloadEnabled(Boolean(currentDraft));
-      setStatus(status, data.warning || 'Draft ready from selected search results. Review before publishing.', data.warning ? 'warning' : 'ready');
-    } catch (error) {
-      setStatus(status, error.message, 'error');
-    }
+  draftButton?.addEventListener('click', () => {
+    dispatch({ type: 'candidate.selection.changed', selectedIndexes: selectedIndexes() })
+      .then(() => dispatch({ type: 'draft.requested' }));
   });
 
   for (const button of downloadButtons) {
@@ -365,6 +359,8 @@ function setupFocusedIssueLab() {
       }
     });
   }
+
+  dispatch({ type: 'lab.mounted' });
 }
 
 setupFocusedIssueLab();

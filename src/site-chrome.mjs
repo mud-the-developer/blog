@@ -1,3 +1,5 @@
+import { applyThemeEffect, createThemeState, themeReducer } from './site-chrome-state.mjs';
+
 const iconPaths = {
   home: '<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M9.5 20v-5h5v5"/>',
   'list-tree': '<path d="M4 5h5"/><path d="M4 12h5"/><path d="M4 19h5"/><path d="M12 5h8"/><path d="M12 12h8"/><path d="M12 19h8"/>',
@@ -36,32 +38,20 @@ function setupThemeToggle() {
   if (!button) return;
   const root = document.documentElement;
   const media = window.matchMedia('(prefers-color-scheme: dark)');
-  let overrideTheme = null;
-
   const systemTheme = () => (media.matches ? 'dark' : 'light');
-  const activeTheme = () => overrideTheme || systemTheme();
+  let state = createThemeState({ systemTheme: systemTheme() });
 
-  const render = () => {
-    const active = activeTheme();
-    if (overrideTheme) {
-      root.dataset.theme = active;
-    } else {
-      root.removeAttribute('data-theme');
+  const dispatch = (event) => {
+    const step = themeReducer(state, event);
+    state = step.state;
+    for (const effect of step.effects) {
+      applyThemeEffect(effect, { root, button });
     }
-    button.dataset.activeTheme = overrideTheme ? active : `system-${active}`;
-    button.setAttribute('aria-pressed', overrideTheme ? 'true' : 'false');
-    const label = button.querySelector('.theme-toggle-label');
-    if (label) label.textContent = active === 'dark' ? 'Dark' : 'Light';
   };
 
-  button.addEventListener('click', () => {
-    overrideTheme = activeTheme() === 'dark' ? 'light' : 'dark';
-    render();
-  });
-  media.addEventListener?.('change', () => {
-    if (!overrideTheme) render();
-  });
-  render();
+  button.addEventListener('click', () => dispatch({ type: 'theme.toggle' }));
+  media.addEventListener?.('change', () => dispatch({ type: 'system-theme.changed', theme: systemTheme() }));
+  dispatch({ type: 'chrome.mounted' });
 }
 
 hydrateIcons();

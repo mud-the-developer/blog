@@ -572,8 +572,23 @@ pub async fn build_static_site(
         assets_dir.join("pretext-polish.mjs"),
     )
     .await?;
+    fs::copy(
+        "src/pretext-polish-state.mjs",
+        assets_dir.join("pretext-polish-state.mjs"),
+    )
+    .await?;
     fs::copy("src/blog-lab.mjs", assets_dir.join("blog-lab.mjs")).await?;
+    fs::copy(
+        "src/blog-lab-machine.mjs",
+        assets_dir.join("blog-lab-machine.mjs"),
+    )
+    .await?;
     fs::copy("src/site-chrome.mjs", assets_dir.join("site-chrome.mjs")).await?;
+    fs::copy(
+        "src/site-chrome-state.mjs",
+        assets_dir.join("site-chrome-state.mjs"),
+    )
+    .await?;
 
     let archive = archive_json(&posts)?;
     fs::write(out_dir.join("archive.json"), archive).await?;

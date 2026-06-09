@@ -37,6 +37,14 @@ export function sanitizeText(value, max = 6000) {
   return String(value || '').replace(/\s+/g, ' ').trim().slice(0, max);
 }
 
+export function stripModelThinking(value) {
+  return String(value || '')
+    .replace(/<think>[\s\S]*?<\/think>/gi, '')
+    .replace(/```(?:thinking|thoughts?|reasoning)[\s\S]*?```/gi, '')
+    .replace(/^\s*(?:thinking|thought|reasoning)\s*:\s*[\s\S]*?(?=\n\s*(?:\{|```|#{1,6}\s)|$)/i, '')
+    .trim();
+}
+
 export async function readJsonAsset(env, url, path, fallback) {
   if (!env?.ASSETS?.fetch) return fallback;
   try {
@@ -69,7 +77,8 @@ export async function callGemma(env, payload) {
       generationConfig: {
         temperature: 0.35,
         topP: 0.9,
-        maxOutputTokens: 2400
+        maxOutputTokens: 2400,
+        responseMimeType: 'application/json'
       }
     })
   });
@@ -77,12 +86,17 @@ export async function callGemma(env, payload) {
     return { text: '', usedGemma: true, error: `Gemma request failed: ${response.status}` };
   }
   const json = await response.json();
-  const text = json?.candidates?.[0]?.content?.parts?.map((part) => part.text || '').join('\n').trim() || '';
+  const text = stripModelThinking(
+    json?.candidates?.[0]?.content?.parts
+      ?.filter((part) => part?.thought !== true)
+      .map((part) => part.text || '')
+      .join('\n') || ''
+  );
   return { text, usedGemma: true };
 }
 
 export function parseMaybeJson(text) {
-  const raw = String(text || '').trim();
+  const raw = stripModelThinking(text);
   if (!raw) return null;
   const fenced = raw.match(/```(?:json)?\s*([\s\S]*?)```/i);
   const candidate = fenced ? fenced[1].trim() : raw;
