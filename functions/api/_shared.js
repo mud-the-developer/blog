@@ -19,7 +19,7 @@ export function modelNameFromEnv(env = {}) {
 }
 
 export function modelNamesFromEnv(env = {}) {
-  const fallbackRaw = String(env.GOOGLE_AI_FALLBACK_MODELS || 'models/gemini-2.5-flash,models/gemini-2.0-flash,models/gemma-3-27b-it');
+  const fallbackRaw = String(env.GOOGLE_AI_FALLBACK_MODELS || 'models/gemini-2.5-flash,models/gemini-2.5-flash-lite,models/gemini-2.0-flash-lite,models/gemini-2.0-flash,models/gemini-1.5-flash,models/gemini-1.5-flash-8b,models/gemma-3-27b-it');
   const names = [modelNameFromEnv(env), ...fallbackRaw.split(',')]
     .map((raw) => String(raw || '').trim())
     .filter(Boolean)
