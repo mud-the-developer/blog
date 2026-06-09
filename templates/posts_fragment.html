@@ -1,0 +1,7 @@
+{% for post in posts %}
+<a class="post-card" href="{{ post.url }}">
+  <span class="post-card-date">{{ post.date }} · {{ post.folder }}</span>
+  <strong>{{ post.title }}</strong>
+  <span>{{ post.excerpt }}</span>
+</a>
+{% endfor %}

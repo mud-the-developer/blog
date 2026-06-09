@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ko" data-runtime="tokio" data-askama-template="index">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Mud's Blog — public notes on AI systems, wireless networks, papers, and engineering." />
+  <title>Mud's Blog</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body data-layout="public-index">
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Mud's Blog home"><span class="ui-icon" data-icon="home" aria-hidden="true"></span><span>Mud's Blog</span></a>
+    <div class="site-header-actions">
+      <nav aria-label="primary">
+        <a href="#posts"><span class="ui-icon" data-icon="list-tree" aria-hidden="true"></span><span>Posts</span></a>
+        <a href="/news/"><span class="ui-icon" data-icon="newspaper" aria-hidden="true"></span><span>News</span></a>
+        <a href="/news/search/"><span class="ui-icon" data-icon="search" aria-hidden="true"></span><span>News Search</span></a>
+        <a href="/posts/jinhyuk-kim/"><span class="ui-icon" data-icon="user" aria-hidden="true"></span><span>About</span></a>
+      </nav>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle color theme" aria-pressed="false">
+        <span class="ui-icon theme-icon theme-icon-sun" data-icon="sun" aria-hidden="true"></span>
+        <span class="ui-icon theme-icon theme-icon-moon" data-icon="moon" aria-hidden="true"></span>
+        <span class="theme-toggle-label">System</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="public-shell">
+    <section class="archive-panel" id="posts" aria-labelledby="posts-title">
+      <div class="archive-heading">
+        <p class="eyebrow">Public writing</p>
+        <h1 id="posts-title">Index</h1>
+        <p>{{ posts.len() }} posts across AI systems, papers, news, and engineering notes.</p>
+      </div>
+
+      <nav class="filetree" aria-label="post file tree">
+        <div class="filetree-root"><span class="ui-icon" data-icon="folder-root" aria-hidden="true"></span><span>posts/</span></div>
+        {% for group in groups %}
+        <details class="filetree-folder" data-folder="{{ group.slug }}" aria-label="{{ group.label }} posts"{% if group.slug != "news" %} open{% endif %}>
+          <summary class="filetree-folder-label">
+            <span class="filetree-title"><span class="ui-icon" data-icon="folder" aria-hidden="true"></span><span>{{ group.slug }}/</span></span>
+            <span class="filetree-count">{{ group.posts.len() }}</span>
+          </summary>
+          <div class="filetree-files">
+            {% for post in group.posts %}
+            <a class="filetree-file" href="{{ post.url }}">
+              <span class="filetree-title"><span>{{ post.title }}</span></span>
+              <span class="filetree-date"><span>{{ post.date }}</span></span>
+            </a>
+            {% endfor %}
+          </div>
+        </details>
+        {% endfor %}
+      </nav>
+
+      <div id="posts-surface" class="post-list" aria-live="polite">
+        {% for post in posts %}
+        <a class="post-card" href="{{ post.url }}">
+          <span class="post-card-date">{{ post.date }} · {{ post.folder }}</span>
+          <strong>{{ post.title }}</strong>
+          <span>{{ post.excerpt }}</span>
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+
+    <aside class="pretext-polish" data-pretext-polish aria-label="ambient animated index">
+      <div class="pretext-surface" data-pretext-surface></div>
+    </aside>
+  </main>
+
+  <script id="archive-data" type="application/json">{{ archive_json|safe }}</script>
+  <script type="module" src="/assets/pretext-polish.mjs"></script>
+  <script type="module" src="/assets/site-chrome.mjs"></script>
+</body>
+</html>

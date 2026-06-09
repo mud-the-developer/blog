@@ -4,8 +4,8 @@
 Pipeline:
 1. Read ranked raw feed data from vendor/blog_news/data/latest.json
 2. Curate the sections used by the native /news/ page
-3. Generate one daily markdown digest post under content/posts/news/
-4. Generate one JSON payload for the native /news/ hub under content/generated/news/
+3. Generate one daily markdown digest post under posts/news/
+4. Generate one JSON payload for the native /news/ hub under data/news/
 """
 
 from __future__ import annotations
@@ -16,6 +16,7 @@ import json
 import math
 import os
 import re
+import sqlite3
 import sys
 import time
 from collections import Counter, defaultdict
@@ -34,17 +35,19 @@ from zoneinfo import ZoneInfo
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_PATH = ROOT / "vendor" / "blog_news" / "data" / "latest.json"
 SNAPSHOT_PATH = ROOT / "static" / "news" / "data" / "latest.json"
-GENERATED_DIR = ROOT / "content" / "generated" / "news"
-POSTS_DIR = ROOT / "content" / "posts" / "news"
+GENERATED_DIR = ROOT / "data" / "news"
+POSTS_DIR = ROOT / "posts" / "news"
 TRANSLATION_CACHE_PATH = GENERATED_DIR / "translation-cache.json"
 BETA_DIGEST_CACHE_PATH = GENERATED_DIR / "gemma-beta-cache.json"
 KST = ZoneInfo("Asia/Seoul")
 ARCHIVE_STEM = "news-digest-archive"
-ARCHIVE_URL = f"/notes/news/{ARCHIVE_STEM}/"
+ARCHIVE_URL = f"/posts/{ARCHIVE_STEM}/"
 NEWS_ASSET_DIR = ROOT / "static" / "news" / "assets"
 DEFAULT_GEMMA_REQUEST_TIMEOUT_SECONDS = 35.0
 DEFAULT_GEMMA_REQUEST_ATTEMPTS = 2
 RECENT_DIGEST_LOOKBACK_DAYS = 5
+DEFAULT_MEMPALACE_PATH = Path.home() / ".mempalace" / "palace"
+DEFAULT_MEMPALACE_LIMIT = 6
 
 SECTION_SPECS = [
     ("hot24", "Hot in 24 Hours", "The fastest-moving items across repos, papers, and community chatter."),
@@ -185,6 +188,10 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate the blog news digest artifacts.")
     parser.add_argument("--date", help="Issue date in YYYY-MM-DD. Defaults to current date in Asia/Seoul.")
     parser.add_argument("--limit", type=int, default=10, help="Target cards per section in the digest post.")
+    parser.add_argument("--keyword", action="append", default=[], help="Focus the issue on one keyword. Can be passed multiple times.")
+    parser.add_argument("--keywords", default="", help="Comma-separated keyword focus list for manual issue generation.")
+    parser.add_argument("--mempalace-limit", type=int, default=DEFAULT_MEMPALACE_LIMIT, help="Maximum MemPalace drawers to pass into the Gemma planning payload.")
+    parser.add_argument("--no-mempalace", action="store_true", help="Disable local MemPalace context enrichment for this run.")
     return parser.parse_args()
 
 
@@ -192,6 +199,114 @@ def issue_date_from_args(raw: str | None) -> datetime:
     if raw:
         return datetime.strptime(raw, "%Y-%m-%d").replace(tzinfo=KST)
     return datetime.now(tz=KST)
+
+
+def normalize_keywords(values: list[str] | tuple[str, ...] | None) -> list[str]:
+    keywords: list[str] = []
+    seen: set[str] = set()
+    for raw in values or []:
+        for part in re.split(r"[,;]", str(raw)):
+            keyword = collapse_whitespace(part).strip(" -_/\t")
+            if not keyword:
+                continue
+            key = keyword.lower()
+            if key in seen:
+                continue
+            seen.add(key)
+            keywords.append(keyword)
+    return keywords[:6]
+
+
+def keywords_from_args(args: argparse.Namespace) -> list[str]:
+    return normalize_keywords([*(args.keyword or []), args.keywords or ""])
+
+
+def slugify_keyword(value: str) -> str:
+    slug = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
+    return slug or "focus"
+
+
+def digest_stem_for(issue_dt: datetime, keywords: list[str] | tuple[str, ...] | None = None) -> str:
+    issue_date = issue_dt.strftime("%Y-%m-%d")
+    normalized = normalize_keywords(list(keywords or []))
+    if not normalized:
+        return f"{issue_date}-ai-news-digest"
+    focus_slug = "-".join(slugify_keyword(keyword) for keyword in normalized)
+    focus_slug = re.sub(r"-+", "-", focus_slug).strip("-")[:80] or "focus"
+    return f"{issue_date}-{focus_slug}-news-digest"
+
+
+def google_ai_api_key() -> str:
+    for name in ("GOOGLE_AI_API_KEY", "GOOGLE_API_KEY", "GEMINI_API_KEY"):
+        value = (os.getenv(name) or "").strip()
+        if value:
+            return value
+    return ""
+
+
+def keyword_query_text(keywords: list[str] | tuple[str, ...] | None) -> str:
+    return " ".join(normalize_keywords(list(keywords or []))).strip()
+
+
+def mempalace_fts_query(keywords: list[str] | tuple[str, ...] | None) -> str:
+    normalized = normalize_keywords(list(keywords or []))
+    if not normalized:
+        normalized = ["AI news", "blog research"]
+    quoted: list[str] = []
+    for keyword in normalized:
+        safe_keyword = keyword.replace('"', '""')
+        quoted.append(f'"{safe_keyword}"')
+    return " OR ".join(quoted)
+
+
+def load_mempalace_context(
+    keywords: list[str] | tuple[str, ...] | None,
+    *,
+    palace_path: Path = DEFAULT_MEMPALACE_PATH,
+    limit: int = DEFAULT_MEMPALACE_LIMIT,
+) -> list[dict[str, str]]:
+    query = mempalace_fts_query(keywords)
+    db_path = palace_path / "chroma.sqlite3"
+    if limit <= 0 or not db_path.exists():
+        return []
+    try:
+        con = sqlite3.connect(db_path)
+        con.row_factory = sqlite3.Row
+        rows = con.execute(
+            """
+            select f.rowid as id, f.string_value as content,
+                   coalesce(wing.string_value, '') as wing,
+                   coalesce(room.string_value, '') as room,
+                   coalesce(source.string_value, '') as source_file
+            from embedding_fulltext_search f
+            left join embedding_metadata wing on wing.id = f.rowid and wing.key = 'wing'
+            left join embedding_metadata room on room.id = f.rowid and room.key = 'room'
+            left join embedding_metadata source on source.id = f.rowid and source.key = 'source_file'
+            where embedding_fulltext_search match ?
+            order by bm25(embedding_fulltext_search)
+            limit ?
+            """,
+            (query, max(1, min(limit, 20))),
+        ).fetchall()
+        con.close()
+    except Exception as error:
+        warn_digest(f"MemPalace context lookup skipped ({type(error).__name__}: {error}).")
+        return []
+
+    context: list[dict[str, str]] = []
+    for row in rows:
+        content = collapse_whitespace(str(row["content"] or ""))
+        if not content:
+            continue
+        context.append(
+            {
+                "content": content[:1200],
+                "wing": str(row["wing"] or ""),
+                "room": str(row["room"] or ""),
+                "source_file": str(row["source_file"] or ""),
+            }
+        )
+    return context
 
 
 def issue_date_label(issue_dt: datetime) -> str:
@@ -282,7 +397,7 @@ def gemma_beta_enabled() -> bool:
     flag = (os.getenv("ENABLE_GEMMA_BETA_DIGEST") or "").strip().lower()
     if flag in {"0", "false", "no", "off"}:
         return False
-    return bool(os.getenv("GOOGLE_AI_API_KEY", "").strip())
+    return bool(google_ai_api_key())
 
 
 def gemma_model_name() -> str:
@@ -293,7 +408,7 @@ def gemma_model_name() -> str:
 def gemma_api_url() -> str:
     return (
         f"https://generativelanguage.googleapis.com/v1beta/"
-        f"{gemma_model_name()}:generateContent?key={os.getenv('GOOGLE_AI_API_KEY','').strip()}"
+        f"{gemma_model_name()}:generateContent?key={google_ai_api_key()}"
     )
 
 
@@ -323,18 +438,18 @@ def warn_digest(message: str) -> None:
 
 def normalize_image(url: str) -> str:
     if url.startswith("/assets/"):
-        return "/news/assets/" + url.removeprefix("/assets/")
+        return "/assets/news/" + url.removeprefix("/assets/")
     return url
 
 
 def fallback_image_url(source: str, badge: str) -> str:
     if source == "github.com" or badge == "Repo":
-        return "/news/assets/thumb-repo.svg"
+        return "/assets/news/thumb-repo.svg"
     if source in PAPER_SOURCES or badge == "Paper":
-        return "/news/assets/thumb-paper.svg"
+        return "/assets/news/thumb-paper.svg"
     if badge == "vRAN":
-        return "/news/assets/thumb-vran.svg"
-    return "/news/assets/thumb-ai.svg"
+        return "/assets/news/thumb-vran.svg"
+    return "/assets/news/thumb-ai.svg"
 
 
 def source_mark(source: str) -> str:
@@ -453,6 +568,18 @@ def collapse_whitespace(value: str) -> str:
 
 def yaml_quote(value: str) -> str:
     return json.dumps(value, ensure_ascii=False)
+
+def yaml_inline_list(values: list[str]) -> str:
+    cleaned = []
+    seen: set[str] = set()
+    for value in values:
+        tag = re.sub(r"[^a-z0-9가-힣-]+", "-", str(value).lower()).strip("-")
+        if not tag or tag in seen:
+            continue
+        seen.add(tag)
+        cleaned.append(tag)
+    return "[" + ", ".join(cleaned) + "]"
+
 
 
 def english_title_for(item: dict[str, Any]) -> str:
@@ -1114,7 +1241,7 @@ def to_card(item: dict[str, Any]) -> NewsItem:
         raw_score=float(item.get("score") or 0.0),
         published_hours_ago=int(item.get("publishedHoursAgo") or 0),
         stars=int(item.get("stars") or 0),
-        image_url=normalize_image(item.get("image", "/news/assets/thumb-ai.svg")),
+        image_url=normalize_image(item.get("image", "/assets/news/thumb-ai.svg")),
         badge=badge,
         deck=deck_for(item, badge),
         meta=meta_for(item),
@@ -1284,6 +1411,8 @@ class DigestContext:
     repo_scoreboard: list[NewsItem]
     sections: list[tuple[str, str, str, list[NewsItem]]]
     source_counts: list[dict[str, Any]]
+    keywords: list[str] = field(default_factory=list)
+    mempalace_context: list[dict[str, str]] = field(default_factory=list)
 
 
 def issue_summary(section_items: dict[str, list[dict[str, Any]]]) -> str:
@@ -1352,9 +1481,31 @@ def ensure_section_minimum(items: list[dict[str, Any]], pool: list[dict[str, Any
     return sorted(selected, key=sort_key)
 
 
-def build_digest_context(payload: dict[str, Any], limit: int) -> DigestContext:
-    candidates = prepare_candidates(payload)
-    relaxed_candidates = prepare_candidates(payload, relaxed=True)
+def item_matches_keywords(item: dict[str, Any], keywords: list[str] | tuple[str, ...] | None) -> bool:
+    normalized = normalize_keywords(list(keywords or []))
+    if not normalized:
+        return True
+    haystack = item_text(item).lower()
+    return any(keyword.lower() in haystack for keyword in normalized)
+
+
+def focus_candidates(items: list[dict[str, Any]], keywords: list[str]) -> list[dict[str, Any]]:
+    if not keywords:
+        return items
+    focused = [item for item in items if item_matches_keywords(item, keywords)]
+    return focused if len(focused) >= 6 else items
+
+
+def build_digest_context(
+    payload: dict[str, Any],
+    limit: int,
+    *,
+    keywords: list[str] | tuple[str, ...] | None = None,
+    mempalace_context: list[dict[str, str]] | None = None,
+) -> DigestContext:
+    normalized_keywords = normalize_keywords(list(keywords or []))
+    candidates = focus_candidates(prepare_candidates(payload), normalized_keywords)
+    relaxed_candidates = focus_candidates(prepare_candidates(payload, relaxed=True), normalized_keywords)
     section_items: dict[str, list[dict[str, Any]]] = {
         "repos": [item for item in candidates if item_badge(item) == "Repo"],
         "papers": [item for item in candidates if item_badge(item) == "Paper"],
@@ -1489,14 +1640,18 @@ def build_digest_context(payload: dict[str, Any], limit: int) -> DigestContext:
         repo_scoreboard=[to_card(item) for item in curated_raw["repos"][:8]],
         sections=sections,
         source_counts=source_counts,
+        keywords=normalized_keywords,
+        mempalace_context=list(mempalace_context or []),
     )
 
 
 def beta_digest_cache_key(issue_dt: datetime, context: DigestContext) -> str:
     raw = json.dumps(
         {
-            "version": 4,
+            "version": 5,
             "date": issue_dt.strftime("%Y-%m-%d"),
+            "keywords": context.keywords,
+            "mempalace_context": context.mempalace_context[:4],
             "summary": context.summary,
             "top_cards": [card.__dict__ for card in context.top_cards],
             "repo_scoreboard": [card.__dict__ for card in context.repo_scoreboard],
@@ -1637,11 +1792,14 @@ def gemma_overview_payload(issue_dt: datetime, context: DigestContext) -> dict[s
     return {
         "task": "Write the front matter for a newsroom-style daily AI beta brief in JSON.",
         "date": issue_dt.strftime("%Y-%m-%d"),
+        "keyword_focus": context.keywords,
+        "mempalace_context": context.mempalace_context[:6],
         "constraints": [
             "Treat this as a human-readable editorial briefing page, not a raw list or tweet thread.",
             "Use restrained newsroom language, not hype.",
             "Be concrete, compact, and readable at a glance.",
             "Do not invent facts, counts, or sources.",
+            "Use keyword_focus and mempalace_context only as editorial preference/context, never as factual evidence unless a supplied card supports it.",
             "Do not mention ranking formulas or hidden scoring internals.",
             "The lead should read like the opening of a short article.",
             "Return strict JSON only.",
@@ -2055,7 +2213,7 @@ def generate_gemma_beta_digest(issue_dt: datetime, context: DigestContext) -> Be
 
 def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: DigestContext, beta: BetaDigest) -> tuple[str, str]:
     stem = f"{issue_dt.strftime('%Y-%m-%d')}-ai-news-beta-digest"
-    structured_url = f"/notes/news/{issue_dt.strftime('%Y-%m-%d')}-ai-news-digest/"
+    structured_url = f"/posts/{issue_dt.strftime('%Y-%m-%d')}-ai-news-digest/"
     title = beta.title or f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}"
     frontmatter = "\n".join(
         [
@@ -2229,7 +2387,7 @@ def archive_entries(current_stem: str, current_summary: str) -> list[dict[str, s
         entries.append(
             {
                 "title": title,
-                "url": f"/notes/news/{stem}/",
+                "url": f"/posts/{stem}/",
                 "date_label": date_label,
                 "description": description_from_post(path),
             }
@@ -2240,7 +2398,7 @@ def archive_entries(current_stem: str, current_summary: str) -> list[dict[str, s
             0,
             {
                 "title": f"AI News Brief — {date_label}",
-                "url": f"/notes/news/{current_stem}/",
+                "url": f"/posts/{current_stem}/",
                 "date_label": date_label,
                 "description": current_summary,
             },
@@ -2284,6 +2442,147 @@ def cards_for_section(
     return slug, "", []
 
 
+def source_ledger_width(value: int, max_value: int) -> str:
+    if max_value <= 0:
+        return "18%"
+    width = max(18.0, min(100.0, round((value / max_value) * 100.0, 1)))
+    return f"{width:.1f}%"
+
+
+def render_compact_signal_rows(cards: list[NewsItem], *, limit: int = 6) -> list[str]:
+    lines = ['      <div class="news-digest-compact-list">']
+    for card in cards[:limit]:
+        badge_suffix = badge_class_suffix(card.badge)
+        source_suffix = source_class_suffix_from_source(card.source)
+        movement = ""
+        if card.rank_delta is not None and card.rank_delta != 0:
+            direction = "+" if card.rank_delta > 0 else "−"
+            movement = f"{direction}{abs(card.rank_delta)}"
+        else:
+            movement = f"#{card.rank}" if card.rank < 999 else relative_hours_label(card.published_hours_ago)
+        lines.extend(
+            [
+                f'        <a class="news-digest-compact-row news-digest-compact-row--{badge_suffix}" href="{safe_text(card.url)}" target="_blank" rel="noreferrer">',
+                '          <span class="news-digest-compact-rank" aria-label="Signal movement">',
+                f'            <strong>{safe_text(movement)}</strong>',
+                f'            <em>{safe_text(card.badge)}</em>',
+                '          </span>',
+                '          <span class="news-digest-compact-copy">',
+                f'            <span class="news-digest-source-chip news-digest-source-chip--{source_suffix}">',
+                f'              <span class="news-digest-source-mark" aria-hidden="true">{safe_text(source_mark(card.source))}</span>',
+                f'              <span class="news-digest-source-label">{safe_text(source_label(card.source))}</span>',
+                '            </span>',
+                f'            <strong data-pretext-target>{safe_text(card.headline or card.title)}</strong>',
+                f'            <span data-pretext-target>{safe_text(card.deck)}</span>',
+                '          </span>',
+                '          <span class="news-digest-compact-meta">',
+                f'            <strong>{card.score:.1f}</strong>',
+                f'            <em>{safe_text(meta_without_source(card.meta, card.source))}</em>',
+                '          </span>',
+                '        </a>',
+            ]
+        )
+    lines.append('      </div>')
+    return lines
+
+
+def render_signal_lead_strip(context: DigestContext, brief: BetaDigest) -> list[str]:
+    lead_cards = context.top_cards[:3]
+    lines = [
+        '    <div class="news-digest-lead-strip" aria-label="Lead signals">',
+        '      <article class="news-digest-lead-story">',
+        '        <p class="section-kicker">Lead read</p>',
+        f'        <h3 data-pretext-target>{safe_text(brief.title or "Today’s signal brief")}</h3>',
+        f'        <p data-pretext-target>{safe_text(brief.lead or brief.dek or context.summary)}</p>',
+        '      </article>',
+        '      <div class="news-digest-lead-cards">',
+    ]
+    for index, card in enumerate(lead_cards, start=1):
+        lines.extend(
+            [
+                f'        <a class="news-digest-lead-card news-digest-lead-card--{badge_class_suffix(card.badge)}" href="{safe_text(card.url)}" target="_blank" rel="noreferrer">',
+                f'          <span class="news-digest-lead-index">0{index}</span>',
+                f'          <strong data-pretext-target>{safe_text(card.headline or card.title)}</strong>',
+                f'          <em>{safe_text(source_label(card.source))} · {card.score:.1f}</em>',
+                '        </a>',
+            ]
+        )
+    lines.extend(['      </div>', '    </div>'])
+    return lines
+
+
+def render_source_ledger(rows: list[dict[str, Any]]) -> list[str]:
+    max_value = max((int(row.get("value") or 0) for row in rows[:6]), default=1)
+    lines = [
+        '    <aside class="news-digest-source-ledger" aria-label="Source ledger">',
+        '      <p class="section-kicker">Source ledger</p>',
+        '      <div class="news-digest-source-ledger-list">',
+    ]
+    for row in rows[:6]:
+        label = str(row.get("label") or "Source")
+        value = int(row.get("value") or 0)
+        lines.extend(
+            [
+                '        <div class="news-digest-source-ledger-row">',
+                f'          <span>{safe_text(label)}</span>',
+                '          <span class="news-digest-source-ledger-track" aria-hidden="true">',
+                f'            <span style="width: {source_ledger_width(value, max_value)}"></span>',
+                '          </span>',
+                f'          <strong>{value}</strong>',
+                '        </div>',
+            ]
+        )
+    lines.extend(['      </div>', '    </aside>'])
+    return lines
+
+
+def render_signal_brief_section(
+    context: DigestContext,
+    brief: BetaDigest,
+    repo_title: str,
+    repo_description: str,
+    repo_cards: list[NewsItem],
+    paper_title: str,
+    paper_description: str,
+    paper_cards: list[NewsItem],
+    social_cards: list[NewsItem],
+) -> list[str]:
+    total_signals = len(repo_cards) + len(paper_cards) + len(social_cards)
+    note = brief.takeaways[0] if brief.takeaways else context.summary
+    lines = [
+        '  <section class="news-digest-signal-brief" aria-label="Signal brief">',
+        '    <header class="news-digest-section-head">',
+        '      <p class="section-kicker">Signal Brief</p>',
+        '      <h2 data-pretext-target>Lead, board, ledger</h2>',
+        f'      <p class="news-digest-section-description" data-pretext-target>{safe_text(context.summary)}</p>',
+        '    </header>',
+        *render_signal_lead_strip(context, brief),
+        '    <div class="news-digest-rail-grid">',
+        '      <section class="news-digest-rail-panel">',
+        '        <p class="section-kicker">Repo momentum</p>',
+        f'        <h3 data-pretext-target>{safe_text(repo_title or "Repository velocity")}</h3>',
+        f'        <p data-pretext-target>{safe_text(repo_description or "Compact GitHub-style rows keep repo movement skimmable.")}</p>',
+        *render_compact_signal_rows(repo_cards, limit=6),
+        '      </section>',
+        '      <section class="news-digest-rail-panel">',
+        '        <p class="section-kicker">Paper queue</p>',
+        f'        <h3 data-pretext-target>{safe_text(paper_title or "Paper queue")}</h3>',
+        f'        <p data-pretext-target>{safe_text(paper_description or "Paper signals stay dense, sourced, and easy to compare.")}</p>',
+        *render_compact_signal_rows(paper_cards, limit=6),
+        '      </section>',
+        '    </div>',
+        '    <div class="news-digest-interrupt-note">',
+        '      <p class="section-kicker">Editor note</p>',
+        f'      <strong data-pretext-target>{safe_text(note)}</strong>',
+        f'      <span>{total_signals} curated signals made this issue; the ledger below keeps the source mix auditable.</span>',
+        '    </div>',
+        *render_source_ledger(context.source_counts),
+        '  </section>',
+        '',
+    ]
+    return lines
+
+
 def render_markdown(
     issue_dt: datetime,
     generated_dt: datetime,
@@ -2292,8 +2591,9 @@ def render_markdown(
     archives: list[dict[str, str]],
 ) -> tuple[str, str]:
     issue_date = issue_dt.strftime("%Y-%m-%d")
-    stem = f"{issue_date}-ai-news-digest"
-    title = brief.title or f"AI News Brief — {issue_date}"
+    stem = digest_stem_for(issue_dt, context.keywords)
+    focus_label = ", ".join(context.keywords)
+    title = brief.title or (f"AI News Brief — {focus_label} — {issue_date}" if focus_label else f"AI News Brief — {issue_date}")
     issue_label = issue_date_label(issue_dt)
     generated_label = generated_timestamp_label(generated_dt)
     repo_title, repo_description, repo_cards = cards_for_section(context.sections, "repos")
@@ -2308,7 +2608,7 @@ def render_markdown(
             f"title: {yaml_quote(title)}",
             f"description: {yaml_quote(brief.dek or context.summary)}",
             f"date: {issue_date}",
-            "tags: [news, news-brief, ai, radar]",
+            f"tags: {yaml_inline_list(['news', 'news-brief', 'ai', 'radar', *context.keywords])}",
             "publish: true",
             "content-classes: [news-digest-note]",
             "---",
@@ -2349,38 +2649,18 @@ def render_markdown(
 
     if repo_cards or paper_cards:
         body.extend(
-            [
-                '  <section class="news-digest-top-shell" aria-label="Primary repo and paper lists">',
-                '    <header class="news-digest-section-head">',
-                '      <p class="section-kicker">Signal Board</p>',
-                '      <h2 data-pretext-target>Repositories and papers</h2>',
-                "    </header>",
-                '    <p class="news-digest-section-description" data-pretext-target>Keep the full repo and paper scan above the fold, then read the day as one short brief below.</p>',
-            ]
+            render_signal_brief_section(
+                context,
+                brief,
+                repo_title,
+                repo_description,
+                repo_cards,
+                paper_title,
+                paper_description,
+                paper_cards,
+                social_cards,
+            )
         )
-        if repo_cards:
-            body.extend(
-                [
-                    '    <div class="news-digest-section-head">',
-                    '      <p class="section-kicker">Top list</p>',
-                    f'      <h3 data-pretext-target>{safe_text(repo_title)}</h3>',
-                    f'      <p class="news-digest-section-description" data-pretext-target>{safe_text(repo_description)}</p>',
-                    "    </div>",
-                ]
-            )
-            body.extend(render_top_inventory_list(repo_cards))
-        if paper_cards:
-            body.extend(
-                [
-                    '    <div class="news-digest-section-head">',
-                    '      <p class="section-kicker">Top list</p>',
-                    f'      <h3 data-pretext-target>{safe_text(paper_title)}</h3>',
-                    f'      <p class="news-digest-section-description" data-pretext-target>{safe_text(paper_description)}</p>',
-                    "    </div>",
-                ]
-            )
-            body.extend(render_top_inventory_list(paper_cards, compact=True))
-        body.extend(["  </section>", ""])
 
     body.extend(
         [
@@ -2458,7 +2738,7 @@ def render_archive_markdown(
     issue_label = issue_date_label(issue_dt)
     generated_label = generated_timestamp_label(generated_dt)
     grouped = grouped_archive_entries(entries)
-    latest_digest_url = entries[0]["url"] if entries else f"/notes/news/{issue_dt.strftime('%Y-%m-%d')}-ai-news-digest/"
+    latest_digest_url = entries[0]["url"] if entries else f"/posts/{issue_dt.strftime('%Y-%m-%d')}-ai-news-digest/"
     frontmatter = "\n".join(
         [
             "---",
@@ -2570,25 +2850,28 @@ def write_hub_json(issue_dt: datetime, generated_dt: datetime, context: DigestCo
         "issue_date": issue_dt.strftime("%Y-%m-%d"),
         "issue_label": issue_date_label(issue_dt),
         "summary": context.summary,
+        "keywords": context.keywords,
+        "mempalace_context": context.mempalace_context[:6],
         "top_cards": [card.__dict__ for card in context.top_cards],
         "repo_scoreboard": [card.__dict__ for card in context.repo_scoreboard],
         "sections": sections,
         "source_counts": context.source_counts,
         "digest": {
             "title": f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}",
-            "url": f"/notes/news/{digest_stem}/",
+            "url": f"/posts/{digest_stem}/",
             "description": context.summary,
         },
         "structured_digest": {
             "title": f"AI News Brief — {issue_dt.strftime('%Y-%m-%d')}",
-            "url": f"/notes/news/{digest_stem}/",
+            "url": f"/posts/{digest_stem}/",
             "description": context.summary,
         },
         "beta_digest": None,
         "archive_url": ARCHIVE_URL,
         "archives": recent_archive_entries(digest_stem, context.summary),
     }
-    (GENERATED_DIR / "latest.json").write_text(json.dumps(hub, ensure_ascii=False, indent=2) + "\n")
+    target_name = "latest.json" if not context.keywords else f"{digest_stem}.json"
+    (GENERATED_DIR / target_name).write_text(json.dumps(hub, ensure_ascii=False, indent=2) + "\n")
 
 
 def main() -> None:
@@ -2597,19 +2880,26 @@ def main() -> None:
     load_translation_cache()
     load_beta_digest_cache()
     issue_dt = issue_date_from_args(args.date)
+    keywords = keywords_from_args(args)
     payload = load_source_feed()
     write_source_snapshot(payload)
     generated_dt = datetime.now(tz=KST)
     set_recent_digest_memory(issue_dt)
-    context = build_digest_context(payload, args.limit)
+    mempalace_context = [] if args.no_mempalace else load_mempalace_context(keywords, limit=args.mempalace_limit)
+    context = build_digest_context(payload, args.limit, keywords=keywords, mempalace_context=mempalace_context)
     digest_stem = write_post(issue_dt, generated_dt, context)
-    write_archive_post(issue_dt, generated_dt, context.summary, digest_stem)
+    if not keywords:
+        write_archive_post(issue_dt, generated_dt, context.summary, digest_stem)
     write_hub_json(issue_dt, generated_dt, context, digest_stem)
     save_translation_cache()
     save_beta_digest_cache()
-    print(f"Generated news digest post: content/posts/news/{digest_stem}.md")
-    print(f"Generated archive post: content/posts/news/{ARCHIVE_STEM}.md")
-    print("Generated hub data: content/generated/news/latest.json")
+    print(f"Generated news digest post: posts/news/{digest_stem}.md")
+    if not keywords:
+        print(f"Generated archive post: posts/news/{ARCHIVE_STEM}.md")
+    else:
+        print(f"Generated keyword-focused digest for: {', '.join(keywords)}")
+    hub_target = "latest.json" if not keywords else f"{digest_stem}.json"
+    print(f"Generated hub data: data/news/{hub_target}")
     print("Updated raw feed snapshot: static/news/data/latest.json")
 
 

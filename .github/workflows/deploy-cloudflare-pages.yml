@@ -1,11 +1,9 @@
 name: Deploy Cloudflare Pages
 
 on:
-  workflow_run:
-    workflows:
-      - Lint and Layout Guards
-    types:
-      - completed
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -17,27 +15,18 @@ concurrency:
 
 jobs:
   build-and-deploy:
-    if: >
-      github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'workflow_run' &&
-       github.event.workflow_run.conclusion == 'success' &&
-       github.event.workflow_run.head_branch == 'main')
     runs-on: ubuntu-latest
     env:
-      SITE_URL: ${{ vars.SITE_URL }}
-      SITE_TITLE: ${{ vars.SITE_TITLE }}
-      SITE_DESCRIPTION: ${{ vars.SITE_DESCRIPTION }}
-      SITE_AUTHOR: ${{ vars.SITE_AUTHOR }}
-      SITE_LANGUAGE: ${{ vars.SITE_LANGUAGE }}
-      SITE_SOCIAL_IMAGE: ${{ vars.SITE_SOCIAL_IMAGE }}
       CF_PAGES_PROJECT: ${{ vars.CF_PAGES_PROJECT }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}
+      GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GOOGLE_AI_MODEL: ${{ vars.GOOGLE_AI_MODEL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
 
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
@@ -48,22 +37,19 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
 
       - name: Validate Cloudflare configuration
         run: |
           set -euo pipefail
-
-          if [[ -z "${CLOUDFLARE_API_TOKEN:-}" ]]; then
-            echo "GitHub secret CLOUDFLARE_API_TOKEN is required."
+          if [[ -z "${CF_PAGES_PROJECT:-}" ]]; then
+            echo "Repository variable CF_PAGES_PROJECT is required."
             exit 1
           fi
-
-          if [[ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]]; then
-            echo "GitHub secret CLOUDFLARE_ACCOUNT_ID is required."
+          if [[ -z "${CLOUDFLARE_API_TOKEN:-}" || -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]]; then
+            echo "GitHub secrets CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID are required."
             exit 1
           fi
-
           if ! [[ "${CLOUDFLARE_ACCOUNT_ID}" =~ ^[A-Za-z0-9]{32}$ ]]; then
             echo "CLOUDFLARE_ACCOUNT_ID looks invalid. It should be your 32-character Account ID."
             exit 1
@@ -72,134 +58,36 @@ jobs:
       - name: Verify Cloudflare token
         run: npx wrangler@4 whoami
 
-      - name: Resolve Cloudflare Pages production branch
+      - name: Build and verify static site
         run: |
           set -euo pipefail
+          npm run build
+          npm test
+          npm run lint
 
-          response="$(curl -fsSL \
-            "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${CF_PAGES_PROJECT}" \
-            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
-            -H "Content-Type: application/json")"
-
-          production_branch="$(echo "${response}" | node -e '
-            const fs = require("node:fs");
-            const raw = fs.readFileSync(0, "utf8");
-            let parsed;
-            try {
-              parsed = JSON.parse(raw);
-            } catch {
-              console.error("Cloudflare API returned invalid JSON.");
-              process.exit(1);
-            }
-            if (!parsed.success) {
-              console.error("Failed to read Cloudflare Pages project metadata.");
-              console.error(raw);
-              process.exit(1);
-            }
-            const branch = parsed?.result?.production_branch;
-            if (!branch) {
-              console.error("Cloudflare Pages production branch is empty.");
-              process.exit(1);
-            }
-            process.stdout.write(branch);
-          ')"
-
-          echo "CF_PAGES_PRODUCTION_BRANCH=${production_branch}" >> "${GITHUB_ENV}"
-          echo "Cloudflare Pages production branch: ${production_branch}"
-
-      - name: Build static site
+      - name: Sync Google AI secret to Cloudflare Pages
+        if: ${{ env.GOOGLE_AI_API_KEY != '' || env.GOOGLE_API_KEY != '' || env.GEMINI_API_KEY != '' }}
         run: |
           set -euo pipefail
-
-          if [[ -z "${SITE_URL:-}" ]]; then
-            SITE_URL="https://mud-blog.pages.dev"
+          key="${GOOGLE_AI_API_KEY:-${GOOGLE_API_KEY:-${GEMINI_API_KEY:-}}}"
+          if [[ -z "${key}" ]]; then
+            echo "No Google AI key secret to sync."
+            exit 0
           fi
+          printf '%s' "${key}" | npx wrangler@4 pages secret put GOOGLE_AI_API_KEY --project-name "${CF_PAGES_PROJECT}"
+          echo "Synced GOOGLE_AI_API_KEY to Cloudflare Pages secrets."
 
-          build_args=(--site-url "$SITE_URL")
-
-          if [[ -n "${SITE_TITLE:-}" ]]; then
-            build_args+=(--title "$SITE_TITLE")
-          fi
-
-          if [[ -n "${SITE_DESCRIPTION:-}" ]]; then
-            build_args+=(--description "$SITE_DESCRIPTION")
-          fi
-
-          if [[ -n "${SITE_AUTHOR:-}" ]]; then
-            build_args+=(--author "$SITE_AUTHOR")
-          fi
-
-          if [[ -n "${SITE_LANGUAGE:-}" ]]; then
-            build_args+=(--language "$SITE_LANGUAGE")
-          fi
-
-          if [[ -n "${SITE_SOCIAL_IMAGE:-}" ]]; then
-            build_args+=(--social-image "$SITE_SOCIAL_IMAGE")
-          fi
-
-          cargo run -p blog-build -- "${build_args[@]}"
-
-      - name: Check performance budgets
-        run: ./scripts/check-performance-budget.sh dist
-
-      - name: Check responsive layout guards
-        run: ./scripts/check-responsive-layout.sh static/assets/style-core.css
-
-      - name: Check internal HTML links
-        run: ./scripts/check-html-links.sh dist
+      - name: Sync Google AI model variable to Cloudflare Pages
+        if: ${{ env.GOOGLE_AI_MODEL != '' }}
+        run: |
+          set -euo pipefail
+          printf '%s' "${GOOGLE_AI_MODEL}" | npx wrangler@4 pages secret put GOOGLE_AI_MODEL --project-name "${CF_PAGES_PROJECT}"
+          echo "Synced GOOGLE_AI_MODEL to Cloudflare Pages environment."
 
       - name: Deploy to Cloudflare Pages
         run: |
           set -euo pipefail
-
-          if [[ -z "${CF_PAGES_PROJECT:-}" ]]; then
-            echo "Repository variable CF_PAGES_PROJECT is required."
-            exit 1
-          fi
-
-          if [[ -z "${CLOUDFLARE_API_TOKEN:-}" || -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]]; then
-            echo "GitHub secrets CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID are required."
-            exit 1
-          fi
-
-          deploy_branch="${CF_PAGES_PRODUCTION_BRANCH:-${GITHUB_REF_NAME:-main}}"
-          source_branch="${GITHUB_REF_NAME:-main}"
-          if [[ "${source_branch}" != "${deploy_branch}" ]]; then
-            echo "::notice::GitHub source branch (${source_branch}) differs from Cloudflare production branch (${deploy_branch}). Deploying to production branch."
-          fi
-
-          max_attempts=3
-          attempt=1
-          deploy_status=1
-
-          while [[ "$attempt" -le "$max_attempts" ]]; do
-            echo "Cloudflare Pages deploy attempt ${attempt}/${max_attempts}"
-
-            if npx wrangler@4 pages deploy dist \
-              --project-name "$CF_PAGES_PROJECT" \
-              --branch "${deploy_branch}" \
-              --commit-hash "${GITHUB_SHA}" \
-              --commit-dirty=true; then
-              deploy_status=0
-              break
-            fi
-
-            deploy_status=$?
-            latest_log="$(ls -1t ~/.config/.wrangler/logs/wrangler-* 2>/dev/null | head -n1 || true)"
-            if [[ -n "${latest_log}" ]]; then
-              echo "::group::Wrangler failure log (attempt ${attempt})"
-              sed -n '1,260p' "${latest_log}" || true
-              echo "::endgroup::"
-            fi
-
-            if [[ "$attempt" -lt "$max_attempts" ]]; then
-              sleep "$((attempt * 12))"
-            fi
-
-            attempt=$((attempt + 1))
-          done
-
-          if [[ "$deploy_status" -ne 0 ]]; then
-            echo "Cloudflare Pages deployment failed after ${max_attempts} attempts."
-            exit "$deploy_status"
-          fi
+          npx wrangler@4 pages deploy dist \
+            --project-name "${CF_PAGES_PROJECT}" \
+            --branch "${GITHUB_REF_NAME:-main}" \
+            --commit-hash "${GITHUB_SHA}"

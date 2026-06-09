@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko" data-runtime="tokio" data-askama-template="news-search">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Search source candidates and draft reviewable AI news issues for Mud's Blog." />
+  <title>News Search — Mud's Blog</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body data-layout="news-search">
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Mud's Blog home"><span class="ui-icon" data-icon="home" aria-hidden="true"></span><span>Mud's Blog</span></a>
+    <div class="site-header-actions">
+      <nav aria-label="primary">
+        <a href="/#posts"><span class="ui-icon" data-icon="list-tree" aria-hidden="true"></span><span>Posts</span></a>
+        <a href="/news/"><span class="ui-icon" data-icon="newspaper" aria-hidden="true"></span><span>News</span></a>
+        <a href="/news/search/" aria-current="page"><span class="ui-icon" data-icon="search" aria-hidden="true"></span><span>News Search</span></a>
+        <a href="/posts/jinhyuk-kim/"><span class="ui-icon" data-icon="user" aria-hidden="true"></span><span>About</span></a>
+      </nav>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle color theme" aria-pressed="false">
+        <span class="ui-icon theme-icon theme-icon-sun" data-icon="sun" aria-hidden="true"></span>
+        <span class="ui-icon theme-icon theme-icon-moon" data-icon="moon" aria-hidden="true"></span>
+        <span class="theme-toggle-label">System</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="news-shell news-search-shell">
+    <section class="news-hero" aria-labelledby="news-search-title">
+      <p class="eyebrow">Interactive news desk</p>
+      <h1 id="news-search-title">News Search</h1>
+      <p>Search the same source families used by the daily news pipeline, select candidates, then generate a reviewable draft card that can be saved as Markdown or PDF.</p>
+      <div class="news-command-strip" aria-label="News desk visual pipeline">
+        <span>source sweep</span>
+        <span>ranked deck</span>
+        <span>Gemma draft</span>
+        <span>review export</span>
+      </div>
+    </section>
+
+    <section class="news-desk-grid" aria-label="Interactive news tools">
+      <section class="focused-issue-lab" data-focused-issue-lab aria-labelledby="focused-issue-title">
+        <div>
+          <p class="eyebrow">Search + draft</p>
+          <h2 id="focused-issue-title">Search-backed news issue</h2>
+          <p>Search live news/repo/paper sources plus the existing digest snapshot sources, review ranked candidates, then ask Gemma 4 to draft an issue from the selected cards.</p>
+        </div>
+        <div class="news-signal-stack" data-news-signal-stack aria-hidden="true">
+          <div class="signal-stack-title"><span class="ui-icon" data-icon="sparkles" aria-hidden="true"></span><span>source signal stack</span></div>
+          <span class="signal-row" style="--level: 92%; --delay: -0.2s"><span class="ui-icon" data-icon="rss" aria-hidden="true"></span><strong>Google News</strong><em>freshness</em></span>
+          <span class="signal-row" style="--level: 76%; --delay: -0.9s"><span class="ui-icon" data-icon="github" aria-hidden="true"></span><strong>GitHub</strong><em>repo momentum</em></span>
+          <span class="signal-row" style="--level: 68%; --delay: -1.4s"><span class="ui-icon" data-icon="book-open" aria-hidden="true"></span><strong>arXiv</strong><em>paper trail</em></span>
+          <span class="signal-row" style="--level: 61%; --delay: -1.9s"><span class="ui-icon" data-icon="book-open" aria-hidden="true"></span><strong>HF Papers</strong><em>model notes</em></span>
+          <span class="signal-row" style="--level: 54%; --delay: -2.5s"><span class="ui-icon" data-icon="radio" aria-hidden="true"></span><strong>X · LinkedIn</strong><em>field chatter</em></span>
+          <span class="signal-row" style="--level: 48%; --delay: -3.1s"><span class="ui-icon" data-icon="zap" aria-hidden="true"></span><strong>GeekNews · Endigest</strong><em>curated pulse</em></span>
+        </div>
+        <form class="lab-form news-search-form" data-news-search-form>
+          <label class="lab-form-wide">
+            <span>Search query</span>
+            <input name="query" type="search" aria-label="Search query" placeholder="open RAN Gemma agents" autocomplete="off" />
+          </label>
+          <label class="issue-date-field">
+            <span><span class="ui-icon" data-icon="calendar" aria-hidden="true"></span>Issue date</span>
+            <input name="date" type="date" aria-label="Issue date" />
+          </label>
+          <fieldset class="source-picker" aria-label="News sources">
+            <legend>News sources</legend>
+            <label><input name="sources" type="checkbox" value="google-news-rss" checked /> <span>Google News</span></label>
+            <label><input name="sources" type="checkbox" value="github-repositories" checked /> <span>GitHub repositories</span></label>
+            <label><input name="sources" type="checkbox" value="arxiv" checked /> <span>arXiv papers</span></label>
+            <label><input name="sources" type="checkbox" value="huggingface-papers" checked /> <span>Hugging Face Papers</span></label>
+            <label><input name="sources" type="checkbox" value="x" checked /> <span>X</span></label>
+            <label><input name="sources" type="checkbox" value="linkedin" checked /> <span>LinkedIn</span></label>
+            <label><input name="sources" type="checkbox" value="geeknews" checked /> <span>GeekNews</span></label>
+            <label><input name="sources" type="checkbox" value="endigest" checked /> <span>Endigest</span></label>
+          </fieldset>
+          <button type="submit">Search news</button>
+        </form>
+        <div class="news-search-results" data-news-search-results aria-live="polite"></div>
+        <div class="draft-action-row">
+          <button class="draft-selected-button" type="button" data-draft-selected-news disabled>Draft from selected news</button>
+          <button class="download-draft-button" type="button" data-download-draft="md" disabled>Download Markdown</button>
+          <button class="download-draft-button" type="button" data-download-draft="pdf" disabled>Download PDF</button>
+        </div>
+        <p class="lab-status" data-focused-issue-status aria-live="polite"></p>
+        <div class="lab-output generated-news-output" data-focused-issue-output></div>
+      </section>
+    </section>
+  </main>
+
+  <script id="archive-data" type="application/json">{{ archive_json|safe }}</script>
+  <script type="module" src="/assets/blog-lab.mjs?v=20260609-news-search"></script>
+  <script type="module" src="/assets/site-chrome.mjs"></script>
+</body>
+</html>

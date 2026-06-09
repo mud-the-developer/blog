@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko" data-runtime="tokio" data-askama-template="post">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="{{ post.excerpt }}" />
+  <title>{{ post.title }} — Mud's Blog</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body data-layout="reader-post">
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Mud's Blog home"><span class="ui-icon" data-icon="home" aria-hidden="true"></span><span>Mud's Blog</span></a>
+    <div class="site-header-actions">
+      <nav aria-label="primary">
+        <a href="/#posts"><span class="ui-icon" data-icon="list-tree" aria-hidden="true"></span><span>Posts</span></a>
+        <a href="/news/"><span class="ui-icon" data-icon="newspaper" aria-hidden="true"></span><span>News</span></a>
+        <a href="/news/search/"><span class="ui-icon" data-icon="search" aria-hidden="true"></span><span>News Search</span></a>
+        <a href="/posts/jinhyuk-kim/"><span class="ui-icon" data-icon="user" aria-hidden="true"></span><span>About</span></a>
+      </nav>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle color theme" aria-pressed="false">
+        <span class="ui-icon theme-icon theme-icon-sun" data-icon="sun" aria-hidden="true"></span>
+        <span class="ui-icon theme-icon theme-icon-moon" data-icon="moon" aria-hidden="true"></span>
+        <span class="theme-toggle-label">System</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="post-shell">
+    <article class="post-reader">
+      <a class="back-link" href="/">← Home</a>
+      <p class="eyebrow">{{ post.date }} · {{ post.folder }} · {{ post.tags_label }}</p>
+      <h1>{{ post.title }}</h1>
+      <div class="post-body">{{ post.html|safe }}</div>
+    </article>
+  </main>
+  <script type="module" src="/assets/site-chrome.mjs"></script>
+</body>
+</html>

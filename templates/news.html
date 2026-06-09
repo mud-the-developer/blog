@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko" data-runtime="tokio" data-askama-template="news">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Archived and generated AI news digests from Mud's Blog." />
+  <title>News — Mud's Blog</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body data-layout="news-index">
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Mud's Blog home"><span class="ui-icon" data-icon="home" aria-hidden="true"></span><span>Mud's Blog</span></a>
+    <div class="site-header-actions">
+      <nav aria-label="primary">
+        <a href="/#posts"><span class="ui-icon" data-icon="list-tree" aria-hidden="true"></span><span>Posts</span></a>
+        <a href="/news/" aria-current="page"><span class="ui-icon" data-icon="newspaper" aria-hidden="true"></span><span>News</span></a>
+        <a href="/news/search/"><span class="ui-icon" data-icon="search" aria-hidden="true"></span><span>News Search</span></a>
+        <a href="/posts/jinhyuk-kim/"><span class="ui-icon" data-icon="user" aria-hidden="true"></span><span>About</span></a>
+      </nav>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle color theme" aria-pressed="false">
+        <span class="ui-icon theme-icon theme-icon-sun" data-icon="sun" aria-hidden="true"></span>
+        <span class="ui-icon theme-icon theme-icon-moon" data-icon="moon" aria-hidden="true"></span>
+        <span class="theme-toggle-label">System</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="news-shell">
+    <section class="news-hero" aria-labelledby="news-title">
+      <p class="eyebrow">Daily + focused digests</p>
+      <h1 id="news-title">News</h1>
+      <p>Archived AI news posts and generated digest data live here. Daily automation writes the rolling issue; focused issue drafts can be reviewed below before publishing.</p>
+    </section>
+
+    <section class="news-data-card" data-news-digest-json aria-labelledby="news-data-title">
+      <p class="eyebrow">Generated data</p>
+      <h2 id="news-data-title">Latest digest JSON</h2>
+      <p><a href="/news/data/latest.json">latest.json</a> is copied from the news pipeline into the deploy output for local preview and Cloudflare Pages Functions.</p>
+      <p><a href="/news/search/">Open News Search</a> to search sources and draft a focused issue.</p>
+    </section>
+
+    <section class="news-list" data-news-archive aria-labelledby="news-archive-title">
+      <div class="news-section-heading">
+        <p class="eyebrow">Archive</p>
+        <h2 id="news-archive-title">Archived news posts</h2>
+        <p>{{ news_posts.len() }} news posts</p>
+      </div>
+      {% for post in news_posts %}
+      <a class="news-row" href="{{ post.url }}">
+        <span>{{ post.date }}</span>
+        <strong>{{ post.title }}</strong>
+        <em>{{ post.excerpt }}</em>
+      </a>
+      {% endfor %}
+    </section>
+  </main>
+
+  <script id="archive-data" type="application/json">{{ archive_json|safe }}</script>
+  <script type="module" src="/assets/blog-lab.mjs?v=20260609-news-search"></script>
+  <script type="module" src="/assets/site-chrome.mjs"></script>
+</body>
+</html>
