@@ -9,6 +9,53 @@ function stableCacheKey(parts) {
   return JSON.stringify(parts);
 }
 
+function cacheKeyHash(value) {
+  let hash = 2166136261;
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0).toString(36);
+}
+
+function edgeCacheRequest(cacheKey, requestUrl) {
+  return new Request(new URL(`/api/news-search-cache/${cacheKeyHash(cacheKey)}`, requestUrl).toString(), {
+    headers: { 'x-news-search-cache-key': cacheKey }
+  });
+}
+
+async function readCachedSearchResponse(cacheKey, requestUrl, nowMs = Date.now()) {
+  const memory = readFreshCache(cacheKey, nowMs);
+  if (memory) return memory;
+  const edgeCache = globalThis.caches?.default;
+  if (!edgeCache) return null;
+  try {
+    const response = await edgeCache.match(edgeCacheRequest(cacheKey, requestUrl));
+    if (!response?.ok) return null;
+    const body = await response.json();
+    writeFreshCache(cacheKey, body, nowMs);
+    return body;
+  } catch (_error) {
+    return null;
+  }
+}
+
+async function writeCachedSearchResponse(cacheKey, requestUrl, body, nowMs = Date.now()) {
+  writeFreshCache(cacheKey, body, nowMs);
+  const edgeCache = globalThis.caches?.default;
+  if (!edgeCache) return;
+  try {
+    await edgeCache.put(edgeCacheRequest(cacheKey, requestUrl), new Response(JSON.stringify(body), {
+      headers: {
+        'content-type': 'application/json; charset=utf-8',
+        'cache-control': `public, max-age=${Math.floor(SEARCH_CACHE_TTL_MS / 1000)}`
+      }
+    }));
+  } catch (_error) {
+    // Cache API is opportunistic on Pages Functions; in-memory cache still covers warm isolates.
+  }
+}
+
 function sourceStateKey(source, searchQuery) {
   return `${source}:${String(searchQuery || '').toLowerCase()}`;
 }
@@ -530,8 +577,8 @@ export async function onRequestPost({ request, env }) {
   const searchQuery = queryPlan.searchQuery || query;
   const limit = Math.max(3, Math.min(Number(input.limit) || 9, 15));
   const sourceIds = selectedSourceIds(input.sources).sort();
-  const cacheKey = stableCacheKey({ version: 2, query, searchQuery, mode: queryPlan.mode, limit, sourceIds });
-  const cached = readFreshCache(cacheKey);
+  const cacheKey = stableCacheKey({ version: 3, query, searchQuery, mode: queryPlan.mode, limit, sourceIds });
+  const cached = await readCachedSearchResponse(cacheKey, request.url);
   if (cached) {
     return jsonResponse({ ...cached, cacheStatus: 'hit' });
   }
@@ -621,7 +668,7 @@ export async function onRequestPost({ request, env }) {
     cacheStatus: 'miss'
   };
   if (sourceStatus.every((source) => source.status === 'ok')) {
-    writeFreshCache(cacheKey, body);
+    await writeCachedSearchResponse(cacheKey, request.url, body);
   }
   return jsonResponse(body);
 }
