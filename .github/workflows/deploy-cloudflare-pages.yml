@@ -56,7 +56,28 @@ jobs:
           fi
 
       - name: Verify Cloudflare token
-        run: npx wrangler@4 whoami
+        run: |
+          set -euo pipefail
+          response_file="$(mktemp)"
+          http_status="$(curl -sS -o "${response_file}" -w '%{http_code}' \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+            -H "Content-Type: application/json" \
+            "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${CF_PAGES_PROJECT}")"
+          if [[ "${http_status}" != "200" ]]; then
+            echo "Cloudflare Pages project verification failed with HTTP ${http_status}. Check CLOUDFLARE_API_TOKEN permissions, CLOUDFLARE_ACCOUNT_ID, and CF_PAGES_PROJECT."
+            rm -f "${response_file}"
+            exit 1
+          fi
+          python3 - "${response_file}" <<'PY'
+          import json, sys
+          with open(sys.argv[1], encoding="utf-8") as handle:
+              payload = json.load(handle)
+          if not payload.get("success"):
+              print("Cloudflare Pages project verification returned success=false.")
+              sys.exit(1)
+          print("Cloudflare Pages project verified.")
+          PY
+          rm -f "${response_file}"
 
       - name: Build and verify static site
         run: |

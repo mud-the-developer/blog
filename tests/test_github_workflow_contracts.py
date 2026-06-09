@@ -62,7 +62,8 @@ class GithubWorkflowContractTests(unittest.TestCase):
         self.assertIn("CLOUDFLARE_API_TOKEN", deploy)
         self.assertIn("CLOUDFLARE_ACCOUNT_ID", deploy)
         self.assertIn("CLOUDFLARE_ACCOUNT_ID}\" =~ ^[A-Za-z0-9]{32}$", deploy)
-        self.assertIn("npx wrangler@4 whoami", deploy)
+        self.assertIn("api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${CF_PAGES_PROJECT}", deploy)
+        self.assertNotIn("npx wrangler@4 whoami", deploy)
 
 
 if __name__ == "__main__":
