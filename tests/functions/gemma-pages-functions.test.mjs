@@ -188,6 +188,24 @@ test('news search function searches live-style sources before Gemma drafting use
     if (String(url).includes('export.arxiv.org/api/query')) {
       return new Response(`<feed><entry><title>Gemma assisted RAN planning</title><id>https://arxiv.org/abs/2604.00001</id><summary>Open RAN planning with small language models.</summary><updated>2026-04-14T10:00:00Z</updated></entry></feed>`, { headers: { 'content-type': 'application/atom+xml' } });
     }
+    if (String(url).includes('api.gdeltproject.org/api/v2/doc/doc')) {
+      return Response.json({ articles: [{ title: 'Gemma RAN operators brief', url: 'https://news.example/gdelt-ran', sourceCommonName: 'Example Wire', seendate: '20260414T090000Z' }] });
+    }
+    if (String(url).includes('hn.algolia.com/api/v1/search')) {
+      return Response.json({ hits: [{ title: 'HN discusses Gemma RAN agents', url: 'https://news.ycombinator.com/item?id=1', objectID: '1', created_at: '2026-04-14T12:00:00Z', points: 50, num_comments: 12, author: 'hn-user' }] });
+    }
+    if (String(url).includes('huggingface.co/papers')) {
+      return new Response('<html><body><a href="/papers/2604.00002">Gemma paper implementation notes</a></body></html>', { headers: { 'content-type': 'text/html' } });
+    }
+    if (String(url).includes('api.openalex.org/works')) {
+      return Response.json({ results: [{ display_name: 'OpenAlex Gemma RAN automation paper', id: 'https://openalex.org/W1', publication_date: '2026-04-14', abstract_inverted_index: { Gemma: [0], planning: [1], RAN: [2] } }] });
+    }
+    if (String(url).includes('api.crossref.org/works')) {
+      return Response.json({ message: { items: [{ title: ['Crossref Gemma RAN paper'], URL: 'https://doi.org/10.0000/gemma-ran', issued: { 'date-parts': [[2026, 4, 14]] }, publisher: 'Example Press' }] } });
+    }
+    if (String(url).includes('api.semanticscholar.org/graph/v1/paper/search')) {
+      return Response.json({ data: [{ title: 'Semantic Scholar Gemma RAN automation', url: 'https://semanticscholar.org/paper/1', abstract: 'Gemma planning for Open RAN.', publicationDate: '2026-04-14' }] });
+    }
     if (String(url).includes('scholar.google.com/scholar')) {
       return new Response(`<html><body>
         <div class="gs_r gs_or gs_scl">
@@ -213,7 +231,7 @@ test('news search function searches live-style sources before Gemma drafting use
     request: new Request('https://blog.example.test/api/news-search', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ query: 'Gemma open RAN', limit: 9, sources: ['google-news-rss', 'arxiv', 'google-scholar', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest'] })
+      body: JSON.stringify({ query: 'Gemma open RAN', limit: 9, sources: ['gdelt', 'google-news-rss', 'arxiv', 'huggingface-papers', 'openalex', 'crossref', 'semantic-scholar', 'google-scholar', 'hacker-news', 'x', 'linkedin', 'geeknews', 'endigest'] })
     }),
     env: mockEnv()
   });
@@ -223,20 +241,28 @@ test('news search function searches live-style sources before Gemma drafting use
   assert.equal(searchBody.ok, true);
   assert.equal(searchBody.query, 'Gemma open RAN');
   assert.ok(searchBody.candidates.length >= 2);
+  assert.ok(searchBody.searched.includes('gdelt'));
   assert.ok(searchBody.searched.includes('google-news-rss'));
   assert.ok(!searchBody.searched.includes('github-repositories'));
   assert.ok(searchBody.searched.includes('arxiv'));
-  assert.ok(searchBody.searched.includes('google-scholar'));
   assert.ok(searchBody.searched.includes('huggingface-papers'));
+  assert.ok(searchBody.searched.includes('openalex'));
+  assert.ok(searchBody.searched.includes('crossref'));
+  assert.ok(searchBody.searched.includes('semantic-scholar'));
+  assert.ok(searchBody.searched.includes('google-scholar'));
+  assert.ok(searchBody.searched.includes('hacker-news'));
   assert.ok(searchBody.searched.includes('x'));
   assert.ok(searchBody.searched.includes('linkedin'));
   assert.ok(searchBody.searched.includes('geeknews'));
   assert.ok(searchBody.searched.includes('endigest'));
   assert.ok(!requests.some((url) => url.includes('api.github.com/search/repositories')));
+  assert.ok(requests.some((url) => url.includes('api.openalex.org/works')));
+  assert.ok(requests.some((url) => url.includes('api.crossref.org/works')));
+  assert.ok(requests.some((url) => url.includes('api.semanticscholar.org/graph/v1/paper/search')));
   assert.ok(requests.some((url) => url.includes('scholar.google.com/scholar')));
   assert.equal(searchBody.candidates[0].origin, 'live-search');
   assert.ok(!searchBody.candidates.some((candidate) => /<\/?a\b|&nbsp;/.test(candidate.summary)));
-  assert.ok(searchBody.candidates.some((candidate) => candidate.source === 'huggingface.co' || candidate.source === 'geeknews'));
+  assert.ok(searchBody.candidates.some((candidate) => candidate.source === 'Hugging Face Papers' || candidate.source === 'huggingface.co' || candidate.source === 'geeknews'));
   assert.ok(searchBody.candidates.some((candidate) => candidate.source === 'Google Scholar' && candidate.type === 'paper'));
   assert.ok(searchBody.candidates.every((candidate) => candidate.thumbnail?.startsWith('/assets/news/thumb-')));
 
@@ -414,6 +440,24 @@ test('news search keeps all-source fanout wide before final ranking', async () =
       assert.ok(String(url).includes('max_results=4'), `expected wider arXiv fanout, got ${url}`);
       return new Response('<feed></feed>', { headers: { 'content-type': 'application/atom+xml' } });
     }
+    if (String(url).includes('api.gdeltproject.org/api/v2/doc/doc')) {
+      return Response.json({ articles: [] });
+    }
+    if (String(url).includes('hn.algolia.com/api/v1/search')) {
+      return Response.json({ hits: [] });
+    }
+    if (String(url).includes('huggingface.co/papers')) {
+      return new Response('<html><body></body></html>', { headers: { 'content-type': 'text/html' } });
+    }
+    if (String(url).includes('api.openalex.org/works')) {
+      return Response.json({ results: [] });
+    }
+    if (String(url).includes('api.crossref.org/works')) {
+      return Response.json({ message: { items: [] } });
+    }
+    if (String(url).includes('api.semanticscholar.org/graph/v1/paper/search')) {
+      return Response.json({ data: [] });
+    }
     if (String(url).includes('scholar.google.com/scholar')) {
       return new Response('<html><body></body></html>', { headers: { 'content-type': 'text/html' } });
     }
@@ -428,7 +472,7 @@ test('news search keeps all-source fanout wide before final ranking', async () =
         query: 'model-intrinsic feature',
         queryMode: 'exact',
         limit: 12,
-        sources: ['google-news-rss', 'github-repositories', 'arxiv', 'google-scholar', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest']
+        sources: ['gdelt', 'google-news-rss', 'hacker-news', 'github-repositories', 'arxiv', 'huggingface-papers', 'openalex', 'crossref', 'semantic-scholar', 'google-scholar', 'x', 'linkedin', 'geeknews', 'endigest']
       })
     }),
     env: mockEnv()

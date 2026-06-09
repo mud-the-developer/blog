@@ -1181,11 +1181,16 @@ async fn plan_local_search_query(query: &str, request: &NewsSearchRequest) -> Lo
 
 fn selected_news_sources(request: &NewsSearchRequest) -> Vec<&'static str> {
     let allowed = [
+        "gdelt",
         "google-news-rss",
+        "hacker-news",
         "github-repositories",
         "arxiv",
-        "google-scholar",
         "huggingface-papers",
+        "openalex",
+        "crossref",
+        "semantic-scholar",
+        "google-scholar",
         "x",
         "linkedin",
         "geeknews",
@@ -1224,6 +1229,19 @@ fn candidate_score(candidate: &serde_json::Value, keywords: &[String], index: us
     }
     if candidate["url"].as_str().is_some_and(|url| !url.is_empty()) {
         score += 0.5;
+    }
+    if candidate["title"]
+        .as_str()
+        .unwrap_or_default()
+        .to_lowercase()
+        .starts_with("open ")
+        && candidate["title"]
+            .as_str()
+            .unwrap_or_default()
+            .to_lowercase()
+            .contains(" results for ")
+    {
+        score -= 8.0;
     }
     score.max(0.1)
 }
@@ -1412,6 +1430,285 @@ async fn fetch_arxiv_candidates(
         .collect())
 }
 
+async fn fetch_gdelt_candidates(
+    client: &reqwest::Client,
+    query: &str,
+    limit: usize,
+) -> Result<Vec<serde_json::Value>, String> {
+    let gdelt_query = query
+        .split_whitespace()
+        .map(|token| {
+            if token.contains('-') {
+                format!("\"{token}\"")
+            } else {
+                token.to_string()
+            }
+        })
+        .collect::<Vec<_>>()
+        .join(" ");
+    let url = format!(
+        "https://api.gdeltproject.org/api/v2/doc/doc?query={}&mode=artlist&format=json&maxrecords={}&sort=hybridrel",
+        simple_url_encode(&gdelt_query),
+        limit.min(10)
+    );
+    let body = client
+        .get(url)
+        .header(
+            "user-agent",
+            "Mozilla/5.0 (compatible; mud-blog-news-search/1.0)",
+        )
+        .send()
+        .await
+        .map_err(|error| format!("gdelt: {error}"))?
+        .json::<serde_json::Value>()
+        .await
+        .map_err(|error| format!("gdelt: {error}"))?;
+    Ok(body["articles"]
+        .as_array()
+        .into_iter()
+        .flatten()
+        .take(limit)
+        .enumerate()
+        .map(|(index, article)| {
+            json!({
+                "id": format!("gdelt-{}", index + 1),
+                "title": article["title"].as_str().unwrap_or("GDELT article"),
+                "url": article["url"].as_str().unwrap_or_default(),
+                "source": article["sourceCommonName"].as_str().or_else(|| article["domain"].as_str()).unwrap_or("GDELT"),
+                "summary": "Live web/news article indexed by GDELT.",
+                "publishedAt": article["seendate"].as_str().unwrap_or_default(),
+                "origin": "live-search",
+                "type": "news",
+                "thumbnail": article["socialimage"].as_str().unwrap_or_default()
+            })
+        })
+        .collect())
+}
+
+async fn fetch_openalex_candidates(
+    client: &reqwest::Client,
+    query: &str,
+    limit: usize,
+) -> Result<Vec<serde_json::Value>, String> {
+    let url = format!(
+        "https://api.openalex.org/works?search={}&per-page={}&sort=relevance_score:desc",
+        simple_url_encode(query),
+        limit.min(10)
+    );
+    let body = client
+        .get(url)
+        .header("user-agent", "mud-blog-news-search/1.0")
+        .send()
+        .await
+        .map_err(|error| format!("openalex: {error}"))?
+        .json::<serde_json::Value>()
+        .await
+        .map_err(|error| format!("openalex: {error}"))?;
+    Ok(body["results"]
+        .as_array()
+        .into_iter()
+        .flatten()
+        .take(limit)
+        .enumerate()
+        .map(|(index, work)| {
+            let doi = work["doi"].as_str().unwrap_or_default().replace("https://doi.org/", "");
+            let url = if doi.is_empty() {
+                work["primary_location"]["landing_page_url"].as_str().or_else(|| work["id"].as_str()).unwrap_or_default().to_string()
+            } else {
+                format!("https://doi.org/{doi}")
+            };
+            json!({
+                "id": format!("openalex-{}", index + 1),
+                "title": work["display_name"].as_str().unwrap_or("OpenAlex work"),
+                "url": url,
+                "source": "OpenAlex",
+                "summary": work["primary_location"]["source"]["display_name"].as_str().unwrap_or("OpenAlex paper metadata."),
+                "publishedAt": work["publication_date"].as_str().unwrap_or_default(),
+                "origin": "live-search",
+                "type": "paper"
+            })
+        })
+        .collect())
+}
+
+async fn fetch_crossref_candidates(
+    client: &reqwest::Client,
+    query: &str,
+    limit: usize,
+) -> Result<Vec<serde_json::Value>, String> {
+    let url = format!(
+        "https://api.crossref.org/works?query={}&rows={}&sort=relevance",
+        simple_url_encode(query),
+        limit.min(10)
+    );
+    let body = client
+        .get(url)
+        .header("user-agent", "mud-blog-news-search/1.0")
+        .send()
+        .await
+        .map_err(|error| format!("crossref: {error}"))?
+        .json::<serde_json::Value>()
+        .await
+        .map_err(|error| format!("crossref: {error}"))?;
+    Ok(body["message"]["items"]
+        .as_array()
+        .into_iter()
+        .flatten()
+        .take(limit)
+        .enumerate()
+        .map(|(index, work)| {
+            json!({
+                "id": format!("crossref-{}", index + 1),
+                "title": work["title"].as_array().and_then(|items| items.first()).and_then(|item| item.as_str()).unwrap_or("Crossref work"),
+                "url": work["URL"].as_str().unwrap_or_default(),
+                "source": "Crossref",
+                "summary": work["publisher"].as_str().unwrap_or("Crossref DOI metadata."),
+                "publishedAt": "",
+                "origin": "live-search",
+                "type": "paper"
+            })
+        })
+        .collect())
+}
+
+async fn fetch_semantic_scholar_candidates(
+    client: &reqwest::Client,
+    query: &str,
+    limit: usize,
+) -> Result<Vec<serde_json::Value>, String> {
+    let url = format!(
+        "https://api.semanticscholar.org/graph/v1/paper/search?query={}&limit={}&fields=title,url,abstract,year,authors,publicationDate,venue",
+        simple_url_encode(query),
+        limit.min(10)
+    );
+    let mut request = client
+        .get(url)
+        .header("user-agent", "mud-blog-news-search/1.0")
+        .header("accept", "application/json");
+    if let Ok(key) = std::env::var("SEMANTIC_SCHOLAR_API_KEY") {
+        request = request.header("x-api-key", key);
+    }
+    let body = request
+        .send()
+        .await
+        .map_err(|error| format!("semantic-scholar: {error}"))?
+        .json::<serde_json::Value>()
+        .await
+        .map_err(|error| format!("semantic-scholar: {error}"))?;
+    Ok(body["data"]
+        .as_array()
+        .into_iter()
+        .flatten()
+        .take(limit)
+        .enumerate()
+        .map(|(index, paper)| {
+            json!({
+                "id": format!("semantic-scholar-{}", index + 1),
+                "title": paper["title"].as_str().unwrap_or("Semantic Scholar paper"),
+                "url": paper["url"].as_str().unwrap_or_default(),
+                "source": "Semantic Scholar",
+                "summary": paper["abstract"].as_str().unwrap_or("Semantic Scholar paper metadata."),
+                "publishedAt": paper["publicationDate"].as_str().unwrap_or_default(),
+                "origin": "live-search",
+                "type": "paper"
+            })
+        })
+        .collect())
+}
+
+async fn fetch_hacker_news_candidates(
+    client: &reqwest::Client,
+    query: &str,
+    limit: usize,
+) -> Result<Vec<serde_json::Value>, String> {
+    let url = format!(
+        "https://hn.algolia.com/api/v1/search?query={}&tags=story&hitsPerPage={}",
+        simple_url_encode(query),
+        limit.min(10)
+    );
+    let body = client
+        .get(url)
+        .header("user-agent", "mud-blog-news-search/1.0")
+        .send()
+        .await
+        .map_err(|error| format!("hacker-news: {error}"))?
+        .json::<serde_json::Value>()
+        .await
+        .map_err(|error| format!("hacker-news: {error}"))?;
+    Ok(body["hits"]
+        .as_array()
+        .into_iter()
+        .flatten()
+        .take(limit)
+        .enumerate()
+        .map(|(index, hit)| {
+            let object_id = hit["objectID"].as_str().unwrap_or_default();
+            let url = hit["url"].as_str().map(str::to_string).unwrap_or_else(|| format!("https://news.ycombinator.com/item?id={object_id}"));
+            json!({
+                "id": format!("hacker-news-{}", index + 1),
+                "title": hit["title"].as_str().or_else(|| hit["story_title"].as_str()).unwrap_or("Hacker News story"),
+                "url": url,
+                "source": "Hacker News",
+                "summary": format!("{} points · {} comments", hit["points"].as_i64().unwrap_or_default(), hit["num_comments"].as_i64().unwrap_or_default()),
+                "publishedAt": hit["created_at"].as_str().unwrap_or_default(),
+                "origin": "live-search",
+                "type": "social"
+            })
+        })
+        .collect())
+}
+
+async fn fetch_huggingface_paper_candidates(
+    client: &reqwest::Client,
+    query: &str,
+    limit: usize,
+) -> Result<Vec<serde_json::Value>, String> {
+    let url = format!(
+        "https://huggingface.co/papers?q={}",
+        simple_url_encode(query)
+    );
+    let html = client
+        .get(url)
+        .header(
+            "user-agent",
+            "Mozilla/5.0 (compatible; mud-blog-news-search/1.0)",
+        )
+        .send()
+        .await
+        .map_err(|error| format!("huggingface-papers: {error}"))?
+        .text()
+        .await
+        .map_err(|error| format!("huggingface-papers: {error}"))?;
+    let mut candidates = Vec::new();
+    let mut rest = html.as_str();
+    while let Some(pos) = rest.find("/papers/") {
+        rest = &rest[pos + "/papers/".len()..];
+        let paper_id = rest.split(['"', '\'', '?', '#']).next().unwrap_or_default();
+        if paper_id.is_empty()
+            || candidates.iter().any(|item: &serde_json::Value| {
+                item["url"].as_str().unwrap_or_default().ends_with(paper_id)
+            })
+        {
+            continue;
+        }
+        let title = format!("Hugging Face paper {paper_id}");
+        candidates.push(json!({
+            "id": format!("huggingface-paper-{}", candidates.len() + 1),
+            "title": title,
+            "url": format!("https://huggingface.co/papers/{paper_id}"),
+            "source": "Hugging Face Papers",
+            "summary": "Paper card surfaced from Hugging Face Papers search.",
+            "publishedAt": "",
+            "origin": "live-search",
+            "type": "paper"
+        }));
+        if candidates.len() >= limit {
+            break;
+        }
+    }
+    Ok(candidates)
+}
+
 fn html_class_text(block: &str, class_name: &str) -> String {
     let Some(class_pos) = block.find(class_name) else {
         return String::new();
@@ -1552,7 +1849,7 @@ async fn news_search_handler(
             .into_response();
     }
     let limit = request.limit.unwrap_or(9).clamp(3, 15);
-    let per_source = (limit / 3).max(2);
+    let per_source = ((limit as f32 / 3.0).ceil() as usize).max(3);
     let query_plan = plan_local_search_query(&query, &request).await;
     let search_query = if query_plan.search_query.trim().is_empty() {
         query.clone()
@@ -1573,13 +1870,23 @@ async fn news_search_handler(
     for source in selected_news_sources(&request) {
         searched.push(source);
         let result = match source {
+            "gdelt" => fetch_gdelt_candidates(&client, &search_query, per_source).await,
             "google-news-rss" => {
                 fetch_google_news_candidates(&client, &search_query, per_source).await
             }
+            "hacker-news" => fetch_hacker_news_candidates(&client, &search_query, per_source).await,
             "github-repositories" => {
                 fetch_github_candidates(&client, &search_query, per_source).await
             }
             "arxiv" => fetch_arxiv_candidates(&client, &search_query, per_source).await,
+            "huggingface-papers" => {
+                fetch_huggingface_paper_candidates(&client, &search_query, per_source).await
+            }
+            "openalex" => fetch_openalex_candidates(&client, &search_query, per_source).await,
+            "crossref" => fetch_crossref_candidates(&client, &search_query, per_source).await,
+            "semantic-scholar" => {
+                fetch_semantic_scholar_candidates(&client, &search_query, per_source).await
+            }
             "google-scholar" => {
                 fetch_google_scholar_candidates(&client, &search_query, per_source).await
             }
