@@ -59,6 +59,7 @@ class GithubWorkflowContractTests(unittest.TestCase):
         self.assertLess(deploy.index("npm test"), deploy.index("wrangler@4 pages deploy dist"))
         self.assertLess(deploy.index("npm run lint"), deploy.index("wrangler@4 pages deploy dist"))
         self.assertIn("pages secret put GOOGLE_AI_API_KEY", deploy)
+        self.assertIn("Authorization: Bearer ${CLOUDFLARE_API_TOKEN}", deploy)
         self.assertIn("CLOUDFLARE_API_TOKEN", deploy)
         self.assertIn("CLOUDFLARE_ACCOUNT_ID", deploy)
         self.assertIn("CLOUDFLARE_ACCOUNT_ID}\" =~ ^[A-Za-z0-9]{32}$", deploy)

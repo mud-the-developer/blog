@@ -301,13 +301,17 @@ test('news page searches candidates before drafting an issue and does not expose
   await page.route('/api/news-search', async (route) => {
     const body = route.request().postDataJSON();
     expect(body.query).toContain('open RAN');
-    expect(body.sources).toEqual(['google-news-rss', 'github-repositories', 'arxiv', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest']);
+    expect(body.queryMode).toBe('gemma-expand');
+    expect(body.sources).toEqual(['google-news-rss', 'github-repositories', 'arxiv', 'google-scholar', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest']);
     await route.fulfill({
       contentType: 'application/json',
       body: JSON.stringify({
         ok: true,
         query: body.query,
-        searched: ['google-news-rss', 'github-repositories', 'arxiv', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest'],
+        queryMode: body.queryMode,
+        searchQuery: 'open RAN Gemma OR O-RAN automation OR agentic RAN operations',
+        keywords: ['open RAN Gemma', 'O-RAN automation', 'agentic RAN operations'],
+        searched: ['google-news-rss', 'github-repositories', 'arxiv', 'google-scholar', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest'],
         candidates: [
           { id: 'gnews-1', title: 'Open RAN Gemma operations update', url: 'https://news.example/oran-gemma', source: 'Example News', summary: 'Search result about Gemma and O-RAN operations.', publishedAt: '2026-04-14T08:00:00Z', score: 12, origin: 'live-search', thumbnail: '/assets/news/thumb-vran.svg' },
           { id: 'github-1', title: 'ran-lab/gemma-oran', url: 'https://github.com/ran-lab/gemma-oran', source: 'GitHub', summary: 'Repository signal from search.', publishedAt: '2026-04-14T09:00:00Z', score: 9, origin: 'live-search', thumbnail: '/assets/news/thumb-repo.svg' }
@@ -317,7 +321,7 @@ test('news page searches candidates before drafting an issue and does not expose
   });
   await page.route('/api/focused-issue', async (route) => {
     const body = route.request().postDataJSON();
-    expect(body.keywords).toContain('open RAN');
+    expect(body.keywords).toEqual(['open RAN Gemma', 'O-RAN automation', 'agentic RAN operations']);
     expect(body.candidates.length).toBeGreaterThanOrEqual(2);
     expect(body.candidates[0].origin).toBe('live-search');
     await new Promise((resolve) => setTimeout(resolve, 150));
@@ -331,7 +335,8 @@ test('news page searches candidates before drafting an issue and does not expose
           summary: 'Ranked source context ready for review.',
           markdown: `## Open RAN + Gemma\nRanked **source context** ready for review.\n\n${'verylongtoken'.repeat(80)}`
         },
-        sources: [{ title: 'Open RAN accelerator stack', score: 8.5, url: 'https://example.test/oran', source: 'Example News', thumbnail: '/assets/news/thumb-vran.svg' }]
+        sources: [{ title: 'Open RAN accelerator stack', score: 8.5, url: 'https://example.test/oran', source: 'Example News', thumbnail: '/assets/news/thumb-vran.svg' }],
+        warning: 'Gemma is not configured; rendered a source-backed fallback.'
       })
     });
   });
@@ -342,11 +347,19 @@ test('news page searches candidates before drafting an issue and does not expose
   await expect(page.getByText('Gemma guide')).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Ask Gemma' })).toHaveCount(0);
   await expect(page.locator('script[src^="/assets/blog-lab.mjs"]')).toHaveCount(1);
-  await expect(page.getByLabel('Search query')).toBeVisible();
+  await expect(page.getByRole('searchbox', { name: 'Search query' })).toBeVisible();
+  await expect(page.getByRole('group', { name: 'Search query mode' })).toBeVisible();
+  await expect(page.getByLabel('Exact keyword')).toBeChecked();
+  await expect(page.getByLabel('Gemma 4 expand')).not.toBeChecked();
   await expect(page.getByRole('group', { name: 'News sources' })).toBeVisible();
+  await expect(page.locator('.source-picker-group')).toHaveCount(4);
+  await expect(page.locator('.source-picker-group[data-source-group="code"]')).toContainText('Code');
+  await expect(page.locator('.source-picker-group[data-source-group="paper"]')).toContainText('Paper');
+  await expect(page.locator('.source-picker-group[data-source-group="social"]')).toContainText('Social');
   await expect(page.getByLabel('Google News')).toBeChecked();
   await expect(page.getByLabel('GitHub repositories')).toBeChecked();
   await expect(page.getByLabel('arXiv papers')).toBeChecked();
+  await expect(page.getByLabel('Google Scholar')).toBeChecked();
   await expect(page.getByLabel('Hugging Face Papers')).toBeChecked();
   await expect(page.getByRole('checkbox', { name: 'X', exact: true })).toBeChecked();
   await expect(page.getByLabel('LinkedIn')).toBeChecked();
@@ -356,13 +369,14 @@ test('news page searches candidates before drafting an issue and does not expose
   await expect(page.getByRole('button', { name: 'Draft from selected news' })).toBeDisabled();
   await expect(page.locator('.news-command-strip span')).toHaveCount(4);
   await expect(page.locator('[data-news-signal-stack]')).toBeVisible();
-  await expect(page.locator('[data-news-signal-stack] .signal-row')).toHaveCount(6);
+  await expect(page.locator('[data-news-signal-stack] .signal-row')).toHaveCount(7);
   await expect(page.locator('[data-news-pretext-board]')).toHaveCount(0);
   await expect(page.getByText('RANKING LANES')).toHaveCount(0);
   const stackMotion = await page.locator('[data-news-signal-stack] .signal-row').first().evaluate((node) => getComputedStyle(node).animationName);
   expect(stackMotion).toContain('signal-row-drift');
 
-  await page.getByLabel('Search query').fill('open RAN Gemma');
+  await page.getByRole('searchbox', { name: 'Search query' }).fill('open RAN Gemma');
+  await page.getByLabel('Gemma 4 expand').check();
   const dateLayout = await page.getByLabel('Issue date').evaluate((node) => {
     const input = node.getBoundingClientRect();
     const field = node.closest('.issue-date-field')?.getBoundingClientRect();
@@ -393,6 +407,7 @@ test('news page searches candidates before drafting an issue and does not expose
   await expect(page.locator('[data-focused-issue-status] .status-pulse')).toBeVisible();
   await expect(page.locator('[data-focused-issue-status]')).toContainText('Drafting selected sources');
   await expect(page.locator('[data-focused-issue-output]')).toContainText('Open RAN + Gemma Brief');
+  await expect(page.locator('[data-focused-issue-output]')).toContainText('Gemma is not configured');
   await expect(page.locator('[data-focused-issue-output]')).toContainText('Open RAN accelerator stack');
   await expect(page.locator('[data-focused-issue-output] .generated-news-card')).toBeVisible();
   await expect(page.locator('[data-focused-issue-output] .generated-news-cover')).toBeVisible();

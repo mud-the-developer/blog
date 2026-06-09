@@ -83,8 +83,25 @@ struct NewsSearchRequest {
     query: Option<String>,
     keywords: Option<String>,
     keyword: Option<String>,
+    #[serde(rename = "queryMode")]
+    query_mode: Option<String>,
+    #[serde(rename = "searchMode")]
+    search_mode: Option<String>,
     sources: Option<Vec<String>>,
     limit: Option<usize>,
+}
+
+#[derive(Debug, Clone, Serialize)]
+struct LocalSearchQueryPlan {
+    mode: String,
+    #[serde(rename = "originalQuery")]
+    original_query: String,
+    #[serde(rename = "searchQuery")]
+    search_query: String,
+    keywords: Vec<String>,
+    #[serde(rename = "usedGemma")]
+    used_gemma: bool,
+    warning: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -474,7 +491,7 @@ fn minify_css(source: &str) -> String {
             pending_space = false;
         }
     }
-    output.trim().to_string()
+    output.trim().replace(";}", "}").replace("0.", ".")
 }
 
 fn folder_groups(posts: &[Post]) -> Vec<FolderGroup<'_>> {
@@ -572,8 +589,23 @@ pub async fn build_static_site(
         assets_dir.join("pretext-polish.mjs"),
     )
     .await?;
+    fs::copy(
+        "src/pretext-polish-state.mjs",
+        assets_dir.join("pretext-polish-state.mjs"),
+    )
+    .await?;
     fs::copy("src/blog-lab.mjs", assets_dir.join("blog-lab.mjs")).await?;
+    fs::copy(
+        "src/blog-lab-machine.mjs",
+        assets_dir.join("blog-lab-machine.mjs"),
+    )
+    .await?;
     fs::copy("src/site-chrome.mjs", assets_dir.join("site-chrome.mjs")).await?;
+    fs::copy(
+        "src/site-chrome-state.mjs",
+        assets_dir.join("site-chrome-state.mjs"),
+    )
+    .await?;
 
     let archive = archive_json(&posts)?;
     fs::write(out_dir.join("archive.json"), archive).await?;
@@ -980,11 +1012,179 @@ fn api_query_text(request: &NewsSearchRequest) -> String {
         .join(" ")
 }
 
+fn news_query_mode(request: &NewsSearchRequest) -> String {
+    request
+        .query_mode
+        .as_deref()
+        .or(request.search_mode.as_deref())
+        .filter(|mode| mode.eq_ignore_ascii_case("gemma-expand"))
+        .map(|_| "gemma-expand".to_string())
+        .unwrap_or_else(|| "exact".to_string())
+}
+
+fn normalize_expanded_keywords(query: &str, values: Vec<String>) -> Vec<String> {
+    let mut keywords = Vec::new();
+    for raw in std::iter::once(query.to_string()).chain(values) {
+        let keyword = raw
+            .replace(['\"', '`', '{', '}', '[', ']', '<', '>'], "")
+            .split_whitespace()
+            .collect::<Vec<_>>()
+            .join(" ");
+        if keyword.len() < 2
+            || keywords
+                .iter()
+                .any(|item: &String| item.eq_ignore_ascii_case(&keyword))
+        {
+            continue;
+        }
+        keywords.push(keyword.chars().take(70).collect());
+        if keywords.len() >= 8 {
+            break;
+        }
+    }
+    keywords
+}
+
+fn search_query_from_keywords(keywords: &[String]) -> String {
+    keywords
+        .iter()
+        .map(|keyword| {
+            if keyword.contains(' ') {
+                format!("\"{keyword}\"")
+            } else {
+                keyword.to_string()
+            }
+        })
+        .collect::<Vec<_>>()
+        .join(" OR ")
+}
+
+async fn call_gemma_for_query_plan(query: &str) -> Result<(Vec<String>, String), String> {
+    let Some(api_key) = google_api_key() else {
+        return Err("Gemma keyword expansion is unavailable without a Google AI API key; using the exact query.".to_string());
+    };
+    let payload = json!({
+        "task": "Expand an editorial news search query into precise source-search keywords.",
+        "originalQuery": query,
+        "instructions": [
+            "Return JSON only: {\"keywords\": string[], \"searchQuery\": string}.",
+            "Preserve the original phrase as the first keyword.",
+            "Add 4-7 adjacent technical keywords, aliases, paper terms, and community phrases that improve search recall.",
+            "Keep each keyword short enough for Google News, arXiv, Scholar, GitHub, and social/search sources.",
+            "Do not invent specific paper titles, dates, companies, or claims."
+        ]
+    });
+    let endpoint = format!(
+        "https://generativelanguage.googleapis.com/v1beta/{}:generateContent?key={}",
+        google_model_name(),
+        api_key
+    );
+    let client = reqwest::Client::builder()
+        .timeout(Duration::from_secs(16))
+        .build()
+        .unwrap_or_else(|_| reqwest::Client::new());
+    let response = client
+        .post(endpoint)
+        .json(&json!({
+            "contents": [{ "role": "user", "parts": [{ "text": serde_json::to_string_pretty(&payload).unwrap_or_default() }] }],
+            "generationConfig": { "temperature": 0.25, "topP": 0.9, "maxOutputTokens": 900, "responseMimeType": "application/json" }
+        }))
+        .send()
+        .await
+        .map_err(|_| "Gemma keyword expansion failed before a response was received.".to_string())?;
+    if !response.status().is_success() {
+        return Err(format!(
+            "Gemma keyword expansion failed locally: {}",
+            response.status()
+        ));
+    }
+    let json: serde_json::Value = response
+        .json()
+        .await
+        .map_err(|error| format!("Gemma query-plan decode failed locally: {error}"))?;
+    let text = json["candidates"][0]["content"]["parts"]
+        .as_array()
+        .map(|parts| {
+            parts
+                .iter()
+                .filter(|part| part["thought"].as_bool() != Some(true))
+                .filter_map(|part| part["text"].as_str())
+                .collect::<Vec<_>>()
+                .join("\n")
+        })
+        .unwrap_or_default();
+    let candidate = extract_json_object(&text).unwrap_or(text.trim());
+    let parsed: serde_json::Value = serde_json::from_str(candidate)
+        .map_err(|_| "Gemma returned non-JSON keyword expansion locally.".to_string())?;
+    let keywords = parsed["keywords"]
+        .as_array()
+        .map(|items| {
+            items
+                .iter()
+                .filter_map(|item| item.as_str().map(str::to_string))
+                .collect::<Vec<_>>()
+        })
+        .unwrap_or_default();
+    let search_query = parsed["searchQuery"]
+        .as_str()
+        .unwrap_or_default()
+        .to_string();
+    Ok((keywords, search_query))
+}
+
+async fn plan_local_search_query(query: &str, request: &NewsSearchRequest) -> LocalSearchQueryPlan {
+    let mode = news_query_mode(request);
+    if mode == "exact" {
+        let keywords = normalize_expanded_keywords(query, Vec::new());
+        return LocalSearchQueryPlan {
+            mode,
+            original_query: query.to_string(),
+            search_query: query.to_string(),
+            keywords,
+            used_gemma: false,
+            warning: None,
+        };
+    }
+    match call_gemma_for_query_plan(query).await {
+        Ok((raw_keywords, raw_search_query)) => {
+            let keywords = normalize_expanded_keywords(query, raw_keywords);
+            let search_query = if raw_search_query.trim().is_empty() {
+                search_query_from_keywords(&keywords)
+            } else {
+                raw_search_query
+                    .split_whitespace()
+                    .collect::<Vec<_>>()
+                    .join(" ")
+            };
+            LocalSearchQueryPlan {
+                mode,
+                original_query: query.to_string(),
+                search_query,
+                keywords,
+                used_gemma: true,
+                warning: None,
+            }
+        }
+        Err(message) => {
+            let keywords = normalize_expanded_keywords(query, Vec::new());
+            LocalSearchQueryPlan {
+                mode,
+                original_query: query.to_string(),
+                search_query: query.to_string(),
+                keywords,
+                used_gemma: false,
+                warning: Some(message),
+            }
+        }
+    }
+}
+
 fn selected_news_sources(request: &NewsSearchRequest) -> Vec<&'static str> {
     let allowed = [
         "google-news-rss",
         "github-repositories",
         "arxiv",
+        "google-scholar",
         "huggingface-papers",
         "x",
         "linkedin",
@@ -1212,6 +1412,117 @@ async fn fetch_arxiv_candidates(
         .collect())
 }
 
+fn html_class_text(block: &str, class_name: &str) -> String {
+    let Some(class_pos) = block.find(class_name) else {
+        return String::new();
+    };
+    let Some(open_end) = block[class_pos..].find('>') else {
+        return String::new();
+    };
+    let content_start = class_pos + open_end + 1;
+    let close_start = block[content_start..]
+        .find("</div>")
+        .or_else(|| block[content_start..].find("</h3>"))
+        .unwrap_or(block.len() - content_start);
+    strip_xml_tags(&block[content_start..content_start + close_start])
+}
+
+fn html_link(block: &str) -> (String, String) {
+    let search = block
+        .find("gs_rt")
+        .map(|pos| &block[pos..])
+        .unwrap_or(block);
+    let Some(link_start) = search.find("<a") else {
+        return (String::new(), html_class_text(block, "gs_rt"));
+    };
+    let link = &search[link_start..];
+    let href = ["href=\"", "href='"]
+        .iter()
+        .find_map(|prefix| {
+            let start = link.find(prefix)? + prefix.len();
+            let quote = prefix.chars().last()?;
+            Some(
+                link[start..]
+                    .split(quote)
+                    .next()
+                    .unwrap_or_default()
+                    .to_string(),
+            )
+        })
+        .unwrap_or_default();
+    let title = link
+        .find('>')
+        .and_then(|start| link[start + 1..].find("</a>").map(|end| (start, end)))
+        .map(|(start, end)| strip_xml_tags(&link[start + 1..start + 1 + end]))
+        .unwrap_or_default();
+    (decode_xml_text(&href), title)
+}
+
+async fn fetch_google_scholar_candidates(
+    client: &reqwest::Client,
+    query: &str,
+    limit: usize,
+) -> Result<Vec<serde_json::Value>, String> {
+    let url = format!(
+        "https://scholar.google.com/scholar?hl=en&q={}",
+        simple_url_encode(query)
+    );
+    let html = client
+        .get(&url)
+        .header(
+            "user-agent",
+            "mud-blog-news-search/1.0 (+https://mud.blog/news/search)",
+        )
+        .send()
+        .await
+        .map_err(|error| format!("google-scholar: {error}"))?
+        .text()
+        .await
+        .map_err(|error| format!("google-scholar: {error}"))?;
+    let mut items = html
+        .split("gs_r gs_or")
+        .skip(1)
+        .take(limit)
+        .enumerate()
+        .filter_map(|(index, block)| {
+            let (url, title) = html_link(block);
+            if title.is_empty() {
+                return None;
+            }
+            let meta = html_class_text(block, "gs_a");
+            let year = meta
+                .split(|ch: char| !ch.is_ascii_digit())
+                .find(|part| part.len() == 4 && (part.starts_with("19") || part.starts_with("20")))
+                .unwrap_or_default()
+                .to_string();
+            let summary = html_class_text(block, "gs_rs");
+            Some(json!({
+                "id": format!("google-scholar-{}", index + 1),
+                "title": title,
+                "url": url,
+                "source": "Google Scholar",
+                "summary": if summary.is_empty() { meta } else { summary },
+                "publishedAt": if year.is_empty() { String::new() } else { format!("{year}-01-01") },
+                "origin": "live-search",
+                "type": "paper"
+            }))
+        })
+        .collect::<Vec<_>>();
+    if items.is_empty() {
+        items.push(json!({
+            "id": "google-scholar-search",
+            "title": format!("Open Google Scholar results for {query}"),
+            "url": url,
+            "source": "Google Scholar",
+            "summary": "Google Scholar did not expose parseable result cards to this runtime; open the citation search page directly.",
+            "publishedAt": "",
+            "origin": "live-search",
+            "type": "paper"
+        }));
+    }
+    Ok(items)
+}
+
 fn dedupe_candidates(candidates: Vec<serde_json::Value>) -> Vec<serde_json::Value> {
     let mut seen = std::collections::HashSet::new();
     let mut unique = Vec::new();
@@ -1242,27 +1553,36 @@ async fn news_search_handler(
     }
     let limit = request.limit.unwrap_or(9).clamp(3, 15);
     let per_source = (limit / 3).max(2);
-    let keywords = normalize_api_keywords(&FocusedIssueRequest {
-        date: None,
-        keywords: Some(query.clone()),
-        keyword: None,
-        candidates: None,
-        sources: None,
-        limit: None,
-    });
+    let query_plan = plan_local_search_query(&query, &request).await;
+    let search_query = if query_plan.search_query.trim().is_empty() {
+        query.clone()
+    } else {
+        query_plan.search_query.clone()
+    };
+    let keywords = query_plan.keywords.clone();
     let client = reqwest::Client::builder()
         .timeout(Duration::from_secs(12))
         .build()
         .unwrap_or_else(|_| reqwest::Client::new());
     let mut warnings = Vec::new();
+    if let Some(warning) = query_plan.warning.clone() {
+        warnings.push(warning);
+    }
     let mut candidates = Vec::new();
     let mut searched = Vec::new();
     for source in selected_news_sources(&request) {
         searched.push(source);
         let result = match source {
-            "google-news-rss" => fetch_google_news_candidates(&client, &query, per_source).await,
-            "github-repositories" => fetch_github_candidates(&client, &query, per_source).await,
-            "arxiv" => fetch_arxiv_candidates(&client, &query, per_source).await,
+            "google-news-rss" => {
+                fetch_google_news_candidates(&client, &search_query, per_source).await
+            }
+            "github-repositories" => {
+                fetch_github_candidates(&client, &search_query, per_source).await
+            }
+            "arxiv" => fetch_arxiv_candidates(&client, &search_query, per_source).await,
+            "google-scholar" => {
+                fetch_google_scholar_candidates(&client, &search_query, per_source).await
+            }
             _ => Ok(Vec::new()),
         };
         match result {
@@ -1294,7 +1614,10 @@ async fn news_search_handler(
     Json(json!({
         "ok": true,
         "query": query,
+        "queryMode": query_plan.mode,
+        "searchQuery": search_query,
         "keywords": keywords,
+        "queryPlan": query_plan,
         "searched": searched,
         "candidates": candidates,
         "warning": if warnings.is_empty() { None::<String> } else { Some(warnings.join("; ")) }

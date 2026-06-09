@@ -50,6 +50,7 @@
           <span class="signal-row" style="--level: 92%; --delay: -0.2s"><span class="ui-icon" data-icon="rss" aria-hidden="true"></span><strong>Google News</strong><em>freshness</em></span>
           <span class="signal-row" style="--level: 76%; --delay: -0.9s"><span class="ui-icon" data-icon="github" aria-hidden="true"></span><strong>GitHub</strong><em>repo momentum</em></span>
           <span class="signal-row" style="--level: 68%; --delay: -1.4s"><span class="ui-icon" data-icon="book-open" aria-hidden="true"></span><strong>arXiv</strong><em>paper trail</em></span>
+          <span class="signal-row" style="--level: 64%; --delay: -1.65s"><span class="ui-icon" data-icon="book-open" aria-hidden="true"></span><strong>Google Scholar</strong><em>citation trail</em></span>
           <span class="signal-row" style="--level: 61%; --delay: -1.9s"><span class="ui-icon" data-icon="book-open" aria-hidden="true"></span><strong>HF Papers</strong><em>model notes</em></span>
           <span class="signal-row" style="--level: 54%; --delay: -2.5s"><span class="ui-icon" data-icon="radio" aria-hidden="true"></span><strong>X · LinkedIn</strong><em>field chatter</em></span>
           <span class="signal-row" style="--level: 48%; --delay: -3.1s"><span class="ui-icon" data-icon="zap" aria-hidden="true"></span><strong>GeekNews · Endigest</strong><em>curated pulse</em></span>
@@ -57,22 +58,40 @@
         <form class="lab-form news-search-form" data-news-search-form>
           <label class="lab-form-wide">
             <span>Search query</span>
-            <input name="query" type="search" aria-label="Search query" placeholder="open RAN Gemma agents" autocomplete="off" />
+            <input name="query" type="search" aria-label="Search query" placeholder="keyword 그대로, 또는 줄글/phrase 입력" autocomplete="off" />
           </label>
+          <fieldset class="query-mode-picker" aria-label="Search query mode">
+            <legend>Query mode</legend>
+            <label><input name="queryMode" type="radio" value="exact" checked /> <span>Exact keyword</span></label>
+            <label><input name="queryMode" type="radio" value="gemma-expand" /> <span>Gemma 4 expand</span></label>
+          </fieldset>
           <label class="issue-date-field">
             <span><span class="ui-icon" data-icon="calendar" aria-hidden="true"></span>Issue date</span>
             <input name="date" type="date" aria-label="Issue date" />
           </label>
           <fieldset class="source-picker" aria-label="News sources">
             <legend>News sources</legend>
-            <label><input name="sources" type="checkbox" value="google-news-rss" checked /> <span>Google News</span></label>
-            <label><input name="sources" type="checkbox" value="github-repositories" checked /> <span>GitHub repositories</span></label>
-            <label><input name="sources" type="checkbox" value="arxiv" checked /> <span>arXiv papers</span></label>
-            <label><input name="sources" type="checkbox" value="huggingface-papers" checked /> <span>Hugging Face Papers</span></label>
-            <label><input name="sources" type="checkbox" value="x" checked /> <span>X</span></label>
-            <label><input name="sources" type="checkbox" value="linkedin" checked /> <span>LinkedIn</span></label>
-            <label><input name="sources" type="checkbox" value="geeknews" checked /> <span>GeekNews</span></label>
-            <label><input name="sources" type="checkbox" value="endigest" checked /> <span>Endigest</span></label>
+            <div class="source-picker-group" data-source-group="news">
+              <span class="source-picker-group-title"><span class="ui-icon" data-icon="rss" aria-hidden="true"></span>News</span>
+              <label><input name="sources" type="checkbox" value="google-news-rss" checked /> <span>Google News</span></label>
+            </div>
+            <div class="source-picker-group" data-source-group="code">
+              <span class="source-picker-group-title"><span class="ui-icon" data-icon="github" aria-hidden="true"></span>Code</span>
+              <label><input name="sources" type="checkbox" value="github-repositories" checked /> <span>GitHub repositories</span></label>
+            </div>
+            <div class="source-picker-group" data-source-group="paper">
+              <span class="source-picker-group-title"><span class="ui-icon" data-icon="book-open" aria-hidden="true"></span>Paper</span>
+              <label><input name="sources" type="checkbox" value="arxiv" checked /> <span>arXiv papers</span></label>
+              <label><input name="sources" type="checkbox" value="google-scholar" checked /> <span>Google Scholar</span></label>
+              <label><input name="sources" type="checkbox" value="huggingface-papers" checked /> <span>Hugging Face Papers</span></label>
+            </div>
+            <div class="source-picker-group" data-source-group="social">
+              <span class="source-picker-group-title"><span class="ui-icon" data-icon="radio" aria-hidden="true"></span>Social</span>
+              <label><input name="sources" type="checkbox" value="x" checked /> <span>X</span></label>
+              <label><input name="sources" type="checkbox" value="linkedin" checked /> <span>LinkedIn</span></label>
+              <label><input name="sources" type="checkbox" value="geeknews" checked /> <span>GeekNews</span></label>
+              <label><input name="sources" type="checkbox" value="endigest" checked /> <span>Endigest</span></label>
+            </div>
           </fieldset>
           <button type="submit">Search news</button>
         </form>

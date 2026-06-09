@@ -1,4 +1,4 @@
-import { jsonResponse, normalizeKeywords, readJsonAsset, sanitizeText } from './_shared.js';
+import { callGemma, jsonResponse, normalizeKeywords, parseMaybeJson, readJsonAsset, sanitizeText } from './_shared.js';
 
 function decodeXml(value) {
   return String(value || '')
@@ -26,6 +26,99 @@ function queryTokens(query) {
     .map((token) => token.trim())
     .filter((token) => token.length > 1)
     .slice(0, 12);
+}
+
+const FALLBACK_STOPWORDS = new Set([
+  'about', 'into', 'from', 'with', 'using', 'what', 'when', 'where', 'why', 'how',
+  'news', 'update', 'updates', 'release', 'releases', 'paper', 'papers',
+  'feature', 'features', 'model', 'models', 'agent', 'agents', 'tool', 'tools'
+]);
+
+function fallbackMatchesQuery(item, query) {
+  const haystack = [item.title, item.summary, item.description, item.source, ...(item.categories || [])]
+    .join(' ')
+    .toLowerCase();
+  const normalizedQuery = String(query || '').toLowerCase().replace(/\s+/g, ' ').trim();
+  if (normalizedQuery.length > 3 && haystack.includes(normalizedQuery)) return true;
+  const tokens = queryTokens(query);
+  const compoundTokens = tokens.filter((token) => /[-+]/.test(token));
+  if (compoundTokens.length) {
+    return compoundTokens.some((token) => {
+      if (haystack.includes(token)) return true;
+      const parts = token.split(/[-+]/).filter((part) => part.length > 2 && !FALLBACK_STOPWORDS.has(part));
+      return parts.length > 1 && parts.every((part) => haystack.includes(part));
+    });
+  }
+  const meaningful = tokens.filter((token) => token.length > 2 && !FALLBACK_STOPWORDS.has(token));
+  if (!meaningful.length) return false;
+  const hits = meaningful.filter((token) => haystack.includes(token)).length;
+  return meaningful.length === 1 ? hits === 1 : hits >= 2;
+}
+
+function normalizeQueryMode(value) {
+  return String(value || '').toLowerCase() === 'gemma-expand' ? 'gemma-expand' : 'exact';
+}
+
+function normalizeExpandedKeywords(query, values = []) {
+  const seen = new Set();
+  const keywords = [];
+  for (const raw of [query, ...values]) {
+    const keyword = sanitizeText(raw, 70).replace(/["`{}[\]<>]/g, '').trim();
+    if (!keyword || keyword.length < 2) continue;
+    const key = keyword.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    keywords.push(keyword);
+  }
+  return keywords.slice(0, 8);
+}
+
+function queryFromKeywords(keywords = []) {
+  return keywords.map((keyword) => (keyword.includes(' ') ? `"${keyword}"` : keyword)).join(' OR ');
+}
+
+async function planSearchQuery(query, queryMode, env = {}) {
+  const mode = normalizeQueryMode(queryMode);
+  if (mode === 'exact') {
+    const keywords = normalizeExpandedKeywords(query, []);
+    return { mode, originalQuery: query, searchQuery: query, keywords, usedGemma: false };
+  }
+  const gemma = await callGemma(env, {
+    task: 'Expand an editorial news search query into precise source-search keywords.',
+    originalQuery: query,
+    instructions: [
+      'Return JSON only: {"keywords": string[], "searchQuery": string}.',
+      'Preserve the original phrase as the first keyword.',
+      'Add 4-7 adjacent technical keywords, aliases, paper terms, and community phrases that improve search recall.',
+      'Keep each keyword short enough for Google News, arXiv, Scholar, GitHub, and social/search sources.',
+      'Do not invent specific paper titles, dates, companies, or claims.'
+    ]
+  });
+  const parsed = parseMaybeJson(gemma.text);
+  if (!parsed) {
+    const keywords = normalizeExpandedKeywords(query, []);
+    return {
+      mode,
+      originalQuery: query,
+      searchQuery: query,
+      keywords,
+      usedGemma: false,
+      warning: gemma.error || (gemma.missingKey ? 'Gemma keyword expansion is unavailable without a Google AI API key; using the exact query.' : 'Gemma keyword expansion returned no usable keyword plan; using the exact query.')
+    };
+  }
+  const keywords = normalizeExpandedKeywords(query, Array.isArray(parsed?.keywords) ? parsed.keywords : []);
+  const parsedSearch = sanitizeText(parsed?.searchQuery || '', 260);
+  const searchQuery = parsedSearch && keywords.some((keyword) => parsedSearch.toLowerCase().includes(keyword.toLowerCase().slice(0, Math.min(keyword.length, 16))))
+    ? parsedSearch
+    : queryFromKeywords(keywords);
+  return {
+    mode,
+    originalQuery: query,
+    searchQuery: searchQuery || query,
+    keywords,
+    usedGemma: gemma.usedGemma && !!parsed,
+    warning: gemma.error || (gemma.missingKey ? 'Gemma keyword expansion is unavailable without a Google AI API key; using the exact query.' : undefined)
+  };
 }
 
 function scoreCandidate(candidate, tokens, index = 0) {
@@ -132,6 +225,47 @@ async function searchArxiv(query, limit) {
   }));
 }
 
+function htmlAttr(block, name) {
+  const match = String(block || '').match(new RegExp(`${name}=["']([^"']+)["']`, 'i'));
+  return decodeXml(match?.[1] || '');
+}
+
+async function searchGoogleScholar(query, limit) {
+  const url = `https://scholar.google.com/scholar?hl=en&q=${encodeURIComponent(query)}`;
+  const response = await fetchWithTimeout(url, { headers: { 'user-agent': 'mud-blog-news-search/1.0 (+https://mud.blog/news/search)' } });
+  if (!response.ok) throw new Error(`Google Scholar ${response.status}`);
+  const html = await response.text();
+  const items = [...html.matchAll(/<div[^>]+class=["'][^"']*gs_r[^"']*["'][^>]*>[\s\S]*?(?=<div[^>]+class=["'][^"']*gs_r[^"']*["']|<div[^>]+id=["']gs_res_ccl_bot["']|<\/body>|$)/gi)]
+    .slice(0, limit)
+    .map((match, index) => {
+      const block = match[0];
+      const titleAnchor = block.match(/<h3[^>]+class=["'][^"']*gs_rt[^"']*["'][^>]*>[\s\S]*?<a\b([^>]*)>([\s\S]*?)<\/a>/i);
+      const plainTitle = block.match(/<h3[^>]+class=["'][^"']*gs_rt[^"']*["'][^>]*>([\s\S]*?)<\/h3>/i);
+      const meta = decodeXml(block.match(/<div[^>]+class=["'][^"']*gs_a[^"']*["'][^>]*>([\s\S]*?)<\/div>/i)?.[1] || '');
+      const year = meta.match(/\b(19|20)\d{2}\b/)?.[0] || '';
+      return {
+        id: `google-scholar-${index + 1}`,
+        title: decodeXml(titleAnchor?.[2] || plainTitle?.[1] || `Google Scholar result ${index + 1}`),
+        url: htmlAttr(titleAnchor?.[1] || '', 'href'),
+        source: 'Google Scholar',
+        summary: decodeXml(block.match(/<div[^>]+class=["'][^"']*gs_rs[^"']*["'][^>]*>([\s\S]*?)<\/div>/i)?.[1] || meta),
+        publishedAt: year ? `${year}-01-01` : '',
+        type: 'paper'
+      };
+    })
+    .filter((item) => item.title && !/Google Scholar result \d+/.test(item.title));
+  if (items.length) return items;
+  return [{
+    id: 'google-scholar-search',
+    title: `Open Google Scholar results for ${query}`,
+    url,
+    source: 'Google Scholar',
+    summary: 'Google Scholar did not expose parseable result cards to this runtime; open the citation search page directly.',
+    publishedAt: '',
+    type: 'paper'
+  }];
+}
+
 const DIGEST_SOURCE_DOMAINS = {
   'digest-snapshot': [],
   'huggingface-papers': ['huggingface.co'],
@@ -140,6 +274,7 @@ const DIGEST_SOURCE_DOMAINS = {
   geeknews: ['geeknews'],
   endigest: ['endigest.dev'],
   arxiv: ['arxiv.org'],
+  'google-scholar': ['scholar.google.com'],
   'github-repositories': ['github.com']
 };
 
@@ -153,10 +288,7 @@ function fallbackFromAsset(feed, query, limit, sourceIds = ['digest-snapshot']) 
   const tokens = queryTokens(query);
   return (Array.isArray(feed?.all) ? feed.all : [])
     .filter((item) => sourceMatchesSelection(item, sourceIds))
-    .filter((item) => {
-      const haystack = [item.title, item.summary, item.description, item.source, ...(item.categories || [])].join(' ').toLowerCase();
-      return tokens.length === 0 || tokens.some((token) => haystack.includes(token));
-    })
+    .filter((item) => tokens.length === 0 || fallbackMatchesQuery(item, query))
     .slice(0, limit)
     .map((item, index) => normalizeCandidate({
       id: `asset-${index + 1}`,
@@ -172,7 +304,7 @@ function fallbackFromAsset(feed, query, limit, sourceIds = ['digest-snapshot']) 
 }
 
 function selectedSourceIds(inputSources) {
-  const allowed = new Set(['google-news-rss', 'github-repositories', 'arxiv', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest']);
+  const allowed = new Set(['google-news-rss', 'github-repositories', 'arxiv', 'google-scholar', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest']);
   const requested = Array.isArray(inputSources)
     ? inputSources.map((source) => String(source)).filter((source) => allowed.has(source))
     : [];
@@ -188,21 +320,24 @@ export async function onRequestPost({ request, env }) {
   }
   const query = sanitizeText(input.query || input.keywords || input.keyword, 160);
   if (!query) return jsonResponse({ ok: false, error: 'Search query is required.' }, { status: 400 });
+  const queryPlan = await planSearchQuery(query, input.queryMode || input.searchMode, env);
+  const searchQuery = queryPlan.searchQuery || query;
   const limit = Math.max(3, Math.min(Number(input.limit) || 9, 15));
   const sourceIds = selectedSourceIds(input.sources);
-  const perSource = Math.max(2, Math.ceil(limit / Math.max(3, sourceIds.length)));
+  const perSource = Math.max(2, Math.ceil(limit / 3));
   const searched = [];
   const warnings = [];
   const feed = await readJsonAsset(env, request.url, '/news/data/latest.json', { all: [] });
   const sourceTasks = {
-    'google-news-rss': () => searchGoogleNews(query, perSource),
-    'github-repositories': () => searchGithub(query, perSource),
-    arxiv: () => searchArxiv(query, perSource),
-    'huggingface-papers': () => Promise.resolve(fallbackFromAsset(feed, query, perSource, ['huggingface-papers'])),
-    x: () => Promise.resolve(fallbackFromAsset(feed, query, perSource, ['x'])),
-    linkedin: () => Promise.resolve(fallbackFromAsset(feed, query, perSource, ['linkedin'])),
-    geeknews: () => Promise.resolve(fallbackFromAsset(feed, query, perSource, ['geeknews'])),
-    endigest: () => Promise.resolve(fallbackFromAsset(feed, query, perSource, ['endigest']))
+    'google-news-rss': () => searchGoogleNews(searchQuery, perSource),
+    'github-repositories': () => searchGithub(searchQuery, perSource),
+    arxiv: () => searchArxiv(searchQuery, perSource),
+    'google-scholar': () => searchGoogleScholar(searchQuery, perSource),
+    'huggingface-papers': () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['huggingface-papers'])),
+    x: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['x'])),
+    linkedin: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['linkedin'])),
+    geeknews: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['geeknews'])),
+    endigest: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['endigest']))
   };
   const batches = await Promise.allSettled(sourceIds.map((source) => sourceTasks[source]()));
   const candidates = [];
@@ -212,16 +347,20 @@ export async function onRequestPost({ request, env }) {
     if (batch.status === 'fulfilled') candidates.push(...batch.value);
     else warnings.push(`${name}: ${batch.reason?.message || 'search failed'}`);
   });
-  const normalized = dedupeCandidates(candidates.map((candidate, index) => normalizeCandidate(candidate, query, index)))
+  if (queryPlan.warning) warnings.unshift(queryPlan.warning);
+  const normalized = dedupeCandidates(candidates.map((candidate, index) => normalizeCandidate(candidate, `${query} ${searchQuery}`, index)))
     .sort((a, b) => b.score - a.score)
     .slice(0, limit);
   if (!normalized.length) {
-    normalized.push(...fallbackFromAsset(feed, query, limit, sourceIds));
+    normalized.push(...fallbackFromAsset(feed, searchQuery, limit, sourceIds));
   }
   return jsonResponse({
     ok: true,
     query,
-    keywords: normalizeKeywords(query),
+    queryMode: queryPlan.mode,
+    searchQuery,
+    keywords: queryPlan.keywords.length ? queryPlan.keywords : normalizeKeywords(query),
+    queryPlan,
     searched,
     candidates: normalized,
     warning: warnings.length ? warnings.join('; ') : undefined
