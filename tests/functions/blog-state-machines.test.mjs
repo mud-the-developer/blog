@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { createThemeState, themeReducer } from '../../src/site-chrome-state.mjs';
+import { applyThemeEffect, createThemeState, themeReducer } from '../../src/site-chrome-state.mjs';
 import { createPretextState, pretextReducer } from '../../src/pretext-polish-state.mjs';
 import { createNewsDeskState, newsDeskReducer, runNewsDeskEffect } from '../../src/blog-lab-machine.mjs';
 
@@ -22,16 +22,42 @@ test('site chrome theme reducer is pure and separates render effects', () => {
   assert.deepEqual(initial, createThemeState({ systemTheme: 'dark' }));
   assert.equal(rendered.state.activeTheme, 'dark');
   assert.equal(rendered.state.overrideTheme, null);
-  assert.deepEqual(rendered.effects, [{ type: 'render-theme', activeTheme: 'system-dark', theme: 'dark', override: false }]);
+  assert.deepEqual(rendered.effects, [{ type: 'render-theme', activeTheme: 'system-dark', theme: 'dark', override: false, accessibleLabel: 'Toggle color theme: Dark' }]);
 
   const toggled = themeReducer(rendered.state, { type: 'theme.toggle' });
   assert.equal(toggled.state.activeTheme, 'light');
   assert.equal(toggled.state.overrideTheme, 'light');
-  assert.deepEqual(toggled.effects, [{ type: 'render-theme', activeTheme: 'light', theme: 'light', override: true }]);
+  assert.deepEqual(toggled.effects, [{ type: 'render-theme', activeTheme: 'light', theme: 'light', override: true, accessibleLabel: 'Toggle color theme: Light' }]);
 
   const ignoredSystemChange = themeReducer(toggled.state, { type: 'system-theme.changed', theme: 'dark' });
   assert.deepEqual(ignoredSystemChange.effects, []);
   assert.equal(ignoredSystemChange.state.activeTheme, 'light');
+});
+
+test('theme render effect keeps the visible theme label inside the accessible name', () => {
+  const attributes = {};
+  const label = { textContent: 'System' };
+  const button = {
+    dataset: {},
+    setAttribute(name, value) {
+      attributes[name] = value;
+    },
+    querySelector(selector) {
+      return selector === '.theme-toggle-label' ? label : null;
+    }
+  };
+  const root = {
+    dataset: {},
+    removeAttribute(name) {
+      delete this.dataset[name];
+    }
+  };
+
+  applyThemeEffect({ type: 'render-theme', activeTheme: 'system-light', theme: 'light', override: false, accessibleLabel: 'Toggle color theme: Light' }, { root, button });
+
+  assert.equal(label.textContent, 'Light');
+  assert.equal(attributes['aria-label'], 'Toggle color theme: Light');
+  assert.equal(attributes['aria-pressed'], 'false');
 });
 
 test('pretext polish reducer ranks archive terms and emits token render effects', () => {

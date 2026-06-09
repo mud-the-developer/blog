@@ -420,6 +420,86 @@ test('news search does not use digest fallback items that only match generic que
   assert.deepEqual(body.candidates, []);
 });
 
+test('news search caches identical exact-source responses to avoid repeated provider fanout', async () => {
+  let providerFetches = 0;
+  globalThis.fetch = async (url) => {
+    if (String(url).includes('news.google.com/rss/search')) {
+      providerFetches += 1;
+      return new Response(`<?xml version="1.0"?><rss><channel>
+        <item><title>Cacheable model-intrinsic feature result</title><link>https://news.example/cacheable-feature</link><source>Example News</source><description>Feature geometry cache fixture.</description></item>
+      </channel></rss>`, { headers: { 'content-type': 'application/rss+xml' } });
+    }
+    throw new Error(`Unexpected request ${url}`);
+  };
+
+  const requestBody = { query: 'cacheable model-intrinsic feature', queryMode: 'exact', limit: 3, sources: ['google-news-rss'] };
+  const first = await newsSearchPost({
+    request: new Request('https://blog.example.test/api/news-search', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(requestBody)
+    }),
+    env: mockEnv()
+  });
+  const firstBody = await first.json();
+
+  const second = await newsSearchPost({
+    request: new Request('https://blog.example.test/api/news-search', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(requestBody)
+    }),
+    env: mockEnv()
+  });
+  const secondBody = await second.json();
+
+  assert.equal(first.status, 200);
+  assert.equal(second.status, 200);
+  assert.equal(providerFetches, 1);
+  assert.equal(firstBody.cacheStatus, 'miss');
+  assert.equal(secondBody.cacheStatus, 'hit');
+  assert.deepEqual(secondBody.candidates.map((candidate) => candidate.url), firstBody.candidates.map((candidate) => candidate.url));
+});
+
+test('news search puts failing providers on cooldown instead of retrying them on the next request', async () => {
+  let providerFetches = 0;
+  globalThis.fetch = async (url) => {
+    if (String(url).includes('news.google.com/rss/search')) {
+      providerFetches += 1;
+      return new Response('temporarily unavailable', { status: 503 });
+    }
+    throw new Error(`Unexpected request ${url}`);
+  };
+
+  const requestBody = { query: 'cooldown model-intrinsic feature', queryMode: 'exact', limit: 3, sources: ['google-news-rss'] };
+  const first = await newsSearchPost({
+    request: new Request('https://blog.example.test/api/news-search', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(requestBody)
+    }),
+    env: mockEnv()
+  });
+  const firstBody = await first.json();
+
+  const second = await newsSearchPost({
+    request: new Request('https://blog.example.test/api/news-search', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(requestBody)
+    }),
+    env: mockEnv()
+  });
+  const secondBody = await second.json();
+
+  assert.equal(first.status, 200);
+  assert.equal(second.status, 200);
+  assert.equal(providerFetches, 1);
+  assert.match(firstBody.warning, /Google News RSS 503/);
+  assert.ok(secondBody.sourceStatus.some((source) => source.id === 'google-news-rss' && source.status === 'cooldown'));
+  assert.match(secondBody.warning, /cooldown/i);
+});
+
 test('news search keeps all-source fanout wide before final ranking', async () => {
   const requests = [];
   globalThis.fetch = async (url) => {

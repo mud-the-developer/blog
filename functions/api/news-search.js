@@ -1,5 +1,48 @@
 import { callGemma, jsonResponse, normalizeKeywords, parseMaybeJson, readJsonAsset, sanitizeText } from './_shared.js';
 
+const SEARCH_RESPONSE_CACHE = new Map();
+const SOURCE_COOLDOWNS = new Map();
+const SEARCH_CACHE_TTL_MS = 10 * 60 * 1000;
+const SOURCE_COOLDOWN_MS = 2 * 60 * 1000;
+
+function stableCacheKey(parts) {
+  return JSON.stringify(parts);
+}
+
+function sourceStateKey(source, searchQuery) {
+  return `${source}:${String(searchQuery || '').toLowerCase()}`;
+}
+
+function readFreshCache(key, nowMs = Date.now()) {
+  const cached = SEARCH_RESPONSE_CACHE.get(key);
+  if (!cached || cached.expiresAt <= nowMs) {
+    if (cached) SEARCH_RESPONSE_CACHE.delete(key);
+    return null;
+  }
+  return cached.body;
+}
+
+function writeFreshCache(key, body, nowMs = Date.now()) {
+  SEARCH_RESPONSE_CACHE.set(key, { expiresAt: nowMs + SEARCH_CACHE_TTL_MS, body });
+}
+
+function cooldownFor(source, searchQuery, nowMs = Date.now()) {
+  const key = sourceStateKey(source, searchQuery);
+  const entry = SOURCE_COOLDOWNS.get(key);
+  if (!entry || entry.until <= nowMs) {
+    if (entry) SOURCE_COOLDOWNS.delete(key);
+    return null;
+  }
+  return entry;
+}
+
+function putOnCooldown(source, searchQuery, reason, nowMs = Date.now()) {
+  SOURCE_COOLDOWNS.set(sourceStateKey(source, searchQuery), {
+    until: nowMs + SOURCE_COOLDOWN_MS,
+    reason
+  });
+}
+
 function decodeXml(value) {
   return String(value || '')
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
@@ -185,7 +228,7 @@ function fetchWithTimeout(url, options = {}, timeoutMs = 12_000) {
   return fetch(url, { ...options, signal: controller.signal }).finally(() => clearTimeout(timeout));
 }
 
-async function fetchWithRetry(url, options = {}, timeoutMs = 12_000, attempts = 2) {
+async function fetchWithRetry(url, options = {}, timeoutMs = 12_000, attempts = 1) {
   let lastResponse;
   for (let attempt = 0; attempt < attempts; attempt += 1) {
     lastResponse = await fetchWithTimeout(url, options, timeoutMs);
@@ -486,9 +529,15 @@ export async function onRequestPost({ request, env }) {
   const queryPlan = await planSearchQuery(query, input.queryMode || input.searchMode, env);
   const searchQuery = queryPlan.searchQuery || query;
   const limit = Math.max(3, Math.min(Number(input.limit) || 9, 15));
-  const sourceIds = selectedSourceIds(input.sources);
+  const sourceIds = selectedSourceIds(input.sources).sort();
+  const cacheKey = stableCacheKey({ version: 2, query, searchQuery, mode: queryPlan.mode, limit, sourceIds });
+  const cached = readFreshCache(cacheKey);
+  if (cached) {
+    return jsonResponse({ ...cached, cacheStatus: 'hit' });
+  }
   const perSource = Math.max(3, Math.ceil(limit / 3));
   const searched = [];
+  const sourceStatus = [];
   const warnings = [];
   const feed = await readJsonAsset(env, request.url, '/news/data/latest.json', { all: [] });
   const sourceTasks = {
@@ -515,13 +564,41 @@ export async function onRequestPost({ request, env }) {
     geeknews: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['geeknews'])),
     endigest: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['endigest']))
   };
-  const batches = await Promise.allSettled(sourceIds.map((source) => sourceTasks[source]()));
+  const batches = await Promise.allSettled(sourceIds.map(async (source) => {
+    const cooldown = cooldownFor(source, searchQuery);
+    if (cooldown) {
+      return {
+        source,
+        skipped: true,
+        reason: cooldown.reason || 'provider cooldown'
+      };
+    }
+    try {
+      const value = await sourceTasks[source]();
+      return { source, value };
+    } catch (error) {
+      putOnCooldown(source, searchQuery, error?.message || 'search failed');
+      throw error;
+    }
+  }));
   const candidates = [];
   batches.forEach((batch, index) => {
     const name = sourceIds[index];
     searched.push(name);
-    if (batch.status === 'fulfilled') candidates.push(...batch.value);
-    else warnings.push(`${name}: ${batch.reason?.message || 'search failed'}`);
+    if (batch.status === 'fulfilled') {
+      if (batch.value?.skipped) {
+        sourceStatus.push({ id: name, status: 'cooldown', reason: batch.value.reason });
+        warnings.push(`${name}: provider cooldown (${batch.value.reason})`);
+      } else {
+        const values = Array.isArray(batch.value?.value) ? batch.value.value : [];
+        candidates.push(...values);
+        sourceStatus.push({ id: name, status: 'ok', count: values.length });
+      }
+    } else {
+      const message = batch.reason?.message || 'search failed';
+      sourceStatus.push({ id: name, status: 'error', reason: message });
+      warnings.push(`${name}: ${message}`);
+    }
   });
   if (queryPlan.warning) warnings.unshift(queryPlan.warning);
   const normalized = dedupeCandidates(candidates.map((candidate, index) => normalizeCandidate(candidate, `${query} ${searchQuery}`, index)))
@@ -530,7 +607,7 @@ export async function onRequestPost({ request, env }) {
   if (!normalized.length) {
     normalized.push(...fallbackFromAsset(feed, searchQuery, limit, sourceIds));
   }
-  return jsonResponse({
+  const body = {
     ok: true,
     query,
     queryMode: queryPlan.mode,
@@ -538,7 +615,13 @@ export async function onRequestPost({ request, env }) {
     keywords: queryPlan.keywords.length ? queryPlan.keywords : normalizeKeywords(query),
     queryPlan,
     searched,
+    sourceStatus,
     candidates: normalized,
-    warning: warnings.length ? warnings.join('; ') : undefined
-  });
+    warning: warnings.length ? warnings.join('; ') : undefined,
+    cacheStatus: 'miss'
+  };
+  if (sourceStatus.every((source) => source.status === 'ok')) {
+    writeFreshCache(cacheKey, body);
+  }
+  return jsonResponse(body);
 }

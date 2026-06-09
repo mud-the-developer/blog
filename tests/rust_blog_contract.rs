@@ -22,6 +22,8 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert_eq!(result.posts.len(), PUBLIC_POST_COUNT);
     assert!(out_dir.join("index.html").exists());
     assert!(out_dir.join("archive.json").exists());
+    assert!(out_dir.join("robots.txt").exists());
+    assert!(out_dir.join("sitemap.xml").exists());
     assert!(out_dir.join("news/index.html").exists());
     assert!(out_dir.join("news/search/index.html").exists());
     assert!(out_dir.join("fragments/posts.html").exists());
@@ -32,8 +34,22 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(!out_dir.join("assets/pretext-field.mjs").exists());
 
     let index = fs::read_to_string(out_dir.join("index.html"))?;
+    let robots = fs::read_to_string(out_dir.join("robots.txt"))?;
+    assert!(robots.starts_with("User-agent: *\n"));
+    assert!(robots.contains("Allow: /\n"));
+    assert!(robots.contains("Sitemap: https://mud-blog.pages.dev/sitemap.xml\n"));
+    assert!(!robots.contains("<!doctype html>"));
+
+    let sitemap = fs::read_to_string(out_dir.join("sitemap.xml"))?;
+    assert!(sitemap.starts_with("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"));
+    assert!(sitemap.contains("<loc>https://mud-blog.pages.dev/</loc>"));
+    assert!(sitemap.contains("<loc>https://mud-blog.pages.dev/news/</loc>"));
+    assert!(sitemap.contains("<loc>https://mud-blog.pages.dev/news/search/</loc>"));
+    assert_eq!(sitemap.matches("<url>").count(), PUBLIC_POST_COUNT + 3);
+
     assert!(index.contains("<a href=\"/news/\"><span class=\"ui-icon\" data-icon=\"newspaper\""));
     assert!(index.contains("data-theme-toggle"));
+    assert!(index.contains("aria-label=\"Toggle color theme: System\""));
     assert!(index.contains("/assets/site-chrome.mjs"));
     assert!(index.contains("data-layout=\"public-index\""));
     assert!(index.contains("class=\"public-shell\""));
