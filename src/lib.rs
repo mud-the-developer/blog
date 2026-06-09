@@ -10,7 +10,7 @@ use askama::Template;
 use axum::{
     Json, Router,
     extract::{Path as AxumPath, State},
-    http::StatusCode,
+    http::{StatusCode, header::CONTENT_TYPE},
     response::{Html, IntoResponse},
     routing::{get, post},
 };
@@ -21,6 +21,7 @@ use tokio::{fs, net::TcpListener};
 use tower_http::{compression::CompressionLayer, services::ServeDir};
 
 pub type BlogResult<T> = Result<T, Box<dyn std::error::Error>>;
+const PUBLIC_SITE_URL: &str = "https://mud-blog.pages.dev";
 
 #[derive(Debug, Clone, Serialize, PartialEq, Eq)]
 pub struct Post {
@@ -555,6 +556,30 @@ pub fn render_news_search_page(posts: &[Post]) -> BlogResult<String> {
     .render()?)
 }
 
+pub fn render_robots_txt() -> String {
+    format!("User-agent: *\nAllow: /\n\nSitemap: {PUBLIC_SITE_URL}/sitemap.xml\n")
+}
+
+pub fn render_sitemap_xml(posts: &[Post]) -> String {
+    let mut output = String::from(
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n",
+    );
+    for path in ["/", "/news/", "/news/search/"] {
+        output.push_str("  <url>\n    <loc>");
+        output.push_str(PUBLIC_SITE_URL);
+        output.push_str(path);
+        output.push_str("</loc>\n  </url>\n");
+    }
+    for post in posts {
+        output.push_str("  <url>\n    <loc>");
+        output.push_str(PUBLIC_SITE_URL);
+        output.push_str(&post.url);
+        output.push_str("</loc>\n  </url>\n");
+    }
+    output.push_str("</urlset>\n");
+    output
+}
+
 pub fn render_posts_fragment(posts: &[Post]) -> BlogResult<String> {
     Ok(PostsFragmentTemplate { posts }.render()?)
 }
@@ -609,6 +634,8 @@ pub async fn build_static_site(
 
     let archive = archive_json(&posts)?;
     fs::write(out_dir.join("archive.json"), archive).await?;
+    fs::write(out_dir.join("robots.txt"), render_robots_txt()).await?;
+    fs::write(out_dir.join("sitemap.xml"), render_sitemap_xml(&posts)).await?;
     fs::write(out_dir.join("index.html"), render_index_page(&posts)?).await?;
     fs::write(news_dir.join("index.html"), render_news_page(&posts)?).await?;
     fs::write(
@@ -625,6 +652,8 @@ pub async fn build_static_site(
     let mut files = vec![
         "index.html".to_string(),
         "archive.json".to_string(),
+        "robots.txt".to_string(),
+        "sitemap.xml".to_string(),
         "news/index.html".to_string(),
         "news/search/index.html".to_string(),
         "fragments/posts.html".to_string(),
@@ -649,6 +678,8 @@ pub fn router(posts: Vec<Post>, assets_root: impl Into<PathBuf>) -> BlogResult<R
 
     Ok(Router::new()
         .route("/", get(index_handler))
+        .route("/robots.txt", get(robots_handler))
+        .route("/sitemap.xml", get(sitemap_handler))
         .route("/news", get(news_handler))
         .route("/news/", get(news_handler))
         .route("/news/search", get(news_search_page_handler))
@@ -669,6 +700,20 @@ async fn index_handler(State(state): State<AppState>) -> impl IntoResponse {
         Ok(html) => Html(html).into_response(),
         Err(error) => (StatusCode::INTERNAL_SERVER_ERROR, error.to_string()).into_response(),
     }
+}
+
+async fn robots_handler() -> impl IntoResponse {
+    (
+        [(CONTENT_TYPE, "text/plain; charset=utf-8")],
+        render_robots_txt(),
+    )
+}
+
+async fn sitemap_handler(State(state): State<AppState>) -> impl IntoResponse {
+    (
+        [(CONTENT_TYPE, "application/xml; charset=utf-8")],
+        render_sitemap_xml(&state.posts),
+    )
 }
 
 async fn news_handler(State(state): State<AppState>) -> impl IntoResponse {

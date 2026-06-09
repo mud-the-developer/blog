@@ -10,11 +10,13 @@ export function createThemeState({ systemTheme = 'light', overrideTheme = null }
 }
 
 function renderThemeEffect(state) {
+  const themeLabel = state.activeTheme === 'dark' ? 'Dark' : 'Light';
   return {
     type: 'render-theme',
     activeTheme: state.overrideTheme ? state.activeTheme : `system-${state.activeTheme}`,
     theme: state.activeTheme,
-    override: Boolean(state.overrideTheme)
+    override: Boolean(state.overrideTheme),
+    accessibleLabel: `Toggle color theme: ${themeLabel}`
   };
 }
 
@@ -52,5 +54,7 @@ export function applyThemeEffect(effect, { root, button }) {
   button.dataset.activeTheme = effect.activeTheme;
   button.setAttribute('aria-pressed', effect.override ? 'true' : 'false');
   const label = button.querySelector('.theme-toggle-label');
-  if (label) label.textContent = effect.theme === 'dark' ? 'Dark' : 'Light';
+  const labelText = effect.theme === 'dark' ? 'Dark' : 'Light';
+  if (label) label.textContent = labelText;
+  button.setAttribute('aria-label', effect.accessibleLabel || `Toggle color theme: ${labelText}`);
 }
