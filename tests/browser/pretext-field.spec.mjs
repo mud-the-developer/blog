@@ -99,7 +99,8 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
       scene: stage?.dataset.pretextScene || '',
       tokenBackdropFilters: tokenStyles.map((style) => style.backdropFilter || style.webkitBackdropFilter || ''),
       filetreeWidth: document.querySelector('.filetree')?.getBoundingClientRect().width || 0,
-      hasAquariumSpaceGradient: css.includes('pretext-aquarium-drift') && css.includes('radial-gradient') && css.includes('backdrop-filter'),
+      hasDeepSpaceGlass: css.includes('pretext-space-drift') && css.includes('backdrop-filter'),
+      hasDecorativeBackgroundPattern: /radial-gradient|repeating-linear-gradient|skewY|orbit|bubble|stripe/i.test(css),
       mentionsNeon: css.toLowerCase().includes('neon'),
       scrollWidth: document.documentElement.scrollWidth,
       clientWidth: document.documentElement.clientWidth,
@@ -110,10 +111,11 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   expect(motion.animatedCount).toBeGreaterThanOrEqual(6);
   expect(motion.glassTokenCount).toBe(motion.tokenCount);
   expect(motion.ambientLayerCount).toBeGreaterThanOrEqual(3);
-  expect(motion.scene).toBe('orbital-aquarium');
+  expect(motion.scene).toBe('deep-space-glass');
   expect(motion.tokenBackdropFilters.every((value) => value.includes('blur'))).toBe(true);
   expect(motion.filetreeWidth).toBeLessThanOrEqual(860);
-  expect(motion.hasAquariumSpaceGradient).toBe(true);
+  expect(motion.hasDeepSpaceGlass).toBe(true);
+  expect(motion.hasDecorativeBackgroundPattern).toBe(false);
   expect(motion.mentionsNeon).toBe(false);
   expect(motion.scrollWidth).toBeLessThanOrEqual(motion.clientWidth + 1);
 });
@@ -182,6 +184,69 @@ test('theme follows the system default and can be toggled without local persiste
   await expect(darkPage.locator('html')).not.toHaveAttribute('data-theme', 'light');
   await expect(darkPage.locator('[data-theme-toggle]')).toHaveAttribute('data-active-theme', 'system-dark');
   await darkContext.close();
+});
+
+test('global blog chrome is glass over space black with an inverted light mode and no decorative patterns', async ({ browser }) => {
+  const context = await browser.newContext({ colorScheme: 'dark', viewport: { width: 1280, height: 900 } });
+  const page = await context.newPage();
+  await page.goto('/news/search/');
+
+  const auditTheme = async (selectors = ['.site-header nav a', '.focused-issue-lab', '.news-desk-grid', '.source-picker', '.news-command-strip span']) => page.evaluate((selectorsToAudit) => {
+    const css = [...document.styleSheets]
+      .flatMap((sheet) => {
+        try { return [...sheet.cssRules].map((rule) => rule.cssText); }
+        catch (_error) { return []; }
+      })
+      .join('\n');
+    const parseRgb = (value) => (value.match(/rgba?\(([^)]+)\)/)?.[1] || '')
+      .split(',')
+      .slice(0, 3)
+      .map((part) => Number.parseFloat(part));
+    const bodyRgb = parseRgb(getComputedStyle(document.body).backgroundColor);
+    const glass = selectorsToAudit.map((selector) => {
+      const node = document.querySelector(selector);
+      const style = node ? getComputedStyle(node) : null;
+      return {
+        selector,
+        present: Boolean(node),
+        background: style?.backgroundColor || '',
+        backdrop: style ? (style.backdropFilter || style.webkitBackdropFilter || '') : '',
+        border: style?.borderColor || ''
+      };
+    });
+    return {
+      bodyRgb,
+      hasPatterns: /radial-gradient|repeating-linear-gradient|skewY|orbit|bubble|stripe/i.test(css),
+      hasSpaceTokens: css.includes('--space-bg') && css.includes('--glass-bg') && css.includes('--glass-blur'),
+      glass,
+      scrollWidth: document.documentElement.scrollWidth,
+      clientWidth: document.documentElement.clientWidth
+    };
+  }, selectors);
+
+  const dark = await auditTheme();
+  expect(dark.bodyRgb.every((channel) => channel <= 22)).toBe(true);
+  expect(dark.hasPatterns).toBe(false);
+  expect(dark.hasSpaceTokens).toBe(true);
+  expect(dark.glass.every((item) => item.present && item.backdrop.includes('blur'))).toBe(true);
+  expect(dark.scrollWidth).toBeLessThanOrEqual(dark.clientWidth + 1);
+
+  await page.goto('/');
+  const homeDark = await auditTheme(['.filetree', '.pretext-polish', '.post-card']);
+  expect(homeDark.glass.every((item) => item.present && item.backdrop.includes('blur'))).toBe(true);
+  expect(homeDark.hasPatterns).toBe(false);
+  expect(homeDark.scrollWidth).toBeLessThanOrEqual(homeDark.clientWidth + 1);
+
+  await page.goto('/news/search/');
+  await page.locator('[data-theme-toggle]').click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  const light = await auditTheme();
+  expect(light.bodyRgb.every((channel) => channel >= 232)).toBe(true);
+  expect(light.hasPatterns).toBe(false);
+  expect(light.glass.every((item) => item.present && item.backdrop.includes('blur'))).toBe(true);
+  expect(light.scrollWidth).toBeLessThanOrEqual(light.clientWidth + 1);
+
+  await context.close();
 });
 
 

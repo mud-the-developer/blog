@@ -79,7 +79,7 @@ export function pretextReducer(state, event) {
 export function renderPretextTokens(effect, { stage, surface, document }) {
   if (effect.type !== 'render-pretext-tokens' || !stage || !surface) return;
   surface.replaceChildren();
-  for (const layerName of ['current', 'bubble-field', 'stardust']) {
+  for (const layerName of ['haze', 'veil', 'glint']) {
     const layer = document.createElement('span');
     layer.className = `pretext-ambient-layer pretext-ambient-layer--${layerName}`;
     layer.setAttribute('aria-hidden', 'true');
@@ -101,6 +101,6 @@ export function renderPretextTokens(effect, { stage, surface, document }) {
     token.style.setProperty('--depth', String(tokenModel.depth));
     surface.append(token);
   }
-  stage.dataset.pretextScene = 'orbital-aquarium';
+  stage.dataset.pretextScene = 'deep-space-glass';
   stage.dataset.pretextReady = 'true';
 }

@@ -95,8 +95,16 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(style.contains(".filetree"));
     assert!(style.contains(".post-body :is"));
     assert!(style.contains(".profile-publication-widget"));
-    assert!(style.contains("pretext-aquarium-drift"));
+    assert!(style.contains("pretext-space-drift"));
     assert!(style.contains("backdrop-filter"));
+    assert!(style.contains("--space-bg"));
+    assert!(style.contains("--glass-bg"));
+    assert!(!style.contains("radial-gradient"));
+    assert!(!style.contains("repeating-linear-gradient"));
+    assert!(!style.to_ascii_lowercase().contains("orbit"));
+    assert!(!style.to_ascii_lowercase().contains("bubble"));
+    assert!(!style.to_ascii_lowercase().contains("stripe"));
+    assert!(!style.to_ascii_lowercase().contains("skewy"));
     assert!(!style.contains(".paper-grid"));
     assert!(!style.contains(".field-stage"));
     assert!(!style.contains(".archive-graph"));
