@@ -224,6 +224,76 @@ test('news search function searches live-style sources before Gemma drafting use
   assert.ok(requests.some((url) => url.includes('news.google.com/rss/search')));
 });
 
+test('news search expands natural-language queries with Gemma but preserves exact keyword mode', async () => {
+  const requests = [];
+  globalThis.fetch = async (url, init) => {
+    requests.push(String(url));
+    if (String(url).includes('generativelanguage.googleapis.com')) {
+      const gemmaPayload = JSON.parse(init.body);
+      const plannerPayload = JSON.parse(gemmaPayload.contents[0].parts[0].text);
+      assert.equal(plannerPayload.task, 'Expand an editorial news search query into precise source-search keywords.');
+      assert.equal(plannerPayload.originalQuery, 'model-intrinsic feature');
+      return Response.json({
+        candidates: [{ content: { parts: [{ text: JSON.stringify({
+          keywords: ['model-intrinsic feature', 'mechanistic interpretability', 'feature geometry', 'SAE features', 'representation analysis'],
+          searchQuery: 'model-intrinsic feature OR mechanistic interpretability OR feature geometry OR SAE features OR representation analysis'
+        }) }] } }]
+      });
+    }
+    if (String(url).includes('news.google.com/rss/search')) {
+      assert.ok(String(url).includes('mechanistic%20interpretability') || String(url).includes('mechanistic+interpretability'));
+      return new Response(`<?xml version="1.0"?><rss><channel>
+        <item><title>Mechanistic interpretability feature geometry update</title><link>https://news.example/features</link><source>Example News</source><pubDate>Tue, 09 Jun 2026 08:00:00 GMT</pubDate><description>Researchers discuss model-intrinsic feature geometry.</description></item>
+      </channel></rss>`, { headers: { 'content-type': 'application/rss+xml' } });
+    }
+    throw new Error(`Unexpected request ${url}`);
+  };
+
+  const expandedResponse = await newsSearchPost({
+    request: new Request('https://blog.example.test/api/news-search', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ query: 'model-intrinsic feature', queryMode: 'gemma-expand', limit: 3, sources: ['google-news-rss'] })
+    }),
+    env: mockEnv()
+  });
+  const expanded = await expandedResponse.json();
+
+  assert.equal(expandedResponse.status, 200);
+  assert.equal(expanded.query, 'model-intrinsic feature');
+  assert.equal(expanded.queryMode, 'gemma-expand');
+  assert.equal(expanded.queryPlan.usedGemma, true);
+  assert.deepEqual(expanded.keywords.slice(0, 4), ['model-intrinsic feature', 'mechanistic interpretability', 'feature geometry', 'SAE features']);
+  assert.match(expanded.searchQuery, /mechanistic interpretability/);
+  assert.ok(expanded.candidates.some((candidate) => /feature geometry/i.test(candidate.summary)));
+
+  requests.length = 0;
+  globalThis.fetch = async (url) => {
+    requests.push(String(url));
+    if (String(url).includes('news.google.com/rss/search')) {
+      assert.ok(String(url).includes('model-intrinsic%20feature') || String(url).includes('model-intrinsic+feature'));
+      assert.ok(!String(url).includes('mechanistic'));
+      return new Response('<rss><channel></channel></rss>', { headers: { 'content-type': 'application/rss+xml' } });
+    }
+    throw new Error(`Exact mode must not call Gemma: ${url}`);
+  };
+  const exactResponse = await newsSearchPost({
+    request: new Request('https://blog.example.test/api/news-search', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ query: 'model-intrinsic feature', queryMode: 'exact', limit: 3, sources: ['google-news-rss'] })
+    }),
+    env: mockEnv()
+  });
+  const exact = await exactResponse.json();
+
+  assert.equal(exactResponse.status, 200);
+  assert.equal(exact.queryMode, 'exact');
+  assert.deepEqual(exact.keywords, ['model-intrinsic feature']);
+  assert.equal(exact.searchQuery, 'model-intrinsic feature');
+  assert.ok(!requests.some((url) => url.includes('generativelanguage.googleapis.com')));
+});
+
 test('focused issue drafting treats selected search results as the authoritative source set', async () => {
   let promptPayload;
   globalThis.fetch = async (url, init) => {

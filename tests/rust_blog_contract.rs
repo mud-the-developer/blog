@@ -84,8 +84,8 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(!style.contains(".archive-graph"));
     assert!(!style.to_ascii_lowercase().contains("neon"));
     assert!(
-        style.len() <= 28_500,
-        "public polish CSS should stay bounded even with news desk motion, icons, theme modes, and dark contrast guards"
+        style.len() <= 28_700,
+        "public polish CSS should stay bounded even with news desk motion, query modes, icons, theme modes, and dark contrast guards"
     );
 
     let profile = fs::read_to_string(out_dir.join("posts/jinhyuk-kim/index.html"))?;
@@ -117,6 +117,9 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(news_search.contains("data-news-search-results"));
     assert!(news_search.contains("aria-label=\"News sources\""));
     assert!(news_search.contains("Google News"));
+    assert!(news_search.contains("Search query mode"));
+    assert!(news_search.contains("Exact keyword"));
+    assert!(news_search.contains("Gemma 4 expand"));
     assert!(news_search.contains("GitHub repositories"));
     assert!(news_search.contains("arXiv papers"));
     assert!(news_search.contains("Google Scholar"));

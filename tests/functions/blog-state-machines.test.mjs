@@ -54,6 +54,7 @@ test('news desk reducer controls search/draft/download states without DOM effect
   const search = newsDeskReducer(initial, {
     type: 'search.submitted',
     query: 'Gemma open RAN',
+    queryMode: 'gemma-expand',
     date: '2026-06-09',
     sources: ['google-news-rss', 'arxiv']
   });
@@ -63,7 +64,7 @@ test('news desk reducer controls search/draft/download states without DOM effect
   assert.deepEqual(search.effects.find((effect) => effect.type === 'post-json'), {
     type: 'post-json',
     path: '/api/news-search',
-    body: { query: 'Gemma open RAN', date: '2026-06-09', sources: ['google-news-rss', 'arxiv'], limit: 12 },
+    body: { query: 'Gemma open RAN', queryMode: 'gemma-expand', date: '2026-06-09', sources: ['google-news-rss', 'arxiv'], limit: 12 },
     onSuccess: 'search.succeeded',
     onError: 'request.failed'
   });
@@ -72,7 +73,7 @@ test('news desk reducer controls search/draft/download states without DOM effect
 
   const ready = newsDeskReducer(search.state, {
     type: 'search.succeeded',
-    data: { candidates, searched: ['google-news-rss', 'arxiv'] }
+    data: { candidates, searched: ['google-news-rss', 'arxiv'], keywords: ['Gemma open RAN', 'O-RAN automation'], searchQuery: 'Gemma open RAN OR O-RAN automation' }
   });
   assert.equal(ready.state.phase, 'candidates-ready');
   assert.equal(ready.state.draftEnabled, true);
@@ -85,7 +86,7 @@ test('news desk reducer controls search/draft/download states without DOM effect
   assert.deepEqual(draft.effects.find((effect) => effect.type === 'post-json'), {
     type: 'post-json',
     path: '/api/focused-issue',
-    body: { date: '2026-06-09', keywords: 'Gemma open RAN', candidates, limit: 2 },
+    body: { date: '2026-06-09', keywords: ['Gemma open RAN', 'O-RAN automation'], candidates, limit: 2 },
     onSuccess: 'draft.succeeded',
     onError: 'request.failed'
   });

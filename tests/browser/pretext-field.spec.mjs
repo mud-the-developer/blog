@@ -301,12 +301,16 @@ test('news page searches candidates before drafting an issue and does not expose
   await page.route('/api/news-search', async (route) => {
     const body = route.request().postDataJSON();
     expect(body.query).toContain('open RAN');
+    expect(body.queryMode).toBe('gemma-expand');
     expect(body.sources).toEqual(['google-news-rss', 'github-repositories', 'arxiv', 'google-scholar', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest']);
     await route.fulfill({
       contentType: 'application/json',
       body: JSON.stringify({
         ok: true,
         query: body.query,
+        queryMode: body.queryMode,
+        searchQuery: 'open RAN Gemma OR O-RAN automation OR agentic RAN operations',
+        keywords: ['open RAN Gemma', 'O-RAN automation', 'agentic RAN operations'],
         searched: ['google-news-rss', 'github-repositories', 'arxiv', 'google-scholar', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest'],
         candidates: [
           { id: 'gnews-1', title: 'Open RAN Gemma operations update', url: 'https://news.example/oran-gemma', source: 'Example News', summary: 'Search result about Gemma and O-RAN operations.', publishedAt: '2026-04-14T08:00:00Z', score: 12, origin: 'live-search', thumbnail: '/assets/news/thumb-vran.svg' },
@@ -317,7 +321,7 @@ test('news page searches candidates before drafting an issue and does not expose
   });
   await page.route('/api/focused-issue', async (route) => {
     const body = route.request().postDataJSON();
-    expect(body.keywords).toContain('open RAN');
+    expect(body.keywords).toEqual(['open RAN Gemma', 'O-RAN automation', 'agentic RAN operations']);
     expect(body.candidates.length).toBeGreaterThanOrEqual(2);
     expect(body.candidates[0].origin).toBe('live-search');
     await new Promise((resolve) => setTimeout(resolve, 150));
@@ -342,7 +346,10 @@ test('news page searches candidates before drafting an issue and does not expose
   await expect(page.getByText('Gemma guide')).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Ask Gemma' })).toHaveCount(0);
   await expect(page.locator('script[src^="/assets/blog-lab.mjs"]')).toHaveCount(1);
-  await expect(page.getByLabel('Search query')).toBeVisible();
+  await expect(page.getByRole('searchbox', { name: 'Search query' })).toBeVisible();
+  await expect(page.getByRole('group', { name: 'Search query mode' })).toBeVisible();
+  await expect(page.getByLabel('Exact keyword')).toBeChecked();
+  await expect(page.getByLabel('Gemma 4 expand')).not.toBeChecked();
   await expect(page.getByRole('group', { name: 'News sources' })).toBeVisible();
   await expect(page.locator('.source-picker-group')).toHaveCount(4);
   await expect(page.locator('.source-picker-group[data-source-group="code"]')).toContainText('Code');
@@ -367,7 +374,8 @@ test('news page searches candidates before drafting an issue and does not expose
   const stackMotion = await page.locator('[data-news-signal-stack] .signal-row').first().evaluate((node) => getComputedStyle(node).animationName);
   expect(stackMotion).toContain('signal-row-drift');
 
-  await page.getByLabel('Search query').fill('open RAN Gemma');
+  await page.getByRole('searchbox', { name: 'Search query' }).fill('open RAN Gemma');
+  await page.getByLabel('Gemma 4 expand').check();
   const dateLayout = await page.getByLabel('Issue date').evaluate((node) => {
     const input = node.getBoundingClientRect();
     const field = node.closest('.issue-date-field')?.getBoundingClientRect();

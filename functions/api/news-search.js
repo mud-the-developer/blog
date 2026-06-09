@@ -1,4 +1,4 @@
-import { jsonResponse, normalizeKeywords, readJsonAsset, sanitizeText } from './_shared.js';
+import { callGemma, jsonResponse, normalizeKeywords, parseMaybeJson, readJsonAsset, sanitizeText } from './_shared.js';
 
 function decodeXml(value) {
   return String(value || '')
@@ -26,6 +26,61 @@ function queryTokens(query) {
     .map((token) => token.trim())
     .filter((token) => token.length > 1)
     .slice(0, 12);
+}
+
+function normalizeQueryMode(value) {
+  return String(value || '').toLowerCase() === 'gemma-expand' ? 'gemma-expand' : 'exact';
+}
+
+function normalizeExpandedKeywords(query, values = []) {
+  const seen = new Set();
+  const keywords = [];
+  for (const raw of [query, ...values]) {
+    const keyword = sanitizeText(raw, 70).replace(/["`{}[\]<>]/g, '').trim();
+    if (!keyword || keyword.length < 2) continue;
+    const key = keyword.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    keywords.push(keyword);
+  }
+  return keywords.slice(0, 8);
+}
+
+function queryFromKeywords(keywords = []) {
+  return keywords.map((keyword) => (keyword.includes(' ') ? `"${keyword}"` : keyword)).join(' OR ');
+}
+
+async function planSearchQuery(query, queryMode, env = {}) {
+  const mode = normalizeQueryMode(queryMode);
+  if (mode === 'exact') {
+    const keywords = normalizeExpandedKeywords(query, []);
+    return { mode, originalQuery: query, searchQuery: query, keywords, usedGemma: false };
+  }
+  const gemma = await callGemma(env, {
+    task: 'Expand an editorial news search query into precise source-search keywords.',
+    originalQuery: query,
+    instructions: [
+      'Return JSON only: {"keywords": string[], "searchQuery": string}.',
+      'Preserve the original phrase as the first keyword.',
+      'Add 4-7 adjacent technical keywords, aliases, paper terms, and community phrases that improve search recall.',
+      'Keep each keyword short enough for Google News, arXiv, Scholar, GitHub, and social/search sources.',
+      'Do not invent specific paper titles, dates, companies, or claims.'
+    ]
+  });
+  const parsed = parseMaybeJson(gemma.text);
+  const keywords = normalizeExpandedKeywords(query, Array.isArray(parsed?.keywords) ? parsed.keywords : []);
+  const parsedSearch = sanitizeText(parsed?.searchQuery || '', 260);
+  const searchQuery = parsedSearch && keywords.some((keyword) => parsedSearch.toLowerCase().includes(keyword.toLowerCase().slice(0, Math.min(keyword.length, 16))))
+    ? parsedSearch
+    : queryFromKeywords(keywords);
+  return {
+    mode,
+    originalQuery: query,
+    searchQuery: searchQuery || query,
+    keywords,
+    usedGemma: gemma.usedGemma && !!parsed,
+    warning: gemma.error || (gemma.missingKey ? 'Gemma keyword expansion is unavailable without a Google AI API key; using the exact query.' : undefined)
+  };
 }
 
 function scoreCandidate(candidate, tokens, index = 0) {
@@ -230,6 +285,8 @@ export async function onRequestPost({ request, env }) {
   }
   const query = sanitizeText(input.query || input.keywords || input.keyword, 160);
   if (!query) return jsonResponse({ ok: false, error: 'Search query is required.' }, { status: 400 });
+  const queryPlan = await planSearchQuery(query, input.queryMode || input.searchMode, env);
+  const searchQuery = queryPlan.searchQuery || query;
   const limit = Math.max(3, Math.min(Number(input.limit) || 9, 15));
   const sourceIds = selectedSourceIds(input.sources);
   const perSource = Math.max(2, Math.ceil(limit / Math.max(3, sourceIds.length)));
@@ -237,15 +294,15 @@ export async function onRequestPost({ request, env }) {
   const warnings = [];
   const feed = await readJsonAsset(env, request.url, '/news/data/latest.json', { all: [] });
   const sourceTasks = {
-    'google-news-rss': () => searchGoogleNews(query, perSource),
-    'github-repositories': () => searchGithub(query, perSource),
-    arxiv: () => searchArxiv(query, perSource),
-    'google-scholar': () => searchGoogleScholar(query, perSource),
-    'huggingface-papers': () => Promise.resolve(fallbackFromAsset(feed, query, perSource, ['huggingface-papers'])),
-    x: () => Promise.resolve(fallbackFromAsset(feed, query, perSource, ['x'])),
-    linkedin: () => Promise.resolve(fallbackFromAsset(feed, query, perSource, ['linkedin'])),
-    geeknews: () => Promise.resolve(fallbackFromAsset(feed, query, perSource, ['geeknews'])),
-    endigest: () => Promise.resolve(fallbackFromAsset(feed, query, perSource, ['endigest']))
+    'google-news-rss': () => searchGoogleNews(searchQuery, perSource),
+    'github-repositories': () => searchGithub(searchQuery, perSource),
+    arxiv: () => searchArxiv(searchQuery, perSource),
+    'google-scholar': () => searchGoogleScholar(searchQuery, perSource),
+    'huggingface-papers': () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['huggingface-papers'])),
+    x: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['x'])),
+    linkedin: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['linkedin'])),
+    geeknews: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['geeknews'])),
+    endigest: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['endigest']))
   };
   const batches = await Promise.allSettled(sourceIds.map((source) => sourceTasks[source]()));
   const candidates = [];
@@ -255,16 +312,20 @@ export async function onRequestPost({ request, env }) {
     if (batch.status === 'fulfilled') candidates.push(...batch.value);
     else warnings.push(`${name}: ${batch.reason?.message || 'search failed'}`);
   });
-  const normalized = dedupeCandidates(candidates.map((candidate, index) => normalizeCandidate(candidate, query, index)))
+  if (queryPlan.warning) warnings.unshift(queryPlan.warning);
+  const normalized = dedupeCandidates(candidates.map((candidate, index) => normalizeCandidate(candidate, `${query} ${searchQuery}`, index)))
     .sort((a, b) => b.score - a.score)
     .slice(0, limit);
   if (!normalized.length) {
-    normalized.push(...fallbackFromAsset(feed, query, limit, sourceIds));
+    normalized.push(...fallbackFromAsset(feed, searchQuery, limit, sourceIds));
   }
   return jsonResponse({
     ok: true,
     query,
-    keywords: normalizeKeywords(query),
+    queryMode: queryPlan.mode,
+    searchQuery,
+    keywords: queryPlan.keywords.length ? queryPlan.keywords : normalizeKeywords(query),
+    queryPlan,
     searched,
     candidates: normalized,
     warning: warnings.length ? warnings.join('; ') : undefined

@@ -3,6 +3,9 @@ export function createNewsDeskState({ date = new Date().toISOString().slice(0, 1
     phase: 'idle',
     date,
     query: '',
+    queryMode: 'exact',
+    searchQuery: '',
+    searchKeywords: [],
     sources: [],
     candidates: [],
     selectedCandidateIndexes: [],
@@ -53,18 +56,22 @@ export function newsDeskReducer(state, event) {
       return { state: next, effects: [statusEffect(next.status.message, next.status.kind)] };
     }
     const date = String(event.date || state.date);
+    const queryMode = String(event.queryMode || 'exact') === 'gemma-expand' ? 'gemma-expand' : 'exact';
     const next = {
       ...state,
       phase: 'searching',
       date,
       query,
+      queryMode,
+      searchQuery: query,
+      searchKeywords: [query],
       sources,
       candidates: [],
       selectedCandidateIndexes: [],
       currentDraft: null,
       draftEnabled: false,
       downloadEnabled: false,
-      status: { message: `Searching ${sources.length} selected source${sources.length === 1 ? '' : 's'}…`, kind: 'loading' }
+      status: { message: queryMode === 'gemma-expand' ? `Expanding keywords with Gemma 4, then searching ${sources.length} source${sources.length === 1 ? '' : 's'}…` : `Searching ${sources.length} selected source${sources.length === 1 ? '' : 's'}…`, kind: 'loading' }
     };
     return {
       state: next,
@@ -76,7 +83,7 @@ export function newsDeskReducer(state, event) {
         {
           type: 'post-json',
           path: '/api/news-search',
-          body: { query, date, sources, limit: 12 },
+          body: { query, queryMode, date, sources, limit: 12 },
           onSuccess: 'search.succeeded',
           onError: 'request.failed'
         }
@@ -88,6 +95,8 @@ export function newsDeskReducer(state, event) {
     const candidates = Array.isArray(event.data?.candidates) ? event.data.candidates : [];
     const selectedCandidateIndexes = defaultSelectedIndexes(candidates);
     const searched = Array.isArray(event.data?.searched) ? event.data.searched.join(', ') : 'sources';
+    const searchKeywords = Array.isArray(event.data?.keywords) && event.data.keywords.length ? event.data.keywords : [state.query];
+    const searchQuery = String(event.data?.searchQuery || state.query);
     const warning = event.data?.warning;
     const draftEnabled = selectedCandidateIndexes.length > 0;
     const next = {
@@ -95,10 +104,12 @@ export function newsDeskReducer(state, event) {
       phase: 'candidates-ready',
       candidates,
       selectedCandidateIndexes,
+      searchKeywords,
+      searchQuery,
       draftEnabled,
       downloadEnabled: false,
       status: {
-        message: warning || `Found ${candidates.length} candidates from ${searched}. Select sources, then draft.`,
+        message: warning || `Found ${candidates.length} candidates from ${searched}${searchKeywords.length > 1 ? ` using ${searchKeywords.length} keywords` : ''}. Select sources, then draft.`,
         kind: warning ? 'warning' : 'ready'
       }
     };
@@ -145,7 +156,7 @@ export function newsDeskReducer(state, event) {
         {
           type: 'post-json',
           path: '/api/focused-issue',
-          body: { date: state.date, keywords: state.query, candidates, limit: candidates.length },
+          body: { date: state.date, keywords: state.searchKeywords.length ? state.searchKeywords : state.query, candidates, limit: candidates.length },
           onSuccess: 'draft.succeeded',
           onError: 'request.failed'
         }

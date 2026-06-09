@@ -337,6 +337,7 @@ function setupFocusedIssueLab() {
     dispatch({
       type: 'search.submitted',
       query: formData.get('query'),
+      queryMode: formData.get('queryMode'),
       date: formData.get('date'),
       sources: selectedSources()
     });

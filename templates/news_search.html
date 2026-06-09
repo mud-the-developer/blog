@@ -58,8 +58,13 @@
         <form class="lab-form news-search-form" data-news-search-form>
           <label class="lab-form-wide">
             <span>Search query</span>
-            <input name="query" type="search" aria-label="Search query" placeholder="open RAN Gemma agents" autocomplete="off" />
+            <input name="query" type="search" aria-label="Search query" placeholder="keyword 그대로, 또는 줄글/phrase 입력" autocomplete="off" />
           </label>
+          <fieldset class="query-mode-picker" aria-label="Search query mode">
+            <legend>Query mode</legend>
+            <label><input name="queryMode" type="radio" value="exact" checked /> <span>Exact keyword</span></label>
+            <label><input name="queryMode" type="radio" value="gemma-expand" /> <span>Gemma 4 expand</span></label>
+          </fieldset>
           <label class="issue-date-field">
             <span><span class="ui-icon" data-icon="calendar" aria-hidden="true"></span>Issue date</span>
             <input name="date" type="date" aria-label="Issue date" />
