@@ -252,6 +252,7 @@ async fn restores_news_digest_pipeline_for_the_new_posts_folder()
     assert!(deploy_workflow.contains(
         "api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${CF_PAGES_PROJECT}"
     ));
+    assert!(deploy_workflow.contains("Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"));
     assert!(!deploy_workflow.contains("npx wrangler@4 whoami"));
     assert!(deploy_workflow.contains("wrangler@4 pages deploy dist"));
     assert!(deploy_workflow.contains("pages secret put GOOGLE_AI_API_KEY"));
