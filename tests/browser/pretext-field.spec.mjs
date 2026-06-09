@@ -302,7 +302,7 @@ test('news page searches candidates before drafting an issue and does not expose
     const body = route.request().postDataJSON();
     expect(body.query).toContain('open RAN');
     expect(body.queryMode).toBe('gemma-expand');
-    expect(body.sources).toEqual(['google-news-rss', 'github-repositories', 'arxiv', 'google-scholar', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest']);
+    expect(body.sources).toEqual(['gdelt', 'google-news-rss', 'github-repositories', 'arxiv', 'huggingface-papers', 'openalex', 'crossref', 'semantic-scholar', 'google-scholar', 'hacker-news', 'x', 'linkedin', 'geeknews', 'endigest']);
     await route.fulfill({
       contentType: 'application/json',
       body: JSON.stringify({
@@ -311,7 +311,7 @@ test('news page searches candidates before drafting an issue and does not expose
         queryMode: body.queryMode,
         searchQuery: 'open RAN Gemma OR O-RAN automation OR agentic RAN operations',
         keywords: ['open RAN Gemma', 'O-RAN automation', 'agentic RAN operations'],
-        searched: ['google-news-rss', 'github-repositories', 'arxiv', 'google-scholar', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest'],
+        searched: ['gdelt', 'google-news-rss', 'github-repositories', 'arxiv', 'huggingface-papers', 'openalex', 'crossref', 'semantic-scholar', 'google-scholar', 'hacker-news', 'x', 'linkedin', 'geeknews', 'endigest'],
         candidates: [
           { id: 'gnews-1', title: 'Open RAN Gemma operations update', url: 'https://news.example/oran-gemma', source: 'Example News', summary: 'Search result about Gemma and O-RAN operations.', publishedAt: '2026-04-14T08:00:00Z', score: 12, origin: 'live-search', thumbnail: '/assets/news/thumb-vran.svg' },
           { id: 'github-1', title: 'ran-lab/gemma-oran', url: 'https://github.com/ran-lab/gemma-oran', source: 'GitHub', summary: 'Repository signal from search.', publishedAt: '2026-04-14T09:00:00Z', score: 9, origin: 'live-search', thumbnail: '/assets/news/thumb-repo.svg' }
@@ -356,11 +356,16 @@ test('news page searches candidates before drafting an issue and does not expose
   await expect(page.locator('.source-picker-group[data-source-group="code"]')).toContainText('Code');
   await expect(page.locator('.source-picker-group[data-source-group="paper"]')).toContainText('Paper');
   await expect(page.locator('.source-picker-group[data-source-group="social"]')).toContainText('Social');
+  await expect(page.getByLabel('GDELT live web')).toBeChecked();
   await expect(page.getByLabel('Google News')).toBeChecked();
   await expect(page.getByLabel('GitHub repositories')).toBeChecked();
   await expect(page.getByLabel('arXiv papers')).toBeChecked();
-  await expect(page.getByLabel('Google Scholar')).toBeChecked();
   await expect(page.getByLabel('Hugging Face Papers')).toBeChecked();
+  await expect(page.getByLabel('OpenAlex')).toBeChecked();
+  await expect(page.getByLabel('Crossref')).toBeChecked();
+  await expect(page.getByLabel('Semantic Scholar')).toBeChecked();
+  await expect(page.getByLabel('Google Scholar link')).toBeChecked();
+  await expect(page.getByLabel('Hacker News')).toBeChecked();
   await expect(page.getByRole('checkbox', { name: 'X', exact: true })).toBeChecked();
   await expect(page.getByLabel('LinkedIn')).toBeChecked();
   await expect(page.getByLabel('GeekNews')).toBeChecked();

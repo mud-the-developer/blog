@@ -47,13 +47,13 @@
         </div>
         <div class="news-signal-stack" data-news-signal-stack aria-hidden="true">
           <div class="signal-stack-title"><span class="ui-icon" data-icon="sparkles" aria-hidden="true"></span><span>source signal stack</span></div>
-          <span class="signal-row" style="--level: 92%; --delay: -0.2s"><span class="ui-icon" data-icon="rss" aria-hidden="true"></span><strong>Google News</strong><em>freshness</em></span>
-          <span class="signal-row" style="--level: 76%; --delay: -0.9s"><span class="ui-icon" data-icon="github" aria-hidden="true"></span><strong>GitHub</strong><em>repo momentum</em></span>
-          <span class="signal-row" style="--level: 68%; --delay: -1.4s"><span class="ui-icon" data-icon="book-open" aria-hidden="true"></span><strong>arXiv</strong><em>paper trail</em></span>
-          <span class="signal-row" style="--level: 64%; --delay: -1.65s"><span class="ui-icon" data-icon="book-open" aria-hidden="true"></span><strong>Google Scholar</strong><em>citation trail</em></span>
-          <span class="signal-row" style="--level: 61%; --delay: -1.9s"><span class="ui-icon" data-icon="book-open" aria-hidden="true"></span><strong>HF Papers</strong><em>model notes</em></span>
-          <span class="signal-row" style="--level: 54%; --delay: -2.5s"><span class="ui-icon" data-icon="radio" aria-hidden="true"></span><strong>X · LinkedIn</strong><em>field chatter</em></span>
-          <span class="signal-row" style="--level: 48%; --delay: -3.1s"><span class="ui-icon" data-icon="zap" aria-hidden="true"></span><strong>GeekNews · Endigest</strong><em>curated pulse</em></span>
+          <span class="signal-row" style="--level: 92%; --delay: -0.2s"><span class="ui-icon" data-icon="rss" aria-hidden="true"></span><strong>GDELT · Google News</strong><em>live web</em></span>
+          <span class="signal-row" style="--level: 80%; --delay: -0.7s"><span class="ui-icon" data-icon="github" aria-hidden="true"></span><strong>GitHub</strong><em>repo momentum</em></span>
+          <span class="signal-row" style="--level: 74%; --delay: -1.15s"><span class="ui-icon" data-icon="book-open" aria-hidden="true"></span><strong>arXiv · HF Papers</strong><em>paper trail</em></span>
+          <span class="signal-row" style="--level: 68%; --delay: -1.55s"><span class="ui-icon" data-icon="book-open" aria-hidden="true"></span><strong>OpenAlex · Crossref</strong><em>metadata graph</em></span>
+          <span class="signal-row" style="--level: 62%; --delay: -1.95s"><span class="ui-icon" data-icon="book-open" aria-hidden="true"></span><strong>Semantic Scholar · Scholar</strong><em>citation trail</em></span>
+          <span class="signal-row" style="--level: 56%; --delay: -2.45s"><span class="ui-icon" data-icon="radio" aria-hidden="true"></span><strong>HN · X · LinkedIn</strong><em>field chatter</em></span>
+          <span class="signal-row" style="--level: 49%; --delay: -3.1s"><span class="ui-icon" data-icon="zap" aria-hidden="true"></span><strong>GeekNews · Endigest</strong><em>curated pulse</em></span>
         </div>
         <form class="lab-form news-search-form" data-news-search-form>
           <label class="lab-form-wide">
@@ -73,6 +73,7 @@
             <legend>News sources</legend>
             <div class="source-picker-group" data-source-group="news">
               <span class="source-picker-group-title"><span class="ui-icon" data-icon="rss" aria-hidden="true"></span>News</span>
+              <label><input name="sources" type="checkbox" value="gdelt" checked /> <span>GDELT live web</span></label>
               <label><input name="sources" type="checkbox" value="google-news-rss" checked /> <span>Google News</span></label>
             </div>
             <div class="source-picker-group" data-source-group="code">
@@ -82,11 +83,15 @@
             <div class="source-picker-group" data-source-group="paper">
               <span class="source-picker-group-title"><span class="ui-icon" data-icon="book-open" aria-hidden="true"></span>Paper</span>
               <label><input name="sources" type="checkbox" value="arxiv" checked /> <span>arXiv papers</span></label>
-              <label><input name="sources" type="checkbox" value="google-scholar" checked /> <span>Google Scholar</span></label>
               <label><input name="sources" type="checkbox" value="huggingface-papers" checked /> <span>Hugging Face Papers</span></label>
+              <label><input name="sources" type="checkbox" value="openalex" checked /> <span>OpenAlex</span></label>
+              <label><input name="sources" type="checkbox" value="crossref" checked /> <span>Crossref</span></label>
+              <label><input name="sources" type="checkbox" value="semantic-scholar" checked /> <span>Semantic Scholar</span></label>
+              <label><input name="sources" type="checkbox" value="google-scholar" checked /> <span>Google Scholar link</span></label>
             </div>
             <div class="source-picker-group" data-source-group="social">
               <span class="source-picker-group-title"><span class="ui-icon" data-icon="radio" aria-hidden="true"></span>Social</span>
+              <label><input name="sources" type="checkbox" value="hacker-news" checked /> <span>Hacker News</span></label>
               <label><input name="sources" type="checkbox" value="x" checked /> <span>X</span></label>
               <label><input name="sources" type="checkbox" value="linkedin" checked /> <span>LinkedIn</span></label>
               <label><input name="sources" type="checkbox" value="geeknews" checked /> <span>GeekNews</span></label>

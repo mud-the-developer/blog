@@ -130,6 +130,7 @@ function scoreCandidate(candidate, tokens, index = 0) {
     if (haystack.includes(token)) score += 2.5;
   }
   if (candidate.url) score += 0.5;
+  if (/^open .+ results for /i.test(candidate.title || '') || /-search$/.test(candidate.id || '')) score -= 8;
   if (candidate.source === 'GitHub' && Number(candidate.stars || 0) > 100) score += Math.log10(Number(candidate.stars)) * 0.6;
   const published = Date.parse(candidate.publishedAt || '');
   if (Number.isFinite(published)) score += Math.max(0, 2 - (Date.now() - published) / 86_400_000 / 21);
@@ -172,15 +173,47 @@ function dedupeCandidates(candidates) {
   return unique;
 }
 
+const SEARCH_HEADERS = {
+  'user-agent': 'Mozilla/5.0 (compatible; mud-blog-news-search/1.0; +https://mud.blog/news/search)',
+  accept: 'application/json, application/rss+xml, application/atom+xml, text/xml, text/html;q=0.8, */*;q=0.5',
+  'accept-language': 'en-US,en;q=0.9,ko;q=0.7'
+};
+
 function fetchWithTimeout(url, options = {}, timeoutMs = 12_000) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
   return fetch(url, { ...options, signal: controller.signal }).finally(() => clearTimeout(timeout));
 }
 
+async function fetchWithRetry(url, options = {}, timeoutMs = 12_000, attempts = 2) {
+  let lastResponse;
+  for (let attempt = 0; attempt < attempts; attempt += 1) {
+    lastResponse = await fetchWithTimeout(url, options, timeoutMs);
+    if (![429, 500, 502, 503, 504].includes(lastResponse.status) || attempt === attempts - 1) return lastResponse;
+    await new Promise((resolve) => setTimeout(resolve, 180 * (attempt + 1)));
+  }
+  return lastResponse;
+}
+
+function publishedDateFromParts(parts) {
+  const date = Array.isArray(parts?.[0]) ? parts[0] : Array.isArray(parts) ? parts : [];
+  if (!date.length) return '';
+  const [year, month = 1, day = 1] = date;
+  if (!year) return '';
+  return `${String(year).padStart(4, '0')}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+}
+
+function openAlexAbstract(inverted = {}) {
+  const entries = Object.entries(inverted || {}).flatMap(([word, positions]) =>
+    (Array.isArray(positions) ? positions : []).map((position) => [Number(position), word])
+  );
+  if (!entries.length) return '';
+  return entries.sort((a, b) => a[0] - b[0]).map((entry) => entry[1]).join(' ');
+}
+
 async function searchGoogleNews(query, limit) {
   const url = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-US&gl=US&ceid=US:en`;
-  const response = await fetchWithTimeout(url, { headers: { 'user-agent': 'mud-blog-news-search/1.0' } });
+  const response = await fetchWithRetry(url, { headers: SEARCH_HEADERS });
   if (!response.ok) throw new Error(`Google News RSS ${response.status}`);
   const xml = await response.text();
   return [...xml.matchAll(/<item[\s\S]*?<\/item>/gi)].slice(0, limit).map((match, index) => ({
@@ -194,9 +227,34 @@ async function searchGoogleNews(query, limit) {
   }));
 }
 
+function gdeltQuery(query) {
+  return String(query || '')
+    .split(/\s+/)
+    .map((token) => (/^[\w]+-[\w-]+$/.test(token) ? `"${token}"` : token))
+    .join(' ')
+    .slice(0, 180);
+}
+
+async function searchGdelt(query, limit) {
+  const url = `https://api.gdeltproject.org/api/v2/doc/doc?query=${encodeURIComponent(gdeltQuery(query))}&mode=artlist&format=json&maxrecords=${Math.min(limit, 10)}&sort=hybridrel`;
+  const response = await fetchWithRetry(url, { headers: SEARCH_HEADERS }, 12_000, 2);
+  if (!response.ok) throw new Error(`GDELT ${response.status}`);
+  const json = await response.json();
+  return (json.articles || []).slice(0, limit).map((article, index) => ({
+    id: `gdelt-${index + 1}`,
+    title: article.title || `GDELT article ${index + 1}`,
+    url: article.url || '',
+    source: article.sourceCommonName || article.domain || 'GDELT',
+    summary: article.seendate ? `Seen by GDELT ${article.seendate}. ${article.language ? `Language: ${article.language}.` : ''}` : 'Live web/news article indexed by GDELT.',
+    publishedAt: article.seendate || '',
+    type: 'news',
+    thumbnail: article.socialimage || undefined
+  }));
+}
+
 async function searchGithub(query, limit) {
   const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&sort=updated&order=desc&per_page=${Math.min(limit, 10)}`;
-  const response = await fetchWithTimeout(url, { headers: { accept: 'application/vnd.github+json', 'user-agent': 'mud-blog-news-search/1.0' } });
+  const response = await fetchWithTimeout(url, { headers: { ...SEARCH_HEADERS, accept: 'application/vnd.github+json' } });
   if (!response.ok) throw new Error(`GitHub search ${response.status}`);
   const json = await response.json();
   return (json.items || []).slice(0, limit).map((repo, index) => ({
@@ -213,7 +271,7 @@ async function searchGithub(query, limit) {
 
 async function searchArxiv(query, limit) {
   const url = `https://export.arxiv.org/api/query?search_query=all:${encodeURIComponent(query)}&start=0&max_results=${Math.min(limit, 10)}&sortBy=submittedDate&sortOrder=descending`;
-  const response = await fetchWithTimeout(url, { headers: { 'user-agent': 'mud-blog-news-search/1.0' } });
+  const response = await fetchWithTimeout(url, { headers: SEARCH_HEADERS });
   if (!response.ok) throw new Error(`arXiv search ${response.status}`);
   const xml = await response.text();
   return [...xml.matchAll(/<entry[\s\S]*?<\/entry>/gi)].slice(0, limit).map((match, index) => ({
@@ -227,6 +285,104 @@ async function searchArxiv(query, limit) {
   }));
 }
 
+async function searchOpenAlex(query, limit) {
+  const url = `https://api.openalex.org/works?search=${encodeURIComponent(query)}&per-page=${Math.min(limit, 10)}&sort=relevance_score:desc`;
+  const response = await fetchWithTimeout(url, { headers: SEARCH_HEADERS });
+  if (!response.ok) throw new Error(`OpenAlex ${response.status}`);
+  const json = await response.json();
+  return (json.results || []).slice(0, limit).map((work, index) => {
+    const doi = String(work.doi || '').replace(/^https?:\/\/doi\.org\//i, '');
+    const url = doi ? `https://doi.org/${doi}` : (work.primary_location?.landing_page_url || work.id || '');
+    const authors = (work.authorships || []).slice(0, 3).map((entry) => entry.author?.display_name).filter(Boolean).join(', ');
+    return {
+      id: `openalex-${index + 1}`,
+      title: work.display_name || `OpenAlex work ${index + 1}`,
+      url,
+      source: 'OpenAlex',
+      summary: sanitizeText(openAlexAbstract(work.abstract_inverted_index) || [authors, work.primary_location?.source?.display_name].filter(Boolean).join(' · '), 520),
+      publishedAt: work.publication_date || (work.publication_year ? `${work.publication_year}-01-01` : ''),
+      type: 'paper'
+    };
+  });
+}
+
+async function searchCrossref(query, limit) {
+  const url = `https://api.crossref.org/works?query=${encodeURIComponent(query)}&rows=${Math.min(limit, 10)}&sort=relevance`;
+  const response = await fetchWithTimeout(url, { headers: SEARCH_HEADERS });
+  if (!response.ok) throw new Error(`Crossref ${response.status}`);
+  const json = await response.json();
+  return (json.message?.items || []).slice(0, limit).map((work, index) => ({
+    id: `crossref-${index + 1}`,
+    title: (work.title || [])[0] || `Crossref work ${index + 1}`,
+    url: work.URL || (work.DOI ? `https://doi.org/${work.DOI}` : ''),
+    source: 'Crossref',
+    summary: sanitizeText([...(work.author || []).slice(0, 3).map((author) => [author.given, author.family].filter(Boolean).join(' ')), work['container-title']?.[0], work.publisher].filter(Boolean).join(' · '), 520),
+    publishedAt: publishedDateFromParts(work.published?.['date-parts'] || work.issued?.['date-parts']),
+    type: 'paper'
+  }));
+}
+
+async function searchSemanticScholar(query, limit, env = {}) {
+  const url = `https://api.semanticscholar.org/graph/v1/paper/search?query=${encodeURIComponent(query)}&limit=${Math.min(limit, 10)}&fields=title,url,abstract,year,authors,publicationDate,venue`;
+  const headers = { ...SEARCH_HEADERS, accept: 'application/json' };
+  if (env.SEMANTIC_SCHOLAR_API_KEY) headers['x-api-key'] = env.SEMANTIC_SCHOLAR_API_KEY;
+  const response = await fetchWithTimeout(url, { headers });
+  if (!response.ok) throw new Error(`Semantic Scholar ${response.status}`);
+  const json = await response.json();
+  return (json.data || []).slice(0, limit).map((paper, index) => ({
+    id: `semantic-scholar-${index + 1}`,
+    title: paper.title || `Semantic Scholar paper ${index + 1}`,
+    url: paper.url || '',
+    source: 'Semantic Scholar',
+    summary: sanitizeText(paper.abstract || [(paper.authors || []).slice(0, 3).map((author) => author.name).filter(Boolean).join(', '), paper.venue].filter(Boolean).join(' · '), 520),
+    publishedAt: paper.publicationDate || (paper.year ? `${paper.year}-01-01` : ''),
+    type: 'paper'
+  }));
+}
+
+async function searchHackerNews(query, limit) {
+  const url = `https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(query)}&tags=story&hitsPerPage=${Math.min(limit, 10)}`;
+  const response = await fetchWithTimeout(url, { headers: SEARCH_HEADERS });
+  if (!response.ok) throw new Error(`Hacker News ${response.status}`);
+  const json = await response.json();
+  return (json.hits || []).slice(0, limit).map((hit, index) => ({
+    id: `hacker-news-${index + 1}`,
+    title: hit.title || hit.story_title || `Hacker News story ${index + 1}`,
+    url: hit.url || `https://news.ycombinator.com/item?id=${hit.objectID}`,
+    source: 'Hacker News',
+    summary: sanitizeText([hit.author ? `by ${hit.author}` : '', Number.isFinite(hit.points) ? `${hit.points} points` : '', Number.isFinite(hit.num_comments) ? `${hit.num_comments} comments` : ''].filter(Boolean).join(' · '), 300),
+    publishedAt: hit.created_at || '',
+    type: 'social'
+  }));
+}
+
+async function searchHuggingFacePapersLive(query, limit) {
+  const url = `https://huggingface.co/papers?q=${encodeURIComponent(query)}`;
+  const response = await fetchWithTimeout(url, { headers: SEARCH_HEADERS });
+  if (!response.ok) throw new Error(`Hugging Face Papers ${response.status}`);
+  const html = await response.text();
+  const seen = new Set();
+  const items = [];
+  for (const match of html.matchAll(/<a\b([^>]*href=["']\/papers\/([^"']+)["'][^>]*)>([\s\S]*?)<\/a>/gi)) {
+    const paperId = decodeXml(match[2]);
+    if (!paperId || seen.has(paperId)) continue;
+    const title = decodeXml(match[3]);
+    if (!title || title.length < 8) continue;
+    seen.add(paperId);
+    items.push({
+      id: `huggingface-paper-${items.length + 1}`,
+      title,
+      url: `https://huggingface.co/papers/${paperId}`,
+      source: 'Hugging Face Papers',
+      summary: 'Paper card surfaced from Hugging Face Papers search.',
+      publishedAt: '',
+      type: 'paper'
+    });
+    if (items.length >= limit) break;
+  }
+  return items;
+}
+
 function htmlAttr(block, name) {
   const match = String(block || '').match(new RegExp(`${name}=["']([^"']+)["']`, 'i'));
   return decodeXml(match?.[1] || '');
@@ -234,7 +390,7 @@ function htmlAttr(block, name) {
 
 async function searchGoogleScholar(query, limit) {
   const url = `https://scholar.google.com/scholar?hl=en&q=${encodeURIComponent(query)}`;
-  const response = await fetchWithTimeout(url, { headers: { 'user-agent': 'mud-blog-news-search/1.0 (+https://mud.blog/news/search)' } });
+  const response = await fetchWithTimeout(url, { headers: SEARCH_HEADERS });
   if (!response.ok) throw new Error(`Google Scholar ${response.status}`);
   const html = await response.text();
   const items = [...html.matchAll(/<div[^>]+class=["'][^"']*gs_r[^"']*["'][^>]*>[\s\S]*?(?=<div[^>]+class=["'][^"']*gs_r[^"']*["']|<div[^>]+id=["']gs_res_ccl_bot["']|<\/body>|$)/gi)]
@@ -270,7 +426,12 @@ async function searchGoogleScholar(query, limit) {
 
 const DIGEST_SOURCE_DOMAINS = {
   'digest-snapshot': [],
+  gdelt: [],
+  'hacker-news': ['news.ycombinator.com', 'hacker news'],
   'huggingface-papers': ['huggingface.co'],
+  openalex: ['openalex.org'],
+  crossref: ['doi.org', 'crossref'],
+  'semantic-scholar': ['semanticscholar.org'],
   x: ['x.com'],
   linkedin: ['linkedin.com'],
   geeknews: ['geeknews'],
@@ -306,7 +467,7 @@ function fallbackFromAsset(feed, query, limit, sourceIds = ['digest-snapshot']) 
 }
 
 function selectedSourceIds(inputSources) {
-  const allowed = new Set(['google-news-rss', 'github-repositories', 'arxiv', 'google-scholar', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest']);
+  const allowed = new Set(['gdelt', 'google-news-rss', 'hacker-news', 'github-repositories', 'arxiv', 'huggingface-papers', 'openalex', 'crossref', 'semantic-scholar', 'google-scholar', 'x', 'linkedin', 'geeknews', 'endigest']);
   const requested = Array.isArray(inputSources)
     ? inputSources.map((source) => String(source)).filter((source) => allowed.has(source))
     : [];
@@ -326,16 +487,29 @@ export async function onRequestPost({ request, env }) {
   const searchQuery = queryPlan.searchQuery || query;
   const limit = Math.max(3, Math.min(Number(input.limit) || 9, 15));
   const sourceIds = selectedSourceIds(input.sources);
-  const perSource = Math.max(2, Math.ceil(limit / 3));
+  const perSource = Math.max(3, Math.ceil(limit / 3));
   const searched = [];
   const warnings = [];
   const feed = await readJsonAsset(env, request.url, '/news/data/latest.json', { all: [] });
   const sourceTasks = {
+    gdelt: () => searchGdelt(searchQuery, perSource),
     'google-news-rss': () => searchGoogleNews(searchQuery, perSource),
+    'hacker-news': () => searchHackerNews(searchQuery, perSource),
     'github-repositories': () => searchGithub(searchQuery, perSource),
     arxiv: () => searchArxiv(searchQuery, perSource),
+    'huggingface-papers': async () => {
+      try {
+        const live = await searchHuggingFacePapersLive(searchQuery, perSource);
+        if (live.length) return live;
+      } catch (_error) {
+        // Hugging Face Papers has no stable public search API; keep digest snapshot fallback.
+      }
+      return fallbackFromAsset(feed, searchQuery, perSource, ['huggingface-papers']);
+    },
+    openalex: () => searchOpenAlex(searchQuery, perSource),
+    crossref: () => searchCrossref(searchQuery, perSource),
+    'semantic-scholar': () => searchSemanticScholar(searchQuery, perSource, env),
     'google-scholar': () => searchGoogleScholar(searchQuery, perSource),
-    'huggingface-papers': () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['huggingface-papers'])),
     x: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['x'])),
     linkedin: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['linkedin'])),
     geeknews: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['geeknews'])),
