@@ -110,7 +110,7 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
 html[data-theme="dark"] .theme-icon-moon,
 html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-icon-moon { display: inline-flex; }
 
-:is(.site-header nav a, .back-link, .theme-toggle, .filetree, .post-card, .focused-issue-lab, .news-hero, .news-data-card, .news-list, .news-desk-grid, .pretext-polish, .pretext-token, .lab-form input, .source-picker, .query-mode-picker, .source-picker-group, .source-picker label, .query-mode-picker label, .lab-output, .news-command-strip span, .news-signal-stack, .signal-row, .news-source-radar, .news-candidate-card, .news-candidate-rank, .news-candidate-thumbnail, .generated-news-card, .generated-news-cover, .generated-news-metrics span, .generated-news-source, .overview-figure svg, .post-body pre, .post-body code, .profile-publication-widget) {
+:is(.site-header nav a, .back-link, .theme-toggle, .filetree, .post-card, .focused-issue-lab, .news-hero, .news-data-card, .news-list, .news-desk-grid, .pretext-polish, .pretext-token, .lab-form input, .source-picker, .query-mode-picker, .source-picker-group, .source-picker label, .query-mode-picker label, .lab-output, .news-command-strip span, .news-signal-stack, .signal-row, .news-source-radar, .news-candidate-card, .news-candidate-rank, .news-candidate-thumbnail, .generated-news-card, .generated-news-cover, .generated-news-metrics span, .generated-news-source, .source-picker-actions button, .news-candidate-toolbar, .news-candidate-toolbar button, .overview-figure svg, .post-body pre, .post-body code, .profile-publication-widget) {
   background-color: var(--glass-bg);
   border-color: var(--glass-line);
   box-shadow: var(--glass-shadow);
@@ -313,7 +313,9 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
 }
 .lab-form button,
 .draft-selected-button,
-.download-draft-button {
+.download-draft-button,
+.source-picker-actions button,
+.news-candidate-toolbar button {
   justify-self: start;
   border: 1px solid var(--action-border, color-mix(in srgb, var(--accent) 54%, var(--line)));
   border-radius: 999px;
@@ -326,7 +328,8 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
 }
 .lab-form button:disabled,
 .draft-selected-button:disabled,
-.download-draft-button:disabled {
+.download-draft-button:disabled,
+.news-candidate-toolbar button:disabled {
   cursor: not-allowed;
   border-color: var(--action-disabled-border, color-mix(in srgb, var(--muted) 36%, var(--line)));
   color: var(--action-disabled-fg, var(--muted));
@@ -532,14 +535,36 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
   padding: 8px;
   background: var(--glass-bg);
 }
+.source-picker-group-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  inline-size: 100%;
+  min-width: 0;
+}
 .source-picker-group-title {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  inline-size: 100%;
+  min-width: 0;
   color: var(--accent);
   font-size: 0.68rem;
   font-weight: 850;
+}
+.source-picker-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-width: 0;
+}
+.source-picker-actions button {
+  min-height: 28px;
+  padding: 4px 8px;
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  background: var(--glass-bg);
 }
 .source-picker label,
 .query-mode-picker label {
@@ -601,6 +626,24 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.news-candidate-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin: -4px 0 12px;
+  padding: 8px;
+  border: 1px solid rgba(222, 209, 191, 0.76);
+  border-radius: 14px;
+  background: var(--glass-bg);
+}
+.news-candidate-toolbar button {
+  min-height: 32px;
+  padding: 6px 10px;
+  font-size: 0.74rem;
+  background: var(--glass-bg);
 }
 .news-candidate-list {
   display: grid;

@@ -478,6 +478,20 @@ test('news page searches candidates before drafting an issue and does not expose
     });
   });
 
+  await page.addInitScript(() => {
+    window.__newsPrintDocuments = [];
+    window.__newsPrintCalled = false;
+    window.open = () => ({
+      document: {
+        open() {},
+        write(html) { window.__newsPrintDocuments.push(String(html)); },
+        close() {}
+      },
+      focus() {},
+      print() { window.__newsPrintCalled = true; }
+    });
+  });
+
   await page.goto('/news/search/');
   await expect(page.locator('[data-focused-issue-lab]')).toBeVisible();
   await expect(page.locator('[data-blog-chat]')).toHaveCount(0);
@@ -493,6 +507,11 @@ test('news page searches candidates before drafting an issue and does not expose
   await expect(page.locator('.source-picker-group[data-source-group="code"]')).toContainText('Code');
   await expect(page.locator('.source-picker-group[data-source-group="paper"]')).toContainText('Paper');
   await expect(page.locator('.source-picker-group[data-source-group="social"]')).toContainText('Social');
+  await expect(page.locator('[data-source-group-action]')).toHaveCount(8);
+  await page.locator('.source-picker-group[data-source-group="paper"] [data-source-group-action="clear"]').click();
+  await expect(page.getByLabel('arXiv papers')).not.toBeChecked();
+  await expect(page.getByLabel('Google Scholar link')).not.toBeChecked();
+  await page.locator('.source-picker-group[data-source-group="paper"] [data-source-group-action="select"]').click();
   await expect(page.getByLabel('GDELT live web')).toBeChecked();
   await expect(page.getByLabel('Google News')).toBeChecked();
   await expect(page.getByLabel('GitHub repositories')).toBeChecked();
@@ -540,6 +559,12 @@ test('news page searches candidates before drafting an issue and does not expose
   await expect(page.locator('[data-news-search-results]')).toContainText('Open RAN Gemma operations update');
   await expect(page.locator('[data-news-search-results] input[type="checkbox"]')).toHaveCount(2);
   await expect(page.locator('.news-source-radar')).toContainText('2 ranked candidates');
+  await expect(page.locator('.news-candidate-toolbar')).toBeVisible();
+  await page.getByRole('button', { name: 'Clear candidate selection' }).click();
+  await expect(page.locator('[data-news-search-results] input[type="checkbox"]:checked')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Draft from selected news' })).toBeDisabled();
+  await page.getByRole('button', { name: 'Select all candidates' }).click();
+  await expect(page.locator('[data-news-search-results] input[type="checkbox"]:checked')).toHaveCount(2);
   await expect(page.locator('.news-candidate-rank').first()).toHaveText('01');
   await expect(page.locator('.news-candidate-meter')).toHaveCount(2);
   const candidateAnimation = await page.locator('.news-candidate-card').first().evaluate((node) => getComputedStyle(node).animationName);
@@ -564,6 +589,17 @@ test('news page searches candidates before drafting an issue and does not expose
   await expect(page.locator('[data-overview-figure]')).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Download Markdown' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Download PDF' })).toBeVisible();
+  await page.getByRole('button', { name: 'Download PDF' }).click();
+  const printAudit = await page.evaluate(() => ({
+    called: window.__newsPrintCalled,
+    html: window.__newsPrintDocuments?.[0] || ''
+  }));
+  expect(printAudit.called).toBe(true);
+  expect(printAudit.html).toContain('generated-news-print');
+  expect(printAudit.html).toContain('news-digest-shell');
+  expect(printAudit.html).toContain('Open RAN + Gemma Brief');
+  expect(printAudit.html).toContain('Open RAN accelerator stack');
+  expect(printAudit.html).not.toContain('%PDF-1.4');
   const draftLayout = await page.evaluate(() => ({
     outputScroll: document.querySelector('[data-focused-issue-output]')?.scrollWidth || 0,
     outputWidth: document.querySelector('[data-focused-issue-output]')?.clientWidth || 0,

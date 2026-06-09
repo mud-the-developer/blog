@@ -190,6 +190,19 @@ function renderSearchResults(container, candidates) {
   boardRail.textContent = sources.join(' · ');
   board.append(boardTitle, boardRail);
 
+  const toolbar = document.createElement('div');
+  toolbar.className = 'news-candidate-toolbar';
+  toolbar.setAttribute('aria-label', 'Candidate selection controls');
+  const selectAll = document.createElement('button');
+  selectAll.type = 'button';
+  selectAll.dataset.candidateAction = 'select-all';
+  selectAll.textContent = 'Select all candidates';
+  const clearAll = document.createElement('button');
+  clearAll.type = 'button';
+  clearAll.dataset.candidateAction = 'clear-all';
+  clearAll.textContent = 'Clear candidate selection';
+  toolbar.append(selectAll, clearAll);
+
   const list = document.createElement('div');
   list.className = 'news-candidate-list';
   candidates.forEach((candidate, index) => {
@@ -224,7 +237,7 @@ function renderSearchResults(container, candidates) {
     label.append(checkbox, rank, thumb, body);
     list.append(label);
   });
-  container.append(board, list);
+  container.append(board, toolbar, list);
 }
 
 function slugify(value = 'generated-news-draft') {
@@ -236,31 +249,122 @@ function draftMarkdown(draft) {
   return `# ${draft.title}\n\n${draft.summary}\n\n${draft.markdown}\n\n## Sources\n${sourceLines}\n`;
 }
 
-function makeSimplePdf(text) {
-  const safeLines = String(text).replace(/[()\\]/g, ' ').split(/\n+/).flatMap((line) => {
-    const chunks = [];
-    for (let i = 0; i < line.length; i += 82) chunks.push(line.slice(i, i + 82));
-    return chunks.length ? chunks : [''];
-  }).slice(0, 42);
-  const content = `BT /F1 11 Tf 52 790 Td 14 TL ${safeLines.map((line) => `(${line}) Tj T*`).join(' ')} ET`;
-  const objects = [
-    '1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj\n',
-    '2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >> endobj\n',
-    '3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >> endobj\n',
-    `4 0 obj << /Length ${content.length} >> stream\n${content}\nendstream endobj\n`,
-    '5 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj\n'
-  ];
-  let pdf = '%PDF-1.4\n';
-  const offsets = [0];
-  for (const object of objects) {
-    offsets.push(new TextEncoder().encode(pdf).length);
-    pdf += object;
+function escapeHtml(value = '') {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function inlineMarkdownHtml(text = '') {
+  return escapeHtml(text)
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g, '<a href="$2" rel="noreferrer">$1</a>');
+}
+
+function markdownBlocksHtml(markdown = '') {
+  return String(markdown || '')
+    .split(/\n+/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const heading = line.match(/^(#{2,3})\s+(.+)/);
+      if (heading) return `<h${heading[1].length + 1}>${inlineMarkdownHtml(heading[2])}</h${heading[1].length + 1}>`;
+      const list = line.match(/^[-*]\s+(.+)/);
+      if (list) return `<p class="news-digest-list-line">• ${inlineMarkdownHtml(list[1])}</p>`;
+      return `<p>${inlineMarkdownHtml(line)}</p>`;
+    })
+    .join('\n');
+}
+
+function buildPrintIssueHtml(draft) {
+  const sources = (draft.sources || []).slice(0, 10);
+  const sourceCards = sources.map((source, index) => `
+    <a class="news-digest-card generated-news-print-source" href="${escapeHtml(source.url || '#')}">
+      <span class="news-digest-card-index">${String(index + 1).padStart(2, '0')}</span>
+      <span class="news-digest-card-copy">
+        <strong>${escapeHtml(source.title || 'Untitled source')}</strong>
+        <em>${escapeHtml([source.source, source.publishedAt, source.score ? `score ${source.score}` : ''].filter(Boolean).join(' · '))}</em>
+        <span>${escapeHtml(source.summary || source.url || '')}</span>
+      </span>
+    </a>`).join('\n');
+  const generatedAt = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', dateStyle: 'medium', timeStyle: 'short' });
+  return `<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>${escapeHtml(draft.title)} — Mud's Blog PDF</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+  <style>
+    @page { size: A4; margin: 15mm; }
+    body { background: #f7fbff; color: #0b1020; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    .generated-news-print { max-width: 860px; margin: 0 auto; }
+    .generated-news-print .news-digest-hero { page-break-inside: avoid; }
+    .generated-news-print .news-digest-hero-copy h1 { font-family: Georgia, serif; font-size: 2.6rem; line-height: 1.02; letter-spacing: -0.045em; margin: 0 0 12px; }
+    .generated-news-print .news-digest-lead { font-size: 1.05rem; color: #30405b; }
+    .generated-news-print .news-digest-meta-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
+    .generated-news-print .news-digest-meta-card,
+    .generated-news-print .news-digest-signal-brief,
+    .generated-news-print .news-digest-card { border: 1px solid rgba(62,86,124,.22); border-radius: 18px; background: rgba(255,255,255,.78); box-shadow: 0 12px 34px rgba(63,89,132,.12); }
+    .generated-news-print .news-digest-meta-card { padding: 12px; }
+    .generated-news-print .news-digest-signal-brief { padding: 20px; margin-top: 18px; }
+    .generated-news-print .news-digest-signal-brief h2,
+    .generated-news-print .news-digest-signal-brief h3 { font-family: Georgia, serif; letter-spacing: -0.025em; margin: 16px 0 8px; }
+    .generated-news-print .news-digest-signal-brief p { margin: 0 0 11px; line-height: 1.72; }
+    .generated-news-print .news-digest-card-grid { display: grid; gap: 10px; margin-top: 14px; }
+    .generated-news-print .news-digest-card { display: grid; grid-template-columns: 42px minmax(0, 1fr); gap: 12px; padding: 13px; }
+    .generated-news-print .news-digest-card-index { font-family: ui-monospace, monospace; color: #315ea8; font-weight: 800; }
+    .generated-news-print .news-digest-card-copy { display: grid; gap: 4px; min-width: 0; }
+    .generated-news-print .news-digest-card-copy em { color: #566274; font-size: .86rem; }
+    .generated-news-print .news-digest-card-copy span { color: #30405b; overflow-wrap: anywhere; }
+    .section-kicker, .news-digest-meta-label { color: #566274; font-size: .76rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    @media print { body { background: white; } .generated-news-print { max-width: none; } }
+  </style>
+</head>
+<body data-layout="reader-post">
+  <article class="news-digest-shell generated-news-print">
+    <section class="news-digest-hero">
+      <div class="news-digest-hero-copy">
+        <p class="section-kicker">Focused Brief</p>
+        <h1>${escapeHtml(draft.title)}</h1>
+        <p class="news-digest-lead">${escapeHtml(draft.summary || '')}</p>
+      </div>
+      <div class="news-digest-meta-grid">
+        <div class="news-digest-meta-card"><span class="news-digest-meta-label">Issue</span><strong>review draft</strong></div>
+        <div class="news-digest-meta-card"><span class="news-digest-meta-label">Generated</span><strong>${escapeHtml(generatedAt)} KST</strong></div>
+        <div class="news-digest-meta-card"><span class="news-digest-meta-label">Sources</span><strong>${sources.length} cards</strong></div>
+      </div>
+    </section>
+    <section class="news-digest-signal-brief">
+      <header class="news-digest-section-head"><p class="section-kicker">Signal Brief</p><h2>Draft copy</h2></header>
+      ${markdownBlocksHtml(draft.markdown)}
+    </section>
+    <section class="news-digest-signal-brief">
+      <header class="news-digest-section-head"><p class="section-kicker">Evidence</p><h2>Selected source cards</h2></header>
+      <div class="news-digest-card-grid">${sourceCards}</div>
+    </section>
+  </article>
+</body>
+</html>`;
+}
+
+function openPrintIssue(draft) {
+  const html = buildPrintIssueHtml(draft);
+  const printWindow = window.open('', '_blank', 'noopener,noreferrer');
+  if (!printWindow) {
+    downloadBlob(new Blob([html], { type: 'text/html;charset=utf-8' }), `${slugify(draft.title)}-print.html`);
+    return;
   }
-  const xrefOffset = new TextEncoder().encode(pdf).length;
-  pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
-  pdf += offsets.slice(1).map((offset) => `${String(offset).padStart(10, '0')} 00000 n \n`).join('');
-  pdf += `trailer << /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
-  return new Blob([pdf], { type: 'application/pdf' });
+  printWindow.document.open();
+  printWindow.document.write(html);
+  printWindow.document.close();
+  printWindow.focus?.();
+  printWindow.print?.();
 }
 
 function downloadBlob(blob, filename) {
@@ -305,6 +409,22 @@ function setupFocusedIssueLab() {
     .map((checkbox) => Number(checkbox.dataset.candidateIndex))
     .filter((index) => Number.isInteger(index));
 
+  const setCandidateSelection = (checked) => {
+    for (const checkbox of lab.querySelectorAll('[data-candidate-index]')) {
+      checkbox.checked = checked;
+    }
+    return dispatch({ type: 'candidate.selection.changed', selectedIndexes: selectedIndexes() });
+  };
+
+  const setSourceGroupSelection = (button) => {
+    const group = button.closest('[data-source-group]');
+    if (!group) return;
+    const checked = button.dataset.sourceGroupAction === 'select';
+    for (const checkbox of group.querySelectorAll('input[name="sources"]')) {
+      checkbox.checked = checked;
+    }
+  };
+
   const applyEffect = async (effect) => {
     if (effect.type === 'render-status') {
       setStatus(status, effect.message, effect.kind);
@@ -338,6 +458,20 @@ function setupFocusedIssueLab() {
     dispatch({ type: 'candidate.selection.changed', selectedIndexes: selectedIndexes() });
   });
 
+  results?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-candidate-action]');
+    if (!button) return;
+    event.preventDefault();
+    setCandidateSelection(button.dataset.candidateAction === 'select-all');
+  });
+
+  form?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-source-group-action]');
+    if (!button) return;
+    event.preventDefault();
+    setSourceGroupSelection(button);
+  });
+
   form?.addEventListener('submit', (event) => {
     event.preventDefault();
     const formData = new FormData(form);
@@ -361,7 +495,7 @@ function setupFocusedIssueLab() {
       const markdown = draftMarkdown(currentDraft);
       const filename = slugify(currentDraft.title);
       if (button.dataset.downloadDraft === 'pdf') {
-        downloadBlob(makeSimplePdf(markdown), `${filename}.pdf`);
+        openPrintIssue(currentDraft);
       } else {
         downloadBlob(new Blob([markdown], { type: 'text/markdown;charset=utf-8' }), `${filename}.md`);
       }

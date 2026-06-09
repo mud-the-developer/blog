@@ -72,16 +72,34 @@
           <fieldset class="source-picker" aria-label="News sources">
             <legend>News sources</legend>
             <div class="source-picker-group" data-source-group="news">
-              <span class="source-picker-group-title"><span class="ui-icon" data-icon="rss" aria-hidden="true"></span>News</span>
+              <div class="source-picker-group-heading">
+                <span class="source-picker-group-title"><span class="ui-icon" data-icon="rss" aria-hidden="true"></span>News</span>
+                <span class="source-picker-actions" aria-label="News source controls">
+                  <button type="button" data-source-group-action="select">Select all</button>
+                  <button type="button" data-source-group-action="clear">Clear</button>
+                </span>
+              </div>
               <label><input name="sources" type="checkbox" value="gdelt" checked /> <span>GDELT live web</span></label>
               <label><input name="sources" type="checkbox" value="google-news-rss" checked /> <span>Google News</span></label>
             </div>
             <div class="source-picker-group" data-source-group="code">
-              <span class="source-picker-group-title"><span class="ui-icon" data-icon="github" aria-hidden="true"></span>Code</span>
+              <div class="source-picker-group-heading">
+                <span class="source-picker-group-title"><span class="ui-icon" data-icon="github" aria-hidden="true"></span>Code</span>
+                <span class="source-picker-actions" aria-label="Code source controls">
+                  <button type="button" data-source-group-action="select">Select all</button>
+                  <button type="button" data-source-group-action="clear">Clear</button>
+                </span>
+              </div>
               <label><input name="sources" type="checkbox" value="github-repositories" checked /> <span>GitHub repositories</span></label>
             </div>
             <div class="source-picker-group" data-source-group="paper">
-              <span class="source-picker-group-title"><span class="ui-icon" data-icon="book-open" aria-hidden="true"></span>Paper</span>
+              <div class="source-picker-group-heading">
+                <span class="source-picker-group-title"><span class="ui-icon" data-icon="book-open" aria-hidden="true"></span>Paper</span>
+                <span class="source-picker-actions" aria-label="Paper source controls">
+                  <button type="button" data-source-group-action="select">Select all</button>
+                  <button type="button" data-source-group-action="clear">Clear</button>
+                </span>
+              </div>
               <label><input name="sources" type="checkbox" value="arxiv" checked /> <span>arXiv papers</span></label>
               <label><input name="sources" type="checkbox" value="huggingface-papers" checked /> <span>Hugging Face Papers</span></label>
               <label><input name="sources" type="checkbox" value="openalex" checked /> <span>OpenAlex</span></label>
@@ -90,7 +108,13 @@
               <label><input name="sources" type="checkbox" value="google-scholar" checked /> <span>Google Scholar link</span></label>
             </div>
             <div class="source-picker-group" data-source-group="social">
-              <span class="source-picker-group-title"><span class="ui-icon" data-icon="radio" aria-hidden="true"></span>Social</span>
+              <div class="source-picker-group-heading">
+                <span class="source-picker-group-title"><span class="ui-icon" data-icon="radio" aria-hidden="true"></span>Social</span>
+                <span class="source-picker-actions" aria-label="Social source controls">
+                  <button type="button" data-source-group-action="select">Select all</button>
+                  <button type="button" data-source-group-action="clear">Clear</button>
+                </span>
+              </div>
               <label><input name="sources" type="checkbox" value="hacker-news" checked /> <span>Hacker News</span></label>
               <label><input name="sources" type="checkbox" value="x" checked /> <span>X</span></label>
               <label><input name="sources" type="checkbox" value="linkedin" checked /> <span>LinkedIn</span></label>
