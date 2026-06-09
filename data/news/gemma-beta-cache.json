@@ -270,6 +270,44 @@
     ],
     "title": "Multimodal Scaling and Agentic Plugins"
   },
+  "6c49052a9f80367776dc0d73b51e8c13ef4873d249b2b302dd150a47f6a18922": {
+    "article_body": [
+      "Agentic development environments continue to drive significant activity on GitHub. `warpdotdev/warp`, an agentic terminal environment, emerged as a top-ranked repository, reflecting ongoing interest in AI-driven coding tools. Other notable projects in this space include `shanraisshan/claude-code-best-practice` and `ultraworkers/claw-code`, both demonstrating momentum in agent-managed code generation and development practices.",
+      "In research, papers exploring advanced evaluation and long-context capabilities are gaining traction. `Skill-RM: Unifying Heterogeneous Evaluation Criteria via Agent Skill` stands out for its approach to treating reward computation as a structured agentic task. Concurrently, `FlashMemory-DeepSeek-V4` addresses the challenge of ultra-long context in LLMs through innovative sparse attention mechanisms, indicating a focus on both agent performance and efficiency.",
+      "Community discussions are largely shaped by strategic industry shifts. The news of Apple unveiling a new AI architecture built around the Google Gemini model generated considerable social attention, signaling potential collaborations and competitive dynamics in the AI hardware and software landscape. This development underscores the increasing cross-company integration within the AI sector.",
+      "Overall, today's digest includes 10 repository signals, 10 paper picks, and 10 community items. The biggest mover among tracked entities was `onyx-dot-app/onyx`, which climbed three ranks. GitHub and Hugging Face Papers remain primary sources of new signals, complemented by insights from GeekNews and X."
+    ],
+    "closing": "This brief provides a snapshot of key AI developments as of June 10, 2026.",
+    "dek": "Today's AI landscape sees significant movement in agentic development, novel approaches to reward modeling, and a notable architectural announcement from Apple.",
+    "lead": "The AI ecosystem on June 10, 2026, is marked by a surge in agentic development tools, with `warpdotdev/warp` leading the GitHub velocity. Research attention is drawn to new frameworks for unifying evaluation criteria, exemplified by `Skill-RM`. Meanwhile, industry discussion centers on Apple's reported integration of Google's Gemini model into its new AI architecture.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "Agentic development tools, particularly `warpdotdev/warp`, are seeing high engagement on GitHub.",
+      "Research is advancing in unified reward modeling (Skill-RM) and efficient long-context LLMs (FlashMemory-DeepSeek-V4).",
+      "Apple's reported adoption of Google Gemini for its new AI architecture is a key industry talking point.",
+      "The AI landscape continues to show strong activity across open-source development and academic research."
+    ],
+    "title": "Daily AI Beta Brief: Agentic Dev, Skill-RM, and Apple's Gemini Integration"
+  },
+  "6c49052a9f80367776dc0d73b51e8c13ef4873d249b2b302dd150a47f6a18922::overview": {
+    "article_body": [
+      "Agentic development environments continue to drive significant activity on GitHub. `warpdotdev/warp`, an agentic terminal environment, emerged as a top-ranked repository, reflecting ongoing interest in AI-driven coding tools. Other notable projects in this space include `shanraisshan/claude-code-best-practice` and `ultraworkers/claw-code`, both demonstrating momentum in agent-managed code generation and development practices.",
+      "In research, papers exploring advanced evaluation and long-context capabilities are gaining traction. `Skill-RM: Unifying Heterogeneous Evaluation Criteria via Agent Skill` stands out for its approach to treating reward computation as a structured agentic task. Concurrently, `FlashMemory-DeepSeek-V4` addresses the challenge of ultra-long context in LLMs through innovative sparse attention mechanisms, indicating a focus on both agent performance and efficiency.",
+      "Community discussions are largely shaped by strategic industry shifts. The news of Apple unveiling a new AI architecture built around the Google Gemini model generated considerable social attention, signaling potential collaborations and competitive dynamics in the AI hardware and software landscape. This development underscores the increasing cross-company integration within the AI sector.",
+      "Overall, today's digest includes 10 repository signals, 10 paper picks, and 10 community items. The biggest mover among tracked entities was `onyx-dot-app/onyx`, which climbed three ranks. GitHub and Hugging Face Papers remain primary sources of new signals, complemented by insights from GeekNews and X."
+    ],
+    "closing": "This brief provides a snapshot of key AI developments as of June 10, 2026.",
+    "dek": "Today's AI landscape sees significant movement in agentic development, novel approaches to reward modeling, and a notable architectural announcement from Apple.",
+    "lead": "The AI ecosystem on June 10, 2026, is marked by a surge in agentic development tools, with `warpdotdev/warp` leading the GitHub velocity. Research attention is drawn to new frameworks for unifying evaluation criteria, exemplified by `Skill-RM`. Meanwhile, industry discussion centers on Apple's reported integration of Google's Gemini model into its new AI architecture.",
+    "takeaways": [
+      "Agentic development tools, particularly `warpdotdev/warp`, are seeing high engagement on GitHub.",
+      "Research is advancing in unified reward modeling (Skill-RM) and efficient long-context LLMs (FlashMemory-DeepSeek-V4).",
+      "Apple's reported adoption of Google Gemini for its new AI architecture is a key industry talking point.",
+      "The AI landscape continues to show strong activity across open-source development and academic research."
+    ],
+    "title": "Daily AI Beta Brief: Agentic Dev, Skill-RM, and Apple's Gemini Integration"
+  },
   "6f230e238377b2505c3e78221b63158e45909754430d4b4f805db05d4ae23f03": {
     "closing": "Infrastructure for agentic autonomy continues to mature across both open and closed ecosystems.",
     "dek": "High-throughput inference engines and agentic skill retrieval dominate today's technical signals.",
