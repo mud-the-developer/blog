@@ -294,6 +294,86 @@ test('news search expands natural-language queries with Gemma but preserves exac
   assert.ok(!requests.some((url) => url.includes('generativelanguage.googleapis.com')));
 });
 
+test('news search Gemma-expand falls back to unquoted exact query when Gemma key is missing', async () => {
+  const requests = [];
+  globalThis.fetch = async (url) => {
+    requests.push(String(url));
+    if (String(url).includes('news.google.com/rss/search')) {
+      assert.ok(!String(url).includes('%22'), 'missing-key fallback should not quote the whole phrase');
+      assert.ok(String(url).includes('about%20model-intrinsic%20feature') || String(url).includes('about+model-intrinsic+feature'));
+      return new Response(`<?xml version="1.0"?><rss><channel>
+        <item><title>Model-intrinsic feature discussion</title><link>https://news.example/model-features</link><source>Example News</source><description>Feature geometry for model internals.</description></item>
+      </channel></rss>`, { headers: { 'content-type': 'application/rss+xml' } });
+    }
+    throw new Error(`Missing-key fallback must not call Gemma: ${url}`);
+  };
+
+  const response = await newsSearchPost({
+    request: new Request('https://blog.example.test/api/news-search', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ query: 'about model-intrinsic feature', queryMode: 'gemma-expand', limit: 3, sources: ['google-news-rss'] })
+    }),
+    env: { ASSETS: mockEnv().ASSETS }
+  });
+  const body = await response.json();
+
+  assert.equal(response.status, 200);
+  assert.equal(body.queryMode, 'gemma-expand');
+  assert.equal(body.queryPlan.usedGemma, false);
+  assert.equal(body.searchQuery, 'about model-intrinsic feature');
+  assert.match(body.warning, /Google AI API key/);
+  assert.ok(body.candidates.some((candidate) => candidate.title === 'Model-intrinsic feature discussion'));
+  assert.ok(!requests.some((url) => url.includes('generativelanguage.googleapis.com')));
+});
+
+test('news search keeps all-source fanout wide before final ranking', async () => {
+  const requests = [];
+  globalThis.fetch = async (url) => {
+    requests.push(String(url));
+    if (String(url).includes('news.google.com/rss/search')) {
+      return new Response(`<?xml version="1.0"?><rss><channel>
+        <item><title>Feature item one</title><link>https://news.example/1</link><source>Example News</source></item>
+        <item><title>Feature item two</title><link>https://news.example/2</link><source>Example News</source></item>
+        <item><title>Feature item three</title><link>https://news.example/3</link><source>Example News</source></item>
+        <item><title>Feature item four</title><link>https://news.example/4</link><source>Example News</source></item>
+      </channel></rss>`, { headers: { 'content-type': 'application/rss+xml' } });
+    }
+    if (String(url).includes('api.github.com/search/repositories')) {
+      assert.ok(String(url).includes('per_page=4'), `expected wider GitHub fanout, got ${url}`);
+      return Response.json({ items: [] });
+    }
+    if (String(url).includes('export.arxiv.org/api/query')) {
+      assert.ok(String(url).includes('max_results=4'), `expected wider arXiv fanout, got ${url}`);
+      return new Response('<feed></feed>', { headers: { 'content-type': 'application/atom+xml' } });
+    }
+    if (String(url).includes('scholar.google.com/scholar')) {
+      return new Response('<html><body></body></html>', { headers: { 'content-type': 'text/html' } });
+    }
+    throw new Error(`Unexpected request ${url}`);
+  };
+
+  const response = await newsSearchPost({
+    request: new Request('https://blog.example.test/api/news-search', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        query: 'model-intrinsic feature',
+        queryMode: 'exact',
+        limit: 12,
+        sources: ['google-news-rss', 'github-repositories', 'arxiv', 'google-scholar', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest']
+      })
+    }),
+    env: mockEnv()
+  });
+  const body = await response.json();
+
+  assert.equal(response.status, 200);
+  assert.ok(body.candidates.filter((candidate) => candidate.source === 'Example News').length >= 4);
+  assert.ok(requests.some((url) => url.includes('api.github.com/search/repositories')));
+  assert.ok(requests.some((url) => url.includes('export.arxiv.org/api/query')));
+});
+
 test('focused issue drafting treats selected search results as the authoritative source set', async () => {
   let promptPayload;
   globalThis.fetch = async (url, init) => {

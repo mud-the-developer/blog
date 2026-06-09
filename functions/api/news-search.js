@@ -68,6 +68,17 @@ async function planSearchQuery(query, queryMode, env = {}) {
     ]
   });
   const parsed = parseMaybeJson(gemma.text);
+  if (!parsed) {
+    const keywords = normalizeExpandedKeywords(query, []);
+    return {
+      mode,
+      originalQuery: query,
+      searchQuery: query,
+      keywords,
+      usedGemma: false,
+      warning: gemma.error || (gemma.missingKey ? 'Gemma keyword expansion is unavailable without a Google AI API key; using the exact query.' : 'Gemma keyword expansion returned no usable keyword plan; using the exact query.')
+    };
+  }
   const keywords = normalizeExpandedKeywords(query, Array.isArray(parsed?.keywords) ? parsed.keywords : []);
   const parsedSearch = sanitizeText(parsed?.searchQuery || '', 260);
   const searchQuery = parsedSearch && keywords.some((keyword) => parsedSearch.toLowerCase().includes(keyword.toLowerCase().slice(0, Math.min(keyword.length, 16))))
@@ -289,7 +300,7 @@ export async function onRequestPost({ request, env }) {
   const searchQuery = queryPlan.searchQuery || query;
   const limit = Math.max(3, Math.min(Number(input.limit) || 9, 15));
   const sourceIds = selectedSourceIds(input.sources);
-  const perSource = Math.max(2, Math.ceil(limit / Math.max(3, sourceIds.length)));
+  const perSource = Math.max(2, Math.ceil(limit / 3));
   const searched = [];
   const warnings = [];
   const feed = await readJsonAsset(env, request.url, '/news/data/latest.json', { all: [] });
