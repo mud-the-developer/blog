@@ -73,6 +73,8 @@ test('pretext polish reducer ranks archive terms and emits token render effects'
   assert.ok(step.effects[0].terms.includes('Gemma'));
   assert.ok(step.effects[0].tokens.length >= 4);
   assert.ok(step.effects[0].tokens.every((token) => token.x.endsWith('%') && token.y.endsWith('%')));
+  assert.ok(step.effects[0].tokens.every((token) => token.depth >= 0 && token.depth <= 1));
+  assert.ok(step.effects[0].tokens.every((token) => token.variant.startsWith('glass-')));
 });
 
 test('news desk reducer controls search/draft/download states without DOM effects', () => {

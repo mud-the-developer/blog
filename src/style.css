@@ -934,10 +934,15 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
   position: sticky;
   top: 28px;
   min-height: 520px;
-  border: 1px solid var(--line);
+  border: 1px solid color-mix(in srgb, var(--accent-2) 28%, transparent);
   border-radius: 22px;
   overflow: hidden;
-  background: linear-gradient(145deg, rgba(255,253,248,0.92), rgba(238,229,216,0.72));
+  background:
+    radial-gradient(circle at 20% 16%, rgba(143, 207, 233, 0.38), transparent 27%),
+    radial-gradient(circle at 78% 22%, rgba(172, 143, 229, 0.28), transparent 24%),
+    radial-gradient(circle at 50% 86%, rgba(59, 151, 169, 0.34), transparent 30%),
+    linear-gradient(145deg, #101726 0%, #132c3a 44%, #071019 100%);
+  box-shadow: 0 24px 70px rgba(18, 44, 58, 0.28);
 }
 .pretext-surface {
   position: relative;
@@ -945,40 +950,98 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
   isolation: isolate;
 }
 .pretext-surface::before,
-.pretext-surface::after {
+.pretext-surface::after,
+.pretext-ambient-layer {
   content: "";
   position: absolute;
-  inset: 18px;
-  border: 1px solid rgba(31, 27, 22, 0.08);
-  transform: skewY(-5deg);
+  inset: 0;
+  pointer-events: none;
+}
+.pretext-surface::before {
+  z-index: 0;
+  background:
+    radial-gradient(circle at 18% 24%, rgba(255,255,255,0.72) 0 1px, transparent 2px),
+    radial-gradient(circle at 72% 34%, rgba(255,255,255,0.52) 0 1px, transparent 2px),
+    radial-gradient(circle at 44% 68%, rgba(255,255,255,0.44) 0 1px, transparent 2px),
+    linear-gradient(115deg, rgba(255,255,255,0.12), transparent 34%, rgba(121, 214, 232, 0.09) 72%, transparent);
+  background-size: 120px 150px, 170px 110px, 130px 180px, auto;
+  mix-blend-mode: screen;
+  opacity: 0.7;
 }
 .pretext-surface::after {
-  inset: 46px 32px;
-  transform: skewY(6deg);
+  z-index: 4;
+  inset: 14px;
+  border: 1px solid rgba(220, 244, 255, 0.18);
+  border-radius: 18px;
+  box-shadow: inset 0 0 44px rgba(195, 231, 244, 0.08);
+}
+.pretext-ambient-layer--current {
+  z-index: 1;
+  background: linear-gradient(110deg, transparent 10%, rgba(154, 224, 238, 0.13) 42%, transparent 74%);
+  filter: blur(0.5px);
+  animation: pretext-current-flow 14s ease-in-out infinite alternate;
+}
+.pretext-ambient-layer--bubble-field {
+  z-index: 2;
+  background:
+    radial-gradient(circle at 12% 76%, rgba(218, 248, 255, 0.38) 0 4px, transparent 5px),
+    radial-gradient(circle at 76% 66%, rgba(218, 248, 255, 0.27) 0 3px, transparent 4px),
+    radial-gradient(circle at 88% 34%, rgba(218, 248, 255, 0.22) 0 5px, transparent 6px);
+  animation: pretext-bubble-rise 12s linear infinite;
+}
+.pretext-ambient-layer--stardust {
+  z-index: 3;
+  background: repeating-linear-gradient(100deg, transparent 0 34px, rgba(255,255,255,0.1) 35px 36px, transparent 37px 72px);
+  opacity: 0.42;
+  animation: pretext-stardust-drift 18s ease-in-out infinite alternate;
 }
 .pretext-token {
   position: absolute;
   left: var(--x);
   top: var(--y);
-  z-index: 1;
-  max-width: 13rem;
-  padding: 4px 8px;
-  border: 1px solid rgba(31, 27, 22, 0.12);
-  border-radius: 10px;
-  background: rgba(255, 253, 248, 0.78);
-  color: color-mix(in srgb, var(--ink) 76%, var(--accent));
+  z-index: 5;
+  max-width: min(13rem, 74%);
+  padding: 8px 11px;
+  border: 1px solid rgba(225, 249, 255, 0.32);
+  border-radius: 15px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.32), rgba(255,255,255,0.08)),
+    linear-gradient(180deg, var(--glass-tint, rgba(92, 190, 214, 0.24)), rgba(13, 29, 43, 0.15));
+  color: rgba(246, 253, 255, 0.92);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.02em;
+  font-size: clamp(0.68rem, 1.4vw, 0.82rem);
+  font-weight: 720;
+  letter-spacing: 0.03em;
+  line-height: 1.18;
   white-space: nowrap;
-  animation: pretext-drift 8s ease-in-out infinite alternate;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.32),
+    0 var(--shadow-y) var(--shadow-blur) rgba(2, 9, 18, 0.3);
+  backdrop-filter: blur(16px) saturate(145%);
+  -webkit-backdrop-filter: blur(16px) saturate(145%);
+  animation: pretext-aquarium-drift var(--duration) ease-in-out infinite alternate;
   animation-delay: var(--delay);
 }
-.pretext-token:nth-child(2n) { color: var(--accent-2); animation-duration: 10s; }
-.pretext-token:nth-child(3n) { opacity: 0.72; animation-duration: 12s; }
-@keyframes pretext-drift {
-  from { transform: translate3d(-4px, -3px, 0); }
-  to { transform: translate3d(5px, 4px, 0); }
+.glass-violet { --glass-tint: rgba(155, 132, 226, 0.26); }
+.glass-sea { --glass-tint: rgba(68, 189, 173, 0.25); }
+.glass-amber { --glass-tint: rgba(229, 181, 112, 0.2); }
+.pretext-token:nth-child(2n) { animation-duration: calc(var(--duration) + 2s); }
+.pretext-token:nth-child(3n) { opacity: 0.84; }
+@keyframes pretext-aquarium-drift {
+  from { transform: translate3d(-6px, -5px, 0) scale(var(--scale-start)); }
+  to { transform: translate3d(8px, 9px, 0) scale(var(--scale-end)); }
+}
+@keyframes pretext-current-flow {
+  from { transform: translateX(-18%) skewY(-5deg); opacity: 0.44; }
+  to { transform: translateX(18%) skewY(4deg); opacity: 0.72; }
+}
+@keyframes pretext-bubble-rise {
+  from { transform: translateY(18px); }
+  to { transform: translateY(-34px); }
+}
+@keyframes pretext-stardust-drift {
+  from { transform: translate3d(-8px, -4px, 0); }
+  to { transform: translate3d(10px, 6px, 0); }
 }
 
 .post-shell {

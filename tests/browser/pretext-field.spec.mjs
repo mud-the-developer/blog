@@ -88,12 +88,18 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
       })
       .join('\n');
     const archive = JSON.parse(document.getElementById('archive-data')?.textContent || '[]');
+    const stage = document.querySelector('[data-pretext-polish]');
+    const tokenStyles = tokens.map((token) => getComputedStyle(token));
     return {
       archiveCount: Array.isArray(archive) ? archive.length : 0,
       tokenCount: tokens.length,
       animatedCount: animated.length,
+      glassTokenCount: tokens.filter((token) => token.classList.contains('pretext-glass-block')).length,
+      ambientLayerCount: document.querySelectorAll('.pretext-ambient-layer').length,
+      scene: stage?.dataset.pretextScene || '',
+      tokenBackdropFilters: tokenStyles.map((style) => style.backdropFilter || style.webkitBackdropFilter || ''),
       filetreeWidth: document.querySelector('.filetree')?.getBoundingClientRect().width || 0,
-      hasRadialGradient: css.includes('radial-gradient'),
+      hasAquariumSpaceGradient: css.includes('pretext-aquarium-drift') && css.includes('radial-gradient') && css.includes('backdrop-filter'),
       mentionsNeon: css.toLowerCase().includes('neon'),
       scrollWidth: document.documentElement.scrollWidth,
       clientWidth: document.documentElement.clientWidth,
@@ -102,8 +108,12 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   expect(motion.archiveCount).toBe(publicPostCount);
   expect(motion.tokenCount).toBeGreaterThanOrEqual(10);
   expect(motion.animatedCount).toBeGreaterThanOrEqual(6);
+  expect(motion.glassTokenCount).toBe(motion.tokenCount);
+  expect(motion.ambientLayerCount).toBeGreaterThanOrEqual(3);
+  expect(motion.scene).toBe('orbital-aquarium');
+  expect(motion.tokenBackdropFilters.every((value) => value.includes('blur'))).toBe(true);
   expect(motion.filetreeWidth).toBeLessThanOrEqual(860);
-  expect(motion.hasRadialGradient).toBe(false);
+  expect(motion.hasAquariumSpaceGradient).toBe(true);
   expect(motion.mentionsNeon).toBe(false);
   expect(motion.scrollWidth).toBeLessThanOrEqual(motion.clientWidth + 1);
 });

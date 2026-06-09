@@ -1,8 +1,10 @@
 const tokenSlots = [
-  [9, 10], [42, 8], [62, 16], [18, 28], [51, 34], [64, 42],
-  [10, 54], [37, 58], [60, 62], [22, 74], [50, 78], [63, 84],
-  [30, 18], [7, 38], [65, 26], [45, 48], [14, 88], [58, 5]
+  [8, 9], [38, 7], [58, 15], [16, 27], [48, 32], [61, 41],
+  [9, 53], [35, 57], [57, 61], [20, 72], [47, 76], [60, 82],
+  [28, 18], [7, 38], [62, 26], [43, 48], [13, 86], [55, 5]
 ];
+
+const tokenVariants = ['glass-blue', 'glass-violet', 'glass-sea', 'glass-amber'];
 
 export function cleanPretextTerm(value) {
   return String(value || '')
@@ -37,11 +39,19 @@ export function termsFromArchive(archive, { isMobile = false } = {}) {
 export function tokensFromTerms(terms) {
   return terms.map((term, index) => {
     const [x, y] = tokenSlots[index % tokenSlots.length];
+    const depth = 0.28 + (index % 5) * 0.14;
     return {
       label: term,
       x: `${x}%`,
       y: `${y}%`,
-      delay: `${index * -0.42}s`
+      delay: `${index * -0.42}s`,
+      duration: `${(8 + depth * 6).toFixed(1)}s`,
+      shadowY: `${Math.round(12 + depth * 16)}px`,
+      shadowBlur: `${Math.round(26 + depth * 16)}px`,
+      scaleStart: (0.94 + depth * 0.08).toFixed(3),
+      scaleEnd: (0.98 + depth * 0.08).toFixed(3),
+      depth: Number(depth.toFixed(2)),
+      variant: tokenVariants[index % tokenVariants.length]
     };
   });
 }
@@ -69,14 +79,28 @@ export function pretextReducer(state, event) {
 export function renderPretextTokens(effect, { stage, surface, document }) {
   if (effect.type !== 'render-pretext-tokens' || !stage || !surface) return;
   surface.replaceChildren();
+  for (const layerName of ['current', 'bubble-field', 'stardust']) {
+    const layer = document.createElement('span');
+    layer.className = `pretext-ambient-layer pretext-ambient-layer--${layerName}`;
+    layer.setAttribute('aria-hidden', 'true');
+    surface.append(layer);
+  }
   for (const tokenModel of effect.tokens) {
     const token = document.createElement('span');
-    token.className = 'pretext-token';
+    token.className = `pretext-token pretext-glass-block ${tokenModel.variant}`;
+    token.dataset.depth = String(tokenModel.depth);
     token.textContent = tokenModel.label;
     token.style.setProperty('--x', tokenModel.x);
     token.style.setProperty('--y', tokenModel.y);
     token.style.setProperty('--delay', tokenModel.delay);
+    token.style.setProperty('--duration', tokenModel.duration);
+    token.style.setProperty('--shadow-y', tokenModel.shadowY);
+    token.style.setProperty('--shadow-blur', tokenModel.shadowBlur);
+    token.style.setProperty('--scale-start', tokenModel.scaleStart);
+    token.style.setProperty('--scale-end', tokenModel.scaleEnd);
+    token.style.setProperty('--depth', String(tokenModel.depth));
     surface.append(token);
   }
+  stage.dataset.pretextScene = 'orbital-aquarium';
   stage.dataset.pretextReady = 'true';
 }
