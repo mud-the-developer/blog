@@ -327,6 +327,46 @@ test('news search Gemma-expand falls back to unquoted exact query when Gemma key
   assert.ok(!requests.some((url) => url.includes('generativelanguage.googleapis.com')));
 });
 
+test('news search does not use digest fallback items that only match generic query words', async () => {
+  globalThis.fetch = async (url) => {
+    if (String(url).includes('api.github.com/search/repositories')) {
+      return Response.json({ items: [] });
+    }
+    throw new Error(`Unexpected request ${url}`);
+  };
+  const env = {
+    GOOGLE_AI_API_KEY: 'unit-test-secret-key',
+    ASSETS: {
+      async fetch(request) {
+        const path = new URL(request.url).pathname;
+        if (path === '/news/data/latest.json') {
+          return Response.json({
+            all: [
+              { title: 'generic agent harness', url: 'https://github.com/example/agent', source: 'github.com', summary: 'Features agent workflows and model switching.' },
+              { title: 'chat tool release', url: 'https://github.com/example/chat', source: 'github.com', summary: 'More features for AI model routing.' }
+            ]
+          });
+        }
+        if (path === '/archive.json') return Response.json([]);
+        return new Response('not found', { status: 404 });
+      }
+    }
+  };
+
+  const response = await newsSearchPost({
+    request: new Request('https://blog.example.test/api/news-search', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ query: 'about model-intrinsic feature', queryMode: 'exact', limit: 3, sources: ['github-repositories'] })
+    }),
+    env
+  });
+  const body = await response.json();
+
+  assert.equal(response.status, 200);
+  assert.deepEqual(body.candidates, []);
+});
+
 test('news search keeps all-source fanout wide before final ranking', async () => {
   const requests = [];
   globalThis.fetch = async (url) => {

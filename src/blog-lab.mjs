@@ -109,7 +109,11 @@ function renderFocusedIssue(output, data) {
   const tape = document.createElement('div');
   tape.className = 'generated-news-tape';
   tape.textContent = (data.sources || []).slice(0, 5).map((source) => source.source || source.title).filter(Boolean).join('  ·  ') || 'ranked source context';
-  header.append(eyebrow, title, summary, metrics, tape);
+  const warning = document.createElement('p');
+  warning.className = 'generated-news-warning';
+  warning.textContent = data.warning || '';
+  if (data.warning) header.append(eyebrow, title, summary, metrics, tape, warning);
+  else header.append(eyebrow, title, summary, metrics, tape);
 
   const body = document.createElement('div');
   body.className = 'generated-news-body';

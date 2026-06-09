@@ -28,6 +28,33 @@ function queryTokens(query) {
     .slice(0, 12);
 }
 
+const FALLBACK_STOPWORDS = new Set([
+  'about', 'into', 'from', 'with', 'using', 'what', 'when', 'where', 'why', 'how',
+  'news', 'update', 'updates', 'release', 'releases', 'paper', 'papers',
+  'feature', 'features', 'model', 'models', 'agent', 'agents', 'tool', 'tools'
+]);
+
+function fallbackMatchesQuery(item, query) {
+  const haystack = [item.title, item.summary, item.description, item.source, ...(item.categories || [])]
+    .join(' ')
+    .toLowerCase();
+  const normalizedQuery = String(query || '').toLowerCase().replace(/\s+/g, ' ').trim();
+  if (normalizedQuery.length > 3 && haystack.includes(normalizedQuery)) return true;
+  const tokens = queryTokens(query);
+  const compoundTokens = tokens.filter((token) => /[-+]/.test(token));
+  if (compoundTokens.length) {
+    return compoundTokens.some((token) => {
+      if (haystack.includes(token)) return true;
+      const parts = token.split(/[-+]/).filter((part) => part.length > 2 && !FALLBACK_STOPWORDS.has(part));
+      return parts.length > 1 && parts.every((part) => haystack.includes(part));
+    });
+  }
+  const meaningful = tokens.filter((token) => token.length > 2 && !FALLBACK_STOPWORDS.has(token));
+  if (!meaningful.length) return false;
+  const hits = meaningful.filter((token) => haystack.includes(token)).length;
+  return meaningful.length === 1 ? hits === 1 : hits >= 2;
+}
+
 function normalizeQueryMode(value) {
   return String(value || '').toLowerCase() === 'gemma-expand' ? 'gemma-expand' : 'exact';
 }
@@ -261,10 +288,7 @@ function fallbackFromAsset(feed, query, limit, sourceIds = ['digest-snapshot']) 
   const tokens = queryTokens(query);
   return (Array.isArray(feed?.all) ? feed.all : [])
     .filter((item) => sourceMatchesSelection(item, sourceIds))
-    .filter((item) => {
-      const haystack = [item.title, item.summary, item.description, item.source, ...(item.categories || [])].join(' ').toLowerCase();
-      return tokens.length === 0 || tokens.some((token) => haystack.includes(token));
-    })
+    .filter((item) => tokens.length === 0 || fallbackMatchesQuery(item, query))
     .slice(0, limit)
     .map((item, index) => normalizeCandidate({
       id: `asset-${index + 1}`,

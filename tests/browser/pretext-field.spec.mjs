@@ -335,7 +335,8 @@ test('news page searches candidates before drafting an issue and does not expose
           summary: 'Ranked source context ready for review.',
           markdown: `## Open RAN + Gemma\nRanked **source context** ready for review.\n\n${'verylongtoken'.repeat(80)}`
         },
-        sources: [{ title: 'Open RAN accelerator stack', score: 8.5, url: 'https://example.test/oran', source: 'Example News', thumbnail: '/assets/news/thumb-vran.svg' }]
+        sources: [{ title: 'Open RAN accelerator stack', score: 8.5, url: 'https://example.test/oran', source: 'Example News', thumbnail: '/assets/news/thumb-vran.svg' }],
+        warning: 'Gemma is not configured; rendered a source-backed fallback.'
       })
     });
   });
@@ -406,6 +407,7 @@ test('news page searches candidates before drafting an issue and does not expose
   await expect(page.locator('[data-focused-issue-status] .status-pulse')).toBeVisible();
   await expect(page.locator('[data-focused-issue-status]')).toContainText('Drafting selected sources');
   await expect(page.locator('[data-focused-issue-output]')).toContainText('Open RAN + Gemma Brief');
+  await expect(page.locator('[data-focused-issue-output]')).toContainText('Gemma is not configured');
   await expect(page.locator('[data-focused-issue-output]')).toContainText('Open RAN accelerator stack');
   await expect(page.locator('[data-focused-issue-output] .generated-news-card')).toBeVisible();
   await expect(page.locator('[data-focused-issue-output] .generated-news-cover')).toBeVisible();
