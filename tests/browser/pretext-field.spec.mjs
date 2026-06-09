@@ -301,13 +301,13 @@ test('news page searches candidates before drafting an issue and does not expose
   await page.route('/api/news-search', async (route) => {
     const body = route.request().postDataJSON();
     expect(body.query).toContain('open RAN');
-    expect(body.sources).toEqual(['google-news-rss', 'github-repositories', 'arxiv', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest']);
+    expect(body.sources).toEqual(['google-news-rss', 'github-repositories', 'arxiv', 'google-scholar', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest']);
     await route.fulfill({
       contentType: 'application/json',
       body: JSON.stringify({
         ok: true,
         query: body.query,
-        searched: ['google-news-rss', 'github-repositories', 'arxiv', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest'],
+        searched: ['google-news-rss', 'github-repositories', 'arxiv', 'google-scholar', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest'],
         candidates: [
           { id: 'gnews-1', title: 'Open RAN Gemma operations update', url: 'https://news.example/oran-gemma', source: 'Example News', summary: 'Search result about Gemma and O-RAN operations.', publishedAt: '2026-04-14T08:00:00Z', score: 12, origin: 'live-search', thumbnail: '/assets/news/thumb-vran.svg' },
           { id: 'github-1', title: 'ran-lab/gemma-oran', url: 'https://github.com/ran-lab/gemma-oran', source: 'GitHub', summary: 'Repository signal from search.', publishedAt: '2026-04-14T09:00:00Z', score: 9, origin: 'live-search', thumbnail: '/assets/news/thumb-repo.svg' }
@@ -344,9 +344,14 @@ test('news page searches candidates before drafting an issue and does not expose
   await expect(page.locator('script[src^="/assets/blog-lab.mjs"]')).toHaveCount(1);
   await expect(page.getByLabel('Search query')).toBeVisible();
   await expect(page.getByRole('group', { name: 'News sources' })).toBeVisible();
+  await expect(page.locator('.source-picker-group')).toHaveCount(4);
+  await expect(page.locator('.source-picker-group[data-source-group="code"]')).toContainText('Code');
+  await expect(page.locator('.source-picker-group[data-source-group="paper"]')).toContainText('Paper');
+  await expect(page.locator('.source-picker-group[data-source-group="social"]')).toContainText('Social');
   await expect(page.getByLabel('Google News')).toBeChecked();
   await expect(page.getByLabel('GitHub repositories')).toBeChecked();
   await expect(page.getByLabel('arXiv papers')).toBeChecked();
+  await expect(page.getByLabel('Google Scholar')).toBeChecked();
   await expect(page.getByLabel('Hugging Face Papers')).toBeChecked();
   await expect(page.getByRole('checkbox', { name: 'X', exact: true })).toBeChecked();
   await expect(page.getByLabel('LinkedIn')).toBeChecked();
@@ -356,7 +361,7 @@ test('news page searches candidates before drafting an issue and does not expose
   await expect(page.getByRole('button', { name: 'Draft from selected news' })).toBeDisabled();
   await expect(page.locator('.news-command-strip span')).toHaveCount(4);
   await expect(page.locator('[data-news-signal-stack]')).toBeVisible();
-  await expect(page.locator('[data-news-signal-stack] .signal-row')).toHaveCount(6);
+  await expect(page.locator('[data-news-signal-stack] .signal-row')).toHaveCount(7);
   await expect(page.locator('[data-news-pretext-board]')).toHaveCount(0);
   await expect(page.getByText('RANKING LANES')).toHaveCount(0);
   const stackMotion = await page.locator('[data-news-signal-stack] .signal-row').first().evaluate((node) => getComputedStyle(node).animationName);

@@ -161,6 +161,17 @@ test('news search function searches live-style sources before Gemma drafting use
     if (String(url).includes('export.arxiv.org/api/query')) {
       return new Response(`<feed><entry><title>Gemma assisted RAN planning</title><id>https://arxiv.org/abs/2604.00001</id><summary>Open RAN planning with small language models.</summary><updated>2026-04-14T10:00:00Z</updated></entry></feed>`, { headers: { 'content-type': 'application/atom+xml' } });
     }
+    if (String(url).includes('scholar.google.com/scholar')) {
+      return new Response(`<html><body>
+        <div class="gs_r gs_or gs_scl">
+          <div class="gs_ri">
+            <h3 class="gs_rt"><a href="https://scholar.example/gemma-ran">Gemma planning for Open RAN automation</a></h3>
+            <div class="gs_a">A Researcher, B Author - Wireless AI Conference, 2026</div>
+            <div class="gs_rs">Paper result from Google Scholar about Gemma planning in O-RAN operations.</div>
+          </div>
+        </div>
+      </body></html>`, { headers: { 'content-type': 'text/html' } });
+    }
     assert.match(String(url), /generativelanguage\.googleapis\.com/);
     const gemmaPayload = JSON.parse(init.body);
     const prompt = gemmaPayload.contents[0].parts[0].text;
@@ -175,7 +186,7 @@ test('news search function searches live-style sources before Gemma drafting use
     request: new Request('https://blog.example.test/api/news-search', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ query: 'Gemma open RAN', limit: 8, sources: ['google-news-rss', 'arxiv', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest'] })
+      body: JSON.stringify({ query: 'Gemma open RAN', limit: 9, sources: ['google-news-rss', 'arxiv', 'google-scholar', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest'] })
     }),
     env: mockEnv()
   });
@@ -188,15 +199,18 @@ test('news search function searches live-style sources before Gemma drafting use
   assert.ok(searchBody.searched.includes('google-news-rss'));
   assert.ok(!searchBody.searched.includes('github-repositories'));
   assert.ok(searchBody.searched.includes('arxiv'));
+  assert.ok(searchBody.searched.includes('google-scholar'));
   assert.ok(searchBody.searched.includes('huggingface-papers'));
   assert.ok(searchBody.searched.includes('x'));
   assert.ok(searchBody.searched.includes('linkedin'));
   assert.ok(searchBody.searched.includes('geeknews'));
   assert.ok(searchBody.searched.includes('endigest'));
   assert.ok(!requests.some((url) => url.includes('api.github.com/search/repositories')));
+  assert.ok(requests.some((url) => url.includes('scholar.google.com/scholar')));
   assert.equal(searchBody.candidates[0].origin, 'live-search');
   assert.ok(!searchBody.candidates.some((candidate) => /<\/?a\b|&nbsp;/.test(candidate.summary)));
   assert.ok(searchBody.candidates.some((candidate) => candidate.source === 'huggingface.co' || candidate.source === 'geeknews'));
+  assert.ok(searchBody.candidates.some((candidate) => candidate.source === 'Google Scholar' && candidate.type === 'paper'));
   assert.ok(searchBody.candidates.every((candidate) => candidate.thumbnail?.startsWith('/assets/news/thumb-')));
 
   const draftResponse = await focusedIssuePost({

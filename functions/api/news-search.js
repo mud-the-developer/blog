@@ -132,6 +132,47 @@ async function searchArxiv(query, limit) {
   }));
 }
 
+function htmlAttr(block, name) {
+  const match = String(block || '').match(new RegExp(`${name}=["']([^"']+)["']`, 'i'));
+  return decodeXml(match?.[1] || '');
+}
+
+async function searchGoogleScholar(query, limit) {
+  const url = `https://scholar.google.com/scholar?hl=en&q=${encodeURIComponent(query)}`;
+  const response = await fetchWithTimeout(url, { headers: { 'user-agent': 'mud-blog-news-search/1.0 (+https://mud.blog/news/search)' } });
+  if (!response.ok) throw new Error(`Google Scholar ${response.status}`);
+  const html = await response.text();
+  const items = [...html.matchAll(/<div[^>]+class=["'][^"']*gs_r[^"']*["'][^>]*>[\s\S]*?(?=<div[^>]+class=["'][^"']*gs_r[^"']*["']|<div[^>]+id=["']gs_res_ccl_bot["']|<\/body>|$)/gi)]
+    .slice(0, limit)
+    .map((match, index) => {
+      const block = match[0];
+      const titleAnchor = block.match(/<h3[^>]+class=["'][^"']*gs_rt[^"']*["'][^>]*>[\s\S]*?<a\b([^>]*)>([\s\S]*?)<\/a>/i);
+      const plainTitle = block.match(/<h3[^>]+class=["'][^"']*gs_rt[^"']*["'][^>]*>([\s\S]*?)<\/h3>/i);
+      const meta = decodeXml(block.match(/<div[^>]+class=["'][^"']*gs_a[^"']*["'][^>]*>([\s\S]*?)<\/div>/i)?.[1] || '');
+      const year = meta.match(/\b(19|20)\d{2}\b/)?.[0] || '';
+      return {
+        id: `google-scholar-${index + 1}`,
+        title: decodeXml(titleAnchor?.[2] || plainTitle?.[1] || `Google Scholar result ${index + 1}`),
+        url: htmlAttr(titleAnchor?.[1] || '', 'href'),
+        source: 'Google Scholar',
+        summary: decodeXml(block.match(/<div[^>]+class=["'][^"']*gs_rs[^"']*["'][^>]*>([\s\S]*?)<\/div>/i)?.[1] || meta),
+        publishedAt: year ? `${year}-01-01` : '',
+        type: 'paper'
+      };
+    })
+    .filter((item) => item.title && !/Google Scholar result \d+/.test(item.title));
+  if (items.length) return items;
+  return [{
+    id: 'google-scholar-search',
+    title: `Open Google Scholar results for ${query}`,
+    url,
+    source: 'Google Scholar',
+    summary: 'Google Scholar did not expose parseable result cards to this runtime; open the citation search page directly.',
+    publishedAt: '',
+    type: 'paper'
+  }];
+}
+
 const DIGEST_SOURCE_DOMAINS = {
   'digest-snapshot': [],
   'huggingface-papers': ['huggingface.co'],
@@ -140,6 +181,7 @@ const DIGEST_SOURCE_DOMAINS = {
   geeknews: ['geeknews'],
   endigest: ['endigest.dev'],
   arxiv: ['arxiv.org'],
+  'google-scholar': ['scholar.google.com'],
   'github-repositories': ['github.com']
 };
 
@@ -172,7 +214,7 @@ function fallbackFromAsset(feed, query, limit, sourceIds = ['digest-snapshot']) 
 }
 
 function selectedSourceIds(inputSources) {
-  const allowed = new Set(['google-news-rss', 'github-repositories', 'arxiv', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest']);
+  const allowed = new Set(['google-news-rss', 'github-repositories', 'arxiv', 'google-scholar', 'huggingface-papers', 'x', 'linkedin', 'geeknews', 'endigest']);
   const requested = Array.isArray(inputSources)
     ? inputSources.map((source) => String(source)).filter((source) => allowed.has(source))
     : [];
@@ -198,6 +240,7 @@ export async function onRequestPost({ request, env }) {
     'google-news-rss': () => searchGoogleNews(query, perSource),
     'github-repositories': () => searchGithub(query, perSource),
     arxiv: () => searchArxiv(query, perSource),
+    'google-scholar': () => searchGoogleScholar(query, perSource),
     'huggingface-papers': () => Promise.resolve(fallbackFromAsset(feed, query, perSource, ['huggingface-papers'])),
     x: () => Promise.resolve(fallbackFromAsset(feed, query, perSource, ['x'])),
     linkedin: () => Promise.resolve(fallbackFromAsset(feed, query, perSource, ['linkedin'])),

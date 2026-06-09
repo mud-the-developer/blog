@@ -474,7 +474,7 @@ fn minify_css(source: &str) -> String {
             pending_space = false;
         }
     }
-    output.trim().to_string()
+    output.trim().replace(";}", "}").replace("0.", ".")
 }
 
 fn folder_groups(posts: &[Post]) -> Vec<FolderGroup<'_>> {
@@ -1000,6 +1000,7 @@ fn selected_news_sources(request: &NewsSearchRequest) -> Vec<&'static str> {
         "google-news-rss",
         "github-repositories",
         "arxiv",
+        "google-scholar",
         "huggingface-papers",
         "x",
         "linkedin",
@@ -1227,6 +1228,117 @@ async fn fetch_arxiv_candidates(
         .collect())
 }
 
+fn html_class_text(block: &str, class_name: &str) -> String {
+    let Some(class_pos) = block.find(class_name) else {
+        return String::new();
+    };
+    let Some(open_end) = block[class_pos..].find('>') else {
+        return String::new();
+    };
+    let content_start = class_pos + open_end + 1;
+    let close_start = block[content_start..]
+        .find("</div>")
+        .or_else(|| block[content_start..].find("</h3>"))
+        .unwrap_or(block.len() - content_start);
+    strip_xml_tags(&block[content_start..content_start + close_start])
+}
+
+fn html_link(block: &str) -> (String, String) {
+    let search = block
+        .find("gs_rt")
+        .map(|pos| &block[pos..])
+        .unwrap_or(block);
+    let Some(link_start) = search.find("<a") else {
+        return (String::new(), html_class_text(block, "gs_rt"));
+    };
+    let link = &search[link_start..];
+    let href = ["href=\"", "href='"]
+        .iter()
+        .find_map(|prefix| {
+            let start = link.find(prefix)? + prefix.len();
+            let quote = prefix.chars().last()?;
+            Some(
+                link[start..]
+                    .split(quote)
+                    .next()
+                    .unwrap_or_default()
+                    .to_string(),
+            )
+        })
+        .unwrap_or_default();
+    let title = link
+        .find('>')
+        .and_then(|start| link[start + 1..].find("</a>").map(|end| (start, end)))
+        .map(|(start, end)| strip_xml_tags(&link[start + 1..start + 1 + end]))
+        .unwrap_or_default();
+    (decode_xml_text(&href), title)
+}
+
+async fn fetch_google_scholar_candidates(
+    client: &reqwest::Client,
+    query: &str,
+    limit: usize,
+) -> Result<Vec<serde_json::Value>, String> {
+    let url = format!(
+        "https://scholar.google.com/scholar?hl=en&q={}",
+        simple_url_encode(query)
+    );
+    let html = client
+        .get(&url)
+        .header(
+            "user-agent",
+            "mud-blog-news-search/1.0 (+https://mud.blog/news/search)",
+        )
+        .send()
+        .await
+        .map_err(|error| format!("google-scholar: {error}"))?
+        .text()
+        .await
+        .map_err(|error| format!("google-scholar: {error}"))?;
+    let mut items = html
+        .split("gs_r gs_or")
+        .skip(1)
+        .take(limit)
+        .enumerate()
+        .filter_map(|(index, block)| {
+            let (url, title) = html_link(block);
+            if title.is_empty() {
+                return None;
+            }
+            let meta = html_class_text(block, "gs_a");
+            let year = meta
+                .split(|ch: char| !ch.is_ascii_digit())
+                .find(|part| part.len() == 4 && (part.starts_with("19") || part.starts_with("20")))
+                .unwrap_or_default()
+                .to_string();
+            let summary = html_class_text(block, "gs_rs");
+            Some(json!({
+                "id": format!("google-scholar-{}", index + 1),
+                "title": title,
+                "url": url,
+                "source": "Google Scholar",
+                "summary": if summary.is_empty() { meta } else { summary },
+                "publishedAt": if year.is_empty() { String::new() } else { format!("{year}-01-01") },
+                "origin": "live-search",
+                "type": "paper"
+            }))
+        })
+        .collect::<Vec<_>>();
+    if items.is_empty() {
+        items.push(json!({
+            "id": "google-scholar-search",
+            "title": format!("Open Google Scholar results for {query}"),
+            "url": url,
+            "source": "Google Scholar",
+            "summary": "Google Scholar did not expose parseable result cards to this runtime; open the citation search page directly.",
+            "publishedAt": "",
+            "origin": "live-search",
+            "type": "paper"
+        }));
+    }
+    Ok(items)
+}
+
 fn dedupe_candidates(candidates: Vec<serde_json::Value>) -> Vec<serde_json::Value> {
     let mut seen = std::collections::HashSet::new();
     let mut unique = Vec::new();
@@ -1278,6 +1390,7 @@ async fn news_search_handler(
             "google-news-rss" => fetch_google_news_candidates(&client, &query, per_source).await,
             "github-repositories" => fetch_github_candidates(&client, &query, per_source).await,
             "arxiv" => fetch_arxiv_candidates(&client, &query, per_source).await,
+            "google-scholar" => fetch_google_scholar_candidates(&client, &query, per_source).await,
             _ => Ok(Vec::new()),
         };
         match result {

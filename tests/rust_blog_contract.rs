@@ -119,7 +119,11 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(news_search.contains("Google News"));
     assert!(news_search.contains("GitHub repositories"));
     assert!(news_search.contains("arXiv papers"));
+    assert!(news_search.contains("Google Scholar"));
     assert!(news_search.contains("Hugging Face Papers"));
+    assert!(news_search.contains("data-source-group=\"code\""));
+    assert!(news_search.contains("data-source-group=\"paper\""));
+    assert!(news_search.contains("data-source-group=\"social\""));
     assert!(news_search.contains("GeekNews"));
     assert!(news_search.contains("Endigest"));
     assert!(news_search.contains("Search news"));
