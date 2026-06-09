@@ -100,8 +100,8 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(!style.contains(".archive-graph"));
     assert!(!style.to_ascii_lowercase().contains("neon"));
     assert!(
-        style.len() <= 28_700,
-        "public polish CSS should stay bounded even with news desk motion, query modes, icons, theme modes, and dark contrast guards"
+        style.len() <= 29_300,
+        "public polish CSS should stay bounded even with responsive news controls, post chrome spacing, icons, theme modes, and dark contrast guards"
     );
 
     let profile = fs::read_to_string(out_dir.join("posts/jinhyuk-kim/index.html"))?;

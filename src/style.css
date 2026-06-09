@@ -496,21 +496,30 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
 .source-picker,
 .query-mode-picker {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
   gap: 8px;
   min-width: 0;
+  max-width: 100%;
   border: 1px solid rgba(222, 209, 191, 0.76);
   border-radius: 16px;
   padding: 10px;
   background: rgba(255, 253, 248, 0.62);
 }
+.query-mode-picker { grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); }
 .source-picker legend,
-.query-mode-picker legend { padding: 0 5px; color: var(--muted); font-size: 0.78rem; font-weight: 760; }
+.query-mode-picker legend {
+  padding: 0 5px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 760;
+  line-height: 1.3;
+}
 .source-picker-group {
   display: flex;
   flex-wrap: wrap;
   align-content: start;
   gap: 6px;
+  min-width: 0;
   border: 1px solid rgba(222, 209, 191, 0.68);
   border-radius: 13px;
   padding: 8px;
@@ -532,11 +541,19 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
   align-items: center;
   gap: 6px;
   min-width: 0;
+  max-width: 100%;
   border: 1px solid rgba(222, 209, 191, 0.68);
   border-radius: 999px;
   padding: 6px 9px;
   background: rgba(246, 242, 234, 0.54);
 }
+.query-mode-picker label {
+  width: 100%;
+  min-height: 36px;
+  justify-content: flex-start;
+}
+.source-picker label > span,
+.query-mode-picker label > span { min-width: 0; overflow-wrap: anywhere; }
 .source-picker input,
 .query-mode-picker input {
   width: auto;
@@ -550,6 +567,14 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
   max-width: 100%;
   min-width: 0;
   overflow-wrap: anywhere;
+}
+.draft-action-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  max-width: 100%;
 }
 .news-source-radar {
   display: grid;
@@ -965,6 +990,12 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
   max-width: 760px;
   margin: 0 auto;
   padding: clamp(18px, 4vw, 40px) 0;
+}
+.post-reader > .back-link {
+  display: flex;
+  width: fit-content;
+  margin: 0 0 clamp(14px, 2vw, 22px);
+  align-items: center;
 }
 .post-reader h1 { margin: 22px 0 26px; font-size: clamp(2.4rem, 5vw, 4.6rem); }
 .post-body {

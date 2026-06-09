@@ -253,6 +253,8 @@ test('post pages keep rich media and inline html aligned with the article width'
     const article = document.querySelector('.post-reader')?.getBoundingClientRect();
     const iframe = document.querySelector('.profile-publication-widget')?.getBoundingClientRect();
     const linkGrid = document.querySelector('.profile-link-grid')?.getBoundingClientRect();
+    const backLink = document.querySelector('.back-link')?.getBoundingClientRect();
+    const metadata = document.querySelector('.post-reader > .eyebrow')?.getBoundingClientRect();
     const images = [...document.querySelectorAll('.post-body img')].map((image) => image.getBoundingClientRect().width);
     const body = document.querySelector('.post-body');
     const bodyStyles = body ? getComputedStyle(body) : null;
@@ -261,6 +263,8 @@ test('post pages keep rich media and inline html aligned with the article width'
       iframeWidth: iframe?.width || 0,
       linkGridWidth: linkGrid?.width || 0,
       imageMax: images.length ? Math.max(...images) : 0,
+      backBottom: backLink?.bottom || 0,
+      metadataTop: metadata?.top || 0,
       lineHeight: bodyStyles ? Number.parseFloat(bodyStyles.lineHeight) : 0,
       scrollWidth: document.documentElement.scrollWidth,
       clientWidth: document.documentElement.clientWidth,
@@ -270,9 +274,67 @@ test('post pages keep rich media and inline html aligned with the article width'
   expect(audit.iframeWidth).toBeLessThanOrEqual(audit.articleWidth + 1);
   expect(audit.linkGridWidth).toBeLessThanOrEqual(audit.articleWidth + 1);
   expect(audit.imageMax).toBeLessThanOrEqual(audit.articleWidth + 1);
+  expect(audit.metadataTop).toBeGreaterThanOrEqual(audit.backBottom + 10);
   expect(audit.lineHeight).toBeGreaterThanOrEqual(30.8);
   expect(audit.lineHeight).toBeLessThanOrEqual(32.5);
   expect(audit.scrollWidth).toBeLessThanOrEqual(audit.clientWidth + 1);
+});
+
+test('narrow news search and post chrome keep controls separated without overlap', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 1200 });
+  await page.goto('/news/search/');
+
+  const newsLayout = await page.evaluate(() => {
+    const rect = (selector) => {
+      const node = document.querySelector(selector);
+      if (!node) return null;
+      const box = node.getBoundingClientRect();
+      return { left: box.left, top: box.top, right: box.right, bottom: box.bottom, width: box.width, height: box.height };
+    };
+    const rects = (selector) => [...document.querySelectorAll(selector)].map((node) => {
+      const box = node.getBoundingClientRect();
+      return { left: box.left, top: box.top, right: box.right, bottom: box.bottom, width: box.width, height: box.height, text: node.textContent.trim() };
+    });
+    const overlaps = (a, b) => a && b && a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+    const inside = (child, parent) => child && parent && child.left >= parent.left - 1 && child.right <= parent.right + 1;
+    const query = rect('.query-mode-picker');
+    const queryLegend = rect('.query-mode-picker legend');
+    const queryLabels = rects('.query-mode-picker label');
+    const sourcePicker = rect('.source-picker');
+    const sourceGroups = rects('.source-picker-group');
+    const actionButtons = rects('.draft-action-row button');
+    return {
+      scrollWidth: document.documentElement.scrollWidth,
+      clientWidth: document.documentElement.clientWidth,
+      queryLabelWidths: queryLabels.map((label) => label.width),
+      queryLegendOverlaps: queryLabels.map((label) => overlaps(queryLegend, label)),
+      queryLabelsInside: queryLabels.map((label) => inside(label, query)),
+      sourceGroupWidths: sourceGroups.map((group) => group.width),
+      sourceGroupsInside: sourceGroups.map((group) => inside(group, sourcePicker)),
+      actionButtonOverlaps: actionButtons.flatMap((button, index) => actionButtons.slice(index + 1).map((next) => overlaps(button, next))),
+    };
+  });
+  expect(newsLayout.scrollWidth).toBeLessThanOrEqual(newsLayout.clientWidth + 1);
+  expect(newsLayout.queryLabelWidths.every((width) => width >= 160)).toBe(true);
+  expect(newsLayout.queryLegendOverlaps).toEqual([false, false]);
+  expect(newsLayout.queryLabelsInside).toEqual([true, true]);
+  expect(newsLayout.sourceGroupWidths.every((width) => width >= 160)).toBe(true);
+  expect(newsLayout.sourceGroupsInside).toEqual([true, true, true, true]);
+  expect(newsLayout.actionButtonOverlaps.every((value) => value === false)).toBe(true);
+
+  await page.goto('/posts/jinhyuk-kim/');
+  const postLayout = await page.evaluate(() => {
+    const back = document.querySelector('.back-link')?.getBoundingClientRect();
+    const metadata = document.querySelector('.post-reader > .eyebrow')?.getBoundingClientRect();
+    return {
+      backBottom: back?.bottom || 0,
+      metadataTop: metadata?.top || 0,
+      scrollWidth: document.documentElement.scrollWidth,
+      clientWidth: document.documentElement.clientWidth,
+    };
+  });
+  expect(postLayout.scrollWidth).toBeLessThanOrEqual(postLayout.clientWidth + 1);
+  expect(postLayout.metadataTop).toBeGreaterThanOrEqual(postLayout.backBottom + 10);
 });
 
 test('post fragment remains direct readable cards for safe replacement', async ({ page, request }) => {
