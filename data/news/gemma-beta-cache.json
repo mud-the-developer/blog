@@ -334,6 +334,42 @@
     ],
     "title": "AI Agentic Infrastructure and Retrieval"
   },
+  "704e543d5ececa0f52764a755ac84fe6612cdf3e8ec1ead8a29e2293f6b851f7": {
+    "article_body": [
+      "GitHub velocity is currently led by `warpdotdev/warp`, an agentic development environment focused on enhancing the terminal experience. This trend is reinforced by `anomalyco/opencode`, another open-source coding agent demonstrating strong momentum. Additionally, `BerriAI/litellm` remains a prominent project, functioning as a versatile SDK and proxy for over 100 LLM APIs, offering features like cost tracking and load balancing.",
+      "In the realm of research, significant attention is directed towards new methodologies for AI evaluation. `Skill-RM: Unifying Heterogeneous Evaluation Criteria via Agent Skill` stands out, proposing a unified reward modeling framework for agentic tasks. Another impactful paper, `FlashMemory-DeepSeek-V4`, details advancements in ultra-long context processing through lookahead sparse attention, indicating ongoing efforts to optimize LLM efficiency. Other related papers, such as `Bayesian-Agent` and `Skill-3D`, further explore agent skill evolution and spatial reasoning.",
+      "Community discussions are largely centered on Apple's recent AI announcements regarding Siri, generating considerable engagement on platforms like GeekNews. Broader social sentiment also highlights the growing interest in \"agentic coding,\" with conversations emphasizing its potential to transform development workflows. Today's digest compiled 10 repository signals, 10 paper picks, and 10 community items, sourced from platforms including GitHub, Hugging Face Papers, and GeekNews."
+    ],
+    "closing": "This concludes the daily AI beta brief for June 11, 2026.",
+    "dek": "Agentic development environments, new research on unifying AI evaluation via agent skills, and Apple's Siri AI announcements are key drivers in today's AI landscape.",
+    "lead": "The AI sector today is notably active in agentic development, with GitHub projects showcasing advanced coding environments. Concurrently, research continues to refine AI evaluation, particularly through novel approaches to assessing agent skills. Community discussions are also heavily influenced by Apple's recent AI unveiling.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "Agentic development tools and coding agents are a dominant theme in current open-source AI projects.",
+      "Research is actively advancing in skill-based AI evaluation and long-context LLM efficiency.",
+      "Apple's AI strategy, particularly concerning Siri, is a major point of discussion in the community.",
+      "The concept of \"agentic engineering\" is gaining traction across both development and social spheres."
+    ],
+    "title": "Daily AI Brief: Agentic Dev Tools and Skill-Based Models Lead"
+  },
+  "704e543d5ececa0f52764a755ac84fe6612cdf3e8ec1ead8a29e2293f6b851f7::overview": {
+    "article_body": [
+      "GitHub velocity is currently led by `warpdotdev/warp`, an agentic development environment focused on enhancing the terminal experience. This trend is reinforced by `anomalyco/opencode`, another open-source coding agent demonstrating strong momentum. Additionally, `BerriAI/litellm` remains a prominent project, functioning as a versatile SDK and proxy for over 100 LLM APIs, offering features like cost tracking and load balancing.",
+      "In the realm of research, significant attention is directed towards new methodologies for AI evaluation. `Skill-RM: Unifying Heterogeneous Evaluation Criteria via Agent Skill` stands out, proposing a unified reward modeling framework for agentic tasks. Another impactful paper, `FlashMemory-DeepSeek-V4`, details advancements in ultra-long context processing through lookahead sparse attention, indicating ongoing efforts to optimize LLM efficiency. Other related papers, such as `Bayesian-Agent` and `Skill-3D`, further explore agent skill evolution and spatial reasoning.",
+      "Community discussions are largely centered on Apple's recent AI announcements regarding Siri, generating considerable engagement on platforms like GeekNews. Broader social sentiment also highlights the growing interest in \"agentic coding,\" with conversations emphasizing its potential to transform development workflows. Today's digest compiled 10 repository signals, 10 paper picks, and 10 community items, sourced from platforms including GitHub, Hugging Face Papers, and GeekNews."
+    ],
+    "closing": "This concludes the daily AI beta brief for June 11, 2026.",
+    "dek": "Agentic development environments, new research on unifying AI evaluation via agent skills, and Apple's Siri AI announcements are key drivers in today's AI landscape.",
+    "lead": "The AI sector today is notably active in agentic development, with GitHub projects showcasing advanced coding environments. Concurrently, research continues to refine AI evaluation, particularly through novel approaches to assessing agent skills. Community discussions are also heavily influenced by Apple's recent AI unveiling.",
+    "takeaways": [
+      "Agentic development tools and coding agents are a dominant theme in current open-source AI projects.",
+      "Research is actively advancing in skill-based AI evaluation and long-context LLM efficiency.",
+      "Apple's AI strategy, particularly concerning Siri, is a major point of discussion in the community.",
+      "The concept of \"agentic engineering\" is gaining traction across both development and social spheres."
+    ],
+    "title": "Daily AI Brief: Agentic Dev Tools and Skill-Based Models Lead"
+  },
   "7b73f57be87249695fdd0f725e793dc91f66bc32065e2206dc8b608ce5b2bca1": {
     "paragraphs": [
       "The developer community is increasingly focused on the practicalities of agent deployment, with new utilities surfacing to streamline creation and quality control. The Spring AI Playground has emerged as a desktop solution for MCP tool creation, testing, and external integration, while the AI-SLOP Detector 3.1.1 provides a necessary check against the \"spaghetti code\" often produced by autonomous agents.",
