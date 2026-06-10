@@ -87,8 +87,7 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   await expect(page.locator('[data-pretext-polish]')).toHaveAttribute('data-pretext-ready', 'true');
   const motion = await page.evaluate(() => {
     const frames = [...document.querySelectorAll('.pretext-cat-frame')];
-    const paws = [...document.querySelectorAll('.pretext-cat-paw')];
-    const animated = [...frames, ...paws, ...document.querySelectorAll('.pretext-cat-shadow')].filter((node) => {
+    const animated = [...frames].filter((node) => {
       const style = getComputedStyle(node);
       return style.animationName !== 'none' && style.animationDuration !== '0s';
     });
@@ -113,7 +112,7 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
       archiveCount: Array.isArray(archive) ? archive.length : 0,
       catStageCount: document.querySelectorAll('.pretext-cat-stage').length,
       frameCount: frames.length,
-      pawCount: paws.length,
+      pawCount: document.querySelectorAll('.pretext-cat-paw').length,
       animatedCount: animated.length,
       ambientLayerCount: document.querySelectorAll('.pretext-ambient-layer').length,
       scene: stage?.dataset.pretextScene || '',
@@ -124,13 +123,10 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
       oldCopyCount: (stage?.textContent || '').match(/INDEX LOOM|writing index|posts\/|blog\/|papers\/|open RAN|Rust/g)?.length || 0,
       clippedFrameCount: stageRect ? frameBoxes.filter((box) => box.left < stageRect.left || box.right > stageRect.right || box.top < stageRect.top || box.bottom > stageRect.bottom).length : 0,
       interactive: stage?.dataset.pretextInteractive || '',
-      frontGlassBackdrop: (() => {
-        const front = document.querySelector('.pretext-front-glass');
-        if (!front) return '';
-        const style = getComputedStyle(front);
-        return style.backdropFilter || style.webkitBackdropFilter || '';
-      })(),
-      frontGlassZ: Number(getComputedStyle(document.querySelector('.pretext-front-glass') || document.body).zIndex || 0),
+      catFontSize: Number.parseFloat(getComputedStyle(frames[0] || document.body).fontSize || '0'),
+      catLineCount: frames[0]?.textContent.trim().split('\n').length || 0,
+      detailedRowCount: frames.filter((frame) => frame.textContent.split('\n').some((row) => row.length >= 30)).length,
+      decorativeNodeCount: document.querySelectorAll('.pretext-cat-paw,.pretext-cat-shadow,.pretext-ambient-layer,.pretext-front-glass').length,
       maxCatZ: Math.max(...frames.map((frame) => Number(getComputedStyle(frame).zIndex || 0))),
       filetreeWidth: document.querySelector('.filetree')?.getBoundingClientRect().width || 0,
       hasCatCss: css.includes('pretext-cat-blink') && css.includes('pretext-cat-prowl') && css.includes('font-variant-ligatures'),
@@ -144,21 +140,23 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   expect(motion.catStageCount).toBe(1);
   expect(motion.frameCount).toBeGreaterThanOrEqual(4);
   expect(motion.frameCount).toBeLessThanOrEqual(6);
-  expect(motion.pawCount).toBeGreaterThanOrEqual(8);
-  expect(motion.animatedCount).toBeGreaterThanOrEqual(8);
-  expect(motion.ambientLayerCount).toBeGreaterThanOrEqual(3);
+  expect(motion.pawCount).toBe(0);
+  expect(motion.animatedCount).toBeGreaterThanOrEqual(4);
+  expect(motion.ambientLayerCount).toBe(0);
   expect(motion.scene).toBe('kinetic-ascii-cat');
-  expect(motion.frontGlassCount).toBe(1);
+  expect(motion.frontGlassCount).toBe(0);
   expect(motion.linkCount).toBe(0);
   expect(motion.anchorTokenCount).toBe(0);
-  expect(motion.frameText).toContain('/\\_/\\');
-  expect(motion.frameText).toContain('( o.o )');
-  expect(motion.frameText).toContain('( -.- )');
+  expect(motion.frameText).toContain('/\\\\_____/\\\\');
+  expect(motion.frameText).toContain('( ==  o  == )');
+  expect(motion.frameText).toContain('( ==  -  == )');
   expect(motion.oldCopyCount).toBe(0);
   expect(motion.clippedFrameCount).toBe(0);
   expect(motion.interactive).toBe('true');
-  expect(motion.frontGlassBackdrop).toContain('blur');
-  expect(motion.frontGlassZ).toBeLessThan(motion.maxCatZ);
+  expect(motion.catFontSize).toBeLessThanOrEqual(12);
+  expect(motion.catLineCount).toBeGreaterThanOrEqual(13);
+  expect(motion.detailedRowCount).toBeGreaterThanOrEqual(4);
+  expect(motion.decorativeNodeCount).toBe(0);
   expect(motion.filetreeWidth).toBeLessThanOrEqual(860);
   expect(motion.hasCatCss).toBe(true);
   expect(motion.hasDecorativeBackgroundPattern).toBe(false);

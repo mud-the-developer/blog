@@ -63,7 +63,7 @@ test('theme render effect keeps the visible theme label inside the accessible na
   assert.equal(attributes['aria-pressed'], 'false');
 });
 
-test('pretext polish reducer emits moving cat ASCII art without archive copy', () => {
+test('pretext polish reducer emits miniature detailed cat ASCII art without extra decoration', () => {
   const initial = createPretextState({ archive, isMobile: false });
   const step = pretextReducer(initial, { type: 'pretext.mounted' });
 
@@ -74,16 +74,18 @@ test('pretext polish reducer emits moving cat ASCII art without archive copy', (
   assert.equal(effect.type, 'render-pretext-ascii-cat');
   assert.equal(effect.scene, 'kinetic-ascii-cat');
   assert.deepEqual(effect.links, []);
-  assert.equal(effect.cat.label, '=^._.^=');
+  assert.equal(effect.cat.label, 'miniature-detailed-cat');
   assert.ok(effect.cat.frames.length >= 4);
   assert.ok(effect.cat.frames.length <= 6);
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.length >= 5));
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.join('\n').includes('/\\_/\\')));
-  assert.ok(effect.cat.frames.some((frame) => frame.rows.join('\n').includes('( o.o )')));
-  assert.ok(effect.cat.frames.some((frame) => frame.rows.join('\n').includes('( -.- )')));
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.every((row) => row.length <= 28)));
-  assert.ok(effect.paws.length >= 8);
-  assert.ok(effect.paws.every((paw) => paw.glyph === '·' || paw.glyph === '˙'));
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.length >= 13));
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.join('\n').includes('/\\\\_____/\\\\')));
+  assert.ok(effect.cat.frames.some((frame) => frame.rows.join('\n').includes('( ==  o  == )')));
+  assert.ok(effect.cat.frames.some((frame) => frame.rows.join('\n').includes('( ==  -  == )')));
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.some((row) => row.length >= 30)));
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.every((row) => row.length <= 56)));
+  assert.deepEqual(effect.paws, []);
+  assert.equal(effect.cat.shadow, null);
+  assert.deepEqual(effect.cat.decorations, []);
   assert.ok(effect.motion.duration.endsWith('s'));
   const renderedCopy = JSON.stringify(effect);
   assert.equal(/open RAN|Rust|papers|blog\/|posts\/|INDEX LOOM|writing index/i.test(renderedCopy), false);

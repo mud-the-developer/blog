@@ -127,9 +127,11 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(!style.contains("pretext-loom-thread"));
     assert!(!style.contains("pretext-ascii-row-pulse"));
     assert!(!style.contains("pretext-scan-lane"));
-    assert!(style.contains("pretext-front-glass"));
+    assert!(!style.contains("pretext-front-glass"));
+    assert!(!style.contains("pretext-ambient-layer"));
+    assert!(!style.contains("pretext-cat-paw"));
+    assert!(!style.contains("pretext-cat-shadow"));
     assert!(style.contains("pretext-cat-frame"));
-    assert!(style.contains("backdrop-filter"));
     assert!(style.contains("--space-bg"));
     assert!(style.contains("--glass-bg"));
     assert!(!style.contains("radial-gradient"));

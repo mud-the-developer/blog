@@ -16,7 +16,7 @@ async function runtimeAudit(page) {
       postCards: document.querySelectorAll('.post-card').length,
       filetreeFiles: document.querySelectorAll('.filetree-file').length,
       pretextCatFrames: document.querySelectorAll('.pretext-cat-frame').length,
-      pretextCatPaws: document.querySelectorAll('.pretext-cat-paw').length,
+      pretextDecorations: document.querySelectorAll('.pretext-cat-paw,.pretext-cat-shadow,.pretext-ambient-layer,.pretext-front-glass').length,
       graphCount: document.querySelectorAll('[data-archive-graph]').length,
       fieldStages: document.querySelectorAll('[data-field-stage]').length,
       scrollWidth: document.documentElement.scrollWidth,
@@ -44,7 +44,7 @@ test('desktop and mobile public homepage stay polished without layout overflow',
     expect(audit.fieldStages, name).toBe(0);
     expect(audit.pretextCatFrames, name).toBeGreaterThanOrEqual(4);
     expect(audit.pretextCatFrames, name).toBeLessThanOrEqual(6);
-    expect(audit.pretextCatPaws, name).toBeGreaterThanOrEqual(8);
+    expect(audit.pretextDecorations, name).toBe(0);
     expect(audit.nodes, name).toBeLessThanOrEqual(980);
     expect(audit.scrollWidth, name).toBeLessThanOrEqual(audit.clientWidth + 1);
 
@@ -60,7 +60,7 @@ test('reduced-motion keeps the filetree but disables ambient Pretext animation',
   await page.goto('/', { waitUntil: 'networkidle' });
   const audit = await runtimeAudit(page);
   const publicPostCount = audit.archiveCount;
-  const animatedCount = await page.locator('.pretext-cat-frame,.pretext-cat-paw,.pretext-cat-shadow,.pretext-ambient-layer').evaluateAll((tokens) =>
+  const animatedCount = await page.locator('.pretext-cat-frame').evaluateAll((tokens) =>
     tokens.filter((token) => {
       const style = window.getComputedStyle(token);
       return style.animationName !== 'none' && style.animationDuration !== '0s' && style.animationDuration !== '0.01ms';
