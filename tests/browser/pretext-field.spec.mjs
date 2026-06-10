@@ -85,12 +85,30 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   await expect(page.locator('.paper-grid')).toHaveCount(0);
 
   await expect(page.locator('[data-pretext-polish]')).toHaveAttribute('data-pretext-ready', 'true');
+  const firstSpriteSample = await page.evaluate(() => {
+    const sprite = document.querySelector('.pretext-cat-sprite');
+    return {
+      text: sprite?.textContent || '',
+      x: getComputedStyle(sprite || document.body).getPropertyValue('--cat-x').trim(),
+      pose: sprite?.dataset.pose || '',
+      frameIndex: sprite?.dataset.frameIndex || ''
+    };
+  });
+  await page.waitForTimeout(420);
+  const secondSpriteSample = await page.evaluate(() => {
+    const sprite = document.querySelector('.pretext-cat-sprite');
+    return {
+      text: sprite?.textContent || '',
+      x: getComputedStyle(sprite || document.body).getPropertyValue('--cat-x').trim(),
+      pose: sprite?.dataset.pose || '',
+      frameIndex: sprite?.dataset.frameIndex || ''
+    };
+  });
+
   const motion = await page.evaluate(() => {
-    const frames = [...document.querySelectorAll('.pretext-cat-frame')];
-    const animated = [...frames].filter((node) => {
-      const style = getComputedStyle(node);
-      return style.animationName !== 'none' && style.animationDuration !== '0s';
-    });
+    const sprite = document.querySelector('.pretext-cat-sprite');
+    const frameData = JSON.parse(document.querySelector('[data-pretext-cat-frames]')?.textContent || '[]');
+    const style = getComputedStyle(sprite || document.body);
     const css = [...document.styleSheets]
       .flatMap((sheet) => {
         try {
@@ -103,79 +121,94 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
     const archive = JSON.parse(document.getElementById('archive-data')?.textContent || '[]');
     const stage = document.querySelector('[data-pretext-polish]');
     const stageRect = stage?.getBoundingClientRect();
-    const frameBoxes = frames.map((frame) => {
-      const rect = frame.getBoundingClientRect();
-      return { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom };
-    });
-    const frameText = frames.map((frame) => frame.textContent.trim()).join('\n');
+    const spriteRect = sprite?.getBoundingClientRect();
+    const spriteText = sprite?.textContent || '';
+    const samples = window.__pretextCatMotionSamples || [];
+    const sampleXs = new Set(samples.map((sample) => sample.x));
+    const sampleFrames = new Set(samples.map((sample) => sample.frameIndex));
     return {
       archiveCount: Array.isArray(archive) ? archive.length : 0,
       catStageCount: document.querySelectorAll('.pretext-cat-stage').length,
-      frameCount: frames.length,
-      pawCount: document.querySelectorAll('.pretext-cat-paw').length,
-      animatedCount: animated.length,
+      spriteCount: document.querySelectorAll('.pretext-cat-sprite').length,
+      hiddenFrameNodeCount: document.querySelectorAll('.pretext-cat-frame').length,
+      frameDataCount: frameData.length,
+      animatedCount: sprite && style.animationName !== 'none' && style.animationDuration !== '0s' ? 1 : 0,
       ambientLayerCount: document.querySelectorAll('.pretext-ambient-layer').length,
       scene: stage?.dataset.pretextScene || '',
+      references: stage?.dataset.pretextReferences || '',
+      referenceSource: sprite?.dataset.referenceSource || '',
+      continuousMotion: sprite?.dataset.continuousMotion || '',
+      spriteMode: document.querySelector('.pretext-cat-stage')?.dataset.spriteMode || '',
+      refreshMode: document.querySelector('.pretext-cat-stage')?.dataset.refreshMode || sprite?.dataset.refreshMode || '',
+      linkStatusCount: document.querySelectorAll('[data-pretext-cat-link]').length,
+      linkStatusText: document.querySelector('[data-pretext-cat-link]')?.textContent || '',
       frontGlassCount: document.querySelectorAll('.pretext-front-glass').length,
       linkCount: document.querySelectorAll('.pretext-link,.pretext-network').length,
-      anchorTokenCount: document.querySelectorAll('a.pretext-cat-frame[href],a.pretext-ascii-row[href],a.pretext-type-fragment[href],a.pretext-fragment[href],a.pretext-token[href]').length,
-      frameText,
+      anchorTokenCount: document.querySelectorAll('a.pretext-cat-sprite[href],a.pretext-cat-frame[href],a.pretext-ascii-row[href],a.pretext-type-fragment[href],a.pretext-fragment[href],a.pretext-token[href]').length,
+      spriteText,
       behaviorList: document.querySelector('.pretext-cat-stage')?.dataset.behaviors || '',
-      poseNames: [...new Set(frames.map((frame) => frame.dataset.pose || ''))].filter(Boolean),
-      jumpFrameCount: frames.filter((frame) => frame.dataset.pose === 'jump').length,
-      napFrameCount: frames.filter((frame) => frame.dataset.pose === 'nap').length,
-      highJumpCount: frames.filter((frame) => Number.parseFloat(getComputedStyle(frame).getPropertyValue('--pose-y')) < -28).length,
-      variedXCount: new Set(frames.map((frame) => getComputedStyle(frame).getPropertyValue('--pose-x').trim())).size,
+      poseNames: [...new Set(frameData.map((frame) => frame.pose || ''))].filter(Boolean),
       oldCopyCount: (stage?.textContent || '').match(/INDEX LOOM|writing index|posts\/|blog\/|papers\/|open RAN|Rust/g)?.length || 0,
-      clippedFrameCount: stageRect ? frameBoxes.filter((box) => box.left < stageRect.left || box.right > stageRect.right || box.top < stageRect.top || box.bottom > stageRect.bottom).length : 0,
+      clippedSpriteCount: stageRect && spriteRect && (spriteRect.left < stageRect.left || spriteRect.right > stageRect.right || spriteRect.top < stageRect.top || spriteRect.bottom > stageRect.bottom) ? 1 : 0,
       interactive: stage?.dataset.pretextInteractive || '',
-      catFontSize: Number.parseFloat(getComputedStyle(frames[0] || document.body).fontSize || '0'),
-      catLineCount: frames[0]?.textContent.trim().split('\n').length || 0,
-      detailedRowCount: frames.filter((frame) => frame.textContent.split('\n').some((row) => row.length >= 18)).length,
+      catFontSize: Number.parseFloat(style.fontSize || '0'),
+      catLineCount: spriteText.trim().split('\n').length || 0,
+      detailedRowCount: frameData.filter((frame) => frame.rows.some((row) => row.length >= 18)).length,
       decorativeNodeCount: document.querySelectorAll('.pretext-cat-paw,.pretext-cat-shadow,.pretext-ambient-layer,.pretext-front-glass').length,
-      maxCatZ: Math.max(...frames.map((frame) => Number(getComputedStyle(frame).zIndex || 0))),
+      maxCatZ: Number(style.zIndex || 0),
       filetreeWidth: document.querySelector('.filetree')?.getBoundingClientRect().width || 0,
-      hasCatCss: css.includes('pretext-cat-blink') && css.includes('pretext-cat-prowl') && css.includes('font-variant-ligatures'),
+      hasCatCss: css.includes('pretext-cat-breathe') && css.includes('pretext-cat-sprite') && css.includes('font-variant-ligatures'),
+      hasOldSeparateFrameCss: css.includes('pretext-cat-blink') || css.includes('pretext-cat-prowl'),
       hasDecorativeBackgroundPattern: /radial-gradient|orbit|bubble|stripe/i.test(css),
       mentionsNeon: css.toLowerCase().includes('neon'),
+      sampleCount: samples.length,
+      sampleXCount: sampleXs.size,
+      sampleFrameCount: sampleFrames.size,
       scrollWidth: document.documentElement.scrollWidth,
       clientWidth: document.documentElement.clientWidth,
     };
   });
   expect(motion.archiveCount).toBe(publicPostCount);
   expect(motion.catStageCount).toBe(1);
-  expect(motion.frameCount).toBeGreaterThanOrEqual(6);
-  expect(motion.frameCount).toBeLessThanOrEqual(7);
-  expect(motion.pawCount).toBe(0);
-  expect(motion.animatedCount).toBeGreaterThanOrEqual(4);
+  expect(motion.spriteCount).toBe(1);
+  expect(motion.hiddenFrameNodeCount).toBe(0);
+  expect(motion.frameDataCount).toBe(10);
+  expect(motion.animatedCount).toBe(1);
   expect(motion.ambientLayerCount).toBe(0);
   expect(motion.scene).toBe('kinetic-ascii-cat');
+  expect(motion.references).toContain('github.com/adryd325/oneko.js');
+  expect(motion.referenceSource).toContain('oneko.js Neko two-frame walk cycle');
+  expect(motion.continuousMotion).toBe('true');
+  expect(motion.spriteMode).toBe('single-continuous-sprite');
+  expect(motion.refreshMode).toBe('slow-baud-row-refresh');
+  expect(motion.linkStatusCount).toBe(1);
+  expect(motion.linkStatusText).toContain('CAT-LINK 1200');
   expect(motion.frontGlassCount).toBe(0);
   expect(motion.linkCount).toBe(0);
   expect(motion.anchorTokenCount).toBe(0);
-  expect(motion.frameText).toContain('/\\_/\\');
-  expect(motion.frameText).toContain('( o.o )');
-  expect(motion.frameText).toContain('( -.- )');
-  expect(motion.frameText).toContain('=^.^=');
-  expect(motion.frameText.toLowerCase()).toContain('zzz');
-  expect(motion.behaviorList).toBe('sit blink crouch jump land');
-  expect(motion.poseNames).toEqual(expect.arrayContaining(['sit', 'blink', 'crouch', 'jump', 'land', 'nap']));
-  expect(motion.jumpFrameCount).toBeGreaterThanOrEqual(1);
-  expect(motion.napFrameCount).toBeGreaterThanOrEqual(1);
-  expect(motion.highJumpCount).toBeGreaterThanOrEqual(1);
-  expect(motion.variedXCount).toBeGreaterThanOrEqual(4);
+  expect(motion.spriteText).toContain('/\\_/\\');
+  expect(motion.spriteText).toMatch(/\( o\.o \)|\( -\.- \)|=\^\.\^=/);
+  expect(motion.behaviorList).toBe('walk turn blink tail-handshake baud-refresh');
+  expect(motion.poseNames).toEqual(expect.arrayContaining(['gait-01-contact', 'gait-02-lift', 'gait-03-pass', 'gait-04-reach', 'blink-carrier', 'tail-handshake']));
   expect(motion.oldCopyCount).toBe(0);
-  expect(motion.clippedFrameCount).toBe(0);
+  expect(motion.clippedSpriteCount).toBe(0);
   expect(motion.interactive).toBe('true');
   expect(motion.catFontSize).toBeLessThanOrEqual(12);
-  expect(motion.catLineCount).toBeGreaterThanOrEqual(7);
-  expect(motion.catLineCount).toBeLessThanOrEqual(12);
-  expect(motion.detailedRowCount).toBeGreaterThanOrEqual(4);
+  expect(motion.catLineCount).toBe(7);
+  expect(motion.detailedRowCount).toBe(10);
   expect(motion.decorativeNodeCount).toBe(0);
   expect(motion.filetreeWidth).toBeLessThanOrEqual(860);
   expect(motion.hasCatCss).toBe(true);
+  expect(motion.hasOldSeparateFrameCss).toBe(false);
   expect(motion.hasDecorativeBackgroundPattern).toBe(false);
   expect(motion.mentionsNeon).toBe(false);
+  expect(motion.sampleCount).toBeGreaterThanOrEqual(2);
+  expect(motion.sampleXCount).toBeGreaterThanOrEqual(2);
+  expect(motion.sampleFrameCount).toBeGreaterThanOrEqual(2);
+  expect(firstSpriteSample.text).not.toBe('');
+  expect(secondSpriteSample.text).not.toBe('');
+  expect(secondSpriteSample.frameIndex).not.toBe(firstSpriteSample.frameIndex);
+  expect(secondSpriteSample.x).not.toBe(firstSpriteSample.x);
   expect(motion.scrollWidth).toBeLessThanOrEqual(motion.clientWidth + 1);
 });
 
@@ -677,3 +710,4 @@ test('news page searches candidates before drafting an issue and does not expose
   expect(html).not.toContain('GOOGLE_AI_API_KEY');
   expect(html).not.toContain('GEMINI_API_KEY');
 });
+

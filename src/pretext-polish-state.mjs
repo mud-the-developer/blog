@@ -1,99 +1,140 @@
 const referenceNotes = [
   {
-    source: 'asciiart.eu classic kitten',
-    cue: String.raw`/\_/\ ( o.o ) > ^ <`,
-    url: 'https://www.asciiart.eu/animals/cats'
+    "source": "oneko.js Neko two-frame walk cycle",
+    "cue": "continuous cursor-follow cat movement with two-frame directional walk loops",
+    "url": "https://github.com/adryd325/oneko.js"
   },
   {
-    source: 'asciiart.eu sleeping cat',
-    cue: 'long curled body with ZZZ sleep cue',
-    url: 'https://www.asciiart.eu/animals/cats'
+    "source": "baud-era terminal refresh cadence",
+    "cue": "slow row-by-row redraw like a low-baud terminal link instead of a smooth modern tween",
+    "url": "https://en.wikipedia.org/wiki/Baud"
+  },
+  {
+    "source": "asciiart.eu classic kitten",
+    "cue": "/\\_/\\ ( o.o ) > ^ <",
+    "url": "https://www.asciiart.eu/animals/cats"
   }
 ];
 
 const catFrameModels = [
   {
-    pose: 'sit',
-    offset: { x: -30, y: 18 },
-    scale: 1,
-    rows: [
-      '      /\\_/\\        sit',
-      '     ( o.o )',
-      '      > ^ <',
-      '   __/|   |\\__',
-      '  /___|___|__\\',
-      '     (_   _ )',
-      '       )_/  ~'
+    "pose": "gait-01-contact",
+    "rows": [
+      "        /\\_/\\",
+      "   ____ ( o.o )___  ,",
+      " _/    \\ > ^ <   _\\/ )",
+      "/  /\\   \\______/\\__\\/",
+      "\\_/  \\__  /\\    /",
+      "    _/   /  \\   /_",
+      "   (_ __/    \\__ _)"
     ]
   },
   {
-    pose: 'blink',
-    offset: { x: -18, y: 14 },
-    scale: 1,
-    rows: [
-      '      /\\_/\\       blink',
-      '     ( -.- )',
-      '      > ^ <',
-      '   __/|   |\\__',
-      '  /___|___|__\\',
-      '     (_   _ )',
-      '       )_/  ~'
+    "pose": "gait-02-lift",
+    "rows": [
+      "        /\\_/\\",
+      "   ____ ( o.o )___  ,",
+      " _/    \\ > ^ <   _\\/ )",
+      "/  /\\   \\______/\\__\\/",
+      "\\_/  \\__  /\\   _/",
+      "    _/   /  \\_/",
+      "   (_ __/    \\___)"
     ]
   },
   {
-    pose: 'crouch',
-    offset: { x: 12, y: 28 },
-    scale: 0.98,
-    rows: [
-      '       /\\_/\\      crouch',
-      '    __( o.o )__',
-      '  _/  \\_^_/  \\_',
-      ' /__  /   \\  __\\',
-      '    \\_\\___/_/',
-      '      (_|_)',
-      '     ready...'
+    "pose": "gait-03-pass",
+    "rows": [
+      "        /\\_/\\",
+      "   ___  ( o.o )___  ,",
+      " _/   \\_ > ^ <   _\\/ )",
+      "/  /\\   \\______/\\__\\/",
+      "\\_/  \\_   /\\   _/",
+      "    __/  /  \\_/",
+      "   (_ __/   _/__)"
     ]
   },
   {
-    pose: 'jump',
-    offset: { x: 42, y: -56 },
-    scale: 1.02,
-    rows: [
-      '        /\\_/\\       hop!',
-      '     \\ (=^.^=) /',
-      '       \\  ^  /',
-      '     __/     \\__',
-      '   _/  /|   |\\  \\_',
-      '      /_|___|_\\',
-      '       /     \\'
+    "pose": "gait-04-reach",
+    "rows": [
+      "        /\\_/\\",
+      "   ___  ( o.o )__   ,",
+      " _/   \\_ > ^ <  _\\/ )",
+      "/  /\\   \\_____/\\__\\/",
+      "\\_/  \\_   /\\  \\",
+      "    __/  /  \\  \\_",
+      "   (_ __/    \\__ )"
     ]
   },
   {
-    pose: 'land',
-    offset: { x: 18, y: 8 },
-    scale: 1,
-    rows: [
-      '      /\\_/\\       land',
-      '     ( o.o )',
-      '    / > ^ < \\',
-      '   /__/| |\\__\\',
-      '      /___\\',
-      '     (_/ \\_)',
-      '        tail~'
+    "pose": "gait-05-contact",
+    "rows": [
+      "        /\\_/\\",
+      "   ____ ( o.o )__   ,",
+      " _/   \\_ > ^ <  _\\/ )",
+      "/  /\\   \\_____/\\__\\/",
+      "\\_/  \\_   /\\   \\",
+      "   __/   /  \\   \\__",
+      "  (_ ___/    \\____)"
     ]
   },
   {
-    pose: 'nap',
-    offset: { x: -44, y: 22 },
-    scale: 0.98,
-    rows: [
-      '   zzz      /\\_/\\',
-      '  |\\__/,|  ( -.- )',
-      '  |_ _  |   > ^ <',
-      '   ( (   )',
-      '  -(((---(((----',
-      '      curled nap',
-      '       tail ~'
+    "pose": "gait-06-lift",
+    "rows": [
+      "        /\\_/\\",
+      "   ____ ( o.o )__   ,",
+      " _/   \\_ > ^ <  _\\/ )",
+      "/  /\\   \\_____/\\__\\/",
+      "\\_/  \\_   /\\   /",
+      "   __/   /  \\_/",
+      "  (_ ___/    \\___)"
+    ]
+  },
+  {
+    "pose": "gait-07-pass",
+    "rows": [
+      "        /\\_/\\",
+      "   ___  ( o.o )__   ,",
+      " _/   \\_ > ^ <  _\\/ )",
+      "/  /\\   \\_____/\\__\\/",
+      "\\_/  \\_   /\\  /_",
+      "    _/   /  \\   )",
+      "   (_ __/    \\__/"
+    ]
+  },
+  {
+    "pose": "gait-08-reach",
+    "rows": [
+      "        /\\_/\\",
+      "   ___  ( o.o )___  ,",
+      " _/   \\_ > ^ <   _\\/ )",
+      "/  /\\   \\______/\\__\\/",
+      "\\_/  \\__  /\\   /",
+      "    _/  ) /  \\  \\_",
+      "   (_ _/ /    \\__ )"
+    ]
+  },
+  {
+    "pose": "blink-carrier",
+    "rows": [
+      "        /\\_/\\",
+      "   ____ ( -.- )___  ,",
+      " _/    \\ > ^ <   _\\/ )",
+      "/  /\\   \\______/\\__\\/",
+      "\\_/  \\__  /\\    /",
+      "    _/   /  \\   /_",
+      "   (_ __/    \\__ _)"
+    ]
+  },
+  {
+    "pose": "tail-handshake",
+    "rows": [
+      "        /\\_/\\",
+      "   ____ (=^.^=)__  ,",
+      " _/   \\_ > ^ <  _\\/ )",
+      "/  /\\   \\_____/\\__\\/",
+      "\\_/  \\_   /\\   /",
+      "   __/   /  \\_/",
+      "  (_ ___/    \\___)"
     ]
   }
 ];
@@ -103,23 +144,35 @@ function createCatFrame(frame, index) {
     rows: frame.rows,
     index,
     pose: frame.pose,
-    offset: frame.offset,
-    scale: frame.scale,
-    delay: `${index * -0.84}s`,
-    duration: '5.04s',
-    depth: Number((0.62 + index * 0.04).toFixed(2))
+    depth: Number((0.64 + index * 0.018).toFixed(3))
   };
 }
 
 function createCat() {
+  const frames = catFrameModels.map(createCatFrame);
   return {
-    label: 'cute-reference-cat',
+    label: 'low-baud-continuous-ascii-cat',
+    spriteMode: 'single-continuous-sprite',
     references: referenceNotes,
-    frames: catFrameModels.map(createCatFrame),
+    frames,
+    frameRate: 2.7,
+    telecom: {
+      label: 'CAT-LINK 1200',
+      mode: 'slow-baud-row-refresh',
+      refreshMs: 370,
+      lineSweepMs: 28,
+      statusCopy: 'carrier sync · row refresh'
+    },
     shadow: null,
     decorations: [],
     paws: [],
-    motion: { duration: '10.4s', delay: '-0.35s', behaviors: ['sit', 'blink', 'crouch', 'jump', 'land'] }
+    motion: {
+      duration: '15.2s',
+      durationMs: 15200,
+      continuous: true,
+      behaviors: ['walk', 'turn', 'blink', 'tail-handshake', 'baud-refresh'],
+      reference: 'oneko.js directional walk cadence softened into a low-baud ASCII row refresh'
+    }
   };
 }
 

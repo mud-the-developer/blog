@@ -63,7 +63,7 @@ test('theme render effect keeps the visible theme label inside the accessible na
   assert.equal(attributes['aria-pressed'], 'false');
 });
 
-test('pretext polish reducer emits cute referenced cat poses that jump blink and sit without extra decoration', () => {
+test('pretext polish reducer emits a referenced single-sprite ASCII cat walk cycle without separate pose cards', () => {
   const initial = createPretextState({ archive, isMobile: false });
   const step = pretextReducer(initial, { type: 'pretext.mounted' });
 
@@ -74,20 +74,23 @@ test('pretext polish reducer emits cute referenced cat poses that jump blink and
   assert.equal(effect.type, 'render-pretext-ascii-cat');
   assert.equal(effect.scene, 'kinetic-ascii-cat');
   assert.deepEqual(effect.links, []);
-  assert.equal(effect.cat.label, 'cute-reference-cat');
-  assert.deepEqual(effect.cat.references.map((reference) => reference.source), ['asciiart.eu classic kitten', 'asciiart.eu sleeping cat']);
-  assert.deepEqual(effect.motion.behaviors, ['sit', 'blink', 'crouch', 'jump', 'land']);
-  assert.ok(effect.cat.frames.length >= 6);
-  assert.ok(effect.cat.frames.length <= 7);
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.length >= 7));
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.length <= 12));
+  assert.equal(effect.cat.label, 'low-baud-continuous-ascii-cat');
+  assert.equal(effect.cat.spriteMode, 'single-continuous-sprite');
+  assert.deepEqual(effect.cat.references.map((reference) => reference.source), [
+    'oneko.js Neko two-frame walk cycle',
+    'baud-era terminal refresh cadence',
+    'asciiart.eu classic kitten'
+  ]);
+  assert.deepEqual(effect.motion.behaviors, ['walk', 'turn', 'blink', 'tail-handshake', 'baud-refresh']);
+  assert.equal(effect.motion.continuous, true);
+  assert.ok(effect.motion.reference.includes('low-baud'));
+  assert.equal(effect.cat.telecom.mode, 'slow-baud-row-refresh');
+  assert.equal(effect.cat.telecom.refreshMs, 370);
+  assert.equal(effect.cat.frames.length, 10);
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.length === 7));
   assert.ok(effect.cat.frames.every((frame) => frame.rows.join('\n').includes('/\\_/\\')));
-  assert.ok(effect.cat.frames.some((frame) => frame.pose === 'sit' && frame.rows.join('\n').includes('( o.o )')));
-  assert.ok(effect.cat.frames.some((frame) => frame.pose === 'blink' && frame.rows.join('\n').includes('( -.- )')));
-  assert.ok(effect.cat.frames.some((frame) => frame.pose === 'jump' && frame.rows.join('\n').includes('=^.^=')));
-  assert.ok(effect.cat.frames.some((frame) => frame.pose === 'nap' && /z{2,}/i.test(frame.rows.join('\n'))));
-  assert.ok(effect.cat.frames.some((frame) => frame.offset.y < -28));
-  assert.ok(new Set(effect.cat.frames.map((frame) => frame.offset.x)).size >= 4);
+  assert.ok(effect.cat.frames.some((frame) => frame.pose === 'blink-carrier' && frame.rows.join('\n').includes('( -.- )')));
+  assert.ok(effect.cat.frames.some((frame) => frame.pose === 'tail-handshake' && frame.rows.join('\n').includes('=^.^=')));
   assert.ok(effect.cat.frames.every((frame) => frame.rows.some((row) => row.length >= 18)));
   assert.ok(effect.cat.frames.every((frame) => frame.rows.every((row) => row.length <= 42)));
   assert.deepEqual(effect.paws, []);

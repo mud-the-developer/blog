@@ -15,26 +15,141 @@ const parseArchive = () => {
   }
 };
 
+function parseCatFrames() {
+  const frameNode = surface?.querySelector('[data-pretext-cat-frames]');
+  if (!frameNode) return [];
+  try {
+    const parsed = JSON.parse(frameNode.textContent || '[]');
+    return Array.isArray(parsed) ? parsed.filter((frame) => Array.isArray(frame.rows)) : [];
+  } catch (_error) {
+    return [];
+  }
+}
+
+function startContinuousCat() {
+  const sprite = surface?.querySelector('.pretext-cat-sprite');
+  const linkStatus = surface?.querySelector('[data-pretext-cat-link]');
+  const frames = parseCatFrames();
+  if (!sprite || !frames.length) return;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const durationMs = Number(sprite.dataset.durationMs || 15200);
+  const refreshMs = Number(sprite.dataset.refreshMs || 370);
+  const lineSweepMs = Number(sprite.dataset.lineSweepMs || 28);
+  const samples = [];
+  window.__pretextCatMotionSamples = samples;
+
+  let startTime = null;
+  let lastFrameIndex = -1;
+  let lastSampleAt = -Infinity;
+  let displayedRows = [...(frames[0]?.rows || [])];
+  let lineTimers = [];
+
+  const clearLineTimers = () => {
+    for (const timer of lineTimers) window.clearTimeout(timer);
+    lineTimers = [];
+  };
+
+  const updateLinkStatus = (frame, rowIndex = null) => {
+    if (!linkStatus) return;
+    const rowCopy = rowIndex === null ? 'locked' : `row ${String(rowIndex + 1).padStart(2, '0')}`;
+    linkStatus.textContent = `CAT-LINK 1200 · ${rowCopy} · ${frame.pose || 'walk'}`;
+  };
+
+  const paintRowsSlowly = (frame, frameIndex) => {
+    clearLineTimers();
+    sprite.dataset.frameIndex = String(frame.index ?? frameIndex);
+    sprite.dataset.pose = frame.pose || 'walk';
+    sprite.dataset.refreshing = 'true';
+    sprite.dataset.refreshMode = 'slow-baud-row-refresh';
+
+    frame.rows.forEach((row, rowIndex) => {
+      const timer = window.setTimeout(() => {
+        displayedRows[rowIndex] = row;
+        sprite.textContent = displayedRows.join('\n');
+        sprite.dataset.refreshRow = String(rowIndex + 1);
+        updateLinkStatus(frame, rowIndex);
+        if (rowIndex === frame.rows.length - 1) {
+          sprite.dataset.refreshing = 'false';
+          updateLinkStatus(frame);
+        }
+      }, rowIndex * lineSweepMs);
+      lineTimers.push(timer);
+    });
+  };
+
+  const paintFrame = (frameIndex, progress, now) => {
+    const frame = frames[frameIndex % frames.length];
+    const oneWayProgress = progress < 0.5 ? progress / 0.5 : (1 - progress) / 0.5;
+    const eased = oneWayProgress * oneWayProgress * (3 - 2 * oneWayProgress);
+    const facing = progress < 0.5 ? 'right' : 'left';
+    const gaitPhase = ((frameIndex % frames.length) / frames.length) * Math.PI * 2;
+    const x = -76 + eased * 152;
+    const y = Math.sin(gaitPhase) * 2.6 + Math.sin(progress * Math.PI * 2) * 1.4;
+    const scale = 0.998 + Math.sin(gaitPhase) * 0.006;
+
+    if (lastFrameIndex !== frameIndex) {
+      paintRowsSlowly(frame, frameIndex);
+      lastFrameIndex = frameIndex;
+    }
+
+    sprite.dataset.facing = facing;
+    sprite.style.setProperty('--cat-x', `${x.toFixed(1)}px`);
+    sprite.style.setProperty('--cat-y', `${y.toFixed(1)}px`);
+    sprite.style.setProperty('--cat-scale', scale.toFixed(3));
+
+    if (samples.length < 24 && now - lastSampleAt >= 120) {
+      samples.push({
+        frameIndex,
+        pose: sprite.dataset.pose,
+        x: Number(x.toFixed(1)),
+        y: Number(y.toFixed(1)),
+        facing,
+        refreshRow: sprite.dataset.refreshRow || '0',
+        refreshing: sprite.dataset.refreshing || 'false'
+      });
+      lastSampleAt = now;
+    }
+  };
+
+  if (reducedMotion) {
+    clearLineTimers();
+    displayedRows = [...frames[0].rows];
+    sprite.textContent = displayedRows.join('\n');
+    sprite.dataset.motionPaused = 'reduced-motion';
+    sprite.dataset.refreshing = 'false';
+    sprite.dataset.refreshMode = 'slow-baud-row-refresh';
+    updateLinkStatus(frames[0]);
+    paintFrame(0, 0.18, 0);
+    return;
+  }
+
+  const tick = (now) => {
+    startTime ??= now;
+    const elapsed = now - startTime;
+    const progress = (elapsed % durationMs) / durationMs;
+    const frameIndex = Math.floor(elapsed / refreshMs) % frames.length;
+    paintFrame(frameIndex, progress, now);
+    window.requestAnimationFrame(tick);
+  };
+
+  window.requestAnimationFrame(tick);
+}
+
 function attachPretextInteraction() {
-  const tokens = [...surface.querySelectorAll('.pretext-cat-frame')];
-  if (!tokens.length) return;
+  const sprite = surface?.querySelector('.pretext-cat-sprite');
+  if (!sprite || !stage || !surface) return;
   stage.dataset.pretextInteractive = 'true';
   const settle = () => {
-    for (const token of tokens) {
-      token.style.setProperty('--tx', '0px');
-      token.style.setProperty('--ty', '0px');
-    }
+    sprite.style.setProperty('--tx', '0px');
+    sprite.style.setProperty('--ty', '0px');
   };
   const move = (event) => {
     const rect = surface.getBoundingClientRect();
     const nx = ((event.clientX - rect.left) / rect.width - 0.5) || 0;
     const ny = ((event.clientY - rect.top) / rect.height - 0.5) || 0;
-    tokens.forEach((token, index) => {
-      const depth = Number(token.dataset.depth || 0.35);
-      const wave = Math.sin(index + nx * 2.5) * 2;
-      token.style.setProperty('--tx', `${(nx * 10 * depth + wave).toFixed(1)}px`);
-      token.style.setProperty('--ty', `${(ny * 6 * depth + Math.cos(index + ny * 2) * 1.5).toFixed(1)}px`);
-    });
+    sprite.style.setProperty('--tx', `${(nx * 8).toFixed(1)}px`);
+    sprite.style.setProperty('--ty', `${(ny * 5).toFixed(1)}px`);
   };
   surface.addEventListener('pointermove', move, { passive: true });
   surface.addEventListener('pointerleave', settle);
@@ -52,6 +167,7 @@ function setupPretextPolish() {
   for (const effect of step.effects) {
     renderPretextTokens(effect, { stage, surface, document });
   }
+  startContinuousCat();
   attachPretextInteraction();
   stage.dataset.pretextPhase = state.phase;
 }

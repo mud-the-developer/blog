@@ -15,8 +15,9 @@ async function runtimeAudit(page) {
       nodes: document.getElementsByTagName('*').length,
       postCards: document.querySelectorAll('.post-card').length,
       filetreeFiles: document.querySelectorAll('.filetree-file').length,
-      pretextCatFrames: document.querySelectorAll('.pretext-cat-frame').length,
-      pretextCatPoses: [...new Set([...document.querySelectorAll('.pretext-cat-frame')].map((frame) => frame.dataset.pose || ''))].filter(Boolean).length,
+      pretextCatSprites: document.querySelectorAll('.pretext-cat-sprite').length,
+      pretextCatFrames: JSON.parse(document.querySelector('[data-pretext-cat-frames]')?.textContent || '[]').length,
+      pretextCatPoses: [...new Set(JSON.parse(document.querySelector('[data-pretext-cat-frames]')?.textContent || '[]').map((frame) => frame.pose || ''))].filter(Boolean).length,
       pretextCatBehaviors: document.querySelector('.pretext-cat-stage')?.dataset.behaviors || '',
       pretextDecorations: document.querySelectorAll('.pretext-cat-paw,.pretext-cat-shadow,.pretext-ambient-layer,.pretext-front-glass').length,
       graphCount: document.querySelectorAll('[data-archive-graph]').length,
@@ -44,10 +45,10 @@ test('desktop and mobile public homepage stay polished without layout overflow',
     expect(audit.filetreeFiles, name).toBe(publicPostCount);
     expect(audit.graphCount, name).toBe(0);
     expect(audit.fieldStages, name).toBe(0);
-    expect(audit.pretextCatFrames, name).toBeGreaterThanOrEqual(6);
-    expect(audit.pretextCatFrames, name).toBeLessThanOrEqual(7);
-    expect(audit.pretextCatPoses, name).toBeGreaterThanOrEqual(6);
-    expect(audit.pretextCatBehaviors, name).toBe('sit blink crouch jump land');
+    expect(audit.pretextCatSprites, name).toBe(1);
+    expect(audit.pretextCatFrames, name).toBe(10);
+    expect(audit.pretextCatPoses, name).toBeGreaterThanOrEqual(10);
+    expect(audit.pretextCatBehaviors, name).toBe('walk turn blink tail-handshake baud-refresh');
     expect(audit.pretextDecorations, name).toBe(0);
     expect(audit.nodes, name).toBeLessThanOrEqual(980);
     expect(audit.scrollWidth, name).toBeLessThanOrEqual(audit.clientWidth + 1);
@@ -64,7 +65,7 @@ test('reduced-motion keeps the filetree but disables ambient Pretext animation',
   await page.goto('/', { waitUntil: 'networkidle' });
   const audit = await runtimeAudit(page);
   const publicPostCount = audit.archiveCount;
-  const animatedCount = await page.locator('.pretext-cat-frame').evaluateAll((tokens) =>
+  const animatedCount = await page.locator('.pretext-cat-sprite').evaluateAll((tokens) =>
     tokens.filter((token) => {
       const style = window.getComputedStyle(token);
       return style.animationName !== 'none' && style.animationDuration !== '0s' && style.animationDuration !== '0.01ms';
