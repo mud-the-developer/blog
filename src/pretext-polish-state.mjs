@@ -54,7 +54,7 @@ function topTags(items) {
     .map(([tag]) => tag);
 }
 
-function createLoomRows(items) {
+function createLoomRows(items, { maxTitles = 5, maxRows = 12 } = {}) {
   const folders = [...countBy(items, 'folder').entries()]
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
     .slice(0, 3);
@@ -74,15 +74,15 @@ function createLoomRows(items) {
     rows.push({ kind: 'folder', text: `${folder.padEnd(7, ' ')} ──${joint}─ ${String(count).padStart(2, '0')} entries`, weight: 0.78 });
   });
 
-  titles.forEach((title, index) => {
-    const lead = index === titles.length - 1 ? '└─' : '├─';
+  titles.slice(0, maxTitles).forEach((title, index, visibleTitles) => {
+    const lead = index === visibleTitles.length - 1 ? '└─' : '├─';
     rows.push({ kind: 'title', text: `${lead} ${title}`, weight: 0.92 });
   });
 
   rows.push({ kind: 'signal', text: `signal: ${tags.length ? tags.join(' · ') : 'writing · index'}`, weight: 0.68 });
   rows.push({ kind: 'cursor', text: 'writing index is live ▌', weight: 0.85 });
 
-  return rows.slice(0, 12).map((row, index) => ({
+  return rows.slice(0, maxRows).map((row, index) => ({
     ...row,
     index,
     depth: Number((0.64 + index * 0.025).toFixed(3))
@@ -96,8 +96,8 @@ function createLoom({ archive = [], isMobile = false } = {}) {
       folder: cleanText(item?.folder, 'notes'),
       tags: Array.isArray(item?.tags) ? item.tags.map((tag) => cleanText(tag)).filter(Boolean) : []
     }))
-    .slice(0, isMobile ? 7 : 12);
-  const rows = createLoomRows(items);
+    .slice(0, 12);
+  const rows = createLoomRows(items, { maxTitles: isMobile ? 2 : 5, maxRows: isMobile ? 9 : 12 });
   return {
     label: 'PRETEXT / INDEX LOOM',
     mode: 'kinetic-text-instrument',
