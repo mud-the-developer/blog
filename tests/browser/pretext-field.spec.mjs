@@ -86,9 +86,9 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
 
   await expect(page.locator('[data-pretext-polish]')).toHaveAttribute('data-pretext-ready', 'true');
   const motion = await page.evaluate(() => {
-    const rows = [...document.querySelectorAll('.pretext-ascii-row')];
-    const threads = [...document.querySelectorAll('.pretext-loom-thread')];
-    const animated = [...rows, ...threads, ...document.querySelectorAll('.pretext-scan-cursor')].filter((node) => {
+    const frames = [...document.querySelectorAll('.pretext-cat-frame')];
+    const paws = [...document.querySelectorAll('.pretext-cat-paw')];
+    const animated = [...frames, ...paws, ...document.querySelectorAll('.pretext-cat-shadow')].filter((node) => {
       const style = getComputedStyle(node);
       return style.animationName !== 'none' && style.animationDuration !== '0s';
     });
@@ -104,28 +104,25 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
     const archive = JSON.parse(document.getElementById('archive-data')?.textContent || '[]');
     const stage = document.querySelector('[data-pretext-polish]');
     const stageRect = stage?.getBoundingClientRect();
-    const rowBoxes = rows.map((row) => {
-      const rect = row.getBoundingClientRect();
+    const frameBoxes = frames.map((frame) => {
+      const rect = frame.getBoundingClientRect();
       return { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom };
     });
+    const frameText = frames.map((frame) => frame.textContent.trim()).join('\n');
     return {
       archiveCount: Array.isArray(archive) ? archive.length : 0,
-      rowCount: rows.length,
-      phraseRowCount: rows.filter((row) => row.dataset.rowKind === 'phrase').length,
-      connectorRowCount: rows.filter((row) => row.dataset.rowKind === 'connector').length,
-      threadCount: threads.length,
+      catStageCount: document.querySelectorAll('.pretext-cat-stage').length,
+      frameCount: frames.length,
+      pawCount: paws.length,
       animatedCount: animated.length,
       ambientLayerCount: document.querySelectorAll('.pretext-ambient-layer').length,
-      frameCount: document.querySelectorAll('.pretext-ascii-frame').length,
-      titleText: document.querySelector('.pretext-ascii-title')?.textContent.trim() || '',
-      cursorCount: document.querySelectorAll('.pretext-scan-cursor').length,
-      cursorText: document.querySelector('.pretext-scan-cursor')?.textContent.trim() || '',
       scene: stage?.dataset.pretextScene || '',
       frontGlassCount: document.querySelectorAll('.pretext-front-glass').length,
       linkCount: document.querySelectorAll('.pretext-link,.pretext-network').length,
-      anchorTokenCount: document.querySelectorAll('a.pretext-ascii-row[href],a.pretext-type-fragment[href],a.pretext-fragment[href],a.pretext-token[href]').length,
-      rowLabels: rows.map((row) => row.textContent.trim()),
-      clippedRowCount: stageRect ? rowBoxes.filter((box) => box.left < stageRect.left || box.right > stageRect.right || box.top < stageRect.top || box.bottom > stageRect.bottom).length : 0,
+      anchorTokenCount: document.querySelectorAll('a.pretext-cat-frame[href],a.pretext-ascii-row[href],a.pretext-type-fragment[href],a.pretext-fragment[href],a.pretext-token[href]').length,
+      frameText,
+      oldCopyCount: (stage?.textContent || '').match(/INDEX LOOM|writing index|posts\/|blog\/|papers\/|open RAN|Rust/g)?.length || 0,
+      clippedFrameCount: stageRect ? frameBoxes.filter((box) => box.left < stageRect.left || box.right > stageRect.right || box.top < stageRect.top || box.bottom > stageRect.bottom).length : 0,
       interactive: stage?.dataset.pretextInteractive || '',
       frontGlassBackdrop: (() => {
         const front = document.querySelector('.pretext-front-glass');
@@ -134,9 +131,9 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
         return style.backdropFilter || style.webkitBackdropFilter || '';
       })(),
       frontGlassZ: Number(getComputedStyle(document.querySelector('.pretext-front-glass') || document.body).zIndex || 0),
-      maxRowZ: Math.max(...rows.map((row) => Number(getComputedStyle(row).zIndex || 0))),
+      maxCatZ: Math.max(...frames.map((frame) => Number(getComputedStyle(frame).zIndex || 0))),
       filetreeWidth: document.querySelector('.filetree')?.getBoundingClientRect().width || 0,
-      hasAsciiLoomCss: css.includes('pretext-ascii-scan') && css.includes('pretext-thread-drift') && css.includes('font-variant-ligatures'),
+      hasCatCss: css.includes('pretext-cat-blink') && css.includes('pretext-cat-prowl') && css.includes('font-variant-ligatures'),
       hasDecorativeBackgroundPattern: /radial-gradient|orbit|bubble|stripe/i.test(css),
       mentionsNeon: css.toLowerCase().includes('neon'),
       scrollWidth: document.documentElement.scrollWidth,
@@ -144,30 +141,26 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
     };
   });
   expect(motion.archiveCount).toBe(publicPostCount);
-  expect(motion.rowCount).toBeGreaterThanOrEqual(12);
-  expect(motion.rowCount).toBeLessThanOrEqual(18);
-  expect(motion.phraseRowCount).toBeGreaterThanOrEqual(5);
-  expect(motion.connectorRowCount).toBeGreaterThanOrEqual(4);
-  expect(motion.threadCount).toBeGreaterThanOrEqual(5);
-  expect(motion.animatedCount).toBeGreaterThanOrEqual(10);
+  expect(motion.catStageCount).toBe(1);
+  expect(motion.frameCount).toBeGreaterThanOrEqual(4);
+  expect(motion.frameCount).toBeLessThanOrEqual(6);
+  expect(motion.pawCount).toBeGreaterThanOrEqual(8);
+  expect(motion.animatedCount).toBeGreaterThanOrEqual(8);
   expect(motion.ambientLayerCount).toBeGreaterThanOrEqual(3);
-  expect(motion.frameCount).toBe(1);
-  expect(motion.titleText).toBe('PRETEXT / INDEX LOOM');
-  expect(motion.cursorCount).toBe(1);
-  expect(motion.cursorText).toBe('writing index is live ▌');
-  expect(motion.scene).toBe('kinetic-ascii-loom');
+  expect(motion.scene).toBe('kinetic-ascii-cat');
   expect(motion.frontGlassCount).toBe(1);
   expect(motion.linkCount).toBe(0);
   expect(motion.anchorTokenCount).toBe(0);
-  expect(motion.rowLabels.some((label) => label.includes('posts/') || label.includes('blog/'))).toBe(true);
-  expect(motion.rowLabels.some((label) => label.includes('papers/'))).toBe(true);
-  expect(motion.rowLabels.some((label) => label.toLowerCase().includes('rust'))).toBe(true);
-  expect(motion.clippedRowCount).toBe(0);
+  expect(motion.frameText).toContain('/\\_/\\');
+  expect(motion.frameText).toContain('( o.o )');
+  expect(motion.frameText).toContain('( -.- )');
+  expect(motion.oldCopyCount).toBe(0);
+  expect(motion.clippedFrameCount).toBe(0);
   expect(motion.interactive).toBe('true');
   expect(motion.frontGlassBackdrop).toContain('blur');
-  expect(motion.frontGlassZ).toBeLessThan(motion.maxRowZ);
+  expect(motion.frontGlassZ).toBeLessThan(motion.maxCatZ);
   expect(motion.filetreeWidth).toBeLessThanOrEqual(860);
-  expect(motion.hasAsciiLoomCss).toBe(true);
+  expect(motion.hasCatCss).toBe(true);
   expect(motion.hasDecorativeBackgroundPattern).toBe(false);
   expect(motion.mentionsNeon).toBe(false);
   expect(motion.scrollWidth).toBeLessThanOrEqual(motion.clientWidth + 1);

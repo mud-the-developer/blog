@@ -16,7 +16,7 @@ const parseArchive = () => {
 };
 
 function attachPretextInteraction() {
-  const tokens = [...surface.querySelectorAll('.pretext-ascii-row,.pretext-loom-thread')];
+  const tokens = [...surface.querySelectorAll('.pretext-cat-frame,.pretext-cat-paw,.pretext-cat-shadow')];
   if (!tokens.length) return;
   stage.dataset.pretextInteractive = 'true';
   const settle = () => {

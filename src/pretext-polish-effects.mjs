@@ -1,5 +1,5 @@
 export function renderPretextTokens(effect, { stage, surface, document }) {
-  if (effect.type !== 'render-pretext-ascii-loom' || !stage || !surface) return;
+  if (effect.type !== 'render-pretext-ascii-cat' || !stage || !surface) return;
   surface.replaceChildren();
 
   for (const layerName of ['paper', 'current', 'dust']) {
@@ -9,52 +9,51 @@ export function renderPretextTokens(effect, { stage, surface, document }) {
     surface.append(layer);
   }
 
-  for (const threadModel of effect.threads || []) {
-    const thread = document.createElement('span');
-    thread.className = `pretext-loom-thread pretext-loom-thread--${threadModel.direction || 'normal'}`;
-    thread.setAttribute('aria-hidden', 'true');
-    thread.textContent = threadModel.text;
-    thread.style.setProperty('--y', threadModel.y);
-    thread.style.setProperty('--delay', threadModel.delay);
-    thread.style.setProperty('--duration', threadModel.duration);
-    surface.append(thread);
+  const catStage = document.createElement('div');
+  catStage.className = 'pretext-cat-stage';
+  catStage.setAttribute('aria-hidden', 'true');
+  catStage.style.setProperty('--duration', effect.motion?.duration || '6.8s');
+  catStage.style.setProperty('--delay', effect.motion?.delay || '0s');
+
+  for (const frameModel of effect.cat?.frames || []) {
+    const frame = document.createElement('pre');
+    frame.className = `pretext-cat-frame pretext-cat-frame--${frameModel.index ?? 0}`;
+    frame.textContent = (frameModel.rows || []).join('\n');
+    frame.dataset.depth = String(frameModel.depth ?? 0.55);
+    frame.style.setProperty('--delay', frameModel.delay || '0s');
+    frame.style.setProperty('--duration', frameModel.duration || '3.2s');
+    frame.style.setProperty('--frame-index', String(frameModel.index ?? 0));
+    frame.style.setProperty('--depth', String(frameModel.depth ?? 0.55));
+    catStage.append(frame);
   }
 
-  const frame = document.createElement('div');
-  frame.className = 'pretext-ascii-frame';
-  frame.setAttribute('aria-hidden', 'true');
+  const shadow = document.createElement('span');
+  shadow.className = 'pretext-cat-shadow';
+  shadow.textContent = effect.cat?.shadow?.glyph || '~~~~~~~~~~~~';
+  shadow.style.setProperty('--delay', effect.cat?.shadow?.delay || '0s');
+  shadow.style.setProperty('--duration', effect.cat?.shadow?.duration || '4.8s');
+  catStage.append(shadow);
+  surface.append(catStage);
 
-  const title = document.createElement('span');
-  title.className = 'pretext-ascii-title';
-  title.textContent = effect.frame?.title || 'PRETEXT / INDEX LOOM';
-  frame.append(title);
-
-  for (const rowModel of effect.frame?.rows || []) {
-    const row = document.createElement('span');
-    row.className = `pretext-ascii-row pretext-ascii-row--${rowModel.kind || 'phrase'}`;
-    row.dataset.rowKind = rowModel.kind || 'phrase';
-    row.dataset.depth = String(rowModel.depth ?? 0.5);
-    row.textContent = rowModel.text;
-    row.style.setProperty('--delay', rowModel.delay || '0s');
-    row.style.setProperty('--duration', rowModel.duration || '10s');
-    row.style.setProperty('--row-index', String(rowModel.index ?? 0));
-    row.style.setProperty('--depth', String(rowModel.depth ?? 0.5));
-    frame.append(row);
+  for (const pawModel of effect.paws || []) {
+    const paw = document.createElement('span');
+    paw.className = 'pretext-cat-paw';
+    paw.setAttribute('aria-hidden', 'true');
+    paw.textContent = pawModel.glyph || '·';
+    paw.dataset.depth = String(pawModel.depth ?? 0.3);
+    paw.style.setProperty('--x', pawModel.x || '50%');
+    paw.style.setProperty('--y', pawModel.y || '72%');
+    paw.style.setProperty('--delay', pawModel.delay || '0s');
+    paw.style.setProperty('--duration', pawModel.duration || '4.4s');
+    paw.style.setProperty('--depth', String(pawModel.depth ?? 0.3));
+    surface.append(paw);
   }
-
-  const cursor = document.createElement('span');
-  cursor.className = 'pretext-scan-cursor';
-  cursor.textContent = effect.scanCursor?.label || 'writing index is live ▌';
-  cursor.style.setProperty('--delay', effect.scanCursor?.delay || '0s');
-  cursor.style.setProperty('--duration', effect.scanCursor?.duration || '9.5s');
-  frame.append(cursor);
-  surface.append(frame);
 
   const frontGlass = document.createElement('span');
   frontGlass.className = 'pretext-front-glass';
   frontGlass.setAttribute('aria-hidden', 'true');
   surface.append(frontGlass);
 
-  stage.dataset.pretextScene = effect.scene || 'kinetic-ascii-loom';
+  stage.dataset.pretextScene = effect.scene || 'kinetic-ascii-cat';
   stage.dataset.pretextReady = 'true';
 }

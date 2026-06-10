@@ -63,7 +63,7 @@ test('theme render effect keeps the visible theme label inside the accessible na
   assert.equal(attributes['aria-pressed'], 'false');
 });
 
-test('pretext polish reducer emits a kinetic ASCII loom from archive language', () => {
+test('pretext polish reducer emits moving cat ASCII art without archive copy', () => {
   const initial = createPretextState({ archive, isMobile: false });
   const step = pretextReducer(initial, { type: 'pretext.mounted' });
 
@@ -71,23 +71,22 @@ test('pretext polish reducer emits a kinetic ASCII loom from archive language', 
   assert.equal(step.state.phase, 'ready');
   assert.equal(step.effects.length, 1);
   const effect = step.effects[0];
-  assert.equal(effect.type, 'render-pretext-ascii-loom');
-  assert.equal(effect.scene, 'kinetic-ascii-loom');
+  assert.equal(effect.type, 'render-pretext-ascii-cat');
+  assert.equal(effect.scene, 'kinetic-ascii-cat');
   assert.deepEqual(effect.links, []);
-  assert.equal(effect.frame.title, 'PRETEXT / INDEX LOOM');
-  assert.ok(effect.frame.rows.length >= 12);
-  assert.ok(effect.frame.rows.length <= 18);
-  assert.ok(effect.frame.rows.some((row) => row.text.includes('posts/') || row.text.includes('blog/')));
-  assert.ok(effect.frame.rows.some((row) => row.text.includes('papers/')));
-  assert.ok(effect.frame.rows.some((row) => row.text.includes('open RAN')));
-  assert.ok(effect.frame.rows.some((row) => row.text.includes('Rust')));
-  assert.ok(effect.frame.rows.every((row) => row.text.length <= 38));
-  assert.ok(effect.frame.rows.filter((row) => row.kind === 'connector').length >= 4);
-  assert.ok(effect.frame.rows.filter((row) => row.kind === 'phrase').length >= 5);
-  assert.ok(effect.threads.length >= 5);
-  assert.ok(effect.threads.every((thread) => thread.text.includes('═') || thread.text.includes('─')));
-  assert.equal(effect.scanCursor.label, 'writing index is live ▌');
-  assert.ok(effect.scanCursor.duration.endsWith('s'));
+  assert.equal(effect.cat.label, '=^._.^=');
+  assert.ok(effect.cat.frames.length >= 4);
+  assert.ok(effect.cat.frames.length <= 6);
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.length >= 5));
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.join('\n').includes('/\\_/\\')));
+  assert.ok(effect.cat.frames.some((frame) => frame.rows.join('\n').includes('( o.o )')));
+  assert.ok(effect.cat.frames.some((frame) => frame.rows.join('\n').includes('( -.- )')));
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.every((row) => row.length <= 28)));
+  assert.ok(effect.paws.length >= 8);
+  assert.ok(effect.paws.every((paw) => paw.glyph === '·' || paw.glyph === '˙'));
+  assert.ok(effect.motion.duration.endsWith('s'));
+  const renderedCopy = JSON.stringify(effect);
+  assert.equal(/open RAN|Rust|papers|blog\/|posts\/|INDEX LOOM|writing index/i.test(renderedCopy), false);
 });
 
 test('news desk reducer controls search/draft/download states without DOM effects', () => {
