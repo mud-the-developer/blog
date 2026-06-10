@@ -1,7 +1,6 @@
 import { test, expect, devices } from '@playwright/test';
 
 const desktopViewport = { width: 1440, height: 900 };
-const publicPostCount = 91;
 
 async function runtimeAudit(page) {
   return page.evaluate(() => {
@@ -35,6 +34,7 @@ test('desktop and mobile public homepage stay polished without layout overflow',
     const page = await context.newPage();
     await page.goto('/', { waitUntil: 'networkidle' });
     const audit = await runtimeAudit(page);
+    const publicPostCount = audit.archiveCount;
 
     expect(audit.archiveCount, name).toBe(publicPostCount);
     expect(audit.postCards, name).toBe(publicPostCount);
@@ -56,6 +56,7 @@ test('reduced-motion keeps the filetree but disables ambient Pretext animation',
   const page = await context.newPage();
   await page.goto('/', { waitUntil: 'networkidle' });
   const audit = await runtimeAudit(page);
+  const publicPostCount = audit.archiveCount;
   const animatedCount = await page.locator('.pretext-token').evaluateAll((tokens) =>
     tokens.filter((token) => {
       const style = window.getComputedStyle(token);

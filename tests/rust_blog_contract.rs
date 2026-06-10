@@ -43,8 +43,10 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(out_dir.join("news/search/index.html").exists());
     assert!(out_dir.join("fragments/posts.html").exists());
     assert!(out_dir.join("assets/pretext-polish.mjs").exists());
+    assert!(out_dir.join("assets/pretext-polish-effects.mjs").exists());
     assert!(out_dir.join("assets/blog-lab.mjs").exists());
     assert!(out_dir.join("assets/site-chrome.mjs").exists());
+    assert!(out_dir.join("assets/site-chrome-effects.mjs").exists());
     assert!(out_dir.join("news/data/latest.json").exists());
     assert!(!out_dir.join("assets/pretext-field.mjs").exists());
 
@@ -143,13 +145,41 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(news.contains("aria-current=\"page\""));
     assert!(news.contains("href=\"/news/search/\""));
     assert!(news.contains("data-news-archive"));
-    assert!(news.contains("data-news-digest-json"));
+    assert!(news.contains("data-news-featured"));
+    assert!(news.contains("data-news-recent"));
+    assert!(news.contains("data-news-monthly-archive"));
+    assert!(news.contains("data-news-utility"));
+    assert!(news.contains("Latest issue"));
+    assert!(news.contains("Recent 7 issues"));
+    assert!(news.contains("Monthly archive"));
+    assert!(news.contains("pipeline utility"));
+    assert!(news.contains("latest.json"));
+    assert!(news.find("Latest issue") < news.find("pipeline utility"));
+    assert!(news.matches("class=\"news-row\"").count() <= 7);
+    assert!(!news.contains("data-news-digest-json"));
     assert!(!news.contains("data-focused-issue-lab"));
     assert!(!news.contains("data-overview-figure"));
     assert!(!news.contains("data-blog-chat"));
     assert!(!news.contains("Gemma guide"));
     assert!(news.contains("AI News Brief —"));
     assert!(news.contains("Daily AI News Archive"));
+
+    let latest_news_post = result
+        .posts
+        .iter()
+        .find(|post| post.folder == "news" && post.title.starts_with("Daily AI Beta Brief"));
+    assert!(latest_news_post.is_some());
+    let Some(latest_news_post) = latest_news_post else {
+        return Ok(());
+    };
+    let latest_news_html = fs::read_to_string(
+        out_dir
+            .join("posts")
+            .join(&latest_news_post.slug)
+            .join("index.html"),
+    )?;
+    assert_eq!(latest_news_html.matches("<h1").count(), 1);
+    assert!(latest_news_html.contains("<h2 data-pretext-target>Daily AI Beta Brief"));
 
     let news_search = fs::read_to_string(out_dir.join("news/search/index.html"))?;
     assert!(news_search.contains("data-askama-template=\"news-search\""));
@@ -159,6 +189,9 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(news_search.contains("aria-label=\"News sources\""));
     assert!(news_search.contains("GDELT live web"));
     assert!(news_search.contains("Google News"));
+    assert!(news_search.contains("unstable RSS"));
+    assert!(news_search.contains("Google Scholar link"));
+    assert!(news_search.contains("experimental / often blocked"));
     assert!(news_search.contains("Search query mode"));
     assert!(news_search.contains("Exact keyword"));
     assert!(news_search.contains("Gemma 4 expand"));

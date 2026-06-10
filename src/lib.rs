@@ -63,6 +63,13 @@ struct FolderGroup<'a> {
     posts: Vec<&'a Post>,
 }
 
+#[derive(Debug, Clone)]
+struct NewsMonthGroup<'a> {
+    month: String,
+    label: String,
+    posts: Vec<&'a Post>,
+}
+
 #[derive(Clone)]
 struct AppState {
     posts: Arc<Vec<Post>>,
@@ -130,7 +137,11 @@ struct PostTemplate<'a> {
 #[derive(Template)]
 #[template(path = "news.html")]
 struct NewsTemplate<'a> {
-    news_posts: Vec<&'a Post>,
+    latest_issue: Vec<&'a Post>,
+    recent_issues: Vec<&'a Post>,
+    month_groups: Vec<NewsMonthGroup<'a>>,
+    archive_post: Vec<&'a Post>,
+    issue_count: usize,
     archive_json: &'a str,
 }
 
@@ -405,6 +416,9 @@ pub async fn load_posts(posts_dir: impl AsRef<Path>) -> BlogResult<Vec<Post>> {
         let fallback = path.file_stem().and_then(OsStr::to_str).unwrap_or("post");
         let mut post = parse_markdown_post(&source, fallback);
         post.folder = folder_for_relative_path(&relative_path);
+        if post.folder == "news" {
+            post.html = demote_first_h1(&post.html);
+        }
         posts.push(post);
     }
 
@@ -521,6 +535,72 @@ fn folder_groups(posts: &[Post]) -> Vec<FolderGroup<'_>> {
     .collect()
 }
 
+fn demote_first_h1(html: &str) -> String {
+    let Some(start) = html.find("<h1") else {
+        return html.to_string();
+    };
+    let Some(open_end_relative) = html[start..].find('>') else {
+        return html.to_string();
+    };
+    let open_end = start + open_end_relative;
+    let Some(close_relative) = html[open_end..].find("</h1>") else {
+        return html.to_string();
+    };
+    let close_start = open_end + close_relative;
+    let close_end = close_start + "</h1>".len();
+
+    let mut output = String::with_capacity(html.len());
+    output.push_str(&html[..start]);
+    output.push_str("<h2");
+    output.push_str(&html[start + "<h1".len()..open_end + 1]);
+    output.push_str(&html[open_end + 1..close_start]);
+    output.push_str("</h2>");
+    output.push_str(&html[close_end..]);
+    output
+}
+
+fn news_month_label(month: &str) -> String {
+    let Some((year, number)) = month.split_once('-') else {
+        return month.to_string();
+    };
+    let name = match number {
+        "01" => "January",
+        "02" => "February",
+        "03" => "March",
+        "04" => "April",
+        "05" => "May",
+        "06" => "June",
+        "07" => "July",
+        "08" => "August",
+        "09" => "September",
+        "10" => "October",
+        "11" => "November",
+        "12" => "December",
+        _ => return month.to_string(),
+    };
+    format!("{name} {year}")
+}
+
+fn news_month_groups<'a>(posts: &[&'a Post]) -> Vec<NewsMonthGroup<'a>> {
+    let mut groups: Vec<NewsMonthGroup<'a>> = Vec::new();
+    for post in posts {
+        let month = post.date.chars().take(7).collect::<String>();
+        if month.len() != 7 {
+            continue;
+        }
+        if let Some(group) = groups.last_mut().filter(|group| group.month == month) {
+            group.posts.push(*post);
+        } else {
+            groups.push(NewsMonthGroup {
+                label: news_month_label(&month),
+                month,
+                posts: vec![*post],
+            });
+        }
+    }
+    groups
+}
+
 pub fn render_index_page(posts: &[Post]) -> BlogResult<String> {
     let archive_json = archive_json(posts)?;
     Ok(IndexTemplate {
@@ -537,12 +617,29 @@ pub fn render_post_page(post: &Post, _posts: &[Post]) -> BlogResult<String> {
 
 pub fn render_news_page(posts: &[Post]) -> BlogResult<String> {
     let archive_json = archive_json(posts)?;
-    let news_posts = posts
+    let archive_post = posts
         .iter()
-        .filter(|post| post.folder == "news")
+        .filter(|post| post.folder == "news" && post.title == "Daily AI News Archive")
+        .take(1)
         .collect::<Vec<_>>();
+    let news_issues = posts
+        .iter()
+        .filter(|post| post.folder == "news" && post.title != "Daily AI News Archive")
+        .collect::<Vec<_>>();
+    let latest_issue = news_issues.iter().copied().take(1).collect::<Vec<_>>();
+    let recent_issues = news_issues
+        .iter()
+        .copied()
+        .skip(1)
+        .take(7)
+        .collect::<Vec<_>>();
+    let month_groups = news_month_groups(&news_issues);
     Ok(NewsTemplate {
-        news_posts,
+        latest_issue,
+        recent_issues,
+        month_groups,
+        archive_post,
+        issue_count: news_issues.len(),
         archive_json: &archive_json,
     }
     .render()?)
@@ -619,6 +716,11 @@ pub async fn build_static_site(
         assets_dir.join("pretext-polish-state.mjs"),
     )
     .await?;
+    fs::copy(
+        "src/pretext-polish-effects.mjs",
+        assets_dir.join("pretext-polish-effects.mjs"),
+    )
+    .await?;
     fs::copy("src/blog-lab.mjs", assets_dir.join("blog-lab.mjs")).await?;
     fs::copy(
         "src/blog-lab-machine.mjs",
@@ -629,6 +731,11 @@ pub async fn build_static_site(
     fs::copy(
         "src/site-chrome-state.mjs",
         assets_dir.join("site-chrome-state.mjs"),
+    )
+    .await?;
+    fs::copy(
+        "src/site-chrome-effects.mjs",
+        assets_dir.join("site-chrome-effects.mjs"),
     )
     .await?;
 

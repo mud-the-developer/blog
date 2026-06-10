@@ -1,4 +1,5 @@
-import { createPretextState, pretextReducer, renderPretextTokens } from './pretext-polish-state.mjs';
+import { renderPretextTokens } from './pretext-polish-effects.mjs';
+import { createPretextState, pretextReducer } from './pretext-polish-state.mjs';
 
 const stage = document.querySelector('[data-pretext-polish]');
 const surface = document.querySelector('[data-pretext-surface]');

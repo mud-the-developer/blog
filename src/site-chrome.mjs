@@ -1,4 +1,5 @@
-import { applyThemeEffect, createThemeState, themeReducer } from './site-chrome-state.mjs';
+import { applyThemeEffect } from './site-chrome-effects.mjs';
+import { createThemeState, themeReducer } from './site-chrome-state.mjs';
 
 const iconPaths = {
   home: '<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M9.5 20v-5h5v5"/>',

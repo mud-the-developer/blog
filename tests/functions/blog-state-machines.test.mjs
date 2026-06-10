@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { applyThemeEffect, createThemeState, themeReducer } from '../../src/site-chrome-state.mjs';
+import { applyThemeEffect } from '../../src/site-chrome-effects.mjs';
+import { createThemeState, themeReducer } from '../../src/site-chrome-state.mjs';
 import { createPretextState, pretextReducer } from '../../src/pretext-polish-state.mjs';
 import { createNewsDeskState, newsDeskReducer, runNewsDeskEffect } from '../../src/blog-lab-machine.mjs';
 

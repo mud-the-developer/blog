@@ -29,28 +29,70 @@
     <section class="news-hero" aria-labelledby="news-title">
       <p class="eyebrow">Daily + focused digests</p>
       <h1 id="news-title">News</h1>
-      <p>Archived AI news posts and generated digest data live here. Daily automation writes the rolling issue; focused issue drafts can be reviewed below before publishing.</p>
+      <p>Daily AI issues are framed as an editorial signal desk first, with the raw pipeline links kept as utility evidence below.</p>
     </section>
 
-    <section class="news-data-card" data-news-digest-json aria-labelledby="news-data-title">
-      <p class="eyebrow">Generated data</p>
-      <h2 id="news-data-title">Latest digest JSON</h2>
-      <p><a href="/news/data/latest.json">latest.json</a> is copied from the news pipeline into the deploy output for local preview and Cloudflare Pages Functions.</p>
-      <p><a href="/news/search/">Open News Search</a> to search sources and draft a focused issue.</p>
-    </section>
-
-    <section class="news-list" data-news-archive aria-labelledby="news-archive-title">
+    <section class="news-featured" data-news-featured aria-labelledby="news-featured-title">
       <div class="news-section-heading">
-        <p class="eyebrow">Archive</p>
-        <h2 id="news-archive-title">Archived news posts</h2>
-        <p>{{ news_posts.len() }} news posts</p>
+        <p class="eyebrow">Latest issue</p>
+        <h2 id="news-featured-title">Latest issue</h2>
+        <p>{{ issue_count }} generated news issues are indexed here.</p>
       </div>
-      {% for post in news_posts %}
+      {% for post in latest_issue %}
+      <a class="news-feature-card" href="{{ post.url }}">
+        <span class="news-feature-date">{{ post.date }}</span>
+        <strong>{{ post.title }}</strong>
+        <em>{{ post.excerpt }}</em>
+        <span class="news-feature-cta">Read today's signal brief →</span>
+      </a>
+      {% endfor %}
+    </section>
+
+    <section class="news-list" data-news-recent data-news-archive aria-labelledby="news-recent-title">
+      <div class="news-section-heading">
+        <p class="eyebrow">Recent</p>
+        <h2 id="news-recent-title">Recent 7 issues</h2>
+        <p>The newest run stays featured; the next seven are compact scan rows.</p>
+      </div>
+      {% for post in recent_issues %}
       <a class="news-row" href="{{ post.url }}">
         <span>{{ post.date }}</span>
         <strong>{{ post.title }}</strong>
         <em>{{ post.excerpt }}</em>
       </a>
+      {% endfor %}
+    </section>
+
+    <section class="news-monthly-archive" data-news-monthly-archive aria-labelledby="news-monthly-title">
+      <div class="news-section-heading">
+        <p class="eyebrow">Archive</p>
+        <h2 id="news-monthly-title">Monthly archive</h2>
+        <p>Older issues are grouped by month so the page scans like an archive, not a raw dump.</p>
+      </div>
+      <div class="news-month-groups">
+        {% for group in month_groups %}
+        <details class="news-month-group"{% if loop.first %} open{% endif %}>
+          <summary><span>{{ group.label }}</span><em>{{ group.posts.len() }} issues</em></summary>
+          <div class="news-month-links">
+            {% for post in group.posts %}
+            <a class="news-month-link" href="{{ post.url }}">
+              <span>{{ post.date }}</span>
+              <strong>{{ post.title }}</strong>
+            </a>
+            {% endfor %}
+          </div>
+        </details>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="news-utility" data-news-utility aria-labelledby="news-utility-title">
+      <p class="eyebrow">pipeline utility</p>
+      <h2 id="news-utility-title">Pipeline utility</h2>
+      <p><a href="/news/data/latest.json">latest.json</a> is copied from the news pipeline into the deploy output for local preview and Cloudflare Pages Functions.</p>
+      <p><a href="/news/search/">Open News Search</a> to search sources and draft a focused issue.</p>
+      {% for post in archive_post %}
+      <p><a href="{{ post.url }}">Daily AI News Archive</a> keeps the generated monthly digest index as a post page.</p>
       {% endfor %}
     </section>
   </main>
