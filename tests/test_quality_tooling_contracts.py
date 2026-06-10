@@ -87,6 +87,8 @@ class QualityToolingContractTests(unittest.TestCase):
 
     def test_ci_keeps_fast_lint_and_exposes_deep_quality_as_manual_gate(self) -> None:
         deploy = DEPLOY_WORKFLOW.read_text()
+        self.assertIn("npm ci", deploy)
+        self.assertLess(deploy.index("npm ci"), deploy.index("npm run build"))
         self.assertIn("npm run lint", deploy)
         self.assertNotIn("npm run lint:quality", deploy)
 
