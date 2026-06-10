@@ -149,8 +149,8 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(!style.contains(".archive-graph"));
     assert!(!style.to_ascii_lowercase().contains("neon"));
     assert!(
-        style.len() <= 32_000,
-        "public polish CSS should stay bounded even with responsive controls, post chrome spacing, icons, theme modes, dark contrast guards, and glass aquarium Pretext layers"
+        style.len() <= 35_000,
+        "public polish CSS should stay bounded even with responsive controls, post chrome spacing, icons, theme modes, dark contrast guards, editorial archive controls, and Pretext layers"
     );
 
     let profile = fs::read_to_string(out_dir.join("posts/jinhyuk-kim/index.html"))?;

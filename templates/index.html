@@ -30,11 +30,23 @@
       <div class="archive-heading">
         <p class="eyebrow">Public writing</p>
         <h1 id="posts-title">Index</h1>
-        <p>{{ posts.len() }} posts across AI systems, papers, and engineering notes.</p>
+        <p class="archive-deck-copy">A tight public desk for AI systems, papers, engineering notes, and the live news pipeline.</p>
+        <div class="archive-command-deck" aria-label="archive summary">
+          <a class="archive-lead-card" href="{{ latest_url }}">
+            <span class="archive-lead-kicker">Latest note</span>
+            <strong>{{ latest_title }}</strong>
+            <em>{{ latest_date }}</em>
+          </a>
+          <div class="archive-metrics" aria-label="archive metrics">
+            <span><strong>{{ posts.len() }}</strong><em>notes</em></span>
+            <span><strong>{{ folder_count }}</strong><em>sections</em></span>
+            <a href="/news/"><strong>Live</strong><em>news desk</em></a>
+          </div>
+        </div>
       </div>
 
       <nav class="filetree" aria-label="post file tree">
-        <div class="filetree-root"><span class="ui-icon" data-icon="folder-root" aria-hidden="true"></span><span>posts/</span></div>
+        <div class="filetree-root"><span class="ui-icon" data-icon="folder-root" aria-hidden="true"></span><span>library / posts/</span></div>
         {% for group in groups %}
         <details class="filetree-folder" data-folder="{{ group.slug }}" aria-label="{{ group.label }} posts"{% if group.slug != "news" %} open{% endif %}>
           <summary class="filetree-folder-label">

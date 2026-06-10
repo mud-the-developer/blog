@@ -127,6 +127,10 @@ struct IndexTemplate<'a> {
     posts: &'a [Post],
     groups: Vec<FolderGroup<'a>>,
     archive_json: &'a str,
+    folder_count: usize,
+    latest_title: String,
+    latest_url: String,
+    latest_date: String,
 }
 
 #[derive(Template)]
@@ -711,9 +715,21 @@ fn news_month_groups<'a>(posts: &[&'a Post]) -> Vec<NewsMonthGroup<'a>> {
 pub fn render_index_page(posts: &[Post]) -> BlogResult<String> {
     let home_posts = home_index_posts(posts);
     let archive_json = archive_json(&home_posts)?;
+    let groups = folder_groups(&home_posts);
+    let latest = home_posts.first();
     Ok(IndexTemplate {
         posts: &home_posts,
-        groups: folder_groups(&home_posts),
+        folder_count: groups.len(),
+        latest_title: latest
+            .map(|post| post.title.clone())
+            .unwrap_or_else(|| "No public notes yet".to_string()),
+        latest_url: latest
+            .map(|post| post.url.clone())
+            .unwrap_or_else(|| "#posts".to_string()),
+        latest_date: latest
+            .map(|post| post.date.clone())
+            .unwrap_or_else(|| "draft".to_string()),
+        groups,
         archive_json: &archive_json,
     }
     .render()?)
