@@ -6,13 +6,26 @@
   "scripts": {
     "build": "cargo run --quiet -- build",
     "dev": "zsh -lc 'source ~/.zshrc >/dev/null 2>&1 || true; cargo run --quiet -- serve --host 0.0.0.0 --port 4173'",
-    "test": "cargo test && python3 -m unittest tests/test_generate_news_digest_cards.py tests/test_github_workflow_contracts.py && node --test tests/functions/*.test.mjs",
+    "test": "cargo test && python3 -m unittest discover -s tests -p \"test_*.py\" && node --test tests/functions/*.test.mjs",
     "test:browser": "npm run build && playwright test --config=playwright.config.mjs",
-    "lint": "cargo fmt --all --check && cargo clippy --workspace --all-targets -- -D warnings && node scripts/check-state-architecture.mjs && node --check src/pretext-polish.mjs && node --check src/pretext-polish-state.mjs && node --check src/pretext-polish-effects.mjs && node --check src/blog-lab.mjs && node --check src/blog-lab-machine.mjs && node --check src/site-chrome.mjs && node --check src/site-chrome-state.mjs && node --check src/site-chrome-effects.mjs && node --check functions/api/_shared.js && node --check functions/api/focused-issue.js && node --check functions/api/focused-issue-machine.js && node --check functions/api/news-search.js && node --check scripts/check-state-architecture.mjs && node --check tests/browser/pretext-field.spec.mjs && node --check tests/browser/performance-budget.spec.mjs && node --check tests/functions/blog-state-machines.test.mjs && node --check tests/functions/focused-issue-machine.test.mjs && node --check tests/functions/gemma-pages-functions.test.mjs && node --check tests/functions/state-architecture-lint.test.mjs",
+    "lint": "npm run lint:rust && node scripts/check-state-architecture.mjs && npm run lint:web",
+    "lint:rust": "cargo fmt --all --check && cargo fmt --manifest-path fuzz/Cargo.toml --check && cargo clippy --workspace --all-targets -- -D warnings",
+    "lint:rust:miri": "scripts/rust-quality.sh miri",
+    "lint:rust:fuzz": "scripts/rust-quality.sh fuzz",
+    "lint:rust:mutants": "scripts/rust-quality.sh mutants",
+    "lint:rust:deep": "npm run lint:rust:miri && npm run lint:rust:fuzz && npm run lint:rust:mutants",
+    "lint:web": "npm run lint:web:eslint && npm run lint:web:biome",
+    "lint:web:eslint": "eslint .",
+    "lint:web:biome": "biome lint .",
+    "lint:quality": "npm run lint:web && npm run lint:rust && node scripts/check-state-architecture.mjs && npm run lint:rust:deep",
     "news:daily": "python3 scripts/generate_news_digest.py",
     "news:keyword": "python3 scripts/generate_news_digest.py"
   },
   "devDependencies": {
-    "@playwright/test": "^1.60.0"
+    "@biomejs/biome": "^2.4.16",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.60.0",
+    "eslint": "^10.4.1",
+    "globals": "^17.6.0"
   }
 }

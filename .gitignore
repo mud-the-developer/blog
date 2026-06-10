@@ -3,6 +3,9 @@ dist/
 dist-test/
 output/
 target/
+fuzz/target/
+fuzz/artifacts/
+fuzz/corpus/
 .DS_Store
 .playwright-cache/
 test-results/
