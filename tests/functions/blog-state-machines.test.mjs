@@ -63,24 +63,29 @@ test('theme render effect keeps the visible theme label inside the accessible na
   assert.equal(attributes['aria-pressed'], 'false');
 });
 
-test('pretext polish reducer emits a quiet title-only card set without link graph clutter', () => {
+test('pretext polish reducer emits a clean signal field from archive language', () => {
   const initial = createPretextState({ archive, isMobile: false });
   const step = pretextReducer(initial, { type: 'pretext.mounted' });
 
   assert.deepEqual(initial, createPretextState({ archive, isMobile: false }));
   assert.equal(step.state.phase, 'ready');
   assert.equal(step.effects.length, 1);
-  assert.equal(step.effects[0].type, 'render-pretext-tokens');
-  assert.deepEqual(step.effects[0].terms, []);
+  assert.equal(step.effects[0].type, 'render-pretext-signal-field');
+  assert.equal(step.effects[0].scene, 'pretext-signal-field');
+  assert.equal(step.effects[0].label, 'writing index');
   assert.deepEqual(step.effects[0].links, []);
-  assert.deepEqual(step.effects[0].tokens.map((token) => token.label), archive.slice(1).map((post) => post.title));
-  assert.ok(step.effects[0].tokens.every((token) => token.label.length <= 56));
-  assert.ok(step.effects[0].tokens.length <= 6);
-  assert.ok(step.effects[0].tokens.every((token) => token.kind === 'post-title'));
+  assert.equal(step.effects[0].lanes.length, 3);
+  assert.ok(step.effects[0].tokens.length >= 8);
+  assert.ok(step.effects[0].tokens.length <= 10);
+  assert.ok(step.effects[0].tokens.some((token) => token.label === 'open RAN'));
+  assert.ok(step.effects[0].tokens.some((token) => token.label === 'Rust'));
+  assert.ok(step.effects[0].tokens.some((token) => token.label === 'semantic'));
+  assert.ok(step.effects[0].tokens.every((token) => token.label.length <= 24));
+  assert.ok(step.effects[0].tokens.every((token) => token.kind === 'signal-fragment'));
   assert.ok(step.effects[0].tokens.every((token) => token.url === ''));
   assert.ok(step.effects[0].tokens.every((token) => token.x.endsWith('%') && token.y.endsWith('%')));
   assert.ok(step.effects[0].tokens.every((token) => token.depth >= 0 && token.depth <= 1));
-  assert.ok(step.effects[0].tokens.every((token) => token.variant.startsWith('glass-')));
+  assert.ok(step.effects[0].tokens.every((token) => token.variant.startsWith('signal-')));
 });
 
 test('news desk reducer controls search/draft/download states without DOM effects', () => {

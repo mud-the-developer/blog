@@ -1,5 +1,5 @@
 export function renderPretextTokens(effect, { stage, surface, document }) {
-  if (effect.type !== 'render-pretext-tokens' || !stage || !surface) return;
+  if (effect.type !== 'render-pretext-signal-field' || !stage || !surface) return;
   surface.replaceChildren();
   for (const layerName of ['current', 'caustic', 'dust']) {
     const layer = document.createElement('span');
@@ -13,11 +13,25 @@ export function renderPretextTokens(effect, { stage, surface, document }) {
     volume.setAttribute('aria-hidden', 'true');
     surface.append(volume);
   }
+  for (const laneModel of effect.lanes || []) {
+    const lane = document.createElement('span');
+    lane.className = 'pretext-scan-lane';
+    lane.setAttribute('aria-hidden', 'true');
+    lane.style.setProperty('--lane-y', laneModel.y);
+    lane.style.setProperty('--delay', laneModel.delay);
+    lane.style.setProperty('--duration', laneModel.duration);
+    surface.append(lane);
+  }
+  const centerLabel = document.createElement('span');
+  centerLabel.className = 'pretext-signal-label';
+  centerLabel.textContent = effect.label || 'writing index';
+  centerLabel.setAttribute('aria-hidden', 'true');
+  surface.append(centerLabel);
   for (const tokenModel of effect.tokens) {
     const token = document.createElement('span');
-    token.className = `pretext-token pretext-glass-block ${tokenModel.variant}`;
+    token.className = `pretext-fragment pretext-signal-fragment ${tokenModel.variant}`;
     token.dataset.depth = String(tokenModel.depth);
-    token.dataset.tokenKind = tokenModel.kind || 'post-title';
+    token.dataset.tokenKind = tokenModel.kind || 'signal-fragment';
     token.textContent = tokenModel.label;
     token.style.setProperty('--x', tokenModel.x);
     token.style.setProperty('--y', tokenModel.y);
@@ -34,6 +48,6 @@ export function renderPretextTokens(effect, { stage, surface, document }) {
   frontGlass.className = 'pretext-front-glass';
   frontGlass.setAttribute('aria-hidden', 'true');
   surface.append(frontGlass);
-  stage.dataset.pretextScene = 'front-glass-aquarium';
+  stage.dataset.pretextScene = effect.scene || 'pretext-signal-field';
   stage.dataset.pretextReady = 'true';
 }

@@ -122,7 +122,8 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(style.contains(".filetree"));
     assert!(style.contains(".post-body :is"));
     assert!(style.contains(".profile-publication-widget"));
-    assert!(style.contains("pretext-aquarium-drift"));
+    assert!(style.contains("pretext-signal-drift"));
+    assert!(style.contains("pretext-scan-lane"));
     assert!(style.contains("pretext-front-glass"));
     assert!(style.contains("pretext-inner-volume"));
     assert!(style.contains("backdrop-filter"));

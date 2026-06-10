@@ -86,7 +86,7 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
 
   await expect(page.locator('[data-pretext-polish]')).toHaveAttribute('data-pretext-ready', 'true');
   const motion = await page.evaluate(() => {
-    const tokens = [...document.querySelectorAll('.pretext-token')];
+    const tokens = [...document.querySelectorAll('.pretext-fragment')];
     const animated = tokens.filter((token) => {
       const style = getComputedStyle(token);
       return style.animationName !== 'none' && style.animationDuration !== '0s';
@@ -103,18 +103,37 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
     const archive = JSON.parse(document.getElementById('archive-data')?.textContent || '[]');
     const stage = document.querySelector('[data-pretext-polish]');
     const tokenStyles = tokens.map((token) => getComputedStyle(token));
+    const stageRect = stage?.getBoundingClientRect();
+    const tokenBoxes = tokens.map((token) => {
+      const rect = token.getBoundingClientRect();
+      return { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom };
+    });
+    const overlaps = [];
+    for (let index = 0; index < tokenBoxes.length; index += 1) {
+      for (let next = index + 1; next < tokenBoxes.length; next += 1) {
+        const a = tokenBoxes[index];
+        const b = tokenBoxes[next];
+        if (a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top) {
+          overlaps.push([tokens[index].textContent.trim(), tokens[next].textContent.trim()]);
+        }
+      }
+    }
     return {
       archiveCount: Array.isArray(archive) ? archive.length : 0,
       tokenCount: tokens.length,
       animatedCount: animated.length,
-      glassTokenCount: tokens.filter((token) => token.classList.contains('pretext-glass-block')).length,
+      glassTokenCount: tokens.filter((token) => token.classList.contains('pretext-signal-fragment')).length,
       ambientLayerCount: document.querySelectorAll('.pretext-ambient-layer').length,
+      laneCount: document.querySelectorAll('.pretext-scan-lane').length,
+      centerLabelCount: document.querySelectorAll('.pretext-signal-label').length,
       scene: stage?.dataset.pretextScene || '',
       frontGlassCount: document.querySelectorAll('.pretext-front-glass').length,
-      linkCount: document.querySelectorAll('.pretext-link').length,
-      anchorTokenCount: document.querySelectorAll('a.pretext-token[href]').length,
+      linkCount: document.querySelectorAll('.pretext-link,.pretext-network').length,
+      anchorTokenCount: document.querySelectorAll('a.pretext-fragment[href],a.pretext-token[href]').length,
       tokenLabels: tokens.map((token) => token.textContent.trim()),
       tokenKinds: tokens.map((token) => token.dataset.tokenKind || ''),
+      clippedTokenCount: stageRect ? tokenBoxes.filter((box) => box.left < stageRect.left || box.right > stageRect.right || box.top < stageRect.top || box.bottom > stageRect.bottom).length : 0,
+      overlapCount: overlaps.length,
       interactive: stage?.dataset.pretextInteractive || '',
       innerVolumeCount: document.querySelectorAll('.pretext-inner-volume').length,
       tokenBackdropFilters: tokenStyles.map((style) => style.backdropFilter || style.webkitBackdropFilter || ''),
@@ -127,7 +146,7 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
       frontGlassZ: Number(getComputedStyle(document.querySelector('.pretext-front-glass') || document.body).zIndex || 0),
       maxTokenZ: Math.max(...tokens.map((token) => Number(getComputedStyle(token).zIndex || 0))),
       filetreeWidth: document.querySelector('.filetree')?.getBoundingClientRect().width || 0,
-      hasFrontGlassAquarium: css.includes('pretext-aquarium-drift') && css.includes('pretext-front-glass') && css.includes('backdrop-filter'),
+      hasFrontGlassAquarium: css.includes('pretext-signal-drift') && css.includes('pretext-scan-lane') && css.includes('backdrop-filter'),
       hasDecorativeBackgroundPattern: /radial-gradient|repeating-linear-gradient|skewY|orbit|bubble|stripe/i.test(css),
       mentionsNeon: css.toLowerCase().includes('neon'),
       scrollWidth: document.documentElement.scrollWidth,
@@ -135,17 +154,21 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
     };
   });
   expect(motion.archiveCount).toBe(publicPostCount);
-  expect(motion.tokenCount).toBeGreaterThanOrEqual(4);
-  expect(motion.tokenCount).toBeLessThanOrEqual(6);
-  expect(motion.animatedCount).toBeGreaterThanOrEqual(4);
+  expect(motion.tokenCount).toBeGreaterThanOrEqual(8);
+  expect(motion.tokenCount).toBeLessThanOrEqual(10);
+  expect(motion.animatedCount).toBeGreaterThanOrEqual(6);
   expect(motion.glassTokenCount).toBe(motion.tokenCount);
   expect(motion.ambientLayerCount).toBeGreaterThanOrEqual(3);
-  expect(motion.scene).toBe('front-glass-aquarium');
+  expect(motion.laneCount).toBe(3);
+  expect(motion.centerLabelCount).toBe(1);
+  expect(motion.scene).toBe('pretext-signal-field');
   expect(motion.frontGlassCount).toBe(1);
   expect(motion.linkCount).toBe(0);
   expect(motion.anchorTokenCount).toBe(0);
-  expect(motion.tokenKinds.every((kind) => kind === 'post-title')).toBe(true);
-  expect(motion.tokenLabels.every((label) => label.length <= 56)).toBe(true);
+  expect(motion.tokenKinds.every((kind) => kind === 'signal-fragment')).toBe(true);
+  expect(motion.tokenLabels.every((label) => label.length <= 24)).toBe(true);
+  expect(motion.clippedTokenCount).toBe(0);
+  expect(motion.overlapCount).toBe(0);
   expect(motion.interactive).toBe('true');
   expect(motion.innerVolumeCount).toBeGreaterThanOrEqual(2);
   expect(motion.tokenBackdropFilters.every((value) => value.includes('blur'))).toBe(true);

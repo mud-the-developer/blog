@@ -16,7 +16,7 @@ const parseArchive = () => {
 };
 
 function attachPretextInteraction() {
-  const tokens = [...surface.querySelectorAll('.pretext-token')];
+  const tokens = [...surface.querySelectorAll('.pretext-fragment')];
   if (!tokens.length) return;
   stage.dataset.pretextInteractive = 'true';
   const settle = () => {
