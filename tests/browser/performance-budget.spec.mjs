@@ -15,8 +15,8 @@ async function runtimeAudit(page) {
       nodes: document.getElementsByTagName('*').length,
       postCards: document.querySelectorAll('.post-card').length,
       filetreeFiles: document.querySelectorAll('.filetree-file').length,
-      pretextTokens: document.querySelectorAll('.pretext-type-fragment').length,
-      pretextMicroRows: document.querySelectorAll('.pretext-micro-row').length,
+      pretextAsciiRows: document.querySelectorAll('.pretext-ascii-row').length,
+      pretextThreads: document.querySelectorAll('.pretext-loom-thread').length,
       graphCount: document.querySelectorAll('[data-archive-graph]').length,
       fieldStages: document.querySelectorAll('[data-field-stage]').length,
       scrollWidth: document.documentElement.scrollWidth,
@@ -42,9 +42,9 @@ test('desktop and mobile public homepage stay polished without layout overflow',
     expect(audit.filetreeFiles, name).toBe(publicPostCount);
     expect(audit.graphCount, name).toBe(0);
     expect(audit.fieldStages, name).toBe(0);
-    expect(audit.pretextTokens, name).toBeGreaterThanOrEqual(name === 'mobile' ? 14 : 18);
-    expect(audit.pretextTokens, name).toBeLessThanOrEqual(24);
-    expect(audit.pretextMicroRows, name).toBe(6);
+    expect(audit.pretextAsciiRows, name).toBeGreaterThanOrEqual(name === 'mobile' ? 10 : 12);
+    expect(audit.pretextAsciiRows, name).toBeLessThanOrEqual(18);
+    expect(audit.pretextThreads, name).toBeGreaterThanOrEqual(5);
     expect(audit.nodes, name).toBeLessThanOrEqual(980);
     expect(audit.scrollWidth, name).toBeLessThanOrEqual(audit.clientWidth + 1);
 
@@ -60,7 +60,7 @@ test('reduced-motion keeps the filetree but disables ambient Pretext animation',
   await page.goto('/', { waitUntil: 'networkidle' });
   const audit = await runtimeAudit(page);
   const publicPostCount = audit.archiveCount;
-  const animatedCount = await page.locator('.pretext-type-fragment,.pretext-micro-row').evaluateAll((tokens) =>
+  const animatedCount = await page.locator('.pretext-ascii-row,.pretext-loom-thread,.pretext-scan-cursor').evaluateAll((tokens) =>
     tokens.filter((token) => {
       const style = window.getComputedStyle(token);
       return style.animationName !== 'none' && style.animationDuration !== '0s' && style.animationDuration !== '0.01ms';

@@ -63,7 +63,7 @@ test('theme render effect keeps the visible theme label inside the accessible na
   assert.equal(attributes['aria-pressed'], 'false');
 });
 
-test('pretext polish reducer emits a layered type current from archive language', () => {
+test('pretext polish reducer emits a kinetic ASCII loom from archive language', () => {
   const initial = createPretextState({ archive, isMobile: false });
   const step = pretextReducer(initial, { type: 'pretext.mounted' });
 
@@ -71,27 +71,23 @@ test('pretext polish reducer emits a layered type current from archive language'
   assert.equal(step.state.phase, 'ready');
   assert.equal(step.effects.length, 1);
   const effect = step.effects[0];
-  assert.equal(effect.type, 'render-pretext-type-current');
-  assert.equal(effect.scene, 'pretext-type-current');
+  assert.equal(effect.type, 'render-pretext-ascii-loom');
+  assert.equal(effect.scene, 'kinetic-ascii-loom');
   assert.deepEqual(effect.links, []);
-  assert.deepEqual(effect.lanes, []);
-  assert.equal(effect.microRows.length, 6);
-  assert.ok(effect.microRows.every((row) => row.text.includes('·') || row.text.includes('/')));
-  assert.ok(effect.microRows.every((row) => row.text.length >= 72));
-  assert.ok(effect.microRows.every((row) => Number(row.opacity) >= 0.2));
-  assert.ok(effect.tokens.length >= 18);
-  assert.ok(effect.tokens.length <= 24);
-  assert.ok(effect.tokens.filter((token) => token.kind === 'focus-word').length >= 3);
-  assert.ok(effect.tokens.filter((token) => token.kind === 'type-phrase').length >= 6);
-  assert.ok(effect.tokens.filter((token) => token.kind === 'type-punctuation').length >= 3);
-  assert.ok(effect.tokens.some((token) => token.label === 'open RAN'));
-  assert.ok(effect.tokens.some((token) => token.label === 'Rust'));
-  assert.ok(effect.tokens.some((token) => token.label === 'semantic'));
-  assert.ok(effect.tokens.every((token) => token.label.length <= 24));
-  assert.ok(effect.tokens.every((token) => token.url === ''));
-  assert.ok(effect.tokens.every((token) => token.x.endsWith('%') && token.y.endsWith('%')));
-  assert.ok(effect.tokens.every((token) => token.depth >= 0 && token.depth <= 1));
-  assert.ok(effect.tokens.every((token) => token.variant.startsWith('type-')));
+  assert.equal(effect.frame.title, 'PRETEXT / INDEX LOOM');
+  assert.ok(effect.frame.rows.length >= 12);
+  assert.ok(effect.frame.rows.length <= 18);
+  assert.ok(effect.frame.rows.some((row) => row.text.includes('posts/') || row.text.includes('blog/')));
+  assert.ok(effect.frame.rows.some((row) => row.text.includes('papers/')));
+  assert.ok(effect.frame.rows.some((row) => row.text.includes('open RAN')));
+  assert.ok(effect.frame.rows.some((row) => row.text.includes('Rust')));
+  assert.ok(effect.frame.rows.every((row) => row.text.length <= 38));
+  assert.ok(effect.frame.rows.filter((row) => row.kind === 'connector').length >= 4);
+  assert.ok(effect.frame.rows.filter((row) => row.kind === 'phrase').length >= 5);
+  assert.ok(effect.threads.length >= 5);
+  assert.ok(effect.threads.every((thread) => thread.text.includes('═') || thread.text.includes('─')));
+  assert.equal(effect.scanCursor.label, 'writing index is live ▌');
+  assert.ok(effect.scanCursor.duration.endsWith('s'));
 });
 
 test('news desk reducer controls search/draft/download states without DOM effects', () => {

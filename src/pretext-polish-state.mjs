@@ -1,13 +1,3 @@
-const fragmentSlots = [
-  [8, 11], [43, 10], [69, 12], [14, 22], [76, 25],
-  [7, 33], [40, 34], [70, 35], [18, 47], [55, 47],
-  [8, 59], [42, 59], [72, 60], [14, 72], [54, 72],
-  [8, 84], [40, 84], [72, 84], [62, 23], [62, 32], [35, 56], [68, 79]
-];
-
-const fragmentVariants = ['type-phrase', 'type-ghost', 'type-mark', 'type-phrase'];
-const punctuationMarks = ['/', '·', '—', '::'];
-
 const stopWords = new Set([
   'and', 'with', 'the', 'for', 'from', 'into', 'your', 'this', 'that',
   'guide', 'notes', 'post', 'posts', 'aware', 'remote', 'large', 'small',
@@ -30,8 +20,27 @@ const labelRewrites = new Map([
   ['seo', 'SEO'],
   ['llm', 'LLM'],
   ['ai', 'AI'],
-  ['papers', 'papers']
+  ['papers', 'papers'],
+  ['paper', 'paper'],
+  ['open ran', 'open RAN']
 ]);
+
+const connectorFrames = [
+  'posts/ ──┬──── {term}',
+  '        │     {term}',
+  'blog/  ──┼──── {term}',
+  '        │     {term}',
+  'papers/──┴──── {term}',
+  '        ╰──── {term}'
+];
+
+const threadPatterns = [
+  '═══╪═════╪═════╪═════╪══',
+  '──╮    ╭──╮    ╭──╮    ╭─',
+  '  ╲╱────╲╱────╲╱────╲╱  ',
+  '░▒░ index ─░▒░ archive ─░▒░',
+  '──── compose ── publish ──'
+];
 
 export function cleanPretextTerm(value) {
   return String(value || '')
@@ -40,10 +49,16 @@ export function cleanPretextTerm(value) {
     .trim();
 }
 
+function clampRowText(value, limit = 38) {
+  const clean = String(value || '').replace(/\s+/g, ' ').trim();
+  if (clean.length <= limit) return clean;
+  return `${clean.slice(0, limit - 1).trimEnd()}…`;
+}
+
 function addFragment(fragments, seen, label, weight = 1) {
   const cleanBase = cleanPretextTerm(label).replace(/\/$/, '');
   const clean = labelRewrites.get(cleanBase.toLowerCase()) || cleanBase;
-  if (!clean || clean.length < 2 || clean.length > 24) return;
+  if (!clean || clean.length < 2 || clean.length > 28) return;
   const key = clean.toLowerCase();
   if (stopWords.has(key)) return;
   const existing = seen.get(key);
@@ -62,7 +77,7 @@ function titleFragments(title) {
   if (phraseRewrites.has(lower)) return [phraseRewrites.get(lower)];
   const words = clean.split(' ').filter(Boolean);
   const phrases = [];
-  if (words.length <= 3 && clean.length <= 24) phrases.push(clean);
+  if (words.length <= 3 && clean.length <= 28) phrases.push(clean);
   if (words.length >= 2) phrases.push(words.slice(0, 2).join(' '));
   for (const word of words) {
     const normalized = word.replace(/[^\p{L}\p{N}-]/gu, '');
@@ -77,73 +92,65 @@ export function termsFromArchive(archive, { isMobile = false } = {}) {
   const fragments = [];
   const seen = new Map();
   for (const post of Array.isArray(archive) ? archive : []) {
-    addFragment(fragments, seen, post.folder, 2);
+    addFragment(fragments, seen, post.folder, 3);
     addFragment(fragments, seen, post.primary_tag, 4);
     for (const tag of post.tags || []) addFragment(fragments, seen, tag, 3);
     for (const phrase of titleFragments(post.title)) addFragment(fragments, seen, phrase, 2);
   }
   return fragments
     .sort((a, b) => b.weight - a.weight || a.label.localeCompare(b.label))
-    .slice(0, isMobile ? 14 : 20)
+    .slice(0, isMobile ? 12 : 18)
     .map((term) => term.label);
 }
 
-function tokenKind(index, termCount) {
-  if (index >= termCount) return 'type-punctuation';
-  return index < 4 ? 'focus-word' : 'type-phrase';
+function cycleTerm(terms, index, fallback) {
+  if (!terms.length) return fallback;
+  return terms[index % terms.length] || fallback;
 }
 
-function tokenModel(label, index, termCount) {
-  const [x, y] = fragmentSlots[index % fragmentSlots.length];
-  const kind = tokenKind(index, termCount);
-  const depth = kind === 'focus-word' ? 0.76 - index * 0.05 : kind === 'type-punctuation' ? 0.22 : 0.42 + (index % 4) * 0.07;
+function connectorRows(terms) {
+  return connectorFrames.map((frame, index) => ({
+    kind: index % 2 === 0 ? 'connector' : 'phrase',
+    text: clampRowText(frame.replace('{term}', cycleTerm(terms, index, ['index', 'writing', 'archive'][index % 3]))),
+    delay: `${index * -0.42}s`,
+    duration: `${(8.5 + index * 0.65).toFixed(1)}s`,
+    depth: Number((0.72 - index * 0.045).toFixed(2))
+  }));
+}
+
+function phraseRows(terms, { isMobile = false } = {}) {
+  const source = terms.length ? terms : ['index', 'writing', 'notes', 'papers', 'archive', 'public'];
+  const count = isMobile ? 6 : 10;
+  return Array.from({ length: count }, (_value, index) => {
+    const left = cycleTerm(source, index * 2, 'index');
+    const right = cycleTerm(source, index * 2 + 1, 'notes');
+    const bridge = index % 3 === 0 ? ' · ' : index % 3 === 1 ? ' / ' : ' :: ';
+    return {
+      kind: index % 4 === 2 ? 'connector' : 'phrase',
+      text: clampRowText(`${left}${bridge}${right}`),
+      delay: `${(index + 6) * -0.34}s`,
+      duration: `${(10.5 + (index % 5) * 0.8).toFixed(1)}s`,
+      depth: Number((0.38 + (index % 5) * 0.07).toFixed(2))
+    };
+  });
+}
+
+function frameFromTerms(terms, options = {}) {
+  const rows = [...connectorRows(terms), ...phraseRows(terms, options)];
   return {
-    label,
-    url: '',
-    kind,
-    x: `${x}%`,
-    y: `${y}%`,
-    delay: `${index * -0.37}s`,
-    duration: `${(11 + depth * 6).toFixed(1)}s`,
-    scaleStart: (0.985 + depth * 0.02).toFixed(3),
-    scaleEnd: (1.004 + depth * 0.026).toFixed(3),
-    opacityStart: (0.36 + depth * 0.24).toFixed(2),
-    opacityEnd: (0.58 + depth * 0.3).toFixed(2),
-    depth: Number(depth.toFixed(2)),
-    variant: kind === 'focus-word' ? 'type-focus' : kind === 'type-punctuation' ? 'type-mark' : fragmentVariants[(index - 4) % fragmentVariants.length]
+    title: 'PRETEXT / INDEX LOOM',
+    rows: rows.map((row, index) => ({ ...row, index }))
   };
 }
 
-export function tokensFromTerms(terms) {
-  const selected = terms.slice(0, 18);
-  const labels = [...selected, ...punctuationMarks];
-  return labels.map((term, index) => tokenModel(term, index, selected.length));
-}
-
-export function tokensFromArchive(archive, { isMobile = false } = {}) {
-  return tokensFromTerms(termsFromArchive(archive, { isMobile }));
-}
-
-export function linksFromTokens() {
-  return [];
-}
-
-function microRowsFromTerms(terms) {
-  const source = terms.length ? terms : ['index', 'writing', 'notes', 'papers'];
-  const rows = [0, 1, 2, 3, 4, 5].map((row) => {
-    const rotated = source.slice(row * 2).concat(source.slice(0, row * 2));
-    const expanded = rotated.concat(source).concat(rotated);
-    const text = expanded.slice(0, 14).join(row % 2 === 0 ? ' · ' : ' / ');
-    return {
-      text,
-      y: `${12 + row * 15}%`,
-      delay: `${row * -3.6}s`,
-      duration: `${22 + row * 4}s`,
-      direction: row % 2 === 0 ? 'normal' : 'reverse',
-      opacity: (0.22 + (row % 3) * 0.045).toFixed(2)
-    };
-  });
-  return rows;
+function threadsFromTerms(terms) {
+  return threadPatterns.map((pattern, index) => ({
+    text: clampRowText(pattern.replace('index', cycleTerm(terms, index, 'index'))),
+    y: `${22 + index * 12}%`,
+    delay: `${index * -1.8}s`,
+    duration: `${(15 + index * 2.2).toFixed(1)}s`,
+    direction: index % 2 === 0 ? 'normal' : 'reverse'
+  }));
 }
 
 export function createPretextState({ archive = [], isMobile = false } = {}) {
@@ -152,20 +159,20 @@ export function createPretextState({ archive = [], isMobile = false } = {}) {
     archive: Array.isArray(archive) ? archive : [],
     isMobile: Boolean(isMobile),
     terms: [],
-    tokens: []
+    frame: null
   };
 }
 
 export function pretextReducer(state, event) {
   if (event.type === 'pretext.mounted') {
     const terms = termsFromArchive(state.archive, { isMobile: state.isMobile });
-    const tokens = tokensFromTerms(terms);
-    const links = [];
-    const microRows = microRowsFromTerms(terms);
-    const next = { ...state, phase: 'ready', terms, tokens };
+    const frame = frameFromTerms(terms, { isMobile: state.isMobile });
+    const threads = threadsFromTerms(terms);
+    const scanCursor = { label: 'writing index is live ▌', delay: '-1.2s', duration: '9.5s' };
+    const next = { ...state, phase: 'ready', terms, frame };
     return {
       state: next,
-      effects: [{ type: 'render-pretext-type-current', scene: 'pretext-type-current', terms, tokens, links, lanes: [], microRows }]
+      effects: [{ type: 'render-pretext-ascii-loom', scene: 'kinetic-ascii-loom', terms, links: [], frame, threads, scanCursor }]
     };
   }
   return { state, effects: [] };

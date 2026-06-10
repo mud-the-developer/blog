@@ -16,7 +16,7 @@ const parseArchive = () => {
 };
 
 function attachPretextInteraction() {
-  const tokens = [...surface.querySelectorAll('.pretext-type-fragment')];
+  const tokens = [...surface.querySelectorAll('.pretext-ascii-row,.pretext-loom-thread')];
   if (!tokens.length) return;
   stage.dataset.pretextInteractive = 'true';
   const settle = () => {
@@ -30,10 +30,10 @@ function attachPretextInteraction() {
     const nx = ((event.clientX - rect.left) / rect.width - 0.5) || 0;
     const ny = ((event.clientY - rect.top) / rect.height - 0.5) || 0;
     tokens.forEach((token, index) => {
-      const depth = Number(token.dataset.depth || 0.5);
-      const wave = Math.sin(index + nx * 3) * 5;
-      token.style.setProperty('--tx', `${(nx * 24 * depth + wave).toFixed(1)}px`);
-      token.style.setProperty('--ty', `${(ny * 18 * depth + Math.cos(index + ny * 2) * 4).toFixed(1)}px`);
+      const depth = Number(token.dataset.depth || 0.35);
+      const wave = Math.sin(index + nx * 2.5) * 2;
+      token.style.setProperty('--tx', `${(nx * 10 * depth + wave).toFixed(1)}px`);
+      token.style.setProperty('--ty', `${(ny * 6 * depth + Math.cos(index + ny * 2) * 1.5).toFixed(1)}px`);
     });
   };
   surface.addEventListener('pointermove', move, { passive: true });

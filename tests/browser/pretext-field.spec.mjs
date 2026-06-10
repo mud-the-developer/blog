@@ -86,9 +86,10 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
 
   await expect(page.locator('[data-pretext-polish]')).toHaveAttribute('data-pretext-ready', 'true');
   const motion = await page.evaluate(() => {
-    const tokens = [...document.querySelectorAll('.pretext-type-fragment')];
-    const animated = tokens.filter((token) => {
-      const style = getComputedStyle(token);
+    const rows = [...document.querySelectorAll('.pretext-ascii-row')];
+    const threads = [...document.querySelectorAll('.pretext-loom-thread')];
+    const animated = [...rows, ...threads, ...document.querySelectorAll('.pretext-scan-cursor')].filter((node) => {
+      const style = getComputedStyle(node);
       return style.animationName !== 'none' && style.animationDuration !== '0s';
     });
     const css = [...document.styleSheets]
@@ -102,49 +103,30 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
       .join('\n');
     const archive = JSON.parse(document.getElementById('archive-data')?.textContent || '[]');
     const stage = document.querySelector('[data-pretext-polish]');
-    const tokenStyles = tokens.map((token) => getComputedStyle(token));
     const stageRect = stage?.getBoundingClientRect();
-    const tokenBoxes = tokens.map((token) => {
-      const rect = token.getBoundingClientRect();
+    const rowBoxes = rows.map((row) => {
+      const rect = row.getBoundingClientRect();
       return { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom };
     });
-    const overlaps = [];
-    for (let index = 0; index < tokenBoxes.length; index += 1) {
-      for (let next = index + 1; next < tokenBoxes.length; next += 1) {
-        const a = tokenBoxes[index];
-        const b = tokenBoxes[next];
-        if (a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top) {
-          overlaps.push([tokens[index].textContent.trim(), tokens[next].textContent.trim()]);
-        }
-      }
-    }
     return {
       archiveCount: Array.isArray(archive) ? archive.length : 0,
-      tokenCount: tokens.length,
+      rowCount: rows.length,
+      phraseRowCount: rows.filter((row) => row.dataset.rowKind === 'phrase').length,
+      connectorRowCount: rows.filter((row) => row.dataset.rowKind === 'connector').length,
+      threadCount: threads.length,
       animatedCount: animated.length,
-      glassTokenCount: tokens.filter((token) => token.classList.contains('pretext-type-fragment')).length,
       ambientLayerCount: document.querySelectorAll('.pretext-ambient-layer').length,
-      microRowCount: document.querySelectorAll('.pretext-micro-row').length,
-      microRowsVisible: [...document.querySelectorAll('.pretext-micro-row')].every((row) => {
-        const style = getComputedStyle(row);
-        return row.textContent.trim().length >= 72 && Number(style.opacity) >= 0.2 && style.visibility !== 'hidden' && style.display !== 'none';
-      }),
-      focusWordCount: tokens.filter((token) => token.dataset.tokenKind === 'focus-word').length,
-      phraseCount: tokens.filter((token) => token.dataset.tokenKind === 'type-phrase').length,
-      punctuationCount: tokens.filter((token) => token.dataset.tokenKind === 'type-punctuation').length,
-      laneCount: document.querySelectorAll('.pretext-scan-lane').length,
-      centerLabelCount: document.querySelectorAll('.pretext-signal-label').length,
+      frameCount: document.querySelectorAll('.pretext-ascii-frame').length,
+      titleText: document.querySelector('.pretext-ascii-title')?.textContent.trim() || '',
+      cursorCount: document.querySelectorAll('.pretext-scan-cursor').length,
+      cursorText: document.querySelector('.pretext-scan-cursor')?.textContent.trim() || '',
       scene: stage?.dataset.pretextScene || '',
       frontGlassCount: document.querySelectorAll('.pretext-front-glass').length,
       linkCount: document.querySelectorAll('.pretext-link,.pretext-network').length,
-      anchorTokenCount: document.querySelectorAll('a.pretext-type-fragment[href],a.pretext-fragment[href],a.pretext-token[href]').length,
-      tokenLabels: tokens.map((token) => token.textContent.trim()),
-      tokenKinds: tokens.map((token) => token.dataset.tokenKind || ''),
-      clippedTokenCount: stageRect ? tokenBoxes.filter((box) => box.left < stageRect.left || box.right > stageRect.right || box.top < stageRect.top || box.bottom > stageRect.bottom).length : 0,
-      overlapCount: overlaps.length,
+      anchorTokenCount: document.querySelectorAll('a.pretext-ascii-row[href],a.pretext-type-fragment[href],a.pretext-fragment[href],a.pretext-token[href]').length,
+      rowLabels: rows.map((row) => row.textContent.trim()),
+      clippedRowCount: stageRect ? rowBoxes.filter((box) => box.left < stageRect.left || box.right > stageRect.right || box.top < stageRect.top || box.bottom > stageRect.bottom).length : 0,
       interactive: stage?.dataset.pretextInteractive || '',
-      innerVolumeCount: document.querySelectorAll('.pretext-inner-volume').length,
-      tokenBackdropFilters: tokenStyles.map((style) => style.backdropFilter || style.webkitBackdropFilter || ''),
       frontGlassBackdrop: (() => {
         const front = document.querySelector('.pretext-front-glass');
         if (!front) return '';
@@ -152,44 +134,40 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
         return style.backdropFilter || style.webkitBackdropFilter || '';
       })(),
       frontGlassZ: Number(getComputedStyle(document.querySelector('.pretext-front-glass') || document.body).zIndex || 0),
-      maxTokenZ: Math.max(...tokens.map((token) => Number(getComputedStyle(token).zIndex || 0))),
+      maxRowZ: Math.max(...rows.map((row) => Number(getComputedStyle(row).zIndex || 0))),
       filetreeWidth: document.querySelector('.filetree')?.getBoundingClientRect().width || 0,
-      hasFrontGlassAquarium: css.includes('pretext-type-drift') && css.includes('pretext-micro-row') && css.includes('backdrop-filter'),
-      hasDecorativeBackgroundPattern: /radial-gradient|repeating-linear-gradient|skewY|orbit|bubble|stripe/i.test(css),
+      hasAsciiLoomCss: css.includes('pretext-ascii-scan') && css.includes('pretext-thread-drift') && css.includes('font-variant-ligatures'),
+      hasDecorativeBackgroundPattern: /radial-gradient|orbit|bubble|stripe/i.test(css),
       mentionsNeon: css.toLowerCase().includes('neon'),
       scrollWidth: document.documentElement.scrollWidth,
       clientWidth: document.documentElement.clientWidth,
     };
   });
   expect(motion.archiveCount).toBe(publicPostCount);
-  expect(motion.tokenCount).toBeGreaterThanOrEqual(18);
-  expect(motion.tokenCount).toBeLessThanOrEqual(24);
-  expect(motion.animatedCount).toBeGreaterThanOrEqual(12);
-  expect(motion.glassTokenCount).toBe(motion.tokenCount);
+  expect(motion.rowCount).toBeGreaterThanOrEqual(12);
+  expect(motion.rowCount).toBeLessThanOrEqual(18);
+  expect(motion.phraseRowCount).toBeGreaterThanOrEqual(5);
+  expect(motion.connectorRowCount).toBeGreaterThanOrEqual(4);
+  expect(motion.threadCount).toBeGreaterThanOrEqual(5);
+  expect(motion.animatedCount).toBeGreaterThanOrEqual(10);
   expect(motion.ambientLayerCount).toBeGreaterThanOrEqual(3);
-  expect(motion.microRowCount).toBe(6);
-  expect(motion.microRowsVisible).toBe(true);
-  expect(motion.focusWordCount).toBeGreaterThanOrEqual(3);
-  expect(motion.phraseCount).toBeGreaterThanOrEqual(6);
-  expect(motion.punctuationCount).toBeGreaterThanOrEqual(3);
-  expect(motion.laneCount).toBe(0);
-  expect(motion.centerLabelCount).toBe(0);
-  expect(motion.scene).toBe('pretext-type-current');
+  expect(motion.frameCount).toBe(1);
+  expect(motion.titleText).toBe('PRETEXT / INDEX LOOM');
+  expect(motion.cursorCount).toBe(1);
+  expect(motion.cursorText).toBe('writing index is live ▌');
+  expect(motion.scene).toBe('kinetic-ascii-loom');
   expect(motion.frontGlassCount).toBe(1);
   expect(motion.linkCount).toBe(0);
   expect(motion.anchorTokenCount).toBe(0);
-  expect(motion.tokenKinds.every((kind) => ['focus-word', 'type-phrase', 'type-punctuation'].includes(kind))).toBe(true);
-  expect(motion.tokenLabels.every((label) => label.length <= 24)).toBe(true);
-  expect(motion.clippedTokenCount).toBe(0);
-  expect(motion.overlapCount).toBe(0);
+  expect(motion.rowLabels.some((label) => label.includes('posts/') || label.includes('blog/'))).toBe(true);
+  expect(motion.rowLabels.some((label) => label.includes('papers/'))).toBe(true);
+  expect(motion.rowLabels.some((label) => label.toLowerCase().includes('rust'))).toBe(true);
+  expect(motion.clippedRowCount).toBe(0);
   expect(motion.interactive).toBe('true');
-  expect(motion.innerVolumeCount).toBeGreaterThanOrEqual(2);
-  expect(motion.tokenBackdropFilters.every((value) => value.includes('blur'))).toBe(true);
-  expect(motion.tokenBackdropFilters.every((value) => !/blur\((?:[5-9]|[1-9][0-9])px\)/.test(value))).toBe(true);
   expect(motion.frontGlassBackdrop).toContain('blur');
-  expect(motion.frontGlassZ).toBeLessThan(motion.maxTokenZ);
+  expect(motion.frontGlassZ).toBeLessThan(motion.maxRowZ);
   expect(motion.filetreeWidth).toBeLessThanOrEqual(860);
-  expect(motion.hasFrontGlassAquarium).toBe(true);
+  expect(motion.hasAsciiLoomCss).toBe(true);
   expect(motion.hasDecorativeBackgroundPattern).toBe(false);
   expect(motion.mentionsNeon).toBe(false);
   expect(motion.scrollWidth).toBeLessThanOrEqual(motion.clientWidth + 1);
