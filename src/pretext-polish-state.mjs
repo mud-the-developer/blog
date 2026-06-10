@@ -1,7 +1,8 @@
 const fragmentSlots = [
-  [8, 14], [46, 13], [18, 25], [49, 25], [9, 37], [45, 38],
-  [20, 50], [51, 51], [10, 64], [42, 64], [16, 78], [50, 78],
-  [37, 18], [31, 43], [61, 59], [36, 86]
+  [8, 11], [43, 10], [69, 12], [14, 22], [52, 22],
+  [7, 33], [40, 34], [70, 35], [18, 47], [55, 47],
+  [8, 59], [42, 59], [72, 60], [14, 72], [54, 72],
+  [8, 84], [40, 84], [72, 84], [82, 23], [62, 32], [35, 56], [68, 79]
 ];
 
 const fragmentVariants = ['type-phrase', 'type-ghost', 'type-mark', 'type-phrase'];
@@ -83,7 +84,7 @@ export function termsFromArchive(archive, { isMobile = false } = {}) {
   }
   return fragments
     .sort((a, b) => b.weight - a.weight || a.label.localeCompare(b.label))
-    .slice(0, isMobile ? 12 : 16)
+    .slice(0, isMobile ? 14 : 20)
     .map((term) => term.label);
 }
 
@@ -114,7 +115,7 @@ function tokenModel(label, index, termCount) {
 }
 
 export function tokensFromTerms(terms) {
-  const selected = terms.slice(0, 12);
+  const selected = terms.slice(0, 18);
   const labels = [...selected, ...punctuationMarks];
   return labels.map((term, index) => tokenModel(term, index, selected.length));
 }
@@ -129,16 +130,17 @@ export function linksFromTokens() {
 
 function microRowsFromTerms(terms) {
   const source = terms.length ? terms : ['index', 'writing', 'notes', 'papers'];
-  const rows = [0, 1, 2, 3].map((row) => {
-    const rotated = source.slice(row * 3).concat(source.slice(0, row * 3));
-    const text = rotated.slice(0, 9).join(row % 2 === 0 ? ' · ' : ' / ');
+  const rows = [0, 1, 2, 3, 4, 5].map((row) => {
+    const rotated = source.slice(row * 2).concat(source.slice(0, row * 2));
+    const expanded = rotated.concat(source).concat(rotated);
+    const text = expanded.slice(0, 14).join(row % 2 === 0 ? ' · ' : ' / ');
     return {
       text,
-      y: `${18 + row * 21}%`,
-      delay: `${row * -4.2}s`,
-      duration: `${24 + row * 5}s`,
+      y: `${12 + row * 15}%`,
+      delay: `${row * -3.6}s`,
+      duration: `${22 + row * 4}s`,
       direction: row % 2 === 0 ? 'normal' : 'reverse',
-      opacity: (0.13 + row * 0.025).toFixed(2)
+      opacity: (0.22 + (row % 3) * 0.045).toFixed(2)
     };
   });
   return rows;

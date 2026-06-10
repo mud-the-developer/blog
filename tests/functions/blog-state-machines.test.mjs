@@ -75,10 +75,12 @@ test('pretext polish reducer emits a layered type current from archive language'
   assert.equal(effect.scene, 'pretext-type-current');
   assert.deepEqual(effect.links, []);
   assert.deepEqual(effect.lanes, []);
-  assert.equal(effect.microRows.length, 4);
+  assert.equal(effect.microRows.length, 6);
   assert.ok(effect.microRows.every((row) => row.text.includes('·') || row.text.includes('/')));
-  assert.ok(effect.tokens.length >= 15);
-  assert.ok(effect.tokens.length <= 20);
+  assert.ok(effect.microRows.every((row) => row.text.length >= 72));
+  assert.ok(effect.microRows.every((row) => Number(row.opacity) >= 0.2));
+  assert.ok(effect.tokens.length >= 18);
+  assert.ok(effect.tokens.length <= 24);
   assert.ok(effect.tokens.filter((token) => token.kind === 'focus-word').length >= 3);
   assert.ok(effect.tokens.filter((token) => token.kind === 'type-phrase').length >= 6);
   assert.ok(effect.tokens.filter((token) => token.kind === 'type-punctuation').length >= 3);

@@ -125,6 +125,10 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
       glassTokenCount: tokens.filter((token) => token.classList.contains('pretext-type-fragment')).length,
       ambientLayerCount: document.querySelectorAll('.pretext-ambient-layer').length,
       microRowCount: document.querySelectorAll('.pretext-micro-row').length,
+      microRowsVisible: [...document.querySelectorAll('.pretext-micro-row')].every((row) => {
+        const style = getComputedStyle(row);
+        return row.textContent.trim().length >= 72 && Number(style.opacity) >= 0.2 && style.visibility !== 'hidden' && style.display !== 'none';
+      }),
       focusWordCount: tokens.filter((token) => token.dataset.tokenKind === 'focus-word').length,
       phraseCount: tokens.filter((token) => token.dataset.tokenKind === 'type-phrase').length,
       punctuationCount: tokens.filter((token) => token.dataset.tokenKind === 'type-punctuation').length,
@@ -158,12 +162,13 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
     };
   });
   expect(motion.archiveCount).toBe(publicPostCount);
-  expect(motion.tokenCount).toBeGreaterThanOrEqual(15);
-  expect(motion.tokenCount).toBeLessThanOrEqual(20);
+  expect(motion.tokenCount).toBeGreaterThanOrEqual(18);
+  expect(motion.tokenCount).toBeLessThanOrEqual(24);
   expect(motion.animatedCount).toBeGreaterThanOrEqual(12);
   expect(motion.glassTokenCount).toBe(motion.tokenCount);
   expect(motion.ambientLayerCount).toBeGreaterThanOrEqual(3);
-  expect(motion.microRowCount).toBe(4);
+  expect(motion.microRowCount).toBe(6);
+  expect(motion.microRowsVisible).toBe(true);
   expect(motion.focusWordCount).toBeGreaterThanOrEqual(3);
   expect(motion.phraseCount).toBeGreaterThanOrEqual(6);
   expect(motion.punctuationCount).toBeGreaterThanOrEqual(3);
