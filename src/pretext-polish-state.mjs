@@ -1,8 +1,8 @@
 const referenceNotes = [
   {
-    "source": "oneko.js Neko two-frame walk cycle",
-    "cue": "continuous cursor-follow cat movement with two-frame directional walk loops",
-    "url": "https://github.com/adryd325/oneko.js"
+    "source": "user supplied long ASCII cat",
+    "cue": "large side-facing cat with raised tail used as the visible Pretext sprite",
+    "url": "inline://discord/ascii-cat-reference"
   },
   {
     "source": "baud-era terminal refresh cadence",
@@ -10,131 +10,135 @@ const referenceNotes = [
     "url": "https://en.wikipedia.org/wiki/Baud"
   },
   {
-    "source": "asciiart.eu classic kitten",
-    "cue": "/\\_/\\ ( o.o ) > ^ <",
-    "url": "https://www.asciiart.eu/animals/cats"
+    "source": "oneko.js Neko two-frame walk cycle",
+    "cue": "single sprite motion path and repeated gait cadence, adapted to a large ASCII cat",
+    "url": "https://github.com/adryd325/oneko.js"
   }
 ];
 
 const catFrameModels = [
   {
-    "pose": "gait-01-contact",
+    "pose": "tail-sweep-left",
     "rows": [
-      "        /\\_/\\",
-      "   ____ ( o.o )___  ,",
-      " _/    \\ > ^ <   _\\/ )",
-      "/  /\\   \\______/\\__\\/",
-      "\\_/  \\__  /\\    /",
-      "    _/   /  \\   /_",
-      "   (_ __/    \\__ _)"
+      " .--.",
+      "                                            `.     \\",
+      "                                              `.    \\",
+      "                                                \\   \\",
+      "                                                 .   .",
+      "                                                 :    .",
+      "                                                 |    :",
+      "                                                 |    |",
+      "  ..._  ___                                       |    |",
+      " `.\"\".`''''\"\"--..___                              |    |",
+      " ,-\\  \\             \"\"-...__         _____________/    |",
+      " / ` \" '                    `\"\"\"\"\"\"\"\"                  .",
+      " \\                                                      L",
+      " (>                                                      \\",
+      "/                                                         \\",
+      "\\_    ___..---.                                            L",
+      "  `--'         '.                                           \\",
+      "                 .                                           \\_",
+      "                _/`.                                           `.._",
+      "             .'     -.                                             `.",
+      "            /     __.-Y     /''''''-...___,...--------.._            |",
+      "           /   _.\"    |    /                ' .      \\   '---..._    |",
+      "          /   /      /    /                _,. '    ,/           |   |",
+      "          \\_,'     _.'   /              /''     _,-'            _|   |",
+      "                  '     /               `-----''               /     |",
+      "                  `...-'                                     `...-'"
     ]
   },
   {
-    "pose": "gait-02-lift",
+    "pose": "tail-sweep-mid",
     "rows": [
-      "        /\\_/\\",
-      "   ____ ( o.o )___  ,",
-      " _/    \\ > ^ <   _\\/ )",
-      "/  /\\   \\______/\\__\\/",
-      "\\_/  \\__  /\\   _/",
-      "    _/   /  \\_/",
-      "   (_ __/    \\___)"
+      " .--.",
+      "                                               `.  \\",
+      "                                                 \\  \\",
+      "                                                  .  \\",
+      "                                                  :   .",
+      "                                                  |    .",
+      "                                                  |    :",
+      "                                                  |    |",
+      "  ..._  ___                                       |    |",
+      " `.\"\".`''''\"\"--..___                              |    |",
+      " ,-\\  \\             \"\"-...__         _____________/    |",
+      " / ` \" '                    `\"\"\"\"\"\"\"\"                  .",
+      " \\                                                      L",
+      " (>                                                      \\",
+      "/                                                         \\",
+      "\\_    ___..---.                                            L",
+      "  `--'         '.                                           \\",
+      "                 .                                           \\_",
+      "                _/`.                                           `.._",
+      "             .'     -.                                             `.",
+      "            /     __.-Y     /''''''-...___,...--------.._            |",
+      "           /   _.\"    |    /                ' .      \\   '---..._    |",
+      "          /   /      /    /                _,. '    ,/           |   |",
+      "          \\_,'     _.'   /              /''     _,-'            _|   |",
+      "                  '     /               `-----''               /     |",
+      "                  `...-'                                     `...-'"
     ]
   },
   {
-    "pose": "gait-03-pass",
+    "pose": "tail-sweep-right",
     "rows": [
-      "        /\\_/\\",
-      "   ___  ( o.o )___  ,",
-      " _/   \\_ > ^ <   _\\/ )",
-      "/  /\\   \\______/\\__\\/",
-      "\\_/  \\_   /\\   _/",
-      "    __/  /  \\_/",
-      "   (_ __/   _/__)"
+      "       .--.",
+      "          `.  \\",
+      "            \\  \\",
+      "             \\  \\",
+      "              .  \\",
+      "              :   .",
+      "              |    .",
+      "              |    :",
+      "  ..._  ___                                       |    |",
+      " `.\"\".`''''\"\"--..___                              |    |",
+      " ,-\\  \\             \"\"-...__         _____________/    |",
+      " / ` \" '                    `\"\"\"\"\"\"\"\"                  .",
+      " \\                                                      L",
+      " (>                                                      \\",
+      "/                                                         \\",
+      "\\_    ___..---.                                            L",
+      "  `--'         '.                                           \\",
+      "                 .                                           \\_",
+      "                _/`.                                           `.._",
+      "             .'     -.                                             `.",
+      "            /     __.-Y     /''''''-...___,...--------.._            |",
+      "           /   _.\"    |    /                ' .      \\   '---..._    |",
+      "          /   /      /    /                _,. '    ,/           |   |",
+      "          \\_,'     _.'   /              /''     _,-'            _|   |",
+      "                  '     /               `-----''               /     |",
+      "                  `...-'                                     `...-'"
     ]
   },
   {
-    "pose": "gait-04-reach",
+    "pose": "tail-sweep-settle",
     "rows": [
-      "        /\\_/\\",
-      "   ___  ( o.o )__   ,",
-      " _/   \\_ > ^ <  _\\/ )",
-      "/  /\\   \\_____/\\__\\/",
-      "\\_/  \\_   /\\  \\",
-      "    __/  /  \\  \\_",
-      "   (_ __/    \\__ )"
-    ]
-  },
-  {
-    "pose": "gait-05-contact",
-    "rows": [
-      "        /\\_/\\",
-      "   ____ ( o.o )__   ,",
-      " _/   \\_ > ^ <  _\\/ )",
-      "/  /\\   \\_____/\\__\\/",
-      "\\_/  \\_   /\\   \\",
-      "   __/   /  \\   \\__",
-      "  (_ ___/    \\____)"
-    ]
-  },
-  {
-    "pose": "gait-06-lift",
-    "rows": [
-      "        /\\_/\\",
-      "   ____ ( o.o )__   ,",
-      " _/   \\_ > ^ <  _\\/ )",
-      "/  /\\   \\_____/\\__\\/",
-      "\\_/  \\_   /\\   /",
-      "   __/   /  \\_/",
-      "  (_ ___/    \\___)"
-    ]
-  },
-  {
-    "pose": "gait-07-pass",
-    "rows": [
-      "        /\\_/\\",
-      "   ___  ( o.o )__   ,",
-      " _/   \\_ > ^ <  _\\/ )",
-      "/  /\\   \\_____/\\__\\/",
-      "\\_/  \\_   /\\  /_",
-      "    _/   /  \\   )",
-      "   (_ __/    \\__/"
-    ]
-  },
-  {
-    "pose": "gait-08-reach",
-    "rows": [
-      "        /\\_/\\",
-      "   ___  ( o.o )___  ,",
-      " _/   \\_ > ^ <   _\\/ )",
-      "/  /\\   \\______/\\__\\/",
-      "\\_/  \\__  /\\   /",
-      "    _/  ) /  \\  \\_",
-      "   (_ _/ /    \\__ )"
-    ]
-  },
-  {
-    "pose": "blink-carrier",
-    "rows": [
-      "        /\\_/\\",
-      "   ____ ( -.- )___  ,",
-      " _/    \\ > ^ <   _\\/ )",
-      "/  /\\   \\______/\\__\\/",
-      "\\_/  \\__  /\\    /",
-      "    _/   /  \\   /_",
-      "   (_ __/    \\__ _)"
-    ]
-  },
-  {
-    "pose": "tail-handshake",
-    "rows": [
-      "        /\\_/\\",
-      "   ____ (=^.^=)__  ,",
-      " _/   \\_ > ^ <  _\\/ )",
-      "/  /\\   \\_____/\\__\\/",
-      "\\_/  \\_   /\\   /",
-      "   __/   /  \\_/",
-      "  (_ ___/    \\___)"
+      "   .--.",
+      "                                             `.   \\",
+      "                                               \\  \\",
+      "                                                .  \\",
+      "                                                :   .",
+      "                                                |    .",
+      "                                                |    :",
+      "                                                |    |",
+      "  ..._  ___                                       |    |",
+      " `.\"\".`''''\"\"--..___                              |    |",
+      " ,-\\  \\             \"\"-...__         _____________/    |",
+      " / ` \" '                    `\"\"\"\"\"\"\"\"                  .",
+      " \\                                                      L",
+      " (>                                                      \\",
+      "/                                                         \\",
+      "\\_    ___..---.                                            L",
+      "  `--'         '.                                           \\",
+      "                 .                                           \\_",
+      "                _/`.                                           `.._",
+      "             .'     -.                                             `.",
+      "            /     __.-Y     /''''''-...___,...--------.._            |",
+      "           /   _.\"    |    /                ' .      \\   '---..._    |",
+      "          /   /      /    /                _,. '    ,/           |   |",
+      "          \\_,'     _.'   /              /''     _,-'            _|   |",
+      "                  '     /               `-----''               /     |",
+      "                  `...-'                                     `...-'"
     ]
   }
 ];
@@ -151,27 +155,34 @@ function createCatFrame(frame, index) {
 function createCat() {
   const frames = catFrameModels.map(createCatFrame);
   return {
-    label: 'low-baud-continuous-ascii-cat',
+    label: 'large-tail-wag-ascii-cat',
     spriteMode: 'single-continuous-sprite',
     references: referenceNotes,
     frames,
-    frameRate: 2.7,
+    frameRate: 2.2,
+    dimensions: {
+      lineCount: 26,
+      maxWidth: 70,
+      scaleStrategy: 'shrink-to-fit-pretext-panel'
+    },
     telecom: {
       label: 'CAT-LINK 1200',
       mode: 'slow-baud-row-refresh',
-      refreshMs: 370,
-      lineSweepMs: 28,
-      statusCopy: 'carrier sync · row refresh'
+      refreshMs: 520,
+      lineSweepMs: 9,
+      statusCopy: 'tail sweep · row refresh'
     },
     shadow: null,
     decorations: [],
     paws: [],
     motion: {
-      duration: '15.2s',
-      durationMs: 15200,
+      duration: '18s',
+      durationMs: 18000,
+      travelPx: 24,
+      xBiasPx: -36,
       continuous: true,
-      behaviors: ['walk', 'turn', 'blink', 'tail-handshake', 'baud-refresh'],
-      reference: 'oneko.js directional walk cadence softened into a low-baud ASCII row refresh'
+      behaviors: ['side-walk', 'tail-wag', 'baud-refresh'],
+      reference: 'large user-supplied ASCII cat translated sideways while tail rows cycle in one sprite'
     }
   };
 }

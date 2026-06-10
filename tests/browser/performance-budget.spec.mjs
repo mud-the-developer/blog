@@ -46,9 +46,9 @@ test('desktop and mobile public homepage stay polished without layout overflow',
     expect(audit.graphCount, name).toBe(0);
     expect(audit.fieldStages, name).toBe(0);
     expect(audit.pretextCatSprites, name).toBe(1);
-    expect(audit.pretextCatFrames, name).toBe(10);
-    expect(audit.pretextCatPoses, name).toBeGreaterThanOrEqual(10);
-    expect(audit.pretextCatBehaviors, name).toBe('walk turn blink tail-handshake baud-refresh');
+    expect(audit.pretextCatFrames, name).toBe(4);
+    expect(audit.pretextCatPoses, name).toBeGreaterThanOrEqual(4);
+    expect(audit.pretextCatBehaviors, name).toBe('side-walk tail-wag baud-refresh');
     expect(audit.pretextDecorations, name).toBe(0);
     expect(audit.nodes, name).toBeLessThanOrEqual(980);
     expect(audit.scrollWidth, name).toBeLessThanOrEqual(audit.clientWidth + 1);

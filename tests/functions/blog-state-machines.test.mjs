@@ -74,25 +74,30 @@ test('pretext polish reducer emits a referenced single-sprite ASCII cat walk cyc
   assert.equal(effect.type, 'render-pretext-ascii-cat');
   assert.equal(effect.scene, 'kinetic-ascii-cat');
   assert.deepEqual(effect.links, []);
-  assert.equal(effect.cat.label, 'low-baud-continuous-ascii-cat');
+  assert.equal(effect.cat.label, 'large-tail-wag-ascii-cat');
   assert.equal(effect.cat.spriteMode, 'single-continuous-sprite');
   assert.deepEqual(effect.cat.references.map((reference) => reference.source), [
-    'oneko.js Neko two-frame walk cycle',
+    'user supplied long ASCII cat',
     'baud-era terminal refresh cadence',
-    'asciiart.eu classic kitten'
+    'oneko.js Neko two-frame walk cycle'
   ]);
-  assert.deepEqual(effect.motion.behaviors, ['walk', 'turn', 'blink', 'tail-handshake', 'baud-refresh']);
+  assert.deepEqual(effect.motion.behaviors, ['side-walk', 'tail-wag', 'baud-refresh']);
   assert.equal(effect.motion.continuous, true);
-  assert.ok(effect.motion.reference.includes('low-baud'));
+  assert.ok(effect.motion.reference.includes('tail'));
+  assert.equal(effect.motion.travelPx, 24);
+  assert.equal(effect.motion.xBiasPx, -36);
   assert.equal(effect.cat.telecom.mode, 'slow-baud-row-refresh');
-  assert.equal(effect.cat.telecom.refreshMs, 370);
-  assert.equal(effect.cat.frames.length, 10);
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.length === 7));
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.join('\n').includes('/\\_/\\')));
-  assert.ok(effect.cat.frames.some((frame) => frame.pose === 'blink-carrier' && frame.rows.join('\n').includes('( -.- )')));
-  assert.ok(effect.cat.frames.some((frame) => frame.pose === 'tail-handshake' && frame.rows.join('\n').includes('=^.^=')));
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.some((row) => row.length >= 18)));
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.every((row) => row.length <= 42)));
+  assert.equal(effect.cat.telecom.refreshMs, 520);
+  assert.equal(effect.cat.frames.length, 4);
+  assert.equal(effect.cat.dimensions.lineCount, 26);
+  assert.ok(effect.cat.dimensions.maxWidth <= 72);
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.length === 26));
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.join('\n').includes('..._  ___')));
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.join('\n').includes('`...-')));
+  assert.ok(effect.cat.frames.some((frame) => frame.pose === 'tail-sweep-left'));
+  assert.ok(effect.cat.frames.some((frame) => frame.pose === 'tail-sweep-right'));
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.some((row) => row.length >= 60)));
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.every((row) => row.length <= 72)));
   assert.deepEqual(effect.paws, []);
   assert.equal(effect.cat.shadow, null);
   assert.deepEqual(effect.cat.decorations, []);

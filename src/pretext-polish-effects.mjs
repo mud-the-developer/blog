@@ -33,9 +33,13 @@ export function renderPretextTokens(effect, { stage, surface, document }) {
   sprite.dataset.frameRate = String(effect.cat?.frameRate || 9);
   sprite.dataset.refreshMs = String(effect.cat?.telecom?.refreshMs || 370);
   sprite.dataset.lineSweepMs = String(effect.cat?.telecom?.lineSweepMs || 28);
+  sprite.dataset.travelPx = String(effect.motion?.travelPx || 76);
+  sprite.dataset.xBiasPx = String(effect.motion?.xBiasPx || 0);
+  sprite.dataset.catMaxWidth = String(effect.cat?.dimensions?.maxWidth || 0);
+  sprite.dataset.catLineCount = String(effect.cat?.dimensions?.lineCount || 0);
   sprite.dataset.referenceSource = (effect.cat?.references || []).map((reference) => reference.source).join(' | ');
   sprite.dataset.referenceUrl = effect.cat?.references?.[0]?.url || '';
-  sprite.style.setProperty('--cat-x', '-86px');
+  sprite.style.setProperty('--cat-x', `${(effect.motion?.xBiasPx || 0) - (effect.motion?.travelPx || 40)}px`);
   sprite.style.setProperty('--cat-y', '0px');
   sprite.style.setProperty('--cat-scale', '1');
 

@@ -94,7 +94,7 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
       frameIndex: sprite?.dataset.frameIndex || ''
     };
   });
-  await page.waitForTimeout(420);
+  await page.waitForTimeout(650);
   const secondSpriteSample = await page.evaluate(() => {
     const sprite = document.querySelector('.pretext-cat-sprite');
     return {
@@ -142,6 +142,8 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
       refreshMode: document.querySelector('.pretext-cat-stage')?.dataset.refreshMode || sprite?.dataset.refreshMode || '',
       linkStatusCount: document.querySelectorAll('[data-pretext-cat-link]').length,
       linkStatusText: document.querySelector('[data-pretext-cat-link]')?.textContent || '',
+      catMaxWidth: Number(sprite?.dataset.catMaxWidth || 0),
+      declaredLineCount: Number(sprite?.dataset.catLineCount || 0),
       frontGlassCount: document.querySelectorAll('.pretext-front-glass').length,
       linkCount: document.querySelectorAll('.pretext-link,.pretext-network').length,
       anchorTokenCount: document.querySelectorAll('a.pretext-cat-sprite[href],a.pretext-cat-frame[href],a.pretext-ascii-row[href],a.pretext-type-fragment[href],a.pretext-fragment[href],a.pretext-token[href]').length,
@@ -172,12 +174,12 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   expect(motion.catStageCount).toBe(1);
   expect(motion.spriteCount).toBe(1);
   expect(motion.hiddenFrameNodeCount).toBe(0);
-  expect(motion.frameDataCount).toBe(10);
+  expect(motion.frameDataCount).toBe(4);
   expect(motion.animatedCount).toBe(1);
   expect(motion.ambientLayerCount).toBe(0);
   expect(motion.scene).toBe('kinetic-ascii-cat');
   expect(motion.references).toContain('github.com/adryd325/oneko.js');
-  expect(motion.referenceSource).toContain('oneko.js Neko two-frame walk cycle');
+  expect(motion.referenceSource).toContain('user supplied long ASCII cat');
   expect(motion.continuousMotion).toBe('true');
   expect(motion.spriteMode).toBe('single-continuous-sprite');
   expect(motion.refreshMode).toBe('slow-baud-row-refresh');
@@ -186,16 +188,18 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   expect(motion.frontGlassCount).toBe(0);
   expect(motion.linkCount).toBe(0);
   expect(motion.anchorTokenCount).toBe(0);
-  expect(motion.spriteText).toContain('/\\_/\\');
-  expect(motion.spriteText).toMatch(/\( o\.o \)|\( -\.- \)|=\^\.\^=/);
-  expect(motion.behaviorList).toBe('walk turn blink tail-handshake baud-refresh');
-  expect(motion.poseNames).toEqual(expect.arrayContaining(['gait-01-contact', 'gait-02-lift', 'gait-03-pass', 'gait-04-reach', 'blink-carrier', 'tail-handshake']));
+  expect(motion.spriteText).toContain('..._  ___');
+  expect(motion.spriteText).toContain('`...-');
+  expect(motion.behaviorList).toBe('side-walk tail-wag baud-refresh');
+  expect(motion.poseNames).toEqual(expect.arrayContaining(['tail-sweep-left', 'tail-sweep-mid', 'tail-sweep-right', 'tail-sweep-settle']));
   expect(motion.oldCopyCount).toBe(0);
   expect(motion.clippedSpriteCount).toBe(0);
   expect(motion.interactive).toBe('true');
-  expect(motion.catFontSize).toBeLessThanOrEqual(12);
-  expect(motion.catLineCount).toBe(7);
-  expect(motion.detailedRowCount).toBe(10);
+  expect(motion.catFontSize).toBeLessThanOrEqual(7);
+  expect(motion.catLineCount).toBe(26);
+  expect(motion.declaredLineCount).toBe(26);
+  expect(motion.catMaxWidth).toBeLessThanOrEqual(72);
+  expect(motion.detailedRowCount).toBe(4);
   expect(motion.decorativeNodeCount).toBe(0);
   expect(motion.filetreeWidth).toBeLessThanOrEqual(860);
   expect(motion.hasCatCss).toBe(true);

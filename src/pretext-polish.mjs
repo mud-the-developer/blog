@@ -36,6 +36,8 @@ function startContinuousCat() {
   const durationMs = Number(sprite.dataset.durationMs || 15200);
   const refreshMs = Number(sprite.dataset.refreshMs || 370);
   const lineSweepMs = Number(sprite.dataset.lineSweepMs || 28);
+  const travelPx = Number(sprite.dataset.travelPx || 76);
+  const xBiasPx = Number(sprite.dataset.xBiasPx || 0);
   const samples = [];
   window.__pretextCatMotionSamples = samples;
 
@@ -84,9 +86,9 @@ function startContinuousCat() {
     const eased = oneWayProgress * oneWayProgress * (3 - 2 * oneWayProgress);
     const facing = progress < 0.5 ? 'right' : 'left';
     const gaitPhase = ((frameIndex % frames.length) / frames.length) * Math.PI * 2;
-    const x = -76 + eased * 152;
-    const y = Math.sin(gaitPhase) * 2.6 + Math.sin(progress * Math.PI * 2) * 1.4;
-    const scale = 0.998 + Math.sin(gaitPhase) * 0.006;
+    const x = xBiasPx - travelPx + eased * travelPx * 2;
+    const y = Math.sin(gaitPhase) * 1.8 + Math.sin(progress * Math.PI * 2) * 1.2;
+    const scale = 0.996 + Math.sin(gaitPhase) * 0.004;
 
     if (lastFrameIndex !== frameIndex) {
       paintRowsSlowly(frame, frameIndex);
@@ -97,6 +99,7 @@ function startContinuousCat() {
     sprite.style.setProperty('--cat-x', `${x.toFixed(1)}px`);
     sprite.style.setProperty('--cat-y', `${y.toFixed(1)}px`);
     sprite.style.setProperty('--cat-scale', scale.toFixed(3));
+    sprite.style.transform = `translate3d(calc(-50% + ${x.toFixed(1)}px + var(--tx, 0px)), calc(-50% + ${y.toFixed(1)}px + var(--ty, 0px)), 0px) scale(${scale.toFixed(3)})`;
 
     if (samples.length < 24 && now - lastSampleAt >= 120) {
       samples.push({
