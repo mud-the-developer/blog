@@ -86,7 +86,7 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
 
   await expect(page.locator('[data-pretext-polish]')).toHaveAttribute('data-pretext-ready', 'true');
   const motion = await page.evaluate(() => {
-    const tokens = [...document.querySelectorAll('.pretext-fragment')];
+    const tokens = [...document.querySelectorAll('.pretext-type-fragment')];
     const animated = tokens.filter((token) => {
       const style = getComputedStyle(token);
       return style.animationName !== 'none' && style.animationDuration !== '0s';
@@ -122,14 +122,18 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
       archiveCount: Array.isArray(archive) ? archive.length : 0,
       tokenCount: tokens.length,
       animatedCount: animated.length,
-      glassTokenCount: tokens.filter((token) => token.classList.contains('pretext-signal-fragment')).length,
+      glassTokenCount: tokens.filter((token) => token.classList.contains('pretext-type-fragment')).length,
       ambientLayerCount: document.querySelectorAll('.pretext-ambient-layer').length,
+      microRowCount: document.querySelectorAll('.pretext-micro-row').length,
+      focusWordCount: tokens.filter((token) => token.dataset.tokenKind === 'focus-word').length,
+      phraseCount: tokens.filter((token) => token.dataset.tokenKind === 'type-phrase').length,
+      punctuationCount: tokens.filter((token) => token.dataset.tokenKind === 'type-punctuation').length,
       laneCount: document.querySelectorAll('.pretext-scan-lane').length,
       centerLabelCount: document.querySelectorAll('.pretext-signal-label').length,
       scene: stage?.dataset.pretextScene || '',
       frontGlassCount: document.querySelectorAll('.pretext-front-glass').length,
       linkCount: document.querySelectorAll('.pretext-link,.pretext-network').length,
-      anchorTokenCount: document.querySelectorAll('a.pretext-fragment[href],a.pretext-token[href]').length,
+      anchorTokenCount: document.querySelectorAll('a.pretext-type-fragment[href],a.pretext-fragment[href],a.pretext-token[href]').length,
       tokenLabels: tokens.map((token) => token.textContent.trim()),
       tokenKinds: tokens.map((token) => token.dataset.tokenKind || ''),
       clippedTokenCount: stageRect ? tokenBoxes.filter((box) => box.left < stageRect.left || box.right > stageRect.right || box.top < stageRect.top || box.bottom > stageRect.bottom).length : 0,
@@ -146,7 +150,7 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
       frontGlassZ: Number(getComputedStyle(document.querySelector('.pretext-front-glass') || document.body).zIndex || 0),
       maxTokenZ: Math.max(...tokens.map((token) => Number(getComputedStyle(token).zIndex || 0))),
       filetreeWidth: document.querySelector('.filetree')?.getBoundingClientRect().width || 0,
-      hasFrontGlassAquarium: css.includes('pretext-signal-drift') && css.includes('pretext-scan-lane') && css.includes('backdrop-filter'),
+      hasFrontGlassAquarium: css.includes('pretext-type-drift') && css.includes('pretext-micro-row') && css.includes('backdrop-filter'),
       hasDecorativeBackgroundPattern: /radial-gradient|repeating-linear-gradient|skewY|orbit|bubble|stripe/i.test(css),
       mentionsNeon: css.toLowerCase().includes('neon'),
       scrollWidth: document.documentElement.scrollWidth,
@@ -154,18 +158,22 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
     };
   });
   expect(motion.archiveCount).toBe(publicPostCount);
-  expect(motion.tokenCount).toBeGreaterThanOrEqual(8);
-  expect(motion.tokenCount).toBeLessThanOrEqual(10);
-  expect(motion.animatedCount).toBeGreaterThanOrEqual(6);
+  expect(motion.tokenCount).toBeGreaterThanOrEqual(15);
+  expect(motion.tokenCount).toBeLessThanOrEqual(20);
+  expect(motion.animatedCount).toBeGreaterThanOrEqual(12);
   expect(motion.glassTokenCount).toBe(motion.tokenCount);
   expect(motion.ambientLayerCount).toBeGreaterThanOrEqual(3);
-  expect(motion.laneCount).toBe(3);
-  expect(motion.centerLabelCount).toBe(1);
-  expect(motion.scene).toBe('pretext-signal-field');
+  expect(motion.microRowCount).toBe(4);
+  expect(motion.focusWordCount).toBeGreaterThanOrEqual(3);
+  expect(motion.phraseCount).toBeGreaterThanOrEqual(6);
+  expect(motion.punctuationCount).toBeGreaterThanOrEqual(3);
+  expect(motion.laneCount).toBe(0);
+  expect(motion.centerLabelCount).toBe(0);
+  expect(motion.scene).toBe('pretext-type-current');
   expect(motion.frontGlassCount).toBe(1);
   expect(motion.linkCount).toBe(0);
   expect(motion.anchorTokenCount).toBe(0);
-  expect(motion.tokenKinds.every((kind) => kind === 'signal-fragment')).toBe(true);
+  expect(motion.tokenKinds.every((kind) => ['focus-word', 'type-phrase', 'type-punctuation'].includes(kind))).toBe(true);
   expect(motion.tokenLabels.every((label) => label.length <= 24)).toBe(true);
   expect(motion.clippedTokenCount).toBe(0);
   expect(motion.overlapCount).toBe(0);

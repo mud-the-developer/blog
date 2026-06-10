@@ -1,9 +1,11 @@
 const fragmentSlots = [
-  [8, 16], [48, 13], [20, 31], [58, 30], [10, 49],
-  [45, 52], [18, 69], [56, 68], [34, 82], [66, 44]
+  [8, 14], [46, 13], [18, 25], [49, 25], [9, 37], [45, 38],
+  [20, 50], [51, 51], [10, 64], [42, 64], [16, 78], [50, 78],
+  [37, 18], [31, 43], [61, 59], [36, 86]
 ];
 
-const fragmentVariants = ['signal-cyan', 'signal-violet', 'signal-amber', 'signal-blue'];
+const fragmentVariants = ['type-phrase', 'type-ghost', 'type-mark', 'type-phrase'];
+const punctuationMarks = ['/', '·', '—', '::'];
 
 const stopWords = new Set([
   'and', 'with', 'the', 'for', 'from', 'into', 'your', 'this', 'that',
@@ -26,7 +28,8 @@ const labelRewrites = new Map([
   ['tokio', 'Tokio'],
   ['seo', 'SEO'],
   ['llm', 'LLM'],
-  ['ai', 'AI']
+  ['ai', 'AI'],
+  ['papers', 'papers']
 ]);
 
 export function cleanPretextTerm(value) {
@@ -37,7 +40,8 @@ export function cleanPretextTerm(value) {
 }
 
 function addFragment(fragments, seen, label, weight = 1) {
-  const clean = labelRewrites.get(cleanPretextTerm(label).replace(/\/$/, '').toLowerCase()) || cleanPretextTerm(label).replace(/\/$/, '');
+  const cleanBase = cleanPretextTerm(label).replace(/\/$/, '');
+  const clean = labelRewrites.get(cleanBase.toLowerCase()) || cleanBase;
   if (!clean || clean.length < 2 || clean.length > 24) return;
   const key = clean.toLowerCase();
   if (stopWords.has(key)) return;
@@ -79,32 +83,40 @@ export function termsFromArchive(archive, { isMobile = false } = {}) {
   }
   return fragments
     .sort((a, b) => b.weight - a.weight || a.label.localeCompare(b.label))
-    .slice(0, isMobile ? 8 : 10)
+    .slice(0, isMobile ? 12 : 16)
     .map((term) => term.label);
 }
 
-function tokenModel(label, index) {
+function tokenKind(index, termCount) {
+  if (index >= termCount) return 'type-punctuation';
+  return index < 4 ? 'focus-word' : 'type-phrase';
+}
+
+function tokenModel(label, index, termCount) {
   const [x, y] = fragmentSlots[index % fragmentSlots.length];
-  const depth = 0.22 + (index % 5) * 0.13;
+  const kind = tokenKind(index, termCount);
+  const depth = kind === 'focus-word' ? 0.76 - index * 0.05 : kind === 'type-punctuation' ? 0.22 : 0.42 + (index % 4) * 0.07;
   return {
     label,
     url: '',
-    kind: 'signal-fragment',
+    kind,
     x: `${x}%`,
     y: `${y}%`,
-    delay: `${index * -0.42}s`,
-    duration: `${(10 + depth * 5).toFixed(1)}s`,
-    shadowY: `${Math.round(6 + depth * 9)}px`,
-    shadowBlur: `${Math.round(12 + depth * 8)}px`,
-    scaleStart: (0.98 + depth * 0.025).toFixed(3),
-    scaleEnd: (1.006 + depth * 0.03).toFixed(3),
+    delay: `${index * -0.37}s`,
+    duration: `${(11 + depth * 6).toFixed(1)}s`,
+    scaleStart: (0.985 + depth * 0.02).toFixed(3),
+    scaleEnd: (1.004 + depth * 0.026).toFixed(3),
+    opacityStart: (0.36 + depth * 0.24).toFixed(2),
+    opacityEnd: (0.58 + depth * 0.3).toFixed(2),
     depth: Number(depth.toFixed(2)),
-    variant: fragmentVariants[index % fragmentVariants.length]
+    variant: kind === 'focus-word' ? 'type-focus' : kind === 'type-punctuation' ? 'type-mark' : fragmentVariants[(index - 4) % fragmentVariants.length]
   };
 }
 
 export function tokensFromTerms(terms) {
-  return terms.slice(0, 10).map((term, index) => tokenModel(term, index));
+  const selected = terms.slice(0, 12);
+  const labels = [...selected, ...punctuationMarks];
+  return labels.map((term, index) => tokenModel(term, index, selected.length));
 }
 
 export function tokensFromArchive(archive, { isMobile = false } = {}) {
@@ -115,12 +127,21 @@ export function linksFromTokens() {
   return [];
 }
 
-function signalLanes() {
-  return [
-    { y: '27%', delay: '-1.4s', duration: '12s' },
-    { y: '50%', delay: '-5.2s', duration: '15s' },
-    { y: '72%', delay: '-8.1s', duration: '18s' }
-  ];
+function microRowsFromTerms(terms) {
+  const source = terms.length ? terms : ['index', 'writing', 'notes', 'papers'];
+  const rows = [0, 1, 2, 3].map((row) => {
+    const rotated = source.slice(row * 3).concat(source.slice(0, row * 3));
+    const text = rotated.slice(0, 9).join(row % 2 === 0 ? ' · ' : ' / ');
+    return {
+      text,
+      y: `${18 + row * 21}%`,
+      delay: `${row * -4.2}s`,
+      duration: `${24 + row * 5}s`,
+      direction: row % 2 === 0 ? 'normal' : 'reverse',
+      opacity: (0.13 + row * 0.025).toFixed(2)
+    };
+  });
+  return rows;
 }
 
 export function createPretextState({ archive = [], isMobile = false } = {}) {
@@ -138,11 +159,11 @@ export function pretextReducer(state, event) {
     const terms = termsFromArchive(state.archive, { isMobile: state.isMobile });
     const tokens = tokensFromTerms(terms);
     const links = [];
-    const lanes = signalLanes();
+    const microRows = microRowsFromTerms(terms);
     const next = { ...state, phase: 'ready', terms, tokens };
     return {
       state: next,
-      effects: [{ type: 'render-pretext-signal-field', scene: 'pretext-signal-field', label: 'writing index', terms, tokens, links, lanes }]
+      effects: [{ type: 'render-pretext-type-current', scene: 'pretext-type-current', terms, tokens, links, lanes: [], microRows }]
     };
   }
   return { state, effects: [] };

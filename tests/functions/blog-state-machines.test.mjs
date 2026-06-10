@@ -63,29 +63,33 @@ test('theme render effect keeps the visible theme label inside the accessible na
   assert.equal(attributes['aria-pressed'], 'false');
 });
 
-test('pretext polish reducer emits a clean signal field from archive language', () => {
+test('pretext polish reducer emits a layered type current from archive language', () => {
   const initial = createPretextState({ archive, isMobile: false });
   const step = pretextReducer(initial, { type: 'pretext.mounted' });
 
   assert.deepEqual(initial, createPretextState({ archive, isMobile: false }));
   assert.equal(step.state.phase, 'ready');
   assert.equal(step.effects.length, 1);
-  assert.equal(step.effects[0].type, 'render-pretext-signal-field');
-  assert.equal(step.effects[0].scene, 'pretext-signal-field');
-  assert.equal(step.effects[0].label, 'writing index');
-  assert.deepEqual(step.effects[0].links, []);
-  assert.equal(step.effects[0].lanes.length, 3);
-  assert.ok(step.effects[0].tokens.length >= 8);
-  assert.ok(step.effects[0].tokens.length <= 10);
-  assert.ok(step.effects[0].tokens.some((token) => token.label === 'open RAN'));
-  assert.ok(step.effects[0].tokens.some((token) => token.label === 'Rust'));
-  assert.ok(step.effects[0].tokens.some((token) => token.label === 'semantic'));
-  assert.ok(step.effects[0].tokens.every((token) => token.label.length <= 24));
-  assert.ok(step.effects[0].tokens.every((token) => token.kind === 'signal-fragment'));
-  assert.ok(step.effects[0].tokens.every((token) => token.url === ''));
-  assert.ok(step.effects[0].tokens.every((token) => token.x.endsWith('%') && token.y.endsWith('%')));
-  assert.ok(step.effects[0].tokens.every((token) => token.depth >= 0 && token.depth <= 1));
-  assert.ok(step.effects[0].tokens.every((token) => token.variant.startsWith('signal-')));
+  const effect = step.effects[0];
+  assert.equal(effect.type, 'render-pretext-type-current');
+  assert.equal(effect.scene, 'pretext-type-current');
+  assert.deepEqual(effect.links, []);
+  assert.deepEqual(effect.lanes, []);
+  assert.equal(effect.microRows.length, 4);
+  assert.ok(effect.microRows.every((row) => row.text.includes('·') || row.text.includes('/')));
+  assert.ok(effect.tokens.length >= 15);
+  assert.ok(effect.tokens.length <= 20);
+  assert.ok(effect.tokens.filter((token) => token.kind === 'focus-word').length >= 3);
+  assert.ok(effect.tokens.filter((token) => token.kind === 'type-phrase').length >= 6);
+  assert.ok(effect.tokens.filter((token) => token.kind === 'type-punctuation').length >= 3);
+  assert.ok(effect.tokens.some((token) => token.label === 'open RAN'));
+  assert.ok(effect.tokens.some((token) => token.label === 'Rust'));
+  assert.ok(effect.tokens.some((token) => token.label === 'semantic'));
+  assert.ok(effect.tokens.every((token) => token.label.length <= 24));
+  assert.ok(effect.tokens.every((token) => token.url === ''));
+  assert.ok(effect.tokens.every((token) => token.x.endsWith('%') && token.y.endsWith('%')));
+  assert.ok(effect.tokens.every((token) => token.depth >= 0 && token.depth <= 1));
+  assert.ok(effect.tokens.every((token) => token.variant.startsWith('type-')));
 });
 
 test('news desk reducer controls search/draft/download states without DOM effects', () => {
