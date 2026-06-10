@@ -122,8 +122,11 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(style.contains(".filetree"));
     assert!(style.contains(".post-body :is"));
     assert!(style.contains(".profile-publication-widget"));
-    assert!(style.contains("pretext-cat-breathe"));
-    assert!(style.contains("pretext-cat-sprite"));
+    assert!(style.contains("pretext-loom-breathe"));
+    assert!(style.contains("pretext-loom-row"));
+    assert!(style.contains("pretext-loom-status"));
+    assert!(!style.contains("pretext-cat-breathe"));
+    assert!(!style.contains("pretext-cat-sprite"));
     assert!(!style.contains("pretext-cat-blink"));
     assert!(!style.contains("pretext-cat-prowl"));
     assert!(!style.contains("pretext-loom-thread"));
@@ -133,7 +136,6 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(!style.contains("pretext-ambient-layer"));
     assert!(!style.contains("pretext-cat-paw"));
     assert!(!style.contains("pretext-cat-shadow"));
-    assert!(style.contains("pretext-cat-sprite"));
     assert!(style.contains("--space-bg"));
     assert!(style.contains("--glass-bg"));
     assert!(!style.contains("radial-gradient"));

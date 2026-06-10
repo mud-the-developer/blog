@@ -85,30 +85,29 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   await expect(page.locator('.paper-grid')).toHaveCount(0);
 
   await expect(page.locator('[data-pretext-polish]')).toHaveAttribute('data-pretext-ready', 'true');
-  const firstSpriteSample = await page.evaluate(() => {
-    const sprite = document.querySelector('.pretext-cat-sprite');
+  const firstLoomSample = await page.evaluate(() => {
+    const stage = document.querySelector('.pretext-loom-stage');
     return {
-      text: sprite?.textContent || '',
-      x: getComputedStyle(sprite || document.body).getPropertyValue('--cat-x').trim(),
-      pose: sprite?.dataset.pose || '',
-      frameIndex: sprite?.dataset.frameIndex || ''
+      activeRow: stage?.dataset.activeRow || '',
+      activeKind: stage?.dataset.activeKind || '',
+      status: document.querySelector('[data-pretext-loom-status]')?.textContent || ''
     };
   });
-  await page.waitForTimeout(650);
-  const secondSpriteSample = await page.evaluate(() => {
-    const sprite = document.querySelector('.pretext-cat-sprite');
+  await page.waitForTimeout(980);
+  const secondLoomSample = await page.evaluate(() => {
+    const stage = document.querySelector('.pretext-loom-stage');
     return {
-      text: sprite?.textContent || '',
-      x: getComputedStyle(sprite || document.body).getPropertyValue('--cat-x').trim(),
-      pose: sprite?.dataset.pose || '',
-      frameIndex: sprite?.dataset.frameIndex || ''
+      activeRow: stage?.dataset.activeRow || '',
+      activeKind: stage?.dataset.activeKind || '',
+      status: document.querySelector('[data-pretext-loom-status]')?.textContent || ''
     };
   });
 
   const motion = await page.evaluate(() => {
-    const sprite = document.querySelector('.pretext-cat-sprite');
-    const frameData = JSON.parse(document.querySelector('[data-pretext-cat-frames]')?.textContent || '[]');
-    const style = getComputedStyle(sprite || document.body);
+    const loomStage = document.querySelector('.pretext-loom-stage');
+    const rowData = JSON.parse(document.querySelector('[data-pretext-loom-rows]')?.textContent || '[]');
+    const activeRows = [...document.querySelectorAll('.pretext-loom-row[data-active="true"]')];
+    const style = getComputedStyle(activeRows[0] || loomStage || document.body);
     const css = [...document.styleSheets]
       .flatMap((sheet) => {
         try {
@@ -121,98 +120,92 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
     const archive = JSON.parse(document.getElementById('archive-data')?.textContent || '[]');
     const stage = document.querySelector('[data-pretext-polish]');
     const stageRect = stage?.getBoundingClientRect();
-    const spriteRect = sprite?.getBoundingClientRect();
-    const spriteText = sprite?.textContent || '';
-    const samples = window.__pretextCatMotionSamples || [];
-    const sampleXs = new Set(samples.map((sample) => sample.x));
-    const sampleFrames = new Set(samples.map((sample) => sample.frameIndex));
+    const loomRect = loomStage?.getBoundingClientRect();
+    const loomText = loomStage?.textContent || '';
+    const samples = window.__pretextLoomMotionSamples || [];
+    const sampleRows = new Set(samples.map((sample) => sample.rowIndex));
     return {
       archiveCount: Array.isArray(archive) ? archive.length : 0,
+      loomStageCount: document.querySelectorAll('.pretext-loom-stage').length,
+      loomRowCount: document.querySelectorAll('.pretext-loom-row').length,
       catStageCount: document.querySelectorAll('.pretext-cat-stage').length,
       spriteCount: document.querySelectorAll('.pretext-cat-sprite').length,
       hiddenFrameNodeCount: document.querySelectorAll('.pretext-cat-frame').length,
-      frameDataCount: frameData.length,
-      animatedCount: sprite && style.animationName !== 'none' && style.animationDuration !== '0s' ? 1 : 0,
+      rowDataCount: rowData.length,
+      animatedCount: activeRows.some((row) => {
+        const rowStyle = getComputedStyle(row);
+        return rowStyle.animationName !== 'none' && rowStyle.animationDuration !== '0s';
+      }) ? 1 : 0,
       ambientLayerCount: document.querySelectorAll('.pretext-ambient-layer').length,
       scene: stage?.dataset.pretextScene || '',
       references: stage?.dataset.pretextReferences || '',
-      referenceSource: sprite?.dataset.referenceSource || '',
-      continuousMotion: sprite?.dataset.continuousMotion || '',
-      spriteMode: document.querySelector('.pretext-cat-stage')?.dataset.spriteMode || '',
-      refreshMode: document.querySelector('.pretext-cat-stage')?.dataset.refreshMode || sprite?.dataset.refreshMode || '',
-      linkStatusCount: document.querySelectorAll('[data-pretext-cat-link]').length,
-      linkStatusText: document.querySelector('[data-pretext-cat-link]')?.textContent || '',
-      catMaxWidth: Number(sprite?.dataset.catMaxWidth || 0),
-      declaredLineCount: Number(sprite?.dataset.catLineCount || 0),
+      loomMode: loomStage?.dataset.loomMode || '',
+      sourceCount: Number(loomStage?.dataset.sourceCount || 0),
+      statusCount: document.querySelectorAll('[data-pretext-loom-status]').length,
+      statusText: document.querySelector('[data-pretext-loom-status]')?.textContent || '',
+      cursorCount: document.querySelectorAll('[data-pretext-loom-cursor]').length,
       frontGlassCount: document.querySelectorAll('.pretext-front-glass').length,
       linkCount: document.querySelectorAll('.pretext-link,.pretext-network').length,
-      anchorTokenCount: document.querySelectorAll('a.pretext-cat-sprite[href],a.pretext-cat-frame[href],a.pretext-ascii-row[href],a.pretext-type-fragment[href],a.pretext-fragment[href],a.pretext-token[href]').length,
-      spriteText,
-      behaviorList: document.querySelector('.pretext-cat-stage')?.dataset.behaviors || '',
-      poseNames: [...new Set(frameData.map((frame) => frame.pose || ''))].filter(Boolean),
-      oldCopyCount: (stage?.textContent || '').match(/INDEX LOOM|writing index|posts\/|blog\/|papers\/|open RAN|Rust/g)?.length || 0,
-      clippedSpriteCount: stageRect && spriteRect && (spriteRect.left < stageRect.left || spriteRect.right > stageRect.right || spriteRect.top < stageRect.top || spriteRect.bottom > stageRect.bottom) ? 1 : 0,
+      anchorTokenCount: document.querySelectorAll('a.pretext-loom-row[href],a.pretext-fragment[href],a.pretext-token[href]').length,
+      loomText,
+      behaviorList: loomStage?.dataset.behaviors || '',
+      rowKinds: [...new Set(rowData.map((row) => row.kind || ''))].filter(Boolean),
+      catCopyCount: (stage?.textContent || '').match(/CAT-LINK|tail-sweep|large-tail|oneko|ascii cat/g)?.length || 0,
+      clippedLoomCount: stageRect && loomRect && (loomRect.left < stageRect.left || loomRect.right > stageRect.right || loomRect.top < stageRect.top || loomRect.bottom > stageRect.bottom) ? 1 : 0,
       interactive: stage?.dataset.pretextInteractive || '',
-      catFontSize: Number.parseFloat(style.fontSize || '0'),
-      catLineCount: spriteText.trim().split('\n').length || 0,
-      detailedRowCount: frameData.filter((frame) => frame.rows.some((row) => row.length >= 18)).length,
+      rowFontSize: Number.parseFloat(style.fontSize || '0'),
       decorativeNodeCount: document.querySelectorAll('.pretext-cat-paw,.pretext-cat-shadow,.pretext-ambient-layer,.pretext-front-glass').length,
-      maxCatZ: Number(style.zIndex || 0),
       filetreeWidth: document.querySelector('.filetree')?.getBoundingClientRect().width || 0,
-      hasCatCss: css.includes('pretext-cat-breathe') && css.includes('pretext-cat-sprite') && css.includes('font-variant-ligatures'),
-      hasOldSeparateFrameCss: css.includes('pretext-cat-blink') || css.includes('pretext-cat-prowl'),
+      hasLoomCss: css.includes('pretext-loom-breathe') && css.includes('pretext-loom-row') && css.includes('font-variant-ligatures'),
+      hasCatCss: css.includes('pretext-cat-sprite') || css.includes('pretext-cat-breathe'),
       hasDecorativeBackgroundPattern: /radial-gradient|orbit|bubble|stripe/i.test(css),
       mentionsNeon: css.toLowerCase().includes('neon'),
       sampleCount: samples.length,
-      sampleXCount: sampleXs.size,
-      sampleFrameCount: sampleFrames.size,
+      sampleRowCount: sampleRows.size,
       scrollWidth: document.documentElement.scrollWidth,
       clientWidth: document.documentElement.clientWidth,
     };
   });
   expect(motion.archiveCount).toBe(publicPostCount);
-  expect(motion.catStageCount).toBe(1);
-  expect(motion.spriteCount).toBe(1);
+  expect(motion.loomStageCount).toBe(1);
+  expect(motion.loomRowCount).toBeGreaterThanOrEqual(8);
+  expect(motion.loomRowCount).toBeLessThanOrEqual(12);
+  expect(motion.catStageCount).toBe(0);
+  expect(motion.spriteCount).toBe(0);
   expect(motion.hiddenFrameNodeCount).toBe(0);
-  expect(motion.frameDataCount).toBe(4);
+  expect(motion.rowDataCount).toBe(motion.loomRowCount);
   expect(motion.animatedCount).toBe(1);
   expect(motion.ambientLayerCount).toBe(0);
-  expect(motion.scene).toBe('kinetic-ascii-cat');
-  expect(motion.references).toContain('github.com/adryd325/oneko.js');
-  expect(motion.referenceSource).toContain('user supplied long ASCII cat');
-  expect(motion.continuousMotion).toBe('true');
-  expect(motion.spriteMode).toBe('single-continuous-sprite');
-  expect(motion.refreshMode).toBe('slow-baud-row-refresh');
-  expect(motion.linkStatusCount).toBe(1);
-  expect(motion.linkStatusText).toContain('CAT-LINK 1200');
+  expect(motion.scene).toBe('kinetic-ascii-loom');
+  expect(motion.references).toContain('archive-data');
+  expect(motion.loomMode).toBe('kinetic-text-instrument');
+  expect(motion.sourceCount).toBe(publicPostCount);
+  expect(motion.statusCount).toBe(1);
+  expect(motion.statusText).toContain('INDEX CURRENT');
+  expect(motion.cursorCount).toBe(1);
   expect(motion.frontGlassCount).toBe(0);
   expect(motion.linkCount).toBe(0);
   expect(motion.anchorTokenCount).toBe(0);
-  expect(motion.spriteText).toContain('..._  ___');
-  expect(motion.spriteText).toContain('`...-');
-  expect(motion.behaviorList).toBe('side-walk tail-wag baud-refresh');
-  expect(motion.poseNames).toEqual(expect.arrayContaining(['tail-sweep-left', 'tail-sweep-mid', 'tail-sweep-right', 'tail-sweep-settle']));
-  expect(motion.oldCopyCount).toBe(0);
-  expect(motion.clippedSpriteCount).toBe(0);
+  expect(motion.loomText).toContain('PRETEXT // CURRENT');
+  expect(motion.loomText).toContain('Second Brain Architecture');
+  expect(motion.loomText).toContain('signal:');
+  expect(motion.behaviorList).toBe('row-pulse cursor-blink archive-current');
+  expect(motion.rowKinds).toEqual(expect.arrayContaining(['system', 'count', 'folder', 'title', 'signal', 'cursor']));
+  expect(motion.catCopyCount).toBe(0);
+  expect(motion.clippedLoomCount).toBe(0);
   expect(motion.interactive).toBe('true');
-  expect(motion.catFontSize).toBeLessThanOrEqual(7);
-  expect(motion.catLineCount).toBe(26);
-  expect(motion.declaredLineCount).toBe(26);
-  expect(motion.catMaxWidth).toBeLessThanOrEqual(72);
-  expect(motion.detailedRowCount).toBe(4);
+  expect(motion.rowFontSize).toBeLessThanOrEqual(12);
   expect(motion.decorativeNodeCount).toBe(0);
   expect(motion.filetreeWidth).toBeLessThanOrEqual(860);
-  expect(motion.hasCatCss).toBe(true);
-  expect(motion.hasOldSeparateFrameCss).toBe(false);
+  expect(motion.hasLoomCss).toBe(true);
+  expect(motion.hasCatCss).toBe(false);
   expect(motion.hasDecorativeBackgroundPattern).toBe(false);
   expect(motion.mentionsNeon).toBe(false);
   expect(motion.sampleCount).toBeGreaterThanOrEqual(2);
-  expect(motion.sampleXCount).toBeGreaterThanOrEqual(2);
-  expect(motion.sampleFrameCount).toBeGreaterThanOrEqual(2);
-  expect(firstSpriteSample.text).not.toBe('');
-  expect(secondSpriteSample.text).not.toBe('');
-  expect(secondSpriteSample.frameIndex).not.toBe(firstSpriteSample.frameIndex);
-  expect(secondSpriteSample.x).not.toBe(firstSpriteSample.x);
+  expect(motion.sampleRowCount).toBeGreaterThanOrEqual(2);
+  expect(firstLoomSample.status).not.toBe('');
+  expect(secondLoomSample.status).not.toBe('');
+  expect(secondLoomSample.activeRow).not.toBe(firstLoomSample.activeRow);
   expect(motion.scrollWidth).toBeLessThanOrEqual(motion.clientWidth + 1);
 });
 

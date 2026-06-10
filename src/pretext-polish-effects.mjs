@@ -1,57 +1,58 @@
 export function renderPretextTokens(effect, { stage, surface, document }) {
-  if (effect.type !== 'render-pretext-ascii-cat' || !stage || !surface) return;
+  if (effect.type !== 'render-pretext-loom' || !stage || !surface) return;
   surface.replaceChildren();
 
-  const frames = effect.cat?.frames || [];
-  const catStage = document.createElement('div');
-  catStage.className = 'pretext-cat-stage';
-  catStage.setAttribute('aria-hidden', 'true');
-  catStage.style.setProperty('--duration', effect.motion?.duration || '8.8s');
-  catStage.style.setProperty('--delay', effect.motion?.delay || '0s');
-  catStage.dataset.behaviors = (effect.motion?.behaviors || []).join(' ');
-  catStage.dataset.spriteMode = effect.cat?.spriteMode || 'single-continuous-sprite';
-  catStage.dataset.refreshMode = effect.cat?.telecom?.mode || 'slow-baud-row-refresh';
+  const rows = effect.loom?.rows || [];
+  const loomStage = document.createElement('div');
+  loomStage.className = 'pretext-loom-stage';
+  loomStage.setAttribute('aria-hidden', 'true');
+  loomStage.style.setProperty('--duration', effect.motion?.duration || '11.8s');
+  loomStage.dataset.behaviors = (effect.motion?.behaviors || []).join(' ');
+  loomStage.dataset.loomMode = effect.loom?.mode || 'kinetic-text-instrument';
+  loomStage.dataset.sourceCount = String(effect.loom?.sourceCount || 0);
 
-  const frameData = document.createElement('script');
-  frameData.type = 'application/json';
-  frameData.dataset.pretextCatFrames = 'true';
-  frameData.textContent = JSON.stringify(frames.map((frameModel) => ({
-    index: frameModel.index ?? 0,
-    pose: frameModel.pose || 'walk',
-    depth: frameModel.depth ?? 0.6,
-    rows: frameModel.rows || []
+  const rowData = document.createElement('script');
+  rowData.type = 'application/json';
+  rowData.dataset.pretextLoomRows = 'true';
+  rowData.textContent = JSON.stringify(rows.map((row) => ({
+    index: row.index ?? 0,
+    kind: row.kind || 'title',
+    text: row.text || '',
+    depth: row.depth ?? 0.6,
+    weight: row.weight ?? 0.75
   })));
 
-  const sprite = document.createElement('pre');
-  sprite.className = 'pretext-cat-sprite';
-  sprite.textContent = (frames[0]?.rows || []).join('\n');
-  sprite.dataset.pose = frames[0]?.pose || 'walk';
-  sprite.dataset.frameIndex = String(frames[0]?.index ?? 0);
-  sprite.dataset.frameCount = String(frames.length);
-  sprite.dataset.continuousMotion = String(Boolean(effect.motion?.continuous));
-  sprite.dataset.durationMs = String(effect.motion?.durationMs || 8800);
-  sprite.dataset.frameRate = String(effect.cat?.frameRate || 9);
-  sprite.dataset.refreshMs = String(effect.cat?.telecom?.refreshMs || 370);
-  sprite.dataset.lineSweepMs = String(effect.cat?.telecom?.lineSweepMs || 28);
-  sprite.dataset.travelPx = String(effect.motion?.travelPx || 76);
-  sprite.dataset.xBiasPx = String(effect.motion?.xBiasPx || 0);
-  sprite.dataset.catMaxWidth = String(effect.cat?.dimensions?.maxWidth || 0);
-  sprite.dataset.catLineCount = String(effect.cat?.dimensions?.lineCount || 0);
-  sprite.dataset.referenceSource = (effect.cat?.references || []).map((reference) => reference.source).join(' | ');
-  sprite.dataset.referenceUrl = effect.cat?.references?.[0]?.url || '';
-  sprite.style.setProperty('--cat-x', `${(effect.motion?.xBiasPx || 0) - (effect.motion?.travelPx || 40)}px`);
-  sprite.style.setProperty('--cat-y', '0px');
-  sprite.style.setProperty('--cat-scale', '1');
+  const header = document.createElement('div');
+  header.className = 'pretext-loom-header';
+  header.textContent = effect.loom?.label || 'PRETEXT / INDEX LOOM';
 
-  const linkStatus = document.createElement('div');
-  linkStatus.className = 'pretext-cat-link';
-  linkStatus.dataset.pretextCatLink = 'true';
-  linkStatus.textContent = `${effect.cat?.telecom?.label || 'CAT-LINK 1200'} · ${effect.cat?.telecom?.statusCopy || 'row refresh'}`;
+  const body = document.createElement('div');
+  body.className = 'pretext-loom-body';
+  rows.forEach((row) => {
+    const line = document.createElement('div');
+    line.className = `pretext-loom-row pretext-loom-row-${row.kind || 'title'}`;
+    line.dataset.loomRow = String(row.index ?? 0);
+    line.dataset.kind = row.kind || 'title';
+    line.style.setProperty('--row-depth', String(row.depth ?? 0.7));
+    line.style.setProperty('--row-weight', String(row.weight ?? 0.75));
+    line.textContent = row.text || '';
+    body.append(line);
+  });
 
-  catStage.append(frameData, sprite, linkStatus);
-  surface.append(catStage);
+  const cursor = document.createElement('div');
+  cursor.className = 'pretext-loom-cursor';
+  cursor.dataset.pretextLoomCursor = 'true';
+  cursor.textContent = '▌';
 
-  stage.dataset.pretextScene = effect.scene || 'kinetic-ascii-cat';
-  stage.dataset.pretextReferences = (effect.cat?.references || []).map((reference) => reference.url).join(' ');
+  const status = document.createElement('div');
+  status.className = 'pretext-loom-status';
+  status.dataset.pretextLoomStatus = 'true';
+  status.textContent = `${effect.loom?.status?.label || 'INDEX CURRENT'} · ${effect.loom?.status?.copy || 'archive rows'}`;
+
+  loomStage.append(rowData, header, body, cursor, status);
+  surface.append(loomStage);
+
+  stage.dataset.pretextScene = effect.scene || 'kinetic-ascii-loom';
+  stage.dataset.pretextReferences = (effect.loom?.references || []).map((reference) => reference.url).join(' ');
   stage.dataset.pretextReady = 'true';
 }

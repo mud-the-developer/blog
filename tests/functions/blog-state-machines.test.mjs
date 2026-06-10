@@ -63,7 +63,7 @@ test('theme render effect keeps the visible theme label inside the accessible na
   assert.equal(attributes['aria-pressed'], 'false');
 });
 
-test('pretext polish reducer emits a referenced single-sprite ASCII cat walk cycle without separate pose cards', () => {
+test('pretext polish reducer emits an archive-derived kinetic loom and no ASCII cat', () => {
   const initial = createPretextState({ archive, isMobile: false });
   const step = pretextReducer(initial, { type: 'pretext.mounted' });
 
@@ -71,39 +71,27 @@ test('pretext polish reducer emits a referenced single-sprite ASCII cat walk cyc
   assert.equal(step.state.phase, 'ready');
   assert.equal(step.effects.length, 1);
   const effect = step.effects[0];
-  assert.equal(effect.type, 'render-pretext-ascii-cat');
-  assert.equal(effect.scene, 'kinetic-ascii-cat');
+  assert.equal(effect.type, 'render-pretext-loom');
+  assert.equal(effect.scene, 'kinetic-ascii-loom');
   assert.deepEqual(effect.links, []);
-  assert.equal(effect.cat.label, 'large-tail-wag-ascii-cat');
-  assert.equal(effect.cat.spriteMode, 'single-continuous-sprite');
-  assert.deepEqual(effect.cat.references.map((reference) => reference.source), [
-    'user supplied long ASCII cat',
-    'baud-era terminal refresh cadence',
-    'oneko.js Neko two-frame walk cycle'
+  assert.equal(effect.loom.label, 'PRETEXT / INDEX LOOM');
+  assert.equal(effect.loom.mode, 'kinetic-text-instrument');
+  assert.deepEqual(effect.loom.references.map((reference) => reference.source), [
+    'archive metadata',
+    'kinetic ASCII index loom'
   ]);
-  assert.deepEqual(effect.motion.behaviors, ['side-walk', 'tail-wag', 'baud-refresh']);
+  assert.deepEqual(effect.motion.behaviors, ['row-pulse', 'cursor-blink', 'archive-current']);
   assert.equal(effect.motion.continuous, true);
-  assert.ok(effect.motion.reference.includes('tail'));
-  assert.equal(effect.motion.travelPx, 24);
-  assert.equal(effect.motion.xBiasPx, -36);
-  assert.equal(effect.cat.telecom.mode, 'slow-baud-row-refresh');
-  assert.equal(effect.cat.telecom.refreshMs, 520);
-  assert.equal(effect.cat.frames.length, 4);
-  assert.equal(effect.cat.dimensions.lineCount, 26);
-  assert.ok(effect.cat.dimensions.maxWidth <= 72);
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.length === 26));
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.join('\n').includes('..._  ___')));
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.join('\n').includes('`...-')));
-  assert.ok(effect.cat.frames.some((frame) => frame.pose === 'tail-sweep-left'));
-  assert.ok(effect.cat.frames.some((frame) => frame.pose === 'tail-sweep-right'));
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.some((row) => row.length >= 60)));
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.every((row) => row.length <= 72)));
-  assert.deepEqual(effect.paws, []);
-  assert.equal(effect.cat.shadow, null);
-  assert.deepEqual(effect.cat.decorations, []);
-  assert.ok(effect.motion.duration.endsWith('s'));
+  assert.ok(effect.motion.reference.includes('archive-derived'));
+  assert.ok(effect.loom.rows.length >= 8);
+  assert.ok(effect.loom.rows.length <= 12);
+  assert.equal(effect.loom.sourceCount, archive.length);
+  assert.ok(effect.loom.rows.some((row) => row.text.includes('PRETEXT // CURRENT')));
+  assert.ok(effect.loom.rows.some((row) => row.text.includes('Rust rendering notes')));
+  assert.ok(effect.loom.rows.some((row) => row.text.includes('signal:')));
+  assert.ok(effect.loom.status.copy.includes('no cat'));
   const renderedCopy = JSON.stringify(effect);
-  assert.equal(/open RAN|Rust|papers|blog\/|posts\/|INDEX LOOM|writing index/i.test(renderedCopy), false);
+  assert.equal(/large-tail-wag|CAT-LINK|oneko|ascii cat|pretext-cat/i.test(renderedCopy), false);
 });
 
 test('news desk reducer controls search/draft/download states without DOM effects', () => {
