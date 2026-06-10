@@ -16,6 +16,8 @@ async function runtimeAudit(page) {
       postCards: document.querySelectorAll('.post-card').length,
       filetreeFiles: document.querySelectorAll('.filetree-file').length,
       pretextCatFrames: document.querySelectorAll('.pretext-cat-frame').length,
+      pretextCatPoses: [...new Set([...document.querySelectorAll('.pretext-cat-frame')].map((frame) => frame.dataset.pose || ''))].filter(Boolean).length,
+      pretextCatBehaviors: document.querySelector('.pretext-cat-stage')?.dataset.behaviors || '',
       pretextDecorations: document.querySelectorAll('.pretext-cat-paw,.pretext-cat-shadow,.pretext-ambient-layer,.pretext-front-glass').length,
       graphCount: document.querySelectorAll('[data-archive-graph]').length,
       fieldStages: document.querySelectorAll('[data-field-stage]').length,
@@ -42,8 +44,10 @@ test('desktop and mobile public homepage stay polished without layout overflow',
     expect(audit.filetreeFiles, name).toBe(publicPostCount);
     expect(audit.graphCount, name).toBe(0);
     expect(audit.fieldStages, name).toBe(0);
-    expect(audit.pretextCatFrames, name).toBeGreaterThanOrEqual(4);
-    expect(audit.pretextCatFrames, name).toBeLessThanOrEqual(6);
+    expect(audit.pretextCatFrames, name).toBeGreaterThanOrEqual(6);
+    expect(audit.pretextCatFrames, name).toBeLessThanOrEqual(7);
+    expect(audit.pretextCatPoses, name).toBeGreaterThanOrEqual(6);
+    expect(audit.pretextCatBehaviors, name).toBe('sit blink crouch jump land');
     expect(audit.pretextDecorations, name).toBe(0);
     expect(audit.nodes, name).toBeLessThanOrEqual(980);
     expect(audit.scrollWidth, name).toBeLessThanOrEqual(audit.clientWidth + 1);

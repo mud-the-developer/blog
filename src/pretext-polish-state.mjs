@@ -1,80 +1,125 @@
-const catFrames = [
-  String.raw`          /\\_____/\\
-       __/  o   o  \\__
-      / ( ==  o  == ) \\
-     /   \\   ---   /   \\
-    /  /  '.___.'  \\   \\
-   |  |  .-.___.-.  |   |  _.-'
-   |  | /  / | \\  \\ |   |
-   |  |/__/  |  \\__\\|   |
-   |     /   |   \\      |
-    \\___/  __|__  \\___/
-       /__/  |  \\__\\
-      (_/    |    \\_)
-       /____/ \\____\\
-      (_/          \\_)`,
-  String.raw`          /\\_____/\\
-       __/  -   -  \\__
-      / ( ==  -  == ) \\
-     /   \\   ___   /   \\
-    /  /  '.___.'  \\   \\
-   |  |  .-.___.-.  |   |  _.-'
-   |  | /  / | \\  \\ |   |
-   |  |/__/  |  \\__\\|   |
-   |     /   |   \\      |
-    \\___/  __|__  \\___/
-       /__/  |  \\__\\
-      (_/    |    \\_)
-       /____/ \\____\\
-      (_/          \\_)`,
-  String.raw`          /\\_____/\\
-       __/  o   o  \\__
-      / ( ==  o  == ) \\
-     /   \\  .---.  /   \\
-    /  /  '.___.'  \\   \\
-   |  |  .-.___.-.  |   |  _.-'
-   |  | /  / | \\  \\ |  /|
-   |  |/__/  |  \\__\\|_/ |
-   |     /   |   \\       |
-    \\___/  __|__  \\____/
-       /__/  |  \\__\\
-      (_/    |    \\_)
-       /____/ \\____\\
-      (_/          \\_)`,
-  String.raw`          /\\_____/\\
-       __/  o   o  \\__
-      / ( ==  o  == ) \\
-     /   \\  .---.  /   \\
-    /  /  '.___.'  \\   \\
-   |\\ |  .-.___.-.  |   |  _.-'
-   | \\| /  / | \\  \\ |   |
-   |  |/__/  |  \\__\\|   |
-   |      /  |   \\      |
-    \\____/ __|__  \\___/
-       /__/  |  \\__\\
-      (_/    |    \\_)
-       /____/ \\____\\
-      (_/          \\_)`
-].map((frame) => frame.split('\n'));
+const referenceNotes = [
+  {
+    source: 'asciiart.eu classic kitten',
+    cue: String.raw`/\_/\ ( o.o ) > ^ <`,
+    url: 'https://www.asciiart.eu/animals/cats'
+  },
+  {
+    source: 'asciiart.eu sleeping cat',
+    cue: 'long curled body with ZZZ sleep cue',
+    url: 'https://www.asciiart.eu/animals/cats'
+  }
+];
 
-function createCatFrame(rows, index) {
+const catFrameModels = [
+  {
+    pose: 'sit',
+    offset: { x: -30, y: 18 },
+    scale: 1,
+    rows: [
+      '      /\\_/\\        sit',
+      '     ( o.o )',
+      '      > ^ <',
+      '   __/|   |\\__',
+      '  /___|___|__\\',
+      '     (_   _ )',
+      '       )_/  ~'
+    ]
+  },
+  {
+    pose: 'blink',
+    offset: { x: -18, y: 14 },
+    scale: 1,
+    rows: [
+      '      /\\_/\\       blink',
+      '     ( -.- )',
+      '      > ^ <',
+      '   __/|   |\\__',
+      '  /___|___|__\\',
+      '     (_   _ )',
+      '       )_/  ~'
+    ]
+  },
+  {
+    pose: 'crouch',
+    offset: { x: 12, y: 28 },
+    scale: 0.98,
+    rows: [
+      '       /\\_/\\      crouch',
+      '    __( o.o )__',
+      '  _/  \\_^_/  \\_',
+      ' /__  /   \\  __\\',
+      '    \\_\\___/_/',
+      '      (_|_)',
+      '     ready...'
+    ]
+  },
+  {
+    pose: 'jump',
+    offset: { x: 42, y: -56 },
+    scale: 1.02,
+    rows: [
+      '        /\\_/\\       hop!',
+      '     \\ (=^.^=) /',
+      '       \\  ^  /',
+      '     __/     \\__',
+      '   _/  /|   |\\  \\_',
+      '      /_|___|_\\',
+      '       /     \\'
+    ]
+  },
+  {
+    pose: 'land',
+    offset: { x: 18, y: 8 },
+    scale: 1,
+    rows: [
+      '      /\\_/\\       land',
+      '     ( o.o )',
+      '    / > ^ < \\',
+      '   /__/| |\\__\\',
+      '      /___\\',
+      '     (_/ \\_)',
+      '        tail~'
+    ]
+  },
+  {
+    pose: 'nap',
+    offset: { x: -44, y: 22 },
+    scale: 0.98,
+    rows: [
+      '   zzz      /\\_/\\',
+      '  |\\__/,|  ( -.- )',
+      '  |_ _  |   > ^ <',
+      '   ( (   )',
+      '  -(((---(((----',
+      '      curled nap',
+      '       tail ~'
+    ]
+  }
+];
+
+function createCatFrame(frame, index) {
   return {
-    rows,
+    rows: frame.rows,
     index,
-    delay: `${index * -0.62}s`,
-    duration: '3.2s',
-    depth: Number((0.58 + index * 0.07).toFixed(2))
+    pose: frame.pose,
+    offset: frame.offset,
+    scale: frame.scale,
+    delay: `${index * -0.84}s`,
+    duration: '5.04s',
+    depth: Number((0.62 + index * 0.04).toFixed(2))
   };
 }
 
 function createCat() {
   return {
-    label: 'miniature-detailed-cat',
-    frames: catFrames.map(createCatFrame),
+    label: 'cute-reference-cat',
+    references: referenceNotes,
+    frames: catFrameModels.map(createCatFrame),
     shadow: null,
     decorations: [],
     paws: [],
-    motion: { duration: '7.2s', delay: '-0.7s' }
+    motion: { duration: '10.4s', delay: '-0.35s', behaviors: ['sit', 'blink', 'crouch', 'jump', 'land'] }
   };
 }
 

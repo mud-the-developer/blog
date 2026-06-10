@@ -120,12 +120,18 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
       linkCount: document.querySelectorAll('.pretext-link,.pretext-network').length,
       anchorTokenCount: document.querySelectorAll('a.pretext-cat-frame[href],a.pretext-ascii-row[href],a.pretext-type-fragment[href],a.pretext-fragment[href],a.pretext-token[href]').length,
       frameText,
+      behaviorList: document.querySelector('.pretext-cat-stage')?.dataset.behaviors || '',
+      poseNames: [...new Set(frames.map((frame) => frame.dataset.pose || ''))].filter(Boolean),
+      jumpFrameCount: frames.filter((frame) => frame.dataset.pose === 'jump').length,
+      napFrameCount: frames.filter((frame) => frame.dataset.pose === 'nap').length,
+      highJumpCount: frames.filter((frame) => Number.parseFloat(getComputedStyle(frame).getPropertyValue('--pose-y')) < -28).length,
+      variedXCount: new Set(frames.map((frame) => getComputedStyle(frame).getPropertyValue('--pose-x').trim())).size,
       oldCopyCount: (stage?.textContent || '').match(/INDEX LOOM|writing index|posts\/|blog\/|papers\/|open RAN|Rust/g)?.length || 0,
       clippedFrameCount: stageRect ? frameBoxes.filter((box) => box.left < stageRect.left || box.right > stageRect.right || box.top < stageRect.top || box.bottom > stageRect.bottom).length : 0,
       interactive: stage?.dataset.pretextInteractive || '',
       catFontSize: Number.parseFloat(getComputedStyle(frames[0] || document.body).fontSize || '0'),
       catLineCount: frames[0]?.textContent.trim().split('\n').length || 0,
-      detailedRowCount: frames.filter((frame) => frame.textContent.split('\n').some((row) => row.length >= 30)).length,
+      detailedRowCount: frames.filter((frame) => frame.textContent.split('\n').some((row) => row.length >= 18)).length,
       decorativeNodeCount: document.querySelectorAll('.pretext-cat-paw,.pretext-cat-shadow,.pretext-ambient-layer,.pretext-front-glass').length,
       maxCatZ: Math.max(...frames.map((frame) => Number(getComputedStyle(frame).zIndex || 0))),
       filetreeWidth: document.querySelector('.filetree')?.getBoundingClientRect().width || 0,
@@ -138,8 +144,8 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   });
   expect(motion.archiveCount).toBe(publicPostCount);
   expect(motion.catStageCount).toBe(1);
-  expect(motion.frameCount).toBeGreaterThanOrEqual(4);
-  expect(motion.frameCount).toBeLessThanOrEqual(6);
+  expect(motion.frameCount).toBeGreaterThanOrEqual(6);
+  expect(motion.frameCount).toBeLessThanOrEqual(7);
   expect(motion.pawCount).toBe(0);
   expect(motion.animatedCount).toBeGreaterThanOrEqual(4);
   expect(motion.ambientLayerCount).toBe(0);
@@ -147,14 +153,23 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   expect(motion.frontGlassCount).toBe(0);
   expect(motion.linkCount).toBe(0);
   expect(motion.anchorTokenCount).toBe(0);
-  expect(motion.frameText).toContain('/\\\\_____/\\\\');
-  expect(motion.frameText).toContain('( ==  o  == )');
-  expect(motion.frameText).toContain('( ==  -  == )');
+  expect(motion.frameText).toContain('/\\_/\\');
+  expect(motion.frameText).toContain('( o.o )');
+  expect(motion.frameText).toContain('( -.- )');
+  expect(motion.frameText).toContain('=^.^=');
+  expect(motion.frameText.toLowerCase()).toContain('zzz');
+  expect(motion.behaviorList).toBe('sit blink crouch jump land');
+  expect(motion.poseNames).toEqual(expect.arrayContaining(['sit', 'blink', 'crouch', 'jump', 'land', 'nap']));
+  expect(motion.jumpFrameCount).toBeGreaterThanOrEqual(1);
+  expect(motion.napFrameCount).toBeGreaterThanOrEqual(1);
+  expect(motion.highJumpCount).toBeGreaterThanOrEqual(1);
+  expect(motion.variedXCount).toBeGreaterThanOrEqual(4);
   expect(motion.oldCopyCount).toBe(0);
   expect(motion.clippedFrameCount).toBe(0);
   expect(motion.interactive).toBe('true');
   expect(motion.catFontSize).toBeLessThanOrEqual(12);
-  expect(motion.catLineCount).toBeGreaterThanOrEqual(13);
+  expect(motion.catLineCount).toBeGreaterThanOrEqual(7);
+  expect(motion.catLineCount).toBeLessThanOrEqual(12);
   expect(motion.detailedRowCount).toBeGreaterThanOrEqual(4);
   expect(motion.decorativeNodeCount).toBe(0);
   expect(motion.filetreeWidth).toBeLessThanOrEqual(860);

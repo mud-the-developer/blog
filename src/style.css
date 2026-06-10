@@ -1000,8 +1000,8 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
 .pretext-polish{position:sticky;top:28px;min-height:520px;border:1px solid var(--glass-line);border-radius:24px;overflow:hidden;background:#06111d}
 .pretext-surface{position:relative;min-height:520px;isolation:isolate;background:#06111d}
 .pretext-cat-stage{position:absolute;inset:26px 22px;z-index:8;display:grid;place-items:center;color:#f2fbff;font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace;font-variant-ligatures:none;overflow:hidden;translate:var(--tx,0) var(--ty,0);animation:pretext-cat-prowl var(--duration) ease-in-out infinite;animation-delay:var(--delay)}
-.pretext-cat-frame{position:absolute;z-index:9;margin:0;color:#f7fcff;font:760 clamp(.44rem,.66vw,.6rem)/1.02 "JetBrains Mono","SFMono-Regular",Consolas,monospace;letter-spacing:.01em;white-space:pre;text-align:left;text-shadow:0 0 7px #bfe8ff24;opacity:0;translate:var(--tx,0) var(--ty,0);animation:pretext-cat-blink var(--duration) steps(1,end) infinite;animation-delay:var(--delay)}
-@keyframes pretext-cat-blink{0%,22%{opacity:1;transform:translateY(-1px)}23%,100%{opacity:0;transform:translateY(1px)}}@keyframes pretext-cat-prowl{0%,100%{transform:translateX(-7px) rotate(-.35deg)}50%{transform:translateX(7px) rotate(.35deg)}}
+.pretext-cat-frame{position:absolute;z-index:9;margin:0;color:#f7fcff;font:760 clamp(.48rem,.72vw,.66rem)/1.03 "JetBrains Mono","SFMono-Regular",Consolas,monospace;letter-spacing:.01em;white-space:pre;text-align:left;text-shadow:0 0 7px #bfe8ff24;opacity:0;transform:translate(var(--pose-x,0),var(--pose-y,0)) scale(var(--pose-scale,1));animation:pretext-cat-blink var(--duration) steps(1,end) infinite;animation-delay:var(--delay);will-change:opacity,transform}
+@keyframes pretext-cat-blink{0%,15.8%{opacity:1}16%,100%{opacity:0}}@keyframes pretext-cat-prowl{0%,100%{transform:translateX(-10px) translateY(2px) rotate(-.25deg)}32%{transform:translateX(8px) translateY(-5px) rotate(.2deg)}64%{transform:translateX(13px) translateY(4px) rotate(.3deg)}}
 
 .post-shell {
   width: min(100% - 32px, 900px);

@@ -63,7 +63,7 @@ test('theme render effect keeps the visible theme label inside the accessible na
   assert.equal(attributes['aria-pressed'], 'false');
 });
 
-test('pretext polish reducer emits miniature detailed cat ASCII art without extra decoration', () => {
+test('pretext polish reducer emits cute referenced cat poses that jump blink and sit without extra decoration', () => {
   const initial = createPretextState({ archive, isMobile: false });
   const step = pretextReducer(initial, { type: 'pretext.mounted' });
 
@@ -74,15 +74,22 @@ test('pretext polish reducer emits miniature detailed cat ASCII art without extr
   assert.equal(effect.type, 'render-pretext-ascii-cat');
   assert.equal(effect.scene, 'kinetic-ascii-cat');
   assert.deepEqual(effect.links, []);
-  assert.equal(effect.cat.label, 'miniature-detailed-cat');
-  assert.ok(effect.cat.frames.length >= 4);
-  assert.ok(effect.cat.frames.length <= 6);
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.length >= 13));
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.join('\n').includes('/\\\\_____/\\\\')));
-  assert.ok(effect.cat.frames.some((frame) => frame.rows.join('\n').includes('( ==  o  == )')));
-  assert.ok(effect.cat.frames.some((frame) => frame.rows.join('\n').includes('( ==  -  == )')));
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.some((row) => row.length >= 30)));
-  assert.ok(effect.cat.frames.every((frame) => frame.rows.every((row) => row.length <= 56)));
+  assert.equal(effect.cat.label, 'cute-reference-cat');
+  assert.deepEqual(effect.cat.references.map((reference) => reference.source), ['asciiart.eu classic kitten', 'asciiart.eu sleeping cat']);
+  assert.deepEqual(effect.motion.behaviors, ['sit', 'blink', 'crouch', 'jump', 'land']);
+  assert.ok(effect.cat.frames.length >= 6);
+  assert.ok(effect.cat.frames.length <= 7);
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.length >= 7));
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.length <= 12));
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.join('\n').includes('/\\_/\\')));
+  assert.ok(effect.cat.frames.some((frame) => frame.pose === 'sit' && frame.rows.join('\n').includes('( o.o )')));
+  assert.ok(effect.cat.frames.some((frame) => frame.pose === 'blink' && frame.rows.join('\n').includes('( -.- )')));
+  assert.ok(effect.cat.frames.some((frame) => frame.pose === 'jump' && frame.rows.join('\n').includes('=^.^=')));
+  assert.ok(effect.cat.frames.some((frame) => frame.pose === 'nap' && /z{2,}/i.test(frame.rows.join('\n'))));
+  assert.ok(effect.cat.frames.some((frame) => frame.offset.y < -28));
+  assert.ok(new Set(effect.cat.frames.map((frame) => frame.offset.x)).size >= 4);
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.some((row) => row.length >= 18)));
+  assert.ok(effect.cat.frames.every((frame) => frame.rows.every((row) => row.length <= 42)));
   assert.deepEqual(effect.paws, []);
   assert.equal(effect.cat.shadow, null);
   assert.deepEqual(effect.cat.decorations, []);
