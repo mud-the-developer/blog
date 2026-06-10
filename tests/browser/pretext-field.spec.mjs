@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const folders = ['news', 'blog', 'papers', 'about'];
+const folders = ['blog', 'papers', 'about'];
 const rejectedCopy = [
   '읽기 좋은 노트',
   'Readable archive',
@@ -49,7 +49,8 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   await expect(page.locator('.filetree-folder')).toHaveCount(folders.length);
   await expect(page.locator('.filetree-folder summary')).toHaveCount(folders.length);
   await expect(page.locator('.filetree-file')).toHaveCount(publicPostCount);
-  await expect(page.locator('details.filetree-folder[data-folder="news"]')).not.toHaveAttribute('open', '');
+  await expect(page.locator('details.filetree-folder[data-folder="news"]')).toHaveCount(0);
+  await expect(page.getByText('news/', { exact: true })).toHaveCount(0);
   for (const folder of ['blog', 'papers', 'about']) {
     await expect(page.locator(`details.filetree-folder[data-folder="${folder}"]`)).toHaveAttribute('open', '');
   }
@@ -67,8 +68,6 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
     await expect(page.locator(`[data-folder="${folder}"]`).getByText(`${folder}/`, { exact: true })).toBeVisible();
   }
 
-  await page.locator('details.filetree-folder[data-folder="news"] > summary').click();
-  await expect(page.locator('details.filetree-folder[data-folder="news"]')).toHaveAttribute('open', '');
   await page.locator('details.filetree-folder[data-folder="blog"] > summary').click();
   await expect(page.locator('details.filetree-folder[data-folder="blog"]')).not.toHaveAttribute('open', '');
 
@@ -111,9 +110,22 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
       glassTokenCount: tokens.filter((token) => token.classList.contains('pretext-glass-block')).length,
       ambientLayerCount: document.querySelectorAll('.pretext-ambient-layer').length,
       scene: stage?.dataset.pretextScene || '',
+      frontGlassCount: document.querySelectorAll('.pretext-front-glass').length,
+      linkCount: document.querySelectorAll('.pretext-link').length,
+      anchorTokenCount: document.querySelectorAll('a.pretext-token[href^="/posts/"]').length,
+      interactive: stage?.dataset.pretextInteractive || '',
+      innerVolumeCount: document.querySelectorAll('.pretext-inner-volume').length,
       tokenBackdropFilters: tokenStyles.map((style) => style.backdropFilter || style.webkitBackdropFilter || ''),
+      frontGlassBackdrop: (() => {
+        const front = document.querySelector('.pretext-front-glass');
+        if (!front) return '';
+        const style = getComputedStyle(front);
+        return style.backdropFilter || style.webkitBackdropFilter || '';
+      })(),
+      frontGlassZ: Number(getComputedStyle(document.querySelector('.pretext-front-glass') || document.body).zIndex || 0),
+      maxTokenZ: Math.max(...tokens.map((token) => Number(getComputedStyle(token).zIndex || 0))),
       filetreeWidth: document.querySelector('.filetree')?.getBoundingClientRect().width || 0,
-      hasDeepSpaceGlass: css.includes('pretext-space-drift') && css.includes('backdrop-filter'),
+      hasFrontGlassAquarium: css.includes('pretext-aquarium-drift') && css.includes('pretext-front-glass') && css.includes('backdrop-filter'),
       hasDecorativeBackgroundPattern: /radial-gradient|repeating-linear-gradient|skewY|orbit|bubble|stripe/i.test(css),
       mentionsNeon: css.toLowerCase().includes('neon'),
       scrollWidth: document.documentElement.scrollWidth,
@@ -125,10 +137,17 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   expect(motion.animatedCount).toBeGreaterThanOrEqual(6);
   expect(motion.glassTokenCount).toBe(motion.tokenCount);
   expect(motion.ambientLayerCount).toBeGreaterThanOrEqual(3);
-  expect(motion.scene).toBe('deep-space-glass');
+  expect(motion.scene).toBe('front-glass-aquarium');
+  expect(motion.frontGlassCount).toBe(1);
+  expect(motion.linkCount).toBeGreaterThanOrEqual(2);
+  expect(motion.anchorTokenCount).toBeGreaterThanOrEqual(6);
+  expect(motion.interactive).toBe('true');
+  expect(motion.innerVolumeCount).toBeGreaterThanOrEqual(2);
   expect(motion.tokenBackdropFilters.every((value) => value.includes('blur'))).toBe(true);
+  expect(motion.frontGlassBackdrop).toContain('blur');
+  expect(motion.frontGlassZ).toBeGreaterThan(motion.maxTokenZ);
   expect(motion.filetreeWidth).toBeLessThanOrEqual(860);
-  expect(motion.hasDeepSpaceGlass).toBe(true);
+  expect(motion.hasFrontGlassAquarium).toBe(true);
   expect(motion.hasDecorativeBackgroundPattern).toBe(false);
   expect(motion.mentionsNeon).toBe(false);
   expect(motion.scrollWidth).toBeLessThanOrEqual(motion.clientWidth + 1);
@@ -437,7 +456,7 @@ test('post fragment remains direct readable cards for safe replacement', async (
   expect(fragment).not.toContain('class="post-grid"');
   expect(fragment).not.toContain('data-askama-template="posts-fragment"');
   expect(fragment.trim().startsWith('<a class="post-card"')).toBe(true);
-  expect(fragment).toContain('AI News Brief — Jun 09');
+  expect(fragment).not.toContain('AI News Brief — Jun 09');
   expect(fragment).toContain('Jinhyuk Kim');
   expect(fragment).not.toContain('About Jinhyuk');
   expect(fragment).not.toContain('Pretext Kinetic Blog');

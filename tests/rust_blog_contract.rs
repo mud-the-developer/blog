@@ -33,6 +33,11 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     let expected_post_count = count_markdown_posts(&root.join("posts"))?;
 
     let result = build_static_site(root.join("posts"), &out_dir).await?;
+    let expected_home_post_count = result
+        .posts
+        .iter()
+        .filter(|post| post.folder != "news")
+        .count();
 
     assert_eq!(result.posts.len(), expected_post_count);
     assert!(out_dir.join("index.html").exists());
@@ -71,13 +76,18 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(index.contains("data-layout=\"public-index\""));
     assert!(index.contains("class=\"public-shell\""));
     assert!(index.contains("class=\"filetree"));
-    assert!(index.contains("<details class=\"filetree-folder\" data-folder=\"news\""));
-    assert!(!index.contains("<details class=\"filetree-folder\" data-folder=\"news\" open"));
+    assert!(!index.contains("<details class=\"filetree-folder\" data-folder=\"news\""));
+    assert!(!index.contains("<span>news/</span>"));
+    assert!(!index.contains(" · news</span>"));
     assert!(index.contains("data-folder=\"blog\" aria-label=\"Blog posts\" open"));
     assert!(index.contains("<summary class=\"filetree-folder-label\""));
     assert_eq!(
         index.matches("class=\"filetree-file\"").count(),
-        expected_post_count
+        expected_home_post_count
+    );
+    assert_eq!(
+        index.matches("class=\"post-card\"").count(),
+        expected_home_post_count
     );
     assert!(index.contains("data-pretext-polish"));
     assert!(!index.contains("data-focused-issue-lab"));
@@ -87,7 +97,7 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(!index.contains("GOOGLE_AI_API_KEY"));
     assert!(!index.contains("GEMINI_API_KEY"));
     assert!(index.contains("posts/"));
-    assert!(index.contains("news/"));
+    assert!(!index.contains("<span>news/</span>"));
     assert!(index.contains("blog/"));
     assert!(index.contains("papers/"));
     assert!(index.contains("about/"));
@@ -112,7 +122,9 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(style.contains(".filetree"));
     assert!(style.contains(".post-body :is"));
     assert!(style.contains(".profile-publication-widget"));
-    assert!(style.contains("pretext-space-drift"));
+    assert!(style.contains("pretext-aquarium-drift"));
+    assert!(style.contains("pretext-front-glass"));
+    assert!(style.contains("pretext-inner-volume"));
     assert!(style.contains("backdrop-filter"));
     assert!(style.contains("--space-bg"));
     assert!(style.contains("--glass-bg"));
@@ -135,6 +147,26 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(profile.contains("class=\"post-reader\""));
     assert!(profile.contains("profile-publication-widget"));
     assert!(!out_dir.join("posts/about-jinhyuk/index.html").exists());
+
+    assert!(
+        out_dir
+            .join("posts/2026-06-10-ai-news-digest/index.html")
+            .exists()
+    );
+    assert!(
+        out_dir
+            .join("posts/news-digest-archive/index.html")
+            .exists()
+    );
+    let home_post = fs::read_to_string(out_dir.join("posts/home/index.html"))?;
+    assert!(home_post.contains("href=\"/posts/jinhyuk-kim/\""));
+    assert!(home_post.contains(">Jinhyuk</a>"));
+    assert!(!home_post.contains("href=\"/posts/about-me/\""));
+
+    let latest_digest =
+        fs::read_to_string(out_dir.join("posts/2026-06-10-ai-news-digest/index.html"))?;
+    assert!(latest_digest.contains("href=\"/posts/news-digest-archive/\""));
+    assert!(!latest_digest.contains("href=\"/notes/"));
 
     let archive = fs::read_to_string(out_dir.join("archive.json"))?;
     assert!(archive.len() <= 24_000);
@@ -367,7 +399,8 @@ async fn renders_plain_post_cards_fragment_that_can_swap_into_existing_tree()
     let fragment = render_posts_fragment(&result.posts)?;
 
     assert!(fragment.trim_start().starts_with("<a class=\"post-card\""));
-    assert!(fragment.contains("AI News Brief — Apr 13"));
+    assert!(!fragment.contains("AI News Brief — Apr 13"));
+    assert!(!fragment.contains(" · news</span>"));
     assert!(fragment.contains("Jinhyuk Kim"));
     assert!(!fragment.contains("Pretext Kinetic Blog"));
     assert!(!fragment.contains("class=\"post-grid\""));

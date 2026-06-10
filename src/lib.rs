@@ -1,4 +1,5 @@
 use std::{
+    collections::HashMap,
     ffi::OsStr,
     fs as std_fs,
     path::{Path, PathBuf},
@@ -262,7 +263,37 @@ fn frontmatter_list(entries: &[(String, String)], key: &str) -> Vec<String> {
     }
 }
 
-fn rewrite_wikilinks(markdown: &str) -> String {
+fn link_key(value: &str) -> String {
+    slugify(value)
+}
+
+fn add_link_alias(link_index: &mut HashMap<String, String>, alias: &str, url: &str) {
+    let key = link_key(alias);
+    if !key.is_empty() {
+        link_index.entry(key).or_insert_with(|| url.to_string());
+    }
+}
+
+fn add_post_link_aliases(
+    link_index: &mut HashMap<String, String>,
+    source: &str,
+    fallback_slug: &str,
+    post: &Post,
+) {
+    add_link_alias(link_index, fallback_slug, &post.url);
+    add_link_alias(link_index, &post.slug, &post.url);
+    add_link_alias(link_index, &post.title, &post.url);
+    let (frontmatter, _) = parse_frontmatter(source);
+    for alias in frontmatter_list(&frontmatter, "aliases") {
+        add_link_alias(link_index, &alias, &post.url);
+    }
+    if post.folder == "about" {
+        add_link_alias(link_index, "About_me", &post.url);
+        add_link_alias(link_index, "about-me", &post.url);
+    }
+}
+
+fn rewrite_wikilinks(markdown: &str, link_index: &HashMap<String, String>) -> String {
     let mut output = String::with_capacity(markdown.len());
     let mut rest = markdown;
 
@@ -285,7 +316,10 @@ fn rewrite_wikilinks(markdown: &str) -> String {
 
         let (target, label) = raw.split_once('|').unwrap_or((raw, raw));
         let (note, heading) = target.split_once('#').unwrap_or((target, ""));
-        let mut href = format!("/posts/{}/", slugify(note));
+        let mut href = link_index
+            .get(&link_key(note))
+            .cloned()
+            .unwrap_or_else(|| format!("/posts/{}/", slugify(note)));
         if !heading.trim().is_empty() {
             href.push('#');
             href.push_str(&slugify(heading));
@@ -298,15 +332,67 @@ fn rewrite_wikilinks(markdown: &str) -> String {
     output
 }
 
+fn resolve_legacy_note_href(href: &str, link_index: &HashMap<String, String>) -> String {
+    let Some(rest) = href.strip_prefix("/notes/") else {
+        return href.to_string();
+    };
+    let (path, suffix) = rest
+        .find(['#', '?'])
+        .map(|index| (&rest[..index], &rest[index..]))
+        .unwrap_or((rest, ""));
+    let Some(candidate) = path.trim_matches('/').rsplit('/').next() else {
+        return href.to_string();
+    };
+    link_index
+        .get(&link_key(candidate))
+        .map(|url| format!("{url}{suffix}"))
+        .unwrap_or_else(|| href.to_string())
+}
+
+fn rewrite_legacy_note_hrefs_for_quote(
+    html: &str,
+    quote: char,
+    link_index: &HashMap<String, String>,
+) -> String {
+    let prefix = format!("href={quote}");
+    let needle = format!("{prefix}/notes/");
+    let mut output = String::with_capacity(html.len());
+    let mut rest = html;
+    while let Some(start) = rest.find(&needle) {
+        output.push_str(&rest[..start]);
+        output.push_str(&prefix);
+        let href_start = start + prefix.len();
+        let Some(end) = rest[href_start..].find(quote) else {
+            output.push_str(&rest[start..]);
+            return output;
+        };
+        let href = &rest[href_start..href_start + end];
+        output.push_str(&resolve_legacy_note_href(href, link_index));
+        output.push(quote);
+        rest = &rest[href_start + end + quote.len_utf8()..];
+    }
+    output.push_str(rest);
+    output
+}
+
+fn rewrite_legacy_note_hrefs(html: &str, link_index: &HashMap<String, String>) -> String {
+    let html = rewrite_legacy_note_hrefs_for_quote(html, '"', link_index);
+    rewrite_legacy_note_hrefs_for_quote(&html, '\'', link_index)
+}
+
 fn markdown_to_html(markdown: &str) -> String {
-    let markdown = rewrite_wikilinks(markdown);
+    markdown_to_html_with_links(markdown, &HashMap::new())
+}
+
+fn markdown_to_html_with_links(markdown: &str, link_index: &HashMap<String, String>) -> String {
+    let markdown = rewrite_wikilinks(markdown, link_index);
     let mut output = String::new();
     let parser = Parser::new_ext(
         &markdown,
         Options::ENABLE_TABLES | Options::ENABLE_STRIKETHROUGH | Options::ENABLE_HEADING_ATTRIBUTES,
     );
     html::push_html(&mut output, parser);
-    output
+    rewrite_legacy_note_hrefs(&output, link_index)
 }
 
 fn excerpt_from_markdown(markdown: &str) -> String {
@@ -346,7 +432,7 @@ pub fn parse_markdown_post(source: &str, fallback_slug: &str) -> Post {
     let (frontmatter, body) = parse_frontmatter(source);
     let title =
         frontmatter_value(&frontmatter, "title").unwrap_or_else(|| fallback_slug.to_string());
-    let slug = frontmatter_value(&frontmatter, "slug").unwrap_or_else(|| slugify(&title));
+    let slug = frontmatter_value(&frontmatter, "slug").unwrap_or_else(|| slugify(fallback_slug));
     let date = frontmatter_value(&frontmatter, "date").unwrap_or_default();
     let tags = frontmatter_list(&frontmatter, "tags");
     let primary_tag = tags.first().cloned().unwrap_or_else(|| "note".to_string());
@@ -409,16 +495,29 @@ pub async fn load_posts(posts_dir: impl AsRef<Path>) -> BlogResult<Vec<Post>> {
     collect_markdown_files(&posts_dir, &posts_dir, &mut files)?;
 
     files.sort();
-    let mut posts = Vec::new();
+    let mut entries = Vec::new();
+    let mut link_index = HashMap::new();
     for relative_path in files {
         let path = posts_dir.join(&relative_path);
         let source = fs::read_to_string(&path).await?;
-        let fallback = path.file_stem().and_then(OsStr::to_str).unwrap_or("post");
-        let mut post = parse_markdown_post(&source, fallback);
+        let fallback = path
+            .file_stem()
+            .and_then(OsStr::to_str)
+            .unwrap_or("post")
+            .to_string();
+        let mut post = parse_markdown_post(&source, &fallback);
         post.folder = folder_for_relative_path(&relative_path);
+        add_post_link_aliases(&mut link_index, &source, &fallback, &post);
+        entries.push((source, post));
+    }
+
+    let mut posts = Vec::new();
+    for (source, mut post) in entries {
+        post.html = markdown_to_html_with_links(&post.body, &link_index);
         if post.folder == "news" {
             post.html = demote_first_h1(&post.html);
         }
+        debug_assert!(!source.is_empty());
         posts.push(post);
     }
 
@@ -535,6 +634,14 @@ fn folder_groups(posts: &[Post]) -> Vec<FolderGroup<'_>> {
     .collect()
 }
 
+fn home_index_posts(posts: &[Post]) -> Vec<Post> {
+    posts
+        .iter()
+        .filter(|post| post.folder != "news")
+        .cloned()
+        .collect()
+}
+
 fn demote_first_h1(html: &str) -> String {
     let Some(start) = html.find("<h1") else {
         return html.to_string();
@@ -602,10 +709,11 @@ fn news_month_groups<'a>(posts: &[&'a Post]) -> Vec<NewsMonthGroup<'a>> {
 }
 
 pub fn render_index_page(posts: &[Post]) -> BlogResult<String> {
-    let archive_json = archive_json(posts)?;
+    let home_posts = home_index_posts(posts);
+    let archive_json = archive_json(&home_posts)?;
     Ok(IndexTemplate {
-        posts,
-        groups: folder_groups(posts),
+        posts: &home_posts,
+        groups: folder_groups(&home_posts),
         archive_json: &archive_json,
     }
     .render()?)
@@ -678,7 +786,8 @@ pub fn render_sitemap_xml(posts: &[Post]) -> String {
 }
 
 pub fn render_posts_fragment(posts: &[Post]) -> BlogResult<String> {
-    Ok(PostsFragmentTemplate { posts }.render()?)
+    let home_posts = home_index_posts(posts);
+    Ok(PostsFragmentTemplate { posts: &home_posts }.render()?)
 }
 
 pub async fn build_static_site(

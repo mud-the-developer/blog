@@ -15,6 +15,31 @@ const parseArchive = () => {
   }
 };
 
+function attachPretextInteraction() {
+  const tokens = [...surface.querySelectorAll('.pretext-token')];
+  if (!tokens.length) return;
+  stage.dataset.pretextInteractive = 'true';
+  const settle = () => {
+    for (const token of tokens) {
+      token.style.setProperty('--tx', '0px');
+      token.style.setProperty('--ty', '0px');
+    }
+  };
+  const move = (event) => {
+    const rect = surface.getBoundingClientRect();
+    const nx = ((event.clientX - rect.left) / rect.width - 0.5) || 0;
+    const ny = ((event.clientY - rect.top) / rect.height - 0.5) || 0;
+    tokens.forEach((token, index) => {
+      const depth = Number(token.dataset.depth || 0.5);
+      const wave = Math.sin(index + nx * 3) * 5;
+      token.style.setProperty('--tx', `${(nx * 24 * depth + wave).toFixed(1)}px`);
+      token.style.setProperty('--ty', `${(ny * 18 * depth + Math.cos(index + ny * 2) * 4).toFixed(1)}px`);
+    });
+  };
+  surface.addEventListener('pointermove', move, { passive: true });
+  surface.addEventListener('pointerleave', settle);
+}
+
 function setupPretextPolish() {
   if (!stage || !surface) return;
   const stateInput = {
@@ -27,6 +52,7 @@ function setupPretextPolish() {
   for (const effect of step.effects) {
     renderPretextTokens(effect, { stage, surface, document });
   }
+  attachPretextInteraction();
   stage.dataset.pretextPhase = state.phase;
 }
 

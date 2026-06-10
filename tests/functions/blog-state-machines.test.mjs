@@ -7,8 +7,9 @@ import { createPretextState, pretextReducer } from '../../src/pretext-polish-sta
 import { createNewsDeskState, newsDeskReducer, runNewsDeskEffect } from '../../src/blog-lab-machine.mjs';
 
 const archive = [
-  { folder: 'news', primary_tag: 'ai', tags: ['Gemma', 'open RAN'], title: 'Gemma open RAN issue' },
-  { folder: 'blog', primary_tag: 'rust', tags: ['Tokio'], title: 'Rust rendering notes' }
+  { folder: 'news', primary_tag: 'ai', tags: ['Gemma', 'open RAN'], title: 'Gemma open RAN issue', url: '/posts/2026-06-10-ai-news-digest/' },
+  { folder: 'blog', primary_tag: 'rust', tags: ['Tokio'], title: 'Rust rendering notes', url: '/posts/rust-rendering-notes/' },
+  { folder: 'papers', primary_tag: 'radio', tags: ['semantic'], title: 'Semantic radio note', url: '/posts/uhlm-2412-12687/' }
 ];
 
 const candidates = [
@@ -76,6 +77,10 @@ test('pretext polish reducer ranks archive terms and emits token render effects'
   assert.ok(step.effects[0].tokens.every((token) => token.x.endsWith('%') && token.y.endsWith('%')));
   assert.ok(step.effects[0].tokens.every((token) => token.depth >= 0 && token.depth <= 1));
   assert.ok(step.effects[0].tokens.every((token) => token.variant.startsWith('glass-')));
+  assert.ok(step.effects[0].tokens.some((token) => token.url === '/posts/rust-rendering-notes/'));
+  assert.ok(step.effects[0].links.length >= 2);
+  assert.ok(step.effects[0].links.every((link) => Number.isInteger(link.from) && Number.isInteger(link.to)));
+  assert.ok(step.effects[0].links.some((link) => link.strength > 0));
 });
 
 test('news desk reducer controls search/draft/download states without DOM effects', () => {
