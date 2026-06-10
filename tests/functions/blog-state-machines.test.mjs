@@ -7,6 +7,7 @@ import { createPretextState, pretextReducer } from '../../src/pretext-polish-sta
 import { createNewsDeskState, newsDeskReducer, runNewsDeskEffect } from '../../src/blog-lab-machine.mjs';
 
 const archive = [
+  { folder: 'papers', primary_tag: 'paper', tags: ['llm'], title: 'Uncertainty-Aware Hybrid Inference with On-Device Small and Remote Large Language Models', url: '/posts/uhlm-2412-12687/' },
   { folder: 'news', primary_tag: 'ai', tags: ['Gemma', 'open RAN'], title: 'Gemma open RAN issue', url: '/posts/2026-06-10-ai-news-digest/' },
   { folder: 'blog', primary_tag: 'rust', tags: ['Tokio'], title: 'Rust rendering notes', url: '/posts/rust-rendering-notes/' },
   { folder: 'papers', primary_tag: 'radio', tags: ['semantic'], title: 'Semantic radio note', url: '/posts/uhlm-2412-12687/' }
@@ -62,7 +63,7 @@ test('theme render effect keeps the visible theme label inside the accessible na
   assert.equal(attributes['aria-pressed'], 'false');
 });
 
-test('pretext polish reducer ranks archive terms and emits token render effects', () => {
+test('pretext polish reducer emits a quiet title-only card set without link graph clutter', () => {
   const initial = createPretextState({ archive, isMobile: false });
   const step = pretextReducer(initial, { type: 'pretext.mounted' });
 
@@ -70,17 +71,16 @@ test('pretext polish reducer ranks archive terms and emits token render effects'
   assert.equal(step.state.phase, 'ready');
   assert.equal(step.effects.length, 1);
   assert.equal(step.effects[0].type, 'render-pretext-tokens');
-  assert.ok(step.effects[0].terms.includes('news/'));
-  assert.ok(step.effects[0].terms.includes('blog/'));
-  assert.ok(step.effects[0].terms.includes('Gemma'));
-  assert.ok(step.effects[0].tokens.length >= 4);
+  assert.deepEqual(step.effects[0].terms, []);
+  assert.deepEqual(step.effects[0].links, []);
+  assert.deepEqual(step.effects[0].tokens.map((token) => token.label), archive.slice(1).map((post) => post.title));
+  assert.ok(step.effects[0].tokens.every((token) => token.label.length <= 56));
+  assert.ok(step.effects[0].tokens.length <= 6);
+  assert.ok(step.effects[0].tokens.every((token) => token.kind === 'post-title'));
+  assert.ok(step.effects[0].tokens.every((token) => token.url === ''));
   assert.ok(step.effects[0].tokens.every((token) => token.x.endsWith('%') && token.y.endsWith('%')));
   assert.ok(step.effects[0].tokens.every((token) => token.depth >= 0 && token.depth <= 1));
   assert.ok(step.effects[0].tokens.every((token) => token.variant.startsWith('glass-')));
-  assert.ok(step.effects[0].tokens.some((token) => token.url === '/posts/rust-rendering-notes/'));
-  assert.ok(step.effects[0].links.length >= 2);
-  assert.ok(step.effects[0].links.every((link) => Number.isInteger(link.from) && Number.isInteger(link.to)));
-  assert.ok(step.effects[0].links.some((link) => link.strength > 0));
 });
 
 test('news desk reducer controls search/draft/download states without DOM effects', () => {

@@ -112,7 +112,9 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
       scene: stage?.dataset.pretextScene || '',
       frontGlassCount: document.querySelectorAll('.pretext-front-glass').length,
       linkCount: document.querySelectorAll('.pretext-link').length,
-      anchorTokenCount: document.querySelectorAll('a.pretext-token[href^="/posts/"]').length,
+      anchorTokenCount: document.querySelectorAll('a.pretext-token[href]').length,
+      tokenLabels: tokens.map((token) => token.textContent.trim()),
+      tokenKinds: tokens.map((token) => token.dataset.tokenKind || ''),
       interactive: stage?.dataset.pretextInteractive || '',
       innerVolumeCount: document.querySelectorAll('.pretext-inner-volume').length,
       tokenBackdropFilters: tokenStyles.map((style) => style.backdropFilter || style.webkitBackdropFilter || ''),
@@ -133,19 +135,23 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
     };
   });
   expect(motion.archiveCount).toBe(publicPostCount);
-  expect(motion.tokenCount).toBeGreaterThanOrEqual(10);
-  expect(motion.animatedCount).toBeGreaterThanOrEqual(6);
+  expect(motion.tokenCount).toBeGreaterThanOrEqual(4);
+  expect(motion.tokenCount).toBeLessThanOrEqual(6);
+  expect(motion.animatedCount).toBeGreaterThanOrEqual(4);
   expect(motion.glassTokenCount).toBe(motion.tokenCount);
   expect(motion.ambientLayerCount).toBeGreaterThanOrEqual(3);
   expect(motion.scene).toBe('front-glass-aquarium');
   expect(motion.frontGlassCount).toBe(1);
-  expect(motion.linkCount).toBeGreaterThanOrEqual(2);
-  expect(motion.anchorTokenCount).toBeGreaterThanOrEqual(6);
+  expect(motion.linkCount).toBe(0);
+  expect(motion.anchorTokenCount).toBe(0);
+  expect(motion.tokenKinds.every((kind) => kind === 'post-title')).toBe(true);
+  expect(motion.tokenLabels.every((label) => label.length <= 56)).toBe(true);
   expect(motion.interactive).toBe('true');
   expect(motion.innerVolumeCount).toBeGreaterThanOrEqual(2);
   expect(motion.tokenBackdropFilters.every((value) => value.includes('blur'))).toBe(true);
+  expect(motion.tokenBackdropFilters.every((value) => !/blur\((?:[5-9]|[1-9][0-9])px\)/.test(value))).toBe(true);
   expect(motion.frontGlassBackdrop).toContain('blur');
-  expect(motion.frontGlassZ).toBeGreaterThan(motion.maxTokenZ);
+  expect(motion.frontGlassZ).toBeLessThan(motion.maxTokenZ);
   expect(motion.filetreeWidth).toBeLessThanOrEqual(860);
   expect(motion.hasFrontGlassAquarium).toBe(true);
   expect(motion.hasDecorativeBackgroundPattern).toBe(false);

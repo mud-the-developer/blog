@@ -41,7 +41,8 @@ test('desktop and mobile public homepage stay polished without layout overflow',
     expect(audit.filetreeFiles, name).toBe(publicPostCount);
     expect(audit.graphCount, name).toBe(0);
     expect(audit.fieldStages, name).toBe(0);
-    expect(audit.pretextTokens, name).toBeGreaterThanOrEqual(name === 'mobile' ? 6 : 10);
+    expect(audit.pretextTokens, name).toBeGreaterThanOrEqual(name === 'mobile' ? 4 : 4);
+    expect(audit.pretextTokens, name).toBeLessThanOrEqual(name === 'mobile' ? 5 : 6);
     expect(audit.nodes, name).toBeLessThanOrEqual(980);
     expect(audit.scrollWidth, name).toBeLessThanOrEqual(audit.clientWidth + 1);
 

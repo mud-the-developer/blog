@@ -1,10 +1,8 @@
 const tokenSlots = [
-  [8, 9], [38, 7], [58, 15], [16, 27], [48, 32], [61, 41],
-  [9, 53], [35, 57], [57, 61], [20, 72], [47, 76], [60, 82],
-  [28, 18], [7, 38], [62, 26], [43, 48], [13, 86], [55, 5]
+  [8, 12], [26, 27], [8, 52], [26, 72]
 ];
 
-const tokenVariants = ['glass-blue', 'glass-violet', 'glass-sea', 'glass-amber'];
+const tokenVariants = ['glass-blue', 'glass-violet', 'glass-sea'];
 
 export function cleanPretextTerm(value) {
   return String(value || '')
@@ -36,58 +34,46 @@ export function termsFromArchive(archive, { isMobile = false } = {}) {
     .map((term) => term.label);
 }
 
-export function tokensFromTerms(terms) {
-  return terms.map((term, index) => tokenModel(term, index, '#'));
-}
-
-function tokenModel(label, index, url = '#') {
+function tokenModel(label, index) {
   const [x, y] = tokenSlots[index % tokenSlots.length];
-  const depth = 0.28 + (index % 5) * 0.14;
+  const depth = 0.3 + (index % 4) * 0.12;
   return {
     label,
-    url,
+    url: '',
+    kind: 'post-title',
     x: `${x}%`,
     y: `${y}%`,
-    delay: `${index * -0.42}s`,
-    duration: `${(8 + depth * 6).toFixed(1)}s`,
-    shadowY: `${Math.round(12 + depth * 16)}px`,
-    shadowBlur: `${Math.round(26 + depth * 16)}px`,
-    scaleStart: (0.94 + depth * 0.08).toFixed(3),
-    scaleEnd: (0.98 + depth * 0.08).toFixed(3),
+    delay: `${index * -0.38}s`,
+    duration: `${(9 + depth * 4).toFixed(1)}s`,
+    shadowY: `${Math.round(10 + depth * 12)}px`,
+    shadowBlur: `${Math.round(18 + depth * 10)}px`,
+    scaleStart: (0.97 + depth * 0.04).toFixed(3),
+    scaleEnd: (1 + depth * 0.04).toFixed(3),
     depth: Number(depth.toFixed(2)),
     variant: tokenVariants[index % tokenVariants.length]
   };
 }
 
+export function tokensFromTerms(terms) {
+  return terms.slice(0, 4).map((term, index) => tokenModel(term, index));
+}
+
 export function tokensFromArchive(archive, { isMobile = false } = {}) {
   const tokens = [];
   const seen = new Set();
-  const add = (label, url) => {
-    const clean = cleanPretextTerm(label);
-    if (!clean || clean.length < 3 || !url) return;
-    const key = `${clean.toLowerCase()}|${url}`;
-    if (seen.has(key)) return;
-    seen.add(key);
-    tokens.push(tokenModel(clean, tokens.length, url));
-  };
+  const limit = 4;
   for (const post of Array.isArray(archive) ? archive : []) {
-    add(post.title, post.url);
-    add(post.primary_tag, post.url);
-    for (const tag of post.tags || []) add(tag, post.url);
+    const clean = cleanPretextTerm(post.title);
+    if (!clean || clean.length > 56 || seen.has(clean.toLowerCase())) continue;
+    seen.add(clean.toLowerCase());
+    tokens.push(tokenModel(clean, tokens.length));
+    if (tokens.length >= limit) break;
   }
-  return tokens.slice(0, isMobile ? 10 : 18);
+  return tokens;
 }
 
-export function linksFromTokens(tokens) {
-  const links = [];
-  const count = Array.isArray(tokens) ? tokens.length : 0;
-  for (let index = 0; index < count - 1; index += 1) {
-    links.push({ from: index, to: index + 1, strength: Number((0.38 + (index % 4) * 0.08).toFixed(2)) });
-    if (index + 3 < count && index % 3 === 0) {
-      links.push({ from: index, to: index + 3, strength: 0.46 });
-    }
-  }
-  return links;
+export function linksFromTokens() {
+  return [];
 }
 
 export function createPretextState({ archive = [], isMobile = false } = {}) {
@@ -102,9 +88,9 @@ export function createPretextState({ archive = [], isMobile = false } = {}) {
 
 export function pretextReducer(state, event) {
   if (event.type === 'pretext.mounted') {
-    const terms = termsFromArchive(state.archive, { isMobile: state.isMobile });
+    const terms = [];
     const tokens = tokensFromArchive(state.archive, { isMobile: state.isMobile });
-    const links = linksFromTokens(tokens);
+    const links = [];
     const next = { ...state, phase: 'ready', terms, tokens };
     return { state: next, effects: [{ type: 'render-pretext-tokens', terms, tokens, links }] };
   }
