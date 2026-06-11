@@ -40,10 +40,11 @@
       </div>
       {% for post in latest_issue %}
       <a class="news-feature-card" href="{{ post.url }}">
+        <span class="news-feature-thumb" aria-hidden="true"><span>AI</span><em>daily issue</em></span>
         <span class="news-feature-date">{{ post.date }}</span>
         <strong>{{ post.title }}</strong>
         <em>{{ post.excerpt }}</em>
-        <span class="news-feature-cta">Read today's signal brief →</span>
+        <span class="news-feature-cta">Read latest issue →</span>
       </a>
       {% endfor %}
     </section>

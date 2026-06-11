@@ -229,6 +229,7 @@ test('local preview serves focused issue API and a dedicated news page', async (
   await expect(page.locator('[data-focused-issue-lab]')).toHaveCount(0);
   const newsIssues = await newsPostCount(request) - 1;
   await expect(page.locator('[data-news-featured] .news-feature-card')).toHaveCount(1);
+  await expect(page.locator('[data-news-featured] .news-feature-thumb')).toHaveCount(1);
   await expect(page.locator('[data-news-recent] .news-row')).toHaveCount(Math.min(7, Math.max(0, newsIssues - 1)));
   await expect(page.locator('[data-news-monthly-archive] .news-month-link')).toHaveCount(newsIssues);
   await expect(page.locator('[data-news-utility]')).toContainText('latest.json');
