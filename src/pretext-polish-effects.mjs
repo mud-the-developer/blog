@@ -1,58 +1,53 @@
 export function renderPretextTokens(effect, { stage, surface, document }) {
-  if (effect.type !== 'render-pretext-loom' || !stage || !surface) return;
+  if (effect.type !== 'render-post-text-rain' || !stage || !surface) return;
   surface.replaceChildren();
 
-  const rows = effect.loom?.rows || [];
-  const loomStage = document.createElement('div');
-  loomStage.className = 'pretext-loom-stage';
-  loomStage.setAttribute('aria-hidden', 'true');
-  loomStage.style.setProperty('--duration', effect.motion?.duration || '11.8s');
-  loomStage.dataset.behaviors = (effect.motion?.behaviors || []).join(' ');
-  loomStage.dataset.loomMode = effect.loom?.mode || 'kinetic-text-instrument';
-  loomStage.dataset.sourceCount = String(effect.loom?.sourceCount || 0);
+  const rain = effect.rain || {};
+  const columns = rain.columns || [];
+  const rainStage = document.createElement('div');
+  rainStage.className = 'pretext-rain-stage';
+  rainStage.setAttribute('aria-hidden', 'true');
+  rainStage.dataset.behaviors = (effect.motion?.behaviors || []).join(' ');
+  rainStage.dataset.rainMode = rain.mode || 'post-text-rain';
+  rainStage.dataset.sourceCount = String(rain.sourceCount || 0);
+  rainStage.dataset.columnCount = String(columns.length);
+  rainStage.dataset.glyphPool = rain.glyphPool || '';
+  rainStage.dataset.sourceWords = (rain.sourceText || '').slice(0, 240);
+  rainStage.dataset.stepMs = String(effect.motion?.stepMs || 220);
 
-  const rowData = document.createElement('script');
-  rowData.type = 'application/json';
-  rowData.dataset.pretextLoomRows = 'true';
-  rowData.textContent = JSON.stringify(rows.map((row) => ({
-    index: row.index ?? 0,
-    kind: row.kind || 'title',
-    text: row.text || '',
-    depth: row.depth ?? 0.6,
-    weight: row.weight ?? 0.75
+  const columnData = document.createElement('script');
+  columnData.type = 'application/json';
+  columnData.dataset.pretextRainColumns = 'true';
+  columnData.textContent = JSON.stringify(columns.map((column) => ({
+    index: column.index ?? 0,
+    text: column.text || '',
+    length: column.length ?? 24,
+    x: column.x ?? 0,
+    alpha: column.alpha ?? 0.5,
+    durationMs: column.durationMs ?? 6400,
+    delayMs: column.delayMs ?? 0,
+    speed: column.speed ?? 6.4
   })));
 
-  const header = document.createElement('div');
-  header.className = 'pretext-loom-header';
-  header.textContent = effect.loom?.label || 'PRETEXT / INDEX LOOM';
-
-  const body = document.createElement('div');
-  body.className = 'pretext-loom-body';
-  rows.forEach((row) => {
-    const line = document.createElement('div');
-    line.className = `pretext-loom-row pretext-loom-row-${row.kind || 'title'}`;
-    line.dataset.loomRow = String(row.index ?? 0);
-    line.dataset.kind = row.kind || 'title';
-    line.style.setProperty('--row-depth', String(row.depth ?? 0.7));
-    line.style.setProperty('--row-weight', String(row.weight ?? 0.75));
-    line.textContent = row.text || '';
-    body.append(line);
+  const rainBody = document.createElement('div');
+  rainBody.className = 'pretext-rain-body';
+  columns.forEach((column) => {
+    const stream = document.createElement('div');
+    stream.className = 'pretext-rain-column';
+    stream.dataset.rainColumn = String(column.index ?? 0);
+    stream.dataset.length = String(column.length ?? 24);
+    stream.style.setProperty('--x', `${column.x ?? 0}%`);
+    stream.style.setProperty('--alpha', String(column.alpha ?? 0.5));
+    stream.style.setProperty('--duration', `${column.durationMs ?? 6400}ms`);
+    stream.style.setProperty('--delay', `${column.delayMs ?? 0}ms`);
+    stream.textContent = column.text || '';
+    rainBody.append(stream);
   });
 
-  const cursor = document.createElement('div');
-  cursor.className = 'pretext-loom-cursor';
-  cursor.dataset.pretextLoomCursor = 'true';
-  cursor.textContent = '▌';
+  rainStage.append(columnData, rainBody);
+  surface.append(rainStage);
 
-  const status = document.createElement('div');
-  status.className = 'pretext-loom-status';
-  status.dataset.pretextLoomStatus = 'true';
-  status.textContent = `${effect.loom?.status?.label || 'INDEX CURRENT'} · ${effect.loom?.status?.copy || 'archive rows'}`;
-
-  loomStage.append(rowData, header, body, cursor, status);
-  surface.append(loomStage);
-
-  stage.dataset.pretextScene = effect.scene || 'kinetic-ascii-loom';
-  stage.dataset.pretextReferences = (effect.loom?.references || []).map((reference) => reference.url).join(' ');
+  stage.dataset.pretextScene = effect.scene || 'post-text-rain';
+  stage.dataset.pretextReferences = (rain.references || []).map((reference) => reference.url).join(' ');
   stage.dataset.pretextReady = 'true';
 }

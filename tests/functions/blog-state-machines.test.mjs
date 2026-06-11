@@ -63,7 +63,7 @@ test('theme render effect keeps the visible theme label inside the accessible na
   assert.equal(attributes['aria-pressed'], 'false');
 });
 
-test('pretext polish reducer emits an archive-derived kinetic loom and no ASCII cat', () => {
+test('pretext polish reducer emits post-derived matrix rain and no index loom', () => {
   const initial = createPretextState({ archive, isMobile: false });
   const step = pretextReducer(initial, { type: 'pretext.mounted' });
 
@@ -71,30 +71,27 @@ test('pretext polish reducer emits an archive-derived kinetic loom and no ASCII 
   assert.equal(step.state.phase, 'ready');
   assert.equal(step.effects.length, 1);
   const effect = step.effects[0];
-  assert.equal(effect.type, 'render-pretext-loom');
-  assert.equal(effect.scene, 'kinetic-ascii-loom');
+  assert.equal(effect.type, 'render-post-text-rain');
+  assert.equal(effect.scene, 'post-text-rain');
   assert.deepEqual(effect.links, []);
-  assert.equal(effect.loom.label, 'PRETEXT / INDEX LOOM');
-  assert.equal(effect.loom.mode, 'kinetic-text-instrument');
-  assert.deepEqual(effect.loom.references.map((reference) => reference.source), [
-    'archive metadata',
-    'kinetic ASCII index loom'
+  assert.equal(effect.rain.label, 'POST TEXT RAIN');
+  assert.equal(effect.rain.mode, 'post-text-rain');
+  assert.deepEqual(effect.rain.references.map((reference) => reference.source), [
+    'archive post letters',
+    'matrix-style text rain'
   ]);
-  assert.deepEqual(effect.motion.behaviors, ['row-pulse', 'cursor-blink', 'archive-current']);
+  assert.deepEqual(effect.motion.behaviors, ['falling-columns', 'random-letter-refresh', 'post-derived-glyphs']);
   assert.equal(effect.motion.continuous, true);
-  assert.ok(effect.motion.reference.includes('archive-derived'));
-  assert.ok(effect.loom.rows.length >= 8);
-  assert.ok(effect.loom.rows.length <= 12);
-  assert.equal(effect.loom.sourceCount, archive.length);
-  assert.ok(effect.loom.rows.some((row) => row.text.includes('PRETEXT // CURRENT')));
-  assert.ok(effect.loom.rows.some((row) => row.text.includes('Rust rendering notes')));
-  assert.ok(effect.loom.rows.some((row) => row.text.includes('signal:')));
-  assert.equal(effect.loom.rows.some((row) => row.kind === 'cursor'), false);
-  assert.equal(effect.loom.rows.some((row) => row.text.includes('archive current')), false);
-  assert.equal(effect.loom.rows.some((row) => row.text.includes('writing index is live')), false);
-  assert.ok(effect.loom.status.copy.includes('no cat'));
+  assert.ok(effect.motion.reference.includes('public post letters'));
+  assert.ok(effect.rain.columns.length >= 24);
+  assert.ok(effect.rain.columns.length <= 32);
+  assert.equal(effect.rain.sourceCount, archive.length);
+  assert.ok(effect.rain.sourceText.includes('Rust rendering notes'));
+  assert.ok(effect.rain.glyphPool.includes('R'));
+  assert.ok(effect.rain.columns.every((column) => column.text.includes('\n')));
+  assert.equal(effect.rain.columns.some((column) => column.kind === 'cursor'), false);
   const renderedCopy = JSON.stringify(effect);
-  assert.equal(/large-tail-wag|CAT-LINK|oneko|ascii cat|pretext-cat/i.test(renderedCopy), false);
+  assert.equal(/PRETEXT \/\/ CURRENT|INDEX CURRENT|archive current|writing index is live|pretext-loom|large-tail-wag|CAT-LINK|oneko|ascii cat|pretext-cat/i.test(renderedCopy), false);
 });
 
 test('news desk reducer controls search/draft/download states without DOM effects', () => {

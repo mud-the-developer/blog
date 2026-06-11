@@ -102,6 +102,8 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
         index.matches("class=\"post-card\"").count(),
         expected_home_post_count
     );
+    assert!(index.contains("aria-label=\"post text rain\""));
+    assert!(!index.contains("aria-label=\"ambient animated index\""));
     assert!(index.contains("data-pretext-polish"));
     assert!(!index.contains("data-focused-issue-lab"));
     assert!(!index.contains("data-blog-chat"));
@@ -139,9 +141,11 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(style.contains(".filetree"));
     assert!(style.contains(".post-body :is"));
     assert!(style.contains(".profile-publication-widget"));
-    assert!(style.contains("pretext-loom-breathe"));
-    assert!(style.contains("pretext-loom-row"));
-    assert!(style.contains("pretext-loom-status"));
+    assert!(style.contains("pretext-rain-fall"));
+    assert!(style.contains("pretext-rain-column"));
+    assert!(!style.contains("pretext-loom-breathe"));
+    assert!(!style.contains("pretext-loom-row"));
+    assert!(!style.contains("pretext-loom-status"));
     assert!(!style.contains("pretext-cat-breathe"));
     assert!(!style.contains("pretext-cat-sprite"));
     assert!(!style.contains("pretext-cat-blink"));

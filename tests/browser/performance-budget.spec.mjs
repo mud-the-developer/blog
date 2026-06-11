@@ -16,10 +16,9 @@ async function runtimeAudit(page) {
       postCards: document.querySelectorAll('.post-card').length,
       filetreeFiles: document.querySelectorAll('.filetree-file').length,
       pretextCatSprites: document.querySelectorAll('.pretext-cat-sprite').length,
-      pretextLoomStages: document.querySelectorAll('.pretext-loom-stage').length,
-      pretextLoomRows: JSON.parse(document.querySelector('[data-pretext-loom-rows]')?.textContent || '[]').length,
-      pretextLoomKinds: [...new Set(JSON.parse(document.querySelector('[data-pretext-loom-rows]')?.textContent || '[]').map((row) => row.kind || ''))].filter(Boolean).length,
-      pretextLoomBehaviors: document.querySelector('.pretext-loom-stage')?.dataset.behaviors || '',
+      pretextRainStages: document.querySelectorAll('.pretext-rain-stage').length,
+      pretextRainColumns: JSON.parse(document.querySelector('[data-pretext-rain-columns]')?.textContent || '[]').length,
+      pretextRainBehaviors: document.querySelector('.pretext-rain-stage')?.dataset.behaviors || '',
       pretextDecorations: document.querySelectorAll('.pretext-cat-paw,.pretext-cat-shadow,.pretext-ambient-layer,.pretext-front-glass').length,
       graphCount: document.querySelectorAll('[data-archive-graph]').length,
       fieldStages: document.querySelectorAll('[data-field-stage]').length,
@@ -47,10 +46,9 @@ test('desktop and mobile public homepage stay polished without layout overflow',
     expect(audit.graphCount, name).toBe(0);
     expect(audit.fieldStages, name).toBe(0);
     expect(audit.pretextCatSprites, name).toBe(0);
-    expect(audit.pretextLoomStages, name).toBe(1);
-    expect(audit.pretextLoomRows, name).toBeGreaterThanOrEqual(8);
-    expect(audit.pretextLoomKinds, name).toBeGreaterThanOrEqual(5);
-    expect(audit.pretextLoomBehaviors, name).toBe('row-pulse cursor-blink archive-current');
+    expect(audit.pretextRainStages, name).toBe(1);
+    expect(audit.pretextRainColumns, name).toBeGreaterThanOrEqual(name === 'mobile' ? 16 : 24);
+    expect(audit.pretextRainBehaviors, name).toBe('falling-columns random-letter-refresh post-derived-glyphs');
     expect(audit.pretextDecorations, name).toBe(0);
     expect(audit.nodes, name).toBeLessThanOrEqual(980);
     expect(audit.scrollWidth, name).toBeLessThanOrEqual(audit.clientWidth + 1);
@@ -67,7 +65,7 @@ test('reduced-motion keeps the filetree but disables ambient Pretext animation',
   await page.goto('/', { waitUntil: 'networkidle' });
   const audit = await runtimeAudit(page);
   const publicPostCount = audit.archiveCount;
-  const animatedCount = await page.locator('.pretext-loom-row,.pretext-loom-cursor').evaluateAll((tokens) =>
+  const animatedCount = await page.locator('.pretext-rain-column').evaluateAll((tokens) =>
     tokens.filter((token) => {
       const style = window.getComputedStyle(token);
       return style.animationName !== 'none' && style.animationDuration !== '0s' && style.animationDuration !== '0.01ms';

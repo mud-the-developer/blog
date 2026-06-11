@@ -90,29 +90,30 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   await expect(page.locator('.paper-grid')).toHaveCount(0);
 
   await expect(page.locator('[data-pretext-polish]')).toHaveAttribute('data-pretext-ready', 'true');
-  const firstLoomSample = await page.evaluate(() => {
-    const stage = document.querySelector('.pretext-loom-stage');
+  await expect(page.getByLabel('post text rain')).toHaveCount(1);
+  const firstRainSample = await page.evaluate(() => {
+    const stage = document.querySelector('.pretext-rain-stage');
     return {
-      activeRow: stage?.dataset.activeRow || '',
-      activeKind: stage?.dataset.activeKind || '',
-      status: document.querySelector('[data-pretext-loom-status]')?.textContent || ''
+      activeColumn: stage?.dataset.activeColumn || '',
+      activeGlyph: stage?.dataset.activeGlyph || '',
+      text: document.querySelector('.pretext-rain-column')?.textContent || ''
     };
   });
-  await page.waitForTimeout(980);
-  const secondLoomSample = await page.evaluate(() => {
-    const stage = document.querySelector('.pretext-loom-stage');
+  await page.waitForTimeout(760);
+  const secondRainSample = await page.evaluate(() => {
+    const stage = document.querySelector('.pretext-rain-stage');
     return {
-      activeRow: stage?.dataset.activeRow || '',
-      activeKind: stage?.dataset.activeKind || '',
-      status: document.querySelector('[data-pretext-loom-status]')?.textContent || ''
+      activeColumn: stage?.dataset.activeColumn || '',
+      activeGlyph: stage?.dataset.activeGlyph || '',
+      text: document.querySelector('.pretext-rain-column')?.textContent || ''
     };
   });
 
   const motion = await page.evaluate(() => {
-    const loomStage = document.querySelector('.pretext-loom-stage');
-    const rowData = JSON.parse(document.querySelector('[data-pretext-loom-rows]')?.textContent || '[]');
-    const activeRows = [...document.querySelectorAll('.pretext-loom-row[data-active="true"]')];
-    const style = getComputedStyle(activeRows[0] || loomStage || document.body);
+    const rainStage = document.querySelector('.pretext-rain-stage');
+    const columnData = JSON.parse(document.querySelector('[data-pretext-rain-columns]')?.textContent || '[]');
+    const columns = [...document.querySelectorAll('.pretext-rain-column')];
+    const style = getComputedStyle(columns[0] || rainStage || document.body);
     const css = [...document.styleSheets]
       .flatMap((sheet) => {
         try {
@@ -125,95 +126,98 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
     const archive = JSON.parse(document.getElementById('archive-data')?.textContent || '[]');
     const stage = document.querySelector('[data-pretext-polish]');
     const stageRect = stage?.getBoundingClientRect();
-    const loomRect = loomStage?.getBoundingClientRect();
-    const loomText = loomStage?.textContent || '';
-    const samples = window.__pretextLoomMotionSamples || [];
-    const sampleRows = new Set(samples.map((sample) => sample.rowIndex));
+    const rainRect = rainStage?.getBoundingClientRect();
+    const rainText = rainStage?.textContent || '';
+    const samples = window.__pretextRainMotionSamples || [];
+    const sampleColumns = new Set(samples.map((sample) => sample.columnIndex));
     return {
       archiveCount: Array.isArray(archive) ? archive.length : 0,
+      rainStageCount: document.querySelectorAll('.pretext-rain-stage').length,
+      rainColumnCount: columns.length,
       loomStageCount: document.querySelectorAll('.pretext-loom-stage').length,
       loomRowCount: document.querySelectorAll('.pretext-loom-row').length,
       catStageCount: document.querySelectorAll('.pretext-cat-stage').length,
       spriteCount: document.querySelectorAll('.pretext-cat-sprite').length,
       hiddenFrameNodeCount: document.querySelectorAll('.pretext-cat-frame').length,
-      rowDataCount: rowData.length,
-      animatedCount: activeRows.some((row) => {
-        const rowStyle = getComputedStyle(row);
-        return rowStyle.animationName !== 'none' && rowStyle.animationDuration !== '0s';
+      columnDataCount: columnData.length,
+      animatedCount: columns.some((column) => {
+        const columnStyle = getComputedStyle(column);
+        return columnStyle.animationName !== 'none' && columnStyle.animationDuration !== '0s';
       }) ? 1 : 0,
       ambientLayerCount: document.querySelectorAll('.pretext-ambient-layer').length,
       scene: stage?.dataset.pretextScene || '',
       references: stage?.dataset.pretextReferences || '',
-      loomMode: loomStage?.dataset.loomMode || '',
-      sourceCount: Number(loomStage?.dataset.sourceCount || 0),
+      rainMode: rainStage?.dataset.rainMode || '',
+      sourceCount: Number(rainStage?.dataset.sourceCount || 0),
+      sourceWords: rainStage?.dataset.sourceWords || '',
+      glyphPool: rainStage?.dataset.glyphPool || '',
       statusCount: document.querySelectorAll('[data-pretext-loom-status]').length,
-      statusText: document.querySelector('[data-pretext-loom-status]')?.textContent || '',
       cursorCount: document.querySelectorAll('[data-pretext-loom-cursor]').length,
       frontGlassCount: document.querySelectorAll('.pretext-front-glass').length,
       linkCount: document.querySelectorAll('.pretext-link,.pretext-network').length,
       anchorTokenCount: document.querySelectorAll('a.pretext-loom-row[href],a.pretext-fragment[href],a.pretext-token[href]').length,
-      loomText,
-      behaviorList: loomStage?.dataset.behaviors || '',
-      rowKinds: [...new Set(rowData.map((row) => row.kind || ''))].filter(Boolean),
+      rainText,
+      behaviorList: rainStage?.dataset.behaviors || '',
       catCopyCount: (stage?.textContent || '').match(/CAT-LINK|tail-sweep|large-tail|oneko|ascii cat/g)?.length || 0,
-      clippedLoomCount: stageRect && loomRect && (loomRect.left < stageRect.left || loomRect.right > stageRect.right || loomRect.top < stageRect.top || loomRect.bottom > stageRect.bottom) ? 1 : 0,
+      clippedRainCount: stageRect && rainRect && (rainRect.left < stageRect.left || rainRect.right > stageRect.right || rainRect.top < stageRect.top || rainRect.bottom > stageRect.bottom) ? 1 : 0,
       interactive: stage?.dataset.pretextInteractive || '',
-      rowFontSize: Number.parseFloat(style.fontSize || '0'),
+      columnFontSize: Number.parseFloat(style.fontSize || '0'),
       decorativeNodeCount: document.querySelectorAll('.pretext-cat-paw,.pretext-cat-shadow,.pretext-ambient-layer,.pretext-front-glass').length,
       filetreeWidth: document.querySelector('.filetree')?.getBoundingClientRect().width || 0,
-      hasLoomCss: css.includes('pretext-loom-breathe') && css.includes('pretext-loom-row') && css.includes('font-variant-ligatures'),
+      hasRainCss: css.includes('pretext-rain-fall') && css.includes('pretext-rain-column') && css.includes('font-variant-ligatures'),
+      hasLoomCss: css.includes('pretext-loom-breathe') || css.includes('pretext-loom-row'),
       hasCatCss: css.includes('pretext-cat-sprite') || css.includes('pretext-cat-breathe'),
       hasDecorativeBackgroundPattern: /radial-gradient|orbit|bubble|stripe/i.test(css),
       mentionsNeon: css.toLowerCase().includes('neon'),
       sampleCount: samples.length,
-      sampleRowCount: sampleRows.size,
+      sampleColumnCount: sampleColumns.size,
       scrollWidth: document.documentElement.scrollWidth,
       clientWidth: document.documentElement.clientWidth,
     };
   });
   expect(motion.archiveCount).toBe(publicPostCount);
-  expect(motion.loomStageCount).toBe(1);
-  expect(motion.loomRowCount).toBeGreaterThanOrEqual(8);
-  expect(motion.loomRowCount).toBeLessThanOrEqual(12);
+  expect(motion.rainStageCount).toBe(1);
+  expect(motion.rainColumnCount).toBeGreaterThanOrEqual(24);
+  expect(motion.rainColumnCount).toBeLessThanOrEqual(32);
+  expect(motion.loomStageCount).toBe(0);
+  expect(motion.loomRowCount).toBe(0);
   expect(motion.catStageCount).toBe(0);
   expect(motion.spriteCount).toBe(0);
   expect(motion.hiddenFrameNodeCount).toBe(0);
-  expect(motion.rowDataCount).toBe(motion.loomRowCount);
+  expect(motion.columnDataCount).toBe(motion.rainColumnCount);
   expect(motion.animatedCount).toBe(1);
   expect(motion.ambientLayerCount).toBe(0);
-  expect(motion.scene).toBe('kinetic-ascii-loom');
+  expect(motion.scene).toBe('post-text-rain');
   expect(motion.references).toContain('archive-data');
-  expect(motion.loomMode).toBe('kinetic-text-instrument');
+  expect(motion.rainMode).toBe('post-text-rain');
   expect(motion.sourceCount).toBe(publicPostCount);
-  expect(motion.statusCount).toBe(1);
-  expect(motion.statusText).toContain('INDEX CURRENT');
-  expect(motion.cursorCount).toBe(1);
+  expect(motion.sourceWords).toContain('Second Brain Architecture');
+  expect(motion.glyphPool).toContain('R');
+  expect(motion.statusCount).toBe(0);
+  expect(motion.cursorCount).toBe(0);
   expect(motion.frontGlassCount).toBe(0);
   expect(motion.linkCount).toBe(0);
   expect(motion.anchorTokenCount).toBe(0);
-  expect(motion.loomText).toContain('PRETEXT // CURRENT');
-  expect(motion.loomText).toContain('Second Brain Architecture');
-  expect(motion.loomText).toContain('signal:');
-  expect(motion.behaviorList).toBe('row-pulse cursor-blink archive-current');
-  expect(motion.rowKinds).toEqual(expect.arrayContaining(['system', 'count', 'folder', 'title', 'signal']));
-  expect(motion.rowKinds).not.toContain('cursor');
-  expect(motion.loomText).not.toContain('writing index is live');
-  expect(motion.loomText).not.toContain('archive current');
+  expect(motion.rainText).not.toContain('PRETEXT // CURRENT');
+  expect(motion.rainText).not.toContain('INDEX CURRENT');
+  expect(motion.rainText).not.toContain('signal:');
+  expect(motion.behaviorList).toBe('falling-columns random-letter-refresh post-derived-glyphs');
   expect(motion.catCopyCount).toBe(0);
-  expect(motion.clippedLoomCount).toBe(0);
+  expect(motion.clippedRainCount).toBe(0);
   expect(motion.interactive).toBe('true');
-  expect(motion.rowFontSize).toBeLessThanOrEqual(12);
+  expect(motion.columnFontSize).toBeLessThanOrEqual(14);
   expect(motion.decorativeNodeCount).toBe(0);
   expect(motion.filetreeWidth).toBeLessThanOrEqual(860);
-  expect(motion.hasLoomCss).toBe(true);
+  expect(motion.hasRainCss).toBe(true);
+  expect(motion.hasLoomCss).toBe(false);
   expect(motion.hasCatCss).toBe(false);
   expect(motion.hasDecorativeBackgroundPattern).toBe(false);
   expect(motion.mentionsNeon).toBe(false);
   expect(motion.sampleCount).toBeGreaterThanOrEqual(2);
-  expect(motion.sampleRowCount).toBeGreaterThanOrEqual(2);
-  expect(firstLoomSample.status).not.toBe('');
-  expect(secondLoomSample.status).not.toBe('');
-  expect(secondLoomSample.activeRow).not.toBe(firstLoomSample.activeRow);
+  expect(motion.sampleColumnCount).toBeGreaterThanOrEqual(2);
+  expect(firstRainSample.text).not.toBe('');
+  expect(secondRainSample.activeColumn).not.toBe('');
+  expect(secondRainSample.activeGlyph).not.toBe('');
   expect(motion.scrollWidth).toBeLessThanOrEqual(motion.clientWidth + 1);
 });
 
