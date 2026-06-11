@@ -71,10 +71,15 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   await page.locator('details.filetree-folder[data-folder="blog"] > summary').click();
   await expect(page.locator('details.filetree-folder[data-folder="blog"]')).not.toHaveAttribute('open', '');
 
-  await expect(page.getByRole('link', { name: /Jinhyuk Kim/ })).toHaveCount(1);
+  await expect(page.getByRole('link', { name: /^About me$/ })).toHaveAttribute('href', '/posts/jinhyuk-kim/');
+  await expect(page.locator('[data-home-post]')).toBeVisible();
+  await expect(page.locator('[data-home-post-body]')).toContainText('Hi 🙋');
+  await expect(page.locator('[data-home-post-body]')).toContainText('Welcome to my blog');
   await expect(page.getByRole('link', { name: /About Jinhyuk/ })).toHaveCount(0);
 
   const visibleText = await page.evaluate(() => document.body.innerText);
+  expect(visibleText).not.toContain('Public writing');
+  expect(visibleText).not.toContain('A tight public desk for AI systems');
   for (const copy of rejectedCopy) {
     expect(visibleText).not.toContain(copy);
   }

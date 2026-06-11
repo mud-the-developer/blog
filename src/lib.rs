@@ -128,6 +128,7 @@ struct IndexTemplate<'a> {
     groups: Vec<FolderGroup<'a>>,
     archive_json: &'a str,
     folder_count: usize,
+    home_html: String,
     latest_title: String,
     latest_url: String,
     latest_date: String,
@@ -717,9 +718,17 @@ pub fn render_index_page(posts: &[Post]) -> BlogResult<String> {
     let archive_json = archive_json(&home_posts)?;
     let groups = folder_groups(&home_posts);
     let latest = home_posts.first();
+    let home_post = home_posts
+        .iter()
+        .find(|post| post.folder == "blog" && post.slug == "home")
+        .or_else(|| home_posts.iter().find(|post| post.title == "Home"))
+        .or(latest);
     Ok(IndexTemplate {
         posts: &home_posts,
         folder_count: groups.len(),
+        home_html: home_post
+            .map(|post| post.html.clone())
+            .unwrap_or_else(|| "<p>Welcome to my notes.</p>".to_string()),
         latest_title: latest
             .map(|post| post.title.clone())
             .unwrap_or_else(|| "No public notes yet".to_string()),

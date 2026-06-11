@@ -77,6 +77,14 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(index.contains("class=\"public-shell\""));
     assert!(index.contains("class=\"filetree"));
     assert!(index.contains("aria-label=\"editorial dossier\""));
+    assert!(index.contains("data-home-post"));
+    assert!(index.contains("data-home-post-body"));
+    assert!(index.contains("<h2>Hi 🙋</h2>"));
+    assert!(index.contains("Welcome to my blog"));
+    assert!(index.contains("<span>About me</span>"));
+    assert!(!index.contains("Public writing"));
+    assert!(!index.contains("id=\"posts-title\""));
+    assert!(!index.contains("A tight public desk for AI systems"));
     assert!(index.contains("dossier-card-left"));
     assert!(index.contains("dossier-card-right"));
     assert!(index.contains("Source brief"));
@@ -126,6 +134,7 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(style.contains("dossier-enter"));
     assert!(style.contains(".dossier-card-left"));
     assert!(style.contains(".dossier-card-right"));
+    assert!(style.contains(".home-post-body"));
     assert!(style.contains(".pretext-polish"));
     assert!(style.contains(".filetree"));
     assert!(style.contains(".post-body :is"));

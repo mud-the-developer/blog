@@ -137,6 +137,34 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
   padding: 42px 0 92px;
 }
 .archive-panel { min-width: 0; }
+.home-post-intro {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+.home-post-body {
+  max-width: 68ch;
+}
+.home-post-body > :first-child { margin-top: 0; }
+.home-post-body h2:first-child {
+  margin: 0 0 .35em;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+  font-weight: 760;
+  letter-spacing: -.055em;
+  line-height: 1.02;
+}
+.home-post-body p {
+  margin-bottom: .55em;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.7vw, 1.15rem);
+}
+.home-post-body a {
+  color: var(--ink);
+  font-weight: 760;
+  text-decoration-thickness: .08em;
+  text-underline-offset: .18em;
+}
 .archive-heading {
   display: grid;
   gap: 12px;
