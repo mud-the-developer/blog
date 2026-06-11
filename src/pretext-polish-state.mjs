@@ -80,7 +80,6 @@ function createLoomRows(items, { maxTitles = 5, maxRows = 12 } = {}) {
   });
 
   rows.push({ kind: 'signal', text: `signal: ${tags.length ? tags.join(' · ') : 'archive · notes'}`, weight: 0.68 });
-  rows.push({ kind: 'cursor', text: 'archive current ▌', weight: 0.85 });
 
   return rows.slice(0, maxRows).map((row, index) => ({
     ...row,

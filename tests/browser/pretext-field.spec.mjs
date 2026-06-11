@@ -190,7 +190,10 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   expect(motion.loomText).toContain('Second Brain Architecture');
   expect(motion.loomText).toContain('signal:');
   expect(motion.behaviorList).toBe('row-pulse cursor-blink archive-current');
-  expect(motion.rowKinds).toEqual(expect.arrayContaining(['system', 'count', 'folder', 'title', 'signal', 'cursor']));
+  expect(motion.rowKinds).toEqual(expect.arrayContaining(['system', 'count', 'folder', 'title', 'signal']));
+  expect(motion.rowKinds).not.toContain('cursor');
+  expect(motion.loomText).not.toContain('writing index is live');
+  expect(motion.loomText).not.toContain('archive current');
   expect(motion.catCopyCount).toBe(0);
   expect(motion.clippedLoomCount).toBe(0);
   expect(motion.interactive).toBe('true');
