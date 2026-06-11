@@ -3,15 +3,7 @@ import { test } from 'node:test';
 
 import { applyThemeEffect } from '../../src/site-chrome-effects.mjs';
 import { createThemeState, themeReducer } from '../../src/site-chrome-state.mjs';
-import { createPretextState, pretextReducer } from '../../src/pretext-polish-state.mjs';
 import { createNewsDeskState, newsDeskReducer, runNewsDeskEffect } from '../../src/blog-lab-machine.mjs';
-
-const archive = [
-  { folder: 'papers', primary_tag: 'paper', tags: ['llm'], title: 'Uncertainty-Aware Hybrid Inference with On-Device Small and Remote Large Language Models', url: '/posts/uhlm-2412-12687/' },
-  { folder: 'news', primary_tag: 'ai', tags: ['Gemma', 'open RAN'], title: 'Gemma open RAN issue', url: '/posts/2026-06-10-ai-news-digest/' },
-  { folder: 'blog', primary_tag: 'rust', tags: ['Tokio'], title: 'Rust rendering notes', url: '/posts/rust-rendering-notes/' },
-  { folder: 'papers', primary_tag: 'radio', tags: ['semantic'], title: 'Semantic radio note', url: '/posts/uhlm-2412-12687/' }
-];
 
 const candidates = [
   { title: 'Photonics compiler', url: 'https://selected.example/photonics', source: 'Selected Wire', score: 9 },
@@ -61,37 +53,6 @@ test('theme render effect keeps the visible theme label inside the accessible na
   assert.equal(label.textContent, 'Light');
   assert.equal(attributes['aria-label'], 'Toggle color theme: Light');
   assert.equal(attributes['aria-pressed'], 'false');
-});
-
-test('pretext polish reducer emits post-derived matrix rain and no index loom', () => {
-  const initial = createPretextState({ archive, isMobile: false });
-  const step = pretextReducer(initial, { type: 'pretext.mounted' });
-
-  assert.deepEqual(initial, createPretextState({ archive, isMobile: false }));
-  assert.equal(step.state.phase, 'ready');
-  assert.equal(step.effects.length, 1);
-  const effect = step.effects[0];
-  assert.equal(effect.type, 'render-post-text-rain');
-  assert.equal(effect.scene, 'post-text-rain');
-  assert.deepEqual(effect.links, []);
-  assert.equal(effect.rain.label, 'POST TEXT RAIN');
-  assert.equal(effect.rain.mode, 'post-text-rain');
-  assert.deepEqual(effect.rain.references.map((reference) => reference.source), [
-    'archive post letters',
-    'matrix-style text rain'
-  ]);
-  assert.deepEqual(effect.motion.behaviors, ['falling-columns', 'stable-streams', 'loop-refresh', 'post-derived-glyphs']);
-  assert.equal(effect.motion.continuous, true);
-  assert.ok(effect.motion.reference.includes('public post letters'));
-  assert.ok(effect.rain.columns.length >= 60);
-  assert.ok(effect.rain.columns.length <= 72);
-  assert.equal(effect.rain.sourceCount, archive.length);
-  assert.ok(effect.rain.sourceText.includes('Rust rendering notes'));
-  assert.ok(effect.rain.glyphPool.includes('R'));
-  assert.ok(effect.rain.columns.every((column) => column.text.includes('\n')));
-  assert.equal(effect.rain.columns.some((column) => column.kind === 'cursor'), false);
-  const renderedCopy = JSON.stringify(effect);
-  assert.equal(/PRETEXT \/\/ CURRENT|INDEX CURRENT|archive current|writing index is live|pretext-loom|large-tail-wag|CAT-LINK|oneko|ascii cat|pretext-cat/i.test(renderedCopy), false);
 });
 
 test('news desk reducer controls search/draft/download states without DOM effects', () => {

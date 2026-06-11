@@ -26,7 +26,7 @@ fn test_output_dir(name: &str) -> PathBuf {
 }
 
 #[tokio::test]
-async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pane()
+async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_motion()
 -> Result<(), Box<dyn std::error::Error>> {
     let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let out_dir = test_output_dir("public-polish");
@@ -47,8 +47,8 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(out_dir.join("news/index.html").exists());
     assert!(out_dir.join("news/search/index.html").exists());
     assert!(out_dir.join("fragments/posts.html").exists());
-    assert!(out_dir.join("assets/pretext-polish.mjs").exists());
-    assert!(out_dir.join("assets/pretext-polish-effects.mjs").exists());
+    assert!(!out_dir.join("assets/pretext-polish.mjs").exists());
+    assert!(!out_dir.join("assets/pretext-polish-effects.mjs").exists());
     assert!(out_dir.join("assets/blog-lab.mjs").exists());
     assert!(out_dir.join("assets/site-chrome.mjs").exists());
     assert!(out_dir.join("assets/site-chrome-effects.mjs").exists());
@@ -102,12 +102,12 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
         index.matches("class=\"post-card\"").count(),
         expected_home_post_count
     );
-    assert!(index.contains("aria-label=\"post text rain\""));
+    assert!(!index.contains("aria-label=\"post text rain\""));
     assert!(!index.contains("aria-label=\"ambient animated index\""));
-    assert!(index.contains("data-pretext-polish"));
+    assert!(!index.contains("data-pretext-polish"));
     assert!(!index.contains("data-focused-issue-lab"));
     assert!(!index.contains("data-blog-chat"));
-    assert!(index.contains("/assets/pretext-polish.mjs"));
+    assert!(!index.contains("/assets/pretext-polish.mjs"));
     assert!(!index.contains("/assets/blog-lab.mjs"));
     assert!(!index.contains("GOOGLE_AI_API_KEY"));
     assert!(!index.contains("GEMINI_API_KEY"));
@@ -137,12 +137,12 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(style.contains(".dossier-card-left"));
     assert!(style.contains(".dossier-card-right"));
     assert!(style.contains(".home-post-body"));
-    assert!(style.contains(".pretext-polish"));
+    assert!(!style.contains(".pretext-polish"));
     assert!(style.contains(".filetree"));
     assert!(style.contains(".post-body :is"));
     assert!(style.contains(".profile-publication-widget"));
-    assert!(style.contains("pretext-rain-fall"));
-    assert!(style.contains("pretext-rain-column"));
+    assert!(!style.contains("pretext-rain-fall"));
+    assert!(!style.contains("pretext-rain-column"));
     assert!(!style.contains("pretext-loom-breathe"));
     assert!(!style.contains("pretext-loom-row"));
     assert!(!style.contains("pretext-loom-status"));

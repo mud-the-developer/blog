@@ -27,7 +27,7 @@ async function newsPostCount(request) {
   return Array.isArray(archive) ? archive.filter((post) => post.folder === 'news').length : 0;
 }
 
-test('homepage is a polished public filetree with subtle Pretext animation and no hero pane', async ({ page }) => {
+test('homepage is a polished public filetree with no pretext motion or hero pane', async ({ page }) => {
   await page.goto('/');
   const publicPostCount = await archivePostCount(page);
 
@@ -57,8 +57,8 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   await expect(page.locator('#posts-surface > .post-card')).toHaveCount(publicPostCount);
   await expect(page.locator('[data-focused-issue-lab]')).toHaveCount(0);
   await expect(page.locator('[data-blog-chat]')).toHaveCount(0);
-  await expect(page.locator('[data-pretext-polish]')).toHaveCount(1);
-  await expect(page.locator('script[src="/assets/pretext-polish.mjs"]')).toHaveCount(1);
+  await expect(page.locator('[data-pretext-polish]')).toHaveCount(0);
+  await expect(page.locator('script[src="/assets/pretext-polish.mjs"]')).toHaveCount(0);
   await expect(page.locator('script[src="/assets/site-chrome.mjs"]')).toHaveCount(1);
   await expect(page.locator('script[src="/assets/blog-lab.mjs"]')).toHaveCount(0);
   await expect(page.locator('script[src="/assets/pretext-field.mjs"]')).toHaveCount(0);
@@ -89,26 +89,6 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   await expect(page.locator('.archive-graph-label')).toHaveCount(0);
   await expect(page.locator('.paper-grid')).toHaveCount(0);
 
-  await expect(page.locator('[data-pretext-polish]')).toHaveAttribute('data-pretext-ready', 'true');
-  await expect(page.getByLabel('post text rain')).toHaveCount(1);
-  const firstRainSample = await page.evaluate(() => {
-    const stage = document.querySelector('.pretext-rain-stage');
-    return {
-      activeColumn: stage?.dataset.activeColumn || '',
-      activeGlyph: stage?.dataset.activeGlyph || '',
-      text: document.querySelector('.pretext-rain-column')?.textContent || ''
-    };
-  });
-  await page.waitForTimeout(760);
-  const secondRainSample = await page.evaluate(() => {
-    const stage = document.querySelector('.pretext-rain-stage');
-    return {
-      activeColumn: stage?.dataset.activeColumn || '',
-      activeGlyph: stage?.dataset.activeGlyph || '',
-      text: document.querySelector('.pretext-rain-column')?.textContent || ''
-    };
-  });
-
   const motion = await page.evaluate(() => {
     const rainStage = document.querySelector('.pretext-rain-stage');
     const columnData = JSON.parse(document.querySelector('[data-pretext-rain-columns]')?.textContent || '[]');
@@ -125,13 +105,13 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
       .join('\n');
     const archive = JSON.parse(document.getElementById('archive-data')?.textContent || '[]');
     const stage = document.querySelector('[data-pretext-polish]');
-    const stageRect = stage?.getBoundingClientRect();
-    const rainRect = rainStage?.getBoundingClientRect();
     const rainText = rainStage?.textContent || '';
     const samples = window.__pretextRainMotionSamples || [];
     const sampleColumns = new Set(samples.map((sample) => sample.columnIndex));
     return {
       archiveCount: Array.isArray(archive) ? archive.length : 0,
+      pretextPolishCount: document.querySelectorAll('[data-pretext-polish]').length,
+      pretextScriptCount: document.querySelectorAll('script[src="/assets/pretext-polish.mjs"]').length,
       rainStageCount: document.querySelectorAll('.pretext-rain-stage').length,
       rainColumnCount: columns.length,
       loomStageCount: document.querySelectorAll('.pretext-loom-stage').length,
@@ -159,9 +139,8 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
       rainText,
       behaviorList: rainStage?.dataset.behaviors || '',
       catCopyCount: (stage?.textContent || '').match(/CAT-LINK|tail-sweep|large-tail|oneko|ascii cat/g)?.length || 0,
-      clippedRainCount: stageRect && rainRect && (rainRect.left < stageRect.left || rainRect.right > stageRect.right || rainRect.top < stageRect.top || rainRect.bottom > stageRect.bottom) ? 1 : 0,
       interactive: stage?.dataset.pretextInteractive || '',
-      columnFontSize: Number.parseFloat(style.fontSize || '0'),
+      columnFontSize: columns[0] ? Number.parseFloat(style.fontSize || '0') : 0,
       decorativeNodeCount: document.querySelectorAll('.pretext-cat-paw,.pretext-cat-shadow,.pretext-ambient-layer,.pretext-front-glass').length,
       filetreeWidth: document.querySelector('.filetree')?.getBoundingClientRect().width || 0,
       hasRainCss: css.includes('pretext-rain-fall') && css.includes('pretext-rain-column') && css.includes('font-variant-ligatures'),
@@ -176,23 +155,24 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
     };
   });
   expect(motion.archiveCount).toBe(publicPostCount);
-  expect(motion.rainStageCount).toBe(1);
-  expect(motion.rainColumnCount).toBeGreaterThanOrEqual(60);
-  expect(motion.rainColumnCount).toBeLessThanOrEqual(72);
+  expect(motion.pretextPolishCount).toBe(0);
+  expect(motion.pretextScriptCount).toBe(0);
+  expect(motion.rainStageCount).toBe(0);
+  expect(motion.rainColumnCount).toBe(0);
   expect(motion.loomStageCount).toBe(0);
   expect(motion.loomRowCount).toBe(0);
   expect(motion.catStageCount).toBe(0);
   expect(motion.spriteCount).toBe(0);
   expect(motion.hiddenFrameNodeCount).toBe(0);
-  expect(motion.columnDataCount).toBe(motion.rainColumnCount);
-  expect(motion.animatedCount).toBe(1);
+  expect(motion.columnDataCount).toBe(0);
+  expect(motion.animatedCount).toBe(0);
   expect(motion.ambientLayerCount).toBe(0);
-  expect(motion.scene).toBe('post-text-rain');
-  expect(motion.references).toContain('archive-data');
-  expect(motion.rainMode).toBe('post-text-rain');
-  expect(motion.sourceCount).toBe(publicPostCount);
-  expect(motion.sourceWords).toContain('Second Brain Architecture');
-  expect(motion.glyphPool).toContain('R');
+  expect(motion.scene).toBe('');
+  expect(motion.references).toBe('');
+  expect(motion.rainMode).toBe('');
+  expect(motion.sourceCount).toBe(0);
+  expect(motion.sourceWords).toBe('');
+  expect(motion.glyphPool).toBe('');
   expect(motion.statusCount).toBe(0);
   expect(motion.cursorCount).toBe(0);
   expect(motion.frontGlassCount).toBe(0);
@@ -201,24 +181,19 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   expect(motion.rainText).not.toContain('PRETEXT // CURRENT');
   expect(motion.rainText).not.toContain('INDEX CURRENT');
   expect(motion.rainText).not.toContain('signal:');
-  expect(motion.behaviorList).toBe('falling-columns stable-streams loop-refresh post-derived-glyphs');
+  expect(motion.behaviorList).toBe('');
   expect(motion.catCopyCount).toBe(0);
-  expect(motion.clippedRainCount).toBe(0);
-  expect(motion.interactive).toBe('true');
-  expect(motion.columnFontSize).toBeLessThanOrEqual(14);
+  expect(motion.interactive).toBe('');
+  expect(motion.columnFontSize).toBe(0);
   expect(motion.decorativeNodeCount).toBe(0);
-  expect(motion.filetreeWidth).toBeLessThanOrEqual(860);
-  expect(motion.hasRainCss).toBe(true);
+  expect(motion.filetreeWidth).toBeLessThanOrEqual(900);
+  expect(motion.hasRainCss).toBe(false);
   expect(motion.hasLoomCss).toBe(false);
   expect(motion.hasCatCss).toBe(false);
   expect(motion.hasDecorativeBackgroundPattern).toBe(false);
   expect(motion.mentionsNeon).toBe(false);
-  expect(motion.sampleCount).toBeGreaterThanOrEqual(48);
-  expect(motion.sampleColumnCount).toBeGreaterThanOrEqual(48);
-  expect(firstRainSample.text).not.toBe('');
-  expect(secondRainSample.text).toBe(firstRainSample.text);
-  expect(secondRainSample.activeColumn).not.toBe('');
-  expect(secondRainSample.activeGlyph).not.toBe('');
+  expect(motion.sampleCount).toBe(0);
+  expect(motion.sampleColumnCount).toBe(0);
   expect(motion.scrollWidth).toBeLessThanOrEqual(motion.clientWidth + 1);
 });
 
@@ -339,7 +314,7 @@ test('global blog chrome is glass over space black with an inverted light mode a
   expect(dark.scrollWidth).toBeLessThanOrEqual(dark.clientWidth + 1);
 
   await page.goto('/');
-  const homeDark = await auditTheme(['.filetree', '.pretext-polish', '.post-card']);
+  const homeDark = await auditTheme(['.filetree', '.post-card']);
   expect(homeDark.glass.every((item) => item.present && item.backdrop.includes('blur'))).toBe(true);
   expect(homeDark.hasPatterns).toBe(false);
   expect(homeDark.scrollWidth).toBeLessThanOrEqual(homeDark.clientWidth + 1);

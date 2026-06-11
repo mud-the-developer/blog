@@ -19,6 +19,7 @@ async function runtimeAudit(page) {
       pretextRainStages: document.querySelectorAll('.pretext-rain-stage').length,
       pretextRainColumns: JSON.parse(document.querySelector('[data-pretext-rain-columns]')?.textContent || '[]').length,
       pretextRainBehaviors: document.querySelector('.pretext-rain-stage')?.dataset.behaviors || '',
+      pretextPolishPanels: document.querySelectorAll('[data-pretext-polish]').length,
       pretextDecorations: document.querySelectorAll('.pretext-cat-paw,.pretext-cat-shadow,.pretext-ambient-layer,.pretext-front-glass').length,
       graphCount: document.querySelectorAll('[data-archive-graph]').length,
       fieldStages: document.querySelectorAll('[data-field-stage]').length,
@@ -46,9 +47,10 @@ test('desktop and mobile public homepage stay polished without layout overflow',
     expect(audit.graphCount, name).toBe(0);
     expect(audit.fieldStages, name).toBe(0);
     expect(audit.pretextCatSprites, name).toBe(0);
-    expect(audit.pretextRainStages, name).toBe(1);
-    expect(audit.pretextRainColumns, name).toBeGreaterThanOrEqual(name === 'mobile' ? 38 : 60);
-    expect(audit.pretextRainBehaviors, name).toBe('falling-columns stable-streams loop-refresh post-derived-glyphs');
+    expect(audit.pretextPolishPanels, name).toBe(0);
+    expect(audit.pretextRainStages, name).toBe(0);
+    expect(audit.pretextRainColumns, name).toBe(0);
+    expect(audit.pretextRainBehaviors, name).toBe('');
     expect(audit.pretextDecorations, name).toBe(0);
     expect(audit.nodes, name).toBeLessThanOrEqual(980);
     expect(audit.scrollWidth, name).toBeLessThanOrEqual(audit.clientWidth + 1);
@@ -59,7 +61,7 @@ test('desktop and mobile public homepage stay polished without layout overflow',
   }
 });
 
-test('reduced-motion keeps the filetree but disables ambient Pretext animation', async ({ browser }) => {
+test('reduced-motion keeps the filetree without ambient Pretext animation', async ({ browser }) => {
   const context = await browser.newContext({ viewport: desktopViewport, reducedMotion: 'reduce' });
   const page = await context.newPage();
   await page.goto('/', { waitUntil: 'networkidle' });
@@ -75,6 +77,8 @@ test('reduced-motion keeps the filetree but disables ambient Pretext animation',
   expect(audit.archiveCount).toBe(publicPostCount);
   expect(audit.graphCount).toBe(0);
   expect(audit.fieldStages).toBe(0);
+  expect(audit.pretextPolishPanels).toBe(0);
+  expect(audit.pretextRainStages).toBe(0);
   expect(audit.postCards).toBe(publicPostCount);
   expect(audit.filetreeFiles).toBe(publicPostCount);
   expect(animatedCount).toBe(0);

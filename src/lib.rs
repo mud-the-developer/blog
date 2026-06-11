@@ -840,21 +840,6 @@ pub async fn build_static_site(
     copy_dir_sync(Path::new("static/news/data"), &out_dir.join("news/data"))?;
     let css = fs::read_to_string("src/style.css").await?;
     fs::write(assets_dir.join("style.css"), minify_css(&css)).await?;
-    fs::copy(
-        "src/pretext-polish.mjs",
-        assets_dir.join("pretext-polish.mjs"),
-    )
-    .await?;
-    fs::copy(
-        "src/pretext-polish-state.mjs",
-        assets_dir.join("pretext-polish-state.mjs"),
-    )
-    .await?;
-    fs::copy(
-        "src/pretext-polish-effects.mjs",
-        assets_dir.join("pretext-polish-effects.mjs"),
-    )
-    .await?;
     fs::copy("src/blog-lab.mjs", assets_dir.join("blog-lab.mjs")).await?;
     fs::copy(
         "src/blog-lab-machine.mjs",
