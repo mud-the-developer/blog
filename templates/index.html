@@ -27,49 +27,61 @@
 
   <main class="public-shell">
     <section class="archive-panel" id="posts" aria-label="home post and archive">
-      <div class="home-post-intro" data-home-post>
-        <div class="home-post-body post-body" data-home-post-body>
-          {{ home_html|safe }}
+      <div class="telecom-terminal" data-telecom-terminal aria-label="retro telecom archive terminal">
+        <div class="telecom-statusbar" aria-label="terminal link status">
+          <span>LINK 1200</span>
+          <span>TTY GLASS</span>
+          <span>RX {{ posts.len() }} NOTES</span>
+          <span>{{ folder_count }} SECTIONS</span>
         </div>
-        <div class="archive-command-deck" aria-label="editorial dossier">
-          <a class="archive-lead-card dossier-card dossier-card-left" href="{{ latest_url }}">
-            <span class="archive-lead-kicker">Latest note</span>
-            <strong>{{ latest_title }}</strong>
-            <em>{{ latest_date }}</em>
-          </a>
-          <div class="archive-metrics dossier-card dossier-card-right" aria-label="archive metrics">
-            <a class="archive-desk-link" href="/news/">
-              <span class="archive-lead-kicker">News desk</span>
-              <strong>Source brief</strong>
-              <em>search · rank · draft</em>
+        <div class="telecom-commandline" aria-label="archive command line">
+          <span class="telecom-prompt">mud@archive:~$</span>
+          <span>open public-index --glass --tui</span>
+        </div>
+        <div class="home-post-intro" data-home-post>
+          <div class="home-post-body post-body" data-home-post-body>
+            {{ home_html|safe }}
+          </div>
+          <div class="archive-command-deck" aria-label="editorial dossier">
+            <a class="archive-lead-card dossier-card dossier-card-left" href="{{ latest_url }}">
+              <span class="archive-lead-kicker">Latest note</span>
+              <strong>{{ latest_title }}</strong>
+              <em>{{ latest_date }}</em>
             </a>
-            <div class="archive-stat-row" aria-label="archive counts">
-              <span><strong>{{ posts.len() }}</strong><em>notes</em></span>
-              <span><strong>{{ folder_count }}</strong><em>sections</em></span>
+            <div class="archive-metrics dossier-card dossier-card-right" aria-label="archive metrics">
+              <a class="archive-desk-link" href="/news/">
+                <span class="archive-lead-kicker">News desk</span>
+                <strong>Source brief</strong>
+                <em>search · rank · draft</em>
+              </a>
+              <div class="archive-stat-row" aria-label="archive counts">
+                <span><strong>{{ posts.len() }}</strong><em>notes</em></span>
+                <span><strong>{{ folder_count }}</strong><em>sections</em></span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <nav class="filetree" aria-label="post file tree">
-        <div class="filetree-root"><span class="ui-icon" data-icon="folder-root" aria-hidden="true"></span><span>library / posts/</span></div>
-        {% for group in groups %}
-        <details class="filetree-folder" data-folder="{{ group.slug }}" aria-label="{{ group.label }} posts"{% if group.slug != "news" %} open{% endif %}>
-          <summary class="filetree-folder-label">
-            <span class="filetree-title"><span class="ui-icon" data-icon="folder" aria-hidden="true"></span><span>{{ group.slug }}/</span></span>
-            <span class="filetree-count">{{ group.posts.len() }}</span>
-          </summary>
-          <div class="filetree-files">
-            {% for post in group.posts %}
-            <a class="filetree-file" href="{{ post.url }}">
-              <span class="filetree-title"><span>{{ post.title }}</span></span>
-              <span class="filetree-date"><span>{{ post.date }}</span></span>
-            </a>
-            {% endfor %}
-          </div>
-        </details>
-        {% endfor %}
-      </nav>
+        <nav class="filetree" aria-label="post file tree">
+          <div class="filetree-root"><span class="filetree-title"><span class="ui-icon" data-icon="folder-root" aria-hidden="true"></span><span>library / posts/</span></span><span>ready</span></div>
+          {% for group in groups %}
+          <details class="filetree-folder" data-folder="{{ group.slug }}" aria-label="{{ group.label }} posts"{% if group.slug != "news" %} open{% endif %}>
+            <summary class="filetree-folder-label">
+              <span class="filetree-title"><span class="ui-icon" data-icon="folder" aria-hidden="true"></span><span>{{ group.slug }}/</span></span>
+              <span class="filetree-count">{{ group.posts.len() }}</span>
+            </summary>
+            <div class="filetree-files">
+              {% for post in group.posts %}
+              <a class="filetree-file" href="{{ post.url }}">
+                <span class="filetree-title"><span>{{ post.title }}</span></span>
+                <span class="filetree-date"><span>{{ post.date }}</span></span>
+              </a>
+              {% endfor %}
+            </div>
+          </details>
+          {% endfor %}
+        </nav>
+      </div>
 
       <div id="posts-surface" class="post-list" aria-live="polite">
         {% for post in posts %}

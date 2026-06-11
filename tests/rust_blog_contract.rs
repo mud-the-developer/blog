@@ -75,7 +75,14 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
     assert!(index.contains("/assets/site-chrome.mjs"));
     assert!(index.contains("data-layout=\"public-index\""));
     assert!(index.contains("class=\"public-shell\""));
+    assert!(index.contains("data-telecom-terminal"));
+    assert!(index.contains("retro telecom archive terminal"));
+    assert!(index.contains("LINK 1200"));
+    assert!(index.contains("TTY GLASS"));
+    assert!(index.contains("mud@archive:~$"));
+    assert!(index.contains("open public-index --glass --tui"));
     assert!(index.contains("class=\"filetree"));
+    assert!(index.contains("<span>ready</span>"));
     assert!(index.contains("aria-label=\"editorial dossier\""));
     assert!(index.contains("data-home-post"));
     assert!(index.contains("data-home-post-body"));
@@ -134,6 +141,9 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
 
     let style = fs::read_to_string(out_dir.join("assets/style.css"))?;
     assert!(style.contains("dossier-enter"));
+    assert!(style.contains(".telecom-terminal"));
+    assert!(style.contains(".telecom-statusbar"));
+    assert!(style.contains(".telecom-commandline"));
     assert!(style.contains(".dossier-card-left"));
     assert!(style.contains(".dossier-card-right"));
     assert!(style.contains(".home-post-body"));
