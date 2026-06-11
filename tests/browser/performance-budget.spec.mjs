@@ -47,8 +47,8 @@ test('desktop and mobile public homepage stay polished without layout overflow',
     expect(audit.fieldStages, name).toBe(0);
     expect(audit.pretextCatSprites, name).toBe(0);
     expect(audit.pretextRainStages, name).toBe(1);
-    expect(audit.pretextRainColumns, name).toBeGreaterThanOrEqual(name === 'mobile' ? 16 : 24);
-    expect(audit.pretextRainBehaviors, name).toBe('falling-columns random-letter-refresh post-derived-glyphs');
+    expect(audit.pretextRainColumns, name).toBeGreaterThanOrEqual(name === 'mobile' ? 38 : 60);
+    expect(audit.pretextRainBehaviors, name).toBe('falling-columns stable-streams loop-refresh post-derived-glyphs');
     expect(audit.pretextDecorations, name).toBe(0);
     expect(audit.nodes, name).toBeLessThanOrEqual(980);
     expect(audit.scrollWidth, name).toBeLessThanOrEqual(audit.clientWidth + 1);

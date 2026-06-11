@@ -80,11 +80,11 @@ test('pretext polish reducer emits post-derived matrix rain and no index loom', 
     'archive post letters',
     'matrix-style text rain'
   ]);
-  assert.deepEqual(effect.motion.behaviors, ['falling-columns', 'random-letter-refresh', 'post-derived-glyphs']);
+  assert.deepEqual(effect.motion.behaviors, ['falling-columns', 'stable-streams', 'loop-refresh', 'post-derived-glyphs']);
   assert.equal(effect.motion.continuous, true);
   assert.ok(effect.motion.reference.includes('public post letters'));
-  assert.ok(effect.rain.columns.length >= 24);
-  assert.ok(effect.rain.columns.length <= 32);
+  assert.ok(effect.rain.columns.length >= 60);
+  assert.ok(effect.rain.columns.length <= 72);
   assert.equal(effect.rain.sourceCount, archive.length);
   assert.ok(effect.rain.sourceText.includes('Rust rendering notes'));
   assert.ok(effect.rain.glyphPool.includes('R'));

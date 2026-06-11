@@ -43,56 +43,43 @@ function startPostTextRain() {
 
   const glyphPool = [...(rainStage.dataset.glyphPool || rainStage.dataset.sourceWords || 'MUD')];
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const stepMs = Number(rainStage.dataset.stepMs || 220);
   const samples = [];
   window.__pretextRainMotionSamples = samples;
 
-  const sample = (columnIndex, tick, now) => {
-    if (samples.length >= 36) return;
+  const sample = (columnIndex, tick, now, reason) => {
+    if (samples.length >= 48) return;
     samples.push({
       columnIndex,
       tick,
+      reason,
       glyph: columns[columnIndex]?.textContent?.replace(/\s+/g, '').slice(0, 1) || '',
-      phase: Number(((now % stepMs) / stepMs).toFixed(2))
+      phase: Number(((now % 1000) / 1000).toFixed(2))
     });
   };
 
-  const refreshColumn = (columnIndex, tick, now) => {
+  const refreshColumn = (columnIndex, tick, now, reason = 'loop') => {
     const column = columns[columnIndex];
     if (!column) return;
-    const length = Number(column.dataset.length || columnData[columnIndex]?.length || 24);
+    const length = Number(column.dataset.length || columnData[columnIndex]?.length || 42);
     column.textContent = makeRandomColumn(glyphPool, length);
     column.dataset.refreshTick = String(tick);
+    column.dataset.refreshReason = reason;
     rainStage.dataset.activeColumn = String(columnIndex);
     rainStage.dataset.activeGlyph = column.textContent.replace(/\s+/g, '').slice(0, 1) || '';
-    sample(columnIndex, tick, now);
+    sample(columnIndex, tick, now, reason);
   };
+
+  columns.forEach((column, index) => {
+    refreshColumn(index, 0, 0, 'initial');
+    column.addEventListener('animationiteration', () => {
+      const nextTick = Number(column.dataset.refreshTick || 0) + 1;
+      refreshColumn(index, nextTick, performance.now(), 'loop');
+    });
+  });
 
   if (reducedMotion) {
     rainStage.dataset.motionPaused = 'reduced-motion';
-    columns.slice(0, Math.min(3, columns.length)).forEach((_, index) => {
-      refreshColumn(index, 0, 0);
-    });
-    return;
   }
-
-  let startTime = null;
-  let lastTick = -1;
-  const tick = (now) => {
-    startTime ??= now;
-    const elapsed = now - startTime;
-    const tickIndex = Math.floor(elapsed / stepMs);
-    if (tickIndex !== lastTick) {
-      const columnIndex = Math.floor(Math.random() * columns.length);
-      refreshColumn(columnIndex, tickIndex, now);
-      if (tickIndex % 3 === 0) {
-        refreshColumn((columnIndex + 7) % columns.length, tickIndex, now);
-      }
-      lastTick = tickIndex;
-    }
-    window.requestAnimationFrame(tick);
-  };
-  window.requestAnimationFrame(tick);
 }
 
 function attachPretextInteraction() {

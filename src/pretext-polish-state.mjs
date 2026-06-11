@@ -6,7 +6,7 @@ const referenceNotes = [
   },
   {
     source: 'matrix-style text rain',
-    cue: 'post-derived glyphs fall as continuous random columns, not an index/status loom',
+    cue: 'post-derived glyphs fall as dense stable columns, refreshing only when a stream loops',
     url: 'visual://post-text-rain'
   }
 ];
@@ -58,8 +58,8 @@ function columnText(pool, index, length) {
 }
 
 function createColumns(pool, { isMobile = false } = {}) {
-  const count = isMobile ? 18 : 30;
-  const baseLength = isMobile ? 34 : 58;
+  const count = isMobile ? 42 : 64;
+  const baseLength = isMobile ? 72 : 108;
   return Array.from({ length: count }, (_, index) => {
     const length = baseLength + (index % 7);
     const durationMs = 5200 + (index % 9) * 430;
@@ -96,8 +96,8 @@ function createRain({ archive = [], isMobile = false } = {}) {
       durationMs: 6800,
       stepMs: isMobile ? 260 : 220,
       continuous: true,
-      behaviors: ['falling-columns', 'random-letter-refresh', 'post-derived-glyphs'],
-      reference: 'public post letters fall in randomized vertical columns'
+      behaviors: ['falling-columns', 'stable-streams', 'loop-refresh', 'post-derived-glyphs'],
+      reference: 'public post letters fall in dense stable vertical columns'
     }
   };
 }

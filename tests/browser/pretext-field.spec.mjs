@@ -177,8 +177,8 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   });
   expect(motion.archiveCount).toBe(publicPostCount);
   expect(motion.rainStageCount).toBe(1);
-  expect(motion.rainColumnCount).toBeGreaterThanOrEqual(24);
-  expect(motion.rainColumnCount).toBeLessThanOrEqual(32);
+  expect(motion.rainColumnCount).toBeGreaterThanOrEqual(60);
+  expect(motion.rainColumnCount).toBeLessThanOrEqual(72);
   expect(motion.loomStageCount).toBe(0);
   expect(motion.loomRowCount).toBe(0);
   expect(motion.catStageCount).toBe(0);
@@ -201,7 +201,7 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   expect(motion.rainText).not.toContain('PRETEXT // CURRENT');
   expect(motion.rainText).not.toContain('INDEX CURRENT');
   expect(motion.rainText).not.toContain('signal:');
-  expect(motion.behaviorList).toBe('falling-columns random-letter-refresh post-derived-glyphs');
+  expect(motion.behaviorList).toBe('falling-columns stable-streams loop-refresh post-derived-glyphs');
   expect(motion.catCopyCount).toBe(0);
   expect(motion.clippedRainCount).toBe(0);
   expect(motion.interactive).toBe('true');
@@ -213,9 +213,10 @@ test('homepage is a polished public filetree with subtle Pretext animation and n
   expect(motion.hasCatCss).toBe(false);
   expect(motion.hasDecorativeBackgroundPattern).toBe(false);
   expect(motion.mentionsNeon).toBe(false);
-  expect(motion.sampleCount).toBeGreaterThanOrEqual(2);
-  expect(motion.sampleColumnCount).toBeGreaterThanOrEqual(2);
+  expect(motion.sampleCount).toBeGreaterThanOrEqual(48);
+  expect(motion.sampleColumnCount).toBeGreaterThanOrEqual(48);
   expect(firstRainSample.text).not.toBe('');
+  expect(secondRainSample.text).toBe(firstRainSample.text);
   expect(secondRainSample.activeColumn).not.toBe('');
   expect(secondRainSample.activeGlyph).not.toBe('');
   expect(motion.scrollWidth).toBeLessThanOrEqual(motion.clientWidth + 1);
