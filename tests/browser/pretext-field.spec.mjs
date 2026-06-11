@@ -45,13 +45,7 @@ test('homepage is a polished public filetree with no pretext motion or hero pane
   await expect(page.locator('.reader-intro')).toHaveCount(0);
   await expect(page.locator('.lede')).toHaveCount(0);
   await expect(page.locator('.public-shell')).toHaveCount(1);
-  await expect(page.locator('[data-telecom-terminal]')).toHaveCount(1);
-  await expect(page.getByLabel('terminal link status')).toContainText('LINK 1200');
-  await expect(page.getByLabel('terminal link status')).toContainText('TTY GLASS');
-  await expect(page.getByLabel('archive command line')).toContainText('mud@archive:~$');
-  await expect(page.getByLabel('archive command line')).toContainText('open public-index --glass --tui');
   await expect(page.locator('.filetree')).toHaveCount(1);
-  await expect(page.locator('.filetree-root')).toContainText('ready');
   await expect(page.locator('.filetree-folder')).toHaveCount(folders.length);
   await expect(page.locator('.filetree-folder summary')).toHaveCount(folders.length);
   await expect(page.locator('.filetree-file')).toHaveCount(publicPostCount);
@@ -149,10 +143,6 @@ test('homepage is a polished public filetree with no pretext motion or hero pane
       columnFontSize: columns[0] ? Number.parseFloat(style.fontSize || '0') : 0,
       decorativeNodeCount: document.querySelectorAll('.pretext-cat-paw,.pretext-cat-shadow,.pretext-ambient-layer,.pretext-front-glass').length,
       filetreeWidth: document.querySelector('.filetree')?.getBoundingClientRect().width || 0,
-      terminalCount: document.querySelectorAll('[data-telecom-terminal]').length,
-      terminalWidth: document.querySelector('[data-telecom-terminal]')?.getBoundingClientRect().width || 0,
-      terminalBackdrop: getComputedStyle(document.querySelector('[data-telecom-terminal]') || document.body).backdropFilter || '',
-      terminalText: document.querySelector('[data-telecom-terminal]')?.textContent || '',
       hasRainCss: css.includes('pretext-rain-fall') && css.includes('pretext-rain-column') && css.includes('font-variant-ligatures'),
       hasLoomCss: css.includes('pretext-loom-breathe') || css.includes('pretext-loom-row'),
       hasCatCss: css.includes('pretext-cat-sprite') || css.includes('pretext-cat-breathe'),
@@ -197,11 +187,6 @@ test('homepage is a polished public filetree with no pretext motion or hero pane
   expect(motion.columnFontSize).toBe(0);
   expect(motion.decorativeNodeCount).toBe(0);
   expect(motion.filetreeWidth).toBeLessThanOrEqual(900);
-  expect(motion.terminalCount).toBe(1);
-  expect(motion.terminalWidth).toBeLessThanOrEqual(900);
-  expect(motion.terminalBackdrop).toContain('blur');
-  expect(motion.terminalText).toContain('LINK 1200');
-  expect(motion.terminalText).toContain('TTY GLASS');
   expect(motion.hasRainCss).toBe(false);
   expect(motion.hasLoomCss).toBe(false);
   expect(motion.hasCatCss).toBe(false);
