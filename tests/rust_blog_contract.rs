@@ -76,6 +76,11 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(index.contains("data-layout=\"public-index\""));
     assert!(index.contains("class=\"public-shell\""));
     assert!(index.contains("class=\"filetree"));
+    assert!(index.contains("aria-label=\"editorial dossier\""));
+    assert!(index.contains("dossier-card-left"));
+    assert!(index.contains("dossier-card-right"));
+    assert!(index.contains("Source brief"));
+    assert!(!index.contains("writing index is live"));
     assert!(!index.contains("<details class=\"filetree-folder\" data-folder=\"news\""));
     assert!(!index.contains("<span>news/</span>"));
     assert!(!index.contains(" · news</span>"));
@@ -118,6 +123,9 @@ async fn builds_public_polished_home_with_pretext_motion_filetree_and_no_hero_pa
     assert!(!index.contains("refresh fragment"));
 
     let style = fs::read_to_string(out_dir.join("assets/style.css"))?;
+    assert!(style.contains("dossier-enter"));
+    assert!(style.contains(".dossier-card-left"));
+    assert!(style.contains(".dossier-card-right"));
     assert!(style.contains(".pretext-polish"));
     assert!(style.contains(".filetree"));
     assert!(style.contains(".post-body :is"));

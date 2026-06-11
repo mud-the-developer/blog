@@ -79,8 +79,8 @@ function createLoomRows(items, { maxTitles = 5, maxRows = 12 } = {}) {
     rows.push({ kind: 'title', text: `${lead} ${title}`, weight: 0.92 });
   });
 
-  rows.push({ kind: 'signal', text: `signal: ${tags.length ? tags.join(' · ') : 'writing · index'}`, weight: 0.68 });
-  rows.push({ kind: 'cursor', text: 'writing index is live ▌', weight: 0.85 });
+  rows.push({ kind: 'signal', text: `signal: ${tags.length ? tags.join(' · ') : 'archive · notes'}`, weight: 0.68 });
+  rows.push({ kind: 'cursor', text: 'archive current ▌', weight: 0.85 });
 
   return rows.slice(0, maxRows).map((row, index) => ({
     ...row,

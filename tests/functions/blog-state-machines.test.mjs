@@ -89,6 +89,8 @@ test('pretext polish reducer emits an archive-derived kinetic loom and no ASCII 
   assert.ok(effect.loom.rows.some((row) => row.text.includes('PRETEXT // CURRENT')));
   assert.ok(effect.loom.rows.some((row) => row.text.includes('Rust rendering notes')));
   assert.ok(effect.loom.rows.some((row) => row.text.includes('signal:')));
+  assert.ok(effect.loom.rows.some((row) => row.text.includes('archive current')));
+  assert.equal(effect.loom.rows.some((row) => row.text.includes('writing index is live')), false);
   assert.ok(effect.loom.status.copy.includes('no cat'));
   const renderedCopy = JSON.stringify(effect);
   assert.equal(/large-tail-wag|CAT-LINK|oneko|ascii cat|pretext-cat/i.test(renderedCopy), false);

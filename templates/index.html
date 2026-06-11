@@ -31,16 +31,22 @@
         <p class="eyebrow">Public writing</p>
         <h1 id="posts-title">Index</h1>
         <p class="archive-deck-copy">A tight public desk for AI systems, papers, engineering notes, and the live news pipeline.</p>
-        <div class="archive-command-deck" aria-label="archive summary">
-          <a class="archive-lead-card" href="{{ latest_url }}">
+        <div class="archive-command-deck" aria-label="editorial dossier">
+          <a class="archive-lead-card dossier-card dossier-card-left" href="{{ latest_url }}">
             <span class="archive-lead-kicker">Latest note</span>
             <strong>{{ latest_title }}</strong>
             <em>{{ latest_date }}</em>
           </a>
-          <div class="archive-metrics" aria-label="archive metrics">
-            <span><strong>{{ posts.len() }}</strong><em>notes</em></span>
-            <span><strong>{{ folder_count }}</strong><em>sections</em></span>
-            <a href="/news/"><strong>Live</strong><em>news desk</em></a>
+          <div class="archive-metrics dossier-card dossier-card-right" aria-label="archive metrics">
+            <a class="archive-desk-link" href="/news/">
+              <span class="archive-lead-kicker">News desk</span>
+              <strong>Source brief</strong>
+              <em>search · rank · draft</em>
+            </a>
+            <div class="archive-stat-row" aria-label="archive counts">
+              <span><strong>{{ posts.len() }}</strong><em>notes</em></span>
+              <span><strong>{{ folder_count }}</strong><em>sections</em></span>
+            </div>
           </div>
         </div>
       </div>
