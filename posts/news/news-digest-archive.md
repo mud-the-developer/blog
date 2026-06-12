@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-06-12
+date: 2026-06-13
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/posts/2026-06-12-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/posts/2026-06-13-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-06-12T03:28:49.327298+09:00">Jun 12, 2026 · 3:28 AM KST</time></strong>
+        <strong><time datetime="2026-06-13T02:42:22.196354+09:00">Jun 13, 2026 · 2:42 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>81</strong>
+        <strong>82</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-06-12">Jun 12, 2026</time></strong>
+        <strong><time datetime="2026-06-13">Jun 13, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by code-yeongyu/oh-my-openagent; paper attention is clustering around DeNovoSWE: Scaling Long-Horizon Environments for Generating Entire Repositories from Scratch; social attention is tilting toward Show GN: turbo-graph – constrained RAG index with turbovec plus graph memory/filter cache; biggest mover: paperclipai/paperclip (+3). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around InterleaveThinker: Reinforcing Agentic Interleaved Generation; social attention is tilting toward Show HN: FablePool – Build publicly by Fable when you raise funds at the prompt. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>June 2026</span><span class="news-digest-month-count">12 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>June 2026</span><span class="news-digest-month-count">13 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-06-13-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-06-13</span>
+            <strong>AI News Brief — 2026-06-13</strong>
+            <span>Agentic AI continues to lead GitHub velocity and research, while community discussions touch on development practices and model guardrails.</span>
+          </a>
           <a class="news-digest-archive-item" href="/posts/2026-06-12-ai-news-digest/">
             <span class="news-digest-archive-date">2026-06-12</span>
             <strong>AI News Brief — 2026-06-12</strong>
