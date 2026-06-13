@@ -651,6 +651,42 @@
     ],
     "title": "Inference Efficiency and Agentic Coding Tools"
   },
+  "f45a48e3f31e9edfa660f59aba178d1633f4fafba702a4b39a1fcfada47c8f85": {
+    "article_body": [
+      "On the development front, agentic AI systems are demonstrating robust momentum. NousResearch/hermes-agent, an agent designed for growth, registered the highest signal on GitHub, accumulating over 192,000 stars and adding 800 new stars in the past week. Other significant repositories include vllm-project/vllm, a high-throughput inference engine for LLMs, and code-yeongyu/oh-my-openagent, a coding agent harness, both showing strong recent activity and star growth. This indicates a sustained focus on practical, scalable AI agent implementations and efficient LLM serving infrastructure.",
+      "Research continues to push the boundaries of AI capabilities, particularly in agentic reasoning and generation. The paper 'InterleaveThinker: Reinforcing Agentic Interleaved Generation' has emerged as a key focus, proposing a multi-agent pipeline for image generators. Complementing this, 'TreeSeeker: Tree-Structured Trial, Error, and Return in Deep Search' explores advanced inference-time frameworks for deep search tasks, while 'SpatialClaw: Rethinking Action Interface for Agentic Spatial Reasoning' investigates new action interfaces for vision-language models. These publications collectively highlight ongoing efforts to enhance AI's ability to plan, reason, and generate complex outputs.",
+      "Community discussions offer insights into both new features and practical applications. OpenAI's introduction of a desired token limit reset feature in Codex has generated interest on platforms like GeekNews, indicating a focus on developer experience and control. Further community signals point to Moonshot AI's release of Kimi K2.7-Code and guides on setting up local coding agents on macOS, underscoring the immediate applicability and accessibility of AI coding tools for developers."
+    ],
+    "closing": "This concludes the daily AI Beta Brief for June 14, 2026. Further updates will follow.",
+    "dek": "Today's AI landscape is marked by significant advancements in agentic systems, with new GitHub projects gaining rapid adoption and research papers exploring sophisticated generation techniques.",
+    "lead": "The field of artificial intelligence continues to see substantial activity centered on agentic systems, as evidenced by top-performing projects and emerging research. NousResearch's 'hermes-agent' repository leads GitHub velocity, reflecting strong developer interest in adaptable AI agents. Concurrently, academic discourse is drawn to innovations in agentic interleaved generation, with the 'InterleaveThinker' paper garnering notable attention in recent days.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "Agentic AI systems are a dominant trend, driving both open-source development and cutting-edge research.",
+      "New research is advancing capabilities in interleaved generation, spatial reasoning, and deep search for AI agents.",
+      "Developer-centric tools and features, such as OpenAI Codex updates and local coding agent setups, are gaining community attention.",
+      "GitHub repositories focused on LLM inference and agent frameworks continue to exhibit rapid growth and adoption."
+    ],
+    "title": "Daily AI Beta Brief: Agentic Systems Drive Development and Research"
+  },
+  "f45a48e3f31e9edfa660f59aba178d1633f4fafba702a4b39a1fcfada47c8f85::overview": {
+    "article_body": [
+      "On the development front, agentic AI systems are demonstrating robust momentum. NousResearch/hermes-agent, an agent designed for growth, registered the highest signal on GitHub, accumulating over 192,000 stars and adding 800 new stars in the past week. Other significant repositories include vllm-project/vllm, a high-throughput inference engine for LLMs, and code-yeongyu/oh-my-openagent, a coding agent harness, both showing strong recent activity and star growth. This indicates a sustained focus on practical, scalable AI agent implementations and efficient LLM serving infrastructure.",
+      "Research continues to push the boundaries of AI capabilities, particularly in agentic reasoning and generation. The paper 'InterleaveThinker: Reinforcing Agentic Interleaved Generation' has emerged as a key focus, proposing a multi-agent pipeline for image generators. Complementing this, 'TreeSeeker: Tree-Structured Trial, Error, and Return in Deep Search' explores advanced inference-time frameworks for deep search tasks, while 'SpatialClaw: Rethinking Action Interface for Agentic Spatial Reasoning' investigates new action interfaces for vision-language models. These publications collectively highlight ongoing efforts to enhance AI's ability to plan, reason, and generate complex outputs.",
+      "Community discussions offer insights into both new features and practical applications. OpenAI's introduction of a desired token limit reset feature in Codex has generated interest on platforms like GeekNews, indicating a focus on developer experience and control. Further community signals point to Moonshot AI's release of Kimi K2.7-Code and guides on setting up local coding agents on macOS, underscoring the immediate applicability and accessibility of AI coding tools for developers."
+    ],
+    "closing": "This concludes the daily AI Beta Brief for June 14, 2026. Further updates will follow.",
+    "dek": "Today's AI landscape is marked by significant advancements in agentic systems, with new GitHub projects gaining rapid adoption and research papers exploring sophisticated generation techniques.",
+    "lead": "The field of artificial intelligence continues to see substantial activity centered on agentic systems, as evidenced by top-performing projects and emerging research. NousResearch's 'hermes-agent' repository leads GitHub velocity, reflecting strong developer interest in adaptable AI agents. Concurrently, academic discourse is drawn to innovations in agentic interleaved generation, with the 'InterleaveThinker' paper garnering notable attention in recent days.",
+    "takeaways": [
+      "Agentic AI systems are a dominant trend, driving both open-source development and cutting-edge research.",
+      "New research is advancing capabilities in interleaved generation, spatial reasoning, and deep search for AI agents.",
+      "Developer-centric tools and features, such as OpenAI Codex updates and local coding agent setups, are gaining community attention.",
+      "GitHub repositories focused on LLM inference and agent frameworks continue to exhibit rapid growth and adoption."
+    ],
+    "title": "Daily AI Beta Brief: Agentic Systems Drive Development and Research"
+  },
   "ff1a6e25bf338d2acb4f92a70d0056e570de65ef52e6232eeedc02aef8cbb70b": {
     "paragraphs": [
       "Backend coding agent developers are currently engaged in deep source code analysis, specifically comparing the implementations of Claude Code and AutoBe. This community focus highlights a growing interest in the portability and structural efficiency of agentic skill libraries.",
