@@ -231,6 +231,54 @@ test('local preview serves focused issue API and a dedicated news page', async (
   await expect(page.locator('[data-overview-figure]')).toHaveCount(0);
 });
 
+test('mobile news digest keeps every paper title visible without overflow', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/posts/2026-06-15-ai-news-digest/');
+
+  const audit = await page.evaluate(() => {
+    const isVisible = (node) => {
+      if (!node) return false;
+      const style = getComputedStyle(node);
+      const box = node.getBoundingClientRect();
+      return style.display !== 'none' && style.visibility !== 'hidden' && box.width > 0 && box.height > 0;
+    };
+    const paperRows = [...document.querySelectorAll('.news-digest-compact-row--paper')];
+    const paperTitles = paperRows.map((row) => row.querySelector('.news-digest-compact-copy > strong')?.textContent.trim() || '');
+    const paperLeadTitles = [...document.querySelectorAll('.news-digest-lead-card--paper strong')];
+    const repoRows = [...document.querySelectorAll('.news-digest-compact-row--repo')];
+    return {
+      visiblePaperRows: paperRows.filter(isVisible).length,
+      visibleRepoRows: repoRows.filter(isVisible).length,
+      paperTitles,
+      visiblePaperLeadTitles: paperLeadTitles.filter(isVisible).map((title) => title.textContent.trim()),
+      clampedPaperLeadTitles: paperLeadTitles.filter((title) => {
+        if (!isVisible(title)) return false;
+        const style = getComputedStyle(title);
+        return style.webkitLineClamp && style.webkitLineClamp !== 'none' && style.webkitLineClamp !== 'unset';
+      }).length,
+      clampedPaperTitles: paperRows.filter((row) => {
+        const title = row.querySelector('.news-digest-compact-copy > strong');
+        if (!title || !isVisible(title)) return false;
+        const style = getComputedStyle(title);
+        return style.webkitLineClamp && style.webkitLineClamp !== 'none' && style.webkitLineClamp !== 'unset';
+      }).length,
+      scrollWidth: document.documentElement.scrollWidth,
+      clientWidth: document.documentElement.clientWidth
+    };
+  });
+
+  expect(audit.visiblePaperRows).toBe(6);
+  expect(audit.visibleRepoRows).toBe(3);
+  expect(audit.paperTitles).toContain('Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning');
+  expect(audit.paperTitles).toContain('SG-OPD: Sign-Gated On-Policy Distillation via Sign-Consistency Gating and Phased Teacher Sampling');
+  expect(audit.visiblePaperLeadTitles).toContain('Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning');
+  expect(audit.paperTitles.some((title) => title.endsWith('…'))).toBe(false);
+  expect(audit.visiblePaperLeadTitles.some((title) => title.endsWith('…'))).toBe(false);
+  expect(audit.clampedPaperTitles).toBe(0);
+  expect(audit.clampedPaperLeadTitles).toBe(0);
+  expect(audit.scrollWidth).toBeLessThanOrEqual(audit.clientWidth + 1);
+});
+
 test('theme follows the system default and can be toggled without local persistence', async ({ browser }) => {
   const darkContext = await browser.newContext({ colorScheme: 'dark', viewport: { width: 1024, height: 760 } });
   const darkPage = await darkContext.newPage();

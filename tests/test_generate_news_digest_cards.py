@@ -45,6 +45,33 @@ class GenerateNewsDigestCardRenderingTests(unittest.TestCase):
         self.assertIn("HF Papers", html)
         self.assertIn("<h3 data-pretext-target>PackForcing</h3>", html)
 
+    def test_paper_rows_render_full_titles_even_when_headline_is_shortened(self) -> None:
+        card = MODULE.NewsItem(
+            headline="Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement…",
+            title="Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning",
+            url="https://example.com/paper",
+            source="huggingface.co",
+            tags=["AI"],
+            score=6.2,
+            raw_score=3.6,
+            published_hours_ago=11,
+            stars=0,
+            image_url="/news/assets/thumb-paper.svg",
+            badge="Paper",
+            deck="English one-line paper summary for readable scanning.",
+            meta="HF Papers · 11h ago · signal 6.20",
+            rank=19,
+            rank_delta=-4,
+        )
+
+        compact_html = "\n".join(MODULE.render_compact_signal_rows([card]))
+        card_html = "\n".join(MODULE.render_digest_card_lines(card, extra_classes="news-digest-top-card"))
+
+        self.assertIn("On-Policy Reinforcement Learning", compact_html)
+        self.assertIn("On-Policy Reinforcement Learning", card_html)
+        self.assertNotIn("On-Policy Reinforcement…", compact_html)
+        self.assertNotIn("On-Policy Reinforcement…", card_html)
+
     def test_render_markdown_uses_signal_brief_rhythm_instead_of_repeated_cards(self) -> None:
         def card(headline: str, badge: str, source: str, score: float, rank: int) -> MODULE.NewsItem:
             return MODULE.NewsItem(

@@ -590,6 +590,12 @@ def headline_for(item: dict[str, Any]) -> str:
     return clamp_text(title, 96)
 
 
+def display_title_for(card: NewsItem) -> str:
+    if card.badge == "Paper":
+        return card.title or card.headline
+    return card.headline or card.title
+
+
 def ensure_terminal_punctuation(value: str) -> str:
     value = value.strip()
     if not value:
@@ -1145,7 +1151,7 @@ def render_digest_card_lines(
         lines.append(f'          <p class="news-digest-card-note" data-pretext-target>{safe_text(lead_note)}</p>')
     lines.extend(
         [
-            f'          <h3 data-pretext-target>{safe_text(card.headline or card.title)}</h3>',
+            f'          <h3 data-pretext-target>{safe_text(display_title_for(card))}</h3>',
             f'          <p class="news-digest-card-deck" data-pretext-target>{safe_text(card.deck)}</p>',
             "        </div>",
             "      </a>",
@@ -2150,7 +2156,7 @@ def render_beta_signal_map(context: DigestContext) -> list[str]:
         lines.extend(
             [
                 '          <div class="news-digest-beta-bar-row">',
-                f'            <span class="news-digest-beta-bar-label" data-pretext-target>{safe_text(card.headline or card.title)}</span>',
+                f'            <span class="news-digest-beta-bar-label" data-pretext-target>{safe_text(display_title_for(card))}</span>',
                 '            <span class="news-digest-beta-bar-track" aria-hidden="true">',
                 f'              <span style="width: {render_beta_bar_value(card.score, max_signal)}"></span>',
                 "            </span>",
@@ -2494,7 +2500,7 @@ def render_compact_signal_rows(cards: list[NewsItem], *, limit: int = 6) -> list
                 f'              <span class="news-digest-source-mark" aria-hidden="true">{safe_text(source_mark(card.source))}</span>',
                 f'              <span class="news-digest-source-label">{safe_text(source_label(card.source))}</span>',
                 '            </span>',
-                f'            <strong data-pretext-target>{safe_text(card.headline or card.title)}</strong>',
+                f'            <strong data-pretext-target>{safe_text(display_title_for(card))}</strong>',
                 f'            <span data-pretext-target>{safe_text(card.deck)}</span>',
                 '          </span>',
                 '          <span class="news-digest-row-metric">',
@@ -2526,7 +2532,7 @@ def render_signal_lead_strip(context: DigestContext, brief: BetaDigest) -> list[
             [
                 f'        <a class="news-digest-lead-card news-digest-lead-card--{badge_class_suffix(card.badge)}" href="{safe_text(card.url)}" target="_blank" rel="noreferrer">',
                 f'          <span class="news-digest-lead-index">{safe_text(source_mark(card.source))}</span>',
-                f'          <strong data-pretext-target>{safe_text(card.headline or card.title)}</strong>',
+                f'          <strong data-pretext-target>{safe_text(display_title_for(card))}</strong>',
                 f'          <em>{safe_text(source_label(card.source))} · {safe_text(metric_value)} {safe_text(metric_label)}</em>',
                 '        </a>',
             ]

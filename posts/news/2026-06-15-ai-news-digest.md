@@ -1,6 +1,6 @@
 ---
 title: "AI News Brief — Jun 15"
-description: "GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement…; social attention is tilting toward Conversation between Amazon CEO and U.S. officials sparks crackdown on Anthropic models. 10 repo signals, 10 paper picks, and 1 community items made today's cut."
+description: "GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning; social attention is tilting toward Conversation between Amazon CEO and U.S. officials sparks crackdown on Anthropic models. 10 repo signals, 10 paper picks, and 1 community items made today's cut."
 date: 2026-06-15
 tags: [news, news-brief, ai, radar]
 publish: true
@@ -11,8 +11,8 @@ content-classes: [news-digest-note]
     <div class="news-digest-hero-copy">
       <p class="section-kicker">News</p>
       <h1 data-pretext-target>AI News Brief — Jun 15</h1>
-      <p class="news-digest-lead" data-pretext-target>GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement…; social attention is tilting toward Conversation between Amazon CEO and U.S. officials sparks crackdown on Anthropic models. 10 repo signals, 10 paper picks, and 1 community items made today&#x27;s cut.</p>
-      <p class="news-digest-section-description" data-pretext-target>GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement…; social attention is tilting toward Conversation between Amazon CEO and U.S. officials sparks crackdown on Anthropic models. 10 repo signals, 10 paper picks, and 1 community items made today&#x27;s cut. The lead read pulls the strongest repo, paper, and community items into one skimmable pass.</p>
+      <p class="news-digest-lead" data-pretext-target>GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning; social attention is tilting toward Conversation between Amazon CEO and U.S. officials sparks crackdown on Anthropic models. 10 repo signals, 10 paper picks, and 1 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description" data-pretext-target>GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning; social attention is tilting toward Conversation between Amazon CEO and U.S. officials sparks crackdown on Anthropic models. 10 repo signals, 10 paper picks, and 1 community items made today&#x27;s cut. The lead read pulls the strongest repo, paper, and community items into one skimmable pass.</p>
       <div class="news-digest-actions" role="group" aria-label="News actions">
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>
         <a class="post-cta-link" href="#digest-archive">Digest archive</a>
@@ -39,13 +39,13 @@ content-classes: [news-digest-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Daily Brief</p>
       <h2 data-pretext-target>Today’s read list</h2>
-      <p class="news-digest-section-description" data-pretext-target>GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement…; social attention is tilting toward Conversation between Amazon CEO and U.S. officials sparks crackdown on Anthropic models. 10 repo signals, 10 paper picks, and 1 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description" data-pretext-target>GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning; social attention is tilting toward Conversation between Amazon CEO and U.S. officials sparks crackdown on Anthropic models. 10 repo signals, 10 paper picks, and 1 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-lead-strip" aria-label="Lead signals">
       <article class="news-digest-lead-story">
         <p class="section-kicker">Lead read</p>
         <h3 data-pretext-target>AI News Brief — Jun 15</h3>
-        <p data-pretext-target>GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement…; social attention is tilting toward Conversation between Amazon CEO and U.S. officials sparks crackdown on Anthropic models. 10 repo signals, 10 paper picks, and 1 community items made today&#x27;s cut. The lead read pulls the strongest repo, paper, and community items into one skimmable pass.</p>
+        <p data-pretext-target>GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning; social attention is tilting toward Conversation between Amazon CEO and U.S. officials sparks crackdown on Anthropic models. 10 repo signals, 10 paper picks, and 1 community items made today&#x27;s cut. The lead read pulls the strongest repo, paper, and community items into one skimmable pass.</p>
       </article>
       <div class="news-digest-lead-cards">
         <a class="news-digest-lead-card news-digest-lead-card--repo" href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noreferrer">
@@ -55,7 +55,7 @@ content-classes: [news-digest-note]
         </a>
         <a class="news-digest-lead-card news-digest-lead-card--paper" href="https://huggingface.co/papers/2606.13106" target="_blank" rel="noreferrer">
           <span class="news-digest-lead-index">HF</span>
-          <strong data-pretext-target>Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement…</strong>
+          <strong data-pretext-target>Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning</strong>
           <em>HF Papers · 3d ago paper</em>
         </a>
         <a class="news-digest-lead-card news-digest-lead-card--paper" href="http://arxiv.org/abs/2606.13649v1" target="_blank" rel="noreferrer">
@@ -202,7 +202,7 @@ content-classes: [news-digest-note]
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
               <span class="news-digest-source-label">HF Papers</span>
             </span>
-            <strong data-pretext-target>Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement…</strong>
+            <strong data-pretext-target>Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning</strong>
             <span data-pretext-target>A switchable latent reasoning framework uses explicit boundary tokens to enable trainable and interpretable latent reasoning through recurrent hidden states. Surfaced via HF Papers 3d ago.</span>
           </span>
           <span class="news-digest-row-metric">
@@ -221,7 +221,7 @@ content-classes: [news-digest-note]
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
               <span class="news-digest-source-label">HF Papers</span>
             </span>
-            <strong data-pretext-target>SG-OPD: Sign-Gated On-Policy Distillation via Sign-Consistency Gating and Phased Teacher Sampli…</strong>
+            <strong data-pretext-target>SG-OPD: Sign-Gated On-Policy Distillation via Sign-Consistency Gating and Phased Teacher Sampling</strong>
             <span data-pretext-target>Sign-Gated On-Policy Distillation improves upon standard on-policy distillation by incorporating a binary verifier to filter teacher signals, resulting in better performance on mathematical…</span>
           </span>
           <span class="news-digest-row-metric">
@@ -354,8 +354,8 @@ content-classes: [news-digest-note]
       <p class="section-kicker">Today in AI</p>
       <h2>The day in one pass</h2>
     </header>
-    <p class="news-digest-section-description" data-pretext-target>GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement…; social attention is tilting toward Conversation between Amazon CEO and U.S. officials sparks crackdown on Anthropic models. 10 repo signals, 10 paper picks, and 1 community items made today&#x27;s cut.</p>
-    <p class="news-digest-section-description" data-pretext-target>The quickest scan starts with NousResearch/hermes-agent, Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement…, and Operadic consistency: a label-free signal for compositional reasoning failures in LLMs, while 10 GitHub-led signals anchor the repo side of the brief.</p>
+    <p class="news-digest-section-description" data-pretext-target>GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning; social attention is tilting toward Conversation between Amazon CEO and U.S. officials sparks crackdown on Anthropic models. 10 repo signals, 10 paper picks, and 1 community items made today&#x27;s cut.</p>
+    <p class="news-digest-section-description" data-pretext-target>The quickest scan starts with NousResearch/hermes-agent, Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning, and Operadic consistency: a label-free signal for compositional reasoning failures in LLMs, while 10 GitHub-led signals anchor the repo side of the brief.</p>
     <p class="news-digest-section-description" data-pretext-target>The sections below keep the longer tail available without crowding the lead read.</p>
   </section>
 
