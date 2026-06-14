@@ -170,8 +170,8 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
     assert!(!style.contains(".archive-graph"));
     assert!(!style.to_ascii_lowercase().contains("neon"));
     assert!(
-        style.len() <= 38_500,
-        "public polish CSS should stay bounded even with responsive controls, post chrome spacing, icons, theme modes, dark contrast guards, editorial archive controls, card-news surfaces, and Pretext layers"
+        style.len() <= 41_200,
+        "public polish CSS should stay bounded even with responsive controls, post chrome spacing, icons, theme modes, dark contrast guards, editorial archive controls, mobile news compression, card-news surfaces, and Pretext layers"
     );
 
     let profile = fs::read_to_string(out_dir.join("posts/jinhyuk-kim/index.html"))?;
