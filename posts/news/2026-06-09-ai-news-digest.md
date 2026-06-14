@@ -56,7 +56,7 @@ content-classes: [news-digest-note]
         <a class="news-digest-lead-card news-digest-lead-card--paper" href="https://huggingface.co/papers/2606.07433" target="_blank" rel="noreferrer">
           <span class="news-digest-lead-index">02</span>
           <strong data-pretext-target>Watch, Remember, Reason: Human-View Video Understanding with MLLMs</strong>
-          <em>Hugging Face Papers · 6.4</em>
+          <em>HF Papers · 6.4</em>
         </a>
         <a class="news-digest-lead-card news-digest-lead-card--repo" href="https://github.com/ultraworkers/claw-code" target="_blank" rel="noreferrer">
           <span class="news-digest-lead-index">03</span>
@@ -194,7 +194,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>Watch, Remember, Reason: Human-View Video Understanding with MLLMs</strong>
             <span data-pretext-target>Multimodal large language models for video understanding are structured around three core capabilities—watching, remembering, and reasoning—with applications spanning multiple video domains…</span>
@@ -212,7 +212,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>Thinking with Imagination: Agentic Visual Spatial Reasoning with World Simulators</strong>
             <span data-pretext-target>Astra is an agentic spatial reasoning framework that enhances Vision-Language Models with action-conditioned visual imagination by coupling a reinforcement learning-trained policy with a wo…</span>
@@ -230,7 +230,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>When Tools Fail: Benchmarking Dynamic Replanning and Anomaly Recovery in LLM Agents</strong>
             <span data-pretext-target>ToolMaze benchmark reveals that real-world tool failures significantly degrade TIR performance, with implicit semantic failures causing the most severe drops and dynamic replanning emerging…</span>
@@ -248,7 +248,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>SoCRATES: Towards Reliable Automated Evaluation of Proactive LLM Mediation across Domains and S…</strong>
             <span data-pretext-target>SoCRATES presents a realistic multi-domain benchmark for evaluating proactive LLM mediators across various socio-cognitive adaptation axes, demonstrating that even top-performing models onl…</span>
@@ -266,7 +266,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>MMAE: A Massive Multitask Audio Editing Benchmark</strong>
             <span data-pretext-target>MMAE presents a comprehensive benchmark for instruction-based audio editing across multiple modalities and complexity levels, revealing significant gaps in current model capabilities. Surfa…</span>
@@ -284,7 +284,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>LayerRoute: Input-Conditioned Adaptive Layer Skipping via LoRA Fine-Tuning for Agentic Language…</strong>
             <span data-pretext-target>LayerRoute is a lightweight adapter that selectively skips transformer blocks during inference based on input type, achieving compute savings while maintaining or improving model quality th…</span>
@@ -313,7 +313,7 @@ content-classes: [news-digest-note]
           <strong>10</strong>
         </div>
         <div class="news-digest-source-ledger-row">
-          <span>Hugging Face Papers</span>
+          <span>HF Papers</span>
           <span class="news-digest-source-ledger-track" aria-hidden="true">
             <span style="width: 90.0%"></span>
           </span>

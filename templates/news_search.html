@@ -29,11 +29,11 @@
     <section class="news-hero" aria-labelledby="news-search-title">
       <p class="eyebrow">Interactive news desk</p>
       <h1 id="news-search-title">News Search</h1>
-      <p>Search the same source families used by the daily news pipeline, select candidates, then generate a reviewable draft card that can be saved as Markdown or PDF.</p>
+      <p>Search the daily pipeline sources, scan compact source cards, then export a reviewable draft as Markdown or PDF.</p>
       <div class="news-command-strip" aria-label="News desk visual pipeline">
-        <span>source sweep</span>
-        <span>ranked deck</span>
-        <span>Gemma draft</span>
+        <span>source scan</span>
+        <span>candidate cards</span>
+        <span>draft review</span>
         <span>review export</span>
       </div>
     </section>
@@ -41,12 +41,12 @@
     <section class="news-desk-grid" aria-label="Interactive news tools">
       <section class="focused-issue-lab" data-focused-issue-lab aria-labelledby="focused-issue-title">
         <div>
-          <p class="eyebrow">Search + draft</p>
-          <h2 id="focused-issue-title">Search-backed news issue</h2>
-          <p>Search live news/repo/paper sources plus the existing digest snapshot sources, review ranked candidates, then ask Gemma 4 to draft an issue from the selected cards.</p>
+          <p class="eyebrow">Source brief</p>
+          <h2 id="focused-issue-title">News source brief</h2>
+          <p>Search live news, code, paper, and social sources; skim the best cards at a glance; then ask Gemma 4 to draft from your selection.</p>
         </div>
         <div class="news-signal-stack" data-news-signal-stack aria-hidden="true">
-          <div class="signal-stack-title"><span class="ui-icon" data-icon="sparkles" aria-hidden="true"></span><span>source signal stack</span></div>
+          <div class="signal-stack-title"><span class="ui-icon" data-icon="sparkles" aria-hidden="true"></span><span>source map</span></div>
           <span class="signal-row" style="--level: 92%; --delay: -0.2s"><span class="ui-icon" data-icon="rss" aria-hidden="true"></span><strong>GDELT · Google News</strong><em>live web</em></span>
           <span class="signal-row" style="--level: 80%; --delay: -0.7s"><span class="ui-icon" data-icon="github" aria-hidden="true"></span><strong>GitHub</strong><em>repo momentum</em></span>
           <span class="signal-row" style="--level: 74%; --delay: -1.15s"><span class="ui-icon" data-icon="book-open" aria-hidden="true"></span><strong>arXiv · HF Papers</strong><em>paper trail</em></span>
@@ -101,11 +101,11 @@
                 </span>
               </div>
               <label><input name="sources" type="checkbox" value="arxiv" checked /> <span>arXiv papers</span></label>
-              <label><input name="sources" type="checkbox" value="huggingface-papers" checked /> <span>Hugging Face Papers</span></label>
+              <label><input name="sources" type="checkbox" value="huggingface-papers" checked /> <span>HF Papers</span></label>
               <label><input name="sources" type="checkbox" value="openalex" checked /> <span>OpenAlex</span></label>
               <label><input name="sources" type="checkbox" value="crossref" checked /> <span>Crossref</span></label>
               <label><input name="sources" type="checkbox" value="semantic-scholar" checked /> <span>Semantic Scholar</span></label>
-              <label><input name="sources" type="checkbox" value="google-scholar" checked /> <span>Google Scholar link <em class="source-reliability source-reliability--experimental">experimental / often blocked</em></span></label>
+              <label><input name="sources" type="checkbox" value="google-scholar" checked /> <span>Scholar link <em class="source-reliability source-reliability--experimental">experimental</em></span></label>
             </div>
             <div class="source-picker-group" data-source-group="social">
               <div class="source-picker-group-heading">

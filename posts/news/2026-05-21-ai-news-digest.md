@@ -219,7 +219,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -235,7 +235,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -251,7 +251,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -267,7 +267,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -275,7 +275,7 @@ content-classes: [news-digest-note]
             <span class="news-digest-card-meta">17h ago · signal 6.19</span>
           </div>
           <h3 data-pretext-target>Anti-Self-Distillation for Reasoning RL via Pointwise Mutual Information</h3>
-          <p class="news-digest-card-deck" data-pretext-target>Anti-Self-Distillation reverses the direction of knowledge transfer in self-distillation to improve math reasoning efficiency and accuracy. Surfaced via Hugging Face Papers 17h ago.</p>
+          <p class="news-digest-card-deck" data-pretext-target>Anti-Self-Distillation reverses the direction of knowledge transfer in self-distillation to improve math reasoning efficiency and accuracy. Surfaced via HF Papers 17h ago.</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--paper news-digest-top-card news-digest-top-card--compact" href="https://huggingface.co/papers/2605.16403" target="_blank" rel="noreferrer">
@@ -283,7 +283,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -299,7 +299,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>

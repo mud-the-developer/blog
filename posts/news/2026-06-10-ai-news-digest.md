@@ -56,7 +56,7 @@ content-classes: [news-digest-note]
         <a class="news-digest-lead-card news-digest-lead-card--paper" href="https://huggingface.co/papers/2606.03980" target="_blank" rel="noreferrer">
           <span class="news-digest-lead-index">02</span>
           <strong data-pretext-target>Skill-RM: Unifying Heterogeneous Evaluation Criteria via Agent Skill</strong>
-          <em>Hugging Face Papers · 6.0</em>
+          <em>HF Papers · 6.0</em>
         </a>
         <a class="news-digest-lead-card news-digest-lead-card--social" href="https://news.hada.io/topic?id=30316" target="_blank" rel="noreferrer">
           <span class="news-digest-lead-index">03</span>
@@ -194,7 +194,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>Skill-RM: Unifying Heterogeneous Evaluation Criteria via Agent Skill</strong>
             <span data-pretext-target>Skill-RM presents a unified reward modeling framework that treats reward computation as a structured agentic task, enabling dynamic evidence aggregation and consistent evaluation across div…</span>
@@ -212,7 +212,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>FlashMemory-DeepSeek-V4: Lightning Index Ultra-Long Context via Lookahead Sparse Attention</strong>
             <span data-pretext-target>Lookahead Sparse Attention with Neural Memory Indexer reduces GPU memory usage for long-context LLM inference while maintaining accuracy through proactive KV cache management and decoupled…</span>
@@ -230,7 +230,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>Optical Reasoning: Rethinking Images as an Expressive Reasoning Medium Beyond Text</strong>
             <span data-pretext-target>Optical reasoning uses images as a standalone reasoning medium for language and multimodal tasks, achieving higher token efficiency than traditional text-based approaches. Surfaced via Hugg…</span>
@@ -248,7 +248,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>Bayesian-Agent: Posterior-Guided Skill Evolution for LLM Agent Harnesses</strong>
             <span data-pretext-target>Bayesian-Agent presents a framework that treats reusable skills and SOPs as hypotheses for model success, using Bayesian inference to guide agent behavior and improve task performance throu…</span>
@@ -266,7 +266,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>Skill-3D: Evolving Scene-Aware Skills for Agentic 3D Spatial Reasoning</strong>
             <span data-pretext-target>Skill-3D framework enables agents to learn scene-aware skills through self-evolving memory and skill libraries, improving tool utilization in 3D spatial reasoning tasks. Surfaced via Huggin…</span>
@@ -284,7 +284,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>On the Geometry of On-Policy Distillation</strong>
             <span data-pretext-target>On-policy distillation exhibits distinct parameter space dynamics characterized by relaxed off-principal updates and subspace locking, forming a unique geometric pattern separate from super…</span>
@@ -313,7 +313,7 @@ content-classes: [news-digest-note]
           <strong>10</strong>
         </div>
         <div class="news-digest-source-ledger-row">
-          <span>Hugging Face Papers</span>
+          <span>HF Papers</span>
           <span class="news-digest-source-ledger-track" aria-hidden="true">
             <span style="width: 60.0%"></span>
           </span>
@@ -359,7 +359,7 @@ content-classes: [news-digest-note]
     <p class="news-digest-section-description" data-pretext-target>Agentic development environments continue to drive significant activity on GitHub. `warpdotdev/warp`, an agentic terminal environment, emerged as a top-ranked repository, reflecting ongoing interest in AI-driven coding tools. Other notable projects in this space include `shanraisshan/claude-code-best-practice` and `ultraworkers/claw-code`, both demonstrating momentum in agent-managed code generation and development practices.</p>
     <p class="news-digest-section-description" data-pretext-target>In research, papers exploring advanced evaluation and long-context capabilities are gaining traction. `Skill-RM: Unifying Heterogeneous Evaluation Criteria via Agent Skill` stands out for its approach to treating reward computation as a structured agentic task. Concurrently, `FlashMemory-DeepSeek-V4` addresses the challenge of ultra-long context in LLMs through innovative sparse attention mechanisms, indicating a focus on both agent performance and efficiency.</p>
     <p class="news-digest-section-description" data-pretext-target>Community discussions are largely shaped by strategic industry shifts. The news of Apple unveiling a new AI architecture built around the Google Gemini model generated considerable social attention, signaling potential collaborations and competitive dynamics in the AI hardware and software landscape. This development underscores the increasing cross-company integration within the AI sector.</p>
-    <p class="news-digest-section-description" data-pretext-target>Overall, today&#x27;s digest includes 10 repository signals, 10 paper picks, and 10 community items. The biggest mover among tracked entities was `onyx-dot-app/onyx`, which climbed three ranks. GitHub and Hugging Face Papers remain primary sources of new signals, complemented by insights from GeekNews and X.</p>
+    <p class="news-digest-section-description" data-pretext-target>Overall, today&#x27;s digest includes 10 repository signals, 10 paper picks, and 10 community items. The biggest mover among tracked entities was `onyx-dot-app/onyx`, which climbed three ranks. GitHub and HF Papers remain primary sources of new signals, complemented by insights from GeekNews and X.</p>
   </section>
 
   <section id="digest-social" class="news-digest-section">

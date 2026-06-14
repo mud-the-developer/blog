@@ -219,7 +219,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -235,7 +235,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -251,7 +251,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -267,7 +267,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -283,7 +283,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -299,7 +299,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -307,7 +307,7 @@ content-classes: [news-digest-note]
             <span class="news-digest-card-meta">3d ago · down 136 · signal 4.27</span>
           </div>
           <h3 data-pretext-target>MemEye: A Visual-Centric Evaluation Framework for Multimodal Agent Memory</h3>
-          <p class="news-digest-card-deck" data-pretext-target>MemEye framework evaluates multimodal agent memory by measuring visual evidence granularity and retrieval usage complexity across 8 life-scenario tasks. Surfaced via Hugging Face Papers 3d…</p>
+          <p class="news-digest-card-deck" data-pretext-target>MemEye framework evaluates multimodal agent memory by measuring visual evidence granularity and retrieval usage complexity across 8 life-scenario tasks. Surfaced via HF Papers 3d…</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--paper news-digest-top-card news-digest-top-card--compact" href="https://huggingface.co/papers/2605.15141" target="_blank" rel="noreferrer">
@@ -315,7 +315,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -331,7 +331,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -347,7 +347,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -363,7 +363,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>

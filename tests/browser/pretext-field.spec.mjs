@@ -593,17 +593,18 @@ test('news page searches candidates before drafting an issue and does not expose
   await expect(page.locator('[data-source-group-action]')).toHaveCount(8);
   await page.locator('.source-picker-group[data-source-group="paper"] [data-source-group-action="clear"]').click();
   await expect(page.getByLabel('arXiv papers')).not.toBeChecked();
-  await expect(page.getByLabel('Google Scholar link')).not.toBeChecked();
+  await expect(page.getByLabel('Scholar link')).not.toBeChecked();
   await page.locator('.source-picker-group[data-source-group="paper"] [data-source-group-action="select"]').click();
   await expect(page.getByLabel('GDELT live web')).toBeChecked();
   await expect(page.getByLabel('Google News')).toBeChecked();
   await expect(page.getByLabel('GitHub repositories')).toBeChecked();
   await expect(page.getByLabel('arXiv papers')).toBeChecked();
-  await expect(page.getByLabel('Hugging Face Papers')).toBeChecked();
+  await expect(page.getByLabel('HF Papers')).toBeChecked();
+  await expect(page.getByText('Hugging Face Papers')).toHaveCount(0);
   await expect(page.getByLabel('OpenAlex')).toBeChecked();
   await expect(page.getByLabel('Crossref')).toBeChecked();
   await expect(page.getByLabel('Semantic Scholar')).toBeChecked();
-  await expect(page.getByLabel('Google Scholar link')).toBeChecked();
+  await expect(page.getByLabel('Scholar link')).toBeChecked();
   await expect(page.getByLabel('Hacker News')).toBeChecked();
   await expect(page.getByRole('checkbox', { name: 'X', exact: true })).toBeChecked();
   await expect(page.getByLabel('LinkedIn')).toBeChecked();
@@ -641,17 +642,41 @@ test('news page searches candidates before drafting an issue and does not expose
   await page.getByRole('button', { name: 'Search news' }).click();
   await expect(page.locator('[data-news-search-results]')).toContainText('Open RAN Gemma operations update');
   await expect(page.locator('[data-news-search-results] input[type="checkbox"]')).toHaveCount(2);
-  await expect(page.locator('.news-source-radar')).toContainText('2 ranked candidates');
+  await expect(page.locator('.news-source-radar')).toContainText('2 source candidates');
   await expect(page.locator('.news-candidate-toolbar')).toBeVisible();
-  await page.getByRole('button', { name: 'Clear candidate selection' }).click();
+  await page.locator('.news-candidate-toolbar [data-candidate-action="clear-all"]').click();
   await expect(page.locator('[data-news-search-results] input[type="checkbox"]:checked')).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Draft from selected news' })).toBeDisabled();
-  await page.getByRole('button', { name: 'Select all candidates' }).click();
+  await page.locator('.news-candidate-toolbar [data-candidate-action="select-all"]').click();
   await expect(page.locator('[data-news-search-results] input[type="checkbox"]:checked')).toHaveCount(2);
-  await expect(page.locator('.news-candidate-rank').first()).toHaveText('01');
+  await expect(page.locator('.news-candidate-rank')).toHaveCount(0);
+  await expect(page.locator('[data-news-search-results]')).not.toContainText(/score \d/i);
   await expect(page.locator('.news-candidate-meter')).toHaveCount(2);
   const candidateAnimation = await page.locator('.news-candidate-card').first().evaluate((node) => getComputedStyle(node).animationName);
   expect(candidateAnimation).toContain('candidate-rise');
+  await page.setViewportSize({ width: 390, height: 844 });
+  const mobileNewsLayout = await page.evaluate(() => {
+    const card = document.querySelector('.news-candidate-card');
+    const thumb = document.querySelector('.news-candidate-thumbnail');
+    const labels = [...document.querySelectorAll('.source-picker label')].map((node) => node.getBoundingClientRect());
+    const cardBox = card?.getBoundingClientRect();
+    const thumbBox = thumb?.getBoundingClientRect();
+    return {
+      pageScroll: document.documentElement.scrollWidth,
+      pageWidth: document.documentElement.clientWidth,
+      cardColumns: card ? getComputedStyle(card).gridTemplateColumns : '',
+      cardRight: cardBox?.right || 0,
+      viewportRight: document.documentElement.clientWidth,
+      thumbWidth: Math.round(thumbBox?.width || 0),
+      crampedSourceLabels: labels.filter((box) => box.width < 92).length
+    };
+  });
+  expect(mobileNewsLayout.pageScroll).toBeLessThanOrEqual(mobileNewsLayout.pageWidth + 1);
+  expect(mobileNewsLayout.cardRight).toBeLessThanOrEqual(mobileNewsLayout.viewportRight + 1);
+  expect(mobileNewsLayout.cardColumns).toContain('58px');
+  expect(mobileNewsLayout.thumbWidth).toBeGreaterThanOrEqual(54);
+  expect(mobileNewsLayout.crampedSourceLabels).toBe(0);
+  await page.setViewportSize({ width: 1280, height: 900 });
   await expect(page.getByRole('button', { name: 'Draft from selected news' })).toBeEnabled();
   await page.getByRole('button', { name: 'Draft from selected news' }).click();
   await expect(page.locator('[data-focused-issue-status] .status-pulse')).toBeVisible();
@@ -666,6 +691,7 @@ test('news page searches candidates before drafting an issue and does not expose
   const draftAnimation = await page.locator('[data-focused-issue-output] .generated-news-card').evaluate((node) => getComputedStyle(node).animationName);
   expect(draftAnimation).toContain('generated-card-enter');
   await expect(page.locator('[data-focused-issue-output] strong').filter({ hasText: 'source context' })).toBeVisible();
+  await expect(page.locator('[data-news-search-results]')).not.toContainText(/score \d/i);
   await expect(page.locator('[data-focused-issue-output] .generated-news-thumbnail')).toHaveCount(1);
   await expect(page.locator('[data-focused-issue-output] .generated-news-source')).toHaveCount(1);
   await expect(page.locator('[data-focused-issue-output] pre')).toHaveCount(0);

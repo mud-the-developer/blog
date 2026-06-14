@@ -56,7 +56,7 @@ content-classes: [news-digest-note]
         <a class="news-digest-lead-card news-digest-lead-card--paper" href="https://huggingface.co/papers/2606.10728" target="_blank" rel="noreferrer">
           <span class="news-digest-lead-index">02</span>
           <strong data-pretext-target>DeNovoSWE: Scaling Long-Horizon Environments for Generating Entire Repositories from Scratch</strong>
-          <em>Hugging Face Papers · 6.4</em>
+          <em>HF Papers · 6.4</em>
         </a>
         <a class="news-digest-lead-card news-digest-lead-card--social" href="https://news.hada.io/topic?id=30400" target="_blank" rel="noreferrer">
           <span class="news-digest-lead-index">03</span>
@@ -194,7 +194,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>DeNovoSWE: Scaling Long-Horizon Environments for Generating Entire Repositories from Scratch</strong>
             <span data-pretext-target>A large-scale dataset called DeNovoSWE is introduced for training code agents to generate entire software repositories from documentation, significantly improving performance on long-horizo…</span>
@@ -212,7 +212,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>Agentic Environment Engineering for Large Language Models: A Survey of Environment Modeling, Sy…</strong>
             <span data-pretext-target>Large language model agents require specialized environments for training and evaluation, which can be categorized by their engineering lifecycle stages and evolved through various paradigm…</span>
@@ -230,7 +230,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>EvoTrainer: Co-Evolving LLM Policies and Training Harnesses for Autonomous Agentic Reinforcemen…</strong>
             <span data-pretext-target>EvoTrainer autonomously evolves both language model policies and training harnesses through empirical feedback, demonstrating superior performance in complex reasoning and coding tasks comp…</span>
@@ -248,7 +248,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>InternVideo3: Agentify Foundation Models with Multimodal Contextual Reasoning</strong>
             <span data-pretext-target>InternVideo3 enhances long-horizon multimodal tasks through Multimodal Contextual Reasoning and efficient attention mechanisms, demonstrating strong performance on video understanding bench…</span>
@@ -266,7 +266,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>ComBench: A Benchmark for Rigorous Proof Reasoning and Constructive Realization in Olympiad-Lev…</strong>
             <span data-pretext-target>A new benchmark called ComBench is introduced to evaluate large language models&#x27; combinatorial reasoning abilities through Olympiad-level problems that test both proof construction and expl…</span>
@@ -284,7 +284,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>Toward Generalist Autonomous Research via Hypothesis-Tree Refinement</strong>
             <span data-pretext-target>An AI framework called Arbor enables autonomous scientific research by combining strategic coordination, isolated hypothesis testing, and a persistent knowledge tree to iteratively improve…</span>
@@ -313,7 +313,7 @@ content-classes: [news-digest-note]
           <strong>10</strong>
         </div>
         <div class="news-digest-source-ledger-row">
-          <span>Hugging Face Papers</span>
+          <span>HF Papers</span>
           <span class="news-digest-source-ledger-track" aria-hidden="true">
             <span style="width: 70.0%"></span>
           </span>
@@ -358,7 +358,7 @@ content-classes: [news-digest-note]
     </header>
     <p class="news-digest-section-description" data-pretext-target>GitHub activity today was largely driven by advancements in agentic coding, with `code-yeongyu/oh-my-openagent` emerging as the top performer in velocity. This project, described as a coding agent for complex codebases, reflects ongoing interest in autonomous code generation. Another notable mover was `paperclipai/paperclip`, which climbed three spots, indicating growing traction for tools managing AI agents at work.</p>
     <p class="news-digest-section-description" data-pretext-target>In research, significant attention was directed towards `DeNovoSWE: Scaling Long-Horizon Environments for Generating Entire Repositories from Scratch`. This paper introduces a large-scale dataset aimed at training code agents to produce complete software repositories from documentation, addressing a key challenge in long-horizon development. Other academic discussions included `ComBench`, a new benchmark for rigorous proof reasoning in Olympiad-level combinatorics, and various studies on agentic environment engineering.</p>
-    <p class="news-digest-section-description" data-pretext-target>Community discussions, particularly on GeekNews, centered on `Show GN: turbo-graph`, a new constrained RAG index leveraging turbovec and graph memory. This points to continued innovation in retrieval-augmented generation techniques. Overall, today&#x27;s digest compiled 10 repo signals, 10 paper picks, and 10 community items, drawing from diverse sources including GitHub, Hugging Face Papers, and GeekNews.</p>
+    <p class="news-digest-section-description" data-pretext-target>Community discussions, particularly on GeekNews, centered on `Show GN: turbo-graph`, a new constrained RAG index leveraging turbovec and graph memory. This points to continued innovation in retrieval-augmented generation techniques. Overall, today&#x27;s digest compiled 10 repo signals, 10 paper picks, and 10 community items, drawing from diverse sources including GitHub, HF Papers, and GeekNews.</p>
   </section>
 
   <section id="digest-social" class="news-digest-section">

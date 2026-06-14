@@ -262,7 +262,7 @@ test('news search function searches live-style sources before Gemma drafting use
   assert.ok(requests.some((url) => url.includes('scholar.google.com/scholar')));
   assert.equal(searchBody.candidates[0].origin, 'live-search');
   assert.ok(!searchBody.candidates.some((candidate) => /<\/?a\b|&nbsp;/.test(candidate.summary)));
-  assert.ok(searchBody.candidates.some((candidate) => candidate.source === 'Hugging Face Papers' || candidate.source === 'huggingface.co' || candidate.source === 'geeknews'));
+  assert.ok(searchBody.candidates.some((candidate) => candidate.source === 'HF Papers' || candidate.source === 'huggingface.co' || candidate.source === 'geeknews'));
   assert.ok(searchBody.candidates.some((candidate) => candidate.source === 'Google Scholar' && candidate.type === 'paper'));
   assert.ok(searchBody.candidates.every((candidate) => candidate.thumbnail?.startsWith('/assets/news/thumb-')));
 

@@ -61,7 +61,7 @@ SECTION_MINIMUMS = {"repos": 10, "papers": 10, "social": 10}
 SOURCE_LABELS = {
     "github.com": "GitHub",
     "arxiv.org": "arXiv",
-    "huggingface.co": "Hugging Face Papers",
+    "huggingface.co": "HF Papers",
     "x.com": "X",
     "linkedin.com": "LinkedIn",
     "geeknews": "GeekNews",

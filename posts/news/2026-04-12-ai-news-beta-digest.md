@@ -44,18 +44,18 @@ content-classes: [news-digest-note, news-digest-beta-note]
         <strong data-pretext-target>Repo: openai/codex (GitHub and up 4)</strong>
       </div>
       <div class="news-digest-archive-item">
-        <strong data-pretext-target>Paper: Act Wisely: Cultivating Meta-Cognitive Tool Use in Agentic Multimodal Models (Hugging Face Papers and down 118)</strong>
+        <strong data-pretext-target>Paper: Act Wisely: Cultivating Meta-Cognitive Tool Use in Agentic Multimodal Models (HF Papers and down 118)</strong>
       </div>
       <div class="news-digest-archive-item">
         <strong data-pretext-target>Social: OpenAI&#x27;s Support for Illinois AI Liability Limitation Legislation (GeekNews and 14h ago)</strong>
       </div>
       <div class="news-digest-archive-item">
-        <strong data-pretext-target>Paper: LPM 1.0: Video-based Character Performance Model (Hugging Face Papers and down 117)</strong>
+        <strong data-pretext-target>Paper: LPM 1.0: Video-based Character Performance Model (HF Papers and down 117)</strong>
       </div>
       </div>
       <div class="news-digest-beta-source-pills" aria-label="Source mix">
         <span class="news-digest-beta-source-pill"><span>GitHub</span><strong>10</strong></span>
-        <span class="news-digest-beta-source-pill"><span>Hugging Face Papers</span><strong>7</strong></span>
+        <span class="news-digest-beta-source-pill"><span>HF Papers</span><strong>7</strong></span>
         <span class="news-digest-beta-source-pill"><span>GeekNews</span><strong>5</strong></span>
         <span class="news-digest-beta-source-pill"><span>X</span><strong>5</strong></span>
         <span class="news-digest-beta-source-pill"><span>arXiv</span><strong>3</strong></span>
@@ -75,7 +75,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
         <p class="section-kicker">Key takeaways</p>
         <ul class="note-aside-list">
           <li data-pretext-target>Repo: openai/codex (GitHub and up 4)</li>
-          <li data-pretext-target>Paper: Act Wisely: Cultivating Meta-Cognitive Tool Use in Agentic Multimodal Models (Hugging Face Papers and down 118)</li>
+          <li data-pretext-target>Paper: Act Wisely: Cultivating Meta-Cognitive Tool Use in Agentic Multimodal Models (HF Papers and down 118)</li>
         </ul>
       </aside>
     </div>
@@ -97,7 +97,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
             <strong>10</strong>
           </div>
           <div class="news-digest-beta-bar-row">
-            <span class="news-digest-beta-bar-label" data-pretext-target>Hugging Face Papers</span>
+            <span class="news-digest-beta-bar-label" data-pretext-target>HF Papers</span>
             <span class="news-digest-beta-bar-track" aria-hidden="true">
               <span style="width: 70.0%"></span>
             </span>
@@ -201,7 +201,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
     </header>
     <div class="note-flow-layout news-digest-beta-story-layout" data-note-flow>
       <div class="note-flow-body news-digest-beta-story-body" data-note-flow-body>
-        <p class="news-digest-beta-story-copy">The fastest-moving items across repos, papers, and community chatter. openai/codex from GitHub, NousResearch/hermes-agent from GitHub, and Act Wisely: Cultivating Meta-Cognitive Tool Use in Agentic Multimodal Models from Hugging Face Papers are setting the pace.</p>
+        <p class="news-digest-beta-story-copy">The fastest-moving items across repos, papers, and community chatter. openai/codex from GitHub, NousResearch/hermes-agent from GitHub, and Act Wisely: Cultivating Meta-Cognitive Tool Use in Agentic Multimodal Models from HF Papers are setting the pace.</p>
         <p class="news-digest-beta-story-copy">openai/codex lands as a repo signal with github · 74579 stars · +800/7d · created 363d ago · updated 1h ago · up 4 · signal 26.04. NousResearch/hermes-agent lands as a repo signal with github · 56870 stars · +800/7d · created 263d ago · updated 4h ago · up 4 · signal 25.78.</p>
       </div>
       <aside class="news-digest-beta-story-rail" aria-label="Referenced items" data-note-flow-rail>
@@ -226,7 +226,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -293,7 +293,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
     </header>
     <div class="note-flow-layout news-digest-beta-story-layout" data-note-flow>
       <div class="note-flow-body news-digest-beta-story-body" data-note-flow-body>
-        <p class="news-digest-beta-story-copy">New research worth bookmarking for a deeper read. Act Wisely: Cultivating Meta-Cognitive Tool Use in Agentic Multimodal Models from Hugging Face Papers, LPM 1.0: Video-based Character Performance Model from Hugging Face Papers, and OpenVLThinkerV2: A Generalist Multimodal Reasoning Model for Multi-domain Visual Tasks from Hugging Face Papers are setting the pace.</p>
+        <p class="news-digest-beta-story-copy">New research worth bookmarking for a deeper read. Act Wisely: Cultivating Meta-Cognitive Tool Use in Agentic Multimodal Models from HF Papers, LPM 1.0: Video-based Character Performance Model from HF Papers, and OpenVLThinkerV2: A Generalist Multimodal Reasoning Model for Multi-domain Visual Tasks from HF Papers are setting the pace.</p>
         <p class="news-digest-beta-story-copy">Act Wisely: Cultivating Meta-Cognitive Tool Use in Agentic Multimodal Models lands as a paper signal with hugging face papers · 2d ago · down 118 · signal 5.72. LPM 1.0: Video-based Character Performance Model lands as a paper signal with hugging face papers · 2d ago · down 117 · signal 5.65.</p>
       </div>
       <aside class="news-digest-beta-story-rail" aria-label="Referenced items" data-note-flow-rail>
@@ -302,7 +302,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -318,7 +318,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -509,7 +509,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -525,7 +525,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -541,7 +541,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -557,7 +557,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>

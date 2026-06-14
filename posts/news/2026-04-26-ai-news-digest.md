@@ -219,7 +219,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -235,7 +235,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -251,7 +251,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -259,7 +259,7 @@ content-classes: [news-digest-note]
             <span class="news-digest-card-meta">2d ago · down 126 · signal 4.90</span>
           </div>
           <h3 data-pretext-target>Context Unrolling in Omni Models</h3>
-          <p class="news-digest-card-deck" data-pretext-target>Omni is a unified multimodal model trained on diverse data types that enables context unrolling for improved reasoning across heterogeneous modalities. Surfaced via Hugging Face Papers 2d a…</p>
+          <p class="news-digest-card-deck" data-pretext-target>Omni is a unified multimodal model trained on diverse data types that enables context unrolling for improved reasoning across heterogeneous modalities. Surfaced via HF Papers 2d a…</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--paper news-digest-top-card news-digest-top-card--compact" href="https://huggingface.co/papers/2604.21931" target="_blank" rel="noreferrer">
@@ -267,7 +267,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -283,7 +283,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -315,7 +315,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>

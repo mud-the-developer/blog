@@ -55,7 +55,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
       </div>
       <div class="news-digest-beta-source-pills" aria-label="Source mix">
         <span class="news-digest-beta-source-pill"><span>GitHub</span><strong>10</strong></span>
-        <span class="news-digest-beta-source-pill"><span>Hugging Face Papers</span><strong>7</strong></span>
+        <span class="news-digest-beta-source-pill"><span>HF Papers</span><strong>7</strong></span>
         <span class="news-digest-beta-source-pill"><span>GeekNews</span><strong>6</strong></span>
         <span class="news-digest-beta-source-pill"><span>X</span><strong>4</strong></span>
         <span class="news-digest-beta-source-pill"><span>arXiv</span><strong>3</strong></span>
@@ -88,7 +88,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
             <strong>10</strong>
           </div>
           <div class="news-digest-beta-bar-row">
-            <span class="news-digest-beta-bar-label" data-pretext-target>Hugging Face Papers</span>
+            <span class="news-digest-beta-bar-label" data-pretext-target>HF Papers</span>
             <span class="news-digest-beta-bar-track" aria-hidden="true">
               <span style="width: 70.0%"></span>
             </span>
@@ -217,7 +217,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -294,7 +294,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -310,7 +310,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -501,7 +501,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -517,7 +517,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -533,7 +533,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -549,7 +549,7 @@ content-classes: [news-digest-note, news-digest-beta-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>

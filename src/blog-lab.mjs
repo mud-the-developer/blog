@@ -32,6 +32,17 @@ function sourceKey(source = {}) {
     .slice(0, 24) || 'source';
 }
 
+function displaySourceName(value = '') {
+  const source = String(value || '').trim();
+  if (/^(hugging\s*face\s*papers|huggingface\.co)$/i.test(source)) return 'HF Papers';
+  if (/^google scholar link$/i.test(source)) return 'Scholar';
+  return source;
+}
+
+function displayMeta(parts = []) {
+  return parts.map(displaySourceName).filter(Boolean).join(' · ');
+}
+
 function appendInlineMarkdown(container, text = '') {
   const pattern = /(\*\*[^*]+\*\*|`[^`]+`|\[[^\]]+\]\([^)]+\))/g;
   let cursor = 0;
@@ -111,7 +122,7 @@ function renderFocusedIssue(output, data) {
   }
   const tape = document.createElement('div');
   tape.className = 'generated-news-tape';
-  tape.textContent = (data.sources || []).slice(0, 5).map((source) => source.source || source.title).filter(Boolean).join('  ·  ') || 'ranked source context';
+  tape.textContent = (data.sources || []).slice(0, 5).map((source) => displaySourceName(source.source || source.title)).filter(Boolean).join('  ·  ') || 'source context';
   const warning = document.createElement('p');
   warning.className = 'generated-news-warning';
   warning.textContent = data.warning || '';
@@ -143,7 +154,7 @@ function renderFocusedIssue(output, data) {
     const name = document.createElement('strong');
     name.textContent = source.title || 'Untitled source';
     const meta = document.createElement('em');
-    meta.textContent = [source.source, source.publishedAt, source.score ? `score ${source.score}` : ''].filter(Boolean).join(' · ');
+    meta.textContent = displayMeta([source.source, source.publishedAt]);
     const deck = document.createElement('span');
     deck.textContent = source.summary || source.url || '';
     sourceBody.append(name, meta, deck);
@@ -181,11 +192,11 @@ function renderSearchResults(container, candidates) {
     container.textContent = 'No candidates found. Try a broader query.';
     return;
   }
-  const sources = [...new Set(candidates.map((candidate) => candidate.source || candidate.type || 'source').filter(Boolean))].slice(0, 8);
+  const sources = [...new Set(candidates.map((candidate) => displaySourceName(candidate.source || candidate.type || 'source')).filter(Boolean))].slice(0, 8);
   const board = document.createElement('div');
   board.className = 'news-source-radar';
   const boardTitle = document.createElement('strong');
-  boardTitle.textContent = `${candidates.length} ranked candidates`;
+  boardTitle.textContent = `${candidates.length} source candidates`;
   const boardRail = document.createElement('span');
   boardRail.textContent = sources.join(' · ');
   board.append(boardTitle, boardRail);
@@ -196,11 +207,11 @@ function renderSearchResults(container, candidates) {
   const selectAll = document.createElement('button');
   selectAll.type = 'button';
   selectAll.dataset.candidateAction = 'select-all';
-  selectAll.textContent = 'Select all candidates';
+  selectAll.textContent = 'Select all';
   const clearAll = document.createElement('button');
   clearAll.type = 'button';
   clearAll.dataset.candidateAction = 'clear-all';
-  clearAll.textContent = 'Clear candidate selection';
+  clearAll.textContent = 'Clear';
   toolbar.append(selectAll, clearAll);
 
   const list = document.createElement('div');
@@ -214,9 +225,6 @@ function renderSearchResults(container, candidates) {
     checkbox.type = 'checkbox';
     checkbox.checked = index < 5;
     checkbox.dataset.candidateIndex = String(index);
-    const rank = document.createElement('span');
-    rank.className = 'news-candidate-rank';
-    rank.textContent = String(index + 1).padStart(2, '0');
     const thumb = document.createElement('img');
     thumb.className = 'news-candidate-thumbnail';
     thumb.src = candidate.thumbnail || fallbackThumbnail(candidate);
@@ -227,14 +235,15 @@ function renderSearchResults(container, candidates) {
     const title = document.createElement('strong');
     title.textContent = candidate.title || 'Untitled candidate';
     const meta = document.createElement('em');
-    meta.textContent = [candidate.source, candidate.type, candidate.publishedAt, candidate.score ? `score ${candidate.score}` : ''].filter(Boolean).join(' · ');
+    meta.textContent = displayMeta([candidate.source, candidate.type, candidate.publishedAt]);
+    if (candidate.score) meta.title = `Internal match signal ${candidate.score}`;
     const summary = document.createElement('span');
     summary.textContent = candidate.summary || candidate.url || '';
     const meter = document.createElement('span');
     meter.className = 'news-candidate-meter';
     meter.setAttribute('aria-hidden', 'true');
     body.append(title, meta, summary, meter);
-    label.append(checkbox, rank, thumb, body);
+    label.append(checkbox, thumb, body);
     list.append(label);
   });
   container.append(board, toolbar, list);
@@ -287,7 +296,7 @@ function buildPrintIssueHtml(draft) {
       <span class="news-digest-card-index">${String(index + 1).padStart(2, '0')}</span>
       <span class="news-digest-card-copy">
         <strong>${escapeHtml(source.title || 'Untitled source')}</strong>
-        <em>${escapeHtml([source.source, source.publishedAt, source.score ? `score ${source.score}` : ''].filter(Boolean).join(' · '))}</em>
+        <em>${escapeHtml(displayMeta([source.source, source.publishedAt]))}</em>
         <span>${escapeHtml(source.summary || source.url || '')}</span>
       </span>
     </a>`).join('\n');

@@ -449,7 +449,7 @@ async function searchHackerNews(query, limit) {
 async function searchHuggingFacePapersLive(query, limit) {
   const url = `https://huggingface.co/papers?q=${encodeURIComponent(query)}`;
   const response = await fetchWithTimeout(url, { headers: SEARCH_HEADERS });
-  if (!response.ok) throw new Error(`Hugging Face Papers ${response.status}`);
+  if (!response.ok) throw new Error(`HF Papers ${response.status}`);
   const html = await response.text();
   const seen = new Set();
   const items = [];
@@ -463,8 +463,8 @@ async function searchHuggingFacePapersLive(query, limit) {
       id: `huggingface-paper-${items.length + 1}`,
       title,
       url: `https://huggingface.co/papers/${paperId}`,
-      source: 'Hugging Face Papers',
-      summary: 'Paper card surfaced from Hugging Face Papers search.',
+      source: 'HF Papers',
+      summary: 'Paper card surfaced from HF Papers search.',
       publishedAt: '',
       type: 'paper'
     });
@@ -598,7 +598,7 @@ export async function onRequestPost({ request, env }) {
         const live = await searchHuggingFacePapersLive(searchQuery, perSource);
         if (live.length) return live;
       } catch (_error) {
-        // Hugging Face Papers has no stable public search API; keep digest snapshot fallback.
+        // HF Papers has no stable public search API; keep digest snapshot fallback.
       }
       return fallbackFromAsset(feed, searchQuery, perSource, ['huggingface-papers']);
     },

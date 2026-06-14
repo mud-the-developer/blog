@@ -56,7 +56,7 @@ content-classes: [news-digest-note]
         <a class="news-digest-lead-card news-digest-lead-card--paper" href="https://huggingface.co/papers/2606.13679" target="_blank" rel="noreferrer">
           <span class="news-digest-lead-index">02</span>
           <strong data-pretext-target>InterleaveThinker: Reinforcing Agentic Interleaved Generation</strong>
-          <em>Hugging Face Papers · 5.8</em>
+          <em>HF Papers · 5.8</em>
         </a>
         <a class="news-digest-lead-card news-digest-lead-card--social" href="https://news.hada.io/topic?id=30444" target="_blank" rel="noreferrer">
           <span class="news-digest-lead-index">03</span>
@@ -194,7 +194,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>InterleaveThinker: Reinforcing Agentic Interleaved Generation</strong>
             <span data-pretext-target>InterleaveThinker enables interleaved generation capabilities for image generators through a multi-agent pipeline with planner and critic agents, achieving performance comparable to state-o…</span>
@@ -212,7 +212,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>SpatialClaw: Rethinking Action Interface for Agentic Spatial Reasoning</strong>
             <span data-pretext-target>SpatialClaw is a training-free framework that uses code as an action interface to enable flexible, stateful spatial reasoning in vision-language models, achieving superior performance acros…</span>
@@ -230,7 +230,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>TreeSeeker: Tree-Structured Trial, Error, and Return in Deep Search</strong>
             <span data-pretext-target>TreeSeeker is an inference-time framework that uses tree-structured search with branch-and-return control to manage exploration and exploitation in deep search tasks, improving performance…</span>
@@ -248,7 +248,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>Robust-U1: Can MLLMs Self-Recover Corrupted Visual Content for Robust Understanding?</strong>
             <span data-pretext-target>Robust-U1 enhances multimodal large language models&#x27; robustness against visual corruptions through self-recovery capabilities that improve both visual quality and reasoning performance. Sur…</span>
@@ -266,7 +266,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>From 2D Grids to 1D Tokens: Reforming Shared Representations for Multimodal Image Fusion</strong>
             <span data-pretext-target>A multimodal image fusion approach uses a 1D token interface from a pretrained image tokenizer to enhance global appearance coherence while preserving local details through selective token…</span>
@@ -284,7 +284,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement…</strong>
             <span data-pretext-target>A switchable latent reasoning framework uses explicit boundary tokens to enable trainable and interpretable latent reasoning through recurrent hidden states. Surfaced via Hugging Face Paper…</span>
@@ -320,7 +320,7 @@ content-classes: [news-digest-note]
           <strong>6</strong>
         </div>
         <div class="news-digest-source-ledger-row">
-          <span>Hugging Face Papers</span>
+          <span>HF Papers</span>
           <span class="news-digest-source-ledger-track" aria-hidden="true">
             <span style="width: 60.0%"></span>
           </span>

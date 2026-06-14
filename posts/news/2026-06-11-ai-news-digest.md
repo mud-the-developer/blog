@@ -56,7 +56,7 @@ content-classes: [news-digest-note]
         <a class="news-digest-lead-card news-digest-lead-card--paper" href="https://huggingface.co/papers/2606.10651" target="_blank" rel="noreferrer">
           <span class="news-digest-lead-index">02</span>
           <strong data-pretext-target>Kwai Keye-VL-2.0 Technical Report</strong>
-          <em>Hugging Face Papers · 6.6</em>
+          <em>HF Papers · 6.6</em>
         </a>
         <a class="news-digest-lead-card news-digest-lead-card--social" href="https://news.hada.io/topic?id=30361" target="_blank" rel="noreferrer">
           <span class="news-digest-lead-index">03</span>
@@ -194,7 +194,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>Kwai Keye-VL-2.0 Technical Report</strong>
             <span data-pretext-target>Kwai Keye-VL-2.0-30B-A3B is an open-source Mixture-of-Experts multimodal foundation model that enables long-video understanding and agentic intelligence through DeepSeek Sparse Attention an…</span>
@@ -212,7 +212,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>Role-Agent: Bootstrapping LLM Agents via Dual-Role Evolution</strong>
             <span data-pretext-target>Role-Agent framework enables LLM agents to function as both agent and environment through bootstrapped co-evolution, improving performance via environment-aware reasoning and targeted pract…</span>
@@ -230,7 +230,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>SearchSwarm: Towards Delegation Intelligence in Agentic LLMs for Long-Horizon Deep Research</strong>
             <span data-pretext-target>A large language model trained on synthesized delegation intelligence achieves superior performance on long-horizon research tasks through task decomposition and subagent coordination. Surf…</span>
@@ -248,7 +248,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>MemDreamer: Decoupling Perception and Reasoning for Long Video Understanding via Hierarchical G…</strong>
             <span data-pretext-target>MemDreamer addresses long-video understanding challenges by decoupling perception and reasoning through hierarchical graph memory and agentic exploration, achieving state-of-the-art perform…</span>
@@ -266,7 +266,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>One Token per Multimodal Evidence: Latent Memory for Resource-Constrained QA</strong>
             <span data-pretext-target>Latent Memory introduces a compressed representation approach for external memory in question answering, reducing token consumption and storage requirements while maintaining competitive pe…</span>
@@ -284,7 +284,7 @@ content-classes: [news-digest-note]
           <span class="news-digest-compact-copy">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <strong data-pretext-target>IR3DE: A Linear Router for Large Language Models</strong>
             <span data-pretext-target>A ridge regression-based routing method achieves competitive performance in selecting domain-expert LLMs for different tasks while enabling dynamic addition/removal of experts without retra…</span>
@@ -313,7 +313,7 @@ content-classes: [news-digest-note]
           <strong>10</strong>
         </div>
         <div class="news-digest-source-ledger-row">
-          <span>Hugging Face Papers</span>
+          <span>HF Papers</span>
           <span class="news-digest-source-ledger-track" aria-hidden="true">
             <span style="width: 80.0%"></span>
           </span>

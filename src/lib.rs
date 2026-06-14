@@ -1967,8 +1967,8 @@ async fn fetch_huggingface_paper_candidates(
             "id": format!("huggingface-paper-{}", candidates.len() + 1),
             "title": title,
             "url": format!("https://huggingface.co/papers/{paper_id}"),
-            "source": "Hugging Face Papers",
-            "summary": "Paper card surfaced from Hugging Face Papers search.",
+            "source": "HF Papers",
+            "summary": "Paper card surfaced from HF Papers search.",
             "publishedAt": "",
             "origin": "live-search",
             "type": "paper"

@@ -219,7 +219,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -235,7 +235,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -251,7 +251,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -259,7 +259,7 @@ content-classes: [news-digest-note]
             <span class="news-digest-card-meta">2d ago · down 102 · signal 5.20</span>
           </div>
           <h3 data-pretext-target>How to Fine-Tune a Reasoning Model? A Teacher-Student Cooperation Framework to Synthesize Stude…</h3>
-          <p class="news-digest-card-deck" data-pretext-target>Teacher-student cooperation data synthesis framework addresses stylistic divergence in synthetic data for improved model fine-tuning performance. Surfaced via Hugging Face Papers 2d ago. Do…</p>
+          <p class="news-digest-card-deck" data-pretext-target>Teacher-student cooperation data synthesis framework addresses stylistic divergence in synthetic data for improved model fine-tuning performance. Surfaced via HF Papers 2d ago. Do…</p>
         </div>
       </a>
       <a class="news-digest-card news-digest-card--paper news-digest-top-card news-digest-top-card--compact" href="https://huggingface.co/papers/2604.14922" target="_blank" rel="noreferrer">
@@ -267,7 +267,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -283,7 +283,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -299,7 +299,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>
@@ -315,7 +315,7 @@ content-classes: [news-digest-note]
           <div class="news-digest-card-topline">
             <span class="news-digest-source-chip news-digest-source-chip--huggingface-co">
               <span class="news-digest-source-mark" aria-hidden="true">HF</span>
-              <span class="news-digest-source-label">Hugging Face Papers</span>
+              <span class="news-digest-source-label">HF Papers</span>
             </span>
             <span class="news-digest-card-badge news-digest-card-badge--paper">Paper</span>
           </div>

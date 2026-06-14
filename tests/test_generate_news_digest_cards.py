@@ -32,7 +32,7 @@ class GenerateNewsDigestCardRenderingTests(unittest.TestCase):
             image_url="/news/assets/thumb-paper.svg",
             badge="Paper",
             deck="English one-line paper summary for readable scanning.",
-            meta="Hugging Face Papers · 11h ago · signal 6.20",
+            meta="HF Papers · 11h ago · signal 6.20",
             rank=19,
             rank_delta=-4,
         )
@@ -42,7 +42,7 @@ class GenerateNewsDigestCardRenderingTests(unittest.TestCase):
         self.assertIn('class="news-digest-card news-digest-card--paper news-digest-top-card"', html)
         self.assertIn("news-digest-card-badge--paper", html)
         self.assertIn("English one-line paper summary for readable scanning.", html)
-        self.assertIn("Hugging Face Papers", html)
+        self.assertIn("HF Papers", html)
         self.assertIn("<h3 data-pretext-target>PackForcing</h3>", html)
 
     def test_render_markdown_uses_signal_brief_rhythm_instead_of_repeated_cards(self) -> None:
