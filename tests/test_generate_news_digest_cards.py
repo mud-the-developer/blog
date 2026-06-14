@@ -98,11 +98,17 @@ class GenerateNewsDigestCardRenderingTests(unittest.TestCase):
         )
 
         self.assertIn('class="news-digest-signal-brief"', html)
+        self.assertIn('data-digest-layout="editorial-signal"', html)
         self.assertIn('class="news-digest-lead-strip"', html)
-        self.assertIn('class="news-digest-rail-grid"', html)
+        self.assertIn('class="news-digest-signal-board"', html)
         self.assertIn('class="news-digest-compact-row', html)
+        self.assertIn('class="news-digest-row-visual ', html)
+        self.assertIn('class="news-digest-row-metric"', html)
         self.assertIn('class="news-digest-source-ledger"', html)
         self.assertIn('class="news-digest-interrupt-note"', html)
+        self.assertNotIn('class="news-digest-compact-rank"', html)
+        self.assertNotIn('signal 8.60', html)
+        self.assertNotIn('Generated from the ranked feed', html)
         self.assertLess(html.index("news-digest-lead-strip"), html.index("news-digest-source-ledger"))
 
 

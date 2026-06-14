@@ -467,6 +467,43 @@ def meta_without_source(meta: str, source: str) -> str:
     return meta
 
 
+def compact_count(value: int) -> str:
+    if value >= 1_000_000:
+        return f"{value / 1_000_000:.1f}M".rstrip("0").rstrip(".")
+    if value >= 1_000:
+        return f"{value / 1_000:.1f}k".rstrip("0").rstrip(".")
+    return str(value)
+
+
+def public_meta_without_score(card: "NewsItem", *, limit: int = 3) -> str:
+    bits = [bit.strip() for bit in meta_without_source(card.meta, card.source).split("·")]
+    public_bits: list[str] = []
+    for bit in bits:
+        lowered = bit.lower()
+        if not bit:
+            continue
+        if lowered.startswith("signal "):
+            continue
+        if re.fullmatch(r"(?:up|down)\s+\d+", lowered):
+            continue
+        if card.badge == "Repo" and re.fullmatch(r"[\d,]+\s+stars", lowered):
+            continue
+        if card.badge == "Paper" and lowered == relative_hours_label(card.published_hours_ago).lower():
+            continue
+        public_bits.append(bit)
+    return " · ".join(public_bits[:limit])
+
+
+def compact_metric_for(card: "NewsItem") -> tuple[str, str]:
+    if card.badge == "Repo" and card.stars > 0:
+        return compact_count(card.stars), "stars"
+    if card.badge == "Paper":
+        return relative_hours_label(card.published_hours_ago), "paper"
+    if card.badge == "Social":
+        return "Community", "wire"
+    return relative_hours_label(card.published_hours_ago), "fresh"
+
+
 def clean_title(value: str) -> str:
     value = re.sub(r"\s+", " ", value).strip()
     value = re.sub(r"\s+-\s+(LinkedIn|x\.com)$", "", value)
@@ -1101,7 +1138,7 @@ def render_digest_card_lines(
         f'            <span class="news-digest-card-badge news-digest-card-badge--{badge_suffix}">{safe_text(card.badge)}</span>',
         "          </div>",
         '          <div class="news-digest-card-eyebrow">',
-        f'            <span class="news-digest-card-meta">{safe_text(meta_without_source(card.meta, card.source))}</span>',
+        f'            <span class="news-digest-card-meta">{safe_text(public_meta_without_score(card))}</span>',
         "          </div>",
     ]
     if lead_note:
@@ -1117,6 +1154,12 @@ def render_digest_card_lines(
     return lines
 
 
+def public_summary_text(value: str) -> str:
+    value = re.sub(r";\s*biggest mover:\s*[^.;]+\(\+\d+\)", "", value)
+    value = re.sub(r"\s+", " ", value).strip()
+    return ensure_terminal_punctuation(value) if value else ""
+
+
 def description_from_post(path: Path) -> str:
     raw = path.read_text()
     match = re.search(r'^description:\s*(.+)$', raw, flags=re.MULTILINE)
@@ -1127,10 +1170,10 @@ def description_from_post(path: Path) -> str:
         return ""
     if value.startswith(('"', "'")):
         try:
-            return json.loads(value)
+            return public_summary_text(json.loads(value))
         except json.JSONDecodeError:
-            return value.strip("\"'")
-    return value
+            return public_summary_text(value.strip("\"'"))
+    return public_summary_text(value)
 
 
 def deck_for(item: dict[str, Any], badge: str) -> str:
@@ -1142,10 +1185,6 @@ def deck_for(item: dict[str, Any], badge: str) -> str:
     tags = [tag for tag in item.get("tags") or [] if tag.lower() != "other"]
     tag_text = ", ".join(tags[:3]).lower()
     movement = ""
-    if isinstance(rank_delta, int) and rank_delta > 0:
-        movement = f" Up {rank_delta} spots from the previous run."
-    elif isinstance(rank_delta, int) and rank_delta < 0:
-        movement = f" Down {abs(rank_delta)} spots from the previous run."
     if badge == "Repo":
         repo_desc = repo_description_from_title(title)
         update_label = repo_update_label(item)
@@ -1197,10 +1236,10 @@ def deck_for(item: dict[str, Any], badge: str) -> str:
         return f"vRAN-oriented signal that bubbled up {relative_hours_label(hours)}.{movement}"
     if tag_text:
         return clamp_text(
-            f"Fresh {tag_text} signal ranked into the current issue {relative_hours_label(hours)}.{movement}",
+            f"Fresh {tag_text} signal surfaced in the current issue {relative_hours_label(hours)}.{movement}",
             170,
         )
-    return clamp_text(f"Fresh signal ranked into the current issue {relative_hours_label(hours)}.{movement}", 170)
+    return clamp_text(f"Fresh signal surfaced in the current issue {relative_hours_label(hours)}.{movement}", 170)
 
 
 def meta_for(item: dict[str, Any]) -> str:
@@ -1429,19 +1468,6 @@ def issue_summary(section_items: dict[str, list[dict[str, Any]]]) -> str:
         fragments.append(f"paper attention is clustering around {headline_for(paper_item)}")
     if social_item:
         fragments.append(f"social attention is tilting toward {headline_for(social_item)}")
-    movers = sorted(
-        (
-            item
-            for group in section_items.values()
-            for item in group
-            if isinstance(item.get("rank_delta"), int) and item.get("rank_delta", 0) > 0
-        ),
-        key=lambda item: (int(item.get("rank_delta") or 0), local_signal_score(item)),
-        reverse=True,
-    )
-    if movers:
-        mover = movers[0]
-        fragments.append(f"biggest mover: {headline_for(mover)} (+{int(mover['rank_delta'])})")
     lead = ensure_terminal_punctuation("; ".join(fragments)) if fragments else "Signals stayed active."
     return (
         f"{lead} "
@@ -1756,11 +1782,11 @@ def fallback_beta_digest(issue_dt: datetime, context: DigestContext) -> BetaDige
             f"while {repo_count} GitHub-led signals anchor the repo side of the brief."
         ),
         ensure_terminal_punctuation(
-            "Use the structured digest below when you need the full wire, raw links, and the longer tail of items that did not make the front narrative."
+            "The sections below keep the longer tail available without crowding the lead read."
         ),
     ]
     lead = ensure_terminal_punctuation(
-        f"{context.summary} This fallback brief keeps the page live when the optional Gemma pass times out."
+        f"{context.summary} The lead read pulls the strongest repo, paper, and community items into one skimmable pass."
     )
     return BetaDigest(
         title=f"AI News Brief — {issue_dt.strftime('%b %d')}",
@@ -1770,7 +1796,7 @@ def fallback_beta_digest(issue_dt: datetime, context: DigestContext) -> BetaDige
         takeaways=takeaways,
         section_titles=section_titles,
         section_bodies=section_bodies,
-        closing="The structured digest remains the complete reference layer for the rest of the wire.",
+        closing="The rest of the issue keeps the supporting links close at hand.",
     )
 
 
@@ -2249,7 +2275,7 @@ def render_beta_markdown(issue_dt: datetime, generated_dt: datetime, context: Di
         f'      <p class="news-digest-section-description" data-pretext-target>{safe_text(beta.lead)}</p>',
         '      <div class="news-digest-actions" role="group" aria-label="Beta digest actions">',
         f'        <a class="post-cta-link" href="{safe_text(structured_url)}">Open structured digest</a>',
-        '        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>',
+        '        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>',
         "      </div>",
         "    </div>",
         '    <div class="news-digest-meta-grid">',
@@ -2454,17 +2480,13 @@ def render_compact_signal_rows(cards: list[NewsItem], *, limit: int = 6) -> list
     for card in cards[:limit]:
         badge_suffix = badge_class_suffix(card.badge)
         source_suffix = source_class_suffix_from_source(card.source)
-        movement = ""
-        if card.rank_delta is not None and card.rank_delta != 0:
-            direction = "+" if card.rank_delta > 0 else "−"
-            movement = f"{direction}{abs(card.rank_delta)}"
-        else:
-            movement = f"#{card.rank}" if card.rank < 999 else relative_hours_label(card.published_hours_ago)
+        metric_value, metric_label = compact_metric_for(card)
+        meta = public_meta_without_score(card)
         lines.extend(
             [
                 f'        <a class="news-digest-compact-row news-digest-compact-row--{badge_suffix}" href="{safe_text(card.url)}" target="_blank" rel="noreferrer">',
-                '          <span class="news-digest-compact-rank" aria-label="Signal movement">',
-                f'            <strong>{safe_text(movement)}</strong>',
+                f'          <span class="news-digest-row-visual news-digest-row-visual--{source_suffix}" aria-hidden="true">',
+                f'            <strong>{safe_text(source_mark(card.source))}</strong>',
                 f'            <em>{safe_text(card.badge)}</em>',
                 '          </span>',
                 '          <span class="news-digest-compact-copy">',
@@ -2475,9 +2497,10 @@ def render_compact_signal_rows(cards: list[NewsItem], *, limit: int = 6) -> list
                 f'            <strong data-pretext-target>{safe_text(card.headline or card.title)}</strong>',
                 f'            <span data-pretext-target>{safe_text(card.deck)}</span>',
                 '          </span>',
-                '          <span class="news-digest-compact-meta">',
-                f'            <strong>{card.score:.1f}</strong>',
-                f'            <em>{safe_text(meta_without_source(card.meta, card.source))}</em>',
+                '          <span class="news-digest-row-metric">',
+                f'            <strong>{safe_text(metric_value)}</strong>',
+                f'            <em>{safe_text(metric_label)}</em>',
+                f'            <span>{safe_text(meta)}</span>',
                 '          </span>',
                 '        </a>',
             ]
@@ -2498,12 +2521,13 @@ def render_signal_lead_strip(context: DigestContext, brief: BetaDigest) -> list[
         '      <div class="news-digest-lead-cards">',
     ]
     for index, card in enumerate(lead_cards, start=1):
+        metric_value, metric_label = compact_metric_for(card)
         lines.extend(
             [
                 f'        <a class="news-digest-lead-card news-digest-lead-card--{badge_class_suffix(card.badge)}" href="{safe_text(card.url)}" target="_blank" rel="noreferrer">',
-                f'          <span class="news-digest-lead-index">0{index}</span>',
+                f'          <span class="news-digest-lead-index">{safe_text(source_mark(card.source))}</span>',
                 f'          <strong data-pretext-target>{safe_text(card.headline or card.title)}</strong>',
-                f'          <em>{safe_text(source_label(card.source))} · {card.score:.1f}</em>',
+                f'          <em>{safe_text(source_label(card.source))} · {safe_text(metric_value)} {safe_text(metric_label)}</em>',
                 '        </a>',
             ]
         )
@@ -2514,8 +2538,8 @@ def render_signal_lead_strip(context: DigestContext, brief: BetaDigest) -> list[
 def render_source_ledger(rows: list[dict[str, Any]]) -> list[str]:
     max_value = max((int(row.get("value") or 0) for row in rows[:6]), default=1)
     lines = [
-        '    <aside class="news-digest-source-ledger" aria-label="Source ledger">',
-        '      <p class="section-kicker">Source ledger</p>',
+        '    <aside class="news-digest-source-ledger" aria-label="Source mix">',
+        '      <p class="section-kicker">Source mix</p>',
         '      <div class="news-digest-source-ledger-list">',
     ]
     for row in rows[:6]:
@@ -2550,31 +2574,31 @@ def render_signal_brief_section(
     total_signals = len(repo_cards) + len(paper_cards) + len(social_cards)
     note = brief.takeaways[0] if brief.takeaways else context.summary
     lines = [
-        '  <section class="news-digest-signal-brief" aria-label="Signal brief">',
+        '  <section class="news-digest-signal-brief" data-digest-layout="editorial-signal" aria-label="Daily signal brief">',
         '    <header class="news-digest-section-head">',
-        '      <p class="section-kicker">Signal Brief</p>',
-        '      <h2 data-pretext-target>Lead, board, ledger</h2>',
+        '      <p class="section-kicker">Daily Brief</p>',
+        '      <h2 data-pretext-target>Today’s read list</h2>',
         f'      <p class="news-digest-section-description" data-pretext-target>{safe_text(context.summary)}</p>',
         '    </header>',
         *render_signal_lead_strip(context, brief),
-        '    <div class="news-digest-rail-grid">',
-        '      <section class="news-digest-rail-panel">',
+        '    <div class="news-digest-signal-board">',
+        '      <section class="news-digest-signal-column">',
         '        <p class="section-kicker">Repo momentum</p>',
         f'        <h3 data-pretext-target>{safe_text(repo_title or "Repository velocity")}</h3>',
-        f'        <p data-pretext-target>{safe_text(repo_description or "Compact GitHub-style rows keep repo movement skimmable.")}</p>',
+        f'        <p data-pretext-target>{safe_text(repo_description or "Open-source projects with enough traction to skim first.")}</p>',
         *render_compact_signal_rows(repo_cards, limit=6),
         '      </section>',
-        '      <section class="news-digest-rail-panel">',
+        '      <section class="news-digest-signal-column">',
         '        <p class="section-kicker">Paper queue</p>',
         f'        <h3 data-pretext-target>{safe_text(paper_title or "Paper queue")}</h3>',
-        f'        <p data-pretext-target>{safe_text(paper_description or "Paper signals stay dense, sourced, and easy to compare.")}</p>',
+        f'        <p data-pretext-target>{safe_text(paper_description or "Research picks worth bookmarking for a deeper read.")}</p>',
         *render_compact_signal_rows(paper_cards, limit=6),
         '      </section>',
         '    </div>',
         '    <div class="news-digest-interrupt-note">',
         '      <p class="section-kicker">Editor note</p>',
         f'      <strong data-pretext-target>{safe_text(note)}</strong>',
-        f'      <span>{total_signals} curated signals made this issue; the ledger below keeps the source mix auditable.</span>',
+        f'      <span>{total_signals} curated items made this issue; the source mix below shows where today’s brief came from.</span>',
         '    </div>',
         *render_source_ledger(context.source_counts),
         '  </section>',
@@ -2624,7 +2648,7 @@ def render_markdown(
         f'      <p class="news-digest-lead" data-pretext-target>{safe_text(brief.dek or context.summary)}</p>',
         f'      <p class="news-digest-section-description" data-pretext-target>{safe_text(brief.lead or context.summary)}</p>',
         '      <div class="news-digest-actions" role="group" aria-label="News actions">',
-        '        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>',
+        '        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>',
         '        <a class="post-cta-link" href="#digest-archive">Digest archive</a>',
         f'        <a class="post-cta-link" href="{safe_text(ARCHIVE_URL)}">Monthly archive</a>',
         "      </div>",
@@ -2720,7 +2744,7 @@ def render_markdown(
             f'    <a class="post-cta-link news-digest-archive-link" href="{safe_text(ARCHIVE_URL)}">Browse the monthly archive</a>',
             "  </section>",
             "",
-            f'  <p class="news-digest-footnote">Generated from the ranked feed for {safe_text(issue_label)} as one single daily issue.</p>',
+            f'  <p class="news-digest-footnote">Generated from the curated feed for {safe_text(issue_label)} as one daily issue.</p>',
             "</div>",
             "",
         ]
@@ -2761,7 +2785,7 @@ def render_archive_markdown(
         '      <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>',
         '      <div class="news-digest-actions" role="group" aria-label="Archive actions">',
         f'        <a class="post-cta-link" href="{safe_text(latest_digest_url)}">Latest issue</a>',
-        '        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Raw feed JSON</a>',
+        '        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>',
         "      </div>",
         "    </div>",
         '    <div class="news-digest-meta-grid">',
