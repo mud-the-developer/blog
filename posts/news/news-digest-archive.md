@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-06-16
+date: 2026-06-17
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/posts/2026-06-16-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/posts/2026-06-17-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-06-16T04:09:05.348980+09:00">Jun 16, 2026 · 4:09 AM KST</time></strong>
+        <strong><time datetime="2026-06-17T03:58:30.362698+09:00">Jun 17, 2026 · 3:58 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>85</strong>
+        <strong>86</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-06-16">Jun 16, 2026</time></strong>
+        <strong><time datetime="2026-06-17">Jun 17, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around OmniVideo-100K: A Dataset for Audio-Visual Reasoning through Structured Scripts and Evidence Ch…; social attention is tilting toward oh my god its happening @MistralAI has officially confirmed the upcoming release of Le Chaton F… 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Nemotron 3 Ultra: Open, Efficient Mixture-of-Experts Hybrid Mamba-Transformer Model for Agentic…; social attention is tilting toward When failover is not secure: Building highly available PostgreSQL on Kubernetes. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>June 2026</span><span class="news-digest-month-count">16 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>June 2026</span><span class="news-digest-month-count">17 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-06-17-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-06-17</span>
+            <strong>AI News Brief — 2026-06-17</strong>
+            <span>Today&#x27;s AI landscape highlights strong momentum in agentic model development and significant new research on hybrid architectures and AI governance.</span>
+          </a>
           <a class="news-digest-archive-item" href="/posts/2026-06-16-ai-news-digest/">
             <span class="news-digest-archive-date">2026-06-16</span>
             <strong>AI News Brief — 2026-06-16</strong>

@@ -709,6 +709,44 @@
     ],
     "title": "Agentic Coding & Retrieval Shifts"
   },
+  "da7197a97962043b7d8aa7a91b29774bc8c49c452af6c641bcaf001d4497b561": {
+    "article_body": [
+      "GitHub velocity this period is prominently driven by projects centered on AI agents. Topping the list is `NousResearch/hermes-agent`, an initiative designed for agents that evolve over time. Other significant repositories include `code-yeongyu/oh-my-openagent`, a coding agent harness, and `lobehub/lobehub`, an agent operator for managing AI teams. This sustained focus on agentic frameworks suggests a maturing interest in autonomous and semi-autonomous AI systems.",
+      "In research, the `Nemotron 3 Ultra` paper is drawing considerable attention. It details a large-scale language model employing a hybrid Mamba-Attention architecture with 550 billion parameters, aiming for high inference throughput and extended context length in agentic reasoning tasks. This indicates a continued push towards more efficient and capable foundational models. Additionally, the `Artificial Intelligence Index Report 2026` has surfaced, providing an overview of AI advancements and the evolving challenges in governance and evaluation.",
+      "Further academic developments include `Memento`, a framework for consistent long video generation, and `Ling and Ring 2.6`, which explores efficient agentic intelligence at a trillion-parameter scale. The `CODA-BENCH` paper also highlights the current limitations of code agents in handling data-intensive tasks, pointing to areas for future improvement. These papers collectively illustrate a broad research front, from foundational model architecture to specific application challenges.",
+      "Community engagement, as tracked across various platforms, shows a diverse range of interests. While some discussions revolve around technical infrastructure, such as building highly available PostgreSQL on Kubernetes, other signals point to broader AI/ML paper collections and personal AI development platforms. The `Introducing GLM-5.2` announcement on X.com also garnered attention for its advancements in coding and agentic tasks, featuring a 1M context window."
+    ],
+    "closing": "This concludes today's briefing on key developments in the AI beta landscape. We will continue to monitor these trends and provide further updates.",
+    "dek": "Today's AI landscape highlights strong momentum in agentic model development and significant new research on hybrid architectures and AI governance.",
+    "lead": "The AI ecosystem continues to see rapid development, with GitHub activity led by `NousResearch/hermes-agent`, a project focused on adaptive AI agents. Concurrently, paper attention is clustering around advanced model architectures, notably `Nemotron 3 Ultra`, which introduces an efficient Mixture-of-Experts hybrid Mamba-Transformer model for agentic reasoning. Community discussions, while diverse, include notable attention on infrastructure topics like secure PostgreSQL failover on Kubernetes.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "Agentic AI development remains a high-velocity area on GitHub, with new frameworks for adaptive and operational agents gaining traction.",
+      "Research is advancing hybrid model architectures like Mamba-Transformer for improved efficiency and agentic reasoning capabilities.",
+      "The AI Index Report highlights ongoing challenges in AI governance and evaluation, underscoring the need for robust frameworks.",
+      "Community discussions reflect both core infrastructure concerns and emerging AI model capabilities, indicating a broad and active ecosystem."
+    ],
+    "title": "AI Beta Brief: Agentic Models and New Research Trends"
+  },
+  "da7197a97962043b7d8aa7a91b29774bc8c49c452af6c641bcaf001d4497b561::overview": {
+    "article_body": [
+      "GitHub velocity this period is prominently driven by projects centered on AI agents. Topping the list is `NousResearch/hermes-agent`, an initiative designed for agents that evolve over time. Other significant repositories include `code-yeongyu/oh-my-openagent`, a coding agent harness, and `lobehub/lobehub`, an agent operator for managing AI teams. This sustained focus on agentic frameworks suggests a maturing interest in autonomous and semi-autonomous AI systems.",
+      "In research, the `Nemotron 3 Ultra` paper is drawing considerable attention. It details a large-scale language model employing a hybrid Mamba-Attention architecture with 550 billion parameters, aiming for high inference throughput and extended context length in agentic reasoning tasks. This indicates a continued push towards more efficient and capable foundational models. Additionally, the `Artificial Intelligence Index Report 2026` has surfaced, providing an overview of AI advancements and the evolving challenges in governance and evaluation.",
+      "Further academic developments include `Memento`, a framework for consistent long video generation, and `Ling and Ring 2.6`, which explores efficient agentic intelligence at a trillion-parameter scale. The `CODA-BENCH` paper also highlights the current limitations of code agents in handling data-intensive tasks, pointing to areas for future improvement. These papers collectively illustrate a broad research front, from foundational model architecture to specific application challenges.",
+      "Community engagement, as tracked across various platforms, shows a diverse range of interests. While some discussions revolve around technical infrastructure, such as building highly available PostgreSQL on Kubernetes, other signals point to broader AI/ML paper collections and personal AI development platforms. The `Introducing GLM-5.2` announcement on X.com also garnered attention for its advancements in coding and agentic tasks, featuring a 1M context window."
+    ],
+    "closing": "This concludes today's briefing on key developments in the AI beta landscape. We will continue to monitor these trends and provide further updates.",
+    "dek": "Today's AI landscape highlights strong momentum in agentic model development and significant new research on hybrid architectures and AI governance.",
+    "lead": "The AI ecosystem continues to see rapid development, with GitHub activity led by `NousResearch/hermes-agent`, a project focused on adaptive AI agents. Concurrently, paper attention is clustering around advanced model architectures, notably `Nemotron 3 Ultra`, which introduces an efficient Mixture-of-Experts hybrid Mamba-Transformer model for agentic reasoning. Community discussions, while diverse, include notable attention on infrastructure topics like secure PostgreSQL failover on Kubernetes.",
+    "takeaways": [
+      "Agentic AI development remains a high-velocity area on GitHub, with new frameworks for adaptive and operational agents gaining traction.",
+      "Research is advancing hybrid model architectures like Mamba-Transformer for improved efficiency and agentic reasoning capabilities.",
+      "The AI Index Report highlights ongoing challenges in AI governance and evaluation, underscoring the need for robust frameworks.",
+      "Community discussions reflect both core infrastructure concerns and emerging AI model capabilities, indicating a broad and active ecosystem."
+    ],
+    "title": "AI Beta Brief: Agentic Models and New Research Trends"
+  },
   "df12fd24e2efbca685fde74ef0e878b89f66f7479000e8d1bb4f6f3928fa606d": {
     "paragraphs": [
       "New research is highlighting critical failure modes in agentic reinforcement learning. The RAGEN-2 paper identifies \"reasoning collapse,\" specifically template collapse in multi-turn LLM agents, as a hidden failure mode that standard entropy metrics cannot detect. To combat this, researchers propose using mutual information proxies and SNR-aware filtering to stabilize reasoning.",
