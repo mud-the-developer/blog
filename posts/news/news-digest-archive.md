@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-06-18
+date: 2026-06-19
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/posts/2026-06-18-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/posts/2026-06-19-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-06-18T02:59:36.987974+09:00">Jun 18, 2026 · 2:59 AM KST</time></strong>
+        <strong><time datetime="2026-06-19T03:11:18.990354+09:00">Jun 19, 2026 · 3:11 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>87</strong>
+        <strong>88</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-06-18">Jun 18, 2026</time></strong>
+        <strong><time datetime="2026-06-19">Jun 19, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by openai/codex; paper attention is clustering around Visual-Seeker: Towards Visual-Native Multimodal Agentic Search via Active Visual Reasoning; social attention is tilting toward Send HTTP request to Bash /dev/tcp from container without curl. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around MaineCoon: Pursuing A Real-Time Audio-Visual Social World Model; social attention is tilting toward OpenAI&#x27;s losses increase nearly 8x by 2025... $34 billion spent. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>June 2026</span><span class="news-digest-month-count">18 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>June 2026</span><span class="news-digest-month-count">19 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-06-19-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-06-19</span>
+            <strong>AI News Brief — 2026-06-19</strong>
+            <span>Today&#x27;s AI landscape is marked by significant advancements in agentic GitHub projects, novel real-time audio-visual world models in research, and community discussion around OpenAI&#x27;s financial trajectory.</span>
+          </a>
           <a class="news-digest-archive-item" href="/posts/2026-06-18-ai-news-digest/">
             <span class="news-digest-archive-date">2026-06-18</span>
             <strong>AI News Brief — 2026-06-18</strong>
