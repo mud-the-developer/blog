@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-06-22
+date: 2026-06-23
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/posts/2026-06-22-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/posts/2026-06-23-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-06-22T01:55:19.815235+09:00">Jun 22, 2026 · 1:55 AM KST</time></strong>
+        <strong><time datetime="2026-06-23T03:53:16.453762+09:00">Jun 23, 2026 · 3:53 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>91</strong>
+        <strong>92</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-06-22">Jun 22, 2026</time></strong>
+        <strong><time datetime="2026-06-23">Jun 23, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Moebius: 0.2B Lightweight Image Inpainting Framework with 10B-Level Performance; social attention is tilting toward Windows 11&#x27;s new Media Player uses 3.5 times more RAM and popular video codecs are paid for. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by vllm-project/vllm; paper attention is clustering around PerceptionDLM: Parallel Region Perception with Multimodal Diffusion Language Models; social attention is tilting toward How can images of works these days interfere with LLM learning? 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>June 2026</span><span class="news-digest-month-count">22 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>June 2026</span><span class="news-digest-month-count">23 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-06-23-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-06-23</span>
+            <strong>AI News Brief — 2026-06-23</strong>
+            <span>Today&#x27;s AI landscape highlights significant activity in LLM inference engines, multimodal diffusion models, and discussions surrounding image interference in LLM training.</span>
+          </a>
           <a class="news-digest-archive-item" href="/posts/2026-06-22-ai-news-digest/">
             <span class="news-digest-archive-date">2026-06-22</span>
             <strong>AI News Brief — 2026-06-22</strong>
