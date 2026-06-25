@@ -1040,6 +1040,42 @@
     ],
     "title": "Inference Efficiency and Agentic Coding Tools"
   },
+  "eaa6d56f5cf7d97290b2e4b9a5a43db18b7f8ad7f5a77281d0be15311311beda": {
+    "article_body": [
+      "GitHub activity is heavily weighted towards agentic AI projects. NousResearch/hermes-agent, described as \"the agent that grows with you,\" stands out with over 200,000 stars and consistent weekly growth. Other coding agents, including openai/codex and anomalyco/opencode, also feature prominently in the top-ranked repositories, indicating a sustained and active push in this area of AI development.",
+      "The research front is marked by significant progress in generative AI, particularly in multimedia. The UnityShots paper, focusing on memory-driven multi-shot audio-video generation with boundary-aware gating, has garnered attention for its approach to maintaining consistent subject appearance and audio across video cuts. This work leverages both fixed-size long-term and short-term memory slots to improve coherence in generated content.",
+      "In a strategic industry move, OpenAI has introduced its inaugural in-house inference chip, \"Jalapeño,\" developed in collaboration with Broadcom. This initiative signals a broader trend among leading AI companies to optimize proprietary hardware for their specific AI workloads, potentially enhancing performance and efficiency. Community discussions also touched on intellectual property concerns, with Anthropic reportedly alleging illegal extraction of Claude AI model capabilities by Alibaba."
+    ],
+    "closing": "This concludes today's AI beta brief for June 26, 2026. We will continue to monitor these developments and provide updates.",
+    "dek": "Today's AI landscape is characterized by rapid advancements in agentic systems, significant research in memory-driven audio-video generation, and OpenAI's strategic move into custom inference hardware.",
+    "lead": "The AI development cycle today shows a strong focus on agentic systems, with NousResearch's hermes-agent leading GitHub velocity. Concurrently, research attention is drawn to advanced audio-video generation techniques, exemplified by the UnityShots paper. A notable industry development includes OpenAI's unveiling of its first in-house inference chip, \"Jalapeño,\" developed in collaboration with Broadcom.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "Agentic AI systems continue to drive significant open-source development and community engagement.",
+      "Research in generative AI is advancing towards more coherent and consistent multi-modal content creation.",
+      "Major AI developers are increasingly investing in custom hardware solutions to support their inference needs.",
+      "The competitive landscape is also seeing discussions around intellectual property and model capabilities."
+    ],
+    "title": "AI Daily Brief: Agentic Systems, Generative Video, and OpenAI's New Chip"
+  },
+  "eaa6d56f5cf7d97290b2e4b9a5a43db18b7f8ad7f5a77281d0be15311311beda::overview": {
+    "article_body": [
+      "GitHub activity is heavily weighted towards agentic AI projects. NousResearch/hermes-agent, described as \"the agent that grows with you,\" stands out with over 200,000 stars and consistent weekly growth. Other coding agents, including openai/codex and anomalyco/opencode, also feature prominently in the top-ranked repositories, indicating a sustained and active push in this area of AI development.",
+      "The research front is marked by significant progress in generative AI, particularly in multimedia. The UnityShots paper, focusing on memory-driven multi-shot audio-video generation with boundary-aware gating, has garnered attention for its approach to maintaining consistent subject appearance and audio across video cuts. This work leverages both fixed-size long-term and short-term memory slots to improve coherence in generated content.",
+      "In a strategic industry move, OpenAI has introduced its inaugural in-house inference chip, \"Jalapeño,\" developed in collaboration with Broadcom. This initiative signals a broader trend among leading AI companies to optimize proprietary hardware for their specific AI workloads, potentially enhancing performance and efficiency. Community discussions also touched on intellectual property concerns, with Anthropic reportedly alleging illegal extraction of Claude AI model capabilities by Alibaba."
+    ],
+    "closing": "This concludes today's AI beta brief for June 26, 2026. We will continue to monitor these developments and provide updates.",
+    "dek": "Today's AI landscape is characterized by rapid advancements in agentic systems, significant research in memory-driven audio-video generation, and OpenAI's strategic move into custom inference hardware.",
+    "lead": "The AI development cycle today shows a strong focus on agentic systems, with NousResearch's hermes-agent leading GitHub velocity. Concurrently, research attention is drawn to advanced audio-video generation techniques, exemplified by the UnityShots paper. A notable industry development includes OpenAI's unveiling of its first in-house inference chip, \"Jalapeño,\" developed in collaboration with Broadcom.",
+    "takeaways": [
+      "Agentic AI systems continue to drive significant open-source development and community engagement.",
+      "Research in generative AI is advancing towards more coherent and consistent multi-modal content creation.",
+      "Major AI developers are increasingly investing in custom hardware solutions to support their inference needs.",
+      "The competitive landscape is also seeing discussions around intellectual property and model capabilities."
+    ],
+    "title": "AI Daily Brief: Agentic Systems, Generative Video, and OpenAI's New Chip"
+  },
   "f45a48e3f31e9edfa660f59aba178d1633f4fafba702a4b39a1fcfada47c8f85": {
     "article_body": [
       "On the development front, agentic AI systems are demonstrating robust momentum. NousResearch/hermes-agent, an agent designed for growth, registered the highest signal on GitHub, accumulating over 192,000 stars and adding 800 new stars in the past week. Other significant repositories include vllm-project/vllm, a high-throughput inference engine for LLMs, and code-yeongyu/oh-my-openagent, a coding agent harness, both showing strong recent activity and star growth. This indicates a sustained focus on practical, scalable AI agent implementations and efficient LLM serving infrastructure.",
