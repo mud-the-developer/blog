@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-06-27
+date: 2026-06-28
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/posts/2026-06-27-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/posts/2026-06-28-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-06-27T02:10:39.795386+09:00">Jun 27, 2026 · 2:10 AM KST</time></strong>
+        <strong><time datetime="2026-06-28T01:33:20.424953+09:00">Jun 28, 2026 · 1:33 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>96</strong>
+        <strong>97</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-06-27">Jun 27, 2026</time></strong>
+        <strong><time datetime="2026-06-28">Jun 28, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by langgenius/dify; paper attention is clustering around OPID: On-Policy Skill Distillation for Agentic Reinforcement Learning; social attention is tilting toward Don’t let AI take the lead — what we learned from two automation failures. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around PhysiFormer: Learning to Simulate Mechanics in World Space; social attention is tilting toward US allows Anthropic’s Mythos AI to be released to ‘trusted’ US organizations. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>June 2026</span><span class="news-digest-month-count">27 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>June 2026</span><span class="news-digest-month-count">28 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-06-28-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-06-28</span>
+            <strong>AI News Brief — 2026-06-28</strong>
+            <span>Today&#x27;s AI landscape is marked by high velocity in agent-driven development on GitHub, alongside new research into physical simulation and notable social attention on Anthropic&#x27;s Mythos AI release.</span>
+          </a>
           <a class="news-digest-archive-item" href="/posts/2026-06-27-ai-news-digest/">
             <span class="news-digest-archive-date">2026-06-27</span>
             <strong>AI News Brief — 2026-06-27</strong>
