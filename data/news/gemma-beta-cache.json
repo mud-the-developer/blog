@@ -1258,6 +1258,44 @@
     ],
     "title": "AI Daily Brief: Agentic Systems, Generative Video, and OpenAI's New Chip"
   },
+  "f0cb1f5784db938955fcb3f643ba305ea1228a17c235548e160836ba1f79c06b": {
+    "article_body": [
+      "The AI ecosystem on July 2, 2026, registered significant activity across open-source repositories, academic papers, and community discussions. A total of 30 key items were identified from GitHub, Hugging Face Papers, GeekNews, X, and LinkedIn, with GitHub projects, particularly those focused on agentic development, showing the highest velocity.",
+      "Leading the GitHub charts is NousResearch/hermes-agent, an agent designed for adaptive growth, which saw considerable activity in the last three hours. Close behind, anomalyco/opencode, an open-source coding agent, also demonstrated strong momentum. This indicates a sustained interest in autonomous development tools and frameworks, with BerriAI/litellm further contributing to the trend by offering a proxy server for over 100 LLM APIs.",
+      "In research, the paper 'SAM2Matting: Generalized Image and Video Matting' garnered attention for its approach to decoupling tracking and matting tasks, leveraging foundational trackers. Another notable publication, the 'Xiaomi-GUI-0 Technical Report,' detailed a native multimodal GUI agent trained in real-device environments, showcasing advancements in practical AI interaction.",
+      "Community discussions, primarily on GeekNews, centered on the evolving relationship between AI and creative professionals, exemplified by the piece 'Don’t ask writers “What do you think about AI?”'. Relatedly, a Chrome extension, 'Branch of Thought,' designed to graph hidden conversation branches in LLMs, also sparked interest, reflecting a desire for greater transparency and control in AI interactions."
+    ],
+    "closing": "This brief provides a snapshot of key AI developments as of July 2, 2026.",
+    "dek": "Today's AI landscape is marked by strong momentum in agentic GitHub projects, particularly NousResearch/hermes-agent, alongside notable research in generalized image and video matting, and community discussion on AI's impact on writers.",
+    "lead": "The AI development sphere today shows a clear focus on agentic tools, with NousResearch/hermes-agent leading GitHub velocity. Concurrently, new research is advancing generalized image and video matting, highlighted by the SAM2Matting paper. Social discourse also reflects ongoing conversations about AI's role in creative fields, particularly concerning writers.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "Agentic development remains a primary focus in open-source AI, with several new and updated projects gaining significant traction.",
+      "Research in computer vision, specifically generalized image and video matting, is advancing through new methodologies.",
+      "The societal impact of AI, particularly on creative professions, continues to be a prominent topic in community discussions.",
+      "Practical tools for enhancing LLM interaction and understanding, such as conversation graphing extensions, are emerging."
+    ],
+    "title": "AI Beta Brief: Agentic Development Dominates GitHub, Matting Research Advances"
+  },
+  "f0cb1f5784db938955fcb3f643ba305ea1228a17c235548e160836ba1f79c06b::overview": {
+    "article_body": [
+      "The AI ecosystem on July 2, 2026, registered significant activity across open-source repositories, academic papers, and community discussions. A total of 30 key items were identified from GitHub, Hugging Face Papers, GeekNews, X, and LinkedIn, with GitHub projects, particularly those focused on agentic development, showing the highest velocity.",
+      "Leading the GitHub charts is NousResearch/hermes-agent, an agent designed for adaptive growth, which saw considerable activity in the last three hours. Close behind, anomalyco/opencode, an open-source coding agent, also demonstrated strong momentum. This indicates a sustained interest in autonomous development tools and frameworks, with BerriAI/litellm further contributing to the trend by offering a proxy server for over 100 LLM APIs.",
+      "In research, the paper 'SAM2Matting: Generalized Image and Video Matting' garnered attention for its approach to decoupling tracking and matting tasks, leveraging foundational trackers. Another notable publication, the 'Xiaomi-GUI-0 Technical Report,' detailed a native multimodal GUI agent trained in real-device environments, showcasing advancements in practical AI interaction.",
+      "Community discussions, primarily on GeekNews, centered on the evolving relationship between AI and creative professionals, exemplified by the piece 'Don’t ask writers “What do you think about AI?”'. Relatedly, a Chrome extension, 'Branch of Thought,' designed to graph hidden conversation branches in LLMs, also sparked interest, reflecting a desire for greater transparency and control in AI interactions."
+    ],
+    "closing": "This brief provides a snapshot of key AI developments as of July 2, 2026.",
+    "dek": "Today's AI landscape is marked by strong momentum in agentic GitHub projects, particularly NousResearch/hermes-agent, alongside notable research in generalized image and video matting, and community discussion on AI's impact on writers.",
+    "lead": "The AI development sphere today shows a clear focus on agentic tools, with NousResearch/hermes-agent leading GitHub velocity. Concurrently, new research is advancing generalized image and video matting, highlighted by the SAM2Matting paper. Social discourse also reflects ongoing conversations about AI's role in creative fields, particularly concerning writers.",
+    "takeaways": [
+      "Agentic development remains a primary focus in open-source AI, with several new and updated projects gaining significant traction.",
+      "Research in computer vision, specifically generalized image and video matting, is advancing through new methodologies.",
+      "The societal impact of AI, particularly on creative professions, continues to be a prominent topic in community discussions.",
+      "Practical tools for enhancing LLM interaction and understanding, such as conversation graphing extensions, are emerging."
+    ],
+    "title": "AI Beta Brief: Agentic Development Dominates GitHub, Matting Research Advances"
+  },
   "f45a48e3f31e9edfa660f59aba178d1633f4fafba702a4b39a1fcfada47c8f85": {
     "article_body": [
       "On the development front, agentic AI systems are demonstrating robust momentum. NousResearch/hermes-agent, an agent designed for growth, registered the highest signal on GitHub, accumulating over 192,000 stars and adding 800 new stars in the past week. Other significant repositories include vllm-project/vllm, a high-throughput inference engine for LLMs, and code-yeongyu/oh-my-openagent, a coding agent harness, both showing strong recent activity and star growth. This indicates a sustained focus on practical, scalable AI agent implementations and efficient LLM serving infrastructure.",

@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-07-01
+date: 2026-07-02
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/posts/2026-07-01-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/posts/2026-07-02-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-07-01T02:16:55.044271+09:00">Jul 1, 2026 · 2:16 AM KST</time></strong>
+        <strong><time datetime="2026-07-02T02:23:38.188666+09:00">Jul 2, 2026 · 2:23 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>100</strong>
+        <strong>101</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-07-01">Jul 1, 2026</time></strong>
+        <strong><time datetime="2026-07-02">Jul 2, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by openai/codex; paper attention is clustering around SAM2Matting: Generalized Image and Video Matting; social attention is tilting toward Show GN: Don&#x27;t entrust your mail to AI — Inbox needs a &#x27;firewall&#x27;, not a secretary (open source). 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around SAM2Matting: Generalized Image and Video Matting; social attention is tilting toward Don’t ask writers “What do you think about AI?”. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>July 2026</span><span class="news-digest-month-count">1 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>July 2026</span><span class="news-digest-month-count">2 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-07-02-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-07-02</span>
+            <strong>AI News Brief — 2026-07-02</strong>
+            <span>Today&#x27;s AI landscape is marked by strong momentum in agentic GitHub projects, particularly NousResearch/hermes-agent, alongside notable research in generalized image and video matting, and community discussion on AI&#x27;s impact on writers.</span>
+          </a>
           <a class="news-digest-archive-item" href="/posts/2026-07-01-ai-news-digest/">
             <span class="news-digest-archive-date">2026-07-01</span>
             <strong>AI News Brief — 2026-07-01</strong>
