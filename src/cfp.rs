@@ -13,6 +13,8 @@ const USER_AGENT: &str = "mud-blog-cfp-radar/0.1 (+https://mud-blog.pages.dev/cf
 pub struct CfpSource {
     pub title: String,
     pub acronym: String,
+    #[serde(default = "default_venue_type", rename = "venueType")]
+    pub venue_type: String,
     pub track: String,
     pub url: String,
     #[serde(default, rename = "conferenceDates")]
@@ -20,13 +22,23 @@ pub struct CfpSource {
     pub location: String,
     #[serde(default, rename = "qualityTier")]
     pub quality_tier: String,
+    #[serde(default, rename = "rankingSource")]
+    pub ranking_source: String,
+    #[serde(default, rename = "rankingYear")]
+    pub ranking_year: String,
     #[serde(default, rename = "impactFactor")]
     pub impact_factor: String,
+    #[serde(default, rename = "impactFactorYear")]
+    pub impact_factor_year: String,
     pub note: String,
     #[serde(default)]
     pub tags: Vec<String>,
     #[serde(default)]
     pub deadline: Option<String>,
+}
+
+fn default_venue_type() -> String {
+    "Conference".to_string()
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -39,12 +51,16 @@ struct CfpConfig {
 pub struct CfpItem {
     pub title: String,
     pub acronym: String,
+    pub venue_type: String,
     pub track: String,
     pub url: String,
     pub conference_dates: String,
     pub location: String,
     pub quality_tier: String,
+    pub ranking_source: String,
+    pub ranking_year: String,
     pub impact_factor: String,
+    pub impact_factor_year: String,
     pub note: String,
     pub tags: Vec<String>,
     pub configured_deadline: Option<String>,
@@ -61,6 +77,8 @@ pub struct CfpIssue {
     pub issue_date: String,
     pub source_count: usize,
     pub active_count: usize,
+    pub conference_count: usize,
+    pub journal_count: usize,
     pub with_configured_deadline_count: usize,
     pub fetched_count: usize,
     pub tracks: BTreeMap<String, usize>,
@@ -189,6 +207,34 @@ fn deadline_label(item: &CfpItem) -> String {
         .unwrap_or_else(|| "TBD / official page".to_string())
 }
 
+fn ranking_label(item: &CfpItem) -> String {
+    let mut parts = Vec::new();
+    if !item.quality_tier.trim().is_empty() {
+        parts.push(item.quality_tier.trim().to_string());
+    }
+    if !item.ranking_source.trim().is_empty() {
+        parts.push(item.ranking_source.trim().to_string());
+    }
+    if !item.ranking_year.trim().is_empty() {
+        parts.push(format!("year: {}", item.ranking_year.trim()));
+    }
+    if parts.is_empty() {
+        "TBD / verify in annual ranking source".to_string()
+    } else {
+        parts.join("; ")
+    }
+}
+
+fn impact_label(item: &CfpItem) -> String {
+    let impact = item.impact_factor.trim();
+    let year = item.impact_factor_year.trim();
+    match (impact.is_empty(), year.is_empty()) {
+        (true, _) => "N/A / verify official metric source".to_string(),
+        (false, true) => impact.to_string(),
+        (false, false) => format!("{impact} ({year})"),
+    }
+}
+
 fn is_wireless_or_communications(item: &CfpItem) -> bool {
     let track = item.track.to_ascii_lowercase();
     let tags = item.tags.join(" ").to_ascii_lowercase();
@@ -209,10 +255,9 @@ fn render_markdown(issue: &CfpIssue) -> String {
     output.push_str("---\n");
     output.push_str(&format!("title: \"CFP Radar — {}\"\n", issue.issue_date));
     output.push_str(&format!("date: {}\n", issue.issue_date));
-    output.push_str("tags:\n  - cfp\n  - conferences\n  - research\n  - wireless\n  - communications\nexcerpt: \"Weekly call-for-papers watchlist with conference dates, deadlines, venue level, and conference metrics for wireless/communications-heavy research venues.\"\n---\n\n");
-    output.push_str(&format!("# CFP Radar — {}\n\n", issue.issue_date));
-    output.push_str("Weekly call-for-papers radar for conferences and workshops relevant to wireless communications, RAN/6G, networking, edge systems, AI systems, and security. Dates are treated as operational leads: always verify the linked official CFP page before planning a submission.\n\n");
-    output.push_str("**Metric note.** Conferences do not have journal-style Impact Factors. The `IF / metric` column therefore records `N/A` plus the ranking/reputation proxy to use instead, while the `level` column is an editorial Q1/Q2-like field-strength label rather than an official journal quartile.\n\n");
+    output.push_str("tags:\n  - cfp\n  - conferences\n  - journals\n  - special-issues\n  - wireless\n  - communications\nexcerpt: \"Weekly CFP watchlist with conferences, journal special issues, deadlines, locations, annual ranking basis, and impact metrics for wireless/communications-heavy venues.\"\n---\n\n");
+    output.push_str("Weekly CFP radar for conferences, workshops, and journal special issues relevant to wireless communications, RAN/6G, networking, edge systems, AI systems, and security. Dates are operational leads: always verify the linked official CFP page before planning a submission.\n\n");
+    output.push_str("**Ranking note.** Journal Q1/Q2 labels are year-specific and category-specific; they must be refreshed from the latest JCR/SCImago-style journal quartile source each year. Conferences do not have journal-style Impact Factors or official Q1/Q2 quartiles, so conference rows use a separate conference-ranking basis such as CORE rank, society flagship status, or field reputation.\n\n");
     let wireless_count = issue
         .items
         .iter()
@@ -221,6 +266,14 @@ fn render_markdown(issue: &CfpIssue) -> String {
     output.push_str("## Snapshot\n\n");
     output.push_str(&format!("- Generated: `{}`\n", issue.generated_at));
     output.push_str(&format!("- Sources watched: **{}**\n", issue.source_count));
+    output.push_str(&format!(
+        "- Conferences / workshops: **{}**\n",
+        issue.conference_count
+    ));
+    output.push_str(&format!(
+        "- Journal special-issue sources: **{}**\n",
+        issue.journal_count
+    ));
     output.push_str(&format!(
         "- Wireless / communications-heavy sources: **{}**\n",
         wireless_count
@@ -235,31 +288,44 @@ fn render_markdown(issue: &CfpIssue) -> String {
     ));
 
     output.push_str("## Watchlist\n\n");
-    output.push_str("| 학회명 | 분야 | 학회 일자 | 접수 deadline | 위치 | Q1/Q2급 수준 | Impact factor / metric | Link |\n");
-    output.push_str("| --- | --- | --- | --- | --- | --- | --- | --- |\n");
+    output.push_str("| Venue name | Type | Field | Event / issue dates | Submission deadline | Location | Q1/Q2 / ranking basis | Impact factor / metric | Link |\n");
+    output.push_str("| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n");
     for item in &issue.items {
         let venue = format!("{} ({})", item.title, item.acronym);
         output.push_str(&format!(
-            "| {} | {} | {} | {} | {} | {} | {} | [CFP]({}) |\n",
+            "| {} | {} | {} | {} | {} | {} | {} | {} | [CFP]({}) |\n",
             markdown_escape(&venue),
+            markdown_escape(&item.venue_type),
             markdown_escape(&item.track),
             markdown_escape(&item.conference_dates),
             markdown_escape(&deadline_label(item)),
             markdown_escape(&item.location),
-            markdown_escape(&item.quality_tier),
-            markdown_escape(&item.impact_factor),
+            markdown_escape(&ranking_label(item)),
+            markdown_escape(&impact_label(item)),
             item.url
         ));
     }
 
-    output.push_str("\n## Deadline signals from official pages\n\n");
+    output.push_str("\n## Ranking policy\n\n");
+    output.push_str("- **Journal rows:** use the configured annual journal-quartile source and year. A Q1/Q2 label is only meaningful with its category and ranking year. Impact Factor means Journal Impact Factor, when the journal publicly exposes it or when the value is updated from JCR by the maintainer.\n");
+    output.push_str("- **Conference/workshop rows:** do not use journal Impact Factor. The ranking column records a conference-specific proxy such as CORE rank, IEEE/ACM flagship status, or field reputation.\n");
+    output.push_str("- **Annual refresh:** the weekly job keeps deadlines fresh; the configured Q/JIF metadata should be reviewed yearly when new JCR/SJR/CORE releases are available.\n\n");
+
+    output.push_str("## Deadline signals from official pages\n\n");
     for item in &issue.items {
         output.push_str(&format!("### {} ({})\n\n", item.title, item.acronym));
-        output.push_str(&format!("- Track: {}\n", item.track));
-        output.push_str(&format!("- Conference dates: {}\n", item.conference_dates));
+        output.push_str(&format!("- Type: {}\n", item.venue_type));
+        output.push_str(&format!("- Field: {}\n", item.track));
+        output.push_str(&format!(
+            "- Event / issue dates: {}\n",
+            item.conference_dates
+        ));
         output.push_str(&format!("- Location: {}\n", item.location));
-        output.push_str(&format!("- Level: {}\n", item.quality_tier));
-        output.push_str(&format!("- IF / metric: {}\n", item.impact_factor));
+        output.push_str(&format!("- Ranking basis: {}\n", ranking_label(item)));
+        output.push_str(&format!(
+            "- Impact factor / metric: {}\n",
+            impact_label(item)
+        ));
         output.push_str(&format!("- Source: [{}]({})\n", item.url, item.url));
         output.push_str(&format!("- Fetch status: `{}`\n", item.fetch_status));
         if let Some(deadline) = &item.configured_deadline {
@@ -331,12 +397,16 @@ pub async fn update_cfp_artifacts(
         items.push(CfpItem {
             title: source.title,
             acronym: source.acronym,
+            venue_type: configured_or_tbd(&source.venue_type),
             track: source.track,
             url: source.url,
             conference_dates: configured_or_tbd(&source.conference_dates),
             location: source.location,
             quality_tier: configured_or_tbd(&source.quality_tier),
+            ranking_source: source.ranking_source,
+            ranking_year: source.ranking_year,
             impact_factor: configured_or_tbd(&source.impact_factor),
+            impact_factor_year: source.impact_factor_year,
             note: source.note,
             tags: source.tags,
             configured_deadline: source.deadline,
@@ -355,11 +425,18 @@ pub async fn update_cfp_artifacts(
         .iter()
         .filter(|item| item.days_until_deadline.is_none_or(|days| days >= 0))
         .count();
+    let conference_count = items
+        .iter()
+        .filter(|item| !item.venue_type.to_ascii_lowercase().contains("journal"))
+        .count();
+    let journal_count = items.len().saturating_sub(conference_count);
     let issue = CfpIssue {
         generated_at: generated_at_utc(),
         issue_date: issue_date.clone(),
         source_count: items.len(),
         active_count,
+        conference_count,
+        journal_count,
         with_configured_deadline_count,
         fetched_count,
         tracks,
@@ -418,6 +495,13 @@ pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIss
             format!("Wireless/communications CFP coverage is too low: {wireless_count}").into(),
         );
     }
+    if issue.journal_count < 6 {
+        return Err(format!(
+            "Journal special-issue CFP coverage is too low: {}",
+            issue.journal_count
+        )
+        .into());
+    }
     if !static_latest_path.exists() {
         return Err("static/cfp/data/latest.json is missing".into());
     }
@@ -428,11 +512,14 @@ pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIss
         return Err(format!("CFP markdown issue is missing: {}", post_path.display()).into());
     }
     let post = fs::read_to_string(&post_path).await?;
-    if !post.contains("# CFP Radar")
+    if post.contains("| 학회명 |")
         || !post.contains("## Watchlist")
-        || !post.contains("학회 일자")
-        || !post.contains("접수 deadline")
+        || !post.contains("Venue name")
+        || !post.contains("Submission deadline")
+        || !post.contains("Q1/Q2 / ranking basis")
         || !post.contains("Impact factor / metric")
+        || !post.contains("Journal special")
+        || !post.contains("Conference")
     {
         return Err("CFP markdown issue is missing required public sections".into());
     }
