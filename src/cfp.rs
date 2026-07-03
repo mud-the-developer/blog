@@ -78,6 +78,7 @@ pub struct CfpIssue {
     pub source_count: usize,
     pub active_count: usize,
     pub conference_count: usize,
+    pub workshop_count: usize,
     pub journal_count: usize,
     pub with_configured_deadline_count: usize,
     pub fetched_count: usize,
@@ -250,14 +251,113 @@ fn is_wireless_or_communications(item: &CfpItem) -> bool {
     .any(|needle| track.contains(needle) || tags.contains(needle))
 }
 
+fn is_journal(item: &CfpItem) -> bool {
+    item.venue_type.to_ascii_lowercase().contains("journal")
+}
+
+fn is_workshop(item: &CfpItem) -> bool {
+    item.venue_type.to_ascii_lowercase().contains("workshop")
+}
+
+fn is_conference(item: &CfpItem) -> bool {
+    !is_journal(item) && !is_workshop(item)
+}
+
+fn deadline_sort_value(item: &CfpItem) -> i64 {
+    item.days_until_deadline.unwrap_or(i64::MAX)
+}
+
+fn sorted_item_refs<'a>(items: impl Iterator<Item = &'a CfpItem>) -> Vec<&'a CfpItem> {
+    let mut refs: Vec<&CfpItem> = items.collect();
+    refs.sort_by(|a, b| {
+        deadline_sort_value(a)
+            .cmp(&deadline_sort_value(b))
+            .then_with(|| a.track.cmp(&b.track))
+            .then_with(|| a.acronym.cmp(&b.acronym))
+    });
+    refs
+}
+
+fn render_watchlist_table(output: &mut String, items: &[&CfpItem]) {
+    if items.is_empty() {
+        output.push_str("No sources configured for this group yet.\n\n");
+        return;
+    }
+    output.push_str("| Venue name | Type | Field | Event / issue dates | Submission deadline | Location | Q1/Q2 / ranking basis | Impact factor / metric | Link |\n");
+    output.push_str("| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n");
+    for item in items {
+        let venue = format!("{} ({})", item.title, item.acronym);
+        output.push_str(&format!(
+            "| {} | {} | {} | {} | {} | {} | {} | {} | [CFP]({}) |\n",
+            markdown_escape(&venue),
+            markdown_escape(&item.venue_type),
+            markdown_escape(&item.track),
+            markdown_escape(&item.conference_dates),
+            markdown_escape(&deadline_label(item)),
+            markdown_escape(&item.location),
+            markdown_escape(&ranking_label(item)),
+            markdown_escape(&impact_label(item)),
+            item.url
+        ));
+    }
+    output.push('\n');
+}
+
+fn render_deadline_radar(output: &mut String, issue: &CfpIssue) {
+    output.push_str("## Nearest submission deadlines\n\n");
+    output.push_str("Sorted from the current issue date by the nearest configured submission deadline. Rows without configured deadlines stay in the full tables below until the official CFP page publishes a date.\n\n");
+    let upcoming = sorted_item_refs(
+        issue
+            .items
+            .iter()
+            .filter(|item| item.days_until_deadline.is_some_and(|days| days >= 0)),
+    );
+    if upcoming.is_empty() {
+        output.push_str("No open configured submission deadlines are available yet; check the grouped watchlist below for official CFP pages being monitored.\n\n");
+        return;
+    }
+    output.push_str("| Deadline | Days left | Venue | Type | Field | Location | Link |\n");
+    output.push_str("| --- | --- | --- | --- | --- | --- | --- |\n");
+    for item in upcoming.iter().take(12) {
+        let venue = format!("{} ({})", item.title, item.acronym);
+        let days = item.days_until_deadline.unwrap_or_default();
+        output.push_str(&format!(
+            "| {} | {} | {} | {} | {} | {} | [CFP]({}) |\n",
+            markdown_escape(item.configured_deadline.as_deref().unwrap_or("TBD")),
+            days,
+            markdown_escape(&venue),
+            markdown_escape(&item.venue_type),
+            markdown_escape(&item.track),
+            markdown_escape(&item.location),
+            item.url
+        ));
+    }
+    output.push('\n');
+}
+
+fn render_type_preview(output: &mut String, title: &str, items: Vec<&CfpItem>) {
+    output.push_str(&format!("### {title}\n\n"));
+    let mut ranked = items;
+    ranked.sort_by(|a, b| {
+        let a_closed = a.days_until_deadline.is_some_and(|days| days < 0);
+        let b_closed = b.days_until_deadline.is_some_and(|days| days < 0);
+        a_closed
+            .cmp(&b_closed)
+            .then_with(|| deadline_sort_value(a).cmp(&deadline_sort_value(b)))
+            .then_with(|| a.acronym.cmp(&b.acronym))
+    });
+    let preview: Vec<&CfpItem> = ranked.into_iter().take(3).collect();
+    render_watchlist_table(output, &preview);
+}
+
 fn render_markdown(issue: &CfpIssue) -> String {
     let mut output = String::new();
     output.push_str("---\n");
     output.push_str(&format!("title: \"CFP Radar — {}\"\n", issue.issue_date));
     output.push_str(&format!("date: {}\n", issue.issue_date));
-    output.push_str("tags:\n  - cfp\n  - conferences\n  - journals\n  - special-issues\n  - wireless\n  - communications\nexcerpt: \"Weekly CFP watchlist with conferences, journal special issues, deadlines, locations, annual ranking basis, and impact metrics for wireless/communications-heavy venues.\"\n---\n\n");
+    output.push_str("tags:\n  - cfp\n  - conferences\n  - workshops\n  - journals\n  - special-issues\n  - wireless\n  - communications\nexcerpt: \"Weekly CFP watchlist with nearest deadlines plus grouped conference, workshop, and journal-special-issue tables for wireless/communications-heavy venues.\"\n---\n\n");
     output.push_str("Weekly CFP radar for conferences, workshops, and journal special issues relevant to wireless communications, RAN/6G, networking, edge systems, AI systems, and security. Dates are operational leads: always verify the linked official CFP page before planning a submission.\n\n");
-    output.push_str("**Ranking note.** Journal Q1/Q2 labels are year-specific and category-specific; they must be refreshed from the latest JCR/SCImago-style journal quartile source each year. Conferences do not have journal-style Impact Factors or official Q1/Q2 quartiles, so conference rows use a separate conference-ranking basis such as CORE rank, society flagship status, or field reputation.\n\n");
+    output.push_str("**Ranking note.** Journal Q1/Q2 labels are year-specific and category-specific; they must be refreshed from the latest JCR/SCImago-style journal quartile source each year. Conferences and workshops do not have journal-style Impact Factors or official Q1/Q2 quartiles, so those rows use a separate conference/workshop-ranking basis such as CORE rank, society flagship status, or field reputation.\n\n");
     let wireless_count = issue
         .items
         .iter()
@@ -266,10 +366,8 @@ fn render_markdown(issue: &CfpIssue) -> String {
     output.push_str("## Snapshot\n\n");
     output.push_str(&format!("- Generated: `{}`\n", issue.generated_at));
     output.push_str(&format!("- Sources watched: **{}**\n", issue.source_count));
-    output.push_str(&format!(
-        "- Conferences / workshops: **{}**\n",
-        issue.conference_count
-    ));
+    output.push_str(&format!("- Conferences: **{}**\n", issue.conference_count));
+    output.push_str(&format!("- Workshops: **{}**\n", issue.workshop_count));
     output.push_str(&format!(
         "- Journal special-issue sources: **{}**\n",
         issue.journal_count
@@ -287,28 +385,50 @@ fn render_markdown(issue: &CfpIssue) -> String {
         issue.with_configured_deadline_count
     ));
 
-    output.push_str("## Watchlist\n\n");
-    output.push_str("| Venue name | Type | Field | Event / issue dates | Submission deadline | Location | Q1/Q2 / ranking basis | Impact factor / metric | Link |\n");
-    output.push_str("| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n");
-    for item in &issue.items {
-        let venue = format!("{} ({})", item.title, item.acronym);
-        output.push_str(&format!(
-            "| {} | {} | {} | {} | {} | {} | {} | {} | [CFP]({}) |\n",
-            markdown_escape(&venue),
-            markdown_escape(&item.venue_type),
-            markdown_escape(&item.track),
-            markdown_escape(&item.conference_dates),
-            markdown_escape(&deadline_label(item)),
-            markdown_escape(&item.location),
-            markdown_escape(&ranking_label(item)),
-            markdown_escape(&impact_label(item)),
-            item.url
-        ));
-    }
+    render_deadline_radar(&mut output, issue);
 
-    output.push_str("\n## Ranking policy\n\n");
+    output.push_str("## Three-by-three quick view\n\n");
+    output.push_str("Three compact rows per venue type, sorted by open configured deadlines first and then by watchlist order.\n\n");
+    render_type_preview(
+        &mut output,
+        "Conferences",
+        issue
+            .items
+            .iter()
+            .filter(|item| is_conference(item))
+            .collect(),
+    );
+    render_type_preview(
+        &mut output,
+        "Workshops",
+        issue
+            .items
+            .iter()
+            .filter(|item| is_workshop(item))
+            .collect(),
+    );
+    render_type_preview(
+        &mut output,
+        "Journal special issues",
+        issue.items.iter().filter(|item| is_journal(item)).collect(),
+    );
+
+    output.push_str("## Full watchlist\n\n");
+    output.push_str("### Conferences\n\n");
+    let conferences = sorted_item_refs(issue.items.iter().filter(|item| is_conference(item)));
+    render_watchlist_table(&mut output, &conferences);
+
+    output.push_str("### Workshops\n\n");
+    let workshops = sorted_item_refs(issue.items.iter().filter(|item| is_workshop(item)));
+    render_watchlist_table(&mut output, &workshops);
+
+    output.push_str("### Journal special issues\n\n");
+    let journals = sorted_item_refs(issue.items.iter().filter(|item| is_journal(item)));
+    render_watchlist_table(&mut output, &journals);
+
+    output.push_str("## Ranking policy\n\n");
     output.push_str("- **Journal rows:** use the configured annual journal-quartile source and year. A Q1/Q2 label is only meaningful with its category and ranking year. Impact Factor means Journal Impact Factor, when the journal publicly exposes it or when the value is updated from JCR by the maintainer.\n");
-    output.push_str("- **Conference/workshop rows:** do not use journal Impact Factor. The ranking column records a conference-specific proxy such as CORE rank, IEEE/ACM flagship status, or field reputation.\n");
+    output.push_str("- **Conference/workshop rows:** do not use journal Impact Factor. The ranking column records a venue-specific proxy such as CORE rank, IEEE/ACM flagship status, or field reputation.\n");
     output.push_str("- **Annual refresh:** the weekly job keeps deadlines fresh; the configured Q/JIF metadata should be reviewed yearly when new JCR/SJR/CORE releases are available.\n\n");
 
     output.push_str("## Deadline signals from official pages\n\n");
@@ -425,17 +545,16 @@ pub async fn update_cfp_artifacts(
         .iter()
         .filter(|item| item.days_until_deadline.is_none_or(|days| days >= 0))
         .count();
-    let conference_count = items
-        .iter()
-        .filter(|item| !item.venue_type.to_ascii_lowercase().contains("journal"))
-        .count();
-    let journal_count = items.len().saturating_sub(conference_count);
+    let conference_count = items.iter().filter(|item| is_conference(item)).count();
+    let workshop_count = items.iter().filter(|item| is_workshop(item)).count();
+    let journal_count = items.iter().filter(|item| is_journal(item)).count();
     let issue = CfpIssue {
         generated_at: generated_at_utc(),
         issue_date: issue_date.clone(),
         source_count: items.len(),
         active_count,
         conference_count,
+        workshop_count,
         journal_count,
         with_configured_deadline_count,
         fetched_count,
@@ -472,7 +591,7 @@ pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIss
     if issue.source_count < 8 {
         return Err(format!("CFP source coverage is too low: {}", issue.source_count).into());
     }
-    if issue.source_count < 24 {
+    if issue.source_count < 48 {
         return Err(format!(
             "CFP source list should include a broad communications-heavy radar: {}",
             issue.source_count
@@ -490,10 +609,13 @@ pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIss
         .iter()
         .filter(|item| is_wireless_or_communications(item))
         .count();
-    if wireless_count < 16 {
+    if wireless_count < 36 {
         return Err(
             format!("Wireless/communications CFP coverage is too low: {wireless_count}").into(),
         );
+    }
+    if issue.workshop_count < 3 {
+        return Err(format!("Workshop CFP coverage is too low: {}", issue.workshop_count).into());
     }
     if issue.journal_count < 6 {
         return Err(format!(
@@ -513,13 +635,16 @@ pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIss
     }
     let post = fs::read_to_string(&post_path).await?;
     if post.contains("| 학회명 |")
-        || !post.contains("## Watchlist")
+        || !post.contains("## Nearest submission deadlines")
+        || !post.contains("## Three-by-three quick view")
+        || !post.contains("## Full watchlist")
         || !post.contains("Venue name")
         || !post.contains("Submission deadline")
         || !post.contains("Q1/Q2 / ranking basis")
         || !post.contains("Impact factor / metric")
         || !post.contains("Journal special")
-        || !post.contains("Conference")
+        || !post.contains("### Conferences")
+        || !post.contains("### Workshops")
     {
         return Err("CFP markdown issue is missing required public sections".into());
     }

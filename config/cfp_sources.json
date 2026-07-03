@@ -220,7 +220,8 @@
       "venueType": "Conference",
       "rankingSource": "Conference proxy: specialized or solid venue; map to CORE B/field-equivalent when available, not an official journal Q2.",
       "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactorYear": "N/A for conferences"
+      "impactFactorYear": "N/A for conferences",
+      "deadline": "2026-04-20"
     },
     {
       "title": "IEEE International Conference on Communications",
@@ -302,7 +303,8 @@
       "venueType": "Conference",
       "rankingSource": "Conference proxy: boundary between major and specialized venue; verify current CORE/field status annually.",
       "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactorYear": "N/A for conferences"
+      "impactFactorYear": "N/A for conferences",
+      "deadline": "2026-04-16"
     },
     {
       "title": "IEEE Vehicular Technology Conference Spring",
@@ -402,10 +404,10 @@
         "phy",
         "mimo"
       ],
-      "venueType": "Conference",
-      "rankingSource": "Conference proxy: specialized or solid venue; map to CORE B/field-equivalent when available, not an official journal Q2.",
+      "venueType": "Workshop",
+      "rankingSource": "Workshop proxy: specialized venue or workshop track; use parent society/conference context and field relevance, not journal Q1/Q2.",
       "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactorYear": "N/A for conferences"
+      "impactFactorYear": "N/A for workshops"
     },
     {
       "title": "IEEE International Symposium on Information Theory",
@@ -425,7 +427,8 @@
       "venueType": "Conference",
       "rankingSource": "Conference proxy: top-tier / flagship venue; map to CORE A*/A or field-equivalent, not an official journal Q1.",
       "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactorYear": "N/A for conferences"
+      "impactFactorYear": "N/A for conferences",
+      "deadline": "2026-01-16"
     },
     {
       "title": "European Conference on Networks and Communications & 6G Summit",
@@ -467,7 +470,8 @@
       "venueType": "Conference",
       "rankingSource": "Conference proxy: specialized or solid venue; map to CORE B/field-equivalent when available, not an official journal Q2.",
       "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactorYear": "N/A for conferences"
+      "impactFactorYear": "N/A for conferences",
+      "deadline": "2026-07-15"
     },
     {
       "title": "IEEE Consumer Communications & Networking Conference",
@@ -510,7 +514,8 @@
       "venueType": "Conference",
       "rankingSource": "Conference proxy: specialized or solid venue; map to CORE B/field-equivalent when available, not an official journal Q2.",
       "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactorYear": "N/A for conferences"
+      "impactFactorYear": "N/A for conferences",
+      "deadline": "2026-02-06"
     },
     {
       "title": "IEEE/IFIP Network Operations and Management Symposium",
@@ -550,10 +555,10 @@
         "6g",
         "ran"
       ],
-      "venueType": "Conference",
-      "rankingSource": "Conference proxy: specialized or solid venue; map to CORE B/field-equivalent when available, not an official journal Q2.",
+      "venueType": "Workshop",
+      "rankingSource": "Workshop proxy: specialized venue or workshop track; use parent society/conference context and field relevance, not journal Q1/Q2.",
       "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactorYear": "N/A for conferences"
+      "impactFactorYear": "N/A for workshops"
     },
     {
       "title": "IEEE Global Communications Conference Workshops",
@@ -572,10 +577,10 @@
         "6g",
         "ran"
       ],
-      "venueType": "Conference",
-      "rankingSource": "Conference proxy: specialized or solid venue; map to CORE B/field-equivalent when available, not an official journal Q2.",
+      "venueType": "Workshop",
+      "rankingSource": "Workshop proxy: specialized venue or workshop track; use parent society/conference context and field relevance, not journal Q1/Q2.",
       "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactorYear": "N/A for conferences"
+      "impactFactorYear": "N/A for workshops"
     },
     {
       "title": "ACM Symposium on Cloud Computing",
@@ -818,6 +823,289 @@
         "mobile",
         "vehicular",
         "iot"
+      ]
+    },
+    {
+      "title": "IEEE International Workshop on Computer Aided Modeling and Design of Communication Links and Networks",
+      "acronym": "CAMAD",
+      "venueType": "Workshop",
+      "track": "Wireless / Communications",
+      "url": "https://camad2026.ieee-camad.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / specialized communications workshop",
+      "rankingSource": "Workshop proxy: specialized venue or workshop track; use parent society/conference context and field relevance, not journal Q1/Q2.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — workshop; use IEEE ComSoc workshop relevance instead",
+      "impactFactorYear": "N/A for workshops",
+      "note": "ComSoc workshop focused on communication link/network modeling, design, wireless systems, 5G/6G, and AI-native communications.",
+      "tags": [
+        "communications",
+        "wireless",
+        "6g",
+        "modeling",
+        "workshops"
+      ]
+    },
+    {
+      "title": "IEEE International Mediterranean Conference on Communications and Networking",
+      "acronym": "MeditCom",
+      "venueType": "Conference",
+      "track": "Wireless / Communications",
+      "url": "https://meditcom2026.ieee-meditcom.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Regional IEEE ComSoc communications and networking CFP source with wireless, 5G/6G, IoT, and networked systems tracks.",
+      "tags": [
+        "communications",
+        "wireless",
+        "networking",
+        "iot",
+        "6g"
+      ]
+    },
+    {
+      "title": "IEEE Latin-American Conference on Communications",
+      "acronym": "LATINCOM",
+      "venueType": "Conference",
+      "track": "Wireless / Communications",
+      "url": "https://latincom2026.ieee-latincom.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "IEEE ComSoc regional communications conference for wireless, optical, networking, IoT, and communication theory topics.",
+      "tags": [
+        "communications",
+        "wireless",
+        "networking",
+        "iot"
+      ],
+      "deadline": "2026-07-05"
+    },
+    {
+      "title": "IEEE International Black Sea Conference on Communications and Networking",
+      "acronym": "BlackSeaCom",
+      "venueType": "Conference",
+      "track": "Wireless / Communications",
+      "url": "https://blackseacom2026.ieee-blackseacom.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "IEEE ComSoc regional communications/networking venue; useful for 5G/6G, wireless, satellite, IoT, and network applications.",
+      "tags": [
+        "communications",
+        "wireless",
+        "networking",
+        "satellite",
+        "iot"
+      ]
+    },
+    {
+      "title": "IEEE International Conference on High Performance Switching and Routing",
+      "acronym": "HPSR",
+      "venueType": "Conference",
+      "track": "Networking / Communications",
+      "url": "https://hpsr2026.ieee-hpsr.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Routing, switching, transport, programmable networking, and carrier-network CFP source relevant to telecom infrastructure.",
+      "tags": [
+        "networking",
+        "communications",
+        "routing",
+        "telecom",
+        "sdn"
+      ]
+    },
+    {
+      "title": "IEEE International Symposium on Local and Metropolitan Area Networks",
+      "acronym": "LANMAN",
+      "venueType": "Conference",
+      "track": "Networking / Communications",
+      "url": "https://lanman2026.ieee-lanman.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "LAN/MAN, edge networking, programmable networks, and metro-access systems CFP source.",
+      "tags": [
+        "networking",
+        "communications",
+        "edge",
+        "sdn"
+      ]
+    },
+    {
+      "title": "IEEE International Conference on Sensing, Communication, and Networking",
+      "acronym": "SECON",
+      "venueType": "Conference",
+      "track": "Wireless / Mobile",
+      "url": "https://secon2026.ieee-secon.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1/Q2-like / strong mobile-wireless systems venue",
+      "rankingSource": "Conference proxy: boundary between major and specialized venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Sensing, communication, mobile networking, edge/IoT, and wireless systems CFP source.",
+      "tags": [
+        "wireless",
+        "mobile",
+        "sensing",
+        "iot",
+        "edge"
+      ]
+    },
+    {
+      "title": "IEEE Conference on Communications and Network Security",
+      "acronym": "CNS",
+      "venueType": "Conference",
+      "track": "Security / Communications",
+      "url": "https://cns2026.ieee-cns.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Security-focused communications/networking CFP source for secure wireless, network security, privacy, and critical infrastructure.",
+      "tags": [
+        "communications",
+        "networking",
+        "security",
+        "privacy"
+      ]
+    },
+    {
+      "title": "International Conference on Computing, Networking and Communications",
+      "acronym": "ICNC",
+      "venueType": "Conference",
+      "track": "Networking / Communications",
+      "url": "https://www.conf-icnc.org/2026/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Computing, networking, wireless communications, mobile computing, and services CFP source.",
+      "tags": [
+        "communications",
+        "networking",
+        "wireless",
+        "mobile"
+      ]
+    },
+    {
+      "title": "IEEE International Conference on Wireless and Mobile Computing, Networking and Communications",
+      "acronym": "WiMob",
+      "venueType": "Conference",
+      "track": "Wireless / Mobile",
+      "url": "https://wimob.org/wimob2026/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Wireless/mobile computing, mobile networking, IoT, and communication systems CFP source.",
+      "tags": [
+        "wireless",
+        "mobile",
+        "networking",
+        "iot"
+      ]
+    },
+    {
+      "title": "IEEE International Conference on Cloud Networking",
+      "acronym": "CloudNet",
+      "venueType": "Conference",
+      "track": "Networking / Cloud",
+      "url": "https://cloudnet2026.ieee-cloudnet.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Cloud networking, edge/cloud systems, network softwarization, and telecom cloud CFP source.",
+      "tags": [
+        "networking",
+        "cloud",
+        "edge",
+        "telecom",
+        "sdn"
+      ],
+      "deadline": "2026-07-10"
+    },
+    {
+      "title": "IEEE Military Communications Conference",
+      "acronym": "MILCOM",
+      "venueType": "Conference",
+      "track": "Wireless / Communications",
+      "url": "https://milcom2026.milcom.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Military, tactical, resilient, satellite, spectrum, and wireless communications CFP source.",
+      "tags": [
+        "communications",
+        "wireless",
+        "spectrum",
+        "satellite"
+      ]
+    },
+    {
+      "title": "IEEE International Conference on Advanced Networks and Telecommunications Systems",
+      "acronym": "ANTS",
+      "venueType": "Conference",
+      "track": "Networking / Communications",
+      "url": "https://ants2026.ieee-comsoc-ants.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Advanced networks, telecommunications systems, optical/wireless networks, SDN/NFV, and 5G/6G CFP source.",
+      "tags": [
+        "communications",
+        "networking",
+        "telecom",
+        "wireless",
+        "6g",
+        "sdn"
       ]
     }
   ]

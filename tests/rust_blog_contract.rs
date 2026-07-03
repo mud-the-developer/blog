@@ -243,15 +243,23 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
     assert!(out_dir.join("cfp/data/latest.json").exists());
 
     let cfp_post = fs::read_to_string(out_dir.join("posts/2026-07-03-cfp-radar/index.html"))?;
+    assert!(cfp_post.contains("Nearest submission deadlines"));
+    assert!(cfp_post.contains("Three-by-three quick view"));
+    assert!(cfp_post.contains("Full watchlist"));
     assert!(cfp_post.contains("Venue name"));
     assert!(cfp_post.contains("Submission deadline"));
     assert!(cfp_post.contains("Q1/Q2 / ranking basis"));
     assert!(cfp_post.contains("Impact factor / metric"));
     assert!(cfp_post.contains("IEEE International Conference on Communications"));
     assert!(cfp_post.contains("IEEE Wireless Communications and Networking Conference"));
+    assert!(cfp_post.contains("IEEE International Workshop on Computer Aided Modeling"));
+    assert!(cfp_post.contains("IEEE International Mediterranean Conference on Communications"));
     assert!(cfp_post.contains("IEEE Journal on Selected Areas in Communications"));
     assert!(cfp_post.contains("Journal special issue"));
-    assert!(cfp_post.contains("Conferences do not have journal-style Impact Factors"));
+    assert!(cfp_post.contains("Workshops"));
+    assert!(
+        cfp_post.contains("Conferences and workshops do not have journal-style Impact Factors")
+    );
     assert_eq!(cfp_post.matches("<h1").count(), 1);
 
     let latest_news_post = result

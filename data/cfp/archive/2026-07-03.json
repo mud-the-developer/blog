@@ -1,12 +1,13 @@
 {
-  "generatedAt": "2026-07-03T09:25:09Z",
+  "generatedAt": "2026-07-03T13:29:18Z",
   "issueDate": "2026-07-03",
-  "sourceCount": 39,
-  "activeCount": 36,
-  "conferenceCount": 31,
+  "sourceCount": 52,
+  "activeCount": 45,
+  "conferenceCount": 40,
+  "workshopCount": 4,
   "journalCount": 8,
-  "withConfiguredDeadlineCount": 4,
-  "fetchedCount": 23,
+  "withConfiguredDeadlineCount": 11,
+  "fetchedCount": 37,
   "tracks": {
     "AI / ML": 3,
     "Cloud / Edge": 1,
@@ -16,14 +17,17 @@
     "Journal Special Issues / Network Management": 1,
     "Journal Special Issues / Networking": 2,
     "Journal Special Issues / Wireless": 2,
+    "Networking / Cloud": 1,
+    "Networking / Communications": 4,
     "Networking / Management": 1,
     "Networking / Softwarization": 1,
     "Networking / Systems": 5,
     "Security": 2,
+    "Security / Communications": 1,
     "Wireless / 6G": 1,
-    "Wireless / Communications": 4,
+    "Wireless / Communications": 9,
     "Wireless / Consumer Networking": 1,
-    "Wireless / Mobile": 3,
+    "Wireless / Mobile": 5,
     "Wireless / Optimization": 1,
     "Wireless / Signal Processing": 1,
     "Wireless / Spectrum": 1,
@@ -61,6 +65,35 @@
       ]
     },
     {
+      "title": "IEEE International Symposium on Information Theory",
+      "acronym": "ISIT",
+      "venueType": "Conference",
+      "track": "Communications / Information Theory",
+      "url": "https://2026.ieee-isit.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1-like / flagship information theory",
+      "rankingSource": "Conference proxy: top-tier / flagship venue; map to CORE A*/A or field-equivalent, not an official journal Q1.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE ITS flagship status instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Information theory flagship CFP source; useful for coding, communication theory, and learning-theoretic communications.",
+      "tags": [
+        "communications",
+        "information-theory",
+        "coding"
+      ],
+      "configuredDeadline": "2026-01-16",
+      "daysUntilDeadline": -168,
+      "deadlineStatus": "closed",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "e ! Information about the excursions added. 2026-04-17: Early bird registration deadline/final paper submission deadline extended to April 20 (AoE). Student travel grant information added here . 2026-04-07: Call for recent results posted. 2026-",
+        "ursions added. 2026-04-17: Early bird registration deadline/final paper submission deadline extended to April 20 (AoE). Student travel grant information added here . 2026-04-07: Call for recent results posted. 2026-03-29: Registration info (",
+        "Important dates Paper submission deadline: January 16, 2026 (passed) Acceptance notification: April 1, 2026 (passed) Workshop paper submission deadline: April 7, 2026 (passed) Tutorial p"
+      ]
+    },
+    {
       "title": "International Conference on Machine Learning",
       "acronym": "ICML",
       "venueType": "Conference",
@@ -86,6 +119,96 @@
         "d pages for references, the impact statement, and appendices. There will be no separate deadline for the submission of supplementary material. The final versions of accepted papers will be allowed one extra page for the main paper. Change",
         "pens: January 8, 2026. Suggested OpenReview account creation deadline: January 8, 2026. (If you do not already have an OpenReview account, please register by this date, otherwise we cannot guarantee that your account will be activated in tim",
         "ur account will be activated in time.**) Abstract submission deadline: January 23, 2026 AoE (Jan 24, 2026, 12 Noon UTC-0). Full paper submission deadlin"
+      ]
+    },
+    {
+      "title": "IEEE International Conference on Network Softwarization",
+      "acronym": "NetSoft",
+      "venueType": "Conference",
+      "track": "Networking / Softwarization",
+      "url": "https://netsoft2026.ieee-netsoft.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / specialized network softwarization",
+      "rankingSource": "Conference proxy: specialized or solid venue; map to CORE B/field-equivalent when available, not an official journal Q2.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/IFIP venue reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "SDN/NFV/network softwarization CFP source; relevant to O-RAN, xApps/rApps, and programmable telecom systems.",
+      "tags": [
+        "networking",
+        "sdn",
+        "nfv",
+        "oran",
+        "ran"
+      ],
+      "configuredDeadline": "2026-02-06",
+      "daysUntilDeadline": -147,
+      "deadlineStatus": "closed",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "06 Feb 2026 Paper Submission Deadline - Hard Deadline 23 Mar 2026 Acceptance Notification",
+        "06 Feb 2026 Paper Submission Deadline - Hard Deadline 23 Mar 2026 Acceptance Notification 24 Apr 2026",
+        "Submission Guidelines Topics of Interest"
+      ]
+    },
+    {
+      "title": "IEEE International Symposium on Personal, Indoor and Mobile Radio Communications",
+      "acronym": "PIMRC",
+      "venueType": "Conference",
+      "track": "Wireless / Communications",
+      "url": "https://pimrc2026.ieee-pimrc.org/call-papers",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1/Q2-like / major wireless communications",
+      "rankingSource": "Conference proxy: boundary between major and specialized venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE ComSoc venue reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Wireless and mobile radio CFP source; useful for cellular, RAN, and radio access work.",
+      "tags": [
+        "communications",
+        "wireless",
+        "mobile",
+        "ran"
+      ],
+      "configuredDeadline": "2026-04-16",
+      "daysUntilDeadline": -78,
+      "deadlineStatus": "closed",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Paper Submission Deadline 16 March 2026 Extended to 16 April 2026 (Firm) Notific",
+        "Workshop Paper Submission Deadline 5 June 2026 Technical Tracks",
+        "Final Submission Camera Ready Guidelines"
+      ]
+    },
+    {
+      "title": "ACM International Symposium on Mobile Ad Hoc Networking and Computing",
+      "acronym": "MobiHoc",
+      "venueType": "Conference",
+      "track": "Wireless / Mobile",
+      "url": "https://www.sigmobile.org/mobihoc/2026/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / specialized wireless-networking",
+      "rankingSource": "Conference proxy: specialized or solid venue; map to CORE B/field-equivalent when available, not an official journal Q2.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use indexing/reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Mobile ad hoc, sensor, and wireless networking CFP source.",
+      "tags": [
+        "wireless",
+        "mobile",
+        "networking"
+      ],
+      "configuredDeadline": "2026-04-20",
+      "daysUntilDeadline": -74,
+      "deadlineStatus": "closed",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "April 13, 2026 Paper Registration Deadline (11:59pm AoE) April 20, 2026",
+        "April 20, 2026 Paper Submission Deadline (11:59pm AoE) July 20, 2026",
+        "July 26, 2026 Rebuttal Deadline August 23, 2026"
       ]
     },
     {
@@ -115,6 +238,97 @@
         "Key dates: Abstract submission deadline: May 4, 2026 (AOE). All authors must have an OpenReview profile when submitting Full paper submission deadline, including all supplementary ma",
         "an OpenReview profile when submitting Full paper submission deadline, including all supplementary materials: May 6, 2026 AOE Author notification: September 24, 2026 AoE Key link",
         "g, life sciences, natural sciences, social sciences, and other adjacent fields. We invite submissions presenting new and original research on topics including but not limited to the following: Computer vision"
+      ]
+    },
+    {
+      "title": "IEEE Latin-American Conference on Communications",
+      "acronym": "LATINCOM",
+      "venueType": "Conference",
+      "track": "Wireless / Communications",
+      "url": "https://latincom2026.ieee-latincom.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "IEEE ComSoc regional communications conference for wireless, optical, networking, IoT, and communication theory topics.",
+      "tags": [
+        "communications",
+        "wireless",
+        "networking",
+        "iot"
+      ],
+      "configuredDeadline": "2026-07-05",
+      "daysUntilDeadline": 2,
+      "deadlineStatus": "due in 2 days",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "05 Jul 2026 Paper Submission Deadline 06 Sep 2026 Acceptance Notification 04 Oct 2026",
+        "27 Sep 2026 Authors Registration Deadline See All Dates",
+        "Submission Guidelines Committees"
+      ]
+    },
+    {
+      "title": "IEEE International Conference on Cloud Networking",
+      "acronym": "CloudNet",
+      "venueType": "Conference",
+      "track": "Networking / Cloud",
+      "url": "https://cloudnet2026.ieee-cloudnet.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Cloud networking, edge/cloud systems, network softwarization, and telecom cloud CFP source.",
+      "tags": [
+        "networking",
+        "cloud",
+        "edge",
+        "telecom",
+        "sdn"
+      ],
+      "configuredDeadline": "2026-07-10",
+      "daysUntilDeadline": 7,
+      "deadlineStatus": "due in 7 days",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "10 Jul 2026 Paper Submission Deadline 24 Aug 2026 Acceptance Notification 21 Sep 2026",
+        "Submission Guidelines Committees",
+        "10 Jul 2026 Paper Submission Deadline 24 Aug 2026 Acceptance Notification"
+      ]
+    },
+    {
+      "title": "IEEE Conference on Standards for Communications and Networking",
+      "acronym": "CSCN",
+      "venueType": "Conference",
+      "track": "Wireless / Standards",
+      "url": "https://cscn2026.ieee-cscn.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / specialized standards-networking",
+      "rankingSource": "Conference proxy: specialized or solid venue; map to CORE B/field-equivalent when available, not an official journal Q2.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use standards/ComSoc relevance instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Communications standards CFP source; relevant to 3GPP, O-RAN, 5G/6G, and networking standards.",
+      "tags": [
+        "communications",
+        "standards",
+        "ran",
+        "6g"
+      ],
+      "configuredDeadline": "2026-07-15",
+      "daysUntilDeadline": 12,
+      "deadlineStatus": "due in 12 days",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "15 Jul 2026 Submission deadline (Main Tracks papers) : Deadline extended (firm) 15 Jul 2026 Submission deadline (Workshop/Special Ses",
+        "15 Jul 2026 Submission deadline (Main Tracks papers) : Deadline extended (firm) 15 Jul 2026 Submission deadline (Workshop/Special Session papers) : Deadline extended",
+        "15 Jul 2026 Submission deadline (Workshop/Special Session papers) : Deadline extended (firm) 26 Jul 2026 Acceptance notification"
       ]
     },
     {
@@ -170,35 +384,6 @@
       "deadlineStatus": "watching official CFP page",
       "fetchStatus": "http 404 Not Found",
       "deadlineSignals": []
-    },
-    {
-      "title": "IEEE International Symposium on Information Theory",
-      "acronym": "ISIT",
-      "venueType": "Conference",
-      "track": "Communications / Information Theory",
-      "url": "https://2026.ieee-isit.org/",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
-      "qualityTier": "Q1-like / flagship information theory",
-      "rankingSource": "Conference proxy: top-tier / flagship venue; map to CORE A*/A or field-equivalent, not an official journal Q1.",
-      "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactor": "N/A — conference; use IEEE ITS flagship status instead",
-      "impactFactorYear": "N/A for conferences",
-      "note": "Information theory flagship CFP source; useful for coding, communication theory, and learning-theoretic communications.",
-      "tags": [
-        "communications",
-        "information-theory",
-        "coding"
-      ],
-      "configuredDeadline": null,
-      "daysUntilDeadline": null,
-      "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "fetched",
-      "deadlineSignals": [
-        "e ! Information about the excursions added. 2026-04-17: Early bird registration deadline/final paper submission deadline extended to April 20 (AoE). Student travel grant information added here . 2026-04-07: Call for recent results posted. 2026-",
-        "ursions added. 2026-04-17: Early bird registration deadline/final paper submission deadline extended to April 20 (AoE). Student travel grant information added here . 2026-04-07: Call for recent results posted. 2026-03-29: Registration info (",
-        "Important dates Paper submission deadline: January 16, 2026 (passed) Acceptance notification: April 1, 2026 (passed) Workshop paper submission deadline: April 7, 2026 (passed) Tutorial p"
-      ]
     },
     {
       "title": "IEEE Communications Magazine — Feature Topics / Calls for Papers",
@@ -449,6 +634,121 @@
       ]
     },
     {
+      "title": "IEEE International Conference on Advanced Networks and Telecommunications Systems",
+      "acronym": "ANTS",
+      "venueType": "Conference",
+      "track": "Networking / Communications",
+      "url": "https://ants2026.ieee-comsoc-ants.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Advanced networks, telecommunications systems, optical/wireless networks, SDN/NFV, and 5G/6G CFP source.",
+      "tags": [
+        "communications",
+        "networking",
+        "telecom",
+        "wireless",
+        "6g",
+        "sdn"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetch failed",
+      "deadlineSignals": []
+    },
+    {
+      "title": "IEEE International Conference on High Performance Switching and Routing",
+      "acronym": "HPSR",
+      "venueType": "Conference",
+      "track": "Networking / Communications",
+      "url": "https://hpsr2026.ieee-hpsr.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Routing, switching, transport, programmable networking, and carrier-network CFP source relevant to telecom infrastructure.",
+      "tags": [
+        "networking",
+        "communications",
+        "routing",
+        "telecom",
+        "sdn"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "15 May 2026 Call for Posters & Demos - Final Version Submission : Deadline Closed 01 Jun 2026 Call for Tutorials - Tutorial Material Due : Deadline Closed",
+        "01 Jun 2026 Call for Tutorials - Tutorial Material Due : Deadline Closed 09 Jun 2026 Apply for a Travel Grant : Deadline Closed",
+        "09 Jun 2026 Apply for a Travel Grant : Deadline Closed 17 Jun 2026 Conference Begins See Al"
+      ]
+    },
+    {
+      "title": "International Conference on Computing, Networking and Communications",
+      "acronym": "ICNC",
+      "venueType": "Conference",
+      "track": "Networking / Communications",
+      "url": "https://www.conf-icnc.org/2026/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Computing, networking, wireless communications, mobile computing, and services CFP source.",
+      "tags": [
+        "communications",
+        "networking",
+        "wireless",
+        "mobile"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetch failed",
+      "deadlineSignals": []
+    },
+    {
+      "title": "IEEE International Symposium on Local and Metropolitan Area Networks",
+      "acronym": "LANMAN",
+      "venueType": "Conference",
+      "track": "Networking / Communications",
+      "url": "https://lanman2026.ieee-lanman.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "LAN/MAN, edge networking, programmable networks, and metro-access systems CFP source.",
+      "tags": [
+        "networking",
+        "communications",
+        "edge",
+        "sdn"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "r Industry Session Papers Announced Important Dates: Paper Submission Deadline: May 5, 2026 Acceptance Notification: May 13, 2026 Camera-ready: May 25, 2026",
+        "31 Mar 2026 Paper Submission Deadline : (Firm Deadline) 30 Apr 2026 Acceptance Notification",
+        "31 Mar 2026 Paper Submission Deadline : (Firm Deadline) 30 Apr 2026 Acceptance Notification 25 May 2026"
+      ]
+    },
+    {
       "title": "IEEE/IFIP Network Operations and Management Symposium",
       "acronym": "NOMS",
       "venueType": "Conference",
@@ -478,37 +778,6 @@
       ]
     },
     {
-      "title": "IEEE International Conference on Network Softwarization",
-      "acronym": "NetSoft",
-      "venueType": "Conference",
-      "track": "Networking / Softwarization",
-      "url": "https://netsoft2026.ieee-netsoft.org/",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
-      "qualityTier": "Q2-like / specialized network softwarization",
-      "rankingSource": "Conference proxy: specialized or solid venue; map to CORE B/field-equivalent when available, not an official journal Q2.",
-      "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactor": "N/A — conference; use IEEE/IFIP venue reputation instead",
-      "impactFactorYear": "N/A for conferences",
-      "note": "SDN/NFV/network softwarization CFP source; relevant to O-RAN, xApps/rApps, and programmable telecom systems.",
-      "tags": [
-        "networking",
-        "sdn",
-        "nfv",
-        "oran",
-        "ran"
-      ],
-      "configuredDeadline": null,
-      "daysUntilDeadline": null,
-      "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "fetched",
-      "deadlineSignals": [
-        "06 Feb 2026 Paper Submission Deadline - Hard Deadline 23 Mar 2026 Acceptance Notification",
-        "06 Feb 2026 Paper Submission Deadline - Hard Deadline 23 Mar 2026 Acceptance Notification 24 Apr 2026",
-        "Submission Guidelines Topics of Interest"
-      ]
-    },
-    {
       "title": "ACM International Conference on Emerging Networking Experiments and Technologies",
       "acronym": "CoNEXT",
       "venueType": "Conference",
@@ -530,7 +799,7 @@
       "configuredDeadline": null,
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "http 415 Unsupported Media Type",
+      "fetchStatus": "fetched",
       "deadlineSignals": []
     },
     {
@@ -608,7 +877,7 @@
       "configuredDeadline": null,
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "http 415 Unsupported Media Type",
+      "fetchStatus": "http 404 Not Found",
       "deadlineSignals": []
     },
     {
@@ -633,8 +902,12 @@
       "configuredDeadline": null,
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "http 415 Unsupported Media Type",
-      "deadlineSignals": []
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "any of these requirements will be desk-rejected without review. By registration deadline All papers MUST be registered in the respective HotCRP instance one week before the submission deadline, including the definitive title, the definitive",
+        "apers MUST be registered in the respective HotCRP instance one week before the submission deadline, including the definitive title, the definitive abstract, the definitive track, and the definitive track justification. Abstracts and titles MUST NOT",
+        "ification. Abstracts and titles MUST NOT be changed after the abstract registration deadline, on the HotCRP metadata. Because abstracts and titles are used to match papers with reviewers, abstracts and titles MUST NOT be changed in the final submitted pdf. T"
+      ]
     },
     {
       "title": "IEEE Symposium on Security and Privacy",
@@ -665,6 +938,36 @@
       ]
     },
     {
+      "title": "IEEE Conference on Communications and Network Security",
+      "acronym": "CNS",
+      "venueType": "Conference",
+      "track": "Security / Communications",
+      "url": "https://cns2026.ieee-cns.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Security-focused communications/networking CFP source for secure wireless, network security, privacy, and critical infrastructure.",
+      "tags": [
+        "communications",
+        "networking",
+        "security",
+        "privacy"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "18 May 2026 Paper Submission Deadline : Deadline Extended 18 Jul 2026 Acceptance Notification",
+        "18 May 2026 Paper Submission Deadline : Deadline Extended 18 Jul 2026 Acceptance Notification 14 A",
+        "Submission Guidelines Call For Workshop Proposals"
+      ]
+    },
+    {
       "title": "European Conference on Networks and Communications & 6G Summit",
       "acronym": "EuCNC & 6G Summit",
       "venueType": "Conference",
@@ -690,6 +993,68 @@
       "fetchStatus": "fetched",
       "deadlineSignals": [
         "ittee Awards Committees Authors All Calls Call for Papers Call for Posters Call for Workshops Call for Special Sessions Call for Tutorials Call for Startups Award"
+      ]
+    },
+    {
+      "title": "IEEE International Black Sea Conference on Communications and Networking",
+      "acronym": "BlackSeaCom",
+      "venueType": "Conference",
+      "track": "Wireless / Communications",
+      "url": "https://blackseacom2026.ieee-blackseacom.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "IEEE ComSoc regional communications/networking venue; useful for 5G/6G, wireless, satellite, IoT, and network applications.",
+      "tags": [
+        "communications",
+        "wireless",
+        "networking",
+        "satellite",
+        "iot"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "01 Mar 2026 Paper Submission Deadline : Final Deadline 15 Feb 2026 Call for Tutorials",
+        "01 Mar 2026 Paper Submission Deadline : Final Deadline 15 Feb 2026 Call for Tutorials 29 Mar 2026",
+        "29 Apr 2026 Camera-ready Due : FINAL DEADLINE See All Dates"
+      ]
+    },
+    {
+      "title": "IEEE International Workshop on Computer Aided Modeling and Design of Communication Links and Networks",
+      "acronym": "CAMAD",
+      "venueType": "Workshop",
+      "track": "Wireless / Communications",
+      "url": "https://camad2026.ieee-camad.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / specialized communications workshop",
+      "rankingSource": "Workshop proxy: specialized venue or workshop track; use parent society/conference context and field relevance, not journal Q1/Q2.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — workshop; use IEEE ComSoc workshop relevance instead",
+      "impactFactorYear": "N/A for workshops",
+      "note": "ComSoc workshop focused on communication link/network modeling, design, wireless systems, 5G/6G, and AI-native communications.",
+      "tags": [
+        "communications",
+        "wireless",
+        "6g",
+        "modeling",
+        "workshops"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "06 Jun 2026 Paper Submission Deadline : Final Deadline 30 Jun 2026 Acceptance Notification",
+        "06 Jun 2026 Paper Submission Deadline : Final Deadline 30 Jun 2026 Acceptance Notification 10 Jul 2026",
+        "Submission Guidelines Committees"
       ]
     },
     {
@@ -743,33 +1108,60 @@
       "deadlineSignals": []
     },
     {
-      "title": "IEEE International Symposium on Personal, Indoor and Mobile Radio Communications",
-      "acronym": "PIMRC",
+      "title": "IEEE Military Communications Conference",
+      "acronym": "MILCOM",
       "venueType": "Conference",
       "track": "Wireless / Communications",
-      "url": "https://pimrc2026.ieee-pimrc.org/call-papers",
+      "url": "https://milcom2026.milcom.org/",
       "conferenceDates": "TBD / official page",
       "location": "TBD / official page",
-      "qualityTier": "Q1/Q2-like / major wireless communications",
-      "rankingSource": "Conference proxy: boundary between major and specialized venue; verify current CORE/field status annually.",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
       "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactor": "N/A — conference; use IEEE ComSoc venue reputation instead",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
       "impactFactorYear": "N/A for conferences",
-      "note": "Wireless and mobile radio CFP source; useful for cellular, RAN, and radio access work.",
+      "note": "Military, tactical, resilient, satellite, spectrum, and wireless communications CFP source.",
       "tags": [
         "communications",
         "wireless",
-        "mobile",
-        "ran"
+        "spectrum",
+        "satellite"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetch failed",
+      "deadlineSignals": []
+    },
+    {
+      "title": "IEEE International Mediterranean Conference on Communications and Networking",
+      "acronym": "MeditCom",
+      "venueType": "Conference",
+      "track": "Wireless / Communications",
+      "url": "https://meditcom2026.ieee-meditcom.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Regional IEEE ComSoc communications and networking CFP source with wireless, 5G/6G, IoT, and networked systems tracks.",
+      "tags": [
+        "communications",
+        "wireless",
+        "networking",
+        "iot",
+        "6g"
       ],
       "configuredDeadline": null,
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
       "fetchStatus": "fetched",
       "deadlineSignals": [
-        "Paper Submission Deadline 16 March 2026 Extended to 16 April 2026 (Firm) Notific",
-        "Workshop Paper Submission Deadline 5 June 2026 Technical Tracks",
-        "Final Submission Camera Ready Guidelines"
+        "26 Mar 2026 Paper Submission : Deadline Extended (FIRM) 30 Apr 2026 Acceptance Notification",
+        "Submission Guidelines Call for Workshop Proposals",
+        "Important Dates Committees"
       ]
     },
     {
@@ -850,33 +1242,12 @@
       "configuredDeadline": null,
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "http 415 Unsupported Media Type",
-      "deadlineSignals": []
-    },
-    {
-      "title": "ACM International Symposium on Mobile Ad Hoc Networking and Computing",
-      "acronym": "MobiHoc",
-      "venueType": "Conference",
-      "track": "Wireless / Mobile",
-      "url": "https://www.sigmobile.org/mobihoc/2026/",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
-      "qualityTier": "Q2-like / specialized wireless-networking",
-      "rankingSource": "Conference proxy: specialized or solid venue; map to CORE B/field-equivalent when available, not an official journal Q2.",
-      "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactor": "N/A — conference; use indexing/reputation instead",
-      "impactFactorYear": "N/A for conferences",
-      "note": "Mobile ad hoc, sensor, and wireless networking CFP source.",
-      "tags": [
-        "wireless",
-        "mobile",
-        "networking"
-      ],
-      "configuredDeadline": null,
-      "daysUntilDeadline": null,
-      "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "http 415 Unsupported Media Type",
-      "deadlineSignals": []
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "quantum computing, communication and sensing to mobile and wireless systems Two Deadlines, Early Notification, Rebuttals, and One-shot Revision MobiCom 2026 offers authors the option of two deadlines and keeps the one-shot revision process to enhan",
+        "ebuttals, and One-shot Revision MobiCom 2026 offers authors the option of two deadlines and keeps the one-shot revision process to enhance the timeliness and quality of the scientific results from the research community. Each paper will go through the same r",
+        "igorous reviewing process as in previous MobiCom conferences. The review process for each deadline will involve two rounds. Papers that are not selected to proceed after the first round will receive an early notification, including reviews. After the second round of rev"
+      ]
     },
     {
       "title": "ACM International Conference on Mobile Systems, Applications, and Services",
@@ -901,7 +1272,68 @@
       "configuredDeadline": null,
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "http 415 Unsupported Media Type",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "9 AoE Final Decision Notification March 2, 2026 Final Camera-ready Deadline April 13, 2026 IoT Day June 21, 2026 Rising Stars Forum June 21, 2026 N 2 Women Workshop June 21, 2026 Main Confe",
+        "Symposium application is open April 25th, 2026 - N2Women Workshop submission deadline has been extended April 20th, 2026 - Accepted Papers have now been rleased April 16th, 2026 - Registration is open April 10th, 2026 - Call f",
+        "il 16th, 2026 - Registration is open April 10th, 2026 - Call for Posters deadline is extended Feb 24th, 2026 - Artefact Evaluation deadline is updated Jan 31st, 2026 - Accepted Workshops is now available Jan 31st, 2026 - A"
+      ]
+    },
+    {
+      "title": "IEEE International Conference on Sensing, Communication, and Networking",
+      "acronym": "SECON",
+      "venueType": "Conference",
+      "track": "Wireless / Mobile",
+      "url": "https://secon2026.ieee-secon.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1/Q2-like / strong mobile-wireless systems venue",
+      "rankingSource": "Conference proxy: boundary between major and specialized venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Sensing, communication, mobile networking, edge/IoT, and wireless systems CFP source.",
+      "tags": [
+        "wireless",
+        "mobile",
+        "sensing",
+        "iot",
+        "edge"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "30 Dec 2025 Paper Submission Deadline 06 Mar 2026 Acceptance Notification 16 Apr 2026",
+        "16 Apr 2026 Camera-ready Due : Final Deadline See All Dates",
+        "Submission Guidelines Committees"
+      ]
+    },
+    {
+      "title": "IEEE International Conference on Wireless and Mobile Computing, Networking and Communications",
+      "acronym": "WiMob",
+      "venueType": "Conference",
+      "track": "Wireless / Mobile",
+      "url": "https://wimob.org/wimob2026/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / communications-networking venue",
+      "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
+      "rankingYear": "2026 watchlist metadata; review yearly",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Wireless/mobile computing, mobile networking, IoT, and communication systems CFP source.",
+      "tags": [
+        "wireless",
+        "mobile",
+        "networking",
+        "iot"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetch failed",
       "deadlineSignals": []
     },
     {
@@ -932,16 +1364,16 @@
     {
       "title": "IEEE International Workshop on Signal Processing Advances in Wireless Communications",
       "acronym": "SPAWC",
-      "venueType": "Conference",
+      "venueType": "Workshop",
       "track": "Wireless / Signal Processing",
       "url": "https://spawc2026.org/",
       "conferenceDates": "TBD / official page",
       "location": "TBD / official page",
       "qualityTier": "Q2-like / specialized wireless signal processing",
-      "rankingSource": "Conference proxy: specialized or solid venue; map to CORE B/field-equivalent when available, not an official journal Q2.",
+      "rankingSource": "Workshop proxy: specialized venue or workshop track; use parent society/conference context and field relevance, not journal Q1/Q2.",
       "rankingYear": "2026 watchlist metadata; review yearly",
       "impactFactor": "N/A — conference/workshop; use SPS/ComSoc reputation instead",
-      "impactFactorYear": "N/A for conferences",
+      "impactFactorYear": "N/A for workshops",
       "note": "Wireless signal processing CFP source; relevant for PHY/MIMO/RAN-adjacent research.",
       "tags": [
         "wireless",
@@ -982,36 +1414,6 @@
         "Submission Guidelines Committees",
         "07 Apr 2026 Camera Ready Paper Submission 11 May 2026 Conference Begins See All D",
         "Important Dates Call for Papers"
-      ]
-    },
-    {
-      "title": "IEEE Conference on Standards for Communications and Networking",
-      "acronym": "CSCN",
-      "venueType": "Conference",
-      "track": "Wireless / Standards",
-      "url": "https://cscn2026.ieee-cscn.org/",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
-      "qualityTier": "Q2-like / specialized standards-networking",
-      "rankingSource": "Conference proxy: specialized or solid venue; map to CORE B/field-equivalent when available, not an official journal Q2.",
-      "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactor": "N/A — conference; use standards/ComSoc relevance instead",
-      "impactFactorYear": "N/A for conferences",
-      "note": "Communications standards CFP source; relevant to 3GPP, O-RAN, 5G/6G, and networking standards.",
-      "tags": [
-        "communications",
-        "standards",
-        "ran",
-        "6g"
-      ],
-      "configuredDeadline": null,
-      "daysUntilDeadline": null,
-      "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "fetched",
-      "deadlineSignals": [
-        "15 Jul 2026 Submission deadline (Main Tracks papers) : Deadline extended (firm) 15 Jul 2026 Submission deadline (Workshop/Special Ses",
-        "15 Jul 2026 Submission deadline (Main Tracks papers) : Deadline extended (firm) 15 Jul 2026 Submission deadline (Workshop/Special Session papers) : Deadline extended",
-        "15 Jul 2026 Submission deadline (Workshop/Special Session papers) : Deadline extended (firm) 26 Jul 2026 Acceptance notification"
       ]
     },
     {
@@ -1077,16 +1479,16 @@
     {
       "title": "IEEE Global Communications Conference Workshops",
       "acronym": "GLOBECOM Workshops",
-      "venueType": "Conference",
+      "venueType": "Workshop",
       "track": "Wireless / Workshops",
       "url": "https://globecom2026.ieee-globecom.org/workshops",
       "conferenceDates": "TBD / official page",
       "location": "TBD / official page",
       "qualityTier": "Q2-like / workshop track under flagship communications",
-      "rankingSource": "Conference proxy: specialized or solid venue; map to CORE B/field-equivalent when available, not an official journal Q2.",
+      "rankingSource": "Workshop proxy: specialized venue or workshop track; use parent society/conference context and field relevance, not journal Q1/Q2.",
       "rankingYear": "2026 watchlist metadata; review yearly",
       "impactFactor": "N/A — workshop; use parent conference context instead",
-      "impactFactorYear": "N/A for conferences",
+      "impactFactorYear": "N/A for workshops",
       "note": "Workshop CFP source for emerging wireless, RAN, edge, and 6G topics.",
       "tags": [
         "communications",
@@ -1107,16 +1509,16 @@
     {
       "title": "IEEE International Conference on Communications Workshops",
       "acronym": "ICC Workshops",
-      "venueType": "Conference",
+      "venueType": "Workshop",
       "track": "Wireless / Workshops",
       "url": "https://icc2026.ieee-icc.org/workshops",
       "conferenceDates": "TBD / official page",
       "location": "TBD / official page",
       "qualityTier": "Q2-like / workshop track under flagship communications",
-      "rankingSource": "Conference proxy: specialized or solid venue; map to CORE B/field-equivalent when available, not an official journal Q2.",
+      "rankingSource": "Workshop proxy: specialized venue or workshop track; use parent society/conference context and field relevance, not journal Q1/Q2.",
       "rankingYear": "2026 watchlist metadata; review yearly",
       "impactFactor": "N/A — workshop; use parent conference context instead",
-      "impactFactorYear": "N/A for conferences",
+      "impactFactorYear": "N/A for workshops",
       "note": "Workshop CFP source for specialized RAN, AI-native communications, edge, and 6G topics.",
       "tags": [
         "communications",
