@@ -1,40 +1,52 @@
 {
-  "generatedAt": "2026-07-03T08:43:50Z",
+  "generatedAt": "2026-07-03T08:56:29Z",
   "issueDate": "2026-07-03",
-  "sourceCount": 12,
-  "activeCount": 12,
-  "withConfiguredDeadlineCount": 0,
-  "fetchedCount": 8,
+  "sourceCount": 31,
+  "activeCount": 28,
+  "withConfiguredDeadlineCount": 4,
+  "fetchedCount": 22,
   "tracks": {
     "AI / ML": 3,
     "Cloud / Edge": 1,
-    "Networking / Systems": 2,
+    "Communications / Information Theory": 1,
+    "Networking / Management": 1,
+    "Networking / Softwarization": 1,
+    "Networking / Systems": 5,
     "Security": 2,
-    "Systems": 1,
-    "Wireless / Communications": 2,
-    "Wireless / Mobile": 1
+    "Wireless / 6G": 1,
+    "Wireless / Communications": 4,
+    "Wireless / Consumer Networking": 1,
+    "Wireless / Mobile": 3,
+    "Wireless / Optimization": 1,
+    "Wireless / Signal Processing": 1,
+    "Wireless / Spectrum": 1,
+    "Wireless / Standards": 1,
+    "Wireless / Vehicular": 2,
+    "Wireless / Workshops": 2
   },
   "items": [
     {
-      "title": "International Conference on Learning Representations",
-      "acronym": "ICLR",
-      "track": "AI / ML",
-      "url": "https://iclr.cc/Conferences/2026/CallForPapers",
-      "location": "Official CFP page",
-      "note": "Learning representation CFP source; useful for annual submission and review-cycle reminders.",
+      "title": "USENIX Symposium on Networked Systems Design and Implementation",
+      "acronym": "NSDI",
+      "track": "Networking / Systems",
+      "url": "https://www.usenix.org/conference/nsdi26/call-for-papers",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1-like / top-tier systems-networking",
+      "impactFactor": "N/A — conference; use CORE/field reputation instead",
+      "note": "Networked systems CFP source; useful for systems/networking submission windows.",
       "tags": [
-        "ml",
-        "ai",
-        "openreview"
+        "systems",
+        "networking"
       ],
-      "configuredDeadline": null,
-      "daysUntilDeadline": null,
-      "deadlineStatus": "watching official CFP page",
+      "configuredDeadline": "2025-09-18",
+      "daysUntilDeadline": -288,
+      "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
-        "Call for Papers We invite submissions to the 14th International Conference on Learning Representations from all areas of machine learning. For any information needed that is not",
-        "ogram-chairs@iclr.cc Please see the author guide for all submission instructions and policies. Key dates The planned dates are as follows (all times are",
-        ", aka “Anywhere on Earth”): Abstract submission: 11:59pm, Sep 19 Submission date: 11:59pm, Sep 24 Reviews released: Nov 11 Author/"
+        "X in cooperation with ACM SIGCOMM and ACM SIGOPS -- Important Dates Spring deadline: Paper titles and abstracts due: Friday, April 18, 2025, 11:59 pm US PDT Full paper submissions due: Friday, April 25, 2025, 11:59 pm US PDT Notif",
+        "aper files due: Tuesday, October 21, 2025 Monday, October 27, 2025 Fall deadline: Paper titles and abstracts due: Thursday, September 11, 2025, 11:59 pm US PDT Full paper submissions due: Thursday, September 18, 2025, 11:59 pm US PDT",
+        "tant problems or challenges in networked systems does this paper solve/address? Two Deadlines NSDI '26 offers authors the choice of two submission deadlines. Any paper submitted to one of these deadlines and accepted during the subsequent reviewing period will"
       ]
     },
     {
@@ -42,15 +54,18 @@
       "acronym": "ICML",
       "track": "AI / ML",
       "url": "https://icml.cc/Conferences/2026/CallForPapers",
-      "location": "Official CFP page",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1-like / top-tier AI",
+      "impactFactor": "N/A — conference; use CORE/field reputation instead",
       "note": "Core ML venue; the CFP page is monitored for abstract, paper, and supplementary deadline language.",
       "tags": [
         "ml",
         "ai"
       ],
-      "configuredDeadline": null,
-      "daysUntilDeadline": null,
-      "deadlineStatus": "watching official CFP page",
+      "configuredDeadline": "2026-01-23",
+      "daysUntilDeadline": -161,
+      "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
         "d pages for references, the impact statement, and appendices. There will be no separate deadline for the submission of supplementary material. The final versions of accepted papers will be allowed one extra page for the main paper. Change",
@@ -63,16 +78,19 @@
       "acronym": "NeurIPS",
       "track": "AI / ML",
       "url": "https://neurips.cc/Conferences/2026/CallForPapers",
-      "location": "Official CFP page",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1-like / top-tier AI",
+      "impactFactor": "N/A — conference; use CORE/field reputation instead",
       "note": "Primary machine-learning conference CFP page; use this source for main-track deadline verification.",
       "tags": [
         "ml",
         "ai",
         "workshops"
       ],
-      "configuredDeadline": null,
-      "daysUntilDeadline": null,
-      "deadlineStatus": "watching official CFP page",
+      "configuredDeadline": "2026-05-06",
+      "daysUntilDeadline": -58,
+      "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
         "Key dates: Abstract submission deadline: May 4, 2026 (AOE). All authors must have an OpenReview profile when submitting Full paper submission deadline, including all supplementary ma",
@@ -81,11 +99,39 @@
       ]
     },
     {
+      "title": "International Conference on Learning Representations",
+      "acronym": "ICLR",
+      "track": "AI / ML",
+      "url": "https://iclr.cc/Conferences/2026/CallForPapers",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1-like / top-tier AI",
+      "impactFactor": "N/A — conference; use CORE/field reputation instead",
+      "note": "Learning representation CFP source; useful for annual submission and review-cycle reminders.",
+      "tags": [
+        "ml",
+        "ai",
+        "openreview"
+      ],
+      "configuredDeadline": "2026-09-24",
+      "daysUntilDeadline": 83,
+      "deadlineStatus": "watching: 83 days out",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Call for Papers We invite submissions to the 14th International Conference on Learning Representations from all areas of machine learning. For any information needed that is not",
+        "ogram-chairs@iclr.cc Please see the author guide for all submission instructions and policies. Key dates The planned dates are as follows (all times are",
+        ", aka “Anywhere on Earth”): Abstract submission: 11:59pm, Sep 19 Submission date: 11:59pm, Sep 24 Reviews released: Nov 11 Author/"
+      ]
+    },
+    {
       "title": "ACM Symposium on Cloud Computing",
       "acronym": "SoCC",
       "track": "Cloud / Edge",
       "url": "https://acmsocc.org/2026/call-for-papers.html",
-      "location": "Official CFP page",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1/Q2-like / strong cloud systems",
+      "impactFactor": "N/A — conference; use CORE/field reputation instead",
       "note": "Cloud systems CFP source; monitored for cloud, edge, and large-scale systems submission calls.",
       "tags": [
         "cloud",
@@ -99,32 +145,158 @@
       "deadlineSignals": []
     },
     {
-      "title": "USENIX Symposium on Networked Systems Design and Implementation",
-      "acronym": "NSDI",
-      "track": "Networking / Systems",
-      "url": "https://www.usenix.org/conference/nsdi26/call-for-papers",
-      "location": "Official CFP page",
-      "note": "Networked systems CFP source; useful for systems/networking submission windows.",
+      "title": "IEEE International Symposium on Information Theory",
+      "acronym": "ISIT",
+      "track": "Communications / Information Theory",
+      "url": "https://2026.ieee-isit.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1-like / flagship information theory",
+      "impactFactor": "N/A — conference; use IEEE ITS flagship status instead",
+      "note": "Information theory flagship CFP source; useful for coding, communication theory, and learning-theoretic communications.",
       "tags": [
-        "systems",
-        "networking"
+        "communications",
+        "information-theory",
+        "coding"
       ],
       "configuredDeadline": null,
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
       "fetchStatus": "fetched",
       "deadlineSignals": [
-        "X in cooperation with ACM SIGCOMM and ACM SIGOPS -- Important Dates Spring deadline: Paper titles and abstracts due: Friday, April 18, 2025, 11:59 pm US PDT Full paper submissions due: Friday, April 25, 2025, 11:59 pm US PDT Notif",
-        "aper files due: Tuesday, October 21, 2025 Monday, October 27, 2025 Fall deadline: Paper titles and abstracts due: Thursday, September 11, 2025, 11:59 pm US PDT Full paper submissions due: Thursday, September 18, 2025, 11:59 pm US PDT",
-        "tant problems or challenges in networked systems does this paper solve/address? Two Deadlines NSDI '26 offers authors the choice of two submission deadlines. Any paper submitted to one of these deadlines and accepted during the subsequent reviewing period will"
+        "e ! Information about the excursions added. 2026-04-17: Early bird registration deadline/final paper submission deadline extended to April 20 (AoE). Student travel grant information added here . 2026-04-07: Call for recent results posted. 2026-",
+        "ursions added. 2026-04-17: Early bird registration deadline/final paper submission deadline extended to April 20 (AoE). Student travel grant information added here . 2026-04-07: Call for recent results posted. 2026-03-29: Registration info (",
+        "Important dates Paper submission deadline: January 16, 2026 (passed) Acceptance notification: April 1, 2026 (passed) Workshop paper submission deadline: April 7, 2026 (passed) Tutorial p"
       ]
+    },
+    {
+      "title": "IEEE/IFIP Network Operations and Management Symposium",
+      "acronym": "NOMS",
+      "track": "Networking / Management",
+      "url": "https://noms2026.ieee-noms.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / network management flagship",
+      "impactFactor": "N/A — conference; use IEEE/IFIP reputation instead",
+      "note": "Network operations and management CFP source; useful for autonomous network operations and telecom management.",
+      "tags": [
+        "networking",
+        "management",
+        "telecom",
+        "automation"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Instructions for Artifact Submission Call for Technical Session Papers",
+        "Submission Guidelines Committees"
+      ]
+    },
+    {
+      "title": "IEEE International Conference on Network Softwarization",
+      "acronym": "NetSoft",
+      "track": "Networking / Softwarization",
+      "url": "https://netsoft2026.ieee-netsoft.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / specialized network softwarization",
+      "impactFactor": "N/A — conference; use IEEE/IFIP venue reputation instead",
+      "note": "SDN/NFV/network softwarization CFP source; relevant to O-RAN, xApps/rApps, and programmable telecom systems.",
+      "tags": [
+        "networking",
+        "sdn",
+        "nfv",
+        "oran",
+        "ran"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "06 Feb 2026 Paper Submission Deadline - Hard Deadline 23 Mar 2026 Acceptance Notification",
+        "06 Feb 2026 Paper Submission Deadline - Hard Deadline 23 Mar 2026 Acceptance Notification 24 Apr 2026",
+        "Submission Guidelines Topics of Interest"
+      ]
+    },
+    {
+      "title": "ACM International Conference on Emerging Networking Experiments and Technologies",
+      "acronym": "CoNEXT",
+      "track": "Networking / Systems",
+      "url": "https://conferences2.sigcomm.org/co-next/2026/#!/cfp",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1-like / strong networking",
+      "impactFactor": "N/A — conference; use CORE/field reputation instead",
+      "note": "Networking experiments and systems venue; good fit for programmable networking, edge, and RAN-adjacent systems.",
+      "tags": [
+        "networking",
+        "systems",
+        "edge"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": []
+    },
+    {
+      "title": "IFIP Networking Conference",
+      "acronym": "IFIP Networking",
+      "track": "Networking / Systems",
+      "url": "https://networking.ifip.org/2026/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / solid networking",
+      "impactFactor": "N/A — conference; use indexing/reputation instead",
+      "note": "Broad networking CFP source that often includes wireless, programmable networks, and networked systems tracks.",
+      "tags": [
+        "networking",
+        "wireless",
+        "systems"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Camera-ready submission: April 30, 2026 May 4, 2026 Deadlines are at 23:59 Anywhere on Earth Technical Sponsors Organized and Supported by",
+        "ant dates Conference Dates: May 24–27, 2026 Main Track Full Papers (submission): February 8, 2026 February 28, 2026 (AoE) - Firm Main Track Full Papers (notification of acceptance): April 2, 2026 April 8, 2026",
+        "n of acceptance): April 2, 2026 April 8, 2026 Workshop Proposals (submission): December 22, 2025 January 14, 2026 Workshop Proposals (notification of acceptance): January 19, 2026 Workshop Papers (submission):"
+      ]
+    },
+    {
+      "title": "IEEE International Conference on Computer Communications",
+      "acronym": "INFOCOM",
+      "track": "Networking / Systems",
+      "url": "https://infocom2026.ieee-infocom.org/call-papers-main-conference",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1-like / top-tier networking",
+      "impactFactor": "N/A — conference; use CORE/field reputation instead",
+      "note": "Flagship computer networking CFP source; important for wireless, edge, and network systems work.",
+      "tags": [
+        "networking",
+        "wireless",
+        "edge"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "http 404 Not Found",
+      "deadlineSignals": []
     },
     {
       "title": "ACM SIGCOMM",
       "acronym": "SIGCOMM",
       "track": "Networking / Systems",
       "url": "https://conferences.sigcomm.org/sigcomm/2026/cfp.html",
-      "location": "Official CFP page",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1-like / top-tier networking",
+      "impactFactor": "N/A — conference; use CORE/field reputation instead",
       "note": "Networking systems CFP source; monitored for paper registration and submission dates.",
       "tags": [
         "networking",
@@ -141,7 +313,10 @@
       "acronym": "CCS",
       "track": "Security",
       "url": "https://www.sigsac.org/ccs/CCS2026/call-for/call-for-papers.html",
-      "location": "Official CFP page",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1-like / top-tier security",
+      "impactFactor": "N/A — conference; use CORE/field reputation instead",
       "note": "Security CFP source; monitored for main-track and artifact deadline signals.",
       "tags": [
         "security",
@@ -163,7 +338,10 @@
       "acronym": "IEEE S&P",
       "track": "Security",
       "url": "https://www.ieee-security.org/TC/SP2026/cfpapers.html",
-      "location": "Official CFP page",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1-like / top-tier security",
+      "impactFactor": "N/A — conference; use CORE/field reputation instead",
       "note": "Security CFP source; useful for AI systems, network security, and privacy-related submissions.",
       "tags": [
         "security",
@@ -180,24 +358,27 @@
       ]
     },
     {
-      "title": "USENIX Symposium on Operating Systems Design and Implementation",
-      "acronym": "OSDI",
-      "track": "Systems",
-      "url": "https://www.usenix.org/conference/osdi26/call-for-papers",
-      "location": "Official CFP page",
-      "note": "Operating systems CFP source; monitored as a systems-track anchor.",
+      "title": "European Conference on Networks and Communications & 6G Summit",
+      "acronym": "EuCNC & 6G Summit",
+      "track": "Wireless / 6G",
+      "url": "https://www.eucnc.eu/",
+      "conferenceDates": "TBD / official page",
+      "location": "Europe / official page",
+      "qualityTier": "Q2-like / major 6G communications forum",
+      "impactFactor": "N/A — conference; use 6G/ComSoc community relevance instead",
+      "note": "6G, wireless networks, and communications CFP source with strong RAN relevance.",
       "tags": [
-        "systems",
-        "os"
+        "communications",
+        "wireless",
+        "6g",
+        "ran"
       ],
       "configuredDeadline": null,
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
       "fetchStatus": "fetched",
       "deadlineSignals": [
-        "n notification has been received less than thirteen months before the OSDI '26 submission deadline, then the authors are requested to provide information regarding the previous submission and a summary of the subsequent revisions to the paper. This information should be",
-        "as a presenter or an author, and include your mailing address in your email request. Deadline and Submission Instructions Authors must register abstracts and submit full papers by the dates indicated above. These are hard deadlines, and no extensions will be g",
-        "st register abstracts and submit full papers by the dates indicated above. These are hard deadlines, and no extensions will be given. Submitted papers must be no longer than 12 single-spaced 8.5\" x 11\" pages, including figures and tables, plus as many pages as need"
+        "ittee Awards Committees Authors All Calls Call for Papers Call for Posters Call for Workshops Call for Special Sessions Call for Tutorials Call for Startups Award"
       ]
     },
     {
@@ -205,7 +386,10 @@
       "acronym": "GLOBECOM",
       "track": "Wireless / Communications",
       "url": "https://globecom2026.ieee-globecom.org/call-papers",
-      "location": "Official CFP page",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1-like / flagship communications",
+      "impactFactor": "N/A — conference; use IEEE ComSoc flagship status instead",
       "note": "Communications and networking CFP source; relevant to 5G/6G, RAN, and edge networking tracks.",
       "tags": [
         "communications",
@@ -223,7 +407,10 @@
       "acronym": "ICC",
       "track": "Wireless / Communications",
       "url": "https://icc2026.ieee-icc.org/call-papers",
-      "location": "Official CFP page",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1-like / flagship communications",
+      "impactFactor": "N/A — conference; use IEEE ComSoc flagship status instead",
       "note": "Communications venue CFP source; monitored for symposium and workshop calls.",
       "tags": [
         "communications",
@@ -237,11 +424,88 @@
       "deadlineSignals": []
     },
     {
+      "title": "IEEE International Symposium on Personal, Indoor and Mobile Radio Communications",
+      "acronym": "PIMRC",
+      "track": "Wireless / Communications",
+      "url": "https://pimrc2026.ieee-pimrc.org/call-papers",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1/Q2-like / major wireless communications",
+      "impactFactor": "N/A — conference; use IEEE ComSoc venue reputation instead",
+      "note": "Wireless and mobile radio CFP source; useful for cellular, RAN, and radio access work.",
+      "tags": [
+        "communications",
+        "wireless",
+        "mobile",
+        "ran"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Paper Submission Deadline 16 March 2026 Extended to 16 April 2026 (Firm) Notific",
+        "Workshop Paper Submission Deadline 5 June 2026 Technical Tracks",
+        "Final Submission Camera Ready Guidelines"
+      ]
+    },
+    {
+      "title": "IEEE Wireless Communications and Networking Conference",
+      "acronym": "WCNC",
+      "track": "Wireless / Communications",
+      "url": "https://wcnc2026.ieee-wcnc.org/call-papers",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1/Q2-like / major wireless communications",
+      "impactFactor": "N/A — conference; use IEEE ComSoc venue reputation instead",
+      "note": "Major IEEE wireless communications venue; important for RAN, 5G/6G, and wireless networking CFP tracking.",
+      "tags": [
+        "communications",
+        "wireless",
+        "ran",
+        "6g"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Paper Submission Deadline 26 October 2025 Final Notification of Acceptance",
+        "Instructions for Final Paper Submissions Instructions for Final Workshop Paper Submissions",
+        "Instructions for Final Workshop Paper Submissions Important Dates"
+      ]
+    },
+    {
+      "title": "IEEE Consumer Communications & Networking Conference",
+      "acronym": "CCNC",
+      "track": "Wireless / Consumer Networking",
+      "url": "https://ccnc2026.ieee-ccnc.org/call-papers",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / applied communications-networking",
+      "impactFactor": "N/A — conference; use indexing/reputation instead",
+      "note": "Consumer communications and networking CFP source; useful for IoT, edge, wireless, and consumer network systems.",
+      "tags": [
+        "communications",
+        "wireless",
+        "iot",
+        "edge"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "http 404 Not Found",
+      "deadlineSignals": []
+    },
+    {
       "title": "ACM International Conference on Mobile Computing and Networking",
       "acronym": "MobiCom",
       "track": "Wireless / Mobile",
       "url": "https://www.sigmobile.org/mobicom/2026/cfp.html",
-      "location": "Official CFP page",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1-like / top-tier mobile-wireless",
+      "impactFactor": "N/A — conference; use CORE/field reputation instead",
       "note": "Mobile and wireless networking CFP source; relevant to RAN, edge, and mobile systems work.",
       "tags": [
         "wireless",
@@ -257,6 +521,252 @@
         "ebuttals, and One-shot Revision MobiCom 2026 offers authors the option of two deadlines and keeps the one-shot revision process to enhance the timeliness and quality of the scientific results from the research community. Each paper will go through the same r",
         "igorous reviewing process as in previous MobiCom conferences. The review process for each deadline will involve two rounds. Papers that are not selected to proceed after the first round will receive an early notification, including reviews. After the second round of rev"
       ]
+    },
+    {
+      "title": "ACM International Symposium on Mobile Ad Hoc Networking and Computing",
+      "acronym": "MobiHoc",
+      "track": "Wireless / Mobile",
+      "url": "https://www.sigmobile.org/mobihoc/2026/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / specialized wireless-networking",
+      "impactFactor": "N/A — conference; use indexing/reputation instead",
+      "note": "Mobile ad hoc, sensor, and wireless networking CFP source.",
+      "tags": [
+        "wireless",
+        "mobile",
+        "networking"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "April 13, 2026 Paper Registration Deadline (11:59pm AoE) April 20, 2026",
+        "April 20, 2026 Paper Submission Deadline (11:59pm AoE) July 20, 2026",
+        "July 26, 2026 Rebuttal Deadline August 23, 2026"
+      ]
+    },
+    {
+      "title": "ACM International Conference on Mobile Systems, Applications, and Services",
+      "acronym": "MobiSys",
+      "track": "Wireless / Mobile",
+      "url": "https://www.sigmobile.org/mobisys/2026/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q1-like / top-tier mobile systems",
+      "impactFactor": "N/A — conference; use CORE/field reputation instead",
+      "note": "Mobile systems venue; useful for edge AI, mobile computing, sensing, and wireless systems submissions.",
+      "tags": [
+        "wireless",
+        "mobile",
+        "systems",
+        "edge"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "9 AoE Final Decision Notification March 2, 2026 Final Camera-ready Deadline April 13, 2026 IoT Day June 21, 2026 Rising Stars Forum June 21, 2026 N 2 Women Workshop June 21, 2026 Main Confe",
+        "Symposium application is open April 25th, 2026 - N2Women Workshop submission deadline has been extended April 20th, 2026 - Accepted Papers have now been rleased April 16th, 2026 - Registration is open April 10th, 2026 - Call f",
+        "il 16th, 2026 - Registration is open April 10th, 2026 - Call for Posters deadline is extended Feb 24th, 2026 - Artefact Evaluation deadline is updated Jan 31st, 2026 - Accepted Workshops is now available Jan 31st, 2026 - A"
+      ]
+    },
+    {
+      "title": "International Symposium on Modeling and Optimization in Mobile, Ad Hoc, and Wireless Networks",
+      "acronym": "WiOpt",
+      "track": "Wireless / Optimization",
+      "url": "https://wi-opt.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / specialized wireless optimization",
+      "impactFactor": "N/A — conference; use indexing/reputation instead",
+      "note": "Wireless modeling, optimization, and mobile network CFP source.",
+      "tags": [
+        "wireless",
+        "optimization",
+        "networking"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetch failed",
+      "deadlineSignals": []
+    },
+    {
+      "title": "IEEE International Workshop on Signal Processing Advances in Wireless Communications",
+      "acronym": "SPAWC",
+      "track": "Wireless / Signal Processing",
+      "url": "https://spawc2026.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / specialized wireless signal processing",
+      "impactFactor": "N/A — conference/workshop; use SPS/ComSoc reputation instead",
+      "note": "Wireless signal processing CFP source; relevant for PHY/MIMO/RAN-adjacent research.",
+      "tags": [
+        "wireless",
+        "signal-processing",
+        "phy",
+        "mimo"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetch failed",
+      "deadlineSignals": []
+    },
+    {
+      "title": "IEEE International Symposium on Dynamic Spectrum Access Networks",
+      "acronym": "DySPAN",
+      "track": "Wireless / Spectrum",
+      "url": "https://dyspan2026.ieee-dyspan.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / specialized spectrum-wireless",
+      "impactFactor": "N/A — conference; use indexing/reputation instead",
+      "note": "Spectrum sharing, cognitive radio, and dynamic spectrum access CFP source.",
+      "tags": [
+        "wireless",
+        "spectrum",
+        "communications"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Submission Guidelines Committees",
+        "07 Apr 2026 Camera Ready Paper Submission 11 May 2026 Conference Begins See All D",
+        "Important Dates Call for Papers"
+      ]
+    },
+    {
+      "title": "IEEE Conference on Standards for Communications and Networking",
+      "acronym": "CSCN",
+      "track": "Wireless / Standards",
+      "url": "https://cscn2026.ieee-cscn.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / specialized standards-networking",
+      "impactFactor": "N/A — conference; use standards/ComSoc relevance instead",
+      "note": "Communications standards CFP source; relevant to 3GPP, O-RAN, 5G/6G, and networking standards.",
+      "tags": [
+        "communications",
+        "standards",
+        "ran",
+        "6g"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "15 Jul 2026 Submission deadline (Main Tracks papers) : Deadline extended (firm) 15 Jul 2026 Submission deadline (Workshop/Special Ses",
+        "15 Jul 2026 Submission deadline (Main Tracks papers) : Deadline extended (firm) 15 Jul 2026 Submission deadline (Workshop/Special Session papers) : Deadline extended",
+        "15 Jul 2026 Submission deadline (Workshop/Special Session papers) : Deadline extended (firm) 26 Jul 2026 Acceptance notification"
+      ]
+    },
+    {
+      "title": "IEEE Vehicular Technology Conference Fall",
+      "acronym": "VTC-Fall",
+      "track": "Wireless / Vehicular",
+      "url": "https://events.vtsociety.org/vtc2026-fall/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / specialized vehicular-wireless",
+      "impactFactor": "N/A — conference; use IEEE VTS venue reputation instead",
+      "note": "Fall VTC CFP source; complements VTC-Spring for vehicular, mobile, and wireless communications.",
+      "tags": [
+        "communications",
+        "wireless",
+        "vehicular",
+        "v2x"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Registration and Final Paper Upload sites are now available! Look under \"Registration\". Deadline extended to July 8, 2026! Authors who register for Workshop-Only must email \"workshops@ieeevtc.org\" for permission to submit fi",
+        "Papers 21 March 2026 : Submit Regular Papers Deadline 19 May 2026 : Submit Recent Results Papers Deadline Extended 19 May 2026 : Submit Workshop Papers Deadline Extended",
+        ": Submit Regular Papers Deadline 19 May 2026 : Submit Recent Results Papers Deadline Extended 19 May 2026 : Submit Workshop Papers Deadline Extended"
+      ]
+    },
+    {
+      "title": "IEEE Vehicular Technology Conference Spring",
+      "acronym": "VTC-Spring",
+      "track": "Wireless / Vehicular",
+      "url": "https://events.vtsociety.org/vtc2026-spring/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / specialized vehicular-wireless",
+      "impactFactor": "N/A — conference; use IEEE VTS venue reputation instead",
+      "note": "Vehicular and wireless communications CFP source; useful for mobility, V2X, and cellular tracks.",
+      "tags": [
+        "communications",
+        "wireless",
+        "vehicular",
+        "v2x"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "4 January 2026 (extended) : Submit Regular Papers Deadline Notification of Acceptance 10 April",
+        "ccommodations Registration Registration Site Final Paper Submission Awards About",
+        "per Revisions Due 17 April 2026 : All Final Paper Submission - Extended Author Registration 17 April"
+      ]
+    },
+    {
+      "title": "IEEE Global Communications Conference Workshops",
+      "acronym": "GLOBECOM Workshops",
+      "track": "Wireless / Workshops",
+      "url": "https://globecom2026.ieee-globecom.org/workshops",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / workshop track under flagship communications",
+      "impactFactor": "N/A — workshop; use parent conference context instead",
+      "note": "Workshop CFP source for emerging wireless, RAN, edge, and 6G topics.",
+      "tags": [
+        "communications",
+        "wireless",
+        "workshops",
+        "6g",
+        "ran"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Submission Guidelines Committees",
+        "Important Dates Call for Workshop Papers"
+      ]
+    },
+    {
+      "title": "IEEE International Conference on Communications Workshops",
+      "acronym": "ICC Workshops",
+      "track": "Wireless / Workshops",
+      "url": "https://icc2026.ieee-icc.org/workshops",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "qualityTier": "Q2-like / workshop track under flagship communications",
+      "impactFactor": "N/A — workshop; use parent conference context instead",
+      "note": "Workshop CFP source for specialized RAN, AI-native communications, edge, and 6G topics.",
+      "tags": [
+        "communications",
+        "wireless",
+        "workshops",
+        "6g",
+        "ran"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetch failed",
+      "deadlineSignals": []
     }
   ]
 }

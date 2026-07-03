@@ -174,8 +174,8 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
     assert!(!style.contains(".archive-graph"));
     assert!(!style.to_ascii_lowercase().contains("neon"));
     assert!(
-        style.len() <= 41_200,
-        "public polish CSS should stay bounded even with responsive controls, post chrome spacing, icons, theme modes, dark contrast guards, editorial archive controls, mobile news compression, card-news surfaces, and Pretext layers"
+        style.len() <= 41_800,
+        "public polish CSS should stay bounded even with responsive controls, post chrome spacing, icons, theme modes, dark contrast guards, editorial archive controls, mobile news compression, card-news surfaces, CFP tables, and Pretext layers"
     );
 
     let profile = fs::read_to_string(out_dir.join("posts/jinhyuk-kim/index.html"))?;
@@ -237,9 +237,19 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
     assert!(cfp.contains("data-askama-template=\"cfp\""));
     assert!(cfp.contains("data-layout=\"cfp-index\""));
     assert!(cfp.contains("CFP Radar"));
+    assert!(cfp.contains("wireless/communications focus"));
     assert!(cfp.contains("/cfp/data/latest.json"));
     assert!(cfp.contains("Read latest CFP Radar"));
     assert!(out_dir.join("cfp/data/latest.json").exists());
+
+    let cfp_post = fs::read_to_string(out_dir.join("posts/2026-07-03-cfp-radar/index.html"))?;
+    assert!(cfp_post.contains("학회 일자"));
+    assert!(cfp_post.contains("접수 deadline"));
+    assert!(cfp_post.contains("Q1/Q2급 수준"));
+    assert!(cfp_post.contains("Impact factor / metric"));
+    assert!(cfp_post.contains("IEEE International Conference on Communications"));
+    assert!(cfp_post.contains("IEEE Wireless Communications and Networking Conference"));
+    assert!(cfp_post.contains("Conferences do not have journal-style Impact Factors"));
 
     let latest_news_post = result
         .posts

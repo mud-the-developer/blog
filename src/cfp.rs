@@ -15,7 +15,13 @@ pub struct CfpSource {
     pub acronym: String,
     pub track: String,
     pub url: String,
+    #[serde(default, rename = "conferenceDates")]
+    pub conference_dates: String,
     pub location: String,
+    #[serde(default, rename = "qualityTier")]
+    pub quality_tier: String,
+    #[serde(default, rename = "impactFactor")]
+    pub impact_factor: String,
     pub note: String,
     #[serde(default)]
     pub tags: Vec<String>,
@@ -35,7 +41,10 @@ pub struct CfpItem {
     pub acronym: String,
     pub track: String,
     pub url: String,
+    pub conference_dates: String,
     pub location: String,
+    pub quality_tier: String,
+    pub impact_factor: String,
     pub note: String,
     pub tags: Vec<String>,
     pub configured_deadline: Option<String>,
@@ -164,17 +173,58 @@ fn markdown_escape(value: &str) -> String {
     value.replace('|', "\\|").replace('\n', " ")
 }
 
+fn configured_or_tbd(value: &str) -> String {
+    let trimmed = value.trim();
+    if trimmed.is_empty() {
+        "TBD / official page".to_string()
+    } else {
+        trimmed.to_string()
+    }
+}
+
+fn deadline_label(item: &CfpItem) -> String {
+    item.configured_deadline
+        .as_ref()
+        .map(|deadline| format!("{deadline} ({})", item.deadline_status))
+        .unwrap_or_else(|| "TBD / official page".to_string())
+}
+
+fn is_wireless_or_communications(item: &CfpItem) -> bool {
+    let track = item.track.to_ascii_lowercase();
+    let tags = item.tags.join(" ").to_ascii_lowercase();
+    [
+        "wireless",
+        "communication",
+        "ran",
+        "6g",
+        "spectrum",
+        "vehicular",
+    ]
+    .iter()
+    .any(|needle| track.contains(needle) || tags.contains(needle))
+}
+
 fn render_markdown(issue: &CfpIssue) -> String {
     let mut output = String::new();
     output.push_str("---\n");
     output.push_str(&format!("title: \"CFP Radar — {}\"\n", issue.issue_date));
     output.push_str(&format!("date: {}\n", issue.issue_date));
-    output.push_str("tags:\n  - cfp\n  - conferences\n  - research\nexcerpt: \"Weekly call-for-papers watchlist for AI, systems, networking, RAN, and edge/cloud venues.\"\n---\n\n");
+    output.push_str("tags:\n  - cfp\n  - conferences\n  - research\n  - wireless\n  - communications\nexcerpt: \"Weekly call-for-papers watchlist with conference dates, deadlines, venue level, and conference metrics for wireless/communications-heavy research venues.\"\n---\n\n");
     output.push_str(&format!("# CFP Radar — {}\n\n", issue.issue_date));
-    output.push_str("Weekly call-for-papers radar for conferences and workshops relevant to AI systems, wireless/RAN, networking, and edge/cloud research. Dates are treated as operational leads: always verify the linked official CFP page before planning a submission.\n\n");
+    output.push_str("Weekly call-for-papers radar for conferences and workshops relevant to wireless communications, RAN/6G, networking, edge systems, AI systems, and security. Dates are treated as operational leads: always verify the linked official CFP page before planning a submission.\n\n");
+    output.push_str("**Metric note.** Conferences do not have journal-style Impact Factors. The `IF / metric` column therefore records `N/A` plus the ranking/reputation proxy to use instead, while the `level` column is an editorial Q1/Q2-like field-strength label rather than an official journal quartile.\n\n");
+    let wireless_count = issue
+        .items
+        .iter()
+        .filter(|item| is_wireless_or_communications(item))
+        .count();
     output.push_str("## Snapshot\n\n");
     output.push_str(&format!("- Generated: `{}`\n", issue.generated_at));
     output.push_str(&format!("- Sources watched: **{}**\n", issue.source_count));
+    output.push_str(&format!(
+        "- Wireless / communications-heavy sources: **{}**\n",
+        wireless_count
+    ));
     output.push_str(&format!(
         "- Sources fetched this run: **{}**\n",
         issue.fetched_count
@@ -185,16 +235,19 @@ fn render_markdown(issue: &CfpIssue) -> String {
     ));
 
     output.push_str("## Watchlist\n\n");
-    output.push_str("| Venue | Track | Deadline status | Location | Link |\n");
-    output.push_str("| --- | --- | --- | --- | --- |\n");
+    output.push_str("| 학회명 | 분야 | 학회 일자 | 접수 deadline | 위치 | Q1/Q2급 수준 | Impact factor / metric | Link |\n");
+    output.push_str("| --- | --- | --- | --- | --- | --- | --- | --- |\n");
     for item in &issue.items {
         let venue = format!("{} ({})", item.title, item.acronym);
         output.push_str(&format!(
-            "| {} | {} | {} | {} | [CFP]({}) |\n",
+            "| {} | {} | {} | {} | {} | {} | {} | [CFP]({}) |\n",
             markdown_escape(&venue),
             markdown_escape(&item.track),
-            markdown_escape(&item.deadline_status),
+            markdown_escape(&item.conference_dates),
+            markdown_escape(&deadline_label(item)),
             markdown_escape(&item.location),
+            markdown_escape(&item.quality_tier),
+            markdown_escape(&item.impact_factor),
             item.url
         ));
     }
@@ -203,6 +256,10 @@ fn render_markdown(issue: &CfpIssue) -> String {
     for item in &issue.items {
         output.push_str(&format!("### {} ({})\n\n", item.title, item.acronym));
         output.push_str(&format!("- Track: {}\n", item.track));
+        output.push_str(&format!("- Conference dates: {}\n", item.conference_dates));
+        output.push_str(&format!("- Location: {}\n", item.location));
+        output.push_str(&format!("- Level: {}\n", item.quality_tier));
+        output.push_str(&format!("- IF / metric: {}\n", item.impact_factor));
         output.push_str(&format!("- Source: [{}]({})\n", item.url, item.url));
         output.push_str(&format!("- Fetch status: `{}`\n", item.fetch_status));
         if let Some(deadline) = &item.configured_deadline {
@@ -276,7 +333,10 @@ pub async fn update_cfp_artifacts(
             acronym: source.acronym,
             track: source.track,
             url: source.url,
+            conference_dates: configured_or_tbd(&source.conference_dates),
             location: source.location,
+            quality_tier: configured_or_tbd(&source.quality_tier),
+            impact_factor: configured_or_tbd(&source.impact_factor),
             note: source.note,
             tags: source.tags,
             configured_deadline: source.deadline,
@@ -335,11 +395,28 @@ pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIss
     if issue.source_count < 8 {
         return Err(format!("CFP source coverage is too low: {}", issue.source_count).into());
     }
+    if issue.source_count < 24 {
+        return Err(format!(
+            "CFP source list should include a broad communications-heavy radar: {}",
+            issue.source_count
+        )
+        .into());
+    }
     if issue.items.is_empty() {
         return Err("CFP latest.json has no items".into());
     }
     if issue.tracks.len() < 4 {
         return Err(format!("CFP track coverage is too narrow: {}", issue.tracks.len()).into());
+    }
+    let wireless_count = issue
+        .items
+        .iter()
+        .filter(|item| is_wireless_or_communications(item))
+        .count();
+    if wireless_count < 16 {
+        return Err(
+            format!("Wireless/communications CFP coverage is too low: {wireless_count}").into(),
+        );
     }
     if !static_latest_path.exists() {
         return Err("static/cfp/data/latest.json is missing".into());
@@ -351,7 +428,12 @@ pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIss
         return Err(format!("CFP markdown issue is missing: {}", post_path.display()).into());
     }
     let post = fs::read_to_string(&post_path).await?;
-    if !post.contains("# CFP Radar") || !post.contains("## Watchlist") {
+    if !post.contains("# CFP Radar")
+        || !post.contains("## Watchlist")
+        || !post.contains("학회 일자")
+        || !post.contains("접수 deadline")
+        || !post.contains("Impact factor / metric")
+    {
         return Err("CFP markdown issue is missing required public sections".into());
     }
     let static_issue: serde_json::Value =
