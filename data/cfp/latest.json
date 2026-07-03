@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-07-03T09:21:57Z",
+  "generatedAt": "2026-07-03T09:25:09Z",
   "issueDate": "2026-07-03",
   "sourceCount": 39,
   "activeCount": 36,
   "conferenceCount": 31,
   "journalCount": 8,
   "withConfiguredDeadlineCount": 4,
-  "fetchedCount": 28,
+  "fetchedCount": 23,
   "tracks": {
     "AI / ML": 3,
     "Cloud / Edge": 1,
@@ -530,7 +530,7 @@
       "configuredDeadline": null,
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "fetched",
+      "fetchStatus": "http 415 Unsupported Media Type",
       "deadlineSignals": []
     },
     {
@@ -608,7 +608,7 @@
       "configuredDeadline": null,
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "http 404 Not Found",
+      "fetchStatus": "http 415 Unsupported Media Type",
       "deadlineSignals": []
     },
     {
@@ -633,12 +633,8 @@
       "configuredDeadline": null,
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "fetched",
-      "deadlineSignals": [
-        "any of these requirements will be desk-rejected without review. By registration deadline All papers MUST be registered in the respective HotCRP instance one week before the submission deadline, including the definitive title, the definitive",
-        "apers MUST be registered in the respective HotCRP instance one week before the submission deadline, including the definitive title, the definitive abstract, the definitive track, and the definitive track justification. Abstracts and titles MUST NOT",
-        "ification. Abstracts and titles MUST NOT be changed after the abstract registration deadline, on the HotCRP metadata. Because abstracts and titles are used to match papers with reviewers, abstracts and titles MUST NOT be changed in the final submitted pdf. T"
-      ]
+      "fetchStatus": "http 415 Unsupported Media Type",
+      "deadlineSignals": []
     },
     {
       "title": "IEEE Symposium on Security and Privacy",
@@ -854,12 +850,8 @@
       "configuredDeadline": null,
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "fetched",
-      "deadlineSignals": [
-        "quantum computing, communication and sensing to mobile and wireless systems Two Deadlines, Early Notification, Rebuttals, and One-shot Revision MobiCom 2026 offers authors the option of two deadlines and keeps the one-shot revision process to enhan",
-        "ebuttals, and One-shot Revision MobiCom 2026 offers authors the option of two deadlines and keeps the one-shot revision process to enhance the timeliness and quality of the scientific results from the research community. Each paper will go through the same r",
-        "igorous reviewing process as in previous MobiCom conferences. The review process for each deadline will involve two rounds. Papers that are not selected to proceed after the first round will receive an early notification, including reviews. After the second round of rev"
-      ]
+      "fetchStatus": "http 415 Unsupported Media Type",
+      "deadlineSignals": []
     },
     {
       "title": "ACM International Symposium on Mobile Ad Hoc Networking and Computing",
@@ -883,12 +875,8 @@
       "configuredDeadline": null,
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "fetched",
-      "deadlineSignals": [
-        "April 13, 2026 Paper Registration Deadline (11:59pm AoE) April 20, 2026",
-        "April 20, 2026 Paper Submission Deadline (11:59pm AoE) July 20, 2026",
-        "July 26, 2026 Rebuttal Deadline August 23, 2026"
-      ]
+      "fetchStatus": "http 415 Unsupported Media Type",
+      "deadlineSignals": []
     },
     {
       "title": "ACM International Conference on Mobile Systems, Applications, and Services",
@@ -913,12 +901,8 @@
       "configuredDeadline": null,
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "fetched",
-      "deadlineSignals": [
-        "9 AoE Final Decision Notification March 2, 2026 Final Camera-ready Deadline April 13, 2026 IoT Day June 21, 2026 Rising Stars Forum June 21, 2026 N 2 Women Workshop June 21, 2026 Main Confe",
-        "Symposium application is open April 25th, 2026 - N2Women Workshop submission deadline has been extended April 20th, 2026 - Accepted Papers have now been rleased April 16th, 2026 - Registration is open April 10th, 2026 - Call f",
-        "il 16th, 2026 - Registration is open April 10th, 2026 - Call for Posters deadline is extended Feb 24th, 2026 - Artefact Evaluation deadline is updated Jan 31st, 2026 - Accepted Workshops is now available Jan 31st, 2026 - A"
-      ]
+      "fetchStatus": "http 415 Unsupported Media Type",
+      "deadlineSignals": []
     },
     {
       "title": "International Symposium on Modeling and Optimization in Mobile, Ad Hoc, and Wireless Networks",
