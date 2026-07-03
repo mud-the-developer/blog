@@ -236,12 +236,40 @@ fn impact_label(item: &CfpItem) -> String {
     }
 }
 
-fn compact_level_label(item: &CfpItem) -> String {
-    let level = item.quality_tier.trim();
-    if level.is_empty() {
-        "TBD".to_string()
+fn compact_standing_label(item: &CfpItem) -> String {
+    if is_journal(item) {
+        return "Quartile: verify annually".to_string();
+    }
+    let cleaned = item
+        .quality_tier
+        .trim()
+        .trim_start_matches("Q1/Q2-like / ")
+        .trim_start_matches("Q1-like / ")
+        .trim_start_matches("Q2-like / ");
+    if cleaned.is_empty() {
+        return "Rank: verify".to_string();
+    }
+    let lower = cleaned.to_ascii_lowercase();
+    if lower.contains("top-tier") {
+        "Top-tier".to_string()
+    } else if lower.contains("flagship") {
+        "Flagship".to_string()
+    } else if lower.contains("major") {
+        "Major venue".to_string()
+    } else if lower.contains("strong") {
+        "Strong venue".to_string()
+    } else if lower.contains("specialized") {
+        "Specialized venue".to_string()
+    } else if lower.contains("solid") {
+        "Solid venue".to_string()
+    } else if lower.contains("communications-networking") {
+        "Communications venue".to_string()
+    } else if lower.contains("workshop") {
+        "Workshop track".to_string()
+    } else if lower.contains("applied") {
+        "Applied venue".to_string()
     } else {
-        level.to_string()
+        cleaned.to_string()
     }
 }
 
@@ -305,7 +333,7 @@ fn render_watchlist_table(output: &mut String, items: &[&CfpItem]) {
         return;
     }
     output.push_str(
-        "| Venue | Field | Dates | Deadline | Location | Level | Metric | Link |
+        "| Venue | Field | Dates | Deadline | Location | Standing | Metric | Link |
 ",
     );
     output.push_str(
@@ -322,7 +350,7 @@ fn render_watchlist_table(output: &mut String, items: &[&CfpItem]) {
             markdown_escape(&item.conference_dates),
             markdown_escape(&deadline_label(item)),
             markdown_escape(&item.location),
-            markdown_escape(&compact_level_label(item)),
+            markdown_escape(&compact_standing_label(item)),
             markdown_escape(&compact_metric_label(item)),
             item.url
         ));
@@ -679,11 +707,15 @@ pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIss
     let post = fs::read_to_string(&post_path).await?;
     if post.contains("| 학회명 |")
         || post.contains("Q1/Q2 / ranking basis")
+        || post.contains("Q1-like")
+        || post.contains("Q2-like")
+        || post.contains("Q1/Q2-like")
         || !post.contains("## Nearest submission deadlines")
         || !post.contains("## Three-by-three quick view")
         || !post.contains("## Full grouped watchlists")
         || !post.contains("| Deadline | Days | Venue | Kind | Field | Link |")
-        || !post.contains("| Venue | Field | Dates | Deadline | Location | Level | Metric | Link |")
+        || !post
+            .contains("| Venue | Field | Dates | Deadline | Location | Standing | Metric | Link |")
         || !post.contains("Journal special")
         || !post.contains("### Conferences")
         || !post.contains("### Workshops")

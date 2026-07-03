@@ -248,9 +248,12 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
     assert!(cfp_post.contains("Full grouped watchlists"));
     assert!(cfp_post.contains(">Venue</th>"));
     assert!(cfp_post.contains(">Deadline</th>"));
-    assert!(cfp_post.contains(">Level</th>"));
+    assert!(cfp_post.contains(">Standing</th>"));
     assert!(cfp_post.contains(">Metric</th>"));
     assert!(!cfp_post.contains("Q1/Q2 / ranking basis"));
+    assert!(!cfp_post.contains("Q1-like"));
+    assert!(!cfp_post.contains("Q2-like"));
+    assert!(!cfp_post.contains("Q1/Q2-like"));
     assert!(cfp_post.contains("IEEE International Conference on Communications"));
     assert!(cfp_post.contains("IEEE Wireless Communications and Networking Conference"));
     assert!(cfp_post.contains("IEEE International Workshop on Computer Aided Modeling"));
