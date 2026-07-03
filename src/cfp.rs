@@ -236,6 +236,23 @@ fn impact_label(item: &CfpItem) -> String {
     }
 }
 
+fn compact_level_label(item: &CfpItem) -> String {
+    let level = item.quality_tier.trim();
+    if level.is_empty() {
+        "TBD".to_string()
+    } else {
+        level.to_string()
+    }
+}
+
+fn compact_metric_label(item: &CfpItem) -> String {
+    if is_journal(item) {
+        "JIF: annual refresh".to_string()
+    } else {
+        "N/A".to_string()
+    }
+}
+
 fn is_wireless_or_communications(item: &CfpItem) -> bool {
     let track = item.track.to_ascii_lowercase();
     let tags = item.tags.join(" ").to_ascii_lowercase();
@@ -280,23 +297,33 @@ fn sorted_item_refs<'a>(items: impl Iterator<Item = &'a CfpItem>) -> Vec<&'a Cfp
 
 fn render_watchlist_table(output: &mut String, items: &[&CfpItem]) {
     if items.is_empty() {
-        output.push_str("No sources configured for this group yet.\n\n");
+        output.push_str(
+            "No sources configured for this group yet.
+
+",
+        );
         return;
     }
-    output.push_str("| Venue name | Type | Field | Event / issue dates | Submission deadline | Location | Q1/Q2 / ranking basis | Impact factor / metric | Link |\n");
-    output.push_str("| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n");
+    output.push_str(
+        "| Venue | Field | Dates | Deadline | Location | Level | Metric | Link |
+",
+    );
+    output.push_str(
+        "| --- | --- | --- | --- | --- | --- | --- | --- |
+",
+    );
     for item in items {
         let venue = format!("{} ({})", item.title, item.acronym);
         output.push_str(&format!(
-            "| {} | {} | {} | {} | {} | {} | {} | {} | [CFP]({}) |\n",
+            "| {} | {} | {} | {} | {} | {} | {} | [CFP]({}) |
+",
             markdown_escape(&venue),
-            markdown_escape(&item.venue_type),
             markdown_escape(&item.track),
             markdown_escape(&item.conference_dates),
             markdown_escape(&deadline_label(item)),
             markdown_escape(&item.location),
-            markdown_escape(&ranking_label(item)),
-            markdown_escape(&impact_label(item)),
+            markdown_escape(&compact_level_label(item)),
+            markdown_escape(&compact_metric_label(item)),
             item.url
         ));
     }
@@ -304,8 +331,14 @@ fn render_watchlist_table(output: &mut String, items: &[&CfpItem]) {
 }
 
 fn render_deadline_radar(output: &mut String, issue: &CfpIssue) {
-    output.push_str("## Nearest submission deadlines\n\n");
-    output.push_str("Sorted from the current issue date by the nearest configured submission deadline. Rows without configured deadlines stay in the full tables below until the official CFP page publishes a date.\n\n");
+    output.push_str(
+        "## Nearest submission deadlines
+
+",
+    );
+    output.push_str("Configured open deadlines, sorted from the current issue date. Items without a configured date stay in the grouped watchlists below.
+
+");
     let upcoming = sorted_item_refs(
         issue
             .items
@@ -313,22 +346,30 @@ fn render_deadline_radar(output: &mut String, issue: &CfpIssue) {
             .filter(|item| item.days_until_deadline.is_some_and(|days| days >= 0)),
     );
     if upcoming.is_empty() {
-        output.push_str("No open configured submission deadlines are available yet; check the grouped watchlist below for official CFP pages being monitored.\n\n");
+        output.push_str("No open configured submission deadlines are available yet; check the grouped watchlists below for official CFP pages being monitored.
+
+");
         return;
     }
-    output.push_str("| Deadline | Days left | Venue | Type | Field | Location | Link |\n");
-    output.push_str("| --- | --- | --- | --- | --- | --- | --- |\n");
+    output.push_str(
+        "| Deadline | Days | Venue | Kind | Field | Link |
+",
+    );
+    output.push_str(
+        "| --- | --- | --- | --- | --- | --- |
+",
+    );
     for item in upcoming.iter().take(12) {
         let venue = format!("{} ({})", item.title, item.acronym);
         let days = item.days_until_deadline.unwrap_or_default();
         output.push_str(&format!(
-            "| {} | {} | {} | {} | {} | {} | [CFP]({}) |\n",
+            "| {} | {} | {} | {} | {} | [CFP]({}) |
+",
             markdown_escape(item.configured_deadline.as_deref().unwrap_or("TBD")),
             days,
             markdown_escape(&venue),
             markdown_escape(&item.venue_type),
             markdown_escape(&item.track),
-            markdown_escape(&item.location),
             item.url
         ));
     }
@@ -388,7 +429,9 @@ fn render_markdown(issue: &CfpIssue) -> String {
     render_deadline_radar(&mut output, issue);
 
     output.push_str("## Three-by-three quick view\n\n");
-    output.push_str("Three compact rows per venue type, sorted by open configured deadlines first and then by watchlist order.\n\n");
+    output.push_str(
+        "Three compact rows per venue type, keeping only the fields needed for quick scanning.\n\n",
+    );
     render_type_preview(
         &mut output,
         "Conferences",
@@ -413,7 +456,7 @@ fn render_markdown(issue: &CfpIssue) -> String {
         issue.items.iter().filter(|item| is_journal(item)).collect(),
     );
 
-    output.push_str("## Full watchlist\n\n");
+    output.push_str("## Full grouped watchlists\n\n");
     output.push_str("### Conferences\n\n");
     let conferences = sorted_item_refs(issue.items.iter().filter(|item| is_conference(item)));
     render_watchlist_table(&mut output, &conferences);
@@ -635,13 +678,12 @@ pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIss
     }
     let post = fs::read_to_string(&post_path).await?;
     if post.contains("| 학회명 |")
+        || post.contains("Q1/Q2 / ranking basis")
         || !post.contains("## Nearest submission deadlines")
         || !post.contains("## Three-by-three quick view")
-        || !post.contains("## Full watchlist")
-        || !post.contains("Venue name")
-        || !post.contains("Submission deadline")
-        || !post.contains("Q1/Q2 / ranking basis")
-        || !post.contains("Impact factor / metric")
+        || !post.contains("## Full grouped watchlists")
+        || !post.contains("| Deadline | Days | Venue | Kind | Field | Link |")
+        || !post.contains("| Venue | Field | Dates | Deadline | Location | Level | Metric | Link |")
         || !post.contains("Journal special")
         || !post.contains("### Conferences")
         || !post.contains("### Workshops")
