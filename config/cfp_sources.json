@@ -1,0 +1,112 @@
+{
+  "conferences": [
+    {
+      "title": "Neural Information Processing Systems",
+      "acronym": "NeurIPS",
+      "track": "AI / ML",
+      "url": "https://neurips.cc/Conferences/2026/CallForPapers",
+      "location": "Official CFP page",
+      "note": "Primary machine-learning conference CFP page; use this source for main-track deadline verification.",
+      "tags": ["ml", "ai", "workshops"]
+    },
+    {
+      "title": "International Conference on Machine Learning",
+      "acronym": "ICML",
+      "track": "AI / ML",
+      "url": "https://icml.cc/Conferences/2026/CallForPapers",
+      "location": "Official CFP page",
+      "note": "Core ML venue; the CFP page is monitored for abstract, paper, and supplementary deadline language.",
+      "tags": ["ml", "ai"]
+    },
+    {
+      "title": "International Conference on Learning Representations",
+      "acronym": "ICLR",
+      "track": "AI / ML",
+      "url": "https://iclr.cc/Conferences/2026/CallForPapers",
+      "location": "Official CFP page",
+      "note": "Learning representation CFP source; useful for annual submission and review-cycle reminders.",
+      "tags": ["ml", "ai", "openreview"]
+    },
+    {
+      "title": "ACM SIGCOMM",
+      "acronym": "SIGCOMM",
+      "track": "Networking / Systems",
+      "url": "https://conferences.sigcomm.org/sigcomm/2026/cfp.html",
+      "location": "Official CFP page",
+      "note": "Networking systems CFP source; monitored for paper registration and submission dates.",
+      "tags": ["networking", "systems"]
+    },
+    {
+      "title": "USENIX Symposium on Networked Systems Design and Implementation",
+      "acronym": "NSDI",
+      "track": "Networking / Systems",
+      "url": "https://www.usenix.org/conference/nsdi26/call-for-papers",
+      "location": "Official CFP page",
+      "note": "Networked systems CFP source; useful for systems/networking submission windows.",
+      "tags": ["systems", "networking"]
+    },
+    {
+      "title": "USENIX Symposium on Operating Systems Design and Implementation",
+      "acronym": "OSDI",
+      "track": "Systems",
+      "url": "https://www.usenix.org/conference/osdi26/call-for-papers",
+      "location": "Official CFP page",
+      "note": "Operating systems CFP source; monitored as a systems-track anchor.",
+      "tags": ["systems", "os"]
+    },
+    {
+      "title": "ACM International Conference on Mobile Computing and Networking",
+      "acronym": "MobiCom",
+      "track": "Wireless / Mobile",
+      "url": "https://www.sigmobile.org/mobicom/2026/cfp.html",
+      "location": "Official CFP page",
+      "note": "Mobile and wireless networking CFP source; relevant to RAN, edge, and mobile systems work.",
+      "tags": ["wireless", "mobile", "networking"]
+    },
+    {
+      "title": "IEEE International Conference on Communications",
+      "acronym": "ICC",
+      "track": "Wireless / Communications",
+      "url": "https://icc2026.ieee-icc.org/call-papers",
+      "location": "Official CFP page",
+      "note": "Communications venue CFP source; monitored for symposium and workshop calls.",
+      "tags": ["communications", "wireless", "ran"]
+    },
+    {
+      "title": "IEEE Global Communications Conference",
+      "acronym": "GLOBECOM",
+      "track": "Wireless / Communications",
+      "url": "https://globecom2026.ieee-globecom.org/call-papers",
+      "location": "Official CFP page",
+      "note": "Communications and networking CFP source; relevant to 5G/6G, RAN, and edge networking tracks.",
+      "tags": ["communications", "wireless", "6g"]
+    },
+    {
+      "title": "ACM Symposium on Cloud Computing",
+      "acronym": "SoCC",
+      "track": "Cloud / Edge",
+      "url": "https://acmsocc.org/2026/call-for-papers.html",
+      "location": "Official CFP page",
+      "note": "Cloud systems CFP source; monitored for cloud, edge, and large-scale systems submission calls.",
+      "tags": ["cloud", "edge", "systems"]
+    },
+    {
+      "title": "IEEE Symposium on Security and Privacy",
+      "acronym": "IEEE S&P",
+      "track": "Security",
+      "url": "https://www.ieee-security.org/TC/SP2026/cfpapers.html",
+      "location": "Official CFP page",
+      "note": "Security CFP source; useful for AI systems, network security, and privacy-related submissions.",
+      "tags": ["security", "privacy"]
+    },
+    {
+      "title": "ACM Conference on Computer and Communications Security",
+      "acronym": "CCS",
+      "track": "Security",
+      "url": "https://www.sigsac.org/ccs/CCS2026/call-for/call-for-papers.html",
+      "location": "Official CFP page",
+      "note": "Security CFP source; monitored for main-track and artifact deadline signals.",
+      "tags": ["security", "privacy", "systems"]
+    }
+  ]
+}

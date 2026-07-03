@@ -67,9 +67,11 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
     assert!(sitemap.contains("<loc>https://mud-blog.pages.dev/</loc>"));
     assert!(sitemap.contains("<loc>https://mud-blog.pages.dev/news/</loc>"));
     assert!(sitemap.contains("<loc>https://mud-blog.pages.dev/news/search/</loc>"));
-    assert_eq!(sitemap.matches("<url>").count(), expected_post_count + 3);
+    assert!(sitemap.contains("<loc>https://mud-blog.pages.dev/cfp/</loc>"));
+    assert_eq!(sitemap.matches("<url>").count(), expected_post_count + 4);
 
     assert!(index.contains("<a href=\"/news/\"><span class=\"ui-icon\" data-icon=\"newspaper\""));
+    assert!(index.contains("href=\"/cfp/\""));
     assert!(index.contains("data-theme-toggle"));
     assert!(index.contains("aria-label=\"Toggle color theme: System\""));
     assert!(index.contains("/assets/site-chrome.mjs"));
@@ -88,6 +90,7 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
     assert!(index.contains("dossier-card-left"));
     assert!(index.contains("dossier-card-right"));
     assert!(index.contains("Source brief"));
+    assert!(index.contains("CFP Radar"));
     assert!(!index.contains("writing index is live"));
     assert!(!index.contains("<details class=\"filetree-folder\" data-folder=\"news\""));
     assert!(!index.contains("<span>news/</span>"));
@@ -114,6 +117,7 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
     assert!(index.contains("posts/"));
     assert!(!index.contains("<span>news/</span>"));
     assert!(index.contains("blog/"));
+    assert!(index.contains("cfp/"));
     assert!(index.contains("papers/"));
     assert!(index.contains("about/"));
     assert!(index.contains("Jinhyuk Kim"));
@@ -200,7 +204,7 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
     assert!(!latest_digest.contains("href=\"/notes/"));
 
     let archive = fs::read_to_string(out_dir.join("archive.json"))?;
-    assert!(archive.len() <= 24_000);
+    assert!(archive.len() <= 26_000);
 
     let news = fs::read_to_string(out_dir.join("news/index.html"))?;
     assert!(news.contains("data-askama-template=\"news\""));
@@ -228,6 +232,14 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
     assert!(!news.contains("Gemma guide"));
     assert!(news.contains("AI News Brief —"));
     assert!(news.contains("Daily AI News Archive"));
+
+    let cfp = fs::read_to_string(out_dir.join("cfp/index.html"))?;
+    assert!(cfp.contains("data-askama-template=\"cfp\""));
+    assert!(cfp.contains("data-layout=\"cfp-index\""));
+    assert!(cfp.contains("CFP Radar"));
+    assert!(cfp.contains("/cfp/data/latest.json"));
+    assert!(cfp.contains("Read latest CFP Radar"));
+    assert!(out_dir.join("cfp/data/latest.json").exists());
 
     let latest_news_post = result
         .posts

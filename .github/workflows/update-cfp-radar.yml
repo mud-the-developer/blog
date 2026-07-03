@@ -1,0 +1,77 @@
+name: Update CFP Radar
+
+on:
+  schedule:
+    - cron: "30 15 * * 0"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Optional issue date (YYYY-MM-DD). Defaults to KST today."
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-cfp-radar
+  cancel-in-progress: false
+
+jobs:
+  update-cfp:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Seoul
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@v2
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Generate CFP Radar artifacts
+        env:
+          INPUT_DATE: ${{ github.event.inputs.date }}
+        run: |
+          set -euo pipefail
+          args=()
+          if [[ -n "${INPUT_DATE:-}" ]]; then
+            args+=(--date "${INPUT_DATE}")
+          fi
+          cargo run -- cfp update "${args[@]}"
+          cargo run -- cfp validate
+          npm run build
+
+      - name: Commit and push CFP artifacts
+        run: |
+          set -euo pipefail
+          paths=(data/cfp posts/cfp static/cfp/data)
+
+          if git diff --quiet -- "${paths[@]}"; then
+            echo "No CFP Radar changes to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add "${paths[@]}"
+          issue_date="$(date +%F)"
+          git commit -m "Refresh the weekly CFP Radar for ${issue_date}"
+          git push origin HEAD:main
+
+          echo "Pushed CFP artifacts to main; Deploy Cloudflare Pages will run from the Update CFP Radar workflow_run event."

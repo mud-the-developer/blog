@@ -21,6 +21,8 @@ use serde_json::json;
 use tokio::{fs, net::TcpListener};
 use tower_http::{compression::CompressionLayer, services::ServeDir};
 
+pub mod cfp;
+
 pub type BlogResult<T> = Result<T, Box<dyn std::error::Error>>;
 const PUBLIC_SITE_URL: &str = "https://mud-blog.pages.dev";
 
@@ -147,6 +149,15 @@ struct NewsTemplate<'a> {
     recent_issues: Vec<&'a Post>,
     month_groups: Vec<NewsMonthGroup<'a>>,
     archive_post: Vec<&'a Post>,
+    issue_count: usize,
+    archive_json: &'a str,
+}
+
+#[derive(Template)]
+#[template(path = "cfp.html")]
+struct CfpTemplate<'a> {
+    latest_issue: Vec<&'a Post>,
+    recent_issues: Vec<&'a Post>,
     issue_count: usize,
     archive_json: &'a str,
 }
@@ -616,6 +627,7 @@ fn minify_css(source: &str) -> String {
 fn folder_groups(posts: &[Post]) -> Vec<FolderGroup<'_>> {
     [
         ("news", "News"),
+        ("cfp", "CFP"),
         ("blog", "Blog"),
         ("papers", "Papers"),
         ("about", "About"),
@@ -786,6 +798,28 @@ pub fn render_news_search_page(posts: &[Post]) -> BlogResult<String> {
     .render()?)
 }
 
+pub fn render_cfp_page(posts: &[Post]) -> BlogResult<String> {
+    let archive_json = archive_json(posts)?;
+    let cfp_issues = posts
+        .iter()
+        .filter(|post| post.folder == "cfp")
+        .collect::<Vec<_>>();
+    let latest_issue = cfp_issues.iter().copied().take(1).collect::<Vec<_>>();
+    let recent_issues = cfp_issues
+        .iter()
+        .copied()
+        .skip(1)
+        .take(8)
+        .collect::<Vec<_>>();
+    Ok(CfpTemplate {
+        issue_count: cfp_issues.len(),
+        latest_issue,
+        recent_issues,
+        archive_json: &archive_json,
+    }
+    .render()?)
+}
+
 pub fn render_robots_txt() -> String {
     format!("User-agent: *\nAllow: /\n\nSitemap: {PUBLIC_SITE_URL}/sitemap.xml\n")
 }
@@ -794,7 +828,7 @@ pub fn render_sitemap_xml(posts: &[Post]) -> String {
     let mut output = String::from(
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n",
     );
-    for path in ["/", "/news/", "/news/search/"] {
+    for path in ["/", "/news/", "/news/search/", "/cfp/"] {
         output.push_str("  <url>\n    <loc>");
         output.push_str(PUBLIC_SITE_URL);
         output.push_str(path);
@@ -826,18 +860,21 @@ pub async fn build_static_site(
     let fragments_dir = out_dir.join("fragments");
     let news_dir = out_dir.join("news");
     let news_search_dir = news_dir.join("search");
+    let cfp_dir = out_dir.join("cfp");
 
     fs::remove_dir_all(out_dir).await.ok();
     fs::create_dir_all(&assets_dir).await?;
     fs::create_dir_all(&fragments_dir).await?;
     fs::create_dir_all(&news_dir).await?;
     fs::create_dir_all(&news_search_dir).await?;
+    fs::create_dir_all(&cfp_dir).await?;
     copy_dir_sync(
         &posts_dir.join("papers").join("assets"),
         &assets_dir.join("posts"),
     )?;
     copy_dir_sync(Path::new("static/news/assets"), &assets_dir.join("news"))?;
     copy_dir_sync(Path::new("static/news/data"), &out_dir.join("news/data"))?;
+    copy_dir_sync(Path::new("static/cfp/data"), &out_dir.join("cfp/data"))?;
     let css = fs::read_to_string("src/style.css").await?;
     fs::write(assets_dir.join("style.css"), minify_css(&css)).await?;
     fs::copy("src/blog-lab.mjs", assets_dir.join("blog-lab.mjs")).await?;
@@ -864,6 +901,7 @@ pub async fn build_static_site(
     fs::write(out_dir.join("sitemap.xml"), render_sitemap_xml(&posts)).await?;
     fs::write(out_dir.join("index.html"), render_index_page(&posts)?).await?;
     fs::write(news_dir.join("index.html"), render_news_page(&posts)?).await?;
+    fs::write(cfp_dir.join("index.html"), render_cfp_page(&posts)?).await?;
     fs::write(
         news_search_dir.join("index.html"),
         render_news_search_page(&posts)?,
@@ -882,6 +920,7 @@ pub async fn build_static_site(
         "sitemap.xml".to_string(),
         "news/index.html".to_string(),
         "news/search/index.html".to_string(),
+        "cfp/index.html".to_string(),
         "fragments/posts.html".to_string(),
     ];
     for post in &posts {
@@ -908,6 +947,8 @@ pub fn router(posts: Vec<Post>, assets_root: impl Into<PathBuf>) -> BlogResult<R
         .route("/sitemap.xml", get(sitemap_handler))
         .route("/news", get(news_handler))
         .route("/news/", get(news_handler))
+        .route("/cfp", get(cfp_handler))
+        .route("/cfp/", get(cfp_handler))
         .route("/news/search", get(news_search_page_handler))
         .route("/news/search/", get(news_search_page_handler))
         .route("/fragments/posts", get(posts_fragment_handler))
@@ -915,6 +956,7 @@ pub fn router(posts: Vec<Post>, assets_root: impl Into<PathBuf>) -> BlogResult<R
         .route("/api/focused-issue", post(focused_issue_handler))
         .route("/api/news-search", post(news_search_handler))
         .route("/posts/{slug}/", get(post_handler))
+        .nest_service("/cfp/data", ServeDir::new(assets_root.join("cfp/data")))
         .nest_service("/news/data", ServeDir::new(assets_root.join("news/data")))
         .nest_service("/assets", ServeDir::new(assets_root.join("assets")))
         .layer(CompressionLayer::new())
@@ -944,6 +986,13 @@ async fn sitemap_handler(State(state): State<AppState>) -> impl IntoResponse {
 
 async fn news_handler(State(state): State<AppState>) -> impl IntoResponse {
     match render_news_page(&state.posts) {
+        Ok(html) => Html(html).into_response(),
+        Err(error) => (StatusCode::INTERNAL_SERVER_ERROR, error.to_string()).into_response(),
+    }
+}
+
+async fn cfp_handler(State(state): State<AppState>) -> impl IntoResponse {
+    match render_cfp_page(&state.posts) {
         Ok(html) => Html(html).into_response(),
         Err(error) => (StatusCode::INTERNAL_SERVER_ERROR, error.to_string()).into_response(),
     }

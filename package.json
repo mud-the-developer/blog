@@ -19,7 +19,10 @@
     "lint:web:biome": "biome lint .",
     "lint:quality": "npm run lint:web && npm run lint:rust && node scripts/check-state-architecture.mjs && npm run lint:rust:deep",
     "news:daily": "python3 scripts/generate_news_digest.py",
-    "news:keyword": "python3 scripts/generate_news_digest.py"
+    "news:keyword": "python3 scripts/generate_news_digest.py",
+    "cfp:update": "cargo run --quiet -- cfp update",
+    "cfp:validate": "cargo run --quiet -- cfp validate",
+    "cfp:weekly": "npm run cfp:update && npm run cfp:validate && npm run build"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.16",

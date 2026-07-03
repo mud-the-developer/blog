@@ -1,6 +1,10 @@
 use std::path::PathBuf;
 
-use mud_blog::{BlogResult, build_static_site, serve};
+use mud_blog::{
+    BlogResult, build_static_site,
+    cfp::{update_cfp_artifacts, validate_cfp_artifacts},
+    serve,
+};
 
 #[tokio::main]
 async fn main() -> BlogResult<()> {
@@ -14,6 +18,42 @@ async fn main() -> BlogResult<()> {
                 "Built {} posts into dist with Tokio + Askama",
                 result.posts.len()
             );
+        }
+        "cfp" => {
+            let subcommand = args.next().unwrap_or_else(|| "update".to_string());
+            let mut date = None;
+            while let Some(arg) = args.next() {
+                if arg.as_str() == "--date"
+                    && let Some(value) = args.next()
+                {
+                    date = Some(value);
+                }
+            }
+
+            match subcommand.as_str() {
+                "update" => {
+                    let issue = update_cfp_artifacts(".", date.as_deref()).await?;
+                    println!(
+                        "Updated CFP Radar for {} with {} sources ({} fetched)",
+                        issue.issue_date, issue.source_count, issue.fetched_count
+                    );
+                }
+                "validate" => {
+                    let issue = validate_cfp_artifacts(".").await?;
+                    println!(
+                        "Validated CFP Radar for {} with {} sources across {} tracks",
+                        issue.issue_date,
+                        issue.source_count,
+                        issue.tracks.len()
+                    );
+                }
+                other => {
+                    eprintln!(
+                        "unknown cfp command: {other}\nusage: mud-blog cfp [update|validate] [--date YYYY-MM-DD]"
+                    );
+                    std::process::exit(2);
+                }
+            }
         }
         "serve" => {
             let mut host = "127.0.0.1".to_string();
@@ -37,7 +77,7 @@ async fn main() -> BlogResult<()> {
         }
         other => {
             eprintln!(
-                "unknown command: {other}\nusage: mud-blog [build|serve --host 0.0.0.0 --port 4173]"
+                "unknown command: {other}\nusage: mud-blog [build|cfp update|cfp validate|serve --host 0.0.0.0 --port 4173]"
             );
             std::process::exit(2);
         }

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const folders = ['blog', 'papers', 'about'];
+const folders = ['cfp', 'blog', 'papers', 'about'];
 const rejectedCopy = [
   '읽기 좋은 노트',
   'Readable archive',
@@ -51,7 +51,7 @@ test('homepage is a polished public filetree with no pretext motion or hero pane
   await expect(page.locator('.filetree-file')).toHaveCount(publicPostCount);
   await expect(page.locator('details.filetree-folder[data-folder="news"]')).toHaveCount(0);
   await expect(page.getByText('news/', { exact: true })).toHaveCount(0);
-  for (const folder of ['blog', 'papers', 'about']) {
+  for (const folder of folders) {
     await expect(page.locator(`details.filetree-folder[data-folder="${folder}"]`)).toHaveAttribute('open', '');
   }
   await expect(page.locator('#posts-surface > .post-card')).toHaveCount(publicPostCount);
@@ -222,7 +222,7 @@ test('local preview serves focused issue API and a dedicated news page', async (
   await expect(page.locator('[data-news-monthly-archive] .news-month-link')).toHaveCount(newsIssues);
   await expect(page.locator('[data-news-utility]')).toContainText('latest.json');
   await expect(page.locator('[data-news-digest-json]')).toHaveCount(0);
-  await expect(page.locator('text=AI News Brief — Jun 09').first()).toBeVisible();
+  await expect(page.locator('[data-news-featured] .news-feature-card strong')).toContainText('Brief');
 
   await page.goto('/news/search/');
   await expect(page.locator('html')).toHaveAttribute('data-askama-template', 'news-search');
