@@ -26,6 +26,12 @@ pub struct CfpSource {
     pub ranking_source: String,
     #[serde(default, rename = "rankingYear")]
     pub ranking_year: String,
+    #[serde(default, rename = "verifiedRank")]
+    pub verified_rank: String,
+    #[serde(default, rename = "verifiedRankSource")]
+    pub verified_rank_source: String,
+    #[serde(default, rename = "verifiedRankYear")]
+    pub verified_rank_year: String,
     #[serde(default, rename = "impactFactor")]
     pub impact_factor: String,
     #[serde(default, rename = "impactFactorYear")]
@@ -56,9 +62,9 @@ pub struct CfpItem {
     pub url: String,
     pub conference_dates: String,
     pub location: String,
-    pub quality_tier: String,
-    pub ranking_source: String,
-    pub ranking_year: String,
+    pub verified_rank: String,
+    pub verified_rank_source: String,
+    pub verified_rank_year: String,
     pub impact_factor: String,
     pub impact_factor_year: String,
     pub note: String,
@@ -208,24 +214,6 @@ fn deadline_label(item: &CfpItem) -> String {
         .unwrap_or_else(|| "TBD / official page".to_string())
 }
 
-fn ranking_label(item: &CfpItem) -> String {
-    let mut parts = Vec::new();
-    if !item.quality_tier.trim().is_empty() {
-        parts.push(item.quality_tier.trim().to_string());
-    }
-    if !item.ranking_source.trim().is_empty() {
-        parts.push(item.ranking_source.trim().to_string());
-    }
-    if !item.ranking_year.trim().is_empty() {
-        parts.push(format!("year: {}", item.ranking_year.trim()));
-    }
-    if parts.is_empty() {
-        "TBD / verify in annual ranking source".to_string()
-    } else {
-        parts.join("; ")
-    }
-}
-
 fn impact_label(item: &CfpItem) -> String {
     let impact = item.impact_factor.trim();
     let year = item.impact_factor_year.trim();
@@ -236,48 +224,39 @@ fn impact_label(item: &CfpItem) -> String {
     }
 }
 
-fn compact_standing_label(item: &CfpItem) -> String {
-    if is_journal(item) {
-        return "Quartile: verify annually".to_string();
-    }
-    let cleaned = item
-        .quality_tier
-        .trim()
-        .trim_start_matches("Q1/Q2-like / ")
-        .trim_start_matches("Q1-like / ")
-        .trim_start_matches("Q2-like / ");
-    if cleaned.is_empty() {
-        return "Rank: verify".to_string();
-    }
-    let lower = cleaned.to_ascii_lowercase();
-    if lower.contains("top-tier") {
-        "Top-tier".to_string()
-    } else if lower.contains("flagship") {
-        "Flagship".to_string()
-    } else if lower.contains("major") {
-        "Major venue".to_string()
-    } else if lower.contains("strong") {
-        "Strong venue".to_string()
-    } else if lower.contains("specialized") {
-        "Specialized venue".to_string()
-    } else if lower.contains("solid") {
-        "Solid venue".to_string()
-    } else if lower.contains("communications-networking") {
-        "Communications venue".to_string()
-    } else if lower.contains("workshop") {
-        "Workshop track".to_string()
-    } else if lower.contains("applied") {
-        "Applied venue".to_string()
+fn verified_rank_label(item: &CfpItem) -> String {
+    let rank = item.verified_rank.trim();
+    if rank.is_empty() {
+        "—".to_string()
     } else {
-        cleaned.to_string()
+        rank.to_string()
+    }
+}
+
+fn verified_rank_source_label(item: &CfpItem) -> String {
+    if item.verified_rank.trim().is_empty() {
+        return "—".to_string();
+    }
+    let source = item.verified_rank_source.trim();
+    let year = item.verified_rank_year.trim();
+    match (source.is_empty(), year.is_empty()) {
+        (true, _) => "verified source needed".to_string(),
+        (false, true) => source.to_string(),
+        (false, false) => format!("{source} ({year})"),
     }
 }
 
 fn compact_metric_label(item: &CfpItem) -> String {
-    if is_journal(item) {
-        "JIF: annual refresh".to_string()
+    let impact = item.impact_factor.trim();
+    if impact.is_empty()
+        || impact.starts_with("N/A")
+        || impact.contains("update from latest")
+        || impact.contains("annual refresh")
+        || impact.contains("verify")
+    {
+        "—".to_string()
     } else {
-        "N/A".to_string()
+        impact_label(item)
     }
 }
 
@@ -333,24 +312,25 @@ fn render_watchlist_table(output: &mut String, items: &[&CfpItem]) {
         return;
     }
     output.push_str(
-        "| Venue | Field | Dates | Deadline | Location | Standing | Metric | Link |
+        "| Venue | Field | Dates | Deadline | Location | Verified rank | Rank source | Metric | Link |
 ",
     );
     output.push_str(
-        "| --- | --- | --- | --- | --- | --- | --- | --- |
+        "| --- | --- | --- | --- | --- | --- | --- | --- | --- |
 ",
     );
     for item in items {
         let venue = format!("{} ({})", item.title, item.acronym);
         output.push_str(&format!(
-            "| {} | {} | {} | {} | {} | {} | {} | [CFP]({}) |
+            "| {} | {} | {} | {} | {} | {} | {} | {} | [CFP]({}) |
 ",
             markdown_escape(&venue),
             markdown_escape(&item.track),
             markdown_escape(&item.conference_dates),
             markdown_escape(&deadline_label(item)),
             markdown_escape(&item.location),
-            markdown_escape(&compact_standing_label(item)),
+            markdown_escape(&verified_rank_label(item)),
+            markdown_escape(&verified_rank_source_label(item)),
             markdown_escape(&compact_metric_label(item)),
             item.url
         ));
@@ -426,7 +406,7 @@ fn render_markdown(issue: &CfpIssue) -> String {
     output.push_str(&format!("date: {}\n", issue.issue_date));
     output.push_str("tags:\n  - cfp\n  - conferences\n  - workshops\n  - journals\n  - special-issues\n  - wireless\n  - communications\nexcerpt: \"Weekly CFP watchlist with nearest deadlines plus grouped conference, workshop, and journal-special-issue tables for wireless/communications-heavy venues.\"\n---\n\n");
     output.push_str("Weekly CFP radar for conferences, workshops, and journal special issues relevant to wireless communications, RAN/6G, networking, edge systems, AI systems, and security. Dates are operational leads: always verify the linked official CFP page before planning a submission.\n\n");
-    output.push_str("**Ranking note.** Journal Q1/Q2 labels are year-specific and category-specific; they must be refreshed from the latest JCR/SCImago-style journal quartile source each year. Conferences and workshops do not have journal-style Impact Factors or official Q1/Q2 quartiles, so those rows use a separate conference/workshop-ranking basis such as CORE rank, society flagship status, or field reputation.\n\n");
+    output.push_str("**Ranking note.** Rank cells are verified-only: they stay `—` until a concrete source/year is recorded, such as CORE A*/A/B/C, CCF A/B/C, SCImago/JCR Q1/Q2, or an official society flagship statement. Conferences and workshops do not have journal-style Impact Factors or official Q1/Q2 quartiles.\n\n");
     let wireless_count = issue
         .items
         .iter()
@@ -498,9 +478,9 @@ fn render_markdown(issue: &CfpIssue) -> String {
     render_watchlist_table(&mut output, &journals);
 
     output.push_str("## Ranking policy\n\n");
-    output.push_str("- **Journal rows:** use the configured annual journal-quartile source and year. A Q1/Q2 label is only meaningful with its category and ranking year. Impact Factor means Journal Impact Factor, when the journal publicly exposes it or when the value is updated from JCR by the maintainer.\n");
-    output.push_str("- **Conference/workshop rows:** do not use journal Impact Factor. The ranking column records a venue-specific proxy such as CORE rank, IEEE/ACM flagship status, or field reputation.\n");
-    output.push_str("- **Annual refresh:** the weekly job keeps deadlines fresh; the configured Q/JIF metadata should be reviewed yearly when new JCR/SJR/CORE releases are available.\n\n");
+    output.push_str("- **Verified-rank only:** table rank cells stay `—` unless a concrete source/year is recorded, such as CORE A*/A/B/C, CCF A/B/C, SCImago/JCR Q1/Q2, or an official society flagship statement.\n");
+    output.push_str("- **No proxy levels:** conferences and workshops do not use journal Impact Factors or journal-style Q1/Q2 quartiles. Heuristic labels such as top-tier, flagship, or specialized are not shown as verified rank.\n");
+    output.push_str("- **Annual refresh:** verified rank and journal metrics must be refreshed when new JCR/SJR/CORE/CCF releases are available.\n\n");
 
     output.push_str("## Deadline signals from official pages\n\n");
     for item in &issue.items {
@@ -512,11 +492,12 @@ fn render_markdown(issue: &CfpIssue) -> String {
             item.conference_dates
         ));
         output.push_str(&format!("- Location: {}\n", item.location));
-        output.push_str(&format!("- Ranking basis: {}\n", ranking_label(item)));
+        output.push_str(&format!("- Verified rank: {}\n", verified_rank_label(item)));
         output.push_str(&format!(
-            "- Impact factor / metric: {}\n",
-            impact_label(item)
+            "- Rank source: {}\n",
+            verified_rank_source_label(item)
         ));
+        output.push_str(&format!("- Metric: {}\n", compact_metric_label(item)));
         output.push_str(&format!("- Source: [{}]({})\n", item.url, item.url));
         output.push_str(&format!("- Fetch status: `{}`\n", item.fetch_status));
         if let Some(deadline) = &item.configured_deadline {
@@ -593,9 +574,9 @@ pub async fn update_cfp_artifacts(
             url: source.url,
             conference_dates: configured_or_tbd(&source.conference_dates),
             location: source.location,
-            quality_tier: configured_or_tbd(&source.quality_tier),
-            ranking_source: source.ranking_source,
-            ranking_year: source.ranking_year,
+            verified_rank: source.verified_rank,
+            verified_rank_source: source.verified_rank_source,
+            verified_rank_year: source.verified_rank_year,
             impact_factor: configured_or_tbd(&source.impact_factor),
             impact_factor_year: source.impact_factor_year,
             note: source.note,
@@ -715,7 +696,7 @@ pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIss
         || !post.contains("## Full grouped watchlists")
         || !post.contains("| Deadline | Days | Venue | Kind | Field | Link |")
         || !post
-            .contains("| Venue | Field | Dates | Deadline | Location | Standing | Metric | Link |")
+            .contains("| Venue | Field | Dates | Deadline | Location | Verified rank | Rank source | Metric | Link |")
         || !post.contains("Journal special")
         || !post.contains("### Conferences")
         || !post.contains("### Workshops")
