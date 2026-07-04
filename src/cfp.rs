@@ -260,6 +260,12 @@ fn compact_metric_label(item: &CfpItem) -> String {
     }
 }
 
+fn has_verified_rank_or_metric(item: &CfpItem) -> bool {
+    verified_rank_label(item) != "—"
+        || verified_rank_source_label(item) != "—"
+        || compact_metric_label(item) != "—"
+}
+
 fn is_wireless_or_communications(item: &CfpItem) -> bool {
     let track = item.track.to_ascii_lowercase();
     let tags = item.tags.join(" ").to_ascii_lowercase();
@@ -311,29 +317,54 @@ fn render_watchlist_table(output: &mut String, items: &[&CfpItem]) {
         );
         return;
     }
-    output.push_str(
-        "| Venue | Field | Dates | Deadline | Location | Verified rank | Rank source | Metric | Link |
+    let show_rank_columns = items.iter().any(|item| has_verified_rank_or_metric(item));
+    if show_rank_columns {
+        output.push_str(
+            "| Venue | Field | Dates | Deadline | Location | Verified rank | Rank source | Metric | Link |
 ",
-    );
-    output.push_str(
-        "| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+        );
+        output.push_str(
+            "| --- | --- | --- | --- | --- | --- | --- | --- | --- |
 ",
-    );
+        );
+    } else {
+        output.push_str(
+            "| Venue | Field | Dates | Deadline | Location | Link |
+",
+        );
+        output.push_str(
+            "| --- | --- | --- | --- | --- | --- |
+",
+        );
+    }
     for item in items {
         let venue = format!("{} ({})", item.title, item.acronym);
-        output.push_str(&format!(
-            "| {} | {} | {} | {} | {} | {} | {} | {} | [CFP]({}) |
+        if show_rank_columns {
+            output.push_str(&format!(
+                "| {} | {} | {} | {} | {} | {} | {} | {} | [CFP]({}) |
 ",
-            markdown_escape(&venue),
-            markdown_escape(&item.track),
-            markdown_escape(&item.conference_dates),
-            markdown_escape(&deadline_label(item)),
-            markdown_escape(&item.location),
-            markdown_escape(&verified_rank_label(item)),
-            markdown_escape(&verified_rank_source_label(item)),
-            markdown_escape(&compact_metric_label(item)),
-            item.url
-        ));
+                markdown_escape(&venue),
+                markdown_escape(&item.track),
+                markdown_escape(&item.conference_dates),
+                markdown_escape(&deadline_label(item)),
+                markdown_escape(&item.location),
+                markdown_escape(&verified_rank_label(item)),
+                markdown_escape(&verified_rank_source_label(item)),
+                markdown_escape(&compact_metric_label(item)),
+                item.url
+            ));
+        } else {
+            output.push_str(&format!(
+                "| {} | {} | {} | {} | {} | [CFP]({}) |
+",
+                markdown_escape(&venue),
+                markdown_escape(&item.track),
+                markdown_escape(&item.conference_dates),
+                markdown_escape(&deadline_label(item)),
+                markdown_escape(&item.location),
+                item.url
+            ));
+        }
     }
     output.push('\n');
 }
@@ -360,21 +391,19 @@ fn render_deadline_radar(output: &mut String, issue: &CfpIssue) {
         return;
     }
     output.push_str(
-        "| Deadline | Days | Venue | Kind | Field | Link |
+        "| Deadline | Venue | Kind | Field | Link |
 ",
     );
     output.push_str(
-        "| --- | --- | --- | --- | --- | --- |
+        "| --- | --- | --- | --- | --- |
 ",
     );
     for item in upcoming.iter().take(12) {
         let venue = format!("{} ({})", item.title, item.acronym);
-        let days = item.days_until_deadline.unwrap_or_default();
         output.push_str(&format!(
-            "| {} | {} | {} | {} | {} | [CFP]({}) |
+            "| {} | {} | {} | {} | [CFP]({}) |
 ",
-            markdown_escape(item.configured_deadline.as_deref().unwrap_or("TBD")),
-            days,
+            markdown_escape(&deadline_label(item)),
             markdown_escape(&venue),
             markdown_escape(&item.venue_type),
             markdown_escape(&item.track),
@@ -492,12 +521,14 @@ fn render_markdown(issue: &CfpIssue) -> String {
             item.conference_dates
         ));
         output.push_str(&format!("- Location: {}\n", item.location));
-        output.push_str(&format!("- Verified rank: {}\n", verified_rank_label(item)));
-        output.push_str(&format!(
-            "- Rank source: {}\n",
-            verified_rank_source_label(item)
-        ));
-        output.push_str(&format!("- Metric: {}\n", compact_metric_label(item)));
+        if has_verified_rank_or_metric(item) {
+            output.push_str(&format!("- Verified rank: {}\n", verified_rank_label(item)));
+            output.push_str(&format!(
+                "- Rank source: {}\n",
+                verified_rank_source_label(item)
+            ));
+            output.push_str(&format!("- Metric: {}\n", compact_metric_label(item)));
+        }
         output.push_str(&format!("- Source: [{}]({})\n", item.url, item.url));
         output.push_str(&format!("- Fetch status: `{}`\n", item.fetch_status));
         if let Some(deadline) = &item.configured_deadline {
@@ -694,9 +725,10 @@ pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIss
         || !post.contains("## Nearest submission deadlines")
         || !post.contains("## Three-by-three quick view")
         || !post.contains("## Full grouped watchlists")
-        || !post.contains("| Deadline | Days | Venue | Kind | Field | Link |")
-        || !post
-            .contains("| Venue | Field | Dates | Deadline | Location | Verified rank | Rank source | Metric | Link |")
+        || post.contains("| Deadline | Days | Venue | Kind | Field | Link |")
+        || !post.contains("| Deadline | Venue | Kind | Field | Link |")
+        || post.contains("| Venue | Field | Dates | Deadline | Location | Verified rank | Rank source | Metric | Link |")
+        || !post.contains("| Venue | Field | Dates | Deadline | Location | Link |")
         || !post.contains("Journal special")
         || !post.contains("### Conferences")
         || !post.contains("### Workshops")
