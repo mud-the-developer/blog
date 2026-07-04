@@ -9,6 +9,46 @@ use crate::BlogResult;
 
 const USER_AGENT: &str = "mud-blog-cfp-radar/0.1 (+https://mud-blog.pages.dev/cfp/)";
 
+const BLOCKED_CFP_SOURCE_PATTERNS: &[&str] = &[
+    "waset.org",
+    "omics",
+    "scirp.org",
+    "longdom.org",
+    "conferenceindex.org",
+    "allconferencealert",
+    "10times.com",
+    "researchfora",
+    "worldresearchlibrary",
+    "eurasiaweb",
+    "scientificfederation",
+];
+
+const TRUSTED_CFP_SOURCE_PATTERNS: &[&str] = &[
+    "aaai.org",
+    "acm-ieee-sec.org",
+    "acmsocc.org",
+    "acm.org",
+    "comsoc.org",
+    "conf-icnc.org",
+    "eucnc.eu",
+    "iclr.cc",
+    "icml.cc",
+    "ieee",
+    "ieeelcn.org",
+    "ifip.org",
+    "milcom.org",
+    "neurips.cc",
+    "sciencedirect.com",
+    "sigcomm.org",
+    "sigmobile.org",
+    "sigsac.org",
+    "spawc2026.org",
+    "usenix.org",
+    "vtsociety.org",
+    "wi-opt.org",
+    "wimob.org",
+];
+
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct CfpSource {
     pub title: String,
@@ -144,6 +184,42 @@ fn strip_html(input: &str) -> String {
 
 fn compact_whitespace(input: &str) -> String {
     input.split_whitespace().collect::<Vec<_>>().join(" ")
+}
+
+fn contains_any<'a>(value: &str, patterns: &'a [&'a str]) -> Option<&'a str> {
+    patterns
+        .iter()
+        .copied()
+        .find(|pattern| value.contains(pattern))
+}
+
+fn validate_source_quality(items: &[CfpItem]) -> BlogResult<()> {
+    for item in items {
+        let url = item.url.to_ascii_lowercase();
+        let haystack = format!(
+            "{} {} {} {} {}",
+            url,
+            item.title.to_ascii_lowercase(),
+            item.acronym.to_ascii_lowercase(),
+            item.track.to_ascii_lowercase(),
+            item.note.to_ascii_lowercase()
+        );
+        if let Some(pattern) = contains_any(&haystack, BLOCKED_CFP_SOURCE_PATTERNS) {
+            return Err(format!(
+                "CFP source quality gate rejected {}: blocked low-quality pattern `{}`",
+                item.acronym, pattern
+            )
+            .into());
+        }
+        if contains_any(&url, TRUSTED_CFP_SOURCE_PATTERNS).is_none() {
+            return Err(format!(
+                "CFP source quality gate rejected {}: untrusted CFP domain `{}`; use an official society, publisher, or venue URL and extend the allowlist intentionally if needed",
+                item.acronym, item.url
+            )
+            .into());
+        }
+    }
+    Ok(())
 }
 
 fn deadline_signals_from_text(text: &str) -> Vec<String> {
@@ -686,6 +762,7 @@ pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIss
     if issue.items.is_empty() {
         return Err("CFP latest.json has no items".into());
     }
+    validate_source_quality(&issue.items)?;
     if issue.tracks.len() < 4 {
         return Err(format!("CFP track coverage is too narrow: {}", issue.tracks.len()).into());
     }
@@ -743,4 +820,77 @@ pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIss
         return Err("static CFP latest.json does not match data/cfp/latest.json".into());
     }
     Ok(issue)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn quality_test_item(acronym: &str, url: &str) -> CfpItem {
+        CfpItem {
+            title: format!("{acronym} test venue"),
+            acronym: acronym.to_string(),
+            venue_type: "Conference".to_string(),
+            track: "Wireless / Communications".to_string(),
+            url: url.to_string(),
+            conference_dates: "TBD / official page".to_string(),
+            location: "TBD / official page".to_string(),
+            verified_rank: String::new(),
+            verified_rank_source: String::new(),
+            verified_rank_year: String::new(),
+            impact_factor: String::new(),
+            impact_factor_year: String::new(),
+            note: "Official source quality test item".to_string(),
+            tags: vec!["wireless".to_string()],
+            configured_deadline: None,
+            days_until_deadline: None,
+            deadline_status: "watching official CFP page".to_string(),
+            fetch_status: "not fetched".to_string(),
+            deadline_signals: Vec::new(),
+        }
+    }
+
+    #[test]
+    fn source_quality_gate_allows_official_society_and_publisher_sources() {
+        let items = vec![
+            quality_test_item("AAAI", "https://aaai.org/conference/aaai/aaai-26/"),
+            quality_test_item(
+                "TVT",
+                "https://vtsociety.org/publication/ieee-transactions-vehicular-technology",
+            ),
+            quality_test_item(
+                "COMNET",
+                "https://www.sciencedirect.com/journal/computer-networks/about/call-for-papers",
+            ),
+        ];
+
+        assert!(validate_source_quality(&items).is_ok());
+    }
+
+    #[test]
+    fn source_quality_gate_rejects_predatory_aggregators() {
+        let items = vec![quality_test_item(
+            "FAKE",
+            "https://waset.org/wireless-communications-conference",
+        )];
+
+        let error = validate_source_quality(&items)
+            .expect_err("WASET-style aggregator source should be rejected")
+            .to_string();
+        assert!(error.contains("blocked low-quality pattern"));
+        assert!(error.contains("waset.org"));
+    }
+
+    #[test]
+    fn source_quality_gate_rejects_untrusted_domains_by_default() {
+        let items = vec![quality_test_item(
+            "UNKNOWN",
+            "https://example-conference-hub.test/cfp",
+        )];
+
+        let error = validate_source_quality(&items)
+            .expect_err("unknown CFP domains should require explicit allowlisting")
+            .to_string();
+        assert!(error.contains("untrusted CFP domain"));
+    }
 }
