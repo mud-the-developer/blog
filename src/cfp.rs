@@ -250,6 +250,8 @@ fn compact_metric_label(item: &CfpItem) -> String {
     let impact = item.impact_factor.trim();
     if impact.is_empty()
         || impact.starts_with("N/A")
+        || impact.eq_ignore_ascii_case("TBD")
+        || impact.eq_ignore_ascii_case("TBD / official page")
         || impact.contains("update from latest")
         || impact.contains("annual refresh")
         || impact.contains("verify")

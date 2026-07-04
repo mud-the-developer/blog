@@ -1,27 +1,34 @@
 {
-  "generatedAt": "2026-07-04T00:18:16Z",
+  "generatedAt": "2026-07-04T00:52:15Z",
   "issueDate": "2026-07-03",
-  "sourceCount": 52,
-  "activeCount": 45,
-  "conferenceCount": 40,
+  "sourceCount": 66,
+  "activeCount": 59,
+  "conferenceCount": 47,
   "workshopCount": 4,
-  "journalCount": 8,
+  "journalCount": 15,
   "withConfiguredDeadlineCount": 11,
-  "fetchedCount": 37,
+  "fetchedCount": 51,
   "tracks": {
-    "AI / ML": 3,
+    "AI / ML": 4,
+    "AI / ML for Communications": 1,
     "Cloud / Edge": 1,
     "Communications / Information Theory": 1,
+    "Cyber-Physical / Edge Systems": 1,
+    "Edge / Cloud / Systems": 1,
+    "IoT / Edge / Sensing": 1,
+    "Journal Special Issues / AI for Networks": 1,
     "Journal Special Issues / Communications": 2,
     "Journal Special Issues / IoT and Edge": 1,
     "Journal Special Issues / Network Management": 1,
     "Journal Special Issues / Networking": 2,
-    "Journal Special Issues / Wireless": 2,
+    "Journal Special Issues / Wireless": 7,
+    "Magazine / Wireless": 1,
     "Networking / Cloud": 1,
     "Networking / Communications": 4,
     "Networking / Management": 1,
+    "Networking / QoS": 1,
     "Networking / Softwarization": 1,
-    "Networking / Systems": 5,
+    "Networking / Systems": 6,
     "Security": 2,
     "Security / Communications": 1,
     "Wireless / 6G": 1,
@@ -361,6 +368,65 @@
       ]
     },
     {
+      "title": "AAAI Conference on Artificial Intelligence",
+      "acronym": "AAAI",
+      "venueType": "Conference",
+      "track": "AI / ML",
+      "url": "https://aaai.org/conference/aaai/aaai-26/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "TBD / official page",
+      "impactFactorYear": "",
+      "note": "Official AAAI conference hub; monitor the Calls/Main Technical Track area and roll forward when AAAI-27 opens.",
+      "tags": [
+        "ai",
+        "ml",
+        "agents"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Author Kit Main Conference Timetable for Authors Note: all deadlines are “anywhere on earth” (UTC-12) June 16, 2025 Open Review submission site opens for author registration June 25, 2025 Open Review sub",
+        "echnical Track) January 20-27, 2026 AAAI-26 Conference Note: Deadlines are track-specific and may differ from those listed above. Track-specific deadlines are listed on their respective CFP. AAAI-26 Photo Highlights",
+        "Note: Deadlines are track-specific and may differ from those listed above. Track-specific deadlines are listed on their respective CFP. AAAI-26 Photo Highlights AAAI-26 Underline Content We are pleased to anno"
+      ]
+    },
+    {
+      "title": "IEEE International Conference on Machine Learning for Communication and Networking",
+      "acronym": "ICMLCN",
+      "venueType": "Conference",
+      "track": "AI / ML for Communications",
+      "url": "https://icmlcn2026.ieee-icmlcn.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "TBD / official page",
+      "impactFactorYear": "",
+      "note": "IEEE machine-learning-for-communications venue; important for AI-native wireless, network optimization, and learning-enabled RAN work.",
+      "tags": [
+        "wireless",
+        "communications",
+        "ml",
+        "networking"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "10 Dec 2025 Paper Submission Deadline : Deadline Extended 09 Feb 2026 Acceptance Notification",
+        "10 Dec 2025 Paper Submission Deadline : Deadline Extended 09 Feb 2026 Acceptance Notification 01 M",
+        "Instructions for Final Manuscript Submissions Instructions for Presentations"
+      ]
+    },
+    {
       "title": "ACM Symposium on Cloud Computing",
       "acronym": "SoCC",
       "venueType": "Conference",
@@ -384,6 +450,123 @@
       "deadlineStatus": "watching official CFP page",
       "fetchStatus": "http 404 Not Found",
       "deadlineSignals": []
+    },
+    {
+      "title": "ACM/IEEE International Conference on Cyber-Physical Systems",
+      "acronym": "ICCPS",
+      "venueType": "Conference",
+      "track": "Cyber-Physical / Edge Systems",
+      "url": "https://iccps.acm.org/2026/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "TBD / official page",
+      "impactFactorYear": "",
+      "note": "ACM/IEEE ICCPS official site; relevant for networked CPS, control, edge intelligence, and connected systems.",
+      "tags": [
+        "cps",
+        "edge",
+        "systems",
+        "iot"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": []
+    },
+    {
+      "title": "ACM/IEEE Symposium on Edge Computing",
+      "acronym": "SEC",
+      "venueType": "Conference",
+      "track": "Edge / Cloud / Systems",
+      "url": "https://acm-ieee-sec.org/2026/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "TBD / official page",
+      "impactFactorYear": "",
+      "note": "ACM/IEEE SEC annual site; monitor for edge AI, cloud-edge systems, and networked edge CFP windows.",
+      "tags": [
+        "edge",
+        "cloud",
+        "systems",
+        "ai"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "ote: call for posters and demos are out! -- Note: SEC 2021 has two deadlines. -- Note: while the first submission deadline period has passed, the second deadline for abstracts is June 17 (submissions due June 24). --",
+        "Note: SEC 2021 has two deadlines. -- Note: while the first submission deadline period has passed, the second deadline for abstracts is June 17 (submissions due June 24). -- Note: there is a new link for submissions to",
+        "-- Note: while the first submission deadline period has passed, the second deadline for abstracts is June 17 (submissions due June 24). -- Note: there is a new link for submissions to the second round: https://sec21round2"
+      ]
+    },
+    {
+      "title": "ACM Conference on Embedded Networked Sensor Systems",
+      "acronym": "SenSys",
+      "venueType": "Conference",
+      "track": "IoT / Edge / Sensing",
+      "url": "https://sensys.acm.org/2026/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "TBD / official page",
+      "impactFactorYear": "",
+      "note": "ACM SenSys official site; useful for sensing, IoT, mobile/edge systems, and wireless sensor-network submissions.",
+      "tags": [
+        "iot",
+        "edge",
+        "wireless",
+        "sensing"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Deadline for Papers, Demos, and Posters March 31, 2026, 23:59 AoE",
+        "Submission Deadline February 20, 2026, 23:59 AoE February 13, 2026, 23:59 AoE",
+        "2nd deadline Call for Papers (Expired) Abstract Registration Nove"
+      ]
+    },
+    {
+      "title": "IEEE Transactions on Machine Learning in Communications and Networking — Calls for Papers",
+      "acronym": "IEEE TMLCN CFP",
+      "venueType": "Journal special issue",
+      "track": "Journal Special Issues / AI for Networks",
+      "url": "https://www.comsoc.org/publications/journals/ieee-tmlcn/cfp",
+      "conferenceDates": "Continuous submissions / special issues via official page",
+      "location": "Journal / online submission",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "TBD / official page",
+      "impactFactorYear": "",
+      "note": "Official IEEE ComSoc TMLCN CFP page; important for machine learning in communications, networking, and AI-native RAN topics.",
+      "tags": [
+        "journal",
+        "ml",
+        "communications",
+        "networking",
+        "special-issue"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "pes, and new applications) are solicited. IEEE TMLCN also particularly encourages the submission of papers that simultaneously advance both the fields of machine learning and wireless networking. The journal also advocates for reproducible and public sharing of code",
+        "for real-world implementation of machine learning and AI over wireless networks. Presubmission queries can be directed to the Editor . To submit to TMLCN, please visit the Author Portal .",
+        "IEEE Transactions on Machine Learning in Communications and Networking Call for Papers | IEEE Communications Society {\"path\":{\"baseUrl\":\"\\/\",\"pathPrefix\":\"\",\"currentPath\":\"node\\/18321\",\"currentPathIsAdmin\":false,\"isFront\":f"
+      ]
     },
     {
       "title": "IEEE Communications Magazine — Feature Topics / Calls for Papers",
@@ -602,6 +785,160 @@
       "deadlineSignals": []
     },
     {
+      "title": "IEEE Open Journal of Vehicular Technology — Calls for Papers",
+      "acronym": "IEEE OJVT CFP",
+      "venueType": "Journal special issue",
+      "track": "Journal Special Issues / Wireless",
+      "url": "https://vtsociety.org/publication/ieee-ojvt",
+      "conferenceDates": "Continuous submissions / special issues via official page",
+      "location": "Journal / online submission",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "TBD / official page",
+      "impactFactorYear": "",
+      "note": "Official VTS Open Journal of Vehicular Technology page; monitor for open-access vehicular/wireless CFPs and topical collections.",
+      "tags": [
+        "journal",
+        "wireless",
+        "vehicular",
+        "open-access",
+        "special-issue"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "VTS VP Conferences . To submit an IEEE Conference Application, please visit the online submission site . Learn More",
+        "uthor Instructions Paper Submission Special Issues IEEE VTS OJVT Best Paper",
+        "2026-03-30 | Call for Papers: Joint Conference and Journal Submission Opportunity 2026-03-04 | Feature articles – March 2026"
+      ]
+    },
+    {
+      "title": "IEEE Transactions on Cognitive Communications and Networking — Calls for Papers",
+      "acronym": "IEEE TCCN CFP",
+      "venueType": "Journal special issue",
+      "track": "Journal Special Issues / Wireless",
+      "url": "https://www.comsoc.org/publications/journals/ieee-tccn/cfp",
+      "conferenceDates": "Continuous submissions / special issues via official page",
+      "location": "Journal / online submission",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "TBD / official page",
+      "impactFactorYear": "",
+      "note": "Official IEEE ComSoc TCCN CFP page for cognitive communications, networking, spectrum sharing, and AI-native network topics.",
+      "tags": [
+        "journal",
+        "wireless",
+        "communications",
+        "cognitive-radio",
+        "special-issue"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "lication Date Manuscript Submission Deadline Agentic AI for Communications and",
+        "Publication Date Manuscript Submission Deadline Agentic AI for Communi",
+        "Call For Papers | IEEE Communications Society {\"path\":{\"baseUrl\":\"\\/\",\"pathPrefix\":\"\",\"currentPath\":\"node\\/6941\\/cfp\",\"currentPathIsAdmin\":false,\"isFron"
+      ]
+    },
+    {
+      "title": "IEEE Transactions on Green Communications and Networking — Calls for Papers",
+      "acronym": "IEEE TGCN CFP",
+      "venueType": "Journal special issue",
+      "track": "Journal Special Issues / Wireless",
+      "url": "https://www.comsoc.org/publications/journals/ieee-tgcn/cfp",
+      "conferenceDates": "Continuous submissions / special issues via official page",
+      "location": "Journal / online submission",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "TBD / official page",
+      "impactFactorYear": "",
+      "note": "Official IEEE ComSoc TGCN CFP page for energy-efficient communications, sustainable networking, and green edge/cloud systems.",
+      "tags": [
+        "journal",
+        "wireless",
+        "communications",
+        "green-networking",
+        "special-issue"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "lication Date Manuscript Submission Deadline Call for Special Issue Proposals",
+        "lication Date Manuscript Submission Deadline Energy Efficiency for Internet of",
+        "Publication Date Manuscript Submission Deadline Call for Special Issue"
+      ]
+    },
+    {
+      "title": "IEEE Transactions on Vehicular Technology — Calls for Papers",
+      "acronym": "IEEE TVT CFP",
+      "venueType": "Journal special issue",
+      "track": "Journal Special Issues / Wireless",
+      "url": "https://vtsociety.org/publication/ieee-transactions-vehicular-technology",
+      "conferenceDates": "Continuous submissions / special issues via official page",
+      "location": "Journal / online submission",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "TBD / official page",
+      "impactFactorYear": "",
+      "note": "Official VTS TVT publication page with Call For Papers link; covers vehicular/mobile wireless, networks, and edge intelligence.",
+      "tags": [
+        "journal",
+        "wireless",
+        "vehicular",
+        "communications",
+        "special-issue"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Deadline Deadline: 1 Aug 2026",
+        "tude Wireless Networks (LAWN) Deadline: 1 Mar 2026 (Extended)",
+        "e Vehicles and Transportation Deadline: 15 Dec 2023"
+      ]
+    },
+    {
+      "title": "IEEE Transactions on Wireless Communications — Calls for Papers",
+      "acronym": "IEEE TWC CFP",
+      "venueType": "Journal special issue",
+      "track": "Journal Special Issues / Wireless",
+      "url": "https://www.comsoc.org/publications/journals/ieee-transactions-wireless-communications/cfp",
+      "conferenceDates": "Continuous submissions / special issues via official page",
+      "location": "Journal / online submission",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "TBD / official page",
+      "impactFactorYear": "",
+      "note": "Official IEEE ComSoc TWC CFP page; monitor for wireless communications special issues and regular-paper calls.",
+      "tags": [
+        "journal",
+        "wireless",
+        "communications",
+        "special-issue"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Call For Papers | IEEE Communications Society {\"path\":{\"baseUrl\":\"\\/\",\"pathPrefix\":\"\",\"currentPath\":\"node\\/6961\\/cfp\",\"currentPathIsAdmin\":false,\"isFron",
+        "Call for Papers Policies and Guidelines",
+        "{\"path\":{\"baseUrl\":\"\\/\",\"pathPrefix\":\"\",\"currentPath\":\"node\\/6961\\/cfp\",\"currentPathIsAdmin\":false,\"isFront\":false,\"currentLanguage\":\"en\"},\"pluralDelimiter\":\"\\u0003\",\"suppressDeprecationErrors\":true,\"gtag\":{\"tagId\":\"\",\"consentMode\":false,\"otherIds"
+      ]
+    },
+    {
       "title": "IEEE Wireless Communications — Calls for Papers",
       "acronym": "IEEE Wireless Commun. CFP",
       "venueType": "Journal special issue",
@@ -631,6 +968,36 @@
         "lication Date Manuscript Submission Deadline 3D Metasurface-Assisted Wireless",
         "Publication Date Manuscript Submission Deadline 3D Metasurface-Assiste",
         "Call For Papers | IEEE Communications Society {\"path\":{\"baseUrl\":\"\\/\",\"pathPrefix\":\"\",\"currentPath\":\"node\\/956\\/cfp\",\"currentPathIsAdmin\":false,\"isFront"
+      ]
+    },
+    {
+      "title": "IEEE Vehicular Technology Magazine — Calls for Articles",
+      "acronym": "IEEE VTM CFP",
+      "venueType": "Journal special issue",
+      "track": "Magazine / Wireless",
+      "url": "https://vtsociety.org/publication/vtmagazine",
+      "conferenceDates": "Quarterly magazine / official page",
+      "location": "Magazine / online submission",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "TBD / official page",
+      "impactFactorYear": "",
+      "note": "Official VTS Vehicular Technology Magazine page; useful for article calls on mobile radio, connected vehicles, and transportation systems.",
+      "tags": [
+        "magazine",
+        "wireless",
+        "vehicular",
+        "communications"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Deadline Deadline: 29 Aug 2026",
+        "et-to-Satellite Communication Deadline: 1 Mar 2026 (Extended)",
+        "and Cutting-Edge Applications Deadline: 21 Nov 2025 (Extended)"
       ]
     },
     {
@@ -778,6 +1145,36 @@
       ]
     },
     {
+      "title": "IEEE/ACM International Symposium on Quality of Service",
+      "acronym": "IWQoS",
+      "venueType": "Conference",
+      "track": "Networking / QoS",
+      "url": "https://iwqos2026.ieee-iwqos.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "TBD / official page",
+      "impactFactorYear": "",
+      "note": "IWQoS official annual site; monitor for QoS, scheduling, network management, edge/cloud, and AI-for-networking calls.",
+      "tags": [
+        "networking",
+        "qos",
+        "edge",
+        "cloud"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "16 Feb 2026 Abstract Deadline : Extended! 23 Feb 2026 Full Paper Deadline : Extended!",
+        "23 Feb 2026 Full Paper Deadline : Extended! 30 Apr 2026 Acceptance Notification",
+        "20 May 2026 Camera Ready Deadline See All Dates"
+      ]
+    },
+    {
       "title": "ACM International Conference on Emerging Networking Experiments and Technologies",
       "acronym": "CoNEXT",
       "venueType": "Conference",
@@ -855,6 +1252,35 @@
       "deadlineStatus": "watching official CFP page",
       "fetchStatus": "http 404 Not Found",
       "deadlineSignals": []
+    },
+    {
+      "title": "IEEE Conference on Local Computer Networks",
+      "acronym": "LCN",
+      "venueType": "Conference",
+      "track": "Networking / Systems",
+      "url": "https://www.ieeelcn.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "TBD / official page",
+      "impactFactorYear": "",
+      "note": "IEEE LCN annual hub; monitor for local, edge, IoT, and networked systems CFP updates.",
+      "tags": [
+        "networking",
+        "edge",
+        "iot"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "ay 4, 2026 (AoE) NEW Paper Registration: April 13, 2026 (AoE) -- Paper Submission: April 20 May 4, 2026 (AoE) NEW Paper Acceptance Notification: June 29, 2026 (AoE) Final Paper Due: July 27, 2026 (AoE) A",
+        "Ns. Please join us for LCN 2026, our 51st annual meeting, in Coimbra, Portugal! Important Dates Paper Registration: April 13 May 4, 2026 (AoE) NEW Paper Registration: April 13, 2026 (AoE) -- Paper Submission: April 20 Ma",
+        "ted to Special Tracks has been posted. February 4, 2026: The LCN 2026 Call for Papers has been released. February 4, 2026: We are seeking members for the Technical Program Committee (TPC). If you are interested in joining the TPC, or kn"
+      ]
     },
     {
       "title": "ACM SIGCOMM",
