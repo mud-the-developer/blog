@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-04T10:15:07Z",
+  "generatedAt": "2026-07-04T11:47:58Z",
   "issueDate": "2026-07-03",
-  "sourceCount": 66,
-  "activeCount": 40,
+  "sourceCount": 73,
+  "activeCount": 42,
   "conferenceCount": 47,
-  "workshopCount": 4,
+  "workshopCount": 11,
   "journalCount": 15,
-  "withConfiguredDeadlineCount": 41,
-  "fetchedCount": 52,
+  "withConfiguredDeadlineCount": 48,
+  "fetchedCount": 59,
   "tracks": {
     "AI / ML": 4,
     "AI / ML for Communications": 1,
@@ -29,18 +29,23 @@
     "Networking / QoS": 1,
     "Networking / Softwarization": 1,
     "Networking / Systems": 6,
-    "Networking / Workshops": 1,
+    "Networking / Workshops": 2,
     "Security": 2,
     "Security / Communications": 1,
     "Wireless / 6G": 1,
+    "Wireless / 6G Workshops": 1,
+    "Wireless / AI-RAN Workshops": 1,
     "Wireless / Communications": 9,
     "Wireless / Consumer Networking": 1,
     "Wireless / Mobile": 5,
+    "Wireless / Mobile Workshops": 1,
+    "Wireless / NextG Workshops": 1,
     "Wireless / Optimization": 1,
     "Wireless / Spectrum": 1,
     "Wireless / Standards": 1,
     "Wireless / Vehicular": 2,
-    "Wireless / Workshops": 2
+    "Wireless / Vehicular Workshops": 1,
+    "Wireless / Workshops": 3
   },
   "items": [
     {
@@ -109,6 +114,42 @@
         "Instructions for Final Workshop Paper Submissions Important Dates Call for Workshop Papers Call for Papers Call for Tutorial Proposals",
         "Submission Guidelines Slide Template Committees Program At a Glance",
         "Important Dates Call for Workshop Papers Call for Papers Call for Tutorial Proposals Call for Panel Proposals"
+      ]
+    },
+    {
+      "title": "IEEE Wireless Communications and Networking Conference Workshops",
+      "acronym": "WCNC Workshops",
+      "venueType": "Workshop",
+      "track": "Wireless / Workshops",
+      "url": "https://wcnc2026.ieee-wcnc.org/call-workshop-papers-0",
+      "conferenceDates": "Workshop programme via official WCNC 2026 page",
+      "location": "Marrakesh, Morocco / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "N/A — workshop; use parent conference context instead",
+      "impactFactorYear": "N/A for workshops",
+      "note": "Official WCNC 2026 call for workshop papers; monitored for wireless, RAN, 6G, and communications workshop deadlines.",
+      "tags": [
+        "wireless",
+        "communications",
+        "workshops",
+        "6g",
+        "ran"
+      ],
+      "configuredDeadline": "2026-01-12",
+      "daysUntilDeadline": -172,
+      "deadlineStatus": "closed",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Key Dates Workshop Paper Submission Deadline : 12 January 2026 29 December 2025 Notification of Acceptance : 12 February 2026 Final Workshop Papers Due : 28 February 2026 22 February 2026 Workshops Click on workshop title for full description and submission link: WS01. The 3rd Workshop on Distributed Generative AI at the Edge of Networks (Edge-GenAI) Abstract In recent years, the advent and ongoing refinement of Generative Artificial",
+        "Key Dates Workshop Paper Submission Deadline : 12 January 2026 29 December 2025 Notification of Acceptance : 12 February 2026 Final Workshop Papers Due : 28 February 2026 22 February 2026 Workshops Click on workshop title for full description and submission link: WS01. The 3rd Workshop on Distributed Generative AI at the Edge of Networks (Edge-GenAI) Abstract In recent years, the advent and ongoing refinement of Generative",
+        "Instructions for Final Paper Submissions Instructions for Final Workshop Paper Submissions Important Dates Call for Workshop Papers Call for Papers",
+        "Instructions for Final Workshop Paper Submissions Important Dates Call for Workshop Papers Call for Papers Call for Tutorial Proposals",
+        "Submission Guidelines Slide Template Committees Program At a Glance",
+        "Workshops Click on workshop title for full description and submission link: WS01. The 3rd Workshop on Distributed Generative AI at the Edge of Networks (Edge-GenAI) Abstract In recent years, the advent and ongoing refinement of Generative Artificial Intelligence (GenAI) technologies, including large-scale models, generative adversarial networks, and denoising models, has significantly expanded the potential applications of this transformative technology. The GenAI agent is capable of exhibiting human-like responses in question-answering tasks,",
+        "these domains becomes increasingly urgent. This workshop will likely attract high-quality submissions due to the relevance of its topics to ongoing research in wireless communications, as well as its alignment with the emerging trends in 6G networks and beyond. Moreover, the workshop's focus on cutting-edge issues such as network architecture, enabling technologies, and standardization will draw a broad audience, including not only researchers and practitioners but also industry professionals and policymakers eager to explore the future of global connectivity. Unlike other events that might only touch on aspects of this integration, this workshop uniquely emphasizes a comprehensive approach, covering the full spectrum from ground",
+        "l validations that pave the way for next-generation industrial connectivity. The original submissions on the following (but not limited to) topics are welcome: Wireless protocols and standards for IIoT; Case studies and real-world deployments; Low-power and energy-efficient communications; Real-time and reliable wireless communications; AI/ML techniques for optimizing industrial wireless networks; Fully integrated, ultra-low-power and full-bandwidth SoC; Security, trust, dependability and reliability in industrial wireless networks; Prototyping and experimental validation; Other advanced technologies for IIoT. Organizers:"
       ]
     },
     {
@@ -451,6 +492,78 @@
       ]
     },
     {
+      "title": "European Conference on Networks and Communications & 6G Summit Workshops",
+      "acronym": "EuCNC Workshops",
+      "venueType": "Workshop",
+      "track": "Wireless / 6G Workshops",
+      "url": "https://www.eucnc.eu/authors/call-for-workshops/",
+      "conferenceDates": "Workshop schedule via official EuCNC & 6G Summit page",
+      "location": "Málaga, Spain / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "N/A — workshop; use parent conference context instead",
+      "impactFactorYear": "N/A for workshops",
+      "note": "Official EuCNC & 6G Summit workshop page; tracks 6G workshop proposal and workshop paper submission deadlines.",
+      "tags": [
+        "wireless",
+        "6g",
+        "workshops",
+        "communications",
+        "ran"
+      ],
+      "configuredDeadline": "2026-04-10",
+      "daysUntilDeadline": -84,
+      "deadlineStatus": "closed",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "endation The proposal must be submitted from 2025 Dec. 16 th until the deadline on 2026 Jan. 23 rd Feb. 6 th . An acknowledgement email will be sent. Call for Workshops (.pdf) Guidelines &#8211; Workshop In case of any problems with online form submission or any other relevant questions related to the workshops, please contact the Workshops Co-Chairs, Diego López (Telefonica, ES), Germán Madueño (Keysight Technologies, ES), Beatriz Lorenzo (U. Mass. Amherst, US) by submitting the Contact Form below: Contact Form Name * (",
+        "Key Dates 2026 Jan. 23 Feb. 6 Deadline for Submission of Workshops 2026 Mar. 6 16 23 Notification of acceptance of workshops 2026 Apr. 10 Workshop papers submission deadline 2026 Apr. 10 Authors registration deadline Tracks PHY Physical Layer and Fundamentals WOS Wireless, Optical and Satellite Networks NET Network Softwarisation AIU Applications, IoT, Use cases",
+        "acceptance of workshops 2026 Apr. 10 Workshop papers submission deadline 2026 Apr. 10 Authors registration deadline Tracks PHY Physical Layer and Fundamentals WOS Wireless, Optical and Satellite Networks NET Network Softwarisation AIU Applications, IoT, Use cases OPE Operational & Experimental Insights AI4C AI/ML Solutions for Communications SAQ Security Aspects and Qu",
+        "op papers submission deadline 2026 Apr. 10 Authors registration deadline Tracks PHY Physical Layer and Fundamentals WOS Wireless, Optical and Satellite Networks NET Network Softwarisation AIU Applications, IoT, Use cases OPE Operational & Experimental Insights AI4C AI/ML Solutions for Communications SAQ Security Aspects and Quantum Communications CMP Compon",
+        "elines &#8211; Workshop In case of any problems with online form submission or any other relevant questions related to the workshops, please contact the Workshops Co-Chairs, Diego López (Telefonica, ES), Germán Madueño (Keysight Technologies, ES), Beatriz Lorenzo (U. Mass. Amherst, US) by submitting the Contact Form below: Contact Form Name * (required) Email *(required) Subject Message &times; Key Dates 2026 Jan. 23 Feb. 6 Deadline for Subm",
+        "ey Dates 2026 Jan. 23 Feb. 6 Deadline for Submission of Workshops 2026 Mar. 6 16 23 Notification of acceptance of workshops 2026 Apr. 10 Workshop papers submission deadline 2026 Apr. 10 Authors registration deadline Tracks PHY Physical Layer and Fundamentals WOS Wireless, Optical and Satellite Networks NET Network Softwarisation AIU Applications, IoT, Use cases OPE",
+        "ication of acceptance of workshops 2026 Apr. 10 Workshop papers submission deadline 2026 Apr. 10 Authors registration deadline Tracks PHY Physical Layer and Fundamentals WOS Wireless, Optical and Satellite Networks NET Network Softwarisation AIU Applications, IoT, Use cases OPE Operational & Experimental Insights AI4C AI/ML Solutions for Communications SAQ Security Asp",
+        "ittee Awards Committees Authors All Calls Call for Papers Call for Posters Call for Workshops Call for Special Sessions Call for Tutorials Call for Startups Award Call for Ph.D. Thesis Award Authors Guidelines Presenters Guidelines Awards Key Dates Registration Registration Registration Policy Registration Key Dates Travel Grants Programme Programme Opening &#038; Closing Sessions Keynotes Panels Workshops Tutorials Special Ses"
+      ]
+    },
+    {
+      "title": "IFIP Networking Conference Workshops",
+      "acronym": "IFIP Networking Workshops",
+      "venueType": "Workshop",
+      "track": "Networking / Workshops",
+      "url": "https://networking.ifip.org/2026/index.php/workshops.html",
+      "conferenceDates": "2026-05-24 / official workshop page",
+      "location": "Lugano, Switzerland / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "N/A — workshop; use parent conference context instead",
+      "impactFactorYear": "N/A for workshops",
+      "note": "Official IFIP Networking 2026 workshops page with firm workshop paper submission deadline.",
+      "tags": [
+        "networking",
+        "workshops",
+        "internet",
+        "qos",
+        "ai-networking"
+      ],
+      "configuredDeadline": "2026-04-14",
+      "daysUntilDeadline": -80,
+      "deadlineStatus": "closed",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "tes Conference dates: May 24 th to 27 th , 2026 Paper submission deadline: March 22, 2026 April 7, 2026 April 14, 2026 (AoE) - Firm Notification of acceptance: April 21 st , 2026 April 28, 2026 Camera-ready deadline: April 30 th , 2026 May 4, 2026 Workshop date: May 24 th Workshop Chairs Davide Andreoletti, University of Applied Sciences of Southern Switzerland, Switzerland ( This email address is being protected from spambots. You need JavaScript enabled to view it. document.getElementById('cloak8fac77a9fe97c2f0fffbbf3da48ddcd6').innerHTML = ''; var prefix = '&#109;a' + 'i&#108;' + '&#116;o';",
+        "appendices. Papers should be submitted through EDAS in PDF through the official workshop submission link (to be announced). Only original papers that have not been published or submitted for review elsewhere will be considered for publication in the proceedings. Papers will appear in the conference proceedings and will be submitted for inclusion into IEEE Xplore subject to meeting IEEE Xplore’s scope and quality requirements. At least one author of each accepted paper is required to register and present the work in the workshop. A s ingle-blind review process will be followed. Important Dates Conference dates: May 24 th to 27 th , 2026 Paper submission deadline: March 22, 2026 April",
+        "mportant Dates Conference dates: May 24 th to 27 th , 2026 Paper submission deadline: March 22, 2026 April 7, 2026 April 14, 2026 (AoE) - Firm Notification of acceptance: April 21 st , 2026 April 28, 2026 Camera-ready deadline: April 30 th , 2026 May 4, 2026 Workshop date: May 24 th Workshop Chairs Davide Andreoletti, University of Applied Sciences of Southern Switzerland, Switzerland ( This email address is being protected from spambots. You need JavaScript enabled to view it. document.getElementById('cloak8fac77a9fe97c2f0fffbbf3da48ddcd6').innerHTML = ''; var prefix = '&#109;a' + 'i&#108;' + '",
+        "resent the work in the workshop. A s ingle-blind review process will be followed. Important Dates Conference dates: May 24 th to 27 th , 2026 Paper submission deadline: March 22, 2026 April 7, 2026 April 14, 2026 (AoE) - Firm Notification of acceptance: April 21 st , 2026 April 28, 2026 Camera-ready deadline: April 30 th , 2026 May 4, 2026 Workshop date: May 24 th Workshop Chairs Davide Andreoletti, University of Applied Sciences of Southern Switzerland, Switzerland ( This email address is being protected from spambots. You need JavaScript enabled to view it. document.getElementById('cloak8f",
+        "on of acceptance: April 21 st , 2026 April 28, 2026 Camera-ready deadline: April 30 th , 2026 May 4, 2026 Workshop date: May 24 th Workshop Chairs Davide Andreoletti, University of Applied Sciences of Southern Switzerland, Switzerland ( This email address is being protected from spambots. You need JavaScript enabled to view it. document.getElementById('cloak8fac77a9fe97c2f0fffbbf3da48ddcd6').innerHTML = ''; var prefix = '&#109;a' + 'i&#108;' + '&#116;o'; var path = 'hr' + 'ef' + '='; var addy8fac77a9fe97c2f0fffbbf3da48ddcd6 = 'd&#97;v&#105;d&#101;.&#97;ndr&#101;&#111;l&#101;tt&#105;' + '&#64;'; addy8fac77a9fe97c2f0fffbbf3da48ddcd6 =",
+        "Resilient and Distributed Edge for next-generation networks (BORDE) Paper submission Submitted papers should be written in English by following the IEEE conference format (double-column, 10pt font), with a maximum length limit of 6 (six) printed pages, including all figures, references, and appendices. Papers should be submitted through EDAS in PDF through the official workshop submission link (to be announced). Only original papers that have not been published or submitted for review elsewhere will be considered for publication in the proceedings. Papers will appear in the conference proceedings and will be submitted for inclusion into IEEE Xplore subject to meeting IEEE Xplore’s scope and quality requir",
+        "Camera Ready Instructions Poster Instructions Travel Grants Call for Papers Call for Demos/Posters Call for Workshops Call for PhD Forum Extended Abstracts Workshops IOCRCI SmartWater TX4Nets CoGen-AI-FNC BORDE CREATIVE Committees Registration Local Info About Switzerland About Lugano About the Venue Transportation Accommodation Information for Participants Workshops IFIP Networking 2026 hosts the following eight co-loca",
+        "Camera Ready Instructions Poster Instructions Travel Grants Call for Papers Call for Demos/Posters Call for Workshops Call for PhD Forum Extended Abstracts Workshops IOCRCI SmartWater TX4Nets CoGen-AI-FNC BORDE CREATIVE Committees Registration Local Info About Switzerland About Lugano About the Venue Transportation Accommodation Information for Participants"
+      ]
+    },
+    {
       "title": "IEEE International Symposium on Personal, Indoor and Mobile Radio Communications",
       "acronym": "PIMRC",
       "venueType": "Conference",
@@ -482,7 +595,7 @@
         "ly 2026 Workshop Paper Submission Deadline 5 June 2026 Technical Tracks Track 1: Fundamentals and PHY Topics: AI and ML in/for communications Coding/modulation, information theory Channel modeling, equalization, and synchronization Cooperative communications, coded caching/computing Integrated sensing and communications Millimeter wave and Terah",
         "Final Submission Camera Ready Guidelines Committees Program At a Glance Keynotes",
         "Important Dates Call for Papers Call for Workshop Proposals Call for Tutorial Proposals Call for Workshop Papers",
-        "Call for Papers | IEEE International Symposium on Personal, Indoor and Mobile Radio Communications (PIMRC) 2026 | IEEE PIMRC 2026 {\"path\":{\"baseUrl\":\"\\/\",\"pathPrefix\":\"\",\"currentPath\":\"node\\/6941\",\"currentPathIsAdmin\":false,\"isFront\":false,\"currentLanguage\":\"en\"},\"pluralDelimiter\":\"\\u0003\",\"suppressDeprecationErrors\":true,\"ajaxPageState\":{\"libraries\":\"eJxtjtsKAyEMBX8o6CdJjMFNNxrxAtu_74WWbUtf5jDzdMjKMApFqngksp7EKtBHzWoRFfiYKnX3qa-G6l4K2Swrh4nZ5zt-3eEFj-9YQJg5kNkujylNBSux_5-hCFn1T0LDjrlj28b7x1ncqm1FlbFxgnEdk4uPOPgGBq5YHQ\",\"theme\":\"comsoc_mini\",\"theme_token\":\"YBsHupBobjZj7T1p0cCIEMfjxb0p5TU0BWQixnbEvOQ\"},\"ajaxTrustedUrl\""
+        "Call for Papers | IEEE International Symposium on Personal, Indoor and Mobile Radio Communications (PIMRC) 2026 | IEEE PIMRC 2026 {\"path\":{\"baseUrl\":\"\\/\",\"pathPrefix\":\"\",\"currentPath\":\"node\\/6941\",\"currentPathIsAdmin\":false,\"isFront\":false,\"currentLanguage\":\"en\"},\"pluralDelimiter\":\"\\u0003\",\"suppressDeprecationErrors\":true,\"ajaxPageState\":{\"libraries\":\"eJxtjtsKAyEMBX8o6CdJjMFNNxrxAtu_74WWbUtf5jDzdMjKMApFqngksp7EKtBHzWoRFfiYKnX3qa-G6l4K2Swrh4nZ5zt-3eEFj-9YQJg5kNkujylNBSux_5-hCFn1T0LDjrlj28b7x1ncqm1FlbFxgnEdk4uPOPgGBq5YHQ\",\"theme\":\"comsoc_mini\",\"theme_token\":\"sAqVp4zXJW-PcKw0JASPpozPFZlguzyiY_dOsFH_BkM\"},\"ajaxTrustedUrl\""
       ]
     },
     {
@@ -828,6 +941,78 @@
         "ssons learned Practical deployment experiences and system insights Submission Guidelines To foster a vibrant and inclusive research community, the workshop adopts a submission process that supports both concrete research contributions and forward-looking ideas. All submissions should follow the single-blind policy. We solicit two types of submissions: 1) Full Papers (up to 6 single-spaced, double-column pages, excluding references) Mature research contributions with novel system designs, implementations, or evaluations Measurement studies, performance analyses, or debugging case studies Operational insights and deployment experiences from real-world systems",
         "delines To foster a vibrant and inclusive research community, the workshop adopts a submission process that supports both concrete research contributions and forward-looking ideas. All submissions should follow the single-blind policy. We solicit two types of submissions: 1) Full Papers (up to 6 single-spaced, double-column pages, excluding references) Mature research contributions with novel system designs, implementations, or evaluations Measurement studies, performance analyses, or debugging case studies Operational insights and deployment experiences from real-world systems 2) Short Papers (up to 2 single-spaced, double-column pages) Early-stage ideas and expl",
         "process that supports both concrete research contributions and forward-looking ideas. All submissions should follow the single-blind policy. We solicit two types of submissions: 1) Full Papers (up to 6 single-spaced, double-column pages, excluding references) Mature research contributions with novel system designs, implementations, or evaluations Measurement studies, performance analyses, or debugging case studies Operational insights and deployment experiences from real-world systems 2) Short Papers (up to 2 single-spaced, double-column pages) Early-stage ideas and exploratory research Visionary proposals and new research directions Negative resul"
+      ]
+    },
+    {
+      "title": "IEEE Vehicular Technology Conference Fall Workshops",
+      "acronym": "VTC-Fall Workshops",
+      "venueType": "Workshop",
+      "track": "Wireless / Vehicular Workshops",
+      "url": "https://events.vtsociety.org/vtc2026-fall/conference-sessions/current-workshops-available/",
+      "conferenceDates": "Workshop schedule via official VTC-Fall 2026 page",
+      "location": "Boston, MA, USA / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "N/A — workshop; use parent conference context instead",
+      "impactFactorYear": "N/A for workshops",
+      "note": "Official VTC-Fall 2026 current workshops page; includes paper submission deadline for generative-AI air-ground collaborative robotics networks workshop.",
+      "tags": [
+        "wireless",
+        "vehicular",
+        "air-ground",
+        "workshops",
+        "6g"
+      ],
+      "configuredDeadline": "2026-05-19",
+      "daysUntilDeadline": -45,
+      "deadlineStatus": "closed",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "AI for 4D Dynamic Air-Ground Collaborative Robotics Networks Paper submission deadline Extended: 19 May 2026 Acceptance notification: 3 July 2026 Final paper submission deadline: 8 July 2026 Submission requirements: 5-page paper (without overlength charge) and up to 2 additional pages are allowed with the purchase of additional page charges in the amount of $100 USD per additional page at the time of registration and final paper submission. Paper submission can be located here: https://vtc2026f-rr-wks.trackchair.com/",
+        "nded: 19 May 2026 Acceptance notification: 3 July 2026 Final paper submission deadline: 8 July 2026 Submission requirements: 5-page paper (without overlength charge) and up to 2 additional pages are allowed with the purchase of additional page charges in the amount of $100 USD per additional page at the time of registration and final paper submission. Paper submission can be located here: https://vtc2026f-rr-wks.trackchair.com/ Boston, MA USA",
+        "Generative AI for 4D Dynamic Air-Ground Collaborative Robotics Networks Paper submission deadline Extended: 19 May 2026 Acceptance notification: 3 July 2026 Final paper submission deadline: 8 July 2026 Submission requirements: 5-page paper (without overlength charge) and up to 2 additional pages are allowed with the purchase of additional page charges in the amount of $100 USD per additional page at the time of registration and final paper submission. Paper submission can be located here: https://vtc2026f-rr-wks.trackchair.com/",
+        "line Extended: 19 May 2026 Acceptance notification: 3 July 2026 Final paper submission deadline: 8 July 2026 Submission requirements: 5-page paper (without overlength charge) and up to 2 additional pages are allowed with the purchase of additional page charges in the amount of $100 USD per additional page at the time of registration and final paper submission. Paper submission can be located here: https://vtc2026f-rr-wks.trackchair.com/ Boston, MA USA",
+        "ance notification: 3 July 2026 Final paper submission deadline: 8 July 2026 Submission requirements: 5-page paper (without overlength charge) and up to 2 additional pages are allowed with the purchase of additional page charges in the amount of $100 USD per additional page at the time of registration and final paper submission. Paper submission can be located here: https://vtc2026f-rr-wks.trackchair.com/ Boston, MA USA IEEE VTS",
+        "Grant NSF Student Travel Grant Conference Policies Final Paper Submission Guidelines Program Accepted Paper List Industry Program &#8211; Call for Proposals Tutorials Currently Available Workshops Currently Available RoboRacer Sponsors Sponsorship Opportunities Committees Organizing Committee Technical Program Committee VTS Conference Committee Venue and Hotel Conference Venue Hotel Banquet Registration Registration Site Final Paper Upload Awards About",
+        "in the amount of $100 USD per additional page at the time of registration and final paper submission. Paper submission can be located here: https://vtc2026f-rr-wks.trackchair.com/ Boston, MA USA IEEE VTS VTC2026-Fall Conference Contact Contact Us &copy; Copyright document.write(ne",
+        "USD per additional page at the time of registration and final paper submission. Paper submission can be located here: https://vtc2026f-rr-wks.trackchair.com/ Boston, MA USA IEEE VTS VTC2026-Fall Conference Contact Contact Us &copy; Copyright document.write(new Date().getFullYear()"
+      ]
+    },
+    {
+      "title": "ACM MobiCom Workshops and Tutorials",
+      "acronym": "MobiCom Workshops",
+      "venueType": "Workshop",
+      "track": "Wireless / Mobile Workshops",
+      "url": "https://www.sigmobile.org/mobicom/2026/workshop_cfp.html",
+      "conferenceDates": "2026-10-30 / official page",
+      "location": "Austin, Texas, USA / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "N/A — workshop; use parent conference context instead",
+      "impactFactorYear": "N/A for workshops",
+      "note": "Official MobiCom 2026 workshop/tutorial CFP page; includes workshop paper submission date for mobile/wireless/networking workshops.",
+      "tags": [
+        "wireless",
+        "mobile",
+        "workshops",
+        "networking",
+        "systems"
+      ],
+      "configuredDeadline": "2026-06-05",
+      "daysUntilDeadline": -28,
+      "deadlineStatus": "closed",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "2026 Workshop/Tutorial Proposal] in the subject line. Submissions must be received by the deadline below. Important Dates (AoE) Proposal Submission March 20, 2026 March 23, 2026 Notification of Acceptance March 31, 2026",
+        "ure that proposals contain [MobiCom 2026 Workshop/Tutorial Proposal] in the subject line. Submissions must be received by the deadline below. Important Dates (AoE) Proposal Submission March 20, 2026 March 23, 2026 Notification of Acceptance",
+        "e deadline below. Important Dates (AoE) Proposal Submission March 20, 2026 March 23, 2026 Notification of Acceptance March 31, 2026",
+        "A call for papers with workshop deadlines (aligned with the relevant Important Dates below). Tutorial Guidelines Tutorial topics should be of significant interest to the MobiCom community. Tutorials may consist of lectures, interactive sessions, hands-on training, or any combination of the above. Tutorial Proposal Submission Instructions The proposal should be no longer than",
+        ", digital twins. Workshop Proposal Submission Instructions The proposal should be no longer than three pages and should include at least the following: The name of the workshop. The name, address, and a short bio (up to 200 words) of each organizer (up to three). A motivation and rationale that includes a brief description of the technical issues to be addressed, and why those issues are timely.",
+        "Expected number of submissions and participants (please include an accurate estimate of the anticipated number of attendees) If previous editions have been held, a description of past versions of the workshop, including the number of submitted and accepted papers, number of attendees, and avenues for improvement. A description of the publicity plan. A call for papers with workshop d",
+        "n of the above. Tutorial Proposal Submission Instructions The proposal should be no longer than three pages and should include at least the following: The name of the tutorial. The name, address, and short bio (up to 200 words) of each organizer (up to three). A motivation and rationale for the tutorial. Reference to the knowledge that the audience should expect to gather with the tutorial. An outline of the tutorial content, inclu",
+        "). Submissions Please send your proposal in PDF (only) via e-mail to the workshop/tutorial co-chairs: Nirupam Roy and Rahman Doost-Mohammady at mobicom2026workshop@googlegroups.com . Ensure that proposals contain [MobiCom 2026 Workshop/Tutorial Proposal] in the subject line. Submissions must be received by the deadline below. Important Dates (AoE) Proposal Submission"
       ]
     },
     {
@@ -1283,6 +1468,74 @@
         "utonomous Vehicle Electronics Deadline: 11 Jul 2025 (Extended) Call Doc Category VTM Name AI for 6G O-RAN Intelligent, Cost-Efficient and Secure Automation Deadline:",
         "ficient and Secure Automation Deadline: 22 Feb 2025 (Extended) Call Doc Category VTM Name Channel Modeling and Propagation for Beyond 5G Mobile Radio Deadline:",
         "on for Beyond 5G Mobile Radio Deadline: 6 Dec 2024 (Extended) General Information VT Magazine Scope VT Magazine Current Issue Paper Submission"
+      ]
+    },
+    {
+      "title": "MobiHoc Workshop on AI for Radio Access Networks",
+      "acronym": "MobiHoc AI-RAN",
+      "venueType": "Workshop",
+      "track": "Wireless / AI-RAN Workshops",
+      "url": "https://www.sigmobile.org/mobihoc/2026/workshop-ai-ran.html",
+      "conferenceDates": "2026-11-26 / official workshop page",
+      "location": "Houston, Texas, USA / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "N/A — workshop; use parent conference/workshop context instead",
+      "impactFactorYear": "N/A for workshops",
+      "note": "Official MobiHoc 2026 AI-RAN workshop page with explicit workshop paper submission deadline; highly relevant to AI-native RAN work.",
+      "tags": [
+        "wireless",
+        "ai-ran",
+        "ran",
+        "workshops",
+        "mobile"
+      ],
+      "configuredDeadline": "2026-08-31",
+      "daysUntilDeadline": 59,
+      "deadlineStatus": "watching: 59 days out",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop Event Date",
+        "August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop Eve",
+        "September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop Event Date Submission Guidelines A full paper should not exceed 6 pages (US letter size) double column including figures, tables, and references in standard ACM format. Papers must be submitted electronically in printable PDF form via the workshop’s website. Templates for t",
+        "Call for Papers Submission Instructions Workshops AI-RAN AIoT FIDTA CyberNet ML4NxtGNet Beyond AoI",
+        "Submission Guidelines A full paper should not exceed 6 pages (US letter size) double column including figures, tables, and references in standard ACM format. Papers must be submitted electronically in printable PDF form via the workshop’s website. Templates for the standard ACM format can be found at this link . Banner image credits: David Edelstein , Denys Nevozhai , and Elle Edwards under the Upsplash licence . Back to Top",
+        "Call for Papers Call for Workshops Call for Posters and Demos Anti-Harassment Policy Workshop on Foundation Models, Generative AI, and Agentic Intelligence for AI-Native Radio Access Networks (AI-RAN) » Workshop website « Radio Access Networks (RANs) are evolving to"
+      ]
+    },
+    {
+      "title": "MobiHoc Workshop on Machine Learning for NextG Networks",
+      "acronym": "MobiHoc ML4NxtGNet",
+      "venueType": "Workshop",
+      "track": "Wireless / NextG Workshops",
+      "url": "https://www.sigmobile.org/mobihoc/2026/workshop-ml4nxtgnet.html",
+      "conferenceDates": "2026-11-26 / official workshop page",
+      "location": "Houston, Texas, USA / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "N/A — workshop; use parent conference/workshop context instead",
+      "impactFactorYear": "N/A for workshops",
+      "note": "Official MobiHoc 2026 ML4NxtGNet workshop page with explicit workshop paper submission deadline; relevant to ML for wireless and next-generation networks.",
+      "tags": [
+        "wireless",
+        "machine-learning",
+        "nextg",
+        "workshops",
+        "mobile"
+      ],
+      "configuredDeadline": "2026-08-31",
+      "daysUntilDeadline": 59,
+      "deadlineStatus": "watching: 59 days out",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop Event Date",
+        "August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop Eve",
+        "September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop Event Date Submission Guidelines A full paper should not exceed 6 pages (US letter size) double column including figures, tables, and references in standard ACM format. Papers must be submitted electronically in printable PDF form via the workshop’s website. Templates for t",
+        "Call for Papers Submission Instructions Workshops AI-RAN AIoT FIDTA CyberNet ML4NxtGNet Beyond AoI",
+        "Submission Guidelines A full paper should not exceed 6 pages (US letter size) double column including figures, tables, and references in standard ACM format. Papers must be submitted electronically in printable PDF form via the workshop’s website. Templates for the standard ACM format can be found at this link . Banner image credits: David Edelstein , Denys Nevozhai , and Elle Edwards under the Upsplash licence . Back to Top",
+        "Call for Papers Call for Workshops Call for Posters and Demos Anti-Harassment Policy Machine Learning for Next-Generation Communication and Edge Networks (ML4NxtGNet) » Workshop website « Learning in Next Generation (NextG) communication networks will be performed o"
       ]
     },
     {
