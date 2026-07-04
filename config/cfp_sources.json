@@ -389,25 +389,27 @@
       "impactFactorYear": "N/A for conferences"
     },
     {
-      "title": "IEEE International Workshop on Signal Processing Advances in Wireless Communications",
-      "acronym": "SPAWC",
-      "track": "Wireless / Signal Processing",
-      "url": "https://spawc2026.org/",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
-      "qualityTier": "specialized wireless signal processing",
-      "impactFactor": "N/A — conference/workshop; use SPS/ComSoc reputation instead",
-      "note": "Wireless signal processing CFP source; relevant for PHY/MIMO/RAN-adjacent research.",
+      "title": "SUN 2026: The 1st International Workshop on Scale-Up Networking",
+      "acronym": "SUN @ IWQoS",
+      "track": "Networking / Workshops",
+      "url": "https://iwqos2026.ieee-iwqos.org/ieeeacm-international-symposium-quality-service-iwqos-2026-206/cfp/sun-2026-1st-international",
+      "conferenceDates": "Workshop date via official IWQoS page",
+      "location": "Co-located with IEEE/ACM IWQoS 2026 / official page",
+      "qualityTier": "workshop track under IEEE/ACM IWQoS",
+      "impactFactor": "N/A — workshop; use parent symposium/workshop context instead",
+      "note": "Official IWQoS 2026 workshop CFP with an explicit submission deadline; replaces the previous SPAWC placeholder because its 2026 site is not resolving from the crawler.",
       "tags": [
-        "wireless",
-        "signal-processing",
-        "phy",
-        "mimo"
+        "networking",
+        "workshops",
+        "datacenter",
+        "ai-infrastructure",
+        "qos"
       ],
       "venueType": "Workshop",
       "rankingSource": "Workshop proxy: specialized venue or workshop track; use parent society/conference context and field relevance, not journal Q1/Q2.",
       "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactorYear": "N/A for workshops"
+      "impactFactorYear": "N/A for workshops",
+      "deadline": "2026-05-10"
     },
     {
       "title": "IEEE International Symposium on Information Theory",
@@ -542,12 +544,12 @@
       "title": "IEEE International Conference on Communications Workshops",
       "acronym": "ICC Workshops",
       "track": "Wireless / Workshops",
-      "url": "https://icc2026.ieee-icc.org/workshops",
+      "url": "https://icc2026.ieee-icc.org/program/workshops",
       "conferenceDates": "TBD / official page",
       "location": "TBD / official page",
       "qualityTier": "workshop track under flagship communications",
       "impactFactor": "N/A — workshop; use parent conference context instead",
-      "note": "Workshop CFP source for specialized RAN, AI-native communications, edge, and 6G topics.",
+      "note": "Workshop CFP source for specialized RAN, AI-native communications, edge, and 6G topics. Official ICC 2026 workshop-paper page lists an extended firm workshop paper deadline of 2026-01-31.",
       "tags": [
         "communications",
         "wireless",
@@ -558,18 +560,19 @@
       "venueType": "Workshop",
       "rankingSource": "Workshop proxy: specialized venue or workshop track; use parent society/conference context and field relevance, not journal Q1/Q2.",
       "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactorYear": "N/A for workshops"
+      "impactFactorYear": "N/A for workshops",
+      "deadline": "2026-01-31"
     },
     {
       "title": "IEEE Global Communications Conference Workshops",
       "acronym": "GLOBECOM Workshops",
       "track": "Wireless / Workshops",
-      "url": "https://globecom2026.ieee-globecom.org/workshops",
+      "url": "https://globecom2026.ieee-globecom.org/call-workshop-proposals",
       "conferenceDates": "TBD / official page",
       "location": "TBD / official page",
       "qualityTier": "workshop track under flagship communications",
       "impactFactor": "N/A — workshop; use parent conference context instead",
-      "note": "Workshop CFP source for emerging wireless, RAN, edge, and 6G topics.",
+      "note": "Workshop CFP source for emerging wireless, RAN, edge, and 6G topics. Official GLOBECOM 2026 workshop-proposals page lists the workshop paper submission deadline.",
       "tags": [
         "communications",
         "wireless",
@@ -580,7 +583,8 @@
       "venueType": "Workshop",
       "rankingSource": "Workshop proxy: specialized venue or workshop track; use parent society/conference context and field relevance, not journal Q1/Q2.",
       "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactorYear": "N/A for workshops"
+      "impactFactorYear": "N/A for workshops",
+      "deadline": "2026-08-10"
     },
     {
       "title": "ACM Symposium on Cloud Computing",

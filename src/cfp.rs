@@ -186,6 +186,184 @@ fn compact_whitespace(input: &str) -> String {
     input.split_whitespace().collect::<Vec<_>>().join(" ")
 }
 
+fn floor_char_boundary(value: &str, mut index: usize) -> usize {
+    index = index.min(value.len());
+    while index > 0 && !value.is_char_boundary(index) {
+        index -= 1;
+    }
+    index
+}
+
+fn ceil_char_boundary(value: &str, mut index: usize) -> usize {
+    index = index.min(value.len());
+    while index < value.len() && !value.is_char_boundary(index) {
+        index += 1;
+    }
+    index
+}
+
+fn month_number(token: &str) -> Option<u32> {
+    let normalized = token
+        .trim_matches(|ch: char| !ch.is_ascii_alphabetic())
+        .to_ascii_lowercase();
+    match normalized.as_str() {
+        "jan" | "january" => Some(1),
+        "feb" | "february" => Some(2),
+        "mar" | "march" => Some(3),
+        "apr" | "april" => Some(4),
+        "may" => Some(5),
+        "jun" | "june" => Some(6),
+        "jul" | "july" => Some(7),
+        "aug" | "august" => Some(8),
+        "sep" | "sept" | "september" => Some(9),
+        "oct" | "october" => Some(10),
+        "nov" | "november" => Some(11),
+        "dec" | "december" => Some(12),
+        _ => None,
+    }
+}
+
+fn numeric_token(token: &str) -> Option<u32> {
+    let digits: String = token.chars().take_while(|ch| ch.is_ascii_digit()).collect();
+    if digits.is_empty() {
+        None
+    } else {
+        digits.parse().ok()
+    }
+}
+
+fn year_token(token: &str) -> Option<i32> {
+    let digits: String = token.chars().filter(|ch| ch.is_ascii_digit()).collect();
+    if digits.len() == 4 {
+        digits.parse().ok()
+    } else {
+        None
+    }
+}
+
+fn parse_iso_date_token(token: &str) -> Option<chrono::NaiveDate> {
+    let cleaned = token.trim_matches(|ch: char| !(ch.is_ascii_digit() || ch == '-'));
+    chrono::NaiveDate::parse_from_str(cleaned, "%Y-%m-%d").ok()
+}
+
+fn push_unique_date(dates: &mut Vec<chrono::NaiveDate>, date: Option<chrono::NaiveDate>) {
+    match date {
+        Some(date) if !dates.contains(&date) => dates.push(date),
+        _ => {}
+    }
+}
+
+fn candidate_dates_from_text(text: &str) -> Vec<chrono::NaiveDate> {
+    let tokens: Vec<&str> = text.split_whitespace().collect();
+    let mut dates = Vec::new();
+    for index in 0..tokens.len() {
+        push_unique_date(&mut dates, parse_iso_date_token(tokens[index]));
+        if index + 2 >= tokens.len() {
+            continue;
+        }
+        if let (Some(day), Some(month), Some(year)) = (
+            numeric_token(tokens[index]),
+            month_number(tokens[index + 1]),
+            year_token(tokens[index + 2]),
+        ) {
+            push_unique_date(
+                &mut dates,
+                chrono::NaiveDate::from_ymd_opt(year, month, day),
+            );
+        }
+        if let (Some(month), Some(day), Some(year)) = (
+            month_number(tokens[index]),
+            numeric_token(tokens[index + 1]),
+            year_token(tokens[index + 2]),
+        ) {
+            push_unique_date(
+                &mut dates,
+                chrono::NaiveDate::from_ymd_opt(year, month, day),
+            );
+        }
+    }
+    dates
+}
+
+fn candidate_deadline_dates_from_signal(signal: &str) -> Vec<chrono::NaiveDate> {
+    let lowered = signal.to_ascii_lowercase();
+    let mut dates = Vec::new();
+    for keyword in [
+        "submission deadline",
+        "manuscript deadline",
+        "deadline",
+        "due",
+    ] {
+        let mut search_from = 0;
+        while let Some(relative) = lowered[search_from..].find(keyword) {
+            let position = search_from + relative;
+            let position = floor_char_boundary(signal, position);
+            let context_start = floor_char_boundary(signal, position.saturating_sub(45));
+            let context_end = ceil_char_boundary(signal, position + keyword.len());
+            let context = signal[context_start..context_end].to_ascii_lowercase();
+            if context.contains("camera")
+                || context.contains("notification")
+                || context.contains("acceptance")
+                || context.contains("registration")
+            {
+                search_from = (position + keyword.len()).min(lowered.len());
+                continue;
+            }
+            let before = &signal[..position];
+            if let Some(date) = candidate_dates_from_text(before).last().copied() {
+                push_unique_date(&mut dates, Some(date));
+            } else {
+                let after_start = ceil_char_boundary(signal, position + keyword.len());
+                let after = &signal[after_start..];
+                let after_dates = candidate_dates_from_text(after);
+                push_unique_date(&mut dates, after_dates.first().copied());
+                if after
+                    .to_ascii_lowercase()
+                    .find("extended")
+                    .is_some_and(|offset| offset < 90)
+                {
+                    push_unique_date(&mut dates, after_dates.get(1).copied());
+                }
+            }
+            search_from = (position + keyword.len()).min(lowered.len());
+        }
+    }
+    dates
+}
+
+fn select_deadline_date(
+    dates: &[chrono::NaiveDate],
+    issue: chrono::NaiveDate,
+) -> Option<chrono::NaiveDate> {
+    dates
+        .iter()
+        .copied()
+        .filter(|date| *date >= issue)
+        .min()
+        .or_else(|| dates.iter().copied().max())
+}
+
+fn inferred_deadline_from_signals(signals: &[String], issue_date: &str) -> Option<String> {
+    let issue = chrono::NaiveDate::parse_from_str(issue_date, "%Y-%m-%d").ok()?;
+    let dates: Vec<chrono::NaiveDate> = signals
+        .iter()
+        .flat_map(|signal| candidate_deadline_dates_from_signal(signal))
+        .collect();
+    Some(select_deadline_date(&dates, issue)?.to_string())
+}
+
+fn signal_deadline_sort_key(signal: &str, issue: chrono::NaiveDate) -> (u8, i64) {
+    let dates = candidate_deadline_dates_from_signal(signal);
+    let Some(selected) = select_deadline_date(&dates, issue) else {
+        return (2, i64::MAX);
+    };
+    if selected >= issue {
+        (0, (selected - issue).num_days())
+    } else {
+        (1, (issue - selected).num_days())
+    }
+}
+
 fn contains_any<'a>(value: &str, patterns: &'a [&'a str]) -> Option<&'a str> {
     patterns
         .iter()
@@ -222,11 +400,12 @@ fn validate_source_quality(items: &[CfpItem]) -> BlogResult<()> {
     Ok(())
 }
 
-fn deadline_signals_from_text(text: &str) -> Vec<String> {
+fn deadline_signals_from_text(text: &str, issue_date: &str) -> Vec<String> {
     let lowered = text.to_ascii_lowercase();
     let keywords = [
         "deadline",
         "submission",
+        "manuscript",
         "important dates",
         "call for papers",
         "cfp",
@@ -236,24 +415,34 @@ fn deadline_signals_from_text(text: &str) -> Vec<String> {
         let mut search_from = 0;
         while let Some(relative) = lowered[search_from..].find(keyword) {
             let position = search_from + relative;
-            let start = position.saturating_sub(90);
-            let end = (position + 180).min(text.len());
+            let start = floor_char_boundary(text, position.saturating_sub(90));
+            let end = ceil_char_boundary(text, position + 650);
             let snippet = compact_whitespace(&text[start..end]);
             if snippet.len() > 24 && !signals.iter().any(|seen| seen == &snippet) {
                 signals.push(snippet);
             }
-            if signals.len() >= 3 {
-                return signals;
+            if signals.len() >= 40 {
+                break;
             }
             search_from = (position + keyword.len()).min(lowered.len());
         }
+        if signals.len() >= 40 {
+            break;
+        }
     }
+    if let Ok(issue) = chrono::NaiveDate::parse_from_str(issue_date, "%Y-%m-%d") {
+        signals.sort_by_key(|signal| signal_deadline_sort_key(signal, issue));
+    } else {
+        signals.sort_by_key(|signal| candidate_deadline_dates_from_signal(signal).is_empty());
+    }
+    signals.truncate(8);
     signals
 }
 
 async fn fetch_deadline_signals(
     client: &reqwest::Client,
     source: &CfpSource,
+    issue_date: &str,
 ) -> (String, Vec<String>) {
     let response = client.get(&source.url).send().await;
     let Ok(response) = response else {
@@ -266,7 +455,7 @@ async fn fetch_deadline_signals(
         return ("decode failed".to_string(), Vec::new());
     };
     let stripped = strip_html(&text);
-    let signals = deadline_signals_from_text(&stripped);
+    let signals = deadline_signals_from_text(&stripped, issue_date);
     ("fetched".to_string(), signals)
 }
 
@@ -287,7 +476,15 @@ fn deadline_label(item: &CfpItem) -> String {
     item.configured_deadline
         .as_ref()
         .map(|deadline| format!("{deadline} ({})", item.deadline_status))
-        .unwrap_or_else(|| "TBD / official page".to_string())
+        .unwrap_or_else(|| {
+            if item.fetch_status == "fetched" {
+                "No dated CFP posted on official page".to_string()
+            } else if item.fetch_status.starts_with("http") || item.fetch_status == "fetch failed" {
+                "Manual check required".to_string()
+            } else {
+                "TBD / official page".to_string()
+            }
+        })
 }
 
 fn impact_label(item: &CfpItem) -> String {
@@ -453,9 +650,7 @@ fn render_deadline_radar(output: &mut String, issue: &CfpIssue) {
 
 ",
     );
-    output.push_str("Configured open deadlines, sorted from the current issue date. Items without a configured date stay in the grouped watchlists below.
-
-");
+    output.push_str("Configured or automatically detected open deadlines, sorted from the current issue date. Items without an official date signal stay in the grouped watchlists below.\n\n");
     let upcoming = sorted_item_refs(
         issue
             .items
@@ -463,9 +658,7 @@ fn render_deadline_radar(output: &mut String, issue: &CfpIssue) {
             .filter(|item| item.days_until_deadline.is_some_and(|days| days >= 0)),
     );
     if upcoming.is_empty() {
-        output.push_str("No open configured submission deadlines are available yet; check the grouped watchlists below for official CFP pages being monitored.
-
-");
+        output.push_str("No open configured or detected submission deadlines are available yet; check the grouped watchlists below for official CFP pages being monitored.\n\n");
         return;
     }
     output.push_str(
@@ -537,7 +730,7 @@ fn render_markdown(issue: &CfpIssue) -> String {
         issue.fetched_count
     ));
     output.push_str(&format!(
-        "- Entries with configured deadlines: **{}**\n\n",
+        "- Entries with configured or detected deadlines: **{}**\n\n",
         issue.with_configured_deadline_count
     ));
 
@@ -667,12 +860,16 @@ pub async fn update_cfp_artifacts(
     let mut fetched_count = 0;
     for source in config.conferences {
         *tracks.entry(source.track.clone()).or_insert(0) += 1;
-        let (fetch_status, deadline_signals) = fetch_deadline_signals(&client, &source).await;
+        let (fetch_status, deadline_signals) =
+            fetch_deadline_signals(&client, &source, &issue_date).await;
         if fetch_status == "fetched" {
             fetched_count += 1;
         }
-        let days = source
+        let detected_deadline = source
             .deadline
+            .clone()
+            .or_else(|| inferred_deadline_from_signals(&deadline_signals, &issue_date));
+        let days = detected_deadline
             .as_deref()
             .and_then(|deadline| days_until(&issue_date, deadline));
         items.push(CfpItem {
@@ -690,7 +887,7 @@ pub async fn update_cfp_artifacts(
             impact_factor_year: source.impact_factor_year,
             note: source.note,
             tags: source.tags,
-            configured_deadline: source.deadline,
+            configured_deadline: detected_deadline,
             days_until_deadline: days,
             deadline_status: deadline_status(days),
             fetch_status,
@@ -786,6 +983,29 @@ pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIss
         )
         .into());
     }
+    let workshop_deadline_count = issue
+        .items
+        .iter()
+        .filter(|item| is_workshop(item) && item.configured_deadline.is_some())
+        .count();
+    if workshop_deadline_count < issue.workshop_count {
+        return Err(format!(
+            "Workshop CFP deadline coverage is incomplete: {workshop_deadline_count}/{}",
+            issue.workshop_count
+        )
+        .into());
+    }
+    let journal_deadline_count = issue
+        .items
+        .iter()
+        .filter(|item| is_journal(item) && item.configured_deadline.is_some())
+        .count();
+    if journal_deadline_count < 7 {
+        return Err(format!(
+            "Journal special-issue deadline extraction is too sparse: {journal_deadline_count}"
+        )
+        .into());
+    }
     if !static_latest_path.exists() {
         return Err("static/cfp/data/latest.json is missing".into());
     }
@@ -848,6 +1068,33 @@ mod tests {
             fetch_status: "not fetched".to_string(),
             deadline_signals: Vec::new(),
         }
+    }
+
+    #[test]
+    fn extracts_nearest_open_deadline_from_official_page_signals() {
+        let signals = vec![
+            "Special Issue on Low-Altitude Wireless Networks Deadline: 1 Mar 2026 (Extended)".to_string(),
+            "Special Issue on Advanced Driving Intelligence for Autonomous Vehicles Deadline: 1 Aug 2026".to_string(),
+            "Graph Representation on Learning for Internet of Things Submission Deadline: November 30th, 2026".to_string(),
+        ];
+
+        assert_eq!(
+            inferred_deadline_from_signals(&signals, "2026-07-03"),
+            Some("2026-08-01".to_string())
+        );
+    }
+
+    #[test]
+    fn keeps_latest_closed_deadline_when_no_open_signal_exists() {
+        let signals = vec![
+            "Important Dates 06 Jun 2026 Paper Submission Deadline : Final Deadline".to_string(),
+            "30 Jun 2026 Acceptance Notification".to_string(),
+        ];
+
+        assert_eq!(
+            inferred_deadline_from_signals(&signals, "2026-07-03"),
+            Some("2026-06-06".to_string())
+        );
     }
 
     #[test]
