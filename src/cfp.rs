@@ -312,6 +312,19 @@ fn candidate_deadline_dates_from_signal(signal: &str) -> Vec<chrono::NaiveDate> 
             let before = &signal[..position];
             if let Some(date) = candidate_dates_from_text(before).last().copied() {
                 push_unique_date(&mut dates, Some(date));
+                let after_start = ceil_char_boundary(signal, position + keyword.len());
+                let after = &signal[after_start..];
+                let after_lowered = after.to_ascii_lowercase();
+                if after_lowered
+                    .find("final deadline")
+                    .or_else(|| after_lowered.find("extended"))
+                    .is_some_and(|offset| offset < 120)
+                {
+                    push_unique_date(
+                        &mut dates,
+                        candidate_dates_from_text(after).first().copied(),
+                    );
+                }
             } else {
                 let after_start = ceil_char_boundary(signal, position + keyword.len());
                 let after = &signal[after_start..];
@@ -1073,14 +1086,20 @@ mod tests {
     #[test]
     fn extracts_nearest_open_deadline_from_official_page_signals() {
         let signals = vec![
-            "Special Issue on Low-Altitude Wireless Networks Deadline: 1 Mar 2026 (Extended)".to_string(),
-            "Special Issue on Advanced Driving Intelligence for Autonomous Vehicles Deadline: 1 Aug 2026".to_string(),
-            "Graph Representation on Learning for Internet of Things Submission Deadline: November 30th, 2026".to_string(),
+            "Special Issue on Low-Altitude Wireless Networks Deadline: 1 Mar 2026 (Extended)"
+                .to_string(),
+            "Integrated Sensing and Communication for IoT Networking in 6G and Beyond Submission Deadline: August 15th, 2026 Guest Editors"
+                .to_string(),
+            "06 Jun 2026 Paper Submission Deadline : Final Deadline 30 Jun 2026 Acceptance Notification"
+                .to_string(),
         ];
-
         assert_eq!(
             inferred_deadline_from_signals(&signals, "2026-07-03"),
-            Some("2026-08-01".to_string())
+            Some("2026-08-15".to_string())
+        );
+        assert_eq!(
+            inferred_deadline_from_signals(&signals[2..], "2026-07-03"),
+            Some("2026-06-30".to_string())
         );
     }
 
