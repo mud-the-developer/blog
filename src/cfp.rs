@@ -396,7 +396,11 @@ fn cfp_ai_model_names() -> Vec<String> {
         .or_else(|_| env::var("GOOGLE_AI_FALLBACK_MODELS"))
         .unwrap_or_default();
     let primary = env::var("GOOGLE_AI_MODEL").unwrap_or_default();
-    let defaults = "models/gemini-2.5-flash-lite";
+    let defaults = if primary.trim().is_empty() && configured.trim().is_empty() {
+        "models/gemini-2.5-flash-lite"
+    } else {
+        ""
+    };
     let mut names = Vec::new();
     for raw in primary
         .split(',')
