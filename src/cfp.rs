@@ -1,4 +1,4 @@
-use std::{collections::BTreeMap, path::Path, time::Duration};
+use std::{collections::BTreeMap, env, path::Path, time::Duration};
 
 use chrono::{FixedOffset, Utc};
 use serde::{Deserialize, Serialize};
@@ -90,6 +90,24 @@ fn default_venue_type() -> String {
 #[derive(Debug, Clone, Deserialize)]
 struct CfpConfig {
     conferences: Vec<CfpSource>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+struct AiDeadlineFinding {
+    #[serde(default)]
+    deadline: Option<String>,
+    #[serde(default)]
+    status: String,
+    #[serde(default)]
+    evidence: String,
+    #[serde(default)]
+    source_url: String,
+}
+
+#[derive(Debug, Clone)]
+struct AiDeadlineSignal {
+    deadline: Option<String>,
+    signal: String,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -363,6 +381,187 @@ fn inferred_deadline_from_signals(signals: &[String], issue_date: &str) -> Optio
         .flat_map(|signal| candidate_deadline_dates_from_signal(signal))
         .collect();
     Some(select_deadline_date(&dates, issue)?.to_string())
+}
+
+fn google_api_key() -> Option<String> {
+    ["GOOGLE_AI_API_KEY", "GOOGLE_API_KEY", "GEMINI_API_KEY"]
+        .iter()
+        .filter_map(|name| env::var(name).ok())
+        .map(|value| value.trim().to_string())
+        .find(|value| !value.is_empty())
+}
+
+fn cfp_ai_model_names() -> Vec<String> {
+    let configured = env::var("CFP_AI_MODELS")
+        .or_else(|_| env::var("GOOGLE_AI_FALLBACK_MODELS"))
+        .unwrap_or_default();
+    let primary = env::var("GOOGLE_AI_MODEL").unwrap_or_default();
+    let defaults = "models/gemini-2.5-flash,models/gemini-2.5-flash-lite,models/gemma-4-31b-it";
+    let mut names = Vec::new();
+    for raw in primary
+        .split(',')
+        .chain(configured.split(','))
+        .chain(defaults.split(','))
+    {
+        let trimmed = raw.trim();
+        if trimmed.is_empty() {
+            continue;
+        }
+        let model = if trimmed.starts_with("models/") {
+            trimmed.to_string()
+        } else {
+            format!("models/{trimmed}")
+        };
+        if !names.contains(&model) {
+            names.push(model);
+        }
+    }
+    names
+}
+
+fn strip_model_thinking(value: &str) -> String {
+    let mut output = value.to_string();
+    loop {
+        let lowered = output.to_ascii_lowercase();
+        let Some(start) = lowered.find("<think>") else {
+            break;
+        };
+        let Some(relative_end) = lowered[start..].find("</think>") else {
+            break;
+        };
+        let end = start + relative_end + "</think>".len();
+        output.replace_range(start..end, "");
+    }
+    output.trim().to_string()
+}
+
+fn parse_ai_deadline_text(text: &str) -> Option<AiDeadlineFinding> {
+    let stripped = strip_model_thinking(text);
+    let candidate = if let Some(start) = stripped.find('{') {
+        let end = stripped.rfind('}')?;
+        &stripped[start..=end]
+    } else {
+        stripped.as_str()
+    };
+    serde_json::from_str(candidate).ok()
+}
+
+fn trusted_ai_source_url(source_url: &str, source: &CfpSource) -> bool {
+    let url = source_url.to_ascii_lowercase();
+    if url.is_empty() || contains_any(&url, BLOCKED_CFP_SOURCE_PATTERNS).is_some() {
+        return false;
+    }
+    if contains_any(&url, TRUSTED_CFP_SOURCE_PATTERNS).is_some() {
+        return true;
+    }
+    let configured_host = source.url.to_ascii_lowercase();
+    !configured_host.is_empty() && url.contains(&configured_host)
+}
+
+fn accepted_ai_deadline_signal(
+    finding: AiDeadlineFinding,
+    source: &CfpSource,
+    model: &str,
+) -> Option<AiDeadlineSignal> {
+    let status = finding.status.to_ascii_lowercase();
+    if !(status.contains("found") || status == "active" || status == "closed") {
+        return None;
+    }
+    let deadline = finding.deadline.as_deref()?.trim();
+    chrono::NaiveDate::parse_from_str(deadline, "%Y-%m-%d").ok()?;
+    let evidence = compact_whitespace(&finding.evidence);
+    if evidence.len() < 24 || !evidence.to_ascii_lowercase().contains("deadline") {
+        return None;
+    }
+    let source_url = finding.source_url.trim();
+    if !trusted_ai_source_url(source_url, source) {
+        return None;
+    }
+    Some(AiDeadlineSignal {
+        deadline: Some(deadline.to_string()),
+        signal: format!(
+            "AI-assisted official CFP lookup via {model}: {evidence} Source: {source_url}"
+        ),
+    })
+}
+
+fn cfp_ai_prompt(source: &CfpSource, issue_date: &str, fetch_status: &str) -> String {
+    format!(
+        "Find the official CFP submission deadline for this research venue source. Use only official society, publisher, or venue pages. If the current URL is inaccessible, use Google Search grounding to find the official current page. Do not use WikiCFP, WASET, OMICS, SCIRP, conference-index, allconferencealert, or generic SEO deadline aggregators. Return JSON only with fields: status ('found' or 'not_found'), deadline (YYYY-MM-DD or null), evidence (one short quote containing the deadline wording), source_url (official URL used). Prefer paper/manuscript/submission deadlines over notification, camera-ready, registration, or event dates. Issue date: {issue_date}. Fetch status from crawler: {fetch_status}. Venue title: {}. Acronym: {}. Venue type: {}. Track: {}. Configured URL: {}. Notes: {}.",
+        source.title, source.acronym, source.venue_type, source.track, source.url, source.note
+    )
+}
+
+async fn ai_deadline_signal(
+    client: &reqwest::Client,
+    source: &CfpSource,
+    issue_date: &str,
+    fetch_status: &str,
+) -> Option<AiDeadlineSignal> {
+    let api_key = google_api_key()?;
+    let prompt = cfp_ai_prompt(source, issue_date, fetch_status);
+    for model in cfp_ai_model_names() {
+        let endpoint =
+            format!("https://generativelanguage.googleapis.com/v1beta/{model}:generateContent");
+        let body = json!({
+            "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+            "tools": [{"google_search": {}}],
+            "generationConfig": {
+                "temperature": 0.0,
+                "maxOutputTokens": 1200
+            }
+        });
+        let Ok(response) = client
+            .post(&endpoint)
+            .query(&[("key", api_key.as_str())])
+            .json(&body)
+            .send()
+            .await
+        else {
+            continue;
+        };
+        if !response.status().is_success() {
+            if matches!(
+                response.status().as_u16(),
+                400 | 404 | 429 | 500 | 502 | 503 | 504
+            ) {
+                continue;
+            }
+            return None;
+        }
+        let Ok(value) = response.json::<serde_json::Value>().await else {
+            continue;
+        };
+        let text = value["candidates"]
+            .as_array()
+            .and_then(|candidates| candidates.first())
+            .and_then(|candidate| candidate["content"]["parts"].as_array())
+            .map(|parts| {
+                parts
+                    .iter()
+                    .filter_map(|part| part["text"].as_str())
+                    .collect::<Vec<_>>()
+                    .join("\n")
+            })
+            .unwrap_or_default();
+        let Some(finding) = parse_ai_deadline_text(&text) else {
+            continue;
+        };
+        if let Some(signal) = accepted_ai_deadline_signal(finding, source, &model) {
+            return Some(signal);
+        }
+    }
+    None
+}
+
+fn should_use_ai_deadline_fallback(fetch_status: &str) -> bool {
+    if env::var("CFP_AI_ASSIST_ALL_NO_DEADLINE")
+        .ok()
+        .is_some_and(|value| value == "1" || value.eq_ignore_ascii_case("true"))
+    {
+        return true;
+    }
+    fetch_status != "fetched"
 }
 
 fn signal_deadline_sort_key(signal: &str, issue: chrono::NaiveDate) -> (u8, i64) {
@@ -873,15 +1072,23 @@ pub async fn update_cfp_artifacts(
     let mut fetched_count = 0;
     for source in config.conferences {
         *tracks.entry(source.track.clone()).or_insert(0) += 1;
-        let (fetch_status, deadline_signals) =
+        let (fetch_status, mut deadline_signals) =
             fetch_deadline_signals(&client, &source, &issue_date).await;
         if fetch_status == "fetched" {
             fetched_count += 1;
         }
-        let detected_deadline = source
+        let mut detected_deadline = source
             .deadline
             .clone()
             .or_else(|| inferred_deadline_from_signals(&deadline_signals, &issue_date));
+        if detected_deadline.is_none()
+            && should_use_ai_deadline_fallback(&fetch_status)
+            && let Some(ai_signal) =
+                ai_deadline_signal(&client, &source, &issue_date, &fetch_status).await
+        {
+            detected_deadline = ai_signal.deadline;
+            deadline_signals.push(ai_signal.signal);
+        }
         let days = detected_deadline
             .as_deref()
             .and_then(|deadline| days_until(&issue_date, deadline));
@@ -1083,6 +1290,29 @@ mod tests {
         }
     }
 
+    fn quality_test_source(acronym: &str, url: &str) -> CfpSource {
+        CfpSource {
+            title: format!("{acronym} test venue"),
+            acronym: acronym.to_string(),
+            venue_type: "Conference".to_string(),
+            track: "Wireless / Communications".to_string(),
+            url: url.to_string(),
+            conference_dates: "TBD / official page".to_string(),
+            location: "TBD / official page".to_string(),
+            quality_tier: String::new(),
+            ranking_source: String::new(),
+            ranking_year: String::new(),
+            verified_rank: String::new(),
+            verified_rank_source: String::new(),
+            verified_rank_year: String::new(),
+            impact_factor: String::new(),
+            impact_factor_year: String::new(),
+            note: "Official source quality test item".to_string(),
+            tags: vec!["wireless".to_string()],
+            deadline: None,
+        }
+    }
+
     #[test]
     fn extracts_nearest_open_deadline_from_official_page_signals() {
         let signals = vec![
@@ -1113,6 +1343,56 @@ mod tests {
         assert_eq!(
             inferred_deadline_from_signals(&signals, "2026-07-03"),
             Some("2026-06-06".to_string())
+        );
+    }
+
+    #[test]
+    fn accepts_ai_deadline_only_with_official_source_and_evidence() {
+        let source = quality_test_source(
+            "INFOCOM",
+            "https://infocom2026.ieee-infocom.org/call-papers",
+        );
+        let finding = AiDeadlineFinding {
+            deadline: Some("2026-07-24".to_string()),
+            status: "found".to_string(),
+            evidence: "Paper submission deadline: 24 July 2026".to_string(),
+            source_url: "https://infocom2026.ieee-infocom.org/call-papers".to_string(),
+        };
+
+        let signal = accepted_ai_deadline_signal(finding, &source, "models/gemini-2.5-flash")
+            .expect("official AI finding should be accepted");
+        assert_eq!(signal.deadline.as_deref(), Some("2026-07-24"));
+        assert!(signal.signal.contains("AI-assisted official CFP lookup"));
+        assert!(signal.signal.contains("Paper submission deadline"));
+    }
+
+    #[test]
+    fn rejects_ai_deadline_from_blocked_aggregator() {
+        let source = quality_test_source(
+            "INFOCOM",
+            "https://infocom2026.ieee-infocom.org/call-papers",
+        );
+        let finding = AiDeadlineFinding {
+            deadline: Some("2026-07-24".to_string()),
+            status: "found".to_string(),
+            evidence: "Paper submission deadline: 24 July 2026".to_string(),
+            source_url: "https://conferenceindex.org/event/infocom".to_string(),
+        };
+
+        assert!(accepted_ai_deadline_signal(finding, &source, "models/gemini-2.5-flash").is_none());
+    }
+
+    #[test]
+    fn parses_ai_deadline_json_wrapped_in_model_text() {
+        let text = r#"```json
+        {"status":"found","deadline":"2026-08-31","evidence":"Workshop Paper Submission Deadline August 31, 2026","source_url":"https://www.sigmobile.org/mobihoc/2026/workshop-ai-ran.html"}
+        ```"#;
+        let parsed = parse_ai_deadline_text(text).expect("JSON object should parse");
+        assert_eq!(parsed.deadline.as_deref(), Some("2026-08-31"));
+        assert!(
+            parsed
+                .evidence
+                .contains("Workshop Paper Submission Deadline")
         );
     }
 
