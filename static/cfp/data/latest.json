@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-04T11:47:58Z",
+  "generatedAt": "2026-07-05T08:44:08Z",
   "issueDate": "2026-07-03",
   "sourceCount": 73,
-  "activeCount": 42,
+  "activeCount": 37,
   "conferenceCount": 47,
   "workshopCount": 11,
   "journalCount": 15,
-  "withConfiguredDeadlineCount": 48,
-  "fetchedCount": 59,
+  "withConfiguredDeadlineCount": 55,
+  "fetchedCount": 67,
   "tracks": {
     "AI / ML": 4,
     "AI / ML for Communications": 1,
@@ -49,6 +49,40 @@
   },
   "items": [
     {
+      "title": "IEEE International Conference on Computer Communications",
+      "acronym": "INFOCOM",
+      "venueType": "Conference",
+      "track": "Networking / Systems",
+      "url": "https://infocom2026.ieee-infocom.org/call-papers",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "N/A — conference; use CORE/field reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Flagship computer networking CFP source; important for wireless, edge, and network systems work.",
+      "tags": [
+        "networking",
+        "wireless",
+        "edge"
+      ],
+      "configuredDeadline": "2025-07-24",
+      "daysUntilDeadline": -344,
+      "deadlineStatus": "closed",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "ocedures and requirements are available at https://infocom2026.ieee-infocom.org/ . The submission website can be accessed by following this link https://edas.info/N33581 . TECHNICAL PROGRAM CHAIRS Tian Lan (George Washington University, USA) Satyajayant Misra (New Mexico State University, USA) TECHNICAL PROGRAM VICE-CHAIR FOR INFORMATION SYSTEMS Qiben Yan (Michigan State University, USA) Submit a Paper Important Dates Abstract Due 24 July 2025",
+        "and-white printers. Reviewers are not required to read your paper in color. The submitted manuscript should be self-contained. Inclusion of additional material (e.g., a technical report containing the detailed math proof through an anonymous Dropbox or OneDrive link) is not allowed. IMPORTANT DATES Abstract Due: Thursday, July 24, 2025 (11:59 p.m., AOE) Full Paper Due: Thursday, July 31, 2025 (11:59 p.m., AOE) Notification of Acceptance: Monday, December 8, 2025 Accepted and presented papers will be published in the IEEE INFOCOM 2026 Conference Proceedings and submitted to IEEE Xplore®. Full details regarding the submission procedures and requirements are available at https://infocom2026.ieee-infocom.org/",
+        "he detailed math proof through an anonymous Dropbox or OneDrive link) is not allowed. IMPORTANT DATES Abstract Due: Thursday, July 24, 2025 (11:59 p.m., AOE) Full Paper Due: Thursday, July 31, 2025 (11:59 p.m., AOE) Notification of Acceptance: Monday, December 8, 2025 Accepted and presented papers will be published in the IEEE INFOCOM 2026 Conference Proceedings and submitted to IEEE Xplore®. Full details regarding the submission procedures and requirements are available at https://infocom2026.ieee-infocom.org/ . The submission website can be accessed by following this link https://edas.info/N33581 . TECHNICAL PROGRAM CHAIRS Tian Lan (George Washington University, USA) Satyajayant Misra (Ne",
+        "Paper Important Dates Abstract Due 24 July 2025 Full Paper Due 31 July 2025 Notification of Acceptance 8 December 2025",
+        "ent that an individual exceeds this limit, only the first five papers received before the deadline will be considered for review, and the remainder will be rejected without review. Submitted papers must be written in English, with a maximum length limit of 10 printed pages. The main text (including figures, tables, appendices, and any material other than references) must be no more than 9 pages. Papers that do not comply with the length limit will not be reviewed. Use the standard IEEE Transactions templates for Microsoft Word or LaTeX formats found at: https://www.ieee.org/conferences/publishing/templates.html If the paper is typeset in LaTeX, please use an unmodified version of the LaTeX template IEEEtran.cls version 1.",
+        "Submission Guidelines [Main Conference] Final Paper Submission Guidelines [Main Conference] Final Paper Submission Instructions [Workshops] Presentation Instructions [Main Conference] Ca",
+        "Final Paper Submission Guidelines [Main Conference] Final Paper Submission Instructions [Workshops] Presentation Instructions [Main Conference] Call for Demos and Posters Call For Workshop Proposals",
+        "Final Paper Submission Instructions [Workshops] Presentation Instructions [Main Conference] Call for Demos and Posters Call For Workshop Proposals N2Women Young Researcher Fellowship"
+      ]
+    },
+    {
       "title": "USENIX Symposium on Networked Systems Design and Implementation",
       "acronym": "NSDI",
       "venueType": "Conference",
@@ -79,6 +113,41 @@
         "lve/address? Two Deadlines NSDI '26 offers authors the choice of two submission deadlines. Any paper submitted to one of these deadlines and accepted during the subsequent reviewing period will be presented at the conference and will appear as part of the proceedings. In the meantime, authors are permitted to advertise their papers as accepted by NSDI, for example, listing them on CVs. For more information, see Additional Information about Multiple Deadlines Process . One-Shot Revision Each paper may be accepted, rejected, or given the option of one-shot revision. Such a revision decision includes a summary of the paper's merits and a list of necessary changes that are required for the paper to be accepted at",
         "ffers authors the choice of two submission deadlines. Any paper submitted to one of these deadlines and accepted during the subsequent reviewing period will be presented at the conference and will appear as part of the proceedings. In the meantime, authors are permitted to advertise their papers as accepted by NSDI, for example, listing them on CVs. For more information, see Additional Information about Multiple Deadlines Process . One-Shot Revision Each paper may be accepted, rejected, or given the option of one-shot revision. Such a revision decision includes a summary of the paper's merits and a list of necessary changes that are required for the paper to be accepted at NSDI. Authors may then submit a version of the",
         "e, listing them on CVs. For more information, see Additional Information about Multiple Deadlines Process . One-Shot Revision Each paper may be accepted, rejected, or given the option of one-shot revision. Such a revision decision includes a summary of the paper's merits and a list of necessary changes that are required for the paper to be accepted at NSDI. Authors may then submit a version of their work addressing all revision instructions during the subsequent deadline. At that point, the paper will be reviewed to judge whether it addresses all the revision requirements requested. This review will be conducted, to the extent possible, by the same reviewers as earlier. To enable this, PC members who give one-shot-revi"
+      ]
+    },
+    {
+      "title": "IEEE Consumer Communications & Networking Conference",
+      "acronym": "CCNC",
+      "venueType": "Conference",
+      "track": "Wireless / Consumer Networking",
+      "url": "https://ccnc2026.ieee-ccnc.org/call-technical-papers",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "N/A — conference; use indexing/reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Consumer communications and networking CFP source; useful for IoT, edge, wireless, and consumer network systems.",
+      "tags": [
+        "communications",
+        "wireless",
+        "iot",
+        "edge"
+      ],
+      "configuredDeadline": "2025-10-01",
+      "daysUntilDeadline": -275,
+      "deadlineStatus": "closed",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Paper Submission Deadline 31 August 2025 Firm Deadline Notification of Acceptance 1 October 2025 Extended Final Camera Ready 16 November 2025 Technical Tracks Track 1: Edge/Cloud Computing and Networking",
+        "mission Deadline 31 August 2025 Firm Deadline Notification of Acceptance 1 October 2025 Extended Final Camera Ready 16 November 2025 Technical Tracks Track 1: Edge/Cloud Computing and Networking The rapid evolution in",
+        "rtant Dates Paper Submission Deadline 31 August 2025 Firm Deadline Notification of Acceptance 1 October 2025 Extended Final Camera Ready 16 November 2025 Technical Tracks Track 1: Edge/Cloud Computing and Net",
+        "Paper Important Dates Paper Submission Deadline 31 August 2025 Firm Deadline Notification of Acceptance 1 October 2025 Extended Final Camera Ready 16 November 2025 Technical Tracks",
+        "Submission Guidelines Call for Technical Papers Call for Workshop Proposals Call for Workshop Papers Call for Tutorials",
+        "safeguard sensitive information becomes increasingly critical. This track encourages the submission of high-quality research contributions that push the boundaries of knowledge and demonstrate significant advancements in the field. It seeks to showcase cutting-edge research that addresses emerging threats, tackles existing security and privacy challenges, and presents novel solutions that can be deployed in real-world scenarios. Main Topics of Interest: The scope of this track covers practical and theoretical submissions describing novel contributions on a wide range of topics, including: AI in Cybersecurity and Cybersecurity in AI Anonymity and privacy-enhancing technologies Applied cryptograph",
+        "Main Topics of Interest: The scope of this track covers practical and theoretical submissions describing novel contributions on a wide range of topics, including: AI in Cybersecurity and Cybersecurity in AI Anonymity and privacy-enhancing technologies Applied cryptography for network, information, and cybersecurity Authentication, authorization, and auditing for content protection Blockchain security and privacy Botnet analysis and detection Computer and network forensics Consumer-friendly and usable security and privacy tools Control of personal data & privacy protection Digital rights management & copyright protection E",
+        "Important Dates Submission Guidelines Call for Technical Papers Call for Workshop Proposals Call for Workshop Papers"
       ]
     },
     {
@@ -595,7 +664,7 @@
         "ly 2026 Workshop Paper Submission Deadline 5 June 2026 Technical Tracks Track 1: Fundamentals and PHY Topics: AI and ML in/for communications Coding/modulation, information theory Channel modeling, equalization, and synchronization Cooperative communications, coded caching/computing Integrated sensing and communications Millimeter wave and Terah",
         "Final Submission Camera Ready Guidelines Committees Program At a Glance Keynotes",
         "Important Dates Call for Papers Call for Workshop Proposals Call for Tutorial Proposals Call for Workshop Papers",
-        "Call for Papers | IEEE International Symposium on Personal, Indoor and Mobile Radio Communications (PIMRC) 2026 | IEEE PIMRC 2026 {\"path\":{\"baseUrl\":\"\\/\",\"pathPrefix\":\"\",\"currentPath\":\"node\\/6941\",\"currentPathIsAdmin\":false,\"isFront\":false,\"currentLanguage\":\"en\"},\"pluralDelimiter\":\"\\u0003\",\"suppressDeprecationErrors\":true,\"ajaxPageState\":{\"libraries\":\"eJxtjtsKAyEMBX8o6CdJjMFNNxrxAtu_74WWbUtf5jDzdMjKMApFqngksp7EKtBHzWoRFfiYKnX3qa-G6l4K2Swrh4nZ5zt-3eEFj-9YQJg5kNkujylNBSux_5-hCFn1T0LDjrlj28b7x1ncqm1FlbFxgnEdk4uPOPgGBq5YHQ\",\"theme\":\"comsoc_mini\",\"theme_token\":\"sAqVp4zXJW-PcKw0JASPpozPFZlguzyiY_dOsFH_BkM\"},\"ajaxTrustedUrl\""
+        "Call for Papers | IEEE International Symposium on Personal, Indoor and Mobile Radio Communications (PIMRC) 2026 | IEEE PIMRC 2026 {\"path\":{\"baseUrl\":\"\\/\",\"pathPrefix\":\"\",\"currentPath\":\"node\\/6941\",\"currentPathIsAdmin\":false,\"isFront\":false,\"currentLanguage\":\"en\"},\"pluralDelimiter\":\"\\u0003\",\"suppressDeprecationErrors\":true,\"ajaxPageState\":{\"libraries\":\"eJxtjtsKAyEMBX8o6CdJjMFNNxrxAtu_74WWbUtf5jDzdMjKMApFqngksp7EKtBHzWoRFfiYKnX3qa-G6l4K2Swrh4nZ5zt-3eEFj-9YQJg5kNkujylNBSux_5-hCFn1T0LDjrlj28b7x1ncqm1FlbFxgnEdk4uPOPgGBq5YHQ\",\"theme\":\"comsoc_mini\",\"theme_token\":\"s7gsOx-S-1fjGa-8VENCsFRHYPFyNzknNjOGrqP7JDU\"},\"ajaxTrustedUrl\""
       ]
     },
     {
@@ -767,6 +836,40 @@
         "Call for Papers Submission Guidelines Call for Workshop Proposals Call for Tutorial Proposals Call for Panel Proposals",
         "uly 2026 Submit a Paper Call for Papers Become a Patron/Exhibitor News and Announcements IEEE Meditcom 2026 - Young Professional (YP) Program Announced IEEE Meditcom 2026 Detailed Program Announced IEEE Meditcom 2026 Keynote Speakers Announced IEEE Meditcom 2026 Call for Papers Announced IEEE MeditCom is the conference of the IEEE Communications Society serving the Mediterranean area and surrounding countries. It gathers visionary researchers in academia and industry from all over the world to the shores of the Mediterranean Sea. IEEE Medi",
         "nnounced IEEE Meditcom 2026 Keynote Speakers Announced IEEE Meditcom 2026 Call for Papers Announced IEEE MeditCom is the conference of the IEEE Communications Society serving the Mediterranean area and surrounding countries. It gathers visionary researchers in academia and industry from all over the world to the shores of the Mediterranean Sea. IEEE MeditCom features a comprehensive and timely technical program, addressing the hottest topics in the areas of communications and networking. IEEE MeditCom 2026 solicits researchers in industry and academia to submit papers on a wide range of research subjects, encompassing theoretical and applied research."
+      ]
+    },
+    {
+      "title": "IEEE Global Communications Conference",
+      "acronym": "GLOBECOM",
+      "venueType": "Conference",
+      "track": "Wireless / Communications",
+      "url": "https://globecom2026.ieee-globecom.org/call-symposium-papers",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "N/A — conference; use IEEE ComSoc flagship status instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Communications and networking CFP source; relevant to 5G/6G, RAN, and edge networking tracks.",
+      "tags": [
+        "communications",
+        "wireless",
+        "6g"
+      ],
+      "configuredDeadline": "2026-05-03",
+      "daysUntilDeadline": -61,
+      "deadlineStatus": "closed",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Important Dates Deadline for Paper Submission 3 May 2026 Firm Deadline! Notification Date 1 August 2026 Final Paper Upload and Registration Deadline 1 September 2026 The 2026 IEEE Global Communications Conference (GLOBECOM) will be held in the vibrant city of Macau, China from 7 to 11 December 2026. Th",
+        "for Paper Submission 3 May 2026 Firm Deadline! Notification Date 1 August 2026 Final Paper Upload and Registration Deadline 1 September 2026 The 2026 IEEE Global Communications Conference (GLOBECOM) will be held in the vibrant city of Macau, China from 7 to 11 December 2026. Themed “Communications, Innovation, Inspiration, Intelligence”, this flagship conference of IEEE",
+        "Deadline for Paper Submission 3 May 2026 Firm Deadline! Notification Date 1 August 2026 Final Paper Upload and Registration Deadline 1 September 2026 The 2026 IEEE Global Communications Conference (GLOBECOM) will be held in the vibrant city of Macau, China from 7 to 11 December 2026. Themed “Communicati",
+        "Important Dates Deadline for Paper Submission 3 May 2026 Firm Deadline! Notification Date 1 August 2026 Final Paper Upload and Registration Deadline 1 September 2026 The 2026 IEEE Global Communications Conference (G",
+        "Final Paper Upload and Registration Deadline 1 September 2026 The 2026 IEEE Global Communications Conference (GLOBECOM) will be held in the vibrant city of Macau, China from 7 to 11 December 2026. Themed “Communications, Innovation, Inspiration, Intelligence”, this flagship conference of IEEE Communications society will feature a comprehensive high-quality technical program including 12 Symposia and 13 SAC Tracks, and a number of Tutorials and Workshops. IEEE GLOBECOM 2026 will also include an attractive Industry Forum & Ex",
+        "Submission Guidelines Committees Organizing Committee Technical Program Committee Operations Committee",
+        "anels, and vendor exhibits. Download the Call of Submission TECHNICAL SYMPOSIA Original technical papers are sought in the following areas (All papers for technical symposia must be submitted via EDAS by clicking the \" EDAS \" of each track.): Cognitive Radio and AI-Enabled Networks ( EDAS ) Fatemeh Afghah (Clemson University, USA) Shuoyao Wang (Shenzhen University, China) CFP-CRAEN",
+        "Important Dates Call for Workshop Papers Call for Symposium Papers Call for Tutorial Proposals Call for Workshop Proposals"
       ]
     },
     {
@@ -980,6 +1083,39 @@
       ]
     },
     {
+      "title": "IEEE Military Communications Conference",
+      "acronym": "MILCOM",
+      "venueType": "Conference",
+      "track": "Wireless / Communications",
+      "url": "https://milcom2026.ieee-milcom.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Military, tactical, resilient, satellite, spectrum, and wireless communications CFP source. Official current-year site may reject automated fetches; keep as manual official source until CFP text is crawlable.",
+      "tags": [
+        "communications",
+        "wireless",
+        "spectrum",
+        "satellite"
+      ],
+      "configuredDeadline": "2026-05-31",
+      "daysUntilDeadline": -33,
+      "deadlineStatus": "closed",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "31 May 2026 Call for Unclassified Technical Papers : (!!! FIRM DEADLINE !!!) 19 Jun 2026 Call for Restricted Technical Papers 19 Jun 2026 Call for Classified Technical Papers 07 Jul 2026 Call for Technical Panels See All Dates Welcome to IEEE MILCOM 2026! IEEE MILCOM 2026 will feature a comprehensive high-quality technical program including",
+        "Important Dates 31 May 2026 Call for Unclassified Technical Papers : (!!! FIRM DEADLINE !!!) 19 Jun 2026 Call for Restricted Technical Papers 19 Jun 2026 Call for Classified Technical Papers 07 Jul 2026 Call for Technical Panels See All Dates",
+        "Submission Guidelines Call for Unclassified Technical Papers Call for Restricted Call for Papers Call for Classified Technical Papers Call for Workshop Proposals",
+        "Submit a Paper Call for Submissions Become a Patron/Exhibitor Theme: Securing the Future of Intelligent Information Dominance: Artificial Intelligence, Quantum Technologies, Advanced Communications and Cyber Resilience on the Battlefield News and Announcements IEEE MILCOM 2026 Call for Unclassified Technical Papers Announced The Call for Unclassified Technical Papers is now available. Check out the topics here .",
+        "Important Dates Submission Guidelines Call for Unclassified Technical Papers Call for Restricted Call for Papers Call for Classified Technical Papers",
+        "Call for Restricted Call for Papers Call for Classified Technical Papers Call for Workshop Proposals Call for Tutorials Call for Technical Panels"
+      ]
+    },
+    {
       "title": "ACM MobiCom Workshops and Tutorials",
       "acronym": "MobiCom Workshops",
       "venueType": "Workshop",
@@ -1049,6 +1185,41 @@
         "June 2026 Register Now Call for Papers Become a Patron/Exhibitor News and Announcements Apply for a travel grant The program is now online Registration is now open Important Dates 15 May 2026 Call for Posters & Demos - Final Version Submission : Deadline Closed 01 Jun 2026 Call for Tutorials - Tutorial Materia",
         "Submission Guidelines Author Instructions Committees Program Program",
         "Important Dates Call for Papers Call for Posters & Demos Call for Workshop Proposals Call for Tutorials"
+      ]
+    },
+    {
+      "title": "IEEE International Conference on Wireless and Mobile Computing, Networking and Communications",
+      "acronym": "WiMob",
+      "venueType": "Conference",
+      "track": "Wireless / Mobile",
+      "url": "http://wimob.org/wimob2026/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Wireless/mobile computing, mobile networking, IoT, and communication systems CFP source.",
+      "tags": [
+        "wireless",
+        "mobile",
+        "networking",
+        "iot"
+      ],
+      "configuredDeadline": "2026-06-28",
+      "daysUntilDeadline": -5,
+      "deadlineStatus": "closed",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "ill June 28, 2026. 01/06/2026 - The deadline has been extend till June 22, 2026. 16/04/2026 - WiMob 2026 Workshops have been established and open for submissions. 13/02/2026 - WiMob 2026 Sponsorship has been approved by IEEE Communications Society. 02/01/2026 - The Website is now online. July 31, 2025 . --",
+        "22/06/2026 - The submission system remains open till June 28, 2026. 01/06/2026 - The deadline has been extend till June 22, 2026. 16/04/2026 - WiMob 2026 Workshops have been established and open for submissions. 13/02/2026 - WiMob 2026 Sponsorship has been approved by IEEE Communications Society. 02/01/2026 - The Website is now online.",
+        "ing to several requests, the submission system will remain open till July 5, 2025 (Firm deadline) -- Welcome to WiMob 2026 The 22nd International Conference on Wireless and Mobile Computing, Networking and Communications. WiMob is an International forum for the exchange of knowledge and experience among researchers, developers and practitioners of wireless and mobile technology. This year, the conference will focus on 5G, IoT, Cyber Security and use of Artificial Intelligence for mobile and wireless Networks. Please refer to the Call For Papers for more de",
+        "According to several requests, the submission system will remain open till July 5, 2025 (Firm deadline) -- Welcome to WiMob 2026 The 22nd International Conference on Wireless and Mobile Computing, Networking and Communications. WiMob is an International forum for the exchange of knowledge and experience among researchers, developers and practitioners of wireless and mobile technology. This year, the conference will focus on 5G, IoT, Cyber Security and use of Artificial Intelligence for mobile and wireless Networks. Please refer to the",
+        "16/04/2026 - WiMob 2026 Workshops have been established and open for submissions. 13/02/2026 - WiMob 2026 Sponsorship has been approved by IEEE Communications Society. 02/01/2026 - The Website is now online. July 31, 2025 . --",
+        "ome Photo Gallery Important Dates Student Travel Grants Call for Papers Call for Short Papers, Posters & Demos Special Issues Author Guidelines Committees Keynote Speakers Program proceedings Call for Workshops Registration Statistics Workshops Women's Network Social event Past Conferences Technical Sponsor:",
+        "hoto Gallery Important Dates Student Travel Grants Call for Papers Call for Short Papers, Posters & Demos Special Issues Author Guidelines Committees Keynote Speakers Program proceedings Call for Workshops Registration Statistics Workshops Women's Network Social event Past Conferences Technical Sponsor:",
+        "ence for mobile and wireless Networks. Please refer to the Call For Papers for more details. For twenty-two years, the International WiMob conference has provided unique opportunities for researchers and developers to interact, share new results, show live demonstrations, and discuss emerging directions in Wireless Communications, Mobile Networking and Ubiquitous Computing. WiMob 2026 will take place at the Avignon Grand Hotel, Avignon, France. Avignon is the very charming and historical city in south of France, the Provence. It is a vibrant city, seat of the popes and city of the art."
       ]
     },
     {
@@ -1187,6 +1358,43 @@
       ]
     },
     {
+      "title": "IEEE International Conference on Advanced Networks and Telecommunications Systems",
+      "acronym": "ANTS",
+      "venueType": "Conference",
+      "track": "Networking / Communications",
+      "url": "https://ants2026.ieee-ants.org/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Advanced networks, telecommunications systems, optical/wireless networks, SDN/NFV, and 5G/6G CFP source. Official current-year site may reject automated fetches; keep as manual official source until CFP text is crawlable.",
+      "tags": [
+        "communications",
+        "networking",
+        "telecom",
+        "wireless",
+        "6g",
+        "sdn"
+      ],
+      "configuredDeadline": "2026-07-08",
+      "daysUntilDeadline": 5,
+      "deadlineStatus": "due in 5 days",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "08 Jul 2026 Paper Submission Deadline 01 Sep 2026 Acceptance Notification 07 Nov 2026 Camera-ready Due 17 Dec 2026 Conference Begins Welcome to IEEE ANTS 2026! IEEE International Conference on Advanced Networks and Telecommunications Systems (ANTS) is a premier IEEE conference on advanced networking and telecommunications topics. IEEE ANTS is fin",
+        "08 Jul 2026 Paper Submission Deadline 01 Sep 2026 Acceptance Notification 07 Nov 2026 Camera-ready Due 17 Dec 2026 Conference Begins Welcome to IEEE ANTS 2026! IEEE International Conference on Advanced Networks and Telecommunications Systems (ANTS) is a premier IEEE conference on advanced networking and telecommunications topics. IEEE",
+        "Important Dates 08 Jul 2026 Paper Submission Deadline 01 Sep 2026 Acceptance Notification 07 Nov 2026 Camera-ready Due 17 Dec 2026 Conference Begins Welcome to IEEE ANTS 2026! IEEE International Conference on Advanced Networks and Tel",
+        "Submission Guidelines Program At a Glance Registration Registration Fees",
+        "Important Dates Call For Papers Call For Papers: Women in Engineering Call for Tutorial Proposals Call for Demos & Exhibits",
+        "Call For Papers Call For Papers: Women in Engineering Call for Tutorial Proposals Call for Demos & Exhibits Call for Early Research Forum",
+        "Call For Papers: Women in Engineering Call for Tutorial Proposals Call for Demos & Exhibits Call for Early Research Forum Call for Workshop Papers",
+        "ber 2026 Submit a Paper Call for Papers Become a Patron/Exhibitor News and Announcements IEEE ANTS 2026 Call for Papers Announced An extended version of selected papers from ANTS will be published as a special issue titled \"Wireless Communication & Networks: Advances towards 5G/6G & Beyond\" in Wireless Personal Communications, A Springer Nature Journal. For more details, please visit https://link.springer.com/collections/gbaaichbad . Selected Optical papers (extended version) can be featured in the Springer-Nature Photonic Network Communication"
+      ]
+    },
+    {
       "title": "IEEE International Conference on Cloud Networking",
       "acronym": "CloudNet",
       "venueType": "Conference",
@@ -1255,6 +1463,39 @@
         "ation Standards Update\" announced! For the first time, IEEE CSCN introduces paper submissions as \"Emerging Communication Standards Update\" (3 pages long) . The objective is to encourage timely contributions from academia, industry, standardisation bodies, regulators, and project consortia working on emerging communication and networking standards. Important Dates 15 Jul 2026 Submission deadline (Main Tracks papers) : Deadline extended (firm) 15 Jul 2026 Submission deadline (",
         "15 Jul 2026 Submission deadline (Main Tracks papers) : Deadline extended (firm) 15 Jul 2026 Submission deadline (Workshop/Special Session papers) : Deadline extended (firm) 26 Jul 2026 Acceptance notification 07 Aug 2026 Camera-ready and registration See All Dates Welcome to IEEE CSCN 2026!",
         "d (firm) 15 Jul 2026 Submission deadline (Workshop/Special Session papers) : Deadline extended (firm) 26 Jul 2026 Acceptance notification 07 Aug 2026 Camera-ready and registration See All Dates Welcome to IEEE CSCN 2026! IEEE Conference on Standards for Communications and Networking (IEEE CSCN 2026) will deliver a rich technical program discussing the future of mobi"
+      ]
+    },
+    {
+      "title": "ACM SIGCOMM",
+      "acronym": "SIGCOMM",
+      "venueType": "Conference",
+      "track": "Networking / Systems",
+      "url": "https://conferences.sigcomm.org/sigcomm/2026/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "N/A — conference; use CORE/field reputation instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Networking systems CFP source; monitored for paper registration and submission dates.",
+      "tags": [
+        "networking",
+        "systems"
+      ],
+      "configuredDeadline": "2026-07-16",
+      "daysUntilDeadline": 13,
+      "deadlineStatus": "due in 13 days",
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Upcoming Deadlines Thursday, July 16, 2026 Early Registration Deadline Friday, July 3, 2026 Camera Ready Submission Wednesday, July 1, 2026 Call for Pods Monday, June 19, 2026 Student Travel Grants Application (GeoDiversity, N2Women, and NSF) Friday, May 15, 2026 Call for Posters and Demos Monday, May 11, 2026 Call for Non-Paper Sessions",
+        "ment November 25, 2025 First version of website is live Upcoming Deadlines Thursday, July 16, 2026 Early Registration Deadline Friday, July 3, 2026 Camera Ready Submission Wednesday, July 1, 2026 Call for Pods Monday, June 19, 2026 Student Travel Grants Application (GeoDiversity, N2Women, and NSF) Friday, May 15, 2026 Call for Posters and Demos Monday, May 11, 2026 Call for Non-Paper Sessions",
+        "tes to Main Track CFP (e.g., notification dates, more info on ethics statement and ORCID, submission limits per author, etc) December 22, 2025 Event date and location are set. Posted ACM Open Access announcement November 25, 2025 First version of website is live Upcoming Deadlines Thursday, July 16, 2026 Early Registration Deadline Friday, July 3, 2026 Camera Ready Submission Wednesday, July 1, 2026 Call for Pods Monday, June 19, 2026 Student Travel Grants Application (GeoDiversity, N2Women, and NSF) Friday, May 15, 2026 Call for Posters and Demos Monday, May 11, 2026",
+        "16, 2026 VISA information page posted March 11, 2026 Posted CFPs for several workshops and tutorials March 11, 2026 Registration Information posted March 1, 2026 Posted Call for Posters & Demos January 26, 2026 Posted Call for Workshop Proposals and Call for Tutorials January 21, 2026 Updates to Main Track CFP (e.g., notification dates, more info on ethics statement and ORCID, submission limits per author, etc) December 22, 2025 Event date and location are set. Posted ACM Open Access announcement November 25, 2025 First version of website is live Upcoming Deadlines Thursday, July 16,",
+        "p Proposals and Call for Tutorials January 21, 2026 Updates to Main Track CFP (e.g., notification dates, more info on ethics statement and ORCID, submission limits per author, etc) December 22, 2025 Event date and location are set. Posted ACM Open Access announcement November 25, 2025 First version of website is live Upcoming Deadlines Thursday, July 16, 2026 Early Registration Deadline Friday, July 3, 2026 Camera Ready Submission Wednesday, July 1, 2026 Call for Pods Monday, June 19, 2026 Student Travel Grants Application (GeoDiversity, N2Women, and NSF) Friday, May 15, 2026",
+        "Main Conference ▾ Call for Papers Submission Instructions Camera Ready Instructions Program Committee Call for Artifacts Accepted Papers Workshops ▾ Call for Workshop Proposals Negative Results in Network Measurements (NetNeg) Hot Topics in Optical Technologies and Applications in Networking (HotOptics) Workshop on Memory-Semantic Networking for AI-Scale Systems (MemNetAI) Workshop on Memory, Systems and Interconnect Co-design for AI (MOSAIC) Worksh",
+        "Early Registration Deadline Friday, July 3, 2026 Camera Ready Submission Wednesday, July 1, 2026 Call for Pods Monday, June 19, 2026 Student Travel Grants Application (GeoDiversity, N2Women, and NSF) Friday, May 15, 2026 Call for Posters and Demos Monday, May 11, 2026 Call for Non-Paper Sessions",
+        "Slack Channels Main Conference ▾ Call for Papers Submission Instructions Camera Ready Instructions Program Committee Call for Artifacts Accepted Papers Workshops ▾ Call for Workshop Proposals Negative Results in Network Measurements (NetNeg) Hot Topics in Optical Technologies and Applications in Networking (HotOptics) Workshop on Memory-Semantic Networking for AI-Scale Systems (MemNetAI) Workshop on Memory, Systems and Interconnect Co-design for AI"
       ]
     },
     {
@@ -1725,7 +1966,7 @@
       "acronym": "SoCC",
       "venueType": "Conference",
       "track": "Cloud / Edge",
-      "url": "https://acmsocc.org/2026/call-for-papers.html",
+      "url": "https://acmsocc.org/2026/",
       "conferenceDates": "TBD / official page",
       "location": "TBD / official page",
       "verifiedRank": "",
@@ -1742,8 +1983,17 @@
       "configuredDeadline": null,
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "http 404 Not Found",
-      "deadlineSignals": []
+      "fetchStatus": "fetched",
+      "deadlineSignals": [
+        "Paper submission deadline (second round) jul 7 Paper registration deadline (second round) apr 29 Notification to authors (first round) --",
+        "Paper registration deadline (second round) apr 29 Notification to authors (first round) -- apr 14 Authors' response period ends (first round) --",
+        "Paper submission deadline (first round) -- feb 6 Paper registration deadline (first round) -- SoCC'26 is 17th edition of the annual ACM Symposium on Cloud Computing, the premier conference on cloud computing. It brings together researchers, developers, users, and practition",
+        "Paper registration deadline (first round) -- SoCC'26 is 17th edition of the annual ACM Symposium on Cloud Computing, the premier conference on cloud computing. It brings together researchers, developers, users, and practitioners interested in cloud computing, and is the only conference co-sponsored by the ACM Special Interest Groups on Management of Data (SIGMOD) and on Operating Systems (SIGOPS). As in prior SoCC conferences, SoCC'26 will foster connections between the aca",
+        "14 Paper submission deadline (second round) jul 7 Paper registration deadline (second round) apr 29 Notification to authors (first round) --",
+        "13 Paper submission deadline (first round) -- feb 6 Paper registration deadline (first round) -- SoCC'26 is 17th edition of the annual ACM Symposium on Cloud Computing, the premier conference on cloud computing. It brings together researchers, developers, users, and",
+        "[1/23/2026] HotCRP site is now open! [5/17/2025] Submission site is now open! -- [5/17/2025] Check out the Call for Papers! -- [12/1/2025] SoCC 2026 website is up! Supported by Tweets by ACMSoCC Follow us: -- --",
+        "Important dates November 18 Conference starts! sep 26 Notification to authors (second round) sep 12"
+      ]
     },
     {
       "title": "ACM/IEEE International Conference on Cyber-Physical Systems",
@@ -2042,39 +2292,11 @@
       ]
     },
     {
-      "title": "IEEE International Conference on Advanced Networks and Telecommunications Systems",
-      "acronym": "ANTS",
-      "venueType": "Conference",
-      "track": "Networking / Communications",
-      "url": "https://ants2026.ieee-comsoc-ants.org/",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
-      "verifiedRank": "",
-      "verifiedRankSource": "",
-      "verifiedRankYear": "",
-      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
-      "impactFactorYear": "N/A for conferences",
-      "note": "Advanced networks, telecommunications systems, optical/wireless networks, SDN/NFV, and 5G/6G CFP source.",
-      "tags": [
-        "communications",
-        "networking",
-        "telecom",
-        "wireless",
-        "6g",
-        "sdn"
-      ],
-      "configuredDeadline": null,
-      "daysUntilDeadline": null,
-      "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "fetch failed",
-      "deadlineSignals": []
-    },
-    {
       "title": "International Conference on Computing, Networking and Communications",
       "acronym": "ICNC",
       "venueType": "Conference",
       "track": "Networking / Communications",
-      "url": "https://www.conf-icnc.org/2026/",
+      "url": "https://conf-icnc.org/2026/",
       "conferenceDates": "TBD / official page",
       "location": "TBD / official page",
       "verifiedRank": "",
@@ -2150,55 +2372,6 @@
       "deadlineSignals": []
     },
     {
-      "title": "IEEE International Conference on Computer Communications",
-      "acronym": "INFOCOM",
-      "venueType": "Conference",
-      "track": "Networking / Systems",
-      "url": "https://infocom2026.ieee-infocom.org/call-papers-main-conference",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
-      "verifiedRank": "",
-      "verifiedRankSource": "",
-      "verifiedRankYear": "",
-      "impactFactor": "N/A — conference; use CORE/field reputation instead",
-      "impactFactorYear": "N/A for conferences",
-      "note": "Flagship computer networking CFP source; important for wireless, edge, and network systems work.",
-      "tags": [
-        "networking",
-        "wireless",
-        "edge"
-      ],
-      "configuredDeadline": null,
-      "daysUntilDeadline": null,
-      "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "http 404 Not Found",
-      "deadlineSignals": []
-    },
-    {
-      "title": "ACM SIGCOMM",
-      "acronym": "SIGCOMM",
-      "venueType": "Conference",
-      "track": "Networking / Systems",
-      "url": "https://conferences.sigcomm.org/sigcomm/2026/cfp.html",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
-      "verifiedRank": "",
-      "verifiedRankSource": "",
-      "verifiedRankYear": "",
-      "impactFactor": "N/A — conference; use CORE/field reputation instead",
-      "impactFactorYear": "N/A for conferences",
-      "note": "Networking systems CFP source; monitored for paper registration and submission dates.",
-      "tags": [
-        "networking",
-        "systems"
-      ],
-      "configuredDeadline": null,
-      "daysUntilDeadline": null,
-      "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "http 404 Not Found",
-      "deadlineSignals": []
-    },
-    {
       "title": "European Conference on Networks and Communications & 6G Summit",
       "acronym": "EuCNC & 6G Summit",
       "venueType": "Conference",
@@ -2227,36 +2400,11 @@
       ]
     },
     {
-      "title": "IEEE Global Communications Conference",
-      "acronym": "GLOBECOM",
-      "venueType": "Conference",
-      "track": "Wireless / Communications",
-      "url": "https://globecom2026.ieee-globecom.org/call-papers",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
-      "verifiedRank": "",
-      "verifiedRankSource": "",
-      "verifiedRankYear": "",
-      "impactFactor": "N/A — conference; use IEEE ComSoc flagship status instead",
-      "impactFactorYear": "N/A for conferences",
-      "note": "Communications and networking CFP source; relevant to 5G/6G, RAN, and edge networking tracks.",
-      "tags": [
-        "communications",
-        "wireless",
-        "6g"
-      ],
-      "configuredDeadline": null,
-      "daysUntilDeadline": null,
-      "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "http 404 Not Found",
-      "deadlineSignals": []
-    },
-    {
       "title": "IEEE International Conference on Communications",
       "acronym": "ICC",
       "venueType": "Conference",
       "track": "Wireless / Communications",
-      "url": "https://icc2026.ieee-icc.org/call-papers",
+      "url": "https://icc2026.ieee-icc.org/authors/call-symposia-papers",
       "conferenceDates": "TBD / official page",
       "location": "TBD / official page",
       "verifiedRank": "",
@@ -2274,58 +2422,6 @@
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
       "fetchStatus": "fetch failed",
-      "deadlineSignals": []
-    },
-    {
-      "title": "IEEE Military Communications Conference",
-      "acronym": "MILCOM",
-      "venueType": "Conference",
-      "track": "Wireless / Communications",
-      "url": "https://milcom2026.milcom.org/",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
-      "verifiedRank": "",
-      "verifiedRankSource": "",
-      "verifiedRankYear": "",
-      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
-      "impactFactorYear": "N/A for conferences",
-      "note": "Military, tactical, resilient, satellite, spectrum, and wireless communications CFP source.",
-      "tags": [
-        "communications",
-        "wireless",
-        "spectrum",
-        "satellite"
-      ],
-      "configuredDeadline": null,
-      "daysUntilDeadline": null,
-      "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "fetch failed",
-      "deadlineSignals": []
-    },
-    {
-      "title": "IEEE Consumer Communications & Networking Conference",
-      "acronym": "CCNC",
-      "venueType": "Conference",
-      "track": "Wireless / Consumer Networking",
-      "url": "https://ccnc2026.ieee-ccnc.org/call-papers",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
-      "verifiedRank": "",
-      "verifiedRankSource": "",
-      "verifiedRankYear": "",
-      "impactFactor": "N/A — conference; use indexing/reputation instead",
-      "impactFactorYear": "N/A for conferences",
-      "note": "Consumer communications and networking CFP source; useful for IoT, edge, wireless, and consumer network systems.",
-      "tags": [
-        "communications",
-        "wireless",
-        "iot",
-        "edge"
-      ],
-      "configuredDeadline": null,
-      "daysUntilDeadline": null,
-      "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "http 404 Not Found",
       "deadlineSignals": []
     },
     {
@@ -2363,37 +2459,11 @@
       ]
     },
     {
-      "title": "IEEE International Conference on Wireless and Mobile Computing, Networking and Communications",
-      "acronym": "WiMob",
-      "venueType": "Conference",
-      "track": "Wireless / Mobile",
-      "url": "https://wimob.org/wimob2026/",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
-      "verifiedRank": "",
-      "verifiedRankSource": "",
-      "verifiedRankYear": "",
-      "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
-      "impactFactorYear": "N/A for conferences",
-      "note": "Wireless/mobile computing, mobile networking, IoT, and communication systems CFP source.",
-      "tags": [
-        "wireless",
-        "mobile",
-        "networking",
-        "iot"
-      ],
-      "configuredDeadline": null,
-      "daysUntilDeadline": null,
-      "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "fetch failed",
-      "deadlineSignals": []
-    },
-    {
       "title": "International Symposium on Modeling and Optimization in Mobile, Ad Hoc, and Wireless Networks",
       "acronym": "WiOpt",
       "venueType": "Conference",
       "track": "Wireless / Optimization",
-      "url": "https://wi-opt.org/",
+      "url": "https://wi-opt.org/cfp.html",
       "conferenceDates": "TBD / official page",
       "location": "TBD / official page",
       "verifiedRank": "",
