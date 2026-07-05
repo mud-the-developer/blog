@@ -48,6 +48,9 @@ jobs:
           INPUT_DATE: ${{ github.event.inputs.date }}
           GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}
           GOOGLE_AI_MODEL: ${{ vars.GOOGLE_AI_MODEL }}
+          CFP_AI_FALLBACK_ENABLED: "1"
+          CFP_AI_MAX_REQUESTS: "3"
+          CFP_AI_TARGETS: "ICNC,ICC,WiOpt"
         run: |
           set -euo pipefail
           args=()

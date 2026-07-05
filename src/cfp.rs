@@ -396,7 +396,7 @@ fn cfp_ai_model_names() -> Vec<String> {
         .or_else(|_| env::var("GOOGLE_AI_FALLBACK_MODELS"))
         .unwrap_or_default();
     let primary = env::var("GOOGLE_AI_MODEL").unwrap_or_default();
-    let defaults = "models/gemini-2.5-flash,models/gemini-2.5-flash-lite,models/gemma-4-31b-it";
+    let defaults = "models/gemini-2.5-flash-lite";
     let mut names = Vec::new();
     for raw in primary
         .split(',')
@@ -417,6 +417,46 @@ fn cfp_ai_model_names() -> Vec<String> {
         }
     }
     names
+}
+
+fn env_truthy(name: &str) -> bool {
+    env::var(name).ok().is_some_and(|value| {
+        matches!(
+            value.trim().to_ascii_lowercase().as_str(),
+            "1" | "true" | "yes" | "on"
+        )
+    })
+}
+
+fn cfp_ai_fallback_enabled() -> bool {
+    env_truthy("CFP_AI_FALLBACK_ENABLED") || env_truthy("CFP_AI_FALLBACK")
+}
+
+fn cfp_ai_max_requests() -> usize {
+    env::var("CFP_AI_MAX_REQUESTS")
+        .ok()
+        .and_then(|value| value.trim().parse::<usize>().ok())
+        .unwrap_or(3)
+}
+
+fn cfp_ai_target_tokens() -> Vec<String> {
+    env::var("CFP_AI_TARGETS")
+        .unwrap_or_default()
+        .split(',')
+        .map(|token| token.trim().to_ascii_lowercase())
+        .filter(|token| !token.is_empty())
+        .collect()
+}
+
+fn cfp_ai_target_matches(source: &CfpSource, targets: &[String]) -> bool {
+    if targets.is_empty() {
+        return true;
+    }
+    let acronym = source.acronym.to_ascii_lowercase();
+    let title = source.title.to_ascii_lowercase();
+    targets
+        .iter()
+        .any(|target| acronym == *target || title.contains(target))
 }
 
 fn strip_model_thinking(value: &str) -> String {
@@ -554,14 +594,15 @@ async fn ai_deadline_signal(
     None
 }
 
-fn should_use_ai_deadline_fallback(fetch_status: &str) -> bool {
-    if env::var("CFP_AI_ASSIST_ALL_NO_DEADLINE")
-        .ok()
-        .is_some_and(|value| value == "1" || value.eq_ignore_ascii_case("true"))
-    {
-        return true;
+fn should_use_ai_deadline_fallback(
+    source: &CfpSource,
+    fetch_status: &str,
+    targets: &[String],
+) -> bool {
+    if !cfp_ai_fallback_enabled() || !cfp_ai_target_matches(source, targets) {
+        return false;
     }
-    fetch_status != "fetched"
+    env_truthy("CFP_AI_ASSIST_ALL_NO_DEADLINE") || fetch_status != "fetched"
 }
 
 fn signal_deadline_sort_key(signal: &str, issue: chrono::NaiveDate) -> (u8, i64) {
@@ -1070,6 +1111,8 @@ pub async fn update_cfp_artifacts(
     let mut items = Vec::new();
     let mut tracks = BTreeMap::new();
     let mut fetched_count = 0;
+    let ai_targets = cfp_ai_target_tokens();
+    let mut ai_requests_remaining = cfp_ai_max_requests();
     for source in config.conferences {
         *tracks.entry(source.track.clone()).or_insert(0) += 1;
         let (fetch_status, mut deadline_signals) =
@@ -1082,12 +1125,16 @@ pub async fn update_cfp_artifacts(
             .clone()
             .or_else(|| inferred_deadline_from_signals(&deadline_signals, &issue_date));
         if detected_deadline.is_none()
-            && should_use_ai_deadline_fallback(&fetch_status)
-            && let Some(ai_signal) =
-                ai_deadline_signal(&client, &source, &issue_date, &fetch_status).await
+            && ai_requests_remaining > 0
+            && should_use_ai_deadline_fallback(&source, &fetch_status, &ai_targets)
         {
-            detected_deadline = ai_signal.deadline;
-            deadline_signals.push(ai_signal.signal);
+            ai_requests_remaining -= 1;
+            if let Some(ai_signal) =
+                ai_deadline_signal(&client, &source, &issue_date, &fetch_status).await
+            {
+                detected_deadline = ai_signal.deadline;
+                deadline_signals.push(ai_signal.signal);
+            }
         }
         let days = detected_deadline
             .as_deref()
@@ -1394,6 +1441,19 @@ mod tests {
                 .evidence
                 .contains("Workshop Paper Submission Deadline")
         );
+    }
+
+    #[test]
+    fn ai_fallback_target_filter_limits_which_sources_can_spend_quota() {
+        let icc = quality_test_source("ICC", "https://www.ieee-icc.org/2026/authors/");
+        let tmlcn = quality_test_source(
+            "IEEE TMLCN CFP",
+            "https://www.comsoc.org/publications/journals/ieee-tmlcn/cfp",
+        );
+        let targets = vec!["icnc".to_string(), "icc".to_string(), "wiopt".to_string()];
+
+        assert!(cfp_ai_target_matches(&icc, &targets));
+        assert!(!cfp_ai_target_matches(&tmlcn, &targets));
     }
 
     #[test]
