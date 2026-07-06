@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-07-06T02:53:19Z",
+  "generatedAt": "2026-07-06T03:20:43Z",
   "issueDate": "2026-07-06",
-  "sourceCount": 68,
-  "activeCount": 31,
-  "conferenceCount": 47,
+  "sourceCount": 67,
+  "activeCount": 30,
+  "conferenceCount": 46,
   "workshopCount": 11,
   "journalCount": 10,
-  "withConfiguredDeadlineCount": 54,
+  "withConfiguredDeadlineCount": 53,
   "fetchedCount": 63,
   "tracks": {
     "AI / ML": 4,
@@ -38,7 +38,6 @@
     "Wireless / Mobile": 5,
     "Wireless / Mobile Workshops": 1,
     "Wireless / NextG Workshops": 1,
-    "Wireless / Optimization": 1,
     "Wireless / Spectrum": 1,
     "Wireless / Standards": 1,
     "Wireless / Vehicular": 2,
@@ -1566,43 +1565,6 @@
       ]
     },
     {
-      "title": "Ad Hoc Networks — Calls for Papers / Special Issues",
-      "acronym": "Ad Hoc Networks SI",
-      "venueType": "Journal special issue",
-      "track": "Journal Special Issues / Wireless",
-      "url": "https://www.sciencedirect.com/journal/ad-hoc-networks/about/call-for-papers",
-      "conferenceDates": "Special issue schedule / official CFP page",
-      "location": "Journal / online submission",
-      "verifiedRank": "",
-      "verifiedRankSource": "",
-      "verifiedRankYear": "",
-      "impactFactor": "Journal Impact Factor: update from latest JCR or official publisher metrics",
-      "impactFactorYear": "annual refresh required",
-      "note": "Special-issue CFP source for mobile ad hoc, wireless mesh/sensor, UAV, vehicular, and opportunistic networking.",
-      "tags": [
-        "journal",
-        "special-issue",
-        "wireless",
-        "mobile",
-        "vehicular",
-        "iot"
-      ],
-      "configuredDeadline": "2026-08-08",
-      "daysUntilDeadline": 33,
-      "deadlineStatus": "upcoming in 33 days",
-      "fetchStatus": "fetched",
-      "deadlineSignals": [
-        "ao Namuduri; Prasant Kumar Misra; Jaime Galán-Jiménez; Sayed Amir Hoseini Submission deadline: 08 August 2026 About ScienceDirect Remote access Contact and support Terms and conditions Privacy policy Cookie settings All content on this site: Copyright © 2026 Elsevier B.V., its licensors, and contributors. All rights are reserved, including those for text and data mining, AI training, and similar technologies. For all open access content, the relevant licensing terms apply. \"{\\\"adobeTarget\\\":{},\\\"articlesInPress\\\":{},\\\"config\\\":{\\\"client\\",
-        "nd Data Degradation\\\",\\\"language\\\":\\\"en\\\",\\\"displayDate\\\":\\\"19 March 2026\\\"},{\\\"submissionDeadline\\\":\\\"2026-08-08\\\",\\\"summary\\\":\\\"Guest editors: Jahan Hassan; Biplob Ray; Kamesh Rao Namuduri; Prasant Kumar Misra; Jaime Galán-Jiménez; Sayed Amir Hoseini\\\",\\\"published\\\":true,\\\"invitedContentOnly\\\":\\\"No\\\",\\\"url\\\":\\\"intelligent-and-resilient-networking-for-the-low-altitude-economy-from-autonomous-systems-to-scalable-services\\\",\\\"expiryDate\\\":\\\"2026-09-08T12:00:00Z\\\",\\\"LAST_PROCESSED\\\":\\\"2026-07-05T22:30:11.865881253\\\",\\\"contentId\\\":329299,\\\"siRecordUniqueIdentifier\\\":\\\"SI053008\\\",\\\"publishDate\\\":\\\"2026-01-08T12:00:00Z\\\",\\\"intro\\\":\\\"<p>This Special Issue focuses on the networking and intelligence challenges that underpin scalable low",
-        "y; Kamesh Rao Namuduri; Prasant Kumar Misra; Jaime Galán-Jiménez; Sayed Amir Hoseini Submission deadline: 08 August 2026 About ScienceDirect Remote access Contact and support Terms and conditions Privacy policy Cookie settings All content on this site: Copyright © 2026 Elsevier B.V., its licensors, and contributors. All rights are reserved, including those for text and data mining, AI training, and similar technologies. For all open access content, the relevant licensing terms apply. \"{\\\"adobeTarget\\\":{},\\\"articlesInPress\\\":{},\\\"config\\\"",
-        "turbance and Data Degradation\\\",\\\"language\\\":\\\"en\\\",\\\"displayDate\\\":\\\"19 March 2026\\\"},{\\\"submissionDeadline\\\":\\\"2026-08-08\\\",\\\"summary\\\":\\\"Guest editors: Jahan Hassan; Biplob Ray; Kamesh Rao Namuduri; Prasant Kumar Misra; Jaime Galán-Jiménez; Sayed Amir Hoseini\\\",\\\"published\\\":true,\\\"invitedContentOnly\\\":\\\"No\\\",\\\"url\\\":\\\"intelligent-and-resilient-networking-for-the-low-altitude-economy-from-autonomous-systems-to-scalable-services\\\",\\\"expiryDate\\\":\\\"2026-09-08T12:00:00Z\\\",\\\"LAST_PROCESSED\\\":\\\"2026-07-05T22:30:11.865881253\\\",\\\"contentId\\\":329299,\\\"siRecordUniqueIdentifier\\\":\\\"SI053008\\\",\\\"publishDate\\\":\\\"2026-01-08T12:00:00Z\\\",\\\"intro\\\":\\\"<p>This Special Issue focuses on the networking and intelligence challenges that underpin sc",
-        "ditors: Ellis Solaiman, Omer Rana, Karan Mitra, Lina Pu, Savas Parastatidis Submission deadline: 30 September 2026 8 January 2026 Intelligent and Resilient Networking for the Low-Altitude Economy: From Autonomous Systems to Scalable Services This Special Issue focuses on the networking and intelligence challenges that underpin scalable low-altitude aerial operations, highlighting the need for AI-driven decision-making, distributed computing, and coordinated multi-UAV systems to support safe and efficient real-world deployment. Guest editors: Jahan Hassan; Biplob Ray; Kamesh Rao Namuduri; Prasant Kumar Misra; Jaime Galán-Jiménez; Sayed Amir Hoseini Submission deadline: 08 Au",
-        "ous Networking for Mobile Ad Hoc Networks\\\",\\\"displayDate\\\":\\\"19 May 2026\\\"},{\\\"submissionDeadline\\\":\\\"2026-09-30\\\",\\\"summary\\\":\\\"Guest editors: Ellis Solaiman, Omer Rana, Karan Mitra, Lina Pu, Savas Parastatidis\\\",\\\"published\\\":true,\\\"invitedContentOnly\\\":\\\"No\\\",\\\"url\\\":\\\"trustworthy-and-resilient-edge-ai-systems-engineering-validation-and-deployment-under-cyber-disturbance-and-data-degradation\\\",\\\"expiryDate\\\":\\\"2026-12-31T12:00:00Z\\\",\\\"LAST_PROCESSED\\\":\\\"2026-07-05T22:31:01.023846521\\\",\\\"contentId\\\":331651,\\\"siRecordUniqueIdentifier\\\":\\\"SI053859\\\",\\\"publishDate\\\":\\\"2026-03-19T12:00:00Z\\\",\\\"intro\\\":\\\"<p>Edge AI systems are increasingly deployed over ad hoc, sensor, and IoT networks in dynamic and often adverse environments. In s",
-        "Guest editors: Ellis Solaiman, Omer Rana, Karan Mitra, Lina Pu, Savas Parastatidis Submission deadline: 30 September 2026 8 January 2026 Intelligent and Resilient Networking for the Low-Altitude Economy: From Autonomous Systems to Scalable Services This Special Issue focuses on the networking and intelligence challenges that underpin scalable low-altitude aerial operations, highlighting the need for AI-driven decision-making, distributed computing, and coordinated multi-UAV systems to support safe and efficient real-world deployment. Guest editors: Jahan Hassan; Biplob Ray; Kamesh Rao Namuduri; Prasant Kumar Misra; Jaime Galán-Jiménez; Sayed Amir Hoseini Submission deadline",
-        "ed Autonomous Networking for Mobile Ad Hoc Networks\\\",\\\"displayDate\\\":\\\"19 May 2026\\\"},{\\\"submissionDeadline\\\":\\\"2026-09-30\\\",\\\"summary\\\":\\\"Guest editors: Ellis Solaiman, Omer Rana, Karan Mitra, Lina Pu, Savas Parastatidis\\\",\\\"published\\\":true,\\\"invitedContentOnly\\\":\\\"No\\\",\\\"url\\\":\\\"trustworthy-and-resilient-edge-ai-systems-engineering-validation-and-deployment-under-cyber-disturbance-and-data-degradation\\\",\\\"expiryDate\\\":\\\"2026-12-31T12:00:00Z\\\",\\\"LAST_PROCESSED\\\":\\\"2026-07-05T22:31:01.023846521\\\",\\\"contentId\\\":331651,\\\"siRecordUniqueIdentifier\\\":\\\"SI053859\\\",\\\"publishDate\\\":\\\"2026-03-19T12:00:00Z\\\",\\\"intro\\\":\\\"<p>Edge AI systems are increasingly deployed over ad hoc, sensor, and IoT networks in dynamic and often adverse environm"
-      ]
-    },
-    {
       "title": "IEEE Global Communications Conference Workshops",
       "acronym": "GLOBECOM Workshops",
       "venueType": "Workshop",
@@ -2051,6 +2013,34 @@
       "deadlineSignals": []
     },
     {
+      "title": "Ad Hoc Networks — Calls for Papers / Special Issues",
+      "acronym": "Ad Hoc Networks SI",
+      "venueType": "Journal special issue",
+      "track": "Journal Special Issues / Wireless",
+      "url": "https://www.sciencedirect.com/journal/ad-hoc-networks/about/call-for-papers",
+      "conferenceDates": "Special issue schedule / official CFP page",
+      "location": "Journal / online submission",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "Journal Impact Factor: update from latest JCR or official publisher metrics",
+      "impactFactorYear": "annual refresh required",
+      "note": "Special-issue CFP source for mobile ad hoc, wireless mesh/sensor, UAV, vehicular, and opportunistic networking.",
+      "tags": [
+        "journal",
+        "special-issue",
+        "wireless",
+        "mobile",
+        "vehicular",
+        "iot"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "http 403 Forbidden",
+      "deadlineSignals": []
+    },
+    {
       "title": "IEEE Transactions on Cognitive Communications and Networking — Calls for Papers",
       "acronym": "IEEE TCCN CFP",
       "venueType": "Journal special issue",
@@ -2127,7 +2117,7 @@
       "acronym": "ICNC",
       "venueType": "Conference",
       "track": "Networking / Communications",
-      "url": "https://conf-icnc.org/2026/",
+      "url": "http://conf-icnc.org/2026/",
       "conferenceDates": "TBD / official page",
       "location": "TBD / official page",
       "verifiedRank": "",
@@ -2135,7 +2125,7 @@
       "verifiedRankYear": "",
       "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
       "impactFactorYear": "N/A for conferences",
-      "note": "Computing, networking, wireless communications, mobile computing, and services CFP source.",
+      "note": "Official ICNC 2026 site stub; keep as a watch source until a dated CFP page appears.",
       "tags": [
         "communications",
         "networking",
@@ -2145,7 +2135,7 @@
       "configuredDeadline": null,
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "fetch failed",
+      "fetchStatus": "fetched",
       "deadlineSignals": []
     },
     {
@@ -2288,31 +2278,6 @@
         "e same tool as the submission system via a separate online form . After the submission deadline, we will use the same tool to check the conformance of papers. The format checking tool uses heuristics and can make mistakes. The PC chairs will manually inspect and possibly reject those papers with evident format violations. However, no paper will be rejected due to format violations without being manually checked. Any papers that do not adhere to the following guidelines may be immediately rejected: Contain no more than twelve (12) single-spaced and numbered pages, including figures, tables, and any other material, followed by as many pages as necessary for bibliographic references. Papers whose non-bibliogra",
         "ategories of challenge, experience, and verification papers. However, we do encourage the submission of experience papers as full papers that provide detailed technical insight into real-world deployments of novel mobile/wireless technologies and systems. MobiCom 2026 will also incorporate early notifications for papers rejected in round 1 and rebuttals as described below in more detail. What&rsquo;s Changing at MobiCom Starting from 2026, MobiCom will adopt a new approach to presentation of papers with only a selected subset of accepted papers allocated the typical (15min) presentation slot in the program. The rest of the accepted papers will be presented in thematically organized sessions with relativ"
       ]
-    },
-    {
-      "title": "International Symposium on Modeling and Optimization in Mobile, Ad Hoc, and Wireless Networks",
-      "acronym": "WiOpt",
-      "venueType": "Conference",
-      "track": "Wireless / Optimization",
-      "url": "https://wi-opt.org/cfp.html",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
-      "verifiedRank": "",
-      "verifiedRankSource": "",
-      "verifiedRankYear": "",
-      "impactFactor": "N/A — conference; use indexing/reputation instead",
-      "impactFactorYear": "N/A for conferences",
-      "note": "Wireless modeling, optimization, and mobile network CFP source.",
-      "tags": [
-        "wireless",
-        "optimization",
-        "networking"
-      ],
-      "configuredDeadline": null,
-      "daysUntilDeadline": null,
-      "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "fetch failed",
-      "deadlineSignals": []
     },
     {
       "title": "IEEE International Symposium on Dynamic Spectrum Access Networks",

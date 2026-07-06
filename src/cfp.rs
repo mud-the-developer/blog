@@ -21,6 +21,7 @@ const BLOCKED_CFP_SOURCE_PATTERNS: &[&str] = &[
     "worldresearchlibrary",
     "eurasiaweb",
     "scientificfederation",
+    "wi-opt.org/cfp.html",
 ];
 
 const TRUSTED_CFP_SOURCE_PATTERNS: &[&str] = &[
@@ -737,7 +738,7 @@ fn deadline_label(item: &CfpItem) -> String {
             if item.fetch_status == "fetched" {
                 "No dated CFP posted on official page".to_string()
             } else if item.fetch_status.starts_with("http") || item.fetch_status == "fetch failed" {
-                "Manual check required".to_string()
+                "Fetch blocked — verify official link".to_string()
             } else {
                 "TBD / official page".to_string()
             }
@@ -1002,6 +1003,11 @@ fn render_markdown(issue: &CfpIssue) -> String {
         issue.with_configured_deadline_count
     ));
 
+    output.push_str("## Source quality filters\n\n");
+    output.push_str("- Sources are limited to official society, publisher, or venue domains; low-signal CFP aggregators are rejected during validation.\n");
+    output.push_str("- Fetched journal-special rows must expose special-issue, feature-topic, or manuscript-deadline evidence on the official page.\n");
+    output.push_str("- Stale generic pages stay out of the radar; fetch-blocked rows are shown as official links to verify, not as known deadlines.\n\n");
+
     render_deadline_radar(&mut output, issue);
 
     output.push_str("## Three-by-three quick view\n\n");
@@ -1050,7 +1056,8 @@ fn render_markdown(issue: &CfpIssue) -> String {
     output.push_str("- **No proxy levels:** conferences and workshops do not use journal Impact Factors or journal-style Q1/Q2 quartiles. Heuristic labels such as top-tier, flagship, or specialized are not shown as verified rank.\n");
     output.push_str("- **Annual refresh:** verified rank and journal metrics must be refreshed when new JCR/SJR/CORE/CCF releases are available.\n\n");
 
-    output.push_str("## Deadline signals from official pages\n\n");
+    output.push_str("## Detailed source evidence\n\n");
+    output.push_str("Audit trail for the official-page snippets used by the crawler. Use this section for verification; the deadline radar and quick view above are the readable operating view.\n\n");
     for item in &issue.items {
         output.push_str(&format!("### {} ({})\n\n", item.title, item.acronym));
         output.push_str(&format!("- Type: {}\n", item.venue_type));
@@ -1542,6 +1549,17 @@ mod tests {
             .to_string();
         assert!(error.contains("blocked low-quality pattern"));
         assert!(error.contains("waset.org"));
+    }
+
+    #[test]
+    fn source_quality_gate_rejects_known_stale_official_pages() {
+        let items = vec![quality_test_item("WiOpt", "https://wi-opt.org/cfp.html")];
+
+        let error = validate_source_quality(&items)
+            .expect_err("stale WiOpt 2022 CFP page should not be reintroduced")
+            .to_string();
+        assert!(error.contains("blocked low-quality pattern"));
+        assert!(error.contains("wi-opt.org/cfp.html"));
     }
 
     #[test]
