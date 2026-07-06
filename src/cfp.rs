@@ -320,10 +320,15 @@ fn candidate_deadline_dates_from_signal(signal: &str) -> Vec<chrono::NaiveDate> 
             let context_start = floor_char_boundary(signal, position.saturating_sub(45));
             let context_end = ceil_char_boundary(signal, position + keyword.len());
             let context = signal[context_start..context_end].to_ascii_lowercase();
+            let wide_context_start = floor_char_boundary(signal, position.saturating_sub(100));
+            let wide_context_end =
+                ceil_char_boundary(signal, (position + keyword.len() + 100).min(signal.len()));
+            let wide_context = signal[wide_context_start..wide_context_end].to_ascii_lowercase();
             if context.contains("camera")
                 || context.contains("notification")
                 || context.contains("acceptance")
                 || context.contains("registration")
+                || non_submission_deadline_context(&wide_context)
             {
                 search_from = (position + keyword.len()).min(lowered.len());
                 continue;
@@ -338,6 +343,9 @@ fn candidate_deadline_dates_from_signal(signal: &str) -> Vec<chrono::NaiveDate> 
                     .find("final deadline")
                     .or_else(|| after_lowered.find("extended"))
                     .is_some_and(|offset| offset < 120)
+                    && !non_submission_deadline_context(
+                        &after_lowered[..after_lowered.len().min(160)],
+                    )
                 {
                     push_unique_date(
                         &mut dates,
@@ -353,6 +361,9 @@ fn candidate_deadline_dates_from_signal(signal: &str) -> Vec<chrono::NaiveDate> 
                     .to_ascii_lowercase()
                     .find("extended")
                     .is_some_and(|offset| offset < 90)
+                    && !non_submission_deadline_context(
+                        &after.to_ascii_lowercase()[..after.len().min(160)],
+                    )
                 {
                     push_unique_date(&mut dates, after_dates.get(1).copied());
                 }
@@ -361,6 +372,43 @@ fn candidate_deadline_dates_from_signal(signal: &str) -> Vec<chrono::NaiveDate> 
         }
     }
     dates
+}
+
+fn non_submission_deadline_context(context: &str) -> bool {
+    let lowered = context.to_ascii_lowercase();
+    let positive_submission = [
+        "paper submission",
+        "papers due",
+        "full paper",
+        "technical paper",
+        "manuscript",
+        "abstract",
+        "workshop paper",
+        "submission deadline",
+        "deadline for submission of workshops",
+        "call for workshop papers",
+    ]
+    .iter()
+    .any(|needle| lowered.contains(needle));
+
+    let negative_context = [
+        "camera",
+        "notification",
+        "acceptance",
+        "registration",
+        "rebuttal",
+        "travel grant",
+        "student travel",
+        "poster",
+        "demo",
+        "tutorial",
+        "final version",
+        "material due",
+    ]
+    .iter()
+    .any(|needle| lowered.contains(needle));
+
+    negative_context && !positive_submission
 }
 
 fn select_deadline_date(
@@ -1415,8 +1463,17 @@ mod tests {
         );
         assert_eq!(
             inferred_deadline_from_signals(&signals[2..], "2026-07-03"),
-            Some("2026-06-30".to_string())
+            Some("2026-06-06".to_string())
         );
+    }
+
+    #[test]
+    fn ignores_non_submission_operational_milestones() {
+        let signals = vec![
+            "Important Dates 15 May 2026 Call for Posters & Demos - Final Version Submission : Deadline Closed 01 Jun 2026 Call for Tutorials - Tutorial Material Due : Deadline Closed 09 Jun 2026 Apply for a Travel Grant : Deadline Closed 17 Jun 2026 Conference Begins".to_string(),
+        ];
+
+        assert_eq!(inferred_deadline_from_signals(&signals, "2026-07-03"), None);
     }
 
     #[test]
