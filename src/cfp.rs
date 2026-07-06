@@ -817,6 +817,17 @@ fn is_journal(item: &CfpItem) -> bool {
     item.venue_type.to_ascii_lowercase().contains("journal")
 }
 
+fn journal_special_issue_signal_evidence(item: &CfpItem) -> bool {
+    item.deadline_signals.iter().any(|signal| {
+        let lowered = signal.to_ascii_lowercase();
+        lowered.contains("special issue")
+            || lowered.contains("feature topic")
+            || lowered.contains("manuscript submission deadline")
+            || lowered.contains("submission deadline")
+            || lowered.contains("call for special issue proposals")
+    })
+}
+
 fn is_workshop(item: &CfpItem) -> bool {
     item.venue_type.to_ascii_lowercase().contains("workshop")
 }
@@ -1254,6 +1265,23 @@ pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIss
         )
         .into());
     }
+    let generic_fetched_journals: Vec<&str> = issue
+        .items
+        .iter()
+        .filter(|item| {
+            is_journal(item)
+                && item.fetch_status == "fetched"
+                && !journal_special_issue_signal_evidence(item)
+        })
+        .map(|item| item.acronym.as_str())
+        .collect();
+    if !generic_fetched_journals.is_empty() {
+        return Err(format!(
+            "Journal special-issue rows lack special-issue/feature-topic evidence: {}",
+            generic_fetched_journals.join(", ")
+        )
+        .into());
+    }
     let workshop_deadline_count = issue
         .items
         .iter()
@@ -1458,6 +1486,31 @@ mod tests {
 
         assert!(cfp_ai_target_matches(&icc, &targets));
         assert!(!cfp_ai_target_matches(&tmlcn, &targets));
+    }
+
+    #[test]
+    fn journal_special_issue_evidence_rejects_generic_cfp_rows() {
+        let mut generic = quality_test_item(
+            "IEEE TWC CFP",
+            "https://www.comsoc.org/publications/journals/ieee-transactions-wireless-communications/cfp",
+        );
+        generic.venue_type = "Journal special issue".to_string();
+        generic.fetch_status = "fetched".to_string();
+        generic.deadline_signals = Vec::new();
+
+        let mut special = quality_test_item(
+            "IEEE JSAC CFP",
+            "https://www.comsoc.org/publications/journals/ieee-jsac/cfp",
+        );
+        special.venue_type = "Journal special issue".to_string();
+        special.fetch_status = "fetched".to_string();
+        special.deadline_signals = vec![
+            "Special Issue Paper Topic Publication Date Manuscript Submission Deadline 1 October 2026"
+                .to_string(),
+        ];
+
+        assert!(!journal_special_issue_signal_evidence(&generic));
+        assert!(journal_special_issue_signal_evidence(&special));
     }
 
     #[test]
