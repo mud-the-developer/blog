@@ -670,6 +670,25 @@ fn signal_deadline_sort_key(signal: &str, issue: chrono::NaiveDate) -> (u8, i64)
     }
 }
 
+fn useful_deadline_signal(signal: &str) -> bool {
+    let lowered = signal.to_ascii_lowercase();
+    if lowered.contains("submission of camera-ready")
+        || lowered.contains("submission of camera ready")
+    {
+        return false;
+    }
+    if !candidate_deadline_dates_from_signal(signal).is_empty() {
+        return true;
+    }
+    let journal_deadline_evidence = (lowered.contains("special issue")
+        || lowered.contains("feature topic")
+        || lowered.contains("call for special issue proposals"))
+        && (lowered.contains("deadline")
+            || lowered.contains("manuscript")
+            || lowered.contains("submission"));
+    journal_deadline_evidence || lowered.contains("manuscript submission deadline")
+}
+
 fn contains_any<'a>(value: &str, patterns: &'a [&'a str]) -> Option<&'a str> {
     patterns
         .iter()
@@ -721,10 +740,19 @@ fn deadline_signals_from_text(text: &str, issue_date: &str) -> Vec<String> {
         let mut search_from = 0;
         while let Some(relative) = lowered[search_from..].find(keyword) {
             let position = search_from + relative;
-            let start = floor_char_boundary(text, position.saturating_sub(90));
+            let context_before = if matches!(keyword, "important dates" | "call for papers" | "cfp")
+            {
+                0
+            } else {
+                90
+            };
+            let start = floor_char_boundary(text, position.saturating_sub(context_before));
             let end = ceil_char_boundary(text, position + 650);
             let snippet = compact_whitespace(&text[start..end]);
-            if snippet.len() > 24 && !signals.iter().any(|seen| seen == &snippet) {
+            if snippet.len() > 24
+                && useful_deadline_signal(&snippet)
+                && !signals.iter().any(|seen| seen == &snippet)
+            {
                 signals.push(snippet);
             }
             if signals.len() >= 40 {
@@ -1474,6 +1502,14 @@ mod tests {
         ];
 
         assert_eq!(inferred_deadline_from_signals(&signals, "2026-07-03"), None);
+        assert!(deadline_signals_from_text(&signals[0], "2026-07-03").is_empty());
+    }
+
+    #[test]
+    fn filters_navigation_only_cfp_signal_snippets() {
+        let text = "Important Dates Call for Papers Call for Posters & Demos Call for Workshop Proposals Call for Tutorials";
+
+        assert!(deadline_signals_from_text(text, "2026-07-03").is_empty());
     }
 
     #[test]
