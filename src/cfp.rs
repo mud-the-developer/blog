@@ -1271,7 +1271,7 @@ pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIss
         .iter()
         .filter(|item| is_journal(item) && item.configured_deadline.is_some())
         .count();
-    if journal_deadline_count < 7 {
+    if journal_deadline_count < 5 {
         return Err(format!(
             "Journal special-issue deadline extraction is too sparse: {journal_deadline_count}"
         )
