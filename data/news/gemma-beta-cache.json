@@ -268,6 +268,42 @@
     ],
     "title": "AI Beta Brief: June 11, 2026 – Agentic Development and Memory Architectures in Focus"
   },
+  "46a2b111eae0a3f678d25cafa8e173573677dda77dabc5473e120ac4fe19740f": {
+    "article_body": [
+      "Agentic AI development remains a primary driver of activity on GitHub. NousResearch's hermes-agent leads the pack, showing robust community engagement and continuous updates. This trend is further supported by other rapidly climbing agent-related repositories, including code-yeongyu/oh-my-openagent and Hmbown/CodeWhale, indicating a broad interest in open-source agent harnesses and frameworks. The MemPalace project, an open-source AI memory system, also shows strong signal, aligning with the agentic theme by providing critical infrastructure for advanced AI systems.",
+      "In research, the paper \"The Mirage of Optimizing Training Policies: Monotonic Inference Policies as the Real Objective for LLM Reinforcement Learning\" is drawing considerable attention. This work critically examines the training-inference mismatch in LLM reinforcement learning, proposing new objectives for stability. Other notable papers explore multimodal attribution, securing AI agents through multi-layer red teaming, and portable inference runtimes for embodied AI models, reflecting a diverse but focused push on foundational and applied challenges.",
+      "Community discussions are actively exploring the broader impact of AI. A key theme emerging from platforms like GeekNews is the \"AI era, rethinking Figma,\" suggesting a significant shift in design paradigms. This sentiment is echoed in conversations about the changing role of developers, moving from coding executors to designers of context, verification, and productization in an AI-assisted environment. Discussions on agentic coding harnesses further underscore the practical implications of these technological shifts."
+    ],
+    "closing": "That concludes today's AI Beta Brief. We will continue to monitor these developments.",
+    "dek": "Today's AI landscape highlights strong momentum in agentic development on GitHub, a critical re-evaluation of LLM reinforcement learning policies in research, and community discussions on AI's impact on design.",
+    "lead": "The AI ecosystem continues its rapid evolution, with agent-focused projects capturing significant attention on GitHub. Leading this trend is NousResearch's hermes-agent, demonstrating sustained velocity. Concurrently, academic discourse is centering on foundational challenges in large language model training, particularly the efficacy of current optimization policies. Meanwhile, social channels are actively debating the broader implications of AI, notably its transformative effect on fields like design.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "Agentic AI development, particularly open-source agent harnesses, continues to show high velocity on GitHub.",
+      "New research is challenging conventional wisdom in LLM reinforcement learning, focusing on more stable inference policies.",
+      "The community is actively debating AI's transformative impact on creative fields like design and the evolving role of developers.",
+      "Memory systems like MemPalace are gaining traction as essential components for advanced AI agents."
+    ],
+    "title": "Daily AI Beta Brief: Agents Drive GitHub, New RL Policy, Design Rethink"
+  },
+  "46a2b111eae0a3f678d25cafa8e173573677dda77dabc5473e120ac4fe19740f::overview": {
+    "article_body": [
+      "Agentic AI development remains a primary driver of activity on GitHub. NousResearch's hermes-agent leads the pack, showing robust community engagement and continuous updates. This trend is further supported by other rapidly climbing agent-related repositories, including code-yeongyu/oh-my-openagent and Hmbown/CodeWhale, indicating a broad interest in open-source agent harnesses and frameworks. The MemPalace project, an open-source AI memory system, also shows strong signal, aligning with the agentic theme by providing critical infrastructure for advanced AI systems.",
+      "In research, the paper \"The Mirage of Optimizing Training Policies: Monotonic Inference Policies as the Real Objective for LLM Reinforcement Learning\" is drawing considerable attention. This work critically examines the training-inference mismatch in LLM reinforcement learning, proposing new objectives for stability. Other notable papers explore multimodal attribution, securing AI agents through multi-layer red teaming, and portable inference runtimes for embodied AI models, reflecting a diverse but focused push on foundational and applied challenges.",
+      "Community discussions are actively exploring the broader impact of AI. A key theme emerging from platforms like GeekNews is the \"AI era, rethinking Figma,\" suggesting a significant shift in design paradigms. This sentiment is echoed in conversations about the changing role of developers, moving from coding executors to designers of context, verification, and productization in an AI-assisted environment. Discussions on agentic coding harnesses further underscore the practical implications of these technological shifts."
+    ],
+    "closing": "That concludes today's AI Beta Brief. We will continue to monitor these developments.",
+    "dek": "Today's AI landscape highlights strong momentum in agentic development on GitHub, a critical re-evaluation of LLM reinforcement learning policies in research, and community discussions on AI's impact on design.",
+    "lead": "The AI ecosystem continues its rapid evolution, with agent-focused projects capturing significant attention on GitHub. Leading this trend is NousResearch's hermes-agent, demonstrating sustained velocity. Concurrently, academic discourse is centering on foundational challenges in large language model training, particularly the efficacy of current optimization policies. Meanwhile, social channels are actively debating the broader implications of AI, notably its transformative effect on fields like design.",
+    "takeaways": [
+      "Agentic AI development, particularly open-source agent harnesses, continues to show high velocity on GitHub.",
+      "New research is challenging conventional wisdom in LLM reinforcement learning, focusing on more stable inference policies.",
+      "The community is actively debating AI's transformative impact on creative fields like design and the evolving role of developers.",
+      "Memory systems like MemPalace are gaining traction as essential components for advanced AI agents."
+    ],
+    "title": "Daily AI Beta Brief: Agents Drive GitHub, New RL Policy, Design Rethink"
+  },
   "4997a134aef86ae3d025005e407b0678ff93d9ec18fd5ea4b838c227e1be37b0": {
     "paragraphs": [
       "High-throughput infrastructure continues to lead the current cycle, with vLLM maintaining its position as a memory-efficient serving engine for LLMs. Alongside these backend efficiencies, the utility of lightweight, terminal-based coding agents remains a focal point of community activity, as evidenced by the ongoing traction of OpenAI's Codex.",
