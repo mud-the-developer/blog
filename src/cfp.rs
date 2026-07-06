@@ -7,7 +7,7 @@ use tokio::fs;
 
 use crate::BlogResult;
 
-const USER_AGENT: &str = "mud-blog-cfp-radar/0.1 (+https://mud-blog.pages.dev/cfp/)";
+const USER_AGENT: &str = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36 mud-blog-cfp-radar/0.1 (+https://mud-blog.pages.dev/cfp/)";
 
 const BLOCKED_CFP_SOURCE_PATTERNS: &[&str] = &[
     "waset.org",

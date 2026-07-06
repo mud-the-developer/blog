@@ -66,12 +66,12 @@
       "title": "ACM SIGCOMM",
       "acronym": "SIGCOMM",
       "track": "Networking / Systems",
-      "url": "https://conferences.sigcomm.org/sigcomm/2026/",
+      "url": "https://conferences.sigcomm.org/sigcomm/2026/cfp/",
       "conferenceDates": "TBD / official page",
       "location": "TBD / official page",
       "qualityTier": "top-tier networking",
       "impactFactor": "N/A — conference; use CORE/field reputation instead",
-      "note": "Networking systems CFP source; monitored for paper registration and submission dates.",
+      "note": "Official SIGCOMM 2026 CFP page with main-track abstract and paper-submission dates.",
       "tags": [
         "networking",
         "systems"
@@ -79,7 +79,8 @@
       "venueType": "Conference",
       "rankingSource": "Conference proxy: top-tier / flagship venue; map to CORE A*/A or field-equivalent, not an official journal Q1.",
       "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactorYear": "N/A for conferences"
+      "impactFactorYear": "N/A for conferences",
+      "deadline": "2026-02-06"
     },
     {
       "title": "IEEE International Conference on Computer Communications",
@@ -125,12 +126,12 @@
       "title": "ACM International Conference on Emerging Networking Experiments and Technologies",
       "acronym": "CoNEXT",
       "track": "Networking / Systems",
-      "url": "https://conferences2.sigcomm.org/co-next/2026/#!/cfp",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
+      "url": "https://conferences2.sigcomm.org/co-next/2026/partials/cfp.html",
+      "conferenceDates": "December 7-10, 2026",
+      "location": "Utrecht, The Netherlands",
       "qualityTier": "strong networking",
       "impactFactor": "N/A — conference; use CORE/field reputation instead",
-      "note": "Networking experiments and systems venue; good fit for programmable networking, edge, and RAN-adjacent systems.",
+      "note": "Official CoNEXT 2026 CFP partial used because the public route is Angular-rendered.",
       "tags": [
         "networking",
         "systems",
@@ -139,7 +140,8 @@
       "venueType": "Conference",
       "rankingSource": "Conference proxy: top-tier / flagship venue; map to CORE A*/A or field-equivalent, not an official journal Q1.",
       "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactorYear": "N/A for conferences"
+      "impactFactorYear": "N/A for conferences",
+      "deadline": "2026-06-05"
     },
     {
       "title": "IFIP Networking Conference",
@@ -159,7 +161,8 @@
       "venueType": "Conference",
       "rankingSource": "Conference proxy: specialized or solid venue; map to CORE B/field-equivalent when available, not an official journal Q2.",
       "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactorYear": "N/A for conferences"
+      "impactFactorYear": "N/A for conferences",
+      "deadline": "2026-02-28"
     },
     {
       "title": "ACM International Conference on Mobile Computing and Networking",
@@ -200,7 +203,8 @@
       "venueType": "Conference",
       "rankingSource": "Conference proxy: top-tier / flagship venue; map to CORE A*/A or field-equivalent, not an official journal Q1.",
       "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactorYear": "N/A for conferences"
+      "impactFactorYear": "N/A for conferences",
+      "deadline": "2025-12-05"
     },
     {
       "title": "ACM International Symposium on Mobile Ad Hoc Networking and Computing",
@@ -623,7 +627,8 @@
       "venueType": "Conference",
       "rankingSource": "Conference proxy: top-tier / flagship venue; map to CORE A*/A or field-equivalent, not an official journal Q1.",
       "rankingYear": "2026 watchlist metadata; review yearly",
-      "impactFactorYear": "N/A for conferences"
+      "impactFactorYear": "N/A for conferences",
+      "deadline": "2026-04-29"
     },
     {
       "title": "IEEE Journal on Selected Areas in Communications — Calls for Papers",
@@ -777,14 +782,15 @@
       "rankingYear": "annual refresh required",
       "impactFactor": "Journal Impact Factor: update from latest JCR or official publisher metrics",
       "impactFactorYear": "annual refresh required",
-      "note": "Elsevier Computer Networks special-issue CFP source for network systems, wireless networking, edge, and Internet architecture topics.",
+      "note": "Official ScienceDirect Computer Networks call-for-papers page; next open special-issue deadline observed in official page data.",
       "tags": [
         "journal",
         "special-issue",
         "networking",
         "wireless",
         "edge"
-      ]
+      ],
+      "deadline": "2026-10-15"
     },
     {
       "title": "Ad Hoc Networks — Calls for Papers / Special Issues",
@@ -799,7 +805,7 @@
       "rankingYear": "annual refresh required",
       "impactFactor": "Journal Impact Factor: update from latest JCR or official publisher metrics",
       "impactFactorYear": "annual refresh required",
-      "note": "Special-issue CFP source for mobile ad hoc, wireless mesh/sensor, UAV, vehicular, and opportunistic networking.",
+      "note": "Official ScienceDirect Ad Hoc Networks call-for-papers page; next open special-issue deadline observed in official page data.",
       "tags": [
         "journal",
         "special-issue",
@@ -807,7 +813,8 @@
         "mobile",
         "vehicular",
         "iot"
-      ]
+      ],
+      "deadline": "2026-08-08"
     },
     {
       "title": "IEEE International Workshop on Computer Aided Modeling and Design of Communication Links and Networks",
@@ -822,14 +829,15 @@
       "rankingYear": "2026 watchlist metadata; review yearly",
       "impactFactor": "N/A — workshop; use IEEE ComSoc workshop relevance instead",
       "impactFactorYear": "N/A for workshops",
-      "note": "ComSoc workshop focused on communication link/network modeling, design, wireless systems, 5G/6G, and AI-native communications.",
+      "note": "Official CAMAD 2026 page; main paper submission deadline recorded to avoid selecting acceptance/camera-ready dates.",
       "tags": [
         "communications",
         "wireless",
         "6g",
         "modeling",
         "workshops"
-      ]
+      ],
+      "deadline": "2026-06-06"
     },
     {
       "title": "IEEE International Mediterranean Conference on Communications and Networking",
@@ -981,28 +989,30 @@
         "networking",
         "security",
         "privacy"
-      ]
+      ],
+      "deadline": "2026-05-18"
     },
     {
       "title": "International Conference on Computing, Networking and Communications",
       "acronym": "ICNC",
       "venueType": "Conference",
       "track": "Networking / Communications",
-      "url": "http://conf-icnc.org/2026/",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
+      "url": "http://conf-icnc.org/2026/cfp.htm",
+      "conferenceDates": "February 16-19, 2026",
+      "location": "Maui, Hawaii, USA",
       "qualityTier": "communications-networking venue",
       "rankingSource": "Conference proxy: specialized or solid communications venue; verify current CORE/field status annually.",
       "rankingYear": "2026 watchlist metadata; review yearly",
       "impactFactor": "N/A — conference; use IEEE/ACM/society reputation instead",
       "impactFactorYear": "N/A for conferences",
-      "note": "Official ICNC 2026 site stub; keep as a watch source until a dated CFP page appears.",
+      "note": "Official ICNC 2026 CFP page with symposium CFP links and paper-submission dates.",
       "tags": [
         "communications",
         "networking",
         "wireless",
         "mobile"
-      ]
+      ],
+      "deadline": "2025-10-12"
     },
     {
       "title": "IEEE International Conference on Wireless and Mobile Computing, Networking and Communications",
