@@ -1138,6 +1138,40 @@
     ],
     "title": "Agentic Infrastructure & Inference Velocity"
   },
+  "8cb39d7c8475ab308fda51c55b41c70dab609b55a8e71192094d877868991e09": {
+    "article_body": [
+      "GitHub activity today is heavily influenced by agentic AI development, with NousResearch/hermes-agent maintaining its lead in velocity. Other significant projects include vllm-project/vllm, a high-throughput inference engine, and langgenius/dify, a platform for agentic workflow development. The trend suggests continued refinement and deployment of AI agents and efficient LLM serving infrastructure.",
+      "In research, the paper \"CineMobile: On-Device Image-to-Video Diffusion for Cinematic Camera Motion Generation\" has garnered considerable attention. This work focuses on enabling efficient image-to-video generation directly on mobile devices, highlighting a push towards more accessible and resource-optimized AI applications. Other notable papers explore areas such as mitigating object-driven shortcuts in action recognition and developing universal benchmarks for proactive agents.",
+      "Community discussions have seen a notable focus on software development best practices, particularly the recommendation to use STRICT tables in SQLite. This reflects an ongoing dialogue within developer communities about robust system design. Additionally, topics such as distributed AI computing with iroh and the emergence of \"Ghost Font\" designed to be difficult for AI to read also surfaced, indicating diverse interests beyond core AI development."
+    ],
+    "closing": "This concludes today's AI beta brief. We will continue to monitor these trends.",
+    "dek": "Today's AI landscape sees significant GitHub activity around agentic frameworks, while new research focuses on efficient on-device video generation and community discussions highlight database best practices.",
+    "lead": "The AI development sphere on July 13, 2026, is marked by a surge in agentic AI frameworks, with NousResearch's hermes-agent leading GitHub velocity. Concurrently, academic interest is drawn to advancements in on-device image-to-video diffusion, exemplified by the CineMobile research. Broader community discussions also reflect a focus on foundational software practices, notably regarding SQLite table strictness.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "Agentic AI frameworks, like NousResearch/hermes-agent, continue to drive significant development on GitHub.",
+      "Research efforts are advancing on-device AI capabilities, exemplified by CineMobile's image-to-video diffusion.",
+      "Community conversations span practical software development, distributed AI, and AI-resistant tools."
+    ],
+    "title": "AI Agents Lead GitHub Velocity; On-Device Video Diffusion Gains Paper Attention"
+  },
+  "8cb39d7c8475ab308fda51c55b41c70dab609b55a8e71192094d877868991e09::overview": {
+    "article_body": [
+      "GitHub activity today is heavily influenced by agentic AI development, with NousResearch/hermes-agent maintaining its lead in velocity. Other significant projects include vllm-project/vllm, a high-throughput inference engine, and langgenius/dify, a platform for agentic workflow development. The trend suggests continued refinement and deployment of AI agents and efficient LLM serving infrastructure.",
+      "In research, the paper \"CineMobile: On-Device Image-to-Video Diffusion for Cinematic Camera Motion Generation\" has garnered considerable attention. This work focuses on enabling efficient image-to-video generation directly on mobile devices, highlighting a push towards more accessible and resource-optimized AI applications. Other notable papers explore areas such as mitigating object-driven shortcuts in action recognition and developing universal benchmarks for proactive agents.",
+      "Community discussions have seen a notable focus on software development best practices, particularly the recommendation to use STRICT tables in SQLite. This reflects an ongoing dialogue within developer communities about robust system design. Additionally, topics such as distributed AI computing with iroh and the emergence of \"Ghost Font\" designed to be difficult for AI to read also surfaced, indicating diverse interests beyond core AI development."
+    ],
+    "closing": "This concludes today's AI beta brief. We will continue to monitor these trends.",
+    "dek": "Today's AI landscape sees significant GitHub activity around agentic frameworks, while new research focuses on efficient on-device video generation and community discussions highlight database best practices.",
+    "lead": "The AI development sphere on July 13, 2026, is marked by a surge in agentic AI frameworks, with NousResearch's hermes-agent leading GitHub velocity. Concurrently, academic interest is drawn to advancements in on-device image-to-video diffusion, exemplified by the CineMobile research. Broader community discussions also reflect a focus on foundational software practices, notably regarding SQLite table strictness.",
+    "takeaways": [
+      "Agentic AI frameworks, like NousResearch/hermes-agent, continue to drive significant development on GitHub.",
+      "Research efforts are advancing on-device AI capabilities, exemplified by CineMobile's image-to-video diffusion.",
+      "Community conversations span practical software development, distributed AI, and AI-resistant tools."
+    ],
+    "title": "AI Agents Lead GitHub Velocity; On-Device Video Diffusion Gains Paper Attention"
+  },
   "9acd595a9ece8e7ae215dd99fec5c3e8a38f7aaa4b35566f2d28953a16889748": {
     "article_body": [
       "In the infrastructure layer, vLLM continues to lead in high-throughput and memory-efficient inference, maintaining significant momentum alongside the Ray compute engine. These tools remain central to the deployment of large-scale models, providing the necessary backbone for the current shift toward more complex, agentic workloads.",
