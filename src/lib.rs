@@ -916,6 +916,15 @@ pub async fn build_static_site(
         assets_dir.join("web-vitals-rum.js"),
     )
     .await?;
+    fs::copy(
+        "src/pretext-editorial.mjs",
+        assets_dir.join("pretext-editorial.mjs"),
+    )
+    .await?;
+    copy_dir_sync(
+        Path::new("node_modules/@chenglou/pretext/dist"),
+        &assets_dir.join("pretext"),
+    )?;
 
     let archive = archive_json(&posts)?;
     fs::write(out_dir.join("archive.json"), archive).await?;
@@ -975,6 +984,7 @@ pub fn router(posts: Vec<Post>, assets_root: impl Into<PathBuf>) -> BlogResult<R
         .route("/news/search/", get(news_search_page_handler))
         .route("/fragments/posts", get(posts_fragment_handler))
         .route("/archive.json", get(archive_handler))
+        .route("/api/vitals", post(vitals_handler))
         .route("/api/focused-issue", post(focused_issue_handler))
         .route("/api/news-search", post(news_search_handler))
         .route("/posts/{slug}/", get(post_handler))
@@ -1039,6 +1049,10 @@ async fn archive_handler(State(state): State<AppState>) -> impl IntoResponse {
         Ok(value) => Json(value).into_response(),
         Err(error) => (StatusCode::INTERNAL_SERVER_ERROR, error.to_string()).into_response(),
     }
+}
+
+async fn vitals_handler() -> StatusCode {
+    StatusCode::NO_CONTENT
 }
 
 async fn focused_issue_handler(

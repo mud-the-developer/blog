@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMzMTVlYTgiLz48cGF0aCBkPSJNMTYgNDZWMThoOWw3IDEzIDctMTNoOXYyOGgtOFYzMWwtOCAxMi04LTEydjE1eiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=" />
   <meta name="description" content="Mud's Blog — public notes on AI systems, wireless networks, papers, and engineering." />
   <title>Mud's Blog</title>
   <link rel="stylesheet" href="/assets/style.css" />
@@ -29,6 +30,10 @@
   <main class="public-shell">
     <section class="archive-panel" id="posts" aria-label="home post and archive">
       <div class="home-post-intro" data-home-post>
+        <figure class="pretext-editorial-layer" data-pretext-editorial aria-label="archive typography motion">
+          <canvas class="pretext-editorial-canvas" aria-hidden="true"></canvas>
+          <figcaption class="visually-hidden">Animated archive typography measured and laid out with Cheng Lou's Pretext library.</figcaption>
+        </figure>
         <div class="home-post-body post-body" data-home-post-body>
           {{ home_html|safe }}
         </div>
@@ -91,6 +96,7 @@
   </main>
 
   <script id="archive-data" type="application/json">{{ archive_json|safe }}</script>
+  <script type="module" src="/assets/pretext-editorial.mjs"></script>
   <script type="module" src="/assets/site-chrome.mjs"></script>
   <script src="/assets/web-vitals-rum.js"></script>
 </body>

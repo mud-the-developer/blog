@@ -26,7 +26,7 @@ fn test_output_dir(name: &str) -> PathBuf {
 }
 
 #[tokio::test]
-async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_motion()
+async fn builds_public_polished_home_with_filetree_and_measured_pretext_atlas()
 -> Result<(), Box<dyn std::error::Error>> {
     let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let out_dir = test_output_dir("public-polish");
@@ -49,6 +49,8 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
     assert!(out_dir.join("fragments/posts.html").exists());
     assert!(!out_dir.join("assets/pretext-polish.mjs").exists());
     assert!(!out_dir.join("assets/pretext-polish-effects.mjs").exists());
+    assert!(out_dir.join("assets/pretext-editorial.mjs").exists());
+    assert!(out_dir.join("assets/pretext/layout.js").exists());
     assert!(out_dir.join("assets/blog-lab.mjs").exists());
     assert!(out_dir.join("assets/site-chrome.mjs").exists());
     assert!(out_dir.join("assets/site-chrome-effects.mjs").exists());
@@ -81,6 +83,9 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
     assert!(index.contains("aria-label=\"editorial dossier\""));
     assert!(index.contains("data-home-post"));
     assert!(index.contains("data-home-post-body"));
+    assert!(index.contains("data-pretext-editorial"));
+    assert!(index.contains("aria-label=\"archive typography motion\""));
+    assert!(index.contains("/assets/pretext-editorial.mjs"));
     assert!(index.contains("<h2>Hi 🙋</h2>"));
     assert!(index.contains("Welcome to my blog"));
     assert!(index.contains("<span>About me</span>"));
@@ -141,6 +146,7 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
     assert!(style.contains(".dossier-card-left"));
     assert!(style.contains(".dossier-card-right"));
     assert!(style.contains(".home-post-body"));
+    assert!(style.contains(".pretext-editorial-canvas"));
     assert!(!style.contains(".pretext-polish"));
     assert!(style.contains(".filetree"));
     assert!(style.contains(".post-body :is"));
@@ -174,7 +180,7 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
     assert!(!style.contains(".archive-graph"));
     assert!(!style.to_ascii_lowercase().contains("neon"));
     assert!(
-        style.len() <= 43_000,
+        style.len() <= 44_000,
         "public polish CSS should stay bounded even with responsive controls, post chrome spacing, icons, theme modes, dark contrast guards, editorial archive controls, mobile news compression, card-news surfaces, CFP tables, and Pretext layers"
     );
 

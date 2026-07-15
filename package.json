@@ -31,5 +31,8 @@
     "@playwright/test": "^1.60.0",
     "eslint": "^10.4.1",
     "globals": "^17.6.0"
+  },
+  "dependencies": {
+    "@chenglou/pretext": "^0.0.8"
   }
 }
