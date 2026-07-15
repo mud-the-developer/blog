@@ -393,11 +393,24 @@ def save_beta_digest_cache() -> None:
     )
 
 
+def nvidia_api_key() -> str:
+    return (os.getenv("NVIDIA_API_KEY") or "").strip()
+
+
+def nvidia_model_name() -> str:
+    return (os.getenv("NVIDIA_NIM_MODEL") or "").strip() or "nvidia/llama-3.3-nemotron-super-49b-v1"
+
+
+def nvidia_api_url() -> str:
+    base = (os.getenv("NVIDIA_NIM_BASE_URL") or "https://integrate.api.nvidia.com/v1").rstrip("/")
+    return f"{base}/chat/completions"
+
+
 def gemma_beta_enabled() -> bool:
     flag = (os.getenv("ENABLE_GEMMA_BETA_DIGEST") or "").strip().lower()
     if flag in {"0", "false", "no", "off"}:
         return False
-    return bool(google_ai_api_key())
+    return bool(nvidia_api_key() or google_ai_api_key())
 
 
 def gemma_model_name() -> str:
@@ -1941,55 +1954,73 @@ def gemma_json_request(cache_key: str, payload: dict[str, Any], *, temperature: 
     if isinstance(cached, dict):
         return cached
 
-    request_body = {
-        "contents": [
-            {
-                "role": "user",
-                "parts": [{"text": json.dumps(payload, ensure_ascii=False)}],
-            }
-        ],
-        "generationConfig": {
-            "temperature": temperature,
-            "responseMimeType": "application/json",
-        },
-    }
-    req = urllib.request.Request(
-        gemma_api_url(),
-        data=json.dumps(request_body).encode("utf-8"),
-        headers={"Content-Type": "application/json", "User-Agent": "blog-news-digest/1.0"},
-    )
-    last_error: Exception | None = None
-    attempts = gemma_request_attempts()
+    providers: list[tuple[str, str, dict[str, str], dict[str, Any]]] = []
+    prompt_text = json.dumps(payload, ensure_ascii=False)
+    if nvidia_api_key():
+        providers.append(
+            (
+                "NVIDIA NIM",
+                nvidia_api_url(),
+                {"Authorization": f"Bearer {nvidia_api_key()}", "Content-Type": "application/json", "User-Agent": "blog-news-digest/1.0"},
+                {
+                    "model": nvidia_model_name(),
+                    "messages": [
+                        {"role": "system", "content": "Return strict JSON only. Do not invent facts."},
+                        {"role": "user", "content": prompt_text},
+                    ],
+                    "temperature": temperature,
+                    "response_format": {"type": "json_object"},
+                },
+            )
+        )
+    if google_ai_api_key():
+        providers.append(
+            (
+                "Gemini fallback",
+                gemma_api_url(),
+                {"Content-Type": "application/json", "User-Agent": "blog-news-digest/1.0"},
+                {
+                    "contents": [{"role": "user", "parts": [{"text": prompt_text}]}],
+                    "generationConfig": {"temperature": temperature, "responseMimeType": "application/json"},
+                },
+            )
+        )
+    if not providers:
+        raise GemmaRequestError("No NVIDIA NIM or Gemini API key is configured.")
 
-    for attempt in range(1, attempts + 1):
-        try:
-            with urllib.request.urlopen(req, timeout=gemma_request_timeout_seconds()) as response:
-                api_payload = json.loads(response.read().decode("utf-8"))
-            parts = (((api_payload.get("candidates") or [{}])[0].get("content") or {}).get("parts") or [])
-            response_text = ""
-            for part in parts:
-                if part.get("thought"):
+    attempts = gemma_request_attempts()
+    last_error: Exception | None = None
+    for provider_name, endpoint, headers, request_body in providers:
+        req = urllib.request.Request(
+            endpoint,
+            data=json.dumps(request_body).encode("utf-8"),
+            headers=headers,
+        )
+        for attempt in range(1, attempts + 1):
+            try:
+                with urllib.request.urlopen(req, timeout=gemma_request_timeout_seconds()) as response:
+                    api_payload = json.loads(response.read().decode("utf-8"))
+                if provider_name == "NVIDIA NIM":
+                    response_text = (((api_payload.get("choices") or [{}])[0].get("message") or {}).get("content") or "")
+                else:
+                    parts = (((api_payload.get("candidates") or [{}])[0].get("content") or {}).get("parts") or [])
+                    response_text = next((part.get("text", "") for part in parts if not part.get("thought") and part.get("text")), "")
+                parsed = parse_llm_json(response_text)
+                BETA_DIGEST_CACHE[cache_key] = parsed
+                return parsed
+            except Exception as error:
+                last_error = error
+                retryable = is_retryable_gemma_error(error)
+                if attempt < attempts and retryable:
+                    backoff_seconds = min(8.0, 1.5 * (2 ** (attempt - 1)))
+                    warn_digest(f"{provider_name} attempt {attempt}/{attempts} failed ({type(error).__name__}); retrying in {backoff_seconds:.1f}s.")
+                    time.sleep(backoff_seconds)
                     continue
-                response_text = part.get("text", "")
-                if response_text:
-                    break
-            parsed = parse_llm_json(response_text)
-            BETA_DIGEST_CACHE[cache_key] = parsed
-            return parsed
-        except Exception as error:
-            last_error = error
-            retryable = is_retryable_gemma_error(error)
-            if attempt < attempts and retryable:
-                backoff_seconds = min(8.0, 1.5 * (2 ** (attempt - 1)))
-                warn_digest(
-                    f"Gemma request attempt {attempt}/{attempts} failed ({type(error).__name__}); retrying in {backoff_seconds:.1f}s."
-                )
-                time.sleep(backoff_seconds)
-                continue
-            break
+                warn_digest(f"{provider_name} failed; trying the next configured provider.")
+                break
 
     detail = f"{type(last_error).__name__}: {last_error}" if last_error else "unknown error"
-    raise GemmaRequestError(f"Gemma request failed after {attempts} attempt(s): {detail}")
+    raise GemmaRequestError(f"NVIDIA NIM and Gemini requests failed: {detail}")
 
 
 def normalize_overview(parsed: dict[str, Any], issue_dt: datetime, context: DigestContext) -> BetaDigest:

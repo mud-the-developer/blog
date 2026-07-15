@@ -162,6 +162,25 @@ class GenerateNewsDigestAutomationTests(unittest.TestCase):
                 else:
                     os.environ[key] = value
 
+    def test_nvidia_nim_is_primary_capable_and_gemini_remains_available(self) -> None:
+        keys = ["NVIDIA_API_KEY", "GOOGLE_AI_API_KEY", "GOOGLE_API_KEY", "GEMINI_API_KEY"]
+        old_values = {key: os.environ.get(key) for key in keys}
+        try:
+            for key in keys:
+                os.environ.pop(key, None)
+            os.environ["NVIDIA_API_KEY"] = "nim-test-key"
+            self.assertTrue(MODULE.gemma_beta_enabled())
+            self.assertEqual(MODULE.nvidia_api_url(), "https://integrate.api.nvidia.com/v1/chat/completions")
+            self.assertTrue(MODULE.nvidia_model_name())
+            os.environ["GEMINI_API_KEY"] = "gemini-fallback-key"
+            self.assertEqual(MODULE.google_ai_api_key(), "gemini-fallback-key")
+        finally:
+            for key, value in old_values.items():
+                if value is None:
+                    os.environ.pop(key, None)
+                else:
+                    os.environ[key] = value
+
     def test_mempalace_context_reads_local_chroma_documents_for_keyword(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             db_path = Path(temp_dir) / "chroma.sqlite3"
