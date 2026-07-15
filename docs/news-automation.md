@@ -55,16 +55,25 @@ This writes:
 
 The monthly archive is only regenerated for normal daily runs, so one-off keyword issues do not pollute the default daily archive.
 
-## Gemma via Google API
+## NVIDIA NIM with Gemini fallback
 
-The generator uses Gemma/Gemini through the Google Generative Language API when one of these environment variables is present:
+The generator tries NVIDIA NIM first through its OpenAI-compatible API. If NIM is unavailable, errors, or returns invalid JSON, it tries Gemma/Gemini through the Google Generative Language API.
+
+NIM variables:
+
+- `NVIDIA_API_KEY`
+- `NVIDIA_NIM_MODEL` (default: `nvidia/llama-3.3-nemotron-super-49b-v1`)
+- `NVIDIA_NIM_BASE_URL` (default: `https://integrate.api.nvidia.com/v1`)
+
+Gemini fallback variables:
 
 - `GOOGLE_AI_API_KEY`
 - `GOOGLE_API_KEY`
 - `GEMINI_API_KEY`
 
-Optional variables:
+The CFP deadline analyzer continues to use Gemini when Google Search grounding is required; NIM is not asked to hallucinate web browsing. Its official-source and evidence validation remains unchanged.
 
+Optional variables:
 ```bash
 export ENABLE_GEMMA_BETA_DIGEST=1
 export GOOGLE_AI_MODEL=gemma-4-31b-it

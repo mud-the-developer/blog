@@ -541,9 +541,26 @@ pub async fn load_posts(posts_dir: impl AsRef<Path>) -> BlogResult<Vec<Post>> {
     Ok(posts)
 }
 
+const ARCHIVE_RETENTION_DAYS: i64 = 7;
+
+fn archive_date(post: &Post) -> Option<chrono::NaiveDate> {
+    chrono::NaiveDate::parse_from_str(post.date.get(..10)?, "%Y-%m-%d").ok()
+}
+
 fn archive_json(posts: &[Post]) -> BlogResult<String> {
+    // Keep the source Markdown and rendered post pages indefinitely, but expose
+    // only the most recent seven calendar days to the client-side archive/search
+    // UI. Using the newest post as the reference makes builds reproducible and
+    // still advances the retention window whenever new content is published.
+    let newest_date = posts.iter().filter_map(archive_date).max();
+    let cutoff =
+        newest_date.map(|date| date - chrono::Days::new((ARCHIVE_RETENTION_DAYS - 1) as u64));
+
     let archive = posts
         .iter()
+        .filter(|post| {
+            archive_date(post).is_some_and(|date| cutoff.is_none_or(|cutoff| date >= cutoff))
+        })
         .map(|post| ArchivePost {
             title: &post.title,
             date: &post.date,
@@ -1097,6 +1114,71 @@ fn fallback_local_issue(
     }
 }
 
+fn nvidia_api_key() -> Option<String> {
+    std::env::var("NVIDIA_API_KEY")
+        .ok()
+        .filter(|value| !value.trim().is_empty())
+}
+
+fn nvidia_model_name() -> String {
+    std::env::var("NVIDIA_NIM_MODEL")
+        .ok()
+        .filter(|value| !value.trim().is_empty())
+        .unwrap_or_else(|| "nvidia/llama-3.3-nemotron-super-49b-v1".to_string())
+}
+
+fn nvidia_base_url() -> String {
+    std::env::var("NVIDIA_NIM_BASE_URL")
+        .ok()
+        .filter(|value| !value.trim().is_empty())
+        .unwrap_or_else(|| "https://integrate.api.nvidia.com/v1".to_string())
+        .trim_end_matches('/')
+        .to_string()
+}
+
+async fn call_nim_chat(
+    api_key: &str,
+    system: &str,
+    user: &str,
+    temperature: f32,
+    max_tokens: u64,
+) -> Result<String, String> {
+    let client = reqwest::Client::builder()
+        .timeout(Duration::from_secs(25))
+        .build()
+        .unwrap_or_else(|_| reqwest::Client::new());
+    let response = client
+        .post(format!("{}/chat/completions", nvidia_base_url()))
+        .bearer_auth(api_key)
+        .json(&json!({
+            "model": nvidia_model_name(),
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": user}
+            ],
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+            "response_format": {"type": "json_object"}
+        }))
+        .send()
+        .await
+        .map_err(|error| format!("NVIDIA NIM request failed locally: {error}"))?;
+    if !response.status().is_success() {
+        return Err(format!(
+            "NVIDIA NIM request failed locally: {}",
+            response.status()
+        ));
+    }
+    let value: serde_json::Value = response
+        .json()
+        .await
+        .map_err(|error| format!("NVIDIA NIM response decode failed locally: {error}"))?;
+    value["choices"][0]["message"]["content"]
+        .as_str()
+        .map(str::to_string)
+        .ok_or_else(|| "NVIDIA NIM returned no assistant content.".to_string())
+}
+
 fn google_api_key() -> Option<String> {
     ["GOOGLE_AI_API_KEY", "GOOGLE_API_KEY", "GEMINI_API_KEY"]
         .iter()
@@ -1125,6 +1207,35 @@ async fn call_gemma_for_issue(
     sources: &[serde_json::Value],
     posts: &[Post],
 ) -> Result<LocalIssue, String> {
+    if let Some(api_key) = nvidia_api_key() {
+        let blog_context = posts
+            .iter()
+            .take(24)
+            .map(|post| json!({ "title": post.title, "folder": post.folder, "excerpt": post.excerpt, "url": post.url }))
+            .collect::<Vec<_>>();
+        let payload = json!({
+            "task": "Draft a focused public blog news issue. Return JSON only with title, summary, markdown, and bullets.",
+            "date": date,
+            "keywords": keywords,
+            "ranking_policy": "Use live searched candidates first. Do not invent unsupported facts.",
+            "searched_news_candidates": sources.iter().filter(|source| source["origin"].as_str() == Some("live-search")).cloned().collect::<Vec<_>>(),
+            "ranked_news_items": sources,
+            "blog_archive_context": blog_context
+        });
+        if let Some(issue) = call_nim_chat(
+            &api_key,
+            "You are a careful editorial assistant. Follow the requested JSON schema exactly and never invent facts.",
+            &serde_json::to_string_pretty(&payload).unwrap_or_default(),
+            0.35,
+            2400,
+        )
+        .await
+        .ok()
+        .and_then(|text| parse_gemma_issue(&text))
+        {
+            return Ok(issue);
+        }
+    }
     let Some(api_key) = google_api_key() else {
         return Err("Google AI API key is not configured in this preview process.".to_string());
     };
@@ -1380,6 +1491,51 @@ fn search_query_from_keywords(keywords: &[String]) -> String {
 }
 
 async fn call_gemma_for_query_plan(query: &str) -> Result<(Vec<String>, String), String> {
+    if let Some(api_key) = nvidia_api_key() {
+        let payload = json!({
+            "task": "Expand an editorial news search query into precise source-search keywords.",
+            "originalQuery": query,
+            "instructions": [
+                "Return JSON only: {\"keywords\": string[], \"searchQuery\": string}.",
+                "Preserve the original phrase as the first keyword.",
+                "Add adjacent technical keywords, aliases, paper terms, and community phrases.",
+                "Do not invent specific paper titles, dates, companies, or claims."
+            ]
+        });
+        if let Some((keywords, search_query)) = call_nim_chat(
+            &api_key,
+            "You expand search queries. Return only valid JSON with keywords and searchQuery.",
+            &serde_json::to_string_pretty(&payload).unwrap_or_default(),
+            0.25,
+            900,
+        )
+        .await
+        .ok()
+        .and_then(|text| extract_json_object(&text).map(str::to_string))
+        .and_then(|candidate| serde_json::from_str::<serde_json::Value>(&candidate).ok())
+        .and_then(|parsed| {
+            let keywords: Vec<String> = parsed["keywords"]
+                .as_array()
+                .map(|items| {
+                    items
+                        .iter()
+                        .filter_map(|item| item.as_str().map(str::to_string))
+                        .collect()
+                })
+                .unwrap_or_default();
+            let search_query = parsed["searchQuery"]
+                .as_str()
+                .unwrap_or_default()
+                .to_string();
+            if keywords.is_empty() && search_query.is_empty() {
+                None
+            } else {
+                Some((keywords, search_query))
+            }
+        }) {
+            return Ok((keywords, search_query));
+        }
+    }
     let Some(api_key) = google_api_key() else {
         return Err("Gemma keyword expansion is unavailable without a Google AI API key; using the exact query.".to_string());
     };

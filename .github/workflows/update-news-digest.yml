@@ -36,6 +36,9 @@ jobs:
       GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       GOOGLE_AI_MODEL: ${{ vars.GOOGLE_AI_MODEL }}
+      NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+      NVIDIA_NIM_MODEL: ${{ vars.NVIDIA_NIM_MODEL }}
+      NVIDIA_NIM_BASE_URL: ${{ vars.NVIDIA_NIM_BASE_URL }}
       ENABLE_GEMMA_BETA_DIGEST: ${{ vars.ENABLE_GEMMA_BETA_DIGEST }}
     steps:
       - name: Checkout

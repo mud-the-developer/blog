@@ -39,9 +39,10 @@ test('desktop and mobile public homepage stay polished without layout overflow',
     const page = await context.newPage();
     await page.goto('/', { waitUntil: 'networkidle' });
     const audit = await runtimeAudit(page);
-    const publicPostCount = audit.archiveCount;
+    const publicPostCount = audit.postCards;
 
-    expect(audit.archiveCount, name).toBe(publicPostCount);
+    expect(audit.archiveCount, name).toBeGreaterThan(0);
+    expect(audit.archiveCount, name).toBeLessThanOrEqual(publicPostCount);
     expect(audit.postCards, name).toBe(publicPostCount);
     expect(audit.filetreeFiles, name).toBe(publicPostCount);
     expect(audit.graphCount, name).toBe(0);
@@ -66,7 +67,7 @@ test('reduced-motion keeps the filetree without ambient Pretext animation', asyn
   const page = await context.newPage();
   await page.goto('/', { waitUntil: 'networkidle' });
   const audit = await runtimeAudit(page);
-  const publicPostCount = audit.archiveCount;
+  const publicPostCount = audit.postCards;
   const animatedCount = await page.locator('.pretext-rain-column').evaluateAll((tokens) =>
     tokens.filter((token) => {
       const style = window.getComputedStyle(token);
@@ -74,7 +75,8 @@ test('reduced-motion keeps the filetree without ambient Pretext animation', asyn
     }).length,
   );
 
-  expect(audit.archiveCount).toBe(publicPostCount);
+  expect(audit.archiveCount).toBeGreaterThan(0);
+  expect(audit.archiveCount).toBeLessThanOrEqual(publicPostCount);
   expect(audit.graphCount).toBe(0);
   expect(audit.fieldStages).toBe(0);
   expect(audit.pretextPolishPanels).toBe(0);

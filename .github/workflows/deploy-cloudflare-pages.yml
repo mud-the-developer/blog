@@ -31,6 +31,9 @@ jobs:
       GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       GOOGLE_AI_MODEL: ${{ vars.GOOGLE_AI_MODEL }}
+      NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+      NVIDIA_NIM_MODEL: ${{ vars.NVIDIA_NIM_MODEL }}
+      NVIDIA_NIM_BASE_URL: ${{ vars.NVIDIA_NIM_BASE_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -117,6 +120,25 @@ jobs:
           set -euo pipefail
           printf '%s' "${GOOGLE_AI_MODEL}" | npx wrangler@4 pages secret put GOOGLE_AI_MODEL --project-name "${CF_PAGES_PROJECT}"
           echo "Synced GOOGLE_AI_MODEL to Cloudflare Pages environment."
+
+      - name: Sync NVIDIA NIM secret to Cloudflare Pages
+        if: ${{ env.NVIDIA_API_KEY != '' }}
+        run: |
+          set -euo pipefail
+          printf '%s' "${NVIDIA_API_KEY}" | npx wrangler@4 pages secret put NVIDIA_API_KEY --project-name "${CF_PAGES_PROJECT}"
+          echo "Synced NVIDIA_API_KEY to Cloudflare Pages secrets."
+
+      - name: Sync NVIDIA NIM variables to Cloudflare Pages
+        if: ${{ env.NVIDIA_NIM_MODEL != '' || env.NVIDIA_NIM_BASE_URL != '' }}
+        run: |
+          set -euo pipefail
+          if [[ -n "${NVIDIA_NIM_MODEL:-}" ]]; then
+            printf '%s' "${NVIDIA_NIM_MODEL}" | npx wrangler@4 pages secret put NVIDIA_NIM_MODEL --project-name "${CF_PAGES_PROJECT}"
+          fi
+          if [[ -n "${NVIDIA_NIM_BASE_URL:-}" ]]; then
+            printf '%s' "${NVIDIA_NIM_BASE_URL}" | npx wrangler@4 pages secret put NVIDIA_NIM_BASE_URL --project-name "${CF_PAGES_PROJECT}"
+          fi
+          echo "Synced NVIDIA NIM variables to Cloudflare Pages environment."
 
       - name: Deploy to Cloudflare Pages
         run: |
