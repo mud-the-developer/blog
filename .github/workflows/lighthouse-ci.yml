@@ -10,6 +10,7 @@ on:
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/lighthouse-ci.yml'
+  workflow_dispatch:
 
 jobs:
   lighthouse:
