@@ -541,9 +541,26 @@ pub async fn load_posts(posts_dir: impl AsRef<Path>) -> BlogResult<Vec<Post>> {
     Ok(posts)
 }
 
+const ARCHIVE_RETENTION_DAYS: i64 = 7;
+
+fn archive_date(post: &Post) -> Option<chrono::NaiveDate> {
+    chrono::NaiveDate::parse_from_str(post.date.get(..10)?, "%Y-%m-%d").ok()
+}
+
 fn archive_json(posts: &[Post]) -> BlogResult<String> {
+    // Keep the source Markdown and rendered post pages indefinitely, but expose
+    // only the most recent seven calendar days to the client-side archive/search
+    // UI. Using the newest post as the reference makes builds reproducible and
+    // still advances the retention window whenever new content is published.
+    let newest_date = posts.iter().filter_map(archive_date).max();
+    let cutoff =
+        newest_date.map(|date| date - chrono::Days::new((ARCHIVE_RETENTION_DAYS - 1) as u64));
+
     let archive = posts
         .iter()
+        .filter(|post| {
+            archive_date(post).is_some_and(|date| cutoff.is_none_or(|cutoff| date >= cutoff))
+        })
         .map(|post| ArchivePost {
             title: &post.title,
             date: &post.date,
