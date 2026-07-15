@@ -30,10 +30,6 @@
   <main class="public-shell">
     <section class="archive-panel" id="posts" aria-label="home post and archive">
       <div class="home-post-intro" data-home-post>
-        <figure class="pretext-editorial-layer" data-pretext-editorial aria-label="archive typography motion">
-          <canvas class="pretext-editorial-canvas" aria-hidden="true"></canvas>
-          <figcaption class="visually-hidden">Animated archive typography measured and laid out with Cheng Lou's Pretext library.</figcaption>
-        </figure>
         <div class="home-post-body post-body" data-home-post-body>
           {{ home_html|safe }}
         </div>
@@ -96,7 +92,6 @@
   </main>
 
   <script id="archive-data" type="application/json">{{ archive_json|safe }}</script>
-  <script type="module" src="/assets/pretext-editorial.mjs"></script>
   <script type="module" src="/assets/site-chrome.mjs"></script>
   <script src="/assets/web-vitals-rum.js"></script>
 </body>

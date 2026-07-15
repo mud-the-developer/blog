@@ -916,16 +916,6 @@ pub async fn build_static_site(
         assets_dir.join("web-vitals-rum.js"),
     )
     .await?;
-    fs::copy(
-        "src/pretext-editorial.mjs",
-        assets_dir.join("pretext-editorial.mjs"),
-    )
-    .await?;
-    copy_dir_sync(
-        Path::new("node_modules/@chenglou/pretext/dist"),
-        &assets_dir.join("pretext"),
-    )?;
-
     let archive = archive_json(&posts)?;
     fs::write(out_dir.join("archive.json"), archive).await?;
     fs::write(out_dir.join("robots.txt"), render_robots_txt()).await?;

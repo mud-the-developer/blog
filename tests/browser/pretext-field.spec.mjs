@@ -20,7 +20,7 @@ async function archivePostCount(page) {
   });
 }
 
-test('homepage is a polished public filetree with measured Pretext motion and no legacy hero pane', async ({ page }) => {
+test('homepage is a polished public filetree without decorative background motion or a legacy hero pane', async ({ page }) => {
   await page.goto('/');
   const publicPostCount = await page.locator('.post-card').count();
   const archiveCount = await archivePostCount(page);
@@ -56,8 +56,8 @@ test('homepage is a polished public filetree with measured Pretext motion and no
   await expect(page.locator('[data-blog-chat]')).toHaveCount(0);
   await expect(page.locator('[data-pretext-polish]')).toHaveCount(0);
   await expect(page.locator('script[src="/assets/pretext-polish.mjs"]')).toHaveCount(0);
-  await expect(page.locator('[data-pretext-editorial][data-pretext-ready="true"]')).toHaveCount(1);
-  await expect(page.locator('script[src="/assets/pretext-editorial.mjs"]')).toHaveCount(1);
+  await expect(page.locator('[data-pretext-editorial]')).toHaveCount(0);
+  await expect(page.locator('script[src="/assets/pretext-editorial.mjs"]')).toHaveCount(0);
   await expect(page.locator('script[src="/assets/site-chrome.mjs"]')).toHaveCount(1);
   await expect(page.locator('script[src="/assets/blog-lab.mjs"]')).toHaveCount(0);
   await expect(page.locator('script[src="/assets/pretext-field.mjs"]')).toHaveCount(0);
