@@ -911,6 +911,11 @@ pub async fn build_static_site(
         assets_dir.join("site-chrome-effects.mjs"),
     )
     .await?;
+    fs::copy(
+        "src/web-vitals-rum.js",
+        assets_dir.join("web-vitals-rum.js"),
+    )
+    .await?;
 
     let archive = archive_json(&posts)?;
     fs::write(out_dir.join("archive.json"), archive).await?;
