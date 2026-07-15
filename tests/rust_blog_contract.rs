@@ -174,7 +174,7 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
     assert!(!style.contains(".archive-graph"));
     assert!(!style.to_ascii_lowercase().contains("neon"));
     assert!(
-        style.len() <= 41_800,
+        style.len() <= 43_000,
         "public polish CSS should stay bounded even with responsive controls, post chrome spacing, icons, theme modes, dark contrast guards, editorial archive controls, mobile news compression, card-news surfaces, CFP tables, and Pretext layers"
     );
 
@@ -301,7 +301,7 @@ async fn builds_public_polished_home_with_filetree_and_no_hero_pane_or_pretext_m
     assert!(news_search.contains("experimental"));
     assert!(news_search.contains("Search query mode"));
     assert!(news_search.contains("Exact keyword"));
-    assert!(news_search.contains("Gemma 4 expand"));
+    assert!(news_search.contains("AI-assisted expansion"));
     assert!(news_search.contains("GitHub repositories"));
     assert!(news_search.contains("arXiv papers"));
     assert!(news_search.contains("Scholar link"));

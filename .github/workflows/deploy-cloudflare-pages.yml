@@ -32,8 +32,9 @@ jobs:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       GOOGLE_AI_MODEL: ${{ vars.GOOGLE_AI_MODEL }}
       NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
-      NVIDIA_NIM_MODEL: ${{ vars.NVIDIA_NIM_MODEL }}
-      NVIDIA_NIM_BASE_URL: ${{ vars.NVIDIA_NIM_BASE_URL }}
+      NVIDIA_NIM_MODEL: ${{ vars.NVIDIA_NIM_MODEL || secrets.NVIDIA_NIM_MODEL }}
+      NVIDIA_NIM_BASE_URL: ${{ vars.NVIDIA_NIM_BASE_URL || 'https://integrate.api.nvidia.com/v1' }}
+      SITE_URL: ${{ vars.SITE_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -147,3 +148,36 @@ jobs:
             --project-name "${CF_PAGES_PROJECT}" \
             --branch "${GITHUB_REF_NAME:-main}" \
             --commit-hash "${GITHUB_SHA}"
+
+      - name: Smoke test deployed site
+        run: |
+          set -euo pipefail
+          site_url="${SITE_URL:-https://${CF_PAGES_PROJECT}.pages.dev}"
+          site_url="${site_url%/}"
+          paths=(/ /news/ /cfp/ /news/search/ /archive.json /news/data/latest.json /cfp/data/latest.json)
+          for attempt in {1..12}; do
+            failed=0
+            for path in "${paths[@]}"; do
+              status="$(curl -sS -L -o /tmp/blog-smoke-body -w '%{http_code}' "${site_url}${path}" || true)"
+              if [[ "${status}" != "200" ]]; then
+                echo "Smoke attempt ${attempt}: ${path} returned HTTP ${status}"
+                failed=1
+                continue
+              fi
+              if [[ "${path}" == *.json ]]; then
+                python3 - /tmp/blog-smoke-body "${path}" <<'PY'
+          import json, sys
+          with open(sys.argv[1], encoding="utf-8") as handle:
+              json.load(handle)
+          print(f"Validated JSON: {sys.argv[2]}")
+          PY
+              fi
+            done
+            if [[ "${failed}" == "0" ]]; then
+              echo "Live smoke test passed for ${site_url}"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Live smoke test failed for ${site_url}"
+          exit 1

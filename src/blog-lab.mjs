@@ -103,9 +103,11 @@ function renderFocusedIssue(output, data) {
   summary.textContent = data.issue?.summary || '';
   const metrics = document.createElement('div');
   metrics.className = 'generated-news-metrics';
-  const modelLabel = data.usedGemma
-    ? String(data.modelName || 'Gemma').replace(/^models\//, '')
-    : 'fallback';
+  const modelLabel = data.provider
+    ? String(data.provider).replace(/^models\//, '')
+    : data.usedGemma
+      ? 'AI-assisted'
+      : 'local fallback';
   const metricRows = [
     ['sources', String((data.sources || []).length)],
     ['model', modelLabel],

@@ -37,6 +37,7 @@ test('homepage is a polished public filetree with no pretext motion or hero pane
   expect(iconCount).toBeGreaterThanOrEqual(7);
   await expect(page.getByRole('link', { name: /^Data$/ })).toHaveCount(0);
   await expect(page.getByRole('link', { name: /^News$/ })).toHaveAttribute('href', '/news/');
+  await expect(page.getByText('Latest research note', { exact: true })).toBeVisible();
 
   await expect(page.locator('.reader-intro')).toHaveCount(0);
   await expect(page.locator('.lede')).toHaveCount(0);
@@ -225,6 +226,8 @@ test('local preview serves focused issue API and a dedicated news page', async (
   await expect(page.locator('html')).toHaveAttribute('data-askama-template', 'news-search');
   await expect(page.getByRole('link', { name: /^News Search$/ })).toHaveAttribute('aria-current', 'page');
   await expect(page.locator('[data-focused-issue-lab]')).toBeVisible();
+  await expect(page.getByText('AI-assisted expansion', { exact: true })).toBeVisible();
+  await expect(page.getByText('Gemma 4', { exact: false })).toHaveCount(0);
   await expect(page.locator('[data-overview-figure]')).toHaveCount(0);
 });
 
@@ -504,7 +507,10 @@ test('narrow news search and post chrome keep controls separated without overlap
     const queryLabels = rects('.query-mode-picker label');
     const sourcePicker = rect('.source-picker');
     const sourceGroups = rects('.source-picker-group');
+    const sourceLabels = rects('.source-picker label');
+    const sourceActionButtons = rects('.source-picker-group [data-source-group-action]');
     const actionButtons = rects('.draft-action-row button');
+    const queryInput = document.querySelector('[name="query"]');
     return {
       scrollWidth: document.documentElement.scrollWidth,
       clientWidth: document.documentElement.clientWidth,
@@ -513,6 +519,9 @@ test('narrow news search and post chrome keep controls separated without overlap
       queryLabelsInside: queryLabels.map((label) => inside(label, query)),
       sourceGroupWidths: sourceGroups.map((group) => group.width),
       sourceGroupsInside: sourceGroups.map((group) => inside(group, sourcePicker)),
+      sourceLabelHeights: sourceLabels.map((label) => label.height),
+      sourceActionHeights: sourceActionButtons.map((button) => button.height),
+      queryInputFontSize: queryInput ? Number.parseFloat(getComputedStyle(queryInput).fontSize) : 0,
       actionButtonOverlaps: actionButtons.flatMap((button, index) => actionButtons.slice(index + 1).map((next) => overlaps(button, next))),
     };
   });
@@ -522,21 +531,30 @@ test('narrow news search and post chrome keep controls separated without overlap
   expect(newsLayout.queryLabelsInside).toEqual([true, true]);
   expect(newsLayout.sourceGroupWidths.every((width) => width >= 160)).toBe(true);
   expect(newsLayout.sourceGroupsInside).toEqual([true, true, true, true]);
+  expect(newsLayout.sourceLabelHeights.every((height) => height >= 44)).toBe(true);
+  expect(newsLayout.sourceActionHeights.every((height) => height >= 44)).toBe(true);
+  expect(newsLayout.queryInputFontSize).toBeGreaterThanOrEqual(16);
   expect(newsLayout.actionButtonOverlaps.every((value) => value === false)).toBe(true);
 
   await page.goto('/posts/jinhyuk-kim/');
   const postLayout = await page.evaluate(() => {
     const back = document.querySelector('.back-link')?.getBoundingClientRect();
     const metadata = document.querySelector('.post-reader > .eyebrow')?.getBoundingClientRect();
+    const body = document.querySelector('.post-body');
+    const bodyStyles = body ? getComputedStyle(body) : null;
     return {
       backBottom: back?.bottom || 0,
       metadataTop: metadata?.top || 0,
       scrollWidth: document.documentElement.scrollWidth,
       clientWidth: document.documentElement.clientWidth,
+      bodyFontSize: bodyStyles ? Number.parseFloat(bodyStyles.fontSize) : 0,
+      bodyLineHeight: bodyStyles ? Number.parseFloat(bodyStyles.lineHeight) : 0,
     };
   });
   expect(postLayout.scrollWidth).toBeLessThanOrEqual(postLayout.clientWidth + 1);
   expect(postLayout.metadataTop).toBeGreaterThanOrEqual(postLayout.backBottom + 10);
+  expect(postLayout.bodyFontSize).toBeGreaterThanOrEqual(17);
+  expect(postLayout.bodyLineHeight).toBeGreaterThanOrEqual(30.5);
 });
 
 test('post fragment remains direct readable cards for safe replacement', async ({ page, request }) => {
@@ -629,7 +647,7 @@ test('news page searches candidates before drafting an issue and does not expose
   await expect(page.getByRole('searchbox', { name: 'Search query' })).toBeVisible();
   await expect(page.getByRole('group', { name: 'Search query mode' })).toBeVisible();
   await expect(page.getByLabel('Exact keyword')).toBeChecked();
-  await expect(page.getByLabel('Gemma 4 expand')).not.toBeChecked();
+  await expect(page.getByLabel('AI-assisted expansion')).not.toBeChecked();
   await expect(page.getByRole('group', { name: 'News sources' })).toBeVisible();
   await expect(page.locator('.source-picker-group')).toHaveCount(4);
   await expect(page.locator('.source-picker-group[data-source-group="code"]')).toContainText('Code');
@@ -665,8 +683,8 @@ test('news page searches candidates before drafting an issue and does not expose
   const stackMotion = await page.locator('[data-news-signal-stack] .signal-row').first().evaluate((node) => getComputedStyle(node).animationName);
   expect(stackMotion).toContain('signal-row-drift');
 
-  await page.getByRole('searchbox', { name: 'Search query' }).fill('open RAN Gemma');
-  await page.getByLabel('Gemma 4 expand').check();
+  await page.getByRole('searchbox', { name: 'Search query' }).fill('open RAN AI');
+  await page.getByLabel('AI-assisted expansion').check();
   const dateLayout = await page.getByLabel('Issue date').evaluate((node) => {
     const input = node.getBoundingClientRect();
     const field = node.closest('.issue-date-field')?.getBoundingClientRect();
