@@ -250,6 +250,7 @@ async fn builds_public_polished_home_with_filetree_and_no_decorative_pretext_mot
 
     let cfp_post = fs::read_to_string(out_dir.join("posts/2026-07-03-cfp-radar/index.html"))?;
     assert!(cfp_post.contains("Nearest submission deadlines"));
+    assert!(cfp_post.contains("/assets/cfp-deadlines.mjs"));
     assert!(cfp_post.contains("Three-by-three quick view"));
     assert!(cfp_post.contains("Full grouped watchlists"));
     assert!(cfp_post.contains(">Venue</th>"));

@@ -902,6 +902,11 @@ pub async fn build_static_site(
     .await?;
     fs::copy("src/site-chrome.mjs", assets_dir.join("site-chrome.mjs")).await?;
     fs::copy(
+        "src/cfp-deadlines.mjs",
+        assets_dir.join("cfp-deadlines.mjs"),
+    )
+    .await?;
+    fs::copy(
         "src/site-chrome-state.mjs",
         assets_dir.join("site-chrome-state.mjs"),
     )
