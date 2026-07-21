@@ -470,6 +470,44 @@
     ],
     "title": "Scaling Gateways and Agentic Reasoning"
   },
+  "3afa656562f0dd36dd60172ec9a6b19c9d922b1bb7762d98e7ab8c3b11d316c9": {
+    "article_body": [
+      "GitHub velocity today was notably driven by agent-centric projects. NousResearch's `hermes-agent`, described as an agent that \"grows with you,\" registered significant activity, indicating continued interest in adaptive AI systems. Close behind, `openai/codex` maintained strong momentum as a lightweight coding agent, alongside `abhigyanpatwari/GitNexus`, a client-side knowledge graph creator for code intelligence. This sustained focus suggests a maturing ecosystem for AI agents, from general-purpose to specialized coding tools.",
+      "In research, multimodal LLMs for video applications emerged as a central theme. The paper \"TimeLens2: Generalist Video Temporal Grounding with Multimodal LLMs\" garnered considerable attention for its work on identifying specific events within video content. Another notable paper, \"Apple-π: Benchmarking Thinking with Video Towards Law-Grounded Physical Intelligence,\" explored evaluating physical plausibility in video generation models. These papers collectively highlight a push towards more nuanced and context-aware AI understanding of dynamic visual data.",
+      "Community discussions today reflected on AI's expanding intellectual frontiers. A key topic circulating was the report of \"Human mathematicians are surpassed by AI in finding counterexamples,\" signaling a shift in perceptions regarding AI's capacity for abstract problem-solving. Other social signals included discussions around potential competitive dynamics between different LLM providers and methods for measuring AI writing styles in academic papers, indicating a broader engagement with the implications of AI advancements.",
+      "Today's digest compiled 10 repository signals, 10 paper selections, and 10 community items, drawing from sources including GitHub, Hugging Face Papers, GeekNews, and X. This volume underscores a consistent pace of innovation and discourse across the AI ecosystem."
+    ],
+    "closing": "This briefing provides a structured overview of key developments in the AI beta landscape for July 22, 2026.",
+    "dek": "Agent-focused projects are leading GitHub activity, while new research in multimodal LLMs for video understanding gains traction, and social channels discuss AI's mathematical advancements.",
+    "lead": "The AI development landscape on July 22, 2026, shows a strong emphasis on agentic systems, particularly within open-source repositories. Simultaneously, academic attention is clustering around advanced multimodal large language models designed for complex video analysis. These technical shifts are paralleled by community discussions exploring the expanding capabilities of AI, notably in abstract fields like mathematics.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "AI agent development, particularly in open-source, continues to accelerate, focusing on adaptive and specialized coding applications.",
+      "Research priorities are shifting towards advanced multimodal LLMs capable of sophisticated video analysis and temporal grounding.",
+      "Public and academic discourse increasingly acknowledges AI's growing capabilities in complex, abstract problem-solving, such as mathematics.",
+      "The daily flow of new repositories, papers, and community discussions remains robust, reflecting ongoing innovation."
+    ],
+    "title": "Daily AI Beta Brief: Agent Development and Video MLLMs Drive Today's Momentum"
+  },
+  "3afa656562f0dd36dd60172ec9a6b19c9d922b1bb7762d98e7ab8c3b11d316c9::overview": {
+    "article_body": [
+      "GitHub velocity today was notably driven by agent-centric projects. NousResearch's `hermes-agent`, described as an agent that \"grows with you,\" registered significant activity, indicating continued interest in adaptive AI systems. Close behind, `openai/codex` maintained strong momentum as a lightweight coding agent, alongside `abhigyanpatwari/GitNexus`, a client-side knowledge graph creator for code intelligence. This sustained focus suggests a maturing ecosystem for AI agents, from general-purpose to specialized coding tools.",
+      "In research, multimodal LLMs for video applications emerged as a central theme. The paper \"TimeLens2: Generalist Video Temporal Grounding with Multimodal LLMs\" garnered considerable attention for its work on identifying specific events within video content. Another notable paper, \"Apple-π: Benchmarking Thinking with Video Towards Law-Grounded Physical Intelligence,\" explored evaluating physical plausibility in video generation models. These papers collectively highlight a push towards more nuanced and context-aware AI understanding of dynamic visual data.",
+      "Community discussions today reflected on AI's expanding intellectual frontiers. A key topic circulating was the report of \"Human mathematicians are surpassed by AI in finding counterexamples,\" signaling a shift in perceptions regarding AI's capacity for abstract problem-solving. Other social signals included discussions around potential competitive dynamics between different LLM providers and methods for measuring AI writing styles in academic papers, indicating a broader engagement with the implications of AI advancements.",
+      "Today's digest compiled 10 repository signals, 10 paper selections, and 10 community items, drawing from sources including GitHub, Hugging Face Papers, GeekNews, and X. This volume underscores a consistent pace of innovation and discourse across the AI ecosystem."
+    ],
+    "closing": "This briefing provides a structured overview of key developments in the AI beta landscape for July 22, 2026.",
+    "dek": "Agent-focused projects are leading GitHub activity, while new research in multimodal LLMs for video understanding gains traction, and social channels discuss AI's mathematical advancements.",
+    "lead": "The AI development landscape on July 22, 2026, shows a strong emphasis on agentic systems, particularly within open-source repositories. Simultaneously, academic attention is clustering around advanced multimodal large language models designed for complex video analysis. These technical shifts are paralleled by community discussions exploring the expanding capabilities of AI, notably in abstract fields like mathematics.",
+    "takeaways": [
+      "AI agent development, particularly in open-source, continues to accelerate, focusing on adaptive and specialized coding applications.",
+      "Research priorities are shifting towards advanced multimodal LLMs capable of sophisticated video analysis and temporal grounding.",
+      "Public and academic discourse increasingly acknowledges AI's growing capabilities in complex, abstract problem-solving, such as mathematics.",
+      "The daily flow of new repositories, papers, and community discussions remains robust, reflecting ongoing innovation."
+    ],
+    "title": "Daily AI Beta Brief: Agent Development and Video MLLMs Drive Today's Momentum"
+  },
   "3ed34a7ce98cfe4a44ba236e131a86db61073193df7ea138bbcc2aa7ee479f0a": {
     "paragraphs": [
       "The latest activity in the developer ecosystem is dominated by high-performance tooling, with vLLM maintaining strong momentum as a high-throughput and memory-efficient inference engine for LLMs. Simultaneously, OpenAI's Codex is seeing significant interest as a lightweight coding agent designed to run directly within the terminal.",
