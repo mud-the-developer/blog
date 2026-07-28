@@ -1948,6 +1948,42 @@
     ],
     "title": "AI Beta Brief: Agents Lead, Open Source Formats Emerge"
   },
+  "cd29e1b846fdba6c8b6693c9a5669f84e3f871afe80acf611780a0f2adc8ba39": {
+    "article_body": [
+      "Development in AI agents remains a central theme in open-source repositories. NousResearch's hermes-agent continues to attract significant attention, positioned as a growing agent system. Other notable projects include BerriAI/litellm, an efficient AI gateway, and vllm-project/vllm, a high-throughput inference engine for large language models. Innovations in optimizing LLM interactions, such as headroomlabs-ai/headroom for token compression and various coding agents like anomalyco/opencode, also saw considerable activity.",
+      "Academic research highlights advancements in video generation, with the Sol-Attn paper proposing methods to accelerate inference through dynamic sparse attention. Further research introduced Kimi K3, a large Mixture-of-Experts model with vision capabilities and an extensive context window, indicating continued scaling efforts. Papers also explored data strategies for embodied manipulation and various distillation techniques for improving agentic search and long-horizon planning, reflecting ongoing efforts to enhance model efficiency and capability.",
+      "Community discussions encompassed a range of topics, from the ethical and operational implications of AI in corporate settings, such as a lawsuit involving a Netflix employee, to broader societal concerns like the use of rare books by AI companies. The Vatican's emerging role in the AI debate and Anthropic's position on open-weight models also drew attention. On social platforms, the introduction of new GPT-5.6 variants in agent performance arenas and discussions around the future of 'Agentic Finance' underscored the growing real-world applications and impact of AI."
+    ],
+    "closing": "This concludes today's AI Beta Brief. We will continue to monitor these developments.",
+    "dek": "Today's AI landscape highlights significant activity in agent development, led by NousResearch/hermes-agent, alongside new research in video generation inference, and varied community discussions.",
+    "lead": "Agent-based AI systems continue to show strong momentum, with NousResearch's hermes-agent leading GitHub activity. Concurrently, new research is advancing video generation capabilities, exemplified by Sol-Attn's work on accelerating inference. Community discussions today touched on corporate AI policies and the broader implications of agentic systems.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "Agent development continues to be a high-velocity area in open-source AI projects.",
+      "New research is significantly advancing video generation inference efficiency.",
+      "Ethical considerations and corporate policies surrounding AI are prominent in community discourse.",
+      "Efforts to scale models and improve embodied AI capabilities remain active research fronts."
+    ],
+    "title": "AI Beta Brief: Agent Development and Video Generation Lead Today's Focus"
+  },
+  "cd29e1b846fdba6c8b6693c9a5669f84e3f871afe80acf611780a0f2adc8ba39::overview": {
+    "article_body": [
+      "Development in AI agents remains a central theme in open-source repositories. NousResearch's hermes-agent continues to attract significant attention, positioned as a growing agent system. Other notable projects include BerriAI/litellm, an efficient AI gateway, and vllm-project/vllm, a high-throughput inference engine for large language models. Innovations in optimizing LLM interactions, such as headroomlabs-ai/headroom for token compression and various coding agents like anomalyco/opencode, also saw considerable activity.",
+      "Academic research highlights advancements in video generation, with the Sol-Attn paper proposing methods to accelerate inference through dynamic sparse attention. Further research introduced Kimi K3, a large Mixture-of-Experts model with vision capabilities and an extensive context window, indicating continued scaling efforts. Papers also explored data strategies for embodied manipulation and various distillation techniques for improving agentic search and long-horizon planning, reflecting ongoing efforts to enhance model efficiency and capability.",
+      "Community discussions encompassed a range of topics, from the ethical and operational implications of AI in corporate settings, such as a lawsuit involving a Netflix employee, to broader societal concerns like the use of rare books by AI companies. The Vatican's emerging role in the AI debate and Anthropic's position on open-weight models also drew attention. On social platforms, the introduction of new GPT-5.6 variants in agent performance arenas and discussions around the future of 'Agentic Finance' underscored the growing real-world applications and impact of AI."
+    ],
+    "closing": "This concludes today's AI Beta Brief. We will continue to monitor these developments.",
+    "dek": "Today's AI landscape highlights significant activity in agent development, led by NousResearch/hermes-agent, alongside new research in video generation inference, and varied community discussions.",
+    "lead": "Agent-based AI systems continue to show strong momentum, with NousResearch's hermes-agent leading GitHub activity. Concurrently, new research is advancing video generation capabilities, exemplified by Sol-Attn's work on accelerating inference. Community discussions today touched on corporate AI policies and the broader implications of agentic systems.",
+    "takeaways": [
+      "Agent development continues to be a high-velocity area in open-source AI projects.",
+      "New research is significantly advancing video generation inference efficiency.",
+      "Ethical considerations and corporate policies surrounding AI are prominent in community discourse.",
+      "Efforts to scale models and improve embodied AI capabilities remain active research fronts."
+    ],
+    "title": "AI Beta Brief: Agent Development and Video Generation Lead Today's Focus"
+  },
   "cfcfa5e9125c14f04f1cb28b85b63ce6992cc3752edc491e4c4ecda932cae127": {
     "article_body": [
       "GitHub activity for June 18th was prominently shaped by agentic coding tools, with OpenAI's `codex` repository maintaining its lead. This lightweight terminal-based coding agent registered significant velocity, reflecting ongoing developer interest in AI-assisted development workflows. Close behind, `vllm-project/vllm` continued its strong showing as a high-throughput inference engine for large language models, underscoring the demand for efficient LLM deployment solutions. Other notable repositories included `code-yeongyu/oh-my-openagent` and `NousResearch/hermes-agent`, further solidifying the trend towards advanced AI agents.",
