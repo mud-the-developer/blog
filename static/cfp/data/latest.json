@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-07-26T16:31:34Z",
-  "issueDate": "2026-07-27",
+  "generatedAt": "2026-08-02T16:30:26Z",
+  "issueDate": "2026-08-03",
   "sourceCount": 67,
-  "activeCount": 22,
+  "activeCount": 23,
   "conferenceCount": 46,
   "workshopCount": 11,
   "journalCount": 10,
-  "withConfiguredDeadlineCount": 56,
+  "withConfiguredDeadlineCount": 54,
   "fetchedCount": 63,
   "tracks": {
     "AI / ML": 4,
@@ -65,7 +65,7 @@
         "edge"
       ],
       "configuredDeadline": "2025-07-24",
-      "daysUntilDeadline": -368,
+      "daysUntilDeadline": -375,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -96,7 +96,7 @@
         "edge"
       ],
       "configuredDeadline": "2025-08-31",
-      "daysUntilDeadline": -330,
+      "daysUntilDeadline": -337,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -124,7 +124,7 @@
         "networking"
       ],
       "configuredDeadline": "2025-09-18",
-      "daysUntilDeadline": -312,
+      "daysUntilDeadline": -319,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -156,7 +156,7 @@
         "openreview"
       ],
       "configuredDeadline": "2025-09-24",
-      "daysUntilDeadline": -306,
+      "daysUntilDeadline": -313,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": []
@@ -182,17 +182,10 @@
         "mobile"
       ],
       "configuredDeadline": "2025-10-12",
-      "daysUntilDeadline": -288,
+      "daysUntilDeadline": -295,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
-      "deadlineSignals": [
-        "Submit Papers Important Dates: Paper submission: September 12, 2025 October 12, 2025 (Firm Deadline) Paper Acceptance: November 15, 2025 Camera-ready paper: November 30, 2025",
-        "Important Dates: Paper submission: September 12, 2025 October 12, 2025 (Firm Deadline) Paper Acceptance: November 15, 2025 Camera-ready paper: November 30, 2025",
-        "CfP: Social Computing and Data Mining (SCDM) Submit Papers CfP: Signal Processing for Communications (SPC) Submit Papers CfP: Wireless Ad Hoc and Sensor Networks (WASN) Submit Papers CfP: Wireless Communications (WC) Submit Papers Important Dates: Paper submission: September 12, 2025 October 12, 2025 (Firm Deadline) Paper Acceptance:",
-        "CfP: Signal Processing for Communications (SPC) Submit Papers CfP: Wireless Ad Hoc and Sensor Networks (WASN) Submit Papers CfP: Wireless Communications (WC) Submit Papers Important Dates: Paper submission: September 12, 2025 October 12, 2025 (Firm Deadline) Paper Acceptance: November 15, 2025 Camera-ready paper: No",
-        "CfP: Wireless Ad Hoc and Sensor Networks (WASN) Submit Papers CfP: Wireless Communications (WC) Submit Papers Important Dates: Paper submission: September 12, 2025 October 12, 2025 (Firm Deadline) Paper Acceptance: November 15, 2025 Camera-ready paper: November 30, 2025",
-        "CfP: Wireless Communications (WC) Submit Papers Important Dates: Paper submission: September 12, 2025 October 12, 2025 (Firm Deadline) Paper Acceptance: November 15, 2025 Camera-ready paper: November 30, 2025"
-      ]
+      "deadlineSignals": []
     },
     {
       "title": "IEEE Wireless Communications and Networking Conference",
@@ -215,7 +208,7 @@
         "6g"
       ],
       "configuredDeadline": "2025-10-26",
-      "daysUntilDeadline": -274,
+      "daysUntilDeadline": -281,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -223,33 +216,6 @@
         "rtant Dates Paper Submission Deadline 26 October 2025 Final Notification of Acceptance 11 January 2026 Camera-Ready Papers Due 7 February 2026 Technical Tracks Track 1: Physical Layer and Communication Theory",
         "Important Dates Paper Submission Deadline 26 October 2025 Final Notification of Acceptance 11 January 2026 Camera-Ready Papers Due 7 February 2026 Technical Tracks",
         "CFP Flyer Important Dates Paper Submission Deadline 26 October 2025 Final Notification of Acceptance 11 January 2026 Camera-Ready Papers Due 7 February 2026 Techn"
-      ]
-    },
-    {
-      "title": "IEEE International Conference on Communications",
-      "acronym": "ICC",
-      "venueType": "Conference",
-      "track": "Wireless / Communications",
-      "url": "https://icc2026.ieee-icc.org/authors/call-symposia-papers",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
-      "verifiedRank": "",
-      "verifiedRankSource": "",
-      "verifiedRankYear": "",
-      "impactFactor": "N/A — conference; use IEEE ComSoc flagship status instead",
-      "impactFactorYear": "N/A for conferences",
-      "note": "Communications venue CFP source; monitored for symposium and workshop calls.",
-      "tags": [
-        "communications",
-        "wireless",
-        "ran"
-      ],
-      "configuredDeadline": "2025-11-10",
-      "daysUntilDeadline": -259,
-      "deadlineStatus": "closed",
-      "fetchStatus": "fetch failed",
-      "deadlineSignals": [
-        "AI-assisted official CFP lookup via models/gemini-2.5-flash: PAPER SUBMISSION DEADLINE EXTENSION*** 10 November 2025 (FIRM) Source: https://icc2026.ieee-icc.org/authors/call-symposia-papers"
       ]
     },
     {
@@ -271,7 +237,7 @@
         "privacy"
       ],
       "configuredDeadline": "2025-11-13",
-      "daysUntilDeadline": -256,
+      "daysUntilDeadline": -263,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -306,16 +272,10 @@
         "edge"
       ],
       "configuredDeadline": "2025-12-05",
-      "daysUntilDeadline": -234,
+      "daysUntilDeadline": -241,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
-      "deadlineSignals": [
-        "Symposium application is open April 25th, 2026 - N2Women Workshop submission deadline has been extended April 20th, 2026 - Accepted Papers have now been rleased April 16th, 2026 - Registration is open April 10th, 2026 - Call for Posters deadline is extended Feb 24th, 2026 - Artefact Evaluation deadline is updated Jan 31st, 2026 - Accepted Workshops is now available Jan 31st, 2026 - Attending Information is now available Dec 11th, 2025 - Keynotes are available Nov 14th, 2025 - Program Committee is available Aug 29th, 2025 - PC Self Nomination is due Aug 8th, 2025 - Paper Submission is open Aug 8th, 2025 -",
-        "ASSET Symposium application is open April 25th, 2026 - N2Women Workshop submission deadline has been extended April 20th, 2026 - Accepted Papers have now been rleased April 16th, 2026 - Registration is open April 10th, 2026 - Call for Posters deadline is extended Feb 24th, 2026 - Artefact Evaluation deadline is updated Jan 31st, 2026 - Accepted Workshops is now available Jan 31st, 2026 - Attending Information is now available Dec 11th, 2025 - Keynotes are available Nov 14th, 2025 - Program Committee is available Aug 29th, 2025 - PC Self Nomination is due Aug 8th, 2025 - Paper Submission is open Aug 8",
-        "il 16th, 2026 - Registration is open April 10th, 2026 - Call for Posters deadline is extended Feb 24th, 2026 - Artefact Evaluation deadline is updated Jan 31st, 2026 - Accepted Workshops is now available Jan 31st, 2026 - Attending Information is now available Dec 11th, 2025 - Keynotes are available Nov 14th, 2025 - Program Committee is available Aug 29th, 2025 - PC Self Nomination is due Aug 8th, 2025 - Paper Submission is open Aug 8th, 2025 - TPC Self Nomination is open Aug 8th, 2025 - Call for Papers is updated Jul, 2025 - ACM MobiSys 2026 webpage goes live Sponsors Gold Sponsors",
-        "Call for Posters deadline is extended Feb 24th, 2026 - Artefact Evaluation deadline is updated Jan 31st, 2026 - Accepted Workshops is now available Jan 31st, 2026 - Attending Information is now available Dec 11th, 2025 - Keynotes are available Nov 14th, 2025 - Program Committee is available Aug 29th, 2025 - PC Self Nomination is due Aug 8th, 2025 - Paper Submission is open Aug 8th, 2025 - TPC Self Nomination is open Aug 8th, 2025 - Call for Papers is updated Jul, 2025 - ACM MobiSys 2026 webpage goes live Sponsors Gold Sponsors Silver Sponsors Bronze Sponsors",
-        "able Aug 29th, 2025 - PC Self Nomination is due Aug 8th, 2025 - Paper Submission is open Aug 8th, 2025 - TPC Self Nomination is open Aug 8th, 2025 - Call for Papers is updated Jul, 2025 - ACM MobiSys 2026 webpage goes live Sponsors Gold Sponsors Silver Sponsors Bronze Sponsors .academic-sponsor{height:auto} Academic Sponsors &copy; 2026 ACM | Header &copy; Wikimedia"
-      ]
+      "deadlineSignals": []
     },
     {
       "title": "IEEE International Conference on Machine Learning for Communication and Networking",
@@ -338,7 +298,7 @@
         "networking"
       ],
       "configuredDeadline": "2025-12-10",
-      "daysUntilDeadline": -229,
+      "daysUntilDeadline": -236,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -370,7 +330,7 @@
         "edge"
       ],
       "configuredDeadline": "2025-12-30",
-      "daysUntilDeadline": -209,
+      "daysUntilDeadline": -216,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -402,7 +362,7 @@
         "ran"
       ],
       "configuredDeadline": "2026-01-12",
-      "daysUntilDeadline": -196,
+      "daysUntilDeadline": -203,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -430,7 +390,7 @@
         "coding"
       ],
       "configuredDeadline": "2026-01-16",
-      "daysUntilDeadline": -192,
+      "daysUntilDeadline": -199,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -463,7 +423,7 @@
         "ai"
       ],
       "configuredDeadline": "2026-01-23",
-      "daysUntilDeadline": -185,
+      "daysUntilDeadline": -192,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -499,7 +459,7 @@
         "ran"
       ],
       "configuredDeadline": "2026-01-31",
-      "daysUntilDeadline": -177,
+      "daysUntilDeadline": -184,
       "deadlineStatus": "closed",
       "fetchStatus": "fetch failed",
       "deadlineSignals": []
@@ -526,7 +486,7 @@
         "ran"
       ],
       "configuredDeadline": "2026-02-06",
-      "daysUntilDeadline": -171,
+      "daysUntilDeadline": -178,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -555,17 +515,10 @@
         "systems"
       ],
       "configuredDeadline": "2026-02-06",
-      "daysUntilDeadline": -171,
+      "daysUntilDeadline": -178,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
-      "deadlineSignals": [
-        "ils and CFP will be posted later. Important Dates Abstract registration deadline Friday, January 30, 2026 (AoE) Paper submission deadline Friday, February 6, 2026 (AoE) Early notification Thursday, April 2, 2026 Rebuttal period April 27 - April 29, 2026 Review results notification Monday, May 11, 2026 One-shot revision deadline Friday, June 19, 2026 One-shot revision results notification Monday, June 29, 2026 Camera-ready deadline Friday, July 3, 2026 Conference August 17 - 21, 2026 Contact the PC Chairs",
-        "t registration deadline Friday, January 30, 2026 (AoE) Paper submission deadline Friday, February 6, 2026 (AoE) Early notification Thursday, April 2, 2026 Rebuttal period April 27 - April 29, 2026 Review results notification Monday, May 11, 2026 One-shot revision deadline Friday, June 19, 2026 One-shot revision results notification Monday, June 29, 2026 Camera-ready deadline Friday, July 3, 2026 Conference August 17 - 21, 2026 Contact the PC Chairs",
-        "normally included within the SIGCOMM conference. Non-paper sessions will be selected from submissions of short proposals. Further details and CFP will be posted later. Important Dates Abstract registration deadline Friday, January 30, 2026 (AoE) Paper submission deadline Friday, February 6, 2026 (AoE) Early notification Thursday, April 2, 2026 Rebuttal period April 27 - April 29, 2026 Review results notification Monday, May 11, 2026 One-shot revision deadline Friday, June 19, 2026 One-shot revision results notification Monday, June 29, 2026 Camera-ready deadline Friday, July 3, 2026 Conference",
-        "Abstract registration deadline Friday, January 30, 2026 (AoE) Paper submission deadline Friday, February 6, 2026 (AoE) Early notification Thursday, April 2, 2026 Rebuttal period April 27 - April 29, 2026 Review results notification Monday, May 11, 2026 One-shot revision deadline Friday, June 19, 2026 One-shot revision results notification Monday, June 29, 2026 Camera-ready deadline Friday, July 3, 2026 Conference August 17 - 21, 2026 Contact the PC Chairs",
-        "Important Dates Abstract registration deadline Friday, January 30, 2026 (AoE) Paper submission deadline Friday, February 6, 2026 (AoE) Early notification Thursday, April 2, 2026 Rebuttal period April 27 - April 29, 2026 Review results notification Monday, May 11, 2026 One-shot revision deadline Friday, June 19, 2026 One-shot revision results notification Monday, June 29, 2026 Camera-ready deadline Friday, July 3, 2026 Conference August 17 - 21, 2026 Contact the PC Chairs",
-        "CFP will be posted later. Important Dates Abstract registration deadline Friday, January 30, 2026 (AoE) Paper submission deadline Friday, February 6, 2026 (AoE) Early notification Thursday, April 2, 2026 Rebuttal period April 27 - April 29, 2026 Review results notification Monday, May 11, 2026 One-shot revision deadline Friday, June 19, 2026 One-shot revision results notification Monday, June 29, 2026 Camera-ready deadline Friday, July 3, 2026 Conference August 17 - 21, 2026 Con"
-      ]
+      "deadlineSignals": []
     },
     {
       "title": "IEEE/ACM International Symposium on Quality of Service",
@@ -588,7 +541,7 @@
         "cloud"
       ],
       "configuredDeadline": "2026-02-23",
-      "daysUntilDeadline": -154,
+      "daysUntilDeadline": -161,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -597,38 +550,6 @@
         "on May 22, 2026 Call for Posters Announced - Updated on May 17, 2026 Submission Guidelines - Updated on May 17, 2026 Patron Opportunities Announced Call for Workshop Papers Announced - Updated on May 5, 2026 Updates on Symposium Location Announced - Updated on Apr. 30, 2026 Call for Workshop Proposals Announced Call for Papers Announced Important Dates 16 Feb 2026 Abstract Deadline : Extended! 23 Feb 2026 Full",
         "Important Dates 16 Feb 2026 Abstract Deadline : Extended! 23 Feb 2026 Full Paper Deadline : Extended! 30 Apr 2026 Acceptance Notification 20 May 2026 Camera Ready Deadline See All Dates Welcome to I",
         "Call for Papers Announced Important Dates 16 Feb 2026 Abstract Deadline : Extended! 23 Feb 2026 Full Paper Deadline : Extended! 30 Apr 2026 Acceptance Notification 20 May 2026 Camera Ready Deadline"
-      ]
-    },
-    {
-      "title": "ACM Conference on Embedded Networked Sensor Systems",
-      "acronym": "SenSys",
-      "venueType": "Conference",
-      "track": "IoT / Edge / Sensing",
-      "url": "https://sensys.acm.org/2026/",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
-      "verifiedRank": "",
-      "verifiedRankSource": "",
-      "verifiedRankYear": "",
-      "impactFactor": "TBD / official page",
-      "impactFactorYear": "",
-      "note": "ACM SenSys official site; useful for sensing, IoT, mobile/edge systems, and wireless sensor-network submissions.",
-      "tags": [
-        "iot",
-        "edge",
-        "wireless",
-        "sensing"
-      ],
-      "configuredDeadline": "2026-02-27",
-      "daysUntilDeadline": -150,
-      "deadlineStatus": "closed",
-      "fetchStatus": "fetched",
-      "deadlineSignals": [
-        "Deadline for Papers, Demos, and Posters March 31, 2026, 23:59 AoE Call for Demos and Posters Notification of Acceptance March 13, 2026, 23:59 AoE February 27, 2026, 23:59 AoE Submission Deadline February 20, 2026, 23:59 AoE",
-        "Submission Deadline February 20, 2026, 23:59 AoE February 13, 2026, 23:59 AoE 2nd deadline Call for Papers (Expired) Abstract Registration November 06, 2025, 23:59 AoE Full Paper Submission November 13, 2025, 23:59 AoE",
-        "2nd deadline Call for Papers (Expired) Abstract Registration November 06, 2025, 23:59 AoE Full Paper Submission November 13, 2025, 23:59 AoE Notification January 29, 2026 1st deadline Call for Papers (Ex",
-        "1st deadline Call for Papers (Expired) Abstract Registration July 1, 2025, 23:59 AoE June 24, 2025, 23:59 AoE Paper Submission July 1, 2025, 23:59 AoE Notification September 21, 2025",
-        "Application deadline June 23, 2025, 23:59 AoE © SenSys 2026: ACM/IEEE Conference on Embedded Artificial Intelligence and Sensing Systems Template by Xiaoying Riley"
       ]
     },
     {
@@ -651,7 +572,7 @@
         "systems"
       ],
       "configuredDeadline": "2026-02-28",
-      "daysUntilDeadline": -149,
+      "daysUntilDeadline": -156,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": []
@@ -678,7 +599,7 @@
         "iot"
       ],
       "configuredDeadline": "2026-03-01",
-      "daysUntilDeadline": -148,
+      "daysUntilDeadline": -155,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -710,7 +631,7 @@
         "6g"
       ],
       "configuredDeadline": "2026-03-26",
-      "daysUntilDeadline": -123,
+      "daysUntilDeadline": -130,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -741,7 +662,7 @@
         "ran"
       ],
       "configuredDeadline": "2026-04-10",
-      "daysUntilDeadline": -108,
+      "daysUntilDeadline": -115,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": []
@@ -768,7 +689,7 @@
         "ai-networking"
       ],
       "configuredDeadline": "2026-04-14",
-      "daysUntilDeadline": -104,
+      "daysUntilDeadline": -111,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -799,7 +720,7 @@
         "ran"
       ],
       "configuredDeadline": "2026-04-16",
-      "daysUntilDeadline": -102,
+      "daysUntilDeadline": -109,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -830,19 +751,10 @@
         "networking"
       ],
       "configuredDeadline": "2026-04-20",
-      "daysUntilDeadline": -98,
+      "daysUntilDeadline": -105,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
-      "deadlineSignals": [
-        "July 26, 2026 Rebuttal Deadline August 23, 2026 Notification of Acceptance September 30, 2026 Camera-Ready Due August 31, 2026 Poster/Demo Submission Deadline",
-        "August 31, 2026 Poster/Demo Submission Deadline September 21, 2026 Poster/Demo Acceptance Notification September 30, 2026 Poster/Demo Camera-Ready Deadline August 31, 2026 Workshop Paper Submission De",
-        "September 30, 2026 Poster/Demo Camera-Ready Deadline August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Re",
-        "August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline",
-        "August 31, 2026 Poster/Demo Submission Deadline September 21, 2026 Poster/Demo Acceptance Notification September 30, 2026 Poster/Demo Camera-Ready Deadline August 31, 2026 Workshop Paper Su",
-        "April 13, 2026 Paper Registration Deadline (11:59pm AoE) April 20, 2026 Paper Submission Deadline (11:59pm AoE) July 20, 2026 Rebuttal Start July 26, 2026 Rebuttal Deadline",
-        "April 20, 2026 Paper Submission Deadline (11:59pm AoE) July 20, 2026 Rebuttal Start July 26, 2026 Rebuttal Deadline August 23, 2026 Notification of Acceptance",
-        "Important Dates April 13, 2026 Paper Registration Deadline (11:59pm AoE) April 20, 2026 Paper Submission Deadline (11:59pm AoE) July 20, 2026 R"
-      ]
+      "deadlineSignals": []
     },
     {
       "title": "IEEE Vehicular Technology Conference Spring",
@@ -865,7 +777,7 @@
         "v2x"
       ],
       "configuredDeadline": "2026-04-28",
-      "daysUntilDeadline": -90,
+      "daysUntilDeadline": -97,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -893,19 +805,10 @@
         "systems"
       ],
       "configuredDeadline": "2026-04-29",
-      "daysUntilDeadline": -89,
+      "daysUntilDeadline": -96,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
-      "deadlineSignals": [
-        "Important Dates First Review Cycle Abstract submission deadline Jan 7, 2026 (Mandatory: all papers must have an abstract submitted by this date) Full paper submission deadline Jan 14, 2026 Notification of early-rejection papers Feb 20, 2026 Author rebuttal period Mar 17–20, 2026 Rebuttal deadline Mar 20, 2026 Author notification Apr 9, 2026 Minor revision approval deadline June 5, 2026 Camera ready deadline August 9, 2026 Second Review Cycle Abstract submission deadline Apr 22, 2026 (Mandat",
-        "s must have an abstract submitted by this date) Full paper submission deadline Jan 14, 2026 Notification of early-rejection papers Feb 20, 2026 Author rebuttal period Mar 17–20, 2026 Rebuttal deadline Mar 20, 2026 Author notification Apr 9, 2026 Minor revision approval deadline June 5, 2026 Camera ready deadline August 9, 2026 Second Review Cycle Abstract submission deadline Apr 22, 2026 (Mandatory: all papers must have a title, an abstract submitted and a track selected by this date) Full paper submission dea",
-        "Author rebuttal period Mar 17–20, 2026 Rebuttal deadline Mar 20, 2026 Author notification Apr 9, 2026 Minor revision approval deadline June 5, 2026 Camera ready deadline August 9, 2026 Second Review Cycle Abstract submission deadline Apr 22, 2026 (Mandatory: all papers must have a title, an abstract submitted and a track selected by this date) Full paper submission deadline Apr 29, 2026 Online artifact deadline May 2, 2026 Notification of early-rejection papers June 3, 2026 June 10, 2026 June 12,",
-        "Author notification Apr 9, 2026 Minor revision approval deadline June 5, 2026 Camera ready deadline August 9, 2026 Second Review Cycle Abstract submission deadline Apr 22, 2026 (Mandatory: all papers must have a title, an abstract submitted and a track selected by this date) Full paper submission deadline Apr 29, 2026 Online artifact deadline May 2, 2026 Notification of early-rejection papers June 3, 2026 June 10, 2026 June 12, 2026 Author rebuttal period June 29–July 1, 2026 Rebuttal deadline July 1,",
-        "Minor revision approval deadline June 5, 2026 Camera ready deadline August 9, 2026 Second Review Cycle Abstract submission deadline Apr 22, 2026 (Mandatory: all papers must have a title, an abstract submitted and a track selected by this date) Full paper submission deadline Apr 29, 2026 Online artifact deadline May 2, 2026 Notification of early-rejection papers June 3, 2026 June 10, 2026 June 12, 2026 Author rebuttal period June 29–July 1, 2026 Rebuttal deadline July 1, 2026 Author notification July 17, 2",
-        "ose. Important Dates First Review Cycle Abstract submission deadline Jan 7, 2026 (Mandatory: all papers must have an abstract submitted by this date) Full paper submission deadline Jan 14, 2026 Notification of early-rejection papers Feb 20, 2026 Author rebuttal period Mar 17–20, 2026 Rebuttal deadline Mar 20, 2026 Author notification Apr 9, 2026 Minor revision approval deadline June 5, 2026 Camera ready deadline August 9, 2026 Second Review Cycle Abstract submission deadline Apr 22, 202",
-        ": all papers must have an abstract submitted by this date) Full paper submission deadline Jan 14, 2026 Notification of early-rejection papers Feb 20, 2026 Author rebuttal period Mar 17–20, 2026 Rebuttal deadline Mar 20, 2026 Author notification Apr 9, 2026 Minor revision approval deadline June 5, 2026 Camera ready deadline August 9, 2026 Second Review Cycle Abstract submission deadline Apr 22, 2026 (Mandatory: all papers must have a title, an abstract submitted and a track selected by this date) Full paper sub",
-        "Minor revision approval deadline Sept 4, 2026 Camera ready deadline Sept 13, 2026 Paper submission deadline: January 28th, 2024 -- -- -- -- Abstract submission deadline TBD -- Paper submission deadline Jan 14th, 2026 -- Notification of early-rejection papers: TBD -- Author rebuttal period: TBD -- Rebuttal deadline: TBD -- Author notification: TBD -- -- Second Review Cycle -- -- Abstract submission deadline TBD -- Paper submission deadline April 29th, 2026 -- Notification of early-rejection papers: TBD -- Author rebutta"
-      ]
+      "deadlineSignals": []
     },
     {
       "title": "IEEE Global Communications Conference",
@@ -927,7 +830,7 @@
         "6g"
       ],
       "configuredDeadline": "2026-05-03",
-      "daysUntilDeadline": -85,
+      "daysUntilDeadline": -92,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -958,7 +861,7 @@
         "sdn"
       ],
       "configuredDeadline": "2026-05-05",
-      "daysUntilDeadline": -83,
+      "daysUntilDeadline": -90,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -992,7 +895,7 @@
         "workshops"
       ],
       "configuredDeadline": "2026-05-06",
-      "daysUntilDeadline": -82,
+      "daysUntilDeadline": -89,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1024,7 +927,7 @@
         "ai"
       ],
       "configuredDeadline": "2026-05-08",
-      "daysUntilDeadline": -80,
+      "daysUntilDeadline": -87,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1060,7 +963,7 @@
         "qos"
       ],
       "configuredDeadline": "2026-05-10",
-      "daysUntilDeadline": -78,
+      "daysUntilDeadline": -85,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1090,7 +993,7 @@
         "privacy"
       ],
       "configuredDeadline": "2026-05-18",
-      "daysUntilDeadline": -70,
+      "daysUntilDeadline": -77,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1122,7 +1025,7 @@
         "6g"
       ],
       "configuredDeadline": "2026-05-19",
-      "daysUntilDeadline": -69,
+      "daysUntilDeadline": -76,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1154,7 +1057,7 @@
         "satellite"
       ],
       "configuredDeadline": "2026-05-31",
-      "daysUntilDeadline": -57,
+      "daysUntilDeadline": -64,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1182,15 +1085,10 @@
         "edge"
       ],
       "configuredDeadline": "2026-06-05",
-      "daysUntilDeadline": -52,
+      "daysUntilDeadline": -59,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
-      "deadlineSignals": [
-        "September 2026 issue of PACMNET June submission: Paper Registration: May 29th, 2026 Paper Submission: June 5th, 2026 Early reject notification: July, 2026 Notification of Acceptance: September 11th, 2026 Camera Ready for accepted papers: October 12th, 2026 Publication of accepted papers: December 2026 issue of PACMNET For papers given the one-shot major revision option: Major revision due: November 12th, 2026 Final decision: December 15th, 2026 Came",
-        "(see below). Important Dates There are two submission opportunities over the course of the year: December submission: Paper Registration: December 5th, 2025 Paper Submission: December 12th, 2025 Early reject notification: February, 2026 Notification of Acceptance: March 31st, 2026 Camera Ready for accepted papers: April 30th, 2026 Publication of accepted papers: June 2026 issue of PACMNET For papers given the one-shot major revision option: Major revision due: May 29th, 202",
-        "n accepted to appear in the Proceedings of the ACM on Networking (PAMCNET). There are two deadlines to submit your work in time for a presentation at the conference (see below). Important Dates There are two submission opportunities over the course of the year: December submission: Paper Registration: December 5th, 2025 Paper Submission: December 12th, 2025 Early reject notification: February, 2026 Notification of Acceptance: March 31st, 2026 Camera Ready for accepted papers: April 30th, 2026 Publication of accepted papers: June 2026",
-        "ential authors who are unsure of the scope are encouraged to contact the PC chairs before submission. The CoNEXT conference will present all papers that have been accepted to appear in the Proceedings of the ACM on Networking (PAMCNET). There are two deadlines to submit your work in time for a presentation at the conference (see below). Important Dates There are two submission opportunities over the course of the year: December submission: Paper Registration: December 5th, 2025 Paper Submission: December 12th, 2025 Early reject notification: February, 2026"
-      ]
+      "deadlineSignals": []
     },
     {
       "title": "ACM MobiCom Workshops and Tutorials",
@@ -1214,7 +1112,7 @@
         "systems"
       ],
       "configuredDeadline": "2026-06-05",
-      "daysUntilDeadline": -52,
+      "daysUntilDeadline": -59,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": []
@@ -1241,7 +1139,7 @@
         "workshops"
       ],
       "configuredDeadline": "2026-06-06",
-      "daysUntilDeadline": -51,
+      "daysUntilDeadline": -58,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1271,7 +1169,7 @@
         "iot"
       ],
       "configuredDeadline": "2026-06-28",
-      "daysUntilDeadline": -29,
+      "daysUntilDeadline": -36,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1300,16 +1198,16 @@
         "iot"
       ],
       "configuredDeadline": "2026-07-05",
-      "daysUntilDeadline": -22,
+      "daysUntilDeadline": -29,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
-        "26 Jul 2026 Paper Submission Deadline : Deadline Extended 06 Sep 2026 Acceptance Notification 04 Oct 2026 Camera-ready Due 27 Sep 2026 Authors Registration Deadline See All Dates Welcome to IEEE LATINCOM 2026! IEEE LATINCOM is the international conference organized by the IEEE Communications Society in the",
-        "26 Jul 2026 Paper Submission Deadline : Deadline Extended 06 Sep 2026 Acceptance Notification 04 Oct 2026 Camera-ready Due 27 Sep 2026 Authors Registration Deadline See All Dates Welcome to IEEE LATINCOM 2026! IEEE LATINCOM is the international conference organized by the IEEE Communications Society in the Latin Ameri",
-        "26 Jul 2026 Paper Submission Deadline : Deadline Extended 06 Sep 2026 Acceptance Notification 04 Oct 2026 Camera-ready Due 27 Sep 2026 Authors Registration Deadline See All Dates Welcome to IEEE LATINCOM 2026! IEEE LATINCOM is the international conference organized by the IEEE Communications Soc",
-        "Important Dates 26 Jul 2026 Paper Submission Deadline : Deadline Extended 06 Sep 2026 Acceptance Notification 04 Oct 2026 Camera-ready Due 27 Sep 2026 Authors Registration Deadline See All Dates We",
-        "Call for Papers Become a Patron/Exhibitor News and Announcements IEEE LATINCOM 2026 Call for Papers Announced Important Dates 26 Jul 2026 Paper Submission Deadline : Deadline Extended 06 Sep 2026 Acceptance Notification 04 Oct 2026",
-        "Call for Papers Announced Important Dates 26 Jul 2026 Paper Submission Deadline : Deadline Extended 06 Sep 2026 Acceptance Notification 04 Oct 2026 Camera-ready Due 27 Sep 2026 Authors Registration Deadline"
+        "News and Announcements The paper submission deadline has been extended to August 09, 2026. This is the firm and final extension. Submit your paper today! Important Dates 09 Aug 2026 Paper Submission Deadline : Final Extended Deadline 06 Sep 2026 Acceptance Notification 04 Oct 2026 Camera-ready Due 27 Sep 2026",
+        "09 Aug 2026 Paper Submission Deadline : Final Extended Deadline 06 Sep 2026 Acceptance Notification 04 Oct 2026 Camera-ready Due 27 Sep 2026 Authors Registration Deadline See All Dates Welcome to IEEE LATINCOM 2026! IEEE LATINCOM is the international conference organized by the IEEE Communications Society",
+        "09 Aug 2026 Paper Submission Deadline : Final Extended Deadline 06 Sep 2026 Acceptance Notification 04 Oct 2026 Camera-ready Due 27 Sep 2026 Authors Registration Deadline See All Dates Welcome to IEEE LATINCOM 2026! IEEE LATINCOM is the international conference organized by the IEEE Communications Society in the Latin America Region",
+        "09 Aug 2026 Paper Submission Deadline : Final Extended Deadline 06 Sep 2026 Acceptance Notification 04 Oct 2026 Camera-ready Due 27 Sep 2026 Authors Registration Deadline See All Dates Welcome to IEEE LATINCOM 2026! IEEE LATINCOM is the international conference organized by the IEEE Communicatio",
+        "Important Dates 09 Aug 2026 Paper Submission Deadline : Final Extended Deadline 06 Sep 2026 Acceptance Notification 04 Oct 2026 Camera-ready Due 27 Sep 2026 Authors Registration Deadline See All Dates",
+        "Call for Papers Become a Patron/Exhibitor News and Announcements The paper submission deadline has been extended to August 09, 2026. This is the firm and final extension. Submit your paper today! Important Dates 09 Aug 2026 Paper Submission Deadline : Final Extended Deadline 06 Sep 2026 Acceptance Notif"
       ]
     },
     {
@@ -1335,7 +1233,7 @@
         "sdn"
       ],
       "configuredDeadline": "2026-07-08",
-      "daysUntilDeadline": -19,
+      "daysUntilDeadline": -26,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1366,7 +1264,7 @@
         "sdn"
       ],
       "configuredDeadline": "2026-07-10",
-      "daysUntilDeadline": -17,
+      "daysUntilDeadline": -24,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1398,7 +1296,7 @@
         "6g"
       ],
       "configuredDeadline": "2026-07-15",
-      "daysUntilDeadline": -12,
+      "daysUntilDeadline": -19,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1433,7 +1331,7 @@
         "v2x"
       ],
       "configuredDeadline": "2026-07-15",
-      "daysUntilDeadline": -12,
+      "daysUntilDeadline": -19,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1463,13 +1361,13 @@
         "agents"
       ],
       "configuredDeadline": "2026-07-28",
-      "daysUntilDeadline": 1,
-      "deadlineStatus": "due in 1 days",
+      "daysUntilDeadline": -6,
+      "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
-        "7 Author Kit Main Conference Timetable for Authors Note: all deadlines are “anywhere on earth” (UTC-12) June 17, 2026 OpenReview submission site opens for author registration June 30, 2026 OpenReview submission site opens for paper submission July 21, 2026 Abstracts due at 11:59 PM UTC-12 July 28, 2026 Full papers due at 11:59 PM UTC-12 July 31, 2026 Supplementary material and code due by 11:59 PM UTC-12 September 24, 2026 Notification of Phase 1 rejections October 19-25, 2026 Author feedback window November 30, 2026 Notification of final acceptance or rejection (Main Technical Track)",
         "chnical Track) February 16-23, 2027 AAAI-27 Conference Note: Deadlines are track-specific and may differ from those listed above. Track-specific deadlines are listed on their respective CFP. Main Technical Track: Call for Papers Jump to Detailed Instructions We are pleased to announce the Forty-First AAAI Conference on Artificial Intelligence (AAAI-27), which will be held in Montréal, Canada, from February 16 to February 23, 2027. The purpose of the AAAI conference series is to promote research in Artificial Intelligence (AI) and foster scientific exchange between researchers, practitioners, scientists, students, and engineers across th",
-        "Note: Deadlines are track-specific and may differ from those listed above. Track-specific deadlines are listed on their respective CFP. Main Technical Track: Call for Papers Jump to Detailed Instructions We are pleased to announce the Forty-First AAAI Conference on Artificial Intelligence (AAAI-27), which will be held in Montréal, Canada, from February 16 to February 23, 2027. The purpose of the AAAI conference series is to promote research in Artificial Intelligence (AI) and foster scientific exchange between researchers, practitioners, scientists, students, and engineers across the entirety of AI and its affiliated disciplines. AAAI-27 is the Forty-First AAAI Con"
+        "Note: Deadlines are track-specific and may differ from those listed above. Track-specific deadlines are listed on their respective CFP. Main Technical Track: Call for Papers Jump to Detailed Instructions We are pleased to announce the Forty-First AAAI Conference on Artificial Intelligence (AAAI-27), which will be held in Montréal, Canada, from February 16 to February 23, 2027. The purpose of the AAAI conference series is to promote research in Artificial Intelligence (AI) and foster scientific exchange between researchers, practitioners, scientists, students, and engineers across the entirety of AI and its affiliated disciplines. AAAI-27 is the Forty-First AAAI Con",
+        "7 Author Kit Main Conference Timetable for Authors Note: all deadlines are “anywhere on earth” (UTC-12) June 17, 2026 OpenReview submission site opens for author registration June 30, 2026 OpenReview submission site opens for paper submission July 21, 2026 Abstracts due at 11:59 PM UTC-12 July 28, 2026 Full papers due at 11:59 PM UTC-12 July 31, 2026 Supplementary material and code due by 11:59 PM UTC-12 September 24, 2026 Notification of Phase 1 rejections October 19-25, 2026 Author feedback window November 30, 2026 Notification of final acceptance or rejection (Main Technical Track)"
       ]
     },
     {
@@ -1495,8 +1393,8 @@
         "iot"
       ],
       "configuredDeadline": "2026-08-08",
-      "daysUntilDeadline": 12,
-      "deadlineStatus": "due in 12 days",
+      "daysUntilDeadline": 5,
+      "deadlineStatus": "due in 5 days",
       "fetchStatus": "http 403 Forbidden",
       "deadlineSignals": []
     },
@@ -1522,8 +1420,8 @@
         "ran"
       ],
       "configuredDeadline": "2026-08-10",
-      "daysUntilDeadline": 14,
-      "deadlineStatus": "due in 14 days",
+      "daysUntilDeadline": 7,
+      "deadlineStatus": "due in 7 days",
       "fetchStatus": "fetched",
       "deadlineSignals": [
         "Proposal Submission Deadline 1 March 2026 Deadline Extended Notification of Selection 3 April 2026 Deadline Extended CFP Due for each accepted proposal 3 May 2026 Deadline Extended Workshop Paper Submission Deadline 10 August 2026",
@@ -1559,8 +1457,8 @@
         "communications"
       ],
       "configuredDeadline": "2026-08-15",
-      "daysUntilDeadline": 19,
-      "deadlineStatus": "upcoming in 19 days",
+      "daysUntilDeadline": 12,
+      "deadlineStatus": "due in 12 days",
       "fetchStatus": "fetched",
       "deadlineSignals": [
         "t Computing Optimization in the Artificial Intelligence of Things (AIoT) Submission Deadline: July 15th, 2026 Guest Editors: Chuang Li, Kim Fung Tsang, Adachi Fumiyuki IoT Empowered AI4Science: Data Acquisition, System Modeling, and Knowledge Discovery Submission Deadline: June 30th, 2026 Guest Editors: Rafał Scherer, Hailin Feng, Yuhuan Lu, Xinxing Wang Multimodal Integrated Sensing and Communication for IoT Networking in 6G and Beyond Submission Deadline: August 15th, 2026 Guest Editors: Luping Xiang, Jiajia Liu, Kun Yang, Christos Masouros, Amiya Nayak, Lei Zhong Smart Radio Environments for the Internet of Everything Submission Deadline: August 31st, 2026 Guest Editors: Qihao Pe",
@@ -1595,13 +1493,10 @@
         "mobile"
       ],
       "configuredDeadline": "2026-08-31",
-      "daysUntilDeadline": 35,
-      "deadlineStatus": "upcoming in 35 days",
+      "daysUntilDeadline": 28,
+      "deadlineStatus": "upcoming in 28 days",
       "fetchStatus": "fetched",
-      "deadlineSignals": [
-        "August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop Event Date",
-        "August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop Eve"
-      ]
+      "deadlineSignals": []
     },
     {
       "title": "MobiHoc Workshop on Machine Learning for NextG Networks",
@@ -1625,13 +1520,10 @@
         "mobile"
       ],
       "configuredDeadline": "2026-08-31",
-      "daysUntilDeadline": 35,
-      "deadlineStatus": "upcoming in 35 days",
+      "daysUntilDeadline": 28,
+      "deadlineStatus": "upcoming in 28 days",
       "fetchStatus": "fetched",
-      "deadlineSignals": [
-        "August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop Event Date",
-        "August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop Eve"
-      ]
+      "deadlineSignals": []
     },
     {
       "title": "Computer Networks — Calls for Papers / Special Issues",
@@ -1655,8 +1547,8 @@
         "edge"
       ],
       "configuredDeadline": "2026-10-15",
-      "daysUntilDeadline": 80,
-      "deadlineStatus": "watching: 80 days out",
+      "daysUntilDeadline": 73,
+      "deadlineStatus": "watching: 73 days out",
       "fetchStatus": "http 403 Forbidden",
       "deadlineSignals": []
     },
@@ -1683,8 +1575,8 @@
         "telecom"
       ],
       "configuredDeadline": "2026-11-01",
-      "daysUntilDeadline": 97,
-      "deadlineStatus": "watching: 97 days out",
+      "daysUntilDeadline": 90,
+      "deadlineStatus": "watching: 90 days out",
       "fetchStatus": "fetched",
       "deadlineSignals": [
         "lication Date Manuscript Submission Deadline Security and Privacy of Multimodal Embodied IoT April 2027 1 November 2026 Radio protocols for 6G",
@@ -1714,8 +1606,8 @@
         "edge"
       ],
       "configuredDeadline": "2026-12-31",
-      "daysUntilDeadline": 157,
-      "deadlineStatus": "watching: 157 days out",
+      "daysUntilDeadline": 150,
+      "deadlineStatus": "watching: 150 days out",
       "fetchStatus": "fetched",
       "deadlineSignals": [
         "lication Date Manuscript Submission Deadline Distributed Intelligence and Collaborative Inference for Foundation Models over Wireless Edge September 2027 31 December 2026 Towards Intellicise Agent Co",
@@ -1746,8 +1638,8 @@
         "6g"
       ],
       "configuredDeadline": "2027-01-01",
-      "daysUntilDeadline": 158,
-      "deadlineStatus": "watching: 158 days out",
+      "daysUntilDeadline": 151,
+      "deadlineStatus": "watching: 151 days out",
       "fetchStatus": "fetched",
       "deadlineSignals": [
         "lication Date Manuscript Submission Deadline 3D Metasurface-Assisted Wireless Communications: From Model-Based Designs to AI-Driven Approaches October 2027 1 January 2027 AI-Empowered Underwater Wire",
@@ -1778,8 +1670,8 @@
         "ran"
       ],
       "configuredDeadline": "2027-03-31",
-      "daysUntilDeadline": 247,
-      "deadlineStatus": "watching: 247 days out",
+      "daysUntilDeadline": 240,
+      "deadlineStatus": "watching: 240 days out",
       "fetchStatus": "fetched",
       "deadlineSignals": [
         "lication Date Manuscript Submission Deadline Next-Generation Underwater Acoustic Communication Systems Second/Third Quarter 2028 31 March 2027 Exploiting Flexible Positioning: Movable and Pinching Antenn",
@@ -1833,6 +1725,32 @@
         "edge",
         "systems",
         "iot"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetched",
+      "deadlineSignals": []
+    },
+    {
+      "title": "ACM Conference on Embedded Networked Sensor Systems",
+      "acronym": "SenSys",
+      "venueType": "Conference",
+      "track": "IoT / Edge / Sensing",
+      "url": "https://sensys.acm.org/2026/",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "TBD / official page",
+      "impactFactorYear": "",
+      "note": "ACM SenSys official site; useful for sensing, IoT, mobile/edge systems, and wireless sensor-network submissions.",
+      "tags": [
+        "iot",
+        "edge",
+        "wireless",
+        "sensing"
       ],
       "configuredDeadline": null,
       "daysUntilDeadline": null,
@@ -2038,6 +1956,31 @@
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
       "fetchStatus": "fetched",
+      "deadlineSignals": []
+    },
+    {
+      "title": "IEEE International Conference on Communications",
+      "acronym": "ICC",
+      "venueType": "Conference",
+      "track": "Wireless / Communications",
+      "url": "https://icc2026.ieee-icc.org/authors/call-symposia-papers",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "N/A — conference; use IEEE ComSoc flagship status instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Communications venue CFP source; monitored for symposium and workshop calls.",
+      "tags": [
+        "communications",
+        "wireless",
+        "ran"
+      ],
+      "configuredDeadline": null,
+      "daysUntilDeadline": null,
+      "deadlineStatus": "watching official CFP page",
+      "fetchStatus": "fetch failed",
       "deadlineSignals": []
     },
     {
