@@ -989,12 +989,104 @@ fn render_watchlist_table(output: &mut String, items: &[&CfpItem]) {
     output.push('\n');
 }
 
-fn render_deadline_radar(output: &mut String, issue: &CfpIssue) {
-    output.push_str(
-        "## Nearest submission deadlines
+fn percent_encode(input: &str) -> String {
+    let mut out = String::with_capacity(input.len() * 2);
+    for b in input.bytes() {
+        match b {
+            b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'-' | b'_' | b'.' | b'~' => {
+                out.push(b as char);
+            }
+            _ => {
+                out.push_str(&format!("%{b:02X}"));
+            }
+        }
+    }
+    out
+}
 
-",
+fn google_calendar_url(item: &CfpItem) -> Option<String> {
+    let deadline = item.configured_deadline.as_deref()?;
+    let naive_date = chrono::NaiveDate::parse_from_str(deadline, "%Y-%m-%d").ok()?;
+    let next_date = naive_date + chrono::Days::new(1);
+    let dates_param = format!(
+        "{}/{}",
+        naive_date.format("%Y%m%d"),
+        next_date.format("%Y%m%d")
     );
+    let title = format!("[CFP] {} ({}) Submission", item.acronym, item.venue_type);
+    let details = format!(
+        "Track: {}\nDeadline Status: {}\nOfficial CFP Page: {}\nNote: {}",
+        item.track, item.deadline_status, item.url, item.note
+    );
+
+    let mut url = String::from("https://calendar.google.com/calendar/render?action=TEMPLATE");
+    url.push_str("&text=");
+    url.push_str(&percent_encode(&title));
+    url.push_str("&dates=");
+    url.push_str(&dates_param);
+    url.push_str("&details=");
+    url.push_str(&percent_encode(&details));
+    if !item.location.is_empty() && item.location != "TBD / official page" {
+        url.push_str("&location=");
+        url.push_str(&percent_encode(&item.location));
+    }
+    Some(url)
+}
+
+fn render_ics(issue: &CfpIssue) -> String {
+    let mut out = String::new();
+    out.push_str("BEGIN:VCALENDAR\r\n");
+    out.push_str("VERSION:2.0\r\n");
+    out.push_str("PRODID:-//Mud's Blog//CFP Radar//EN\r\n");
+    out.push_str("CALSCALE:GREGORIAN\r\n");
+    out.push_str("METHOD:PUBLISH\r\n");
+    out.push_str("X-WR-CALNAME:CFP Radar Deadlines\r\n");
+    out.push_str("X-WR-TIMEZONE:Asia/Seoul\r\n");
+
+    let now_stamp = Utc::now().format("%Y%m%dT%H%M%SZ").to_string();
+
+    for item in &issue.items {
+        if let Some(deadline) = &item.configured_deadline
+            && let Ok(dt) = chrono::NaiveDate::parse_from_str(deadline, "%Y-%m-%d")
+        {
+            let dt_start = dt.format("%Y%m%d").to_string();
+            let dt_end = (dt + chrono::Days::new(1)).format("%Y%m%d").to_string();
+            let uid = format!(
+                "{}-{}@mud-blog.pages.dev",
+                item.acronym.replace(' ', "_"),
+                deadline
+            );
+
+            out.push_str("BEGIN:VEVENT\r\n");
+            out.push_str(&format!("UID:{uid}\r\n"));
+            out.push_str(&format!("DTSTAMP:{now_stamp}\r\n"));
+            out.push_str(&format!("DTSTART;VALUE=DATE:{dt_start}\r\n"));
+            out.push_str(&format!("DTEND;VALUE=DATE:{dt_end}\r\n"));
+            out.push_str(&format!(
+                "SUMMARY:[CFP] {} ({}) Submission Deadline\r\n",
+                item.acronym, item.venue_type
+            ));
+            out.push_str(&format!(
+                "DESCRIPTION:Field: {}\\nStatus: {}\\nOfficial CFP: {}\\nNote: {}\r\n",
+                item.track,
+                item.deadline_status,
+                item.url,
+                item.note.replace('\n', " ")
+            ));
+            out.push_str(&format!("URL:{}\r\n", item.url));
+            if !item.location.is_empty() && item.location != "TBD / official page" {
+                out.push_str(&format!("LOCATION:{}\r\n", item.location));
+            }
+            out.push_str("END:VEVENT\r\n");
+        }
+    }
+
+    out.push_str("END:VCALENDAR\r\n");
+    out
+}
+
+fn render_deadline_radar(output: &mut String, issue: &CfpIssue) {
+    output.push_str("## Nearest submission deadlines\n\n");
     output.push_str("Configured or automatically detected open deadlines, sorted from the current issue date. Items without an official date signal stay in the grouped watchlists below.\n\n");
     let upcoming = sorted_item_refs(
         issue
@@ -1006,24 +1098,21 @@ fn render_deadline_radar(output: &mut String, issue: &CfpIssue) {
         output.push_str("No open configured or detected submission deadlines are available yet; check the grouped watchlists below for official CFP pages being monitored.\n\n");
         return;
     }
-    output.push_str(
-        "| Deadline | Venue | Kind | Field | Link |
-",
-    );
-    output.push_str(
-        "| --- | --- | --- | --- | --- |
-",
-    );
+    output.push_str("| Deadline | Venue | Kind | Field | Link |\n");
+    output.push_str("| --- | --- | --- | --- | --- |\n");
     for item in upcoming.iter().take(12) {
         let venue = format!("{} ({})", item.title, item.acronym);
+        let link_col = match google_calendar_url(item) {
+            Some(gcal) => format!("[CFP]({}) · [+ GCal]({})", item.url, gcal),
+            None => format!("[CFP]({})", item.url),
+        };
         output.push_str(&format!(
-            "| {} | {} | {} | {} | [CFP]({}) |
-",
+            "| {} | {} | {} | {} | {} |\n",
             markdown_escape(&deadline_label(item)),
             markdown_escape(&venue),
             markdown_escape(&item.venue_type),
             markdown_escape(&item.track),
-            item.url
+            link_col
         ));
     }
     output.push('\n');
@@ -1049,8 +1138,10 @@ fn render_markdown(issue: &CfpIssue) -> String {
     output.push_str("---\n");
     output.push_str(&format!("title: \"CFP Radar — {}\"\n", issue.issue_date));
     output.push_str(&format!("date: {}\n", issue.issue_date));
-    output.push_str("tags:\n  - cfp\n  - conferences\n  - workshops\n  - journals\n  - special-issues\n  - wireless\n  - communications\nexcerpt: \"Weekly CFP watchlist with nearest deadlines plus grouped conference, workshop, and journal-special-issue tables for wireless/communications-heavy venues.\"\n---\n\n");
+    output.push_str("slug: cfp-radar\n");
+    output.push_str("tags:\n  - cfp\n  - conferences\n  - workshops\n  - journals\n  - special-issues\n  - wireless\n  - communications\nexcerpt: \"Weekly Call For Papers Dashboard with nearest submission deadlines, 1-click Google Calendar add links, and grouped watchlists for wireless/communications venues.\"\n---\n\n");
     output.push_str("Weekly CFP radar for conferences, workshops, and journal special issues relevant to wireless communications, RAN/6G, networking, edge systems, AI systems, and security. Dates are operational leads: always verify the linked official CFP page before planning a submission.\n\n");
+    output.push_str("📅 **1-Click Calendar Sync:** [+ Subscribe via Webcal (Apple/iCloud/Outlook)](webcal://mud-blog.pages.dev/cfp/radar.ics) | [Download .ics](/cfp/data/radar.ics)\n\n");
     output.push_str("**Ranking note.** Rank cells are verified-only: they stay `—` until a concrete source/year is recorded, such as CORE A*/A/B/C, CCF A/B/C, SCImago/JCR Q1/Q2, or an official society flagship statement. Conferences and workshops do not have journal-style Impact Factors or official Q1/Q2 quartiles.\n\n");
     let wireless_count = issue
         .items
@@ -1297,17 +1388,52 @@ pub async fn update_cfp_artifacts(
     fs::write(data_dir.join("latest.json"), &pretty).await?;
     fs::write(archive_dir.join(format!("{issue_date}.json")), &pretty).await?;
     fs::write(static_data_dir.join("latest.json"), &pretty).await?;
-    fs::write(
-        posts_dir.join(format!("{issue_date}-cfp-radar.md")),
-        render_markdown(&issue),
-    )
-    .await?;
+    fs::write(posts_dir.join("cfp-radar.md"), render_markdown(&issue)).await?;
+
+    let ics_content = render_ics(&issue);
+    fs::write(data_dir.join("radar.ics"), &ics_content).await?;
+    fs::write(static_data_dir.join("radar.ics"), &ics_content).await?;
+    let root_static_cfp = root.join("static/cfp");
+    fs::create_dir_all(&root_static_cfp).await?;
+    fs::write(root_static_cfp.join("radar.ics"), &ics_content).await?;
+
+    Ok(issue)
+}
+
+pub async fn sync_cfp_artifacts_from_latest(root: impl AsRef<Path>) -> BlogResult<CfpIssue> {
+    let root = root.as_ref();
+    let latest_path = root.join("data/cfp/latest.json");
+    let issue: CfpIssue = serde_json::from_str(&fs::read_to_string(&latest_path).await?)?;
+
+    let data_dir = root.join("data/cfp");
+    let static_data_dir = root.join("static/cfp/data");
+    let posts_dir = root.join("posts/cfp");
+    fs::create_dir_all(&data_dir).await?;
+    fs::create_dir_all(&static_data_dir).await?;
+    fs::create_dir_all(&posts_dir).await?;
+
+    let pretty = serde_json::to_string_pretty(&issue)?;
+    fs::write(data_dir.join("latest.json"), &pretty).await?;
+    fs::write(static_data_dir.join("latest.json"), &pretty).await?;
+    fs::write(posts_dir.join("cfp-radar.md"), render_markdown(&issue)).await?;
+
+    let ics_content = render_ics(&issue);
+    fs::write(data_dir.join("radar.ics"), &ics_content).await?;
+    fs::write(static_data_dir.join("radar.ics"), &ics_content).await?;
+    let root_static_cfp = root.join("static/cfp");
+    fs::create_dir_all(&root_static_cfp).await?;
+    fs::write(root_static_cfp.join("radar.ics"), &ics_content).await?;
 
     Ok(issue)
 }
 
 pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIssue> {
     let root = root.as_ref();
+    let post_path = root.join("posts/cfp/cfp-radar.md");
+    let static_ics_path = root.join("static/cfp/radar.ics");
+    if !post_path.exists() || !static_ics_path.exists() {
+        sync_cfp_artifacts_from_latest(root).await?;
+    }
     let latest_path = root.join("data/cfp/latest.json");
     let static_latest_path = root.join("static/cfp/data/latest.json");
     let issue: CfpIssue = serde_json::from_str(&fs::read_to_string(&latest_path).await?)?;
@@ -1391,9 +1517,11 @@ pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIss
     if !static_latest_path.exists() {
         return Err("static/cfp/data/latest.json is missing".into());
     }
-    let post_path = root
-        .join("posts/cfp")
-        .join(format!("{}-cfp-radar.md", issue.issue_date));
+    let static_ics_path = root.join("static/cfp/radar.ics");
+    if !static_ics_path.exists() {
+        return Err("static/cfp/radar.ics is missing".into());
+    }
+    let post_path = root.join("posts/cfp").join("cfp-radar.md");
     if !post_path.exists() {
         return Err(format!("CFP markdown issue is missing: {}", post_path.display()).into());
     }
