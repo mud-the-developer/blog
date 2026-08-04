@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-07-16
+date: 2026-08-04
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/posts/2026-07-16-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/posts/2026-08-04-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-07-16T01:46:06.983912+09:00">Jul 16, 2026 · 1:46 AM KST</time></strong>
+        <strong><time datetime="2026-08-04T02:20:14.062755+09:00">Aug 4, 2026 · 2:20 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>115</strong>
+        <strong>134</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-07-16">Jul 16, 2026</time></strong>
+        <strong><time datetime="2026-08-04">Aug 4, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,112 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Blind-Spots-Bench: Evaluating Blind Spots in Multimodal Models; social attention is tilting toward Cursor zero-day: Why full disclosure is the only remaining protection. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around From RLVR to RLSVR: Task Transformation Induces Self-Verifiable Rewards for Open-Ended LLM Self…; social attention is tilting toward Isopolis - isometric pixel map of San Francisco. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>July 2026</span><span class="news-digest-month-count">16 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>August 2026</span><span class="news-digest-month-count">4 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-08-04-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-08-04</span>
+            <strong>AI News Brief — 2026-08-04</strong>
+            <span>NousResearch/hermes-agent leads GitHub velocity, while papers focus on LLM self-improvement and visual generation scaling.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/posts/2026-08-03-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-08-03</span>
+            <strong>AI News Brief — 2026-08-03</strong>
+            <span>GitHub&#x27;s langgenius/dify leads velocity, while multimodal model research and AI financial advice dominate discussions.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/posts/2026-08-02-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-08-02</span>
+            <strong>AI News Brief — 2026-08-02</strong>
+            <span>vllm Leads GitHub, DistillAlign Captivates Paper Attention, and Community Discusses rand Fork.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/posts/2026-08-01-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-08-01</span>
+            <strong>AI News Brief — 2026-08-01</strong>
+            <span>NousResearch/hermes-agent leads GitHub velocity, while multimodal model research and GCC&#x27;s AI policy capture attention.</span>
+          </a>
+        </div>
+      </details>
+      <details class="news-digest-month-group">
+        <summary class="news-digest-month-summary"><span>July 2026</span><span class="news-digest-month-count">31 digests</span></summary>
+        <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-07-31-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-07-31</span>
+            <strong>AI News Brief — 2026-07-31</strong>
+            <span>GitHub&#x27;s headroomlabs-ai/headroom leads the pack, while CADENCE paper and darktable tool gain social traction.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/posts/2026-07-30-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-07-30</span>
+            <strong>AI News Brief — 2026-07-30</strong>
+            <span>Today&#x27;s AI landscape is marked by significant activity in agentic GitHub projects, alongside new research into on-policy distillation and multimodal models, with community discussion touching on practical applications.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/posts/2026-07-29-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-07-29</span>
+            <strong>AI News Brief — 2026-07-29</strong>
+            <span>Today&#x27;s AI landscape highlights significant activity in agent development, led by NousResearch/hermes-agent, alongside new research in video generation inference, and varied community discussions.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/posts/2026-07-28-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-07-28</span>
+            <strong>AI News Brief — 2026-07-28</strong>
+            <span>Today&#x27;s AI landscape highlights significant activity in LLM gateways, multilingual model alignment, and practical AI agent applications.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/posts/2026-07-27-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-07-27</span>
+            <strong>AI News Brief — 2026-07-27</strong>
+            <span>NousResearch/hermes-agent leads GitHub velocity, while Color Pass-Through via Camera-Display Coupling garners paper attention and a tic-tac-toe AI using Eomrang trends on social media.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/posts/2026-07-26-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-07-26</span>
+            <strong>AI News Brief — 2026-07-26</strong>
+            <span>Today&#x27;s AI developments highlight a strong emphasis on optimizing LLM token usage, advancements in camera-display technology for enhanced visual pass-through, and public discourse surrounding browser-integrated AI features.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/posts/2026-07-25-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-07-25</span>
+            <strong>AI News Brief — 2026-07-25</strong>
+            <span>Headroom Labs&#x27; compression tool leads GitHub, while Color Pass-Through and OpenAI&#x27;s Hugging Face incident capture paper and social attention.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/posts/2026-07-24-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-07-24</span>
+            <strong>AI News Brief — 2026-07-24</strong>
+            <span>NousResearch/hermes-agent leads GitHub, while FVAttn paper garners attention in video generation advancements.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/posts/2026-07-23-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-07-23</span>
+            <strong>AI News Brief — 2026-07-23</strong>
+            <span>Today&#x27;s AI landscape is marked by significant advancements in agentic AI development and new research in stabilizing asynchronous reinforcement learning.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/posts/2026-07-22-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-07-22</span>
+            <strong>AI News Brief — 2026-07-22</strong>
+            <span>Agent-focused projects are leading GitHub activity, while new research in multimodal LLMs for video understanding gains traction, and social channels discuss AI&#x27;s mathematical advancements.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/posts/2026-07-21-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-07-21</span>
+            <strong>AI News Brief — 2026-07-21</strong>
+            <span>Today&#x27;s AI landscape highlights strong momentum in agentic AI development, new research into distilling agent skills, and community discussion around OpenAI&#x27;s recent Codex model context adjustments.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/posts/2026-07-20-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-07-20</span>
+            <strong>AI News Brief — 2026-07-20</strong>
+            <span>Today&#x27;s AI landscape is marked by significant activity in agentic systems, with new GitHub repositories and research papers focusing on their development and evaluation, alongside discussions on AI&#x27;s societal implications.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/posts/2026-07-19-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-07-19</span>
+            <strong>AI News Brief — 2026-07-19</strong>
+            <span>NousResearch/hermes-agent dominates GitHub, while RxBrain and Apple-OpenAI legal tussle capture paper and social attention.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/posts/2026-07-18-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-07-18</span>
+            <strong>AI News Brief — 2026-07-18</strong>
+            <span>Today&#x27;s AI landscape highlights significant activity in agentic systems, with new research in reinforcement learning and notable open-source project velocity.</span>
+          </a>
+          <a class="news-digest-archive-item" href="/posts/2026-07-17-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-07-17</span>
+            <strong>AI News Brief — 2026-07-17</strong>
+            <span>BerriAI&#x27;s litellm leads GitHub velocity, Boogu-Image-0.1 garners paper attention, and OpenAI faces EU trademark loss.</span>
+          </a>
           <a class="news-digest-archive-item" href="/posts/2026-07-16-ai-news-digest/">
             <span class="news-digest-archive-date">2026-07-16</span>
             <strong>AI News Brief — 2026-07-16</strong>

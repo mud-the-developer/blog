@@ -1377,16 +1377,14 @@ pub async fn update_cfp_artifacts(
     };
 
     let data_dir = root.join("data/cfp");
-    let archive_dir = data_dir.join("archive");
     let static_data_dir = root.join("static/cfp/data");
     let posts_dir = root.join("posts/cfp");
-    fs::create_dir_all(&archive_dir).await?;
+    fs::create_dir_all(&data_dir).await?;
     fs::create_dir_all(&static_data_dir).await?;
     fs::create_dir_all(&posts_dir).await?;
 
     let pretty = serde_json::to_string_pretty(&issue)?;
     fs::write(data_dir.join("latest.json"), &pretty).await?;
-    fs::write(archive_dir.join(format!("{issue_date}.json")), &pretty).await?;
     fs::write(static_data_dir.join("latest.json"), &pretty).await?;
     fs::write(posts_dir.join("cfp-radar.md"), render_markdown(&issue)).await?;
 
