@@ -242,13 +242,13 @@ async fn builds_public_polished_home_with_filetree_and_no_decorative_pretext_mot
     let cfp = fs::read_to_string(out_dir.join("cfp/index.html"))?;
     assert!(cfp.contains("data-askama-template=\"cfp\""));
     assert!(cfp.contains("data-layout=\"cfp-index\""));
-    assert!(cfp.contains("CFP Radar"));
-    assert!(cfp.contains("wireless/communications focus"));
+    assert!(cfp.contains("wireless communications"));
     assert!(cfp.contains("/cfp/data/latest.json"));
-    assert!(cfp.contains("Read latest CFP Radar"));
+    assert!(cfp.contains("View CFP Radar Note"));
     assert!(out_dir.join("cfp/data/latest.json").exists());
+    assert!(out_dir.join("cfp/radar.ics").exists());
 
-    let cfp_post = fs::read_to_string(out_dir.join("posts/2026-07-03-cfp-radar/index.html"))?;
+    let cfp_post = fs::read_to_string(out_dir.join("posts/cfp-radar/index.html"))?;
     assert!(cfp_post.contains("Nearest submission deadlines"));
     assert!(cfp_post.contains("/assets/cfp-deadlines.mjs"));
     assert!(cfp_post.contains("Three-by-three quick view"));

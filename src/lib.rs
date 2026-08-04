@@ -157,8 +157,6 @@ struct NewsTemplate<'a> {
 #[template(path = "cfp.html")]
 struct CfpTemplate<'a> {
     latest_issue: Vec<&'a Post>,
-    recent_issues: Vec<&'a Post>,
-    issue_count: usize,
     archive_json: &'a str,
 }
 
@@ -817,21 +815,13 @@ pub fn render_news_search_page(posts: &[Post]) -> BlogResult<String> {
 
 pub fn render_cfp_page(posts: &[Post]) -> BlogResult<String> {
     let archive_json = archive_json(posts)?;
-    let cfp_issues = posts
+    let latest_issue = posts
         .iter()
         .filter(|post| post.folder == "cfp")
-        .collect::<Vec<_>>();
-    let latest_issue = cfp_issues.iter().copied().take(1).collect::<Vec<_>>();
-    let recent_issues = cfp_issues
-        .iter()
-        .copied()
-        .skip(1)
-        .take(8)
+        .take(1)
         .collect::<Vec<_>>();
     Ok(CfpTemplate {
-        issue_count: cfp_issues.len(),
         latest_issue,
-        recent_issues,
         archive_json: &archive_json,
     }
     .render()?)
@@ -891,7 +881,7 @@ pub async fn build_static_site(
     )?;
     copy_dir_sync(Path::new("static/news/assets"), &assets_dir.join("news"))?;
     copy_dir_sync(Path::new("static/news/data"), &out_dir.join("news/data"))?;
-    copy_dir_sync(Path::new("static/cfp/data"), &out_dir.join("cfp/data"))?;
+    copy_dir_sync(Path::new("static/cfp"), &out_dir.join("cfp"))?;
     let css = fs::read_to_string("src/style.css").await?;
     fs::write(assets_dir.join("style.css"), minify_css(&css)).await?;
     fs::copy("src/blog-lab.mjs", assets_dir.join("blog-lab.mjs")).await?;
