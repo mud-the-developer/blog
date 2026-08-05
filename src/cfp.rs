@@ -1141,7 +1141,7 @@ fn render_markdown(issue: &CfpIssue) -> String {
     output.push_str("slug: cfp-radar\n");
     output.push_str("tags:\n  - cfp\n  - conferences\n  - workshops\n  - journals\n  - special-issues\n  - wireless\n  - communications\nexcerpt: \"Weekly Call For Papers Dashboard with nearest submission deadlines, 1-click Google Calendar add links, and grouped watchlists for wireless/communications venues.\"\n---\n\n");
     output.push_str("Weekly CFP radar for conferences, workshops, and journal special issues relevant to wireless communications, RAN/6G, networking, edge systems, AI systems, and security. Dates are operational leads: always verify the linked official CFP page before planning a submission.\n\n");
-    output.push_str("📅 **1-Click Calendar Sync:** [+ Subscribe via Webcal (Apple/iCloud/Outlook)](webcal://mud-blog.pages.dev/cfp/radar.ics) | [Download .ics](/cfp/data/radar.ics)\n\n");
+    output.push_str("**1-Click Calendar Sync:** [+ Subscribe via Webcal (Apple/iCloud/Outlook)](webcal://mud-blog.pages.dev/cfp/radar.ics) | [Download .ics](/cfp/radar.ics)\n\n");
     output.push_str("**Ranking note.** Rank cells are verified-only: they stay `—` until a concrete source/year is recorded, such as CORE A*/A/B/C, CCF A/B/C, SCImago/JCR Q1/Q2, or an official society flagship statement. Conferences and workshops do not have journal-style Impact Factors or official Q1/Q2 quartiles.\n\n");
     let wireless_count = issue
         .items

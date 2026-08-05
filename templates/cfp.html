@@ -47,19 +47,15 @@
 
     <section class="news-featured" data-cfp-featured aria-labelledby="cfp-featured-title">
       <div class="news-section-heading">
-        <p class="eyebrow">Active Note</p>
-        <h2 id="cfp-featured-title">Active CFP Radar Note</h2>
-        <p>This single note is updated weekly with detected submission deadlines and 1-click Google Calendar add links.</p>
+        <p class="eyebrow">Active Radar</p>
+        <h2 id="cfp-featured-title">Tracked Venue Watchlist</h2>
+        <p>Operational submission lead dates for wireless communications, AI/systems, and networking research venues.</p>
       </div>
-      {% for post in latest_issue %}
-      <a class="news-feature-card" href="{{ post.url }}">
-        <span class="news-feature-thumb" aria-hidden="true"><span>CFP</span><em>Radar Note</em></span>
-        <span class="news-feature-date">{{ post.date }}</span>
-        <strong>{{ post.title }}</strong>
-        <em>{{ post.excerpt }}</em>
-        <span class="news-feature-cta">View CFP Radar Note →</span>
-      </a>
-      {% endfor %}
+      <article class="post-reader" style="margin-top: 24px;">
+        {% for post in latest_issue %}
+        <div class="post-body">{{ post.html|safe }}</div>
+        {% endfor %}
+      </article>
     </section>
 
     <section class="news-utility" data-cfp-utility aria-labelledby="cfp-utility-title">
@@ -71,6 +67,7 @@
   </main>
 
   <script id="archive-data" type="application/json">{{ archive_json|safe }}</script>
+  <script type="module" src="/assets/cfp-deadlines.mjs"></script>
   <script type="module" src="/assets/site-chrome.mjs"></script>
   <script src="/assets/web-vitals-rum.js"></script>
 </body>
