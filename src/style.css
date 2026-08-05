@@ -1274,6 +1274,24 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
   color: var(--muted);
   opacity: 0.6;
 }
+.cfp-post-body {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 18px;
+}
+.cfp-post-body > p,
+.cfp-post-body > ul,
+.cfp-post-body > ol,
+.cfp-post-body > blockquote {
+  max-width: 100%;
+}
+.cfp-post-body > p:first-of-type {
+  font-size: clamp(1.06rem, 1.4vw, 1.2rem);
+  line-height: 1.72;
+  color: var(--ink);
+  max-width: 100%;
+  margin-bottom: 20px;
+}
 
 html[data-theme="light"] { color-scheme: light; }
 html[data-theme="dark"] {

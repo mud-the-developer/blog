@@ -1435,11 +1435,7 @@ pub async fn sync_cfp_artifacts_from_latest(root: impl AsRef<Path>) -> BlogResul
 
 pub async fn validate_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIssue> {
     let root = root.as_ref();
-    let post_path = root.join("posts/cfp/cfp-radar.md");
-    let static_ics_path = root.join("static/cfp/radar.ics");
-    if !post_path.exists() || !static_ics_path.exists() {
-        sync_cfp_artifacts_from_latest(root).await?;
-    }
+    sync_cfp_artifacts_from_latest(root).await?;
     let latest_path = root.join("data/cfp/latest.json");
     let static_latest_path = root.join("static/cfp/data/latest.json");
     let issue: CfpIssue = serde_json::from_str(&fs::read_to_string(&latest_path).await?)?;
