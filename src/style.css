@@ -1108,7 +1108,7 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
 }
 .post-reader {
   width: 100%;
-  max-width: 100%;
+  max-width: 720px;
   margin: 0 auto;
   padding: clamp(18px, 4vw, 40px) 0;
 }
