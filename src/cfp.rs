@@ -959,10 +959,13 @@ fn render_watchlist_table(output: &mut String, items: &[&CfpItem]) {
     }
     for item in items {
         let venue = format!("{} ({})", item.title, item.acronym);
+        let cfp_link = format!(
+            "[<span class=\"ui-icon\" data-icon=\"external-link\"></span> CFP]({})",
+            item.url
+        );
         if show_rank_columns {
             output.push_str(&format!(
-                "| {} | {} | {} | {} | {} | {} | {} | {} | [CFP]({}) |
-",
+                "| {} | {} | {} | {} | {} | {} | {} | {} | {} |\n",
                 markdown_escape(&venue),
                 markdown_escape(&item.track),
                 markdown_escape(&item.conference_dates),
@@ -971,18 +974,17 @@ fn render_watchlist_table(output: &mut String, items: &[&CfpItem]) {
                 markdown_escape(&verified_rank_label(item)),
                 markdown_escape(&verified_rank_source_label(item)),
                 markdown_escape(&compact_metric_label(item)),
-                item.url
+                cfp_link
             ));
         } else {
             output.push_str(&format!(
-                "| {} | {} | {} | {} | {} | [CFP]({}) |
-",
+                "| {} | {} | {} | {} | {} | {} |\n",
                 markdown_escape(&venue),
                 markdown_escape(&item.track),
                 markdown_escape(&item.conference_dates),
                 markdown_escape(&deadline_label(item)),
                 markdown_escape(&item.location),
-                item.url
+                cfp_link
             ));
         }
     }
@@ -1103,8 +1105,14 @@ fn render_deadline_radar(output: &mut String, issue: &CfpIssue) {
     for item in upcoming.iter().take(12) {
         let venue = format!("{} ({})", item.title, item.acronym);
         let link_col = match google_calendar_url(item) {
-            Some(gcal) => format!("[CFP]({}) · [+ GCal]({})", item.url, gcal),
-            None => format!("[CFP]({})", item.url),
+            Some(gcal) => format!(
+                "[<span class=\"ui-icon\" data-icon=\"external-link\"></span> CFP]({}) · [<span class=\"ui-icon\" data-icon=\"calendar-plus\"></span> + GCal]({})",
+                item.url, gcal
+            ),
+            None => format!(
+                "[<span class=\"ui-icon\" data-icon=\"external-link\"></span> CFP]({})",
+                item.url
+            ),
         };
         output.push_str(&format!(
             "| {} | {} | {} | {} | {} |\n",
@@ -1141,7 +1149,7 @@ fn render_markdown(issue: &CfpIssue) -> String {
     output.push_str("slug: cfp-radar\n");
     output.push_str("tags:\n  - cfp\n  - conferences\n  - workshops\n  - journals\n  - special-issues\n  - wireless\n  - communications\nexcerpt: \"Weekly Call For Papers Dashboard with nearest submission deadlines, 1-click Google Calendar add links, and grouped watchlists for wireless/communications venues.\"\n---\n\n");
     output.push_str("Weekly CFP radar for conferences, workshops, and journal special issues relevant to wireless communications, RAN/6G, networking, edge systems, AI systems, and security. Dates are operational leads: always verify the linked official CFP page before planning a submission.\n\n");
-    output.push_str("**1-Click Calendar Sync:** [+ Subscribe via Webcal (Apple/iCloud/Outlook)](webcal://mud-blog.pages.dev/cfp/radar.ics) | [Download .ics](/cfp/radar.ics)\n\n");
+    output.push_str("<div class=\"cfp-calendar-sync-banner\"><span class=\"ui-icon\" data-icon=\"calendar\"></span> <strong>1-Click Calendar Sync:</strong> <a class=\"cfp-sync-link\" href=\"webcal://mud-blog.pages.dev/cfp/radar.ics\"><span class=\"ui-icon\" data-icon=\"calendar-plus\"></span><span>Subscribe via Webcal</span></a> <span class=\"cfp-sync-sep\">|</span> <a class=\"cfp-sync-link\" href=\"/cfp/radar.ics\" download><span class=\"ui-icon\" data-icon=\"download\"></span><span>Download .ics</span></a></div>\n\n");
     output.push_str("**Ranking note.** Rank cells are verified-only: they stay `—` until a concrete source/year is recorded, such as CORE A*/A/B/C, CCF A/B/C, SCImago/JCR Q1/Q2, or an official society flagship statement. Conferences and workshops do not have journal-style Impact Factors or official Q1/Q2 quartiles.\n\n");
     let wireless_count = issue
         .items
