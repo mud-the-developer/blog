@@ -45,17 +45,10 @@
       </div>
     </section>
 
-    <section class="news-featured" data-cfp-featured aria-labelledby="cfp-featured-title">
-      <div class="news-section-heading">
-        <p class="eyebrow">Active Radar</p>
-        <h2 id="cfp-featured-title">Tracked Venue Watchlist</h2>
-        <p>Operational submission lead dates for wireless communications, AI/systems, and networking research venues.</p>
-      </div>
-      <article class="post-reader" style="margin-top: 24px;">
-        {% for post in latest_issue %}
-        <div class="post-body">{{ post.html|safe }}</div>
-        {% endfor %}
-      </article>
+    <section class="news-featured" data-cfp-featured aria-label="Active CFP Radar">
+      {% for post in latest_issue %}
+      <div class="post-body cfp-post-body">{{ post.html|safe }}</div>
+      {% endfor %}
     </section>
 
     <section class="news-utility" data-cfp-utility aria-labelledby="cfp-utility-title">
