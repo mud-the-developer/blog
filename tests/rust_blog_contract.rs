@@ -244,7 +244,7 @@ async fn builds_public_polished_home_with_filetree_and_no_decorative_pretext_mot
     assert!(cfp.contains("data-layout=\"cfp-index\""));
     assert!(cfp.contains("wireless communications"));
     assert!(cfp.contains("/cfp/data/latest.json"));
-    assert!(cfp.contains("View CFP Radar Note"));
+    assert!(cfp.contains("Nearest submission deadlines"));
     assert!(out_dir.join("cfp/data/latest.json").exists());
     assert!(out_dir.join("cfp/radar.ics").exists());
 
