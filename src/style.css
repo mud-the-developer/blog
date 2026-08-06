@@ -1113,7 +1113,7 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
 }
 .post-reader {
   width: 100%;
-  max-width: 720px;
+  max-width: 800px;
   margin: 0 auto;
   padding: clamp(10px, 2vw, 22px) 0;
 }
@@ -1167,12 +1167,12 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
   min-height: 420px;
   border: 1px solid var(--line);
 }
-.profile-link-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+.post-body .profile-link-grid {
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
-.profile-link-item img { display: block; width: 100%; height: auto; }
+.post-body .profile-link-item img { display: block; width: auto; height: 30px; border: 0; }
 .post-body pre {
   overflow-x: auto;
   padding: 16px;
@@ -1221,6 +1221,8 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
   padding: 9px 12px;
   border-bottom: 1px solid color-mix(in srgb, var(--line) 45%, transparent);
   vertical-align: middle;
+  max-width: 34ch;
+  overflow-wrap: anywhere;
 }
 .post-body tr:last-child td {
   border-bottom: 0;
@@ -1229,7 +1231,8 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
   background: color-mix(in srgb, var(--paper) 35%, transparent);
 }
 .post-body td:first-child {
-  white-space: nowrap;
+  min-width: 12ch;
+  max-width: 22ch;
   font-family: var(--font-mono);
   font-weight: 680;
   font-size: 0.84rem;
@@ -1240,6 +1243,7 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
 }
 .post-body td:last-child {
   white-space: nowrap;
+  max-width: none;
 }
 .cfp-sync-banner {
   display: flex;
