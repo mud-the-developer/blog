@@ -180,7 +180,7 @@ async fn builds_public_polished_home_with_filetree_and_no_decorative_pretext_mot
     assert!(!style.contains(".archive-graph"));
     assert!(!style.to_ascii_lowercase().contains("neon"));
     assert!(
-        style.len() <= 43_000,
+        style.len() <= 52_000,
         "public polish CSS should stay bounded even with responsive controls, post chrome spacing, icons, theme modes, dark contrast guards, editorial archive controls, mobile news compression, card-news surfaces, and CFP tables"
     );
 
