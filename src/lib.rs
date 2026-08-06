@@ -530,6 +530,8 @@ pub async fn load_posts(posts_dir: impl AsRef<Path>) -> BlogResult<Vec<Post>> {
         post.html = markdown_to_html_with_links(&post.body, &link_index);
         if post.folder == "news" {
             post.html = demote_first_h1(&post.html);
+        } else {
+            post.html = strip_leading_h1_matching_title(&post.html, &post.title);
         }
         debug_assert!(!source.is_empty());
         posts.push(post);
@@ -672,6 +674,36 @@ fn home_index_posts(posts: &[Post]) -> Vec<Post> {
         .filter(|post| post.folder != "news")
         .cloned()
         .collect()
+}
+
+fn strip_leading_h1_matching_title(html: &str, title: &str) -> String {
+    let trimmed = html.trim_start();
+    if !trimmed.starts_with("<h1") {
+        return html.to_string();
+    }
+    let Some(open_end) = trimmed.find('>') else {
+        return html.to_string();
+    };
+    let Some(close_relative) = trimmed[open_end..].find("</h1>") else {
+        return html.to_string();
+    };
+    let close_start = open_end + close_relative;
+    let close_end = close_start + "</h1>".len();
+    let heading_text = trimmed[open_end + 1..close_start].replace(['\n', '\r'], " ");
+    let mut plain = String::with_capacity(heading_text.len());
+    let mut inside_tag = false;
+    for ch in heading_text.chars() {
+        match ch {
+            '<' => inside_tag = true,
+            '>' => inside_tag = false,
+            _ if !inside_tag => plain.push(ch),
+            _ => {}
+        }
+    }
+    if plain.trim() != title.trim() {
+        return html.to_string();
+    }
+    trimmed[close_end..].trim_start().to_string()
 }
 
 fn demote_first_h1(html: &str) -> String {

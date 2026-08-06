@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>가독성 비교: 60ch vs 66ch vs 72ch</title>
+  <style>
+    :root {
+      --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-display: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      --ink: #1a1a2e;
+      --muted: #6b6b7b;
+      --accent: #0066cc;
+      --accent-2: #7a4ed8;
+      --line: #e0e0e8;
+      --bg: #fafafa;
+      --paper: #ffffff;
+      --glass-bg: rgba(255, 255, 255, 0.7);
+      --glass-line: rgba(0, 0, 0, 0.08);
+      --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+      --glass-blur: 16px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --ink: #f0f0f5;
+        --muted: #9a9ab0;
+        --accent: #66a3ff;
+        --accent-2: #b39cff;
+        --line: #2a2a3e;
+        --bg: #121218;
+        --paper: #1a1a24;
+        --glass-bg: rgba(26, 26, 36, 0.7);
+        --glass-line: rgba(255, 255, 255, 0.1);
+        --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .header {
+      max-width: 900px;
+      margin: 0 auto 32px;
+      text-align: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+    }
+    .header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .header p { color: var(--muted); font-size: 1.05rem; }
+    .header .meta { margin-top: 12px; font-size: 0.9rem; color: var(--muted); }
+
+    .controls {
+      max-width: 900px;
+      margin: 0 auto 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+    }
+    .control-group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .control-label { font-size: 0.85rem; color: var(--muted); }
+    .btn {
+      border: 1px solid var(--line);
+      background: var(--glass-bg);
+      color: var(--ink);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      backdrop-filter: blur(var(--glass-blur));
+      transition: all 0.15s;
+    }
+    .btn:hover { border-color: var(--accent); }
+    .btn.active { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--glass-bg)); color: var(--accent); font-weight: 600; }
+    .btn:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 62%, transparent); outline-offset: 3px; }
+
+    .variant-section {
+      max-width: 900px;
+      margin: 0 auto 48px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--glass-shadow);
+    }
+
+    .variant-header {
+      background: var(--glass-bg);
+      border-bottom: 1px solid var(--glass-line);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      padding: 16px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .variant-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .variant-label {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+    .variant-ch {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--muted);
+      background: var(--bg);
+      padding: 4px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+    }
+    .variant-ch.current { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+    .variant-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+    .badge {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      background: var(--bg);
+      color: var(--muted);
+    }
+    .badge.rec { border-color: #22c55e; background: color-mix(in srgb, #22c55e 10%, var(--bg)); color: #166534; }
+    .badge.warn { border-color: #f59e0b; background: color-mix(in srgb, #f59e0b 10%, var(--bg)); color: #92400e; }
+
+    .variant-content { padding: 32px; }
+
+    /* Article styles matching blog */
+    .article {
+      font-family: var(--font-body);
+      font-size: clamp(1.05rem, 1.1vw, 1.1rem);
+      line-height: 1.84;
+      color: var(--ink);
+    }
+    .article h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 4.6rem);
+      margin: 22px 0 26px;
+      font-weight: 720;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+    .article h2 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      margin-top: 2.2em;
+      margin-bottom: 0.55em;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+    .article h3 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      margin-top: 1.8em;
+      margin-bottom: 0.5em;
+      line-height: 1.2;
+    }
+    .article p { margin-bottom: 1.2em; }
+    .article li { margin-bottom: 0.45em; }
+    .article ul, .article ol { padding-inline-start: 1.4em; margin-bottom: 1.2em; }
+    .article blockquote {
+      margin: 1.2em 0;
+      padding: 0.15em 0 0.15em 1.15em;
+      border-inline-start: 3px solid var(--accent);
+      color: var(--muted);
+    }
+    .article code {
+      font-family: var(--font-mono);
+      font-size: 0.92em;
+      background: var(--bg);
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+    }
+    .article pre {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 1.2em 0;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+    .article pre code { background: none; padding: 0; font-size: inherit; }
+    .article a { color: var(--accent); text-decoration-color: color-mix(in srgb, var(--accent) 44%, transparent); text-underline-offset: 0.18em; }
+
+    /* CH ruler overlay */
+    .ch-ruler {
+      position: relative;
+      height: 24px;
+      margin: 8px 0 16px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      user-select: none;
+      pointer-events: none;
+    }
+    .ch-ruler::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: repeating-linear-gradient(90deg, var(--line), var(--line) 1px, transparent 1px, transparent 2px);
+    }
+    .ch-ruler span {
+      position: absolute;
+      top: 0;
+      transform: translateX(-50%);
+    }
+
+    /* Responsive: mobile breakpoint at 560px */
+    @media (max-width: 560px) {
+      .variant-content { padding: 20px 16px; }
+      .article { font-size: 1.0625rem; line-height: 1.8; }
+      .article h1 { font-size: clamp(2rem, 6vw, 3rem); }
+      .article h2 { font-size: 1.6rem; }
+      .article h3 { font-size: 1.28rem; }
+      .variant-header { padding: 14px 16px; }
+      .header { padding: 0 12px 20px; }
+      .controls { padding: 0 12px; }
+      .variant-section { margin: 0 12px 32px; border-radius: 12px; }
+    }
+
+    /* Print styles */
+    @media print {
+      .controls, .ch-ruler { display: none !important; }
+      .variant-section { break-inside: avoid; page-break-inside: avoid; margin-bottom: 24px; }
+      body { background: white; color: black; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>가독성 비교: 60ch vs 66ch vs 72ch</h1>
+    <p>동일 콘텐츠·동일 폰트·동일 줄간격(1.84)에서 <strong>본문 최대 너비(ch 단위)</strong>만 변경하여 비교합니다.</p>
+    <div class="meta">
+      기준: 현재 블로그 CSS <code>.post-body p { max-width: 66ch; line-height: 1.84; }</code> |
+      WCAG 1.4.8(AAA) ≤ 80ch | Baymard 권장 50–75ch | Ruder 최적 50–60ch
+    </div>
+  </header>
+
+  <div class="controls" role="group" aria-label="비교 옵션">
+    <div class="control-group">
+      <span class="control-label">모드:</span>
+      <button class="btn active" data-mode="all" aria-pressed="true">전체 비교</button>
+      <button class="btn" data-mode="single" aria-pressed="false">단일 보기</button>
+    </div>
+    <div class="control-group">
+      <span class="control-label">단일 선택:</span>
+      <button class="btn" data-variant="60" aria-pressed="false">60ch</button>
+      <button class="btn" data-variant="66" aria-pressed="false">66ch (현재)</button>
+      <button class="btn" data-variant="72" aria-pressed="false">72ch</button>
+    </div>
+    <div class="control-group">
+      <label class="btn" style="cursor:pointer;">
+        <input type="checkbox" id="showRuler" checked style="margin-right:6px;"> CH 눈금자 표시
+      </label>
+    </div>
+  </div>
+
+  <main id="variants">
+    <!-- 60ch -->
+    <section class="variant-section" data-ch="60">
+      <header class="variant-header">
+        <div class="variant-title">
+          <span class="variant-label">60자</span>
+          <span class="variant-ch">60ch</span>
+        </div>
+        <div class="variant-badges">
+          <span class="badge rec">Ruder 최적 구간</span>
+          <span class="badge">Baymard 하한</span>
+        </div>
+      </header>
+      <div class="variant-content">
+        <div class="ch-ruler" aria-hidden="true">
+          <span style="left: calc(10ch * 1);">10</span>
+          <span style="left: calc(20ch * 1);">20</span>
+          <span style="left: calc(30ch * 1);">30</span>
+          <span style="left: calc(40ch * 1);">40</span>
+          <span style="left: calc(50ch * 1);">50</span>
+          <span style="left: calc(60ch * 1);">60</span>
+        </div>
+        <article class="article" style="max-width: 60ch;">
+          {{ARTICLE_CONTENT}}
+        </article>
+      </div>
+    </section>
+
+    <!-- 66ch (현재) -->
+    <section class="variant-section" data-ch="66">
+      <header class="variant-header">
+        <div class="variant-title">
+          <span class="variant-label">66자 (현재)</span>
+          <span class="variant-ch current">66ch</span>
+        </div>
+        <div class="variant-badges">
+          <span class="badge rec">Baymard 권장 내</span>
+          <span class="badge">WCAG 1.4.8 AAA 준수</span>
+        </div>
+      </header>
+      <div class="variant-content">
+        <div class="ch-ruler" aria-hidden="true">
+          <span style="left: calc(10ch * 1);">10</span>
+          <span style="left: calc(20ch * 1);">20</span>
+          <span style="left: calc(30ch * 1);">30</span>
+          <span style="left: calc(40ch * 1);">40</span>
+          <span style="left: calc(50ch * 1);">50</span>
+          <span style="left: calc(60ch * 1);">60</span>
+          <span style="left: calc(66ch * 1);">66</span>
+        </div>
+        <article class="article" style="max-width: 66ch;">
+          {{ARTICLE_CONTENT}}
+        </article>
+      </div>
+    </section>
+
+    <!-- 72ch -->
+    <section class="variant-section" data-ch="72">
+      <header class="variant-header">
+        <div class="variant-title">
+          <span class="variant-label">72자</span>
+          <span class="variant-ch">72ch</span>
+        </div>
+        <div class="variant-badges">
+          <span class="badge">Baymard 상한 근접</span>
+          <span class="badge warn">WCAG 1.4.8 AAA 초과 위험</span>
+        </div>
+      </header>
+      <div class="variant-content">
+        <div class="ch-ruler" aria-hidden="true">
+          <span style="left: calc(10ch * 1);">10</span>
+          <span style="left: calc(20ch * 1);">20</span>
+          <span style="left: calc(30ch * 1);">30</span>
+          <span style="left: calc(40ch * 1);">40</span>
+          <span style="left: calc(50ch * 1);">50</span>
+          <span style="left: calc(60ch * 1);">60</span>
+          <span style="left: calc(70ch * 1);">70</span>
+          <span style="left: calc(72ch * 1);">72</span>
+        </div>
+        <article class="article" style="max-width: 72ch;">
+          {{ARTICLE_CONTENT}}
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer style="max-width: 900px; margin: 48px auto 0; padding-top: 24px; border-top: 1px solid var(--line); text-align: center; color: var(--muted); font-size: 0.9rem;">
+    <p>피드백 기준: <strong>줄 길이(문자 수)</strong> · <strong>눈 이동 거리</strong> · <strong>단락 밀도감</strong> · <strong>모바일(≤560px) 강제 1.8 줄간격과의 조화</strong></p>
+    <p>스크린샷 저장: <kbd>Cmd/Ctrl + P</kbd> → PDF 저장 또는 브라우저 스크린샷 도구 사용</p>
+  </footer>
+
+  <script>
+    // Article content (from 2026-07-14 AI news digest)
+    const ARTICLE_CONTENT = `
+      <h1>Daily AI Brief: Agentic Development and Policy Distillation Lead Trends</h1>
+      <p>Today's AI landscape is marked by significant activity in agentic frameworks on GitHub, alongside new research in policy distillation and community discussions on AI-driven SaaS registration.</p>
+      <p>The AI ecosystem today highlights a strong focus on agentic frameworks, with NousResearch's 'hermes-agent' leading GitHub velocity. Concurrently, new academic work on 'Trust Region Policy Distillation' is drawing attention in research circles. Community discussions are also gravitating towards practical applications, such as AI-powered SaaS registration.</p>
+
+      <h2>Repository Momentum</h2>
+      <p>Fresh GitHub projects worth scanning before the feed turns over.</p>
+      <ul>
+        <li><strong>NousResearch/hermes-agent</strong> — The agent that grows with you. 214.2k stars, +800/7d. Updated 1h ago.</li>
+        <li><strong>BerriAI/litellm</strong> — Python SDK, Proxy Server (AI Gateway) to call 100+ LLM APIs in OpenAI format, with cost tracking, guardrails, loadbalancing and logging. 53.5k stars.</li>
+        <li><strong>openai/codex</strong> — Lightweight coding agent that runs in your terminal. 97.7k stars, +800/7d.</li>
+        <li><strong>sickn33/agentic-awesome-skills</strong> — Installable GitHub library of 1,900+ agentic skills for Claude Code, Cursor, Codex CLI, and more. 43.1k stars.</li>
+        <li><strong>headroomlabs-ai/headroom</strong> — Compress tool outputs, logs, files, and RAG chunks before they reach the LLM. 60-95% fewer tokens, same answers. 58.9k stars.</li>
+      </ul>
+
+      <h2>Fresh Papers</h2>
+      <p>New research worth bookmarking for a deeper read.</p>
+      <ul>
+        <li><strong>Trust Region Policy Distillation</strong> (HF Papers) — Policy distillation with trust region constraints for stable transfer.</li>
+        <li><strong>Agentic Patterns Taxonomy</strong> — Comprehensive taxonomy of agentic patterns and evaluation benchmarks.</li>
+        <li><strong>Preference Distillation</strong> — Distilling preference data into smaller models without reward modeling.</li>
+      </ul>
+
+      <h2>Community Wire</h2>
+      <p>Discussions and show-and-tells from the community.</p>
+      <ul>
+        <li><strong>Show GN: MCP server that registers the created SaaS by simply telling AI</strong> — GeekNews community wire.</li>
+        <li><strong>Natural language to deployed service in under 2 minutes</strong> — Demo of AI-driven service provisioning.</li>
+      </ul>
+
+      <h2>Technical Deep-dive</h2>
+      <p>The <code>hermes-agent</code> architecture uses a reducer/effect pattern where state transitions are pure and side effects are pushed to an effect runner. This separates concerns cleanly:</p>
+      <pre><code>// Reducer (pure)
+function reduce(state, action) {
+  switch (action.type) {
+    case 'QUERY': return { ...state, query: action.payload };
+    case 'RESULTS': return { ...state, results: action.payload };
+  }
+}
+
+// Effect runner (impure)
+async function runEffect(effect, dispatch) {
+  if (effect.type === 'SEARCH') {
+    const results = await searchAPI(effect.payload);
+    dispatch({ type: 'RESULTS', payload: results });
+  }
+}</code></pre>
+      <p>This pattern keeps the core logic testable and the I/O boundaries explicit. The same pattern applies to the news desk workflow where candidate selection, drafting, and publishing are separate effect types.</p>
+      <blockquote>"The best agent frameworks don't hide complexity—they make the boundaries visible so you can reason about them."</blockquote>
+
+      <h2>Metrics Summary</h2>
+      <p>Today's brief processed 10 repository signals, 10 paper picks, and 10 community items. The lead story combines all three modalities into a single coherent narrative.</p>
+    `;
+
+    // Inject content
+    document.querySelectorAll('.variant-content .article').forEach(article => {
+      article.innerHTML = ARTICLE_CONTENT;
+    });
+
+    // Controls
+    const modeBtns = document.querySelectorAll('[data-mode]');
+    const variantBtns = document.querySelectorAll('[data-variant]');
+    const sections = document.querySelectorAll('.variant-section');
+    const rulerCheckbox = document.getElementById('showRuler');
+    let currentMode = 'all';
+    let currentVariant = '66';
+
+    function updateVisibility() {
+      sections.forEach(sec => {
+        const ch = sec.dataset.ch;
+        let show = false;
+        if (currentMode === 'all') {
+          show = true;
+        } else {
+          show = ch === currentVariant;
+        }
+        sec.style.display = show ? 'block' : 'none';
+      });
+      // Update button states
+      modeBtns.forEach(btn => {
+        const active = btn.dataset.mode === currentMode;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-pressed', active);
+      });
+      variantBtns.forEach(btn => {
+        const active = btn.dataset.variant === currentVariant;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-pressed', active);
+      });
+    }
+
+    modeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentMode = btn.dataset.mode;
+        if (currentMode === 'single' && !variantBtns[1].classList.contains('active')) {
+          currentVariant = '66';
+        }
+        updateVisibility();
+      });
+    });
+
+    variantBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentVariant = btn.dataset.variant;
+        currentMode = 'single';
+        updateVisibility();
+      });
+    });
+
+    rulerCheckbox.addEventListener('change', () => {
+      document.querySelectorAll('.ch-ruler').forEach(r => {
+        r.style.display = rulerCheckbox.checked ? 'block' : 'none';
+      });
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT') return;
+      if (e.key >= '1' && e.key <= '3') {
+        const variants = ['60', '66', '72'];
+        currentVariant = variants[parseInt(e.key) - 1];
+        currentMode = 'single';
+        updateVisibility();
+      } else if (e.key === '0' || e.key === 'a') {
+        currentMode = 'all';
+        updateVisibility();
+      }
+    });
+
+    // Initial
+    updateVisibility();
+  </script>
+</body>
+</html>
