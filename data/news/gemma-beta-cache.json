@@ -1156,6 +1156,49 @@
     ],
     "title": "Developer Analysis of Agentic Coding Models"
   },
+  "5f7c1f2fda3b1408d687f56d6a64c7217a81a59efb9a69367a5beefc9bdf7a38": {
+    "article_body": [
+      "The GitHub landscape is currently led by **NousResearch/hermes-agent**, with **vllm-project/vllm** and **headroomlabs-ai/headroom** closely following in terms of project momentum. These projects reflect the community's focus on enhancing LLM capabilities and efficiency.",
+      "On the research front, papers hosted on Hugging Face garnered significant attention, particularly **'SFT Conflicts, RL Coexists'**, which delves into the theoretical and empirical aspects of combining Supervised Fine-Tuning (SFT) and Reinforcement Learning (RL) for multi-task LLMs. Other notable papers include **'StreamArena'** for continuous video understanding and **'Douyin Multimodal Embedding Model Technical Report'** for its insights into multimodal representation learning.",
+      "Community engagement, as tracked by GeekNews and other platforms, showed interest in **'Meta Muse Glimmer'**, an accessible coding model, alongside discussions on LLM quirks, such as the impact of file naming on review scores.",
+      "The diversity of today's signals underscores the broad development and application spectrum of AI, from core model enhancements to user-facing applications and academic research."
+    ],
+    "closing": "As the AI ecosystem evolves, today's brief captures a snapshot of innovation across development, research, and community interaction, setting the stage for tomorrow's advancements.",
+    "dek": "NousResearch/hermes-agent dominates GitHub, while SFT Conflicts paper draws attention in AI research",
+    "lead": "['August 11, 2026, saw NousResearch/hermes-agent maintain its stronghold on GitHub with 218,250 stars and a +800/7d growth rate.', \"In academic circles, 'SFT Conflicts, RL Coexists' emerged as a focal point, analyzing multi-task learning for LLMs.\", \"Community chatter highlighted 'Meta Muse Glimmer,' an open 30B coding model, and peculiarities in LLM review processes.\", \"Today's brief distills 10 key GitHub repos, 6 fresh papers from Hugging Face, and 5 community signals.\"]",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "NousResearch/hermes-agent leads GitHub with sustained growth.",
+      "SFT vs. RL in multi-task LLMs is a research highlight.",
+      "Community focuses on accessible models and LLM behavior nuances.",
+      "Diverse AI development with 10 repos, 6 papers, and 5 community items highlighted."
+    ],
+    "title": "AI Ecosystem Brief - August 11, 2026"
+  },
+  "5f7c1f2fda3b1408d687f56d6a64c7217a81a59efb9a69367a5beefc9bdf7a38::overview": {
+    "article_body": [
+      "The GitHub landscape is currently led by **NousResearch/hermes-agent**, with **vllm-project/vllm** and **headroomlabs-ai/headroom** closely following in terms of project momentum. These projects reflect the community's focus on enhancing LLM capabilities and efficiency.",
+      "On the research front, papers hosted on Hugging Face garnered significant attention, particularly **'SFT Conflicts, RL Coexists'**, which delves into the theoretical and empirical aspects of combining Supervised Fine-Tuning (SFT) and Reinforcement Learning (RL) for multi-task LLMs. Other notable papers include **'StreamArena'** for continuous video understanding and **'Douyin Multimodal Embedding Model Technical Report'** for its insights into multimodal representation learning.",
+      "Community engagement, as tracked by GeekNews and other platforms, showed interest in **'Meta Muse Glimmer'**, an accessible coding model, alongside discussions on LLM quirks, such as the impact of file naming on review scores.",
+      "The diversity of today's signals underscores the broad development and application spectrum of AI, from core model enhancements to user-facing applications and academic research."
+    ],
+    "closing": "As the AI ecosystem evolves, today's brief captures a snapshot of innovation across development, research, and community interaction, setting the stage for tomorrow's advancements.",
+    "dek": "NousResearch/hermes-agent dominates GitHub, while SFT Conflicts paper draws attention in AI research",
+    "lead": [
+      "August 11, 2026, saw NousResearch/hermes-agent maintain its stronghold on GitHub with 218,250 stars and a +800/7d growth rate.",
+      "In academic circles, 'SFT Conflicts, RL Coexists' emerged as a focal point, analyzing multi-task learning for LLMs.",
+      "Community chatter highlighted 'Meta Muse Glimmer,' an open 30B coding model, and peculiarities in LLM review processes.",
+      "Today's brief distills 10 key GitHub repos, 6 fresh papers from Hugging Face, and 5 community signals."
+    ],
+    "takeaways": [
+      "NousResearch/hermes-agent leads GitHub with sustained growth.",
+      "SFT vs. RL in multi-task LLMs is a research highlight.",
+      "Community focuses on accessible models and LLM behavior nuances.",
+      "Diverse AI development with 10 repos, 6 papers, and 5 community items highlighted."
+    ],
+    "title": "AI Ecosystem Brief - August 11, 2026"
+  },
   "615cf0544bbc1b379676a0f2e37c8a0dac1a85ef8580490226d36f0220fdd828": {
     "paragraphs": [
       "Repository momentum is currently centering on the plumbing of multi-model integration. BerriAI's litellm has emerged as a high-velocity leader, serving as a central AI gateway that allows developers to call over 100 LLM APIs in a unified format while managing essential operational needs like cost tracking, load balancing, and guardrails.",
