@@ -242,6 +242,42 @@
     ],
     "title": "Daily AI Beta Brief: Agentic Systems Lead Development"
   },
+  "1f284813d3cd2c2e9f7d445e738fe8a65f26904c4bfd82518b506a63b31e3c77": {
+    "article_body": [
+      "Repository momentum continues to be led by `vllm-project/vllm`, a high-throughput and memory-efficient inference and serving engine for LLMs, maintaining its top position. Other significant activity in the GitHub space includes several open-source coding agents such as `anomalyco/opencode`, `code-yeongyu/oh-my-openagent`, and `nexu-io/open-design`, which focuses on design automation. Additionally, `headroomlabs-ai/headroom` is gaining traction for its token compression capabilities, aiming to reduce LLM input costs.",
+      "In the realm of fresh research, 'UniSwap: Streaming Audio-Visual Identity Swapping for Talking Videos' from Hugging Face Papers is a key item, exploring advanced multimodal generation. Other notable papers include 'Full-bandwidth transformer,' which proposes architectural improvements for reasoning and efficiency, and 'Intern-S2-Preview: Scientific Agentic Foundation Model,' a series integrating multimodal pre-training and reinforcement learning. An arXiv paper on 'Distributed Selective Inference for Quantile Regression' also surfaced, alongside 'AutoDesign' for agentic design optimization.",
+      "Community chatter is prominently featuring the lawsuit by Nine PBS against Iron Mountain over blocked access to archival data, sparking discussion on data ownership and accessibility. Further social signals include interest in `GLM-5.3` for its coding and cyber capabilities, and discussions around the 'stateless' evolution of MCP. Mentions of promotional pricing for Gemini 3.7 Flash and predictions regarding tool use as the next bottleneck for agentic work latency were also observed across social platforms."
+    ],
+    "closing": "This concludes today's AI Beta Brief for August 15, 2026. We will continue to monitor these developments.",
+    "dek": "Today's AI landscape highlights continued velocity in LLM inference engines, new research in audio-visual identity swapping, and community discussion around data access disputes.",
+    "lead": "The AI sector's daily pulse indicates `vllm-project/vllm` as the leading GitHub repository, demonstrating sustained velocity in high-throughput LLM inference. In research, a new paper on streaming audio-visual identity swapping, 'UniSwap,' is drawing notable attention. Concurrently, community discussions are gravitating towards a lawsuit by Nine PBS against Iron Mountain concerning archival data access, underscoring broader concerns about data control and availability.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "LLM inference optimization remains a high-priority development area, as evidenced by `vllm-project/vllm`'s consistent activity.",
+      "Advanced multimodal research, particularly in real-time audio-visual manipulation and scientific agentic models, is gaining significant academic traction.",
+      "Data access and control issues are sparking notable community debate, highlighting broader concerns beyond technical advancements.",
+      "The development of coding and design agents continues to evolve, with ongoing efforts to improve efficiency and reduce operational costs."
+    ],
+    "title": "AI Beta Brief: vLLM Leads Repos, UniSwap in Papers, Data Access Debates on Social"
+  },
+  "1f284813d3cd2c2e9f7d445e738fe8a65f26904c4bfd82518b506a63b31e3c77::overview": {
+    "article_body": [
+      "Repository momentum continues to be led by `vllm-project/vllm`, a high-throughput and memory-efficient inference and serving engine for LLMs, maintaining its top position. Other significant activity in the GitHub space includes several open-source coding agents such as `anomalyco/opencode`, `code-yeongyu/oh-my-openagent`, and `nexu-io/open-design`, which focuses on design automation. Additionally, `headroomlabs-ai/headroom` is gaining traction for its token compression capabilities, aiming to reduce LLM input costs.",
+      "In the realm of fresh research, 'UniSwap: Streaming Audio-Visual Identity Swapping for Talking Videos' from Hugging Face Papers is a key item, exploring advanced multimodal generation. Other notable papers include 'Full-bandwidth transformer,' which proposes architectural improvements for reasoning and efficiency, and 'Intern-S2-Preview: Scientific Agentic Foundation Model,' a series integrating multimodal pre-training and reinforcement learning. An arXiv paper on 'Distributed Selective Inference for Quantile Regression' also surfaced, alongside 'AutoDesign' for agentic design optimization.",
+      "Community chatter is prominently featuring the lawsuit by Nine PBS against Iron Mountain over blocked access to archival data, sparking discussion on data ownership and accessibility. Further social signals include interest in `GLM-5.3` for its coding and cyber capabilities, and discussions around the 'stateless' evolution of MCP. Mentions of promotional pricing for Gemini 3.7 Flash and predictions regarding tool use as the next bottleneck for agentic work latency were also observed across social platforms."
+    ],
+    "closing": "This concludes today's AI Beta Brief for August 15, 2026. We will continue to monitor these developments.",
+    "dek": "Today's AI landscape highlights continued velocity in LLM inference engines, new research in audio-visual identity swapping, and community discussion around data access disputes.",
+    "lead": "The AI sector's daily pulse indicates `vllm-project/vllm` as the leading GitHub repository, demonstrating sustained velocity in high-throughput LLM inference. In research, a new paper on streaming audio-visual identity swapping, 'UniSwap,' is drawing notable attention. Concurrently, community discussions are gravitating towards a lawsuit by Nine PBS against Iron Mountain concerning archival data access, underscoring broader concerns about data control and availability.",
+    "takeaways": [
+      "LLM inference optimization remains a high-priority development area, as evidenced by `vllm-project/vllm`'s consistent activity.",
+      "Advanced multimodal research, particularly in real-time audio-visual manipulation and scientific agentic models, is gaining significant academic traction.",
+      "Data access and control issues are sparking notable community debate, highlighting broader concerns beyond technical advancements.",
+      "The development of coding and design agents continues to evolve, with ongoing efforts to improve efficiency and reduce operational costs."
+    ],
+    "title": "AI Beta Brief: vLLM Leads Repos, UniSwap in Papers, Data Access Debates on Social"
+  },
   "221194fca8243072b2c26bb0075cecf16f1f9c46231fe02fb227cafe82fd5b0e": {
     "article_body": [
       "The AI ecosystem experienced a dynamic 24 hours, with robust activity across open-source repositories, academic papers, and community discussions. GitHub projects focused on LLM performance and agentic frameworks saw notable momentum, while new research explored efficiencies in vision-language models. Social platforms reflected diverse conversations, from novel web paradigms to the economic implications of AI.",
