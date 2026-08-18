@@ -2595,6 +2595,61 @@
     ],
     "title": "AI Daily Briefing: Inference Efficiency and Agentic Retrieval"
   },
+  "bec5576776f7abe0a5d8f5fe4374c703a5e094d8338ef15e19b8fcad12c9e77a": {
+    "article_body": [
+      "{'paragraph': \"The GitHub repository NousResearch/hermes-agent continues its dominance with 218,250 stars and a consistent growth rate of +800 stars over the last 7 days. This agent, designed to 'grow with you,' has seen updates as recently as 28 days ago, underscoring its active development and community engagement.\"}",
+      "{'paragraph': 'On the research front, ENTLORE stands out as a significant benchmark for evaluating enterprise question answering capabilities, particularly in recovering implicit organizational relations from routine documents. Additionally, VideoGAIA introduces a multimodal benchmark for agentic video understanding, reflecting the push towards more comprehensive AI capabilities.'}",
+      "{'paragraph': \"Social media and community forums are abuzz with diverse topics. A peculiar trend involves tracking rare book shipments to Amazon's AI training facilities, sparking curiosity about the data sources fueling AI models. Meanwhile, there's a noted antipathy among young people towards AI CEOs, highlighting the societal impacts of AI leadership.\"}",
+      "{'paragraph': 'Other notable mentions include the Real-Time Symbol-Domain OFDM Radar paper on arXiv, contributing to the vRAN cluster, and the update on Agent Arena, where different AI models top various categories (GPT 5.6 Sol for Code, Claude Opus 5 for Work and Chat). These developments showcase the breadth of AI innovation across technical and application domains.'}",
+      "{'paragraph': \"Today's digest aggregates 10 key repository updates, 6 fresh papers from Hugging Face and arXiv, and 5 community signals, among others. The full brief below provides detailed insights into each of these areas, offering a comprehensive overview of the current AI ecosystem's pulse.\"}"
+    ],
+    "closing": "Stay tuned for tomorrow's brief as the AI landscape continues to evolve at pace.",
+    "dek": "NousResearch/hermes-agent leads GitHub velocity, while ENTLORE and social chatter on AI shipment tracking gain attention.",
+    "lead": "['As of August 19, 2026, the AI landscape is dominated by NousResearch/hermes-agent on GitHub, boasting 218,250 stars and a +800/7d growth rate.', 'Research highlights include ENTLORE, a new benchmark for latent organizational reasoning in enterprise question answering, and VideoGAIA, advancing agentic video understanding.', 'Social platforms buzz with topics like tracking rare book shipments to Amazon AI training facilities and the perceived antipathy of young people toward AI CEOs.', \"Today's brief compiles the top signals across repositories, papers, and community discussions.\"]",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "NousResearch/hermes-agent dominates GitHub with active development and high community engagement.",
+      "ENTLORE and VideoGAIA emerge as crucial benchmarks for enterprise QA and agentic video understanding, respectively.",
+      "Social chatter highlights rare book tracking to AI facilities and youth antipathy towards AI CEOs.",
+      "Diverse AI innovations span from vRAN contributions to multi-category leadership in Agent Arena."
+    ],
+    "title": "AI Daily Brief - August 19, 2026"
+  },
+  "bec5576776f7abe0a5d8f5fe4374c703a5e094d8338ef15e19b8fcad12c9e77a::overview": {
+    "article_body": [
+      {
+        "paragraph": "The GitHub repository NousResearch/hermes-agent continues its dominance with 218,250 stars and a consistent growth rate of +800 stars over the last 7 days. This agent, designed to 'grow with you,' has seen updates as recently as 28 days ago, underscoring its active development and community engagement."
+      },
+      {
+        "paragraph": "On the research front, ENTLORE stands out as a significant benchmark for evaluating enterprise question answering capabilities, particularly in recovering implicit organizational relations from routine documents. Additionally, VideoGAIA introduces a multimodal benchmark for agentic video understanding, reflecting the push towards more comprehensive AI capabilities."
+      },
+      {
+        "paragraph": "Social media and community forums are abuzz with diverse topics. A peculiar trend involves tracking rare book shipments to Amazon's AI training facilities, sparking curiosity about the data sources fueling AI models. Meanwhile, there's a noted antipathy among young people towards AI CEOs, highlighting the societal impacts of AI leadership."
+      },
+      {
+        "paragraph": "Other notable mentions include the Real-Time Symbol-Domain OFDM Radar paper on arXiv, contributing to the vRAN cluster, and the update on Agent Arena, where different AI models top various categories (GPT 5.6 Sol for Code, Claude Opus 5 for Work and Chat). These developments showcase the breadth of AI innovation across technical and application domains."
+      },
+      {
+        "paragraph": "Today's digest aggregates 10 key repository updates, 6 fresh papers from Hugging Face and arXiv, and 5 community signals, among others. The full brief below provides detailed insights into each of these areas, offering a comprehensive overview of the current AI ecosystem's pulse."
+      }
+    ],
+    "closing": "Stay tuned for tomorrow's brief as the AI landscape continues to evolve at pace.",
+    "dek": "NousResearch/hermes-agent leads GitHub velocity, while ENTLORE and social chatter on AI shipment tracking gain attention.",
+    "lead": [
+      "As of August 19, 2026, the AI landscape is dominated by NousResearch/hermes-agent on GitHub, boasting 218,250 stars and a +800/7d growth rate.",
+      "Research highlights include ENTLORE, a new benchmark for latent organizational reasoning in enterprise question answering, and VideoGAIA, advancing agentic video understanding.",
+      "Social platforms buzz with topics like tracking rare book shipments to Amazon AI training facilities and the perceived antipathy of young people toward AI CEOs.",
+      "Today's brief compiles the top signals across repositories, papers, and community discussions."
+    ],
+    "takeaways": [
+      "NousResearch/hermes-agent dominates GitHub with active development and high community engagement.",
+      "ENTLORE and VideoGAIA emerge as crucial benchmarks for enterprise QA and agentic video understanding, respectively.",
+      "Social chatter highlights rare book tracking to AI facilities and youth antipathy towards AI CEOs.",
+      "Diverse AI innovations span from vRAN contributions to multi-category leadership in Agent Arena."
+    ],
+    "title": "AI Daily Brief - August 19, 2026"
+  },
   "bfd020afa1c23e482bd592df223424461abce60a77322fa54b126be9f46a08a1": {
     "paragraphs": [
       "Recent research is shifting toward a new paradigm for agentic search, proposing that retrieval models be trained directly from multi-step agent interaction data. This approach aims to mine supervision from agent trajectories to improve accuracy, addressing a critical gap highlighted by benchmarks showing that LLM skill utilization degrades significantly in realistic settings where skills must be retrieved and refined rather than handcrafted.",
