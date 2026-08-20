@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-08-20
+date: 2026-08-21
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/posts/2026-08-20-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/posts/2026-08-21-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-08-20T00:48:20.673603+09:00">Aug 20, 2026 · 12:48 AM KST</time></strong>
+        <strong><time datetime="2026-08-21T00:50:32.181151+09:00">Aug 21, 2026 · 12:50 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>149</strong>
+        <strong>150</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-08-20">Aug 20, 2026</time></strong>
+        <strong><time datetime="2026-08-21">Aug 21, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by vllm-project/vllm; paper attention is clustering around Agentic ESOpt: Fine-Tuning Long-Horizon LLM Agents with Minimal GPU Requirements; social attention is tilting toward Cerebras CS-4, a rack-scale AI inference system. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by BerriAI/litellm; paper attention is clustering around Zetta ζ: An Efficient Closed-Loop Embodied Harness for Self-Evolving Physical Intelligence; social attention is tilting toward Don&#x27;t paste AI answers verbatim. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>August 2026</span><span class="news-digest-month-count">19 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>August 2026</span><span class="news-digest-month-count">20 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-08-21-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-08-21</span>
+            <strong>AI News Brief — 2026-08-21</strong>
+            <span>The AI landscape on August 21, 2026, features significant velocity in LLM gateway development, new research in self-evolving physical intelligence, and ongoing community discussions regarding AI content use.</span>
+          </a>
           <a class="news-digest-archive-item" href="/posts/2026-08-20-ai-news-digest/">
             <span class="news-digest-archive-date">2026-08-20</span>
             <strong>AI News Brief — 2026-08-20</strong>
