@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-08-16T15:48:58Z",
-  "issueDate": "2026-08-17",
+  "generatedAt": "2026-08-23T15:49:51Z",
+  "issueDate": "2026-08-24",
   "sourceCount": 67,
-  "activeCount": 20,
+  "activeCount": 19,
   "conferenceCount": 46,
   "workshopCount": 11,
   "journalCount": 10,
-  "withConfiguredDeadlineCount": 55,
+  "withConfiguredDeadlineCount": 56,
   "fetchedCount": 63,
   "tracks": {
     "AI / ML": 4,
@@ -65,7 +65,7 @@
         "edge"
       ],
       "configuredDeadline": "2025-07-24",
-      "daysUntilDeadline": -389,
+      "daysUntilDeadline": -396,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -96,7 +96,7 @@
         "edge"
       ],
       "configuredDeadline": "2025-08-31",
-      "daysUntilDeadline": -351,
+      "daysUntilDeadline": -358,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -124,7 +124,7 @@
         "networking"
       ],
       "configuredDeadline": "2025-09-18",
-      "daysUntilDeadline": -333,
+      "daysUntilDeadline": -340,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -156,7 +156,7 @@
         "openreview"
       ],
       "configuredDeadline": "2025-09-24",
-      "daysUntilDeadline": -327,
+      "daysUntilDeadline": -334,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": []
@@ -182,7 +182,7 @@
         "mobile"
       ],
       "configuredDeadline": "2025-10-12",
-      "daysUntilDeadline": -309,
+      "daysUntilDeadline": -316,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -215,7 +215,7 @@
         "6g"
       ],
       "configuredDeadline": "2025-10-26",
-      "daysUntilDeadline": -295,
+      "daysUntilDeadline": -302,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -223,6 +223,33 @@
         "rtant Dates Paper Submission Deadline 26 October 2025 Final Notification of Acceptance 11 January 2026 Camera-Ready Papers Due 7 February 2026 Technical Tracks Track 1: Physical Layer and Communication Theory",
         "Important Dates Paper Submission Deadline 26 October 2025 Final Notification of Acceptance 11 January 2026 Camera-Ready Papers Due 7 February 2026 Technical Tracks",
         "CFP Flyer Important Dates Paper Submission Deadline 26 October 2025 Final Notification of Acceptance 11 January 2026 Camera-Ready Papers Due 7 February 2026 Techn"
+      ]
+    },
+    {
+      "title": "IEEE International Conference on Communications",
+      "acronym": "ICC",
+      "venueType": "Conference",
+      "track": "Wireless / Communications",
+      "url": "https://icc2026.ieee-icc.org/authors/call-symposia-papers",
+      "conferenceDates": "TBD / official page",
+      "location": "TBD / official page",
+      "verifiedRank": "",
+      "verifiedRankSource": "",
+      "verifiedRankYear": "",
+      "impactFactor": "N/A — conference; use IEEE ComSoc flagship status instead",
+      "impactFactorYear": "N/A for conferences",
+      "note": "Communications venue CFP source; monitored for symposium and workshop calls.",
+      "tags": [
+        "communications",
+        "wireless",
+        "ran"
+      ],
+      "configuredDeadline": "2025-11-10",
+      "daysUntilDeadline": -287,
+      "deadlineStatus": "closed",
+      "fetchStatus": "fetch failed",
+      "deadlineSignals": [
+        "AI-assisted official CFP lookup via models/gemini-2.5-flash: PAPER SUBMISSION DEADLINE EXTENSION*** 10 November 2025 (FIRM) Source: https://icc2026.ieee-icc.org/authors/call-symposia-papers"
       ]
     },
     {
@@ -244,7 +271,7 @@
         "privacy"
       ],
       "configuredDeadline": "2025-11-13",
-      "daysUntilDeadline": -277,
+      "daysUntilDeadline": -284,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -279,7 +306,7 @@
         "edge"
       ],
       "configuredDeadline": "2025-12-05",
-      "daysUntilDeadline": -255,
+      "daysUntilDeadline": -262,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -311,7 +338,7 @@
         "networking"
       ],
       "configuredDeadline": "2025-12-10",
-      "daysUntilDeadline": -250,
+      "daysUntilDeadline": -257,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -343,7 +370,7 @@
         "edge"
       ],
       "configuredDeadline": "2025-12-30",
-      "daysUntilDeadline": -230,
+      "daysUntilDeadline": -237,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -375,7 +402,7 @@
         "ran"
       ],
       "configuredDeadline": "2026-01-12",
-      "daysUntilDeadline": -217,
+      "daysUntilDeadline": -224,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -403,7 +430,7 @@
         "coding"
       ],
       "configuredDeadline": "2026-01-16",
-      "daysUntilDeadline": -213,
+      "daysUntilDeadline": -220,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -436,7 +463,7 @@
         "ai"
       ],
       "configuredDeadline": "2026-01-23",
-      "daysUntilDeadline": -206,
+      "daysUntilDeadline": -213,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -472,7 +499,7 @@
         "ran"
       ],
       "configuredDeadline": "2026-01-31",
-      "daysUntilDeadline": -198,
+      "daysUntilDeadline": -205,
       "deadlineStatus": "closed",
       "fetchStatus": "fetch failed",
       "deadlineSignals": []
@@ -499,7 +526,7 @@
         "ran"
       ],
       "configuredDeadline": "2026-02-06",
-      "daysUntilDeadline": -192,
+      "daysUntilDeadline": -199,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -528,7 +555,7 @@
         "systems"
       ],
       "configuredDeadline": "2026-02-06",
-      "daysUntilDeadline": -192,
+      "daysUntilDeadline": -199,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -561,7 +588,7 @@
         "cloud"
       ],
       "configuredDeadline": "2026-02-23",
-      "daysUntilDeadline": -175,
+      "daysUntilDeadline": -182,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -593,7 +620,7 @@
         "sensing"
       ],
       "configuredDeadline": "2026-02-27",
-      "daysUntilDeadline": -171,
+      "daysUntilDeadline": -178,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -624,7 +651,7 @@
         "systems"
       ],
       "configuredDeadline": "2026-02-28",
-      "daysUntilDeadline": -170,
+      "daysUntilDeadline": -177,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": []
@@ -651,7 +678,7 @@
         "iot"
       ],
       "configuredDeadline": "2026-03-01",
-      "daysUntilDeadline": -169,
+      "daysUntilDeadline": -176,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -683,7 +710,7 @@
         "6g"
       ],
       "configuredDeadline": "2026-03-26",
-      "daysUntilDeadline": -144,
+      "daysUntilDeadline": -151,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -714,7 +741,7 @@
         "ran"
       ],
       "configuredDeadline": "2026-04-10",
-      "daysUntilDeadline": -129,
+      "daysUntilDeadline": -136,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": []
@@ -741,7 +768,7 @@
         "ai-networking"
       ],
       "configuredDeadline": "2026-04-14",
-      "daysUntilDeadline": -125,
+      "daysUntilDeadline": -132,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -772,7 +799,7 @@
         "ran"
       ],
       "configuredDeadline": "2026-04-16",
-      "daysUntilDeadline": -123,
+      "daysUntilDeadline": -130,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -803,7 +830,7 @@
         "networking"
       ],
       "configuredDeadline": "2026-04-20",
-      "daysUntilDeadline": -119,
+      "daysUntilDeadline": -126,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -838,7 +865,7 @@
         "v2x"
       ],
       "configuredDeadline": "2026-04-28",
-      "daysUntilDeadline": -111,
+      "daysUntilDeadline": -118,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -866,7 +893,7 @@
         "systems"
       ],
       "configuredDeadline": "2026-04-29",
-      "daysUntilDeadline": -110,
+      "daysUntilDeadline": -117,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -900,7 +927,7 @@
         "6g"
       ],
       "configuredDeadline": "2026-05-03",
-      "daysUntilDeadline": -106,
+      "daysUntilDeadline": -113,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -931,7 +958,7 @@
         "sdn"
       ],
       "configuredDeadline": "2026-05-05",
-      "daysUntilDeadline": -104,
+      "daysUntilDeadline": -111,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -965,7 +992,7 @@
         "workshops"
       ],
       "configuredDeadline": "2026-05-06",
-      "daysUntilDeadline": -103,
+      "daysUntilDeadline": -110,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -997,7 +1024,7 @@
         "ai"
       ],
       "configuredDeadline": "2026-05-08",
-      "daysUntilDeadline": -101,
+      "daysUntilDeadline": -108,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1033,7 +1060,7 @@
         "qos"
       ],
       "configuredDeadline": "2026-05-10",
-      "daysUntilDeadline": -99,
+      "daysUntilDeadline": -106,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1063,7 +1090,7 @@
         "privacy"
       ],
       "configuredDeadline": "2026-05-18",
-      "daysUntilDeadline": -91,
+      "daysUntilDeadline": -98,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1095,7 +1122,7 @@
         "6g"
       ],
       "configuredDeadline": "2026-05-19",
-      "daysUntilDeadline": -90,
+      "daysUntilDeadline": -97,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1127,7 +1154,7 @@
         "satellite"
       ],
       "configuredDeadline": "2026-05-31",
-      "daysUntilDeadline": -78,
+      "daysUntilDeadline": -85,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1155,7 +1182,7 @@
         "edge"
       ],
       "configuredDeadline": "2026-06-05",
-      "daysUntilDeadline": -73,
+      "daysUntilDeadline": -80,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1187,7 +1214,7 @@
         "systems"
       ],
       "configuredDeadline": "2026-06-05",
-      "daysUntilDeadline": -73,
+      "daysUntilDeadline": -80,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": []
@@ -1214,14 +1241,14 @@
         "workshops"
       ],
       "configuredDeadline": "2026-06-06",
-      "daysUntilDeadline": -72,
+      "daysUntilDeadline": -79,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
-        "06 Jun 2026 Paper Submission Deadline : Final Deadline 10 Jul 2026 Acceptance Notification 17 Aug 2026 Camera-ready Due : Deadline Extended 07 Sep 2026 Conference Begins See All Dates The Destination Nicosia, Cyprus Travel Info",
-        "06 Jun 2026 Paper Submission Deadline : Final Deadline 10 Jul 2026 Acceptance Notification 17 Aug 2026 Camera-ready Due : Deadline Extended 07 Sep 2026 Conference Begins See All Dates The Destination Nicosia, Cyprus Travel Information Hote",
-        "06 Jun 2026 Paper Submission Deadline : Final Deadline 10 Jul 2026 Acceptance Notification 17 Aug 2026 Camera-ready Due : Deadline Extended 07 Sep 2026 Conference Begins See All Dates The Destination Nicosia, Cyprus",
-        "Important Dates 06 Jun 2026 Paper Submission Deadline : Final Deadline 10 Jul 2026 Acceptance Notification 17 Aug 2026 Camera-ready Due : Deadline Extended 07 Sep 2026 Conference Begins See All Dates",
+        "06 Jun 2026 Paper Submission Deadline : Final Deadline 10 Jul 2026 Acceptance Notification 24 Aug 2026 Camera-ready Due : Deadline Extended 07 Sep 2026 Conference Begins See All Dates The Destination Nicosia, Cyprus Travel Info",
+        "06 Jun 2026 Paper Submission Deadline : Final Deadline 10 Jul 2026 Acceptance Notification 24 Aug 2026 Camera-ready Due : Deadline Extended 07 Sep 2026 Conference Begins See All Dates The Destination Nicosia, Cyprus Travel Information Hote",
+        "06 Jun 2026 Paper Submission Deadline : Final Deadline 10 Jul 2026 Acceptance Notification 24 Aug 2026 Camera-ready Due : Deadline Extended 07 Sep 2026 Conference Begins See All Dates The Destination Nicosia, Cyprus",
+        "Important Dates 06 Jun 2026 Paper Submission Deadline : Final Deadline 10 Jul 2026 Acceptance Notification 24 Aug 2026 Camera-ready Due : Deadline Extended 07 Sep 2026 Conference Begins See All Dates",
         "Call for Papers Announced 2026 IEEE CAMAD will be held as a hybrid conference, and appropriate arrangements will be made to support participants’ travel and participation. Further information regarding registrations and any required presentation materials will be announced at a later stage through this website. Important Dates 06 Jun 2026 Paper Submission Deadline : Final Deadline"
       ]
     },
@@ -1246,7 +1273,7 @@
         "iot"
       ],
       "configuredDeadline": "2026-06-28",
-      "daysUntilDeadline": -50,
+      "daysUntilDeadline": -57,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1275,7 +1302,7 @@
         "iot"
       ],
       "configuredDeadline": "2026-07-05",
-      "daysUntilDeadline": -43,
+      "daysUntilDeadline": -50,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": []
@@ -1303,7 +1330,7 @@
         "sdn"
       ],
       "configuredDeadline": "2026-07-08",
-      "daysUntilDeadline": -40,
+      "daysUntilDeadline": -47,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1334,7 +1361,7 @@
         "sdn"
       ],
       "configuredDeadline": "2026-07-10",
-      "daysUntilDeadline": -38,
+      "daysUntilDeadline": -45,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1366,7 +1393,7 @@
         "6g"
       ],
       "configuredDeadline": "2026-07-15",
-      "daysUntilDeadline": -33,
+      "daysUntilDeadline": -40,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1401,7 +1428,7 @@
         "v2x"
       ],
       "configuredDeadline": "2026-07-15",
-      "daysUntilDeadline": -33,
+      "daysUntilDeadline": -40,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1431,7 +1458,7 @@
         "agents"
       ],
       "configuredDeadline": "2026-07-28",
-      "daysUntilDeadline": -20,
+      "daysUntilDeadline": -27,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1463,7 +1490,7 @@
         "iot"
       ],
       "configuredDeadline": "2026-08-08",
-      "daysUntilDeadline": -9,
+      "daysUntilDeadline": -16,
       "deadlineStatus": "closed",
       "fetchStatus": "http 403 Forbidden",
       "deadlineSignals": []
@@ -1490,7 +1517,7 @@
         "ran"
       ],
       "configuredDeadline": "2026-08-10",
-      "daysUntilDeadline": -7,
+      "daysUntilDeadline": -14,
       "deadlineStatus": "closed",
       "fetchStatus": "fetched",
       "deadlineSignals": [
@@ -1527,8 +1554,8 @@
         "communications"
       ],
       "configuredDeadline": "2026-08-31",
-      "daysUntilDeadline": 14,
-      "deadlineStatus": "due in 14 days",
+      "daysUntilDeadline": 7,
+      "deadlineStatus": "due in 7 days",
       "fetchStatus": "fetched",
       "deadlineSignals": [
         "Integrated Sensing and Communication for IoT Networking in 6G and Beyond Submission Deadline: August 15th, 2026 Guest Editors: Luping Xiang, Jiajia Liu, Kun Yang, Christos Masouros, Amiya Nayak, Lei Zhong Smart Radio Environments for the Internet of Everything Submission Deadline: August 31st, 2026 Guest Editors: Qihao Peng, Hong Ren, Kezhi Wang, Derrick Wing Kwan Ng, Ekram Hossain Closed Special Issues Towards Positioning, Navigation, and Location Based Services for IoT Submission Deadline: September 1, 2017 Guest Editors: Yuan Zhuang, Yue Cao, Naser El-Sheimy, and Jun Yang Integrated Computing: Computational Intelligence Paradigms and Internet of Things for Indus",
@@ -1563,8 +1590,8 @@
         "mobile"
       ],
       "configuredDeadline": "2026-08-31",
-      "daysUntilDeadline": 14,
-      "deadlineStatus": "due in 14 days",
+      "daysUntilDeadline": 7,
+      "deadlineStatus": "due in 7 days",
       "fetchStatus": "fetched",
       "deadlineSignals": [
         "August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop Event Date",
@@ -1593,8 +1620,8 @@
         "mobile"
       ],
       "configuredDeadline": "2026-08-31",
-      "daysUntilDeadline": 14,
-      "deadlineStatus": "due in 14 days",
+      "daysUntilDeadline": 7,
+      "deadlineStatus": "due in 7 days",
       "fetchStatus": "fetched",
       "deadlineSignals": [
         "August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop Event Date",
@@ -1623,8 +1650,8 @@
         "edge"
       ],
       "configuredDeadline": "2026-10-15",
-      "daysUntilDeadline": 59,
-      "deadlineStatus": "watching: 59 days out",
+      "daysUntilDeadline": 52,
+      "deadlineStatus": "watching: 52 days out",
       "fetchStatus": "http 403 Forbidden",
       "deadlineSignals": []
     },
@@ -1651,8 +1678,8 @@
         "edge"
       ],
       "configuredDeadline": "2026-12-31",
-      "daysUntilDeadline": 136,
-      "deadlineStatus": "watching: 136 days out",
+      "daysUntilDeadline": 129,
+      "deadlineStatus": "watching: 129 days out",
       "fetchStatus": "fetched",
       "deadlineSignals": [
         "lication Date Manuscript Submission Deadline Distributed Intelligence and Collaborative Inference for Foundation Models over Wireless Edge September 2027 31 December 2026 Towards Intellicise Agent Co",
@@ -1683,8 +1710,8 @@
         "6g"
       ],
       "configuredDeadline": "2027-01-01",
-      "daysUntilDeadline": 137,
-      "deadlineStatus": "watching: 137 days out",
+      "daysUntilDeadline": 130,
+      "deadlineStatus": "watching: 130 days out",
       "fetchStatus": "fetched",
       "deadlineSignals": [
         "lication Date Manuscript Submission Deadline 3D Metasurface-Assisted Wireless Communications: From Model-Based Designs to AI-Driven Approaches October 2027 1 January 2027 AI-Empowered Underwater Wire",
@@ -1715,8 +1742,8 @@
         "telecom"
       ],
       "configuredDeadline": "2027-02-01",
-      "daysUntilDeadline": 168,
-      "deadlineStatus": "watching: 168 days out",
+      "daysUntilDeadline": 161,
+      "deadlineStatus": "watching: 161 days out",
       "fetchStatus": "fetched",
       "deadlineSignals": [
         "lication Date Manuscript Submission Deadline Internet of Agents for Communications and Networking: Architectures, Protocols, and Orchestration July 2027 1 February 2027 Security and Privacy of Multim",
@@ -1747,8 +1774,8 @@
         "ran"
       ],
       "configuredDeadline": "2027-03-31",
-      "daysUntilDeadline": 226,
-      "deadlineStatus": "watching: 226 days out",
+      "daysUntilDeadline": 219,
+      "deadlineStatus": "watching: 219 days out",
       "fetchStatus": "fetched",
       "deadlineSignals": [
         "lication Date Manuscript Submission Deadline Next-Generation Underwater Acoustic Communication Systems Second/Third Quarter 2028 31 March 2027 Exploiting Flexible Positioning: Movable and Pinching Antenn",
@@ -2007,31 +2034,6 @@
       "daysUntilDeadline": null,
       "deadlineStatus": "watching official CFP page",
       "fetchStatus": "fetched",
-      "deadlineSignals": []
-    },
-    {
-      "title": "IEEE International Conference on Communications",
-      "acronym": "ICC",
-      "venueType": "Conference",
-      "track": "Wireless / Communications",
-      "url": "https://icc2026.ieee-icc.org/authors/call-symposia-papers",
-      "conferenceDates": "TBD / official page",
-      "location": "TBD / official page",
-      "verifiedRank": "",
-      "verifiedRankSource": "",
-      "verifiedRankYear": "",
-      "impactFactor": "N/A — conference; use IEEE ComSoc flagship status instead",
-      "impactFactorYear": "N/A for conferences",
-      "note": "Communications venue CFP source; monitored for symposium and workshop calls.",
-      "tags": [
-        "communications",
-        "wireless",
-        "ran"
-      ],
-      "configuredDeadline": null,
-      "daysUntilDeadline": null,
-      "deadlineStatus": "watching official CFP page",
-      "fetchStatus": "fetch failed",
       "deadlineSignals": []
     },
     {
