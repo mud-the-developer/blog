@@ -905,6 +905,40 @@
     ],
     "title": "High-Throughput Serving and Agentic Research"
   },
+  "3f5d750b736e976d6811414a74eb92629d319951de9e9c83cb2a119d833f9ae4": {
+    "article_body": [
+      "On the development front, GitHub repositories demonstrate robust activity around coding agents and LLM infrastructure. `openai/codex` continues to lead in velocity, reflecting sustained interest in automated coding solutions. Other notable projects include `BerriAI/litellm`, an AI Gateway for managing diverse LLM APIs, and `vllm-project/vllm`, which focuses on high-throughput inference. These trends suggest a maturing ecosystem for deploying and managing AI models, with a strong emphasis on developer tooling and efficiency in agentic workflows.",
+      "New research is pushing the boundaries of agentic intelligence and reasoning. The paper 'Beyond Imitation: Filtering On-Policy Distillation by Reasoning Progress' is a key highlight, proposing methods to refine on-policy distillation by aligning teacher rewards with reasoning progress. Further academic contributions, such as 'Apodex 1.1: Scaling Agentic Intelligence for Complex Work' and 'Prime Agent: A Self-Improving RLM Harness,' underscore a collective effort to enhance agents' capabilities for complex, long-horizon tasks, often involving recursive subagents and persistent computation.",
+      "Community discussions are actively exploring the performance and infrastructure challenges of agentic AI. A prominent topic is 'AgentX - InferenceXv3,' which delves into whether the 'CUDA Moat' holds up under agentic inferencing workloads, alongside discussions of new datasets and context lengths. Broader conversations touch on the exponential growth in token usage, with one observation noting a 9,000x increase in tokens processed weekly by OpenRouter since 2024, indicating the escalating demands placed on inference systems as agentic workflows become more prevalent."
+    ],
+    "closing": "This concludes today's AI beta brief. We will continue to monitor these developing trends.",
+    "dek": "Today's AI beta brief highlights significant activity in agentic coding repositories, new research on reasoning progress in policy distillation, and community discussions around agentic inference hardware efficiency.",
+    "lead": "The AI landscape today shows a clear focus on agentic systems, particularly in coding and inference. GitHub velocity is notably driven by projects like `openai/codex`, signaling continued interest in lightweight, terminal-based coding agents. Concurrently, academic attention is drawn to advancements in reasoning and distillation, exemplified by papers exploring improved on-policy learning. Social discourse, meanwhile, centers on the practical implications of agentic inferencing and the performance of specialized hardware.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "Agentic coding tools and LLM infrastructure continue to see significant development and adoption on GitHub.",
+      "Research is advancing agent reasoning and on-policy distillation, aiming for more robust and capable AI agents.",
+      "The community is actively debating the efficiency and hardware requirements for agentic inferencing, with a focus on specialized chips and scalability."
+    ],
+    "title": "AI Beta Brief: Agentic Code and Inference Trends Dominate"
+  },
+  "3f5d750b736e976d6811414a74eb92629d319951de9e9c83cb2a119d833f9ae4::overview": {
+    "article_body": [
+      "On the development front, GitHub repositories demonstrate robust activity around coding agents and LLM infrastructure. `openai/codex` continues to lead in velocity, reflecting sustained interest in automated coding solutions. Other notable projects include `BerriAI/litellm`, an AI Gateway for managing diverse LLM APIs, and `vllm-project/vllm`, which focuses on high-throughput inference. These trends suggest a maturing ecosystem for deploying and managing AI models, with a strong emphasis on developer tooling and efficiency in agentic workflows.",
+      "New research is pushing the boundaries of agentic intelligence and reasoning. The paper 'Beyond Imitation: Filtering On-Policy Distillation by Reasoning Progress' is a key highlight, proposing methods to refine on-policy distillation by aligning teacher rewards with reasoning progress. Further academic contributions, such as 'Apodex 1.1: Scaling Agentic Intelligence for Complex Work' and 'Prime Agent: A Self-Improving RLM Harness,' underscore a collective effort to enhance agents' capabilities for complex, long-horizon tasks, often involving recursive subagents and persistent computation.",
+      "Community discussions are actively exploring the performance and infrastructure challenges of agentic AI. A prominent topic is 'AgentX - InferenceXv3,' which delves into whether the 'CUDA Moat' holds up under agentic inferencing workloads, alongside discussions of new datasets and context lengths. Broader conversations touch on the exponential growth in token usage, with one observation noting a 9,000x increase in tokens processed weekly by OpenRouter since 2024, indicating the escalating demands placed on inference systems as agentic workflows become more prevalent."
+    ],
+    "closing": "This concludes today's AI beta brief. We will continue to monitor these developing trends.",
+    "dek": "Today's AI beta brief highlights significant activity in agentic coding repositories, new research on reasoning progress in policy distillation, and community discussions around agentic inference hardware efficiency.",
+    "lead": "The AI landscape today shows a clear focus on agentic systems, particularly in coding and inference. GitHub velocity is notably driven by projects like `openai/codex`, signaling continued interest in lightweight, terminal-based coding agents. Concurrently, academic attention is drawn to advancements in reasoning and distillation, exemplified by papers exploring improved on-policy learning. Social discourse, meanwhile, centers on the practical implications of agentic inferencing and the performance of specialized hardware.",
+    "takeaways": [
+      "Agentic coding tools and LLM infrastructure continue to see significant development and adoption on GitHub.",
+      "Research is advancing agent reasoning and on-policy distillation, aiming for more robust and capable AI agents.",
+      "The community is actively debating the efficiency and hardware requirements for agentic inferencing, with a focus on specialized chips and scalability."
+    ],
+    "title": "AI Beta Brief: Agentic Code and Inference Trends Dominate"
+  },
   "44732cb98f8f6e85133a417e63f4d9458ee93f5cd164e8dd0428abd6a13187f2": {
     "article_body": [
       "The dominance of **NousResearch/hermes-agent** on GitHub, with its significant star count and growth, indicates a strong community interest in adaptive AI agents. Updated 13 days ago, it reflects ongoing development efforts in AI that 'grow with' user needs.",
