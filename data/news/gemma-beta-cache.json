@@ -1,4 +1,38 @@
 {
+  "03b5aaf93038cb829ff99507e42628c20c178e8ee6f24594b047a12b1b033099": {
+    "article_body": [
+      "On GitHub, the `NousResearch/hermes-agent` project remains a primary driver of velocity, reflecting a strong and consistent interest in AI agents. With over 218,000 stars and continued growth, `hermes-agent` highlights the ongoing push for intelligent, adaptive systems. Other agent-related repositories, such as `openai/codex` and `BerriAI/litellm`, also show significant activity, indicating a robust ecosystem developing around agentic workflows and their underlying infrastructure.",
+      "Academic attention is clustering around advancements in retrieval mechanisms, with the `RetrievalRouter: Joint Modality and Architecture Selection for Document Retrieval` paper drawing particular interest. This research explores adaptive strategies for document retrieval, aiming to optimize both accuracy and speed. Complementing this, papers like `Multi-Granularity Context-Enhanced RAG over Multimodal Knowledge Graphs` further illustrate a deepening focus on sophisticated context management and multimodal integration within RAG systems.",
+      "Community discussions are notably gravitating towards the release of Haiku R1/beta6, indicating engagement with alternative operating systems and their potential in the AI landscape. Beyond specific releases, broader social signals include discussions on AI's impact on employment, as seen in the 'open source AI CEO' narrative, and a significant open letter advocating for global cyber defense signed by major AI industry players, underscoring ongoing ethical and security considerations."
+    ],
+    "closing": "This concludes today's AI Beta Brief. We will continue to monitor these developments as the AI landscape evolves.",
+    "dek": "Today's AI beta landscape is marked by sustained momentum in agentic development on GitHub, significant new research in document retrieval, and community interest in the latest Haiku OS release.",
+    "lead": "AI agent projects continue to dominate developer attention, with NousResearch's `hermes-agent` leading GitHub velocity. This trend underscores an ongoing focus on autonomous systems and their practical applications. Concurrently, new research is advancing retrieval augmented generation (RAG) techniques, exemplified by the `RetrievalRouter` paper. The broader community is also noting the release of Haiku R1/beta6, signaling activity in foundational AI infrastructure.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "AI agent projects, led by `NousResearch/hermes-agent`, continue to drive significant developer activity on GitHub.",
+      "New research is advancing retrieval-augmented generation (RAG) techniques, focusing on adaptive modality and architecture selection.",
+      "Community attention is split between foundational releases like Haiku R1/beta6 and broader discussions on AI's societal implications."
+    ],
+    "title": "AI Beta Brief: Agents Lead GitHub, Retrieval Research Advances"
+  },
+  "03b5aaf93038cb829ff99507e42628c20c178e8ee6f24594b047a12b1b033099::overview": {
+    "article_body": [
+      "On GitHub, the `NousResearch/hermes-agent` project remains a primary driver of velocity, reflecting a strong and consistent interest in AI agents. With over 218,000 stars and continued growth, `hermes-agent` highlights the ongoing push for intelligent, adaptive systems. Other agent-related repositories, such as `openai/codex` and `BerriAI/litellm`, also show significant activity, indicating a robust ecosystem developing around agentic workflows and their underlying infrastructure.",
+      "Academic attention is clustering around advancements in retrieval mechanisms, with the `RetrievalRouter: Joint Modality and Architecture Selection for Document Retrieval` paper drawing particular interest. This research explores adaptive strategies for document retrieval, aiming to optimize both accuracy and speed. Complementing this, papers like `Multi-Granularity Context-Enhanced RAG over Multimodal Knowledge Graphs` further illustrate a deepening focus on sophisticated context management and multimodal integration within RAG systems.",
+      "Community discussions are notably gravitating towards the release of Haiku R1/beta6, indicating engagement with alternative operating systems and their potential in the AI landscape. Beyond specific releases, broader social signals include discussions on AI's impact on employment, as seen in the 'open source AI CEO' narrative, and a significant open letter advocating for global cyber defense signed by major AI industry players, underscoring ongoing ethical and security considerations."
+    ],
+    "closing": "This concludes today's AI Beta Brief. We will continue to monitor these developments as the AI landscape evolves.",
+    "dek": "Today's AI beta landscape is marked by sustained momentum in agentic development on GitHub, significant new research in document retrieval, and community interest in the latest Haiku OS release.",
+    "lead": "AI agent projects continue to dominate developer attention, with NousResearch's `hermes-agent` leading GitHub velocity. This trend underscores an ongoing focus on autonomous systems and their practical applications. Concurrently, new research is advancing retrieval augmented generation (RAG) techniques, exemplified by the `RetrievalRouter` paper. The broader community is also noting the release of Haiku R1/beta6, signaling activity in foundational AI infrastructure.",
+    "takeaways": [
+      "AI agent projects, led by `NousResearch/hermes-agent`, continue to drive significant developer activity on GitHub.",
+      "New research is advancing retrieval-augmented generation (RAG) techniques, focusing on adaptive modality and architecture selection.",
+      "Community attention is split between foundational releases like Haiku R1/beta6 and broader discussions on AI's societal implications."
+    ],
+    "title": "AI Beta Brief: Agents Lead GitHub, Retrieval Research Advances"
+  },
   "0831d1cf4c51ad02df2b386d9e4e7c3ab772e6890031e587eeb0167d860c4d41": {
     "article_body": [
       "The AI ecosystem is shifting focus toward the practical deployment of agentic workflows and the optimization of inference engines. Recent activity highlights a surge in high-throughput serving via vLLM and a research pivot toward mining supervision from agent trajectories. Simultaneously, developer discourse is centering on the source code analysis of emerging coding agents."

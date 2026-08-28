@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-08-27
+date: 2026-08-28
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/posts/2026-08-27-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/posts/2026-08-28-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-08-27T01:34:23.313584+09:00">Aug 27, 2026 · 1:34 AM KST</time></strong>
+        <strong><time datetime="2026-08-28T09:26:18.119062+09:00">Aug 28, 2026 · 9:26 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>156</strong>
+        <strong>157</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-08-27">Aug 27, 2026</time></strong>
+        <strong><time datetime="2026-08-28">Aug 28, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around On-policy Distillation with Verifiable Reward; social attention is tilting toward AI causes the greatest decline in entry-level jobs. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around RetrievalRouter: Joint Modality and Architecture Selection for Document Retrieval; social attention is tilting toward Haiku R1/beta6 released. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>August 2026</span><span class="news-digest-month-count">26 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>August 2026</span><span class="news-digest-month-count">27 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-08-28-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-08-28</span>
+            <strong>AI News Brief — 2026-08-28</strong>
+            <span>Today&#x27;s AI beta landscape is marked by sustained momentum in agentic development on GitHub, significant new research in document retrieval, and community interest in the latest Haiku OS release.</span>
+          </a>
           <a class="news-digest-archive-item" href="/posts/2026-08-27-ai-news-digest/">
             <span class="news-digest-archive-date">2026-08-27</span>
             <strong>AI News Brief — 2026-08-27</strong>
