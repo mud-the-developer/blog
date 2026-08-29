@@ -466,6 +466,42 @@
     ],
     "title": "Daily AI Beta Brief: Agentic Systems Drive Today's Developments"
   },
+  "2a82c98ae97f9b0ded289eb65b4ef804e216d9ccd59b131e14be79ea8900999d": {
+    "article_body": [
+      "Agent-driven development continues to show strong momentum, with the NousResearch/hermes-agent repository leading GitHub velocity. This project, described as 'the agent that grows with you,' remains a significant focal point for developers. Other notable repositories, including BerriAI/litellm and openai/codex, also maintained high activity, indicating a sustained interest in AI gateways and lightweight coding agents.",
+      "In research, Test-Time Policy Optimization (TTPO) garnered significant attention. This paper introduces a method for label-free test-time training, specifically for mathematical reasoning, by distilling agreeing rollouts and penalizing disagreeing ones. Another paper, 'UrbanGround: From Local Perception to Spatial Agency in a Real-Scale City,' explored multimodal language model agents in realistic 3D urban environments, highlighting their navigation and spatial reasoning capabilities.",
+      "Community discussions were largely centered on a reported security incident involving Hugging Face and the subsequent response plans from OpenAI, as observed on platforms like GeekNews. Further social commentary included updates on the OpenAI Python SDK's transition to HTTPX2 and a ruling concerning the Trump administration's blacklisting of Anthropic, reflecting ongoing legal and technical developments within the AI ecosystem."
+    ],
+    "closing": "This brief covers key developments from 10 repositories, 10 paper picks, and 10 community items identified today.",
+    "dek": "Today's AI landscape is marked by significant velocity in agent development, novel research into test-time policy optimization, and community discussion surrounding a Hugging Face security incident.",
+    "lead": "The AI sector saw notable activity today, with agent-based development continuing its strong velocity, particularly led by NousResearch/hermes-agent on GitHub. Research attention coalesced around Test-Time Policy Optimization (TTPO), a method for label-free test-time training in mathematical reasoning. Concurrently, community discussions highlighted a security incident involving Hugging Face and OpenAI's subsequent response plans.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "AI agent development, particularly the NousResearch/hermes-agent project, continues to drive significant GitHub velocity.",
+      "New research on Test-Time Policy Optimization (TTPO) offers advancements in label-free training for mathematical reasoning.",
+      "A Hugging Face security incident and OpenAI's response plans drew considerable community attention.",
+      "Broader discussions touched on SDK updates and regulatory challenges impacting AI firms."
+    ],
+    "title": "Daily AI Brief: Agent Activity, Policy Optimization, and Security Discussions"
+  },
+  "2a82c98ae97f9b0ded289eb65b4ef804e216d9ccd59b131e14be79ea8900999d::overview": {
+    "article_body": [
+      "Agent-driven development continues to show strong momentum, with the NousResearch/hermes-agent repository leading GitHub velocity. This project, described as 'the agent that grows with you,' remains a significant focal point for developers. Other notable repositories, including BerriAI/litellm and openai/codex, also maintained high activity, indicating a sustained interest in AI gateways and lightweight coding agents.",
+      "In research, Test-Time Policy Optimization (TTPO) garnered significant attention. This paper introduces a method for label-free test-time training, specifically for mathematical reasoning, by distilling agreeing rollouts and penalizing disagreeing ones. Another paper, 'UrbanGround: From Local Perception to Spatial Agency in a Real-Scale City,' explored multimodal language model agents in realistic 3D urban environments, highlighting their navigation and spatial reasoning capabilities.",
+      "Community discussions were largely centered on a reported security incident involving Hugging Face and the subsequent response plans from OpenAI, as observed on platforms like GeekNews. Further social commentary included updates on the OpenAI Python SDK's transition to HTTPX2 and a ruling concerning the Trump administration's blacklisting of Anthropic, reflecting ongoing legal and technical developments within the AI ecosystem."
+    ],
+    "closing": "This brief covers key developments from 10 repositories, 10 paper picks, and 10 community items identified today.",
+    "dek": "Today's AI landscape is marked by significant velocity in agent development, novel research into test-time policy optimization, and community discussion surrounding a Hugging Face security incident.",
+    "lead": "The AI sector saw notable activity today, with agent-based development continuing its strong velocity, particularly led by NousResearch/hermes-agent on GitHub. Research attention coalesced around Test-Time Policy Optimization (TTPO), a method for label-free test-time training in mathematical reasoning. Concurrently, community discussions highlighted a security incident involving Hugging Face and OpenAI's subsequent response plans.",
+    "takeaways": [
+      "AI agent development, particularly the NousResearch/hermes-agent project, continues to drive significant GitHub velocity.",
+      "New research on Test-Time Policy Optimization (TTPO) offers advancements in label-free training for mathematical reasoning.",
+      "A Hugging Face security incident and OpenAI's response plans drew considerable community attention.",
+      "Broader discussions touched on SDK updates and regulatory challenges impacting AI firms."
+    ],
+    "title": "Daily AI Brief: Agent Activity, Policy Optimization, and Security Discussions"
+  },
   "2c2eda365ad124a3c63153eec2fae225af511f890870177b66c13b2be1907ca7": {
     "article_body": [
       "{'paragraph': \"BerriAI's litellm, a Python SDK and Proxy Server facilitating access to over 100 LLM APIs, dominated GitHub with a score of 26.74, reflecting its broad utility and community engagement. Its ability to offer cost tracking, guardrails, and load balancing positions it as a pivotal tool for AI integration.\"}",
