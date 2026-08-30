@@ -1,30 +1,30 @@
 {
-  "generated_at": "2026-08-30T03:34:31.993607+09:00",
-  "generated_label": "Aug 30, 2026 · 3:34 AM KST",
-  "issue_date": "2026-08-30",
-  "issue_label": "Aug 30, 2026",
-  "summary": "GitHub velocity is led by BerriAI/litellm; paper attention is clustering around TTPO: Test-Time Policy Optimization; social attention is tilting toward Decisions made by OpenAI following SpaceX's acquisition of Cursor. 10 repo signals, 10 paper picks, and 10 community items made today's cut.",
+  "generated_at": "2026-08-31T03:38:39.721904+09:00",
+  "generated_label": "Aug 31, 2026 · 3:38 AM KST",
+  "issue_date": "2026-08-31",
+  "issue_label": "Aug 31, 2026",
+  "summary": "GitHub velocity is led by vllm-project/vllm; paper attention is clustering around TTPO: Test-Time Policy Optimization; social attention is tilting toward StemDeck - Free, open source local AI sound source separation tool. 10 repo signals, 10 paper picks, and 10 community items made today's cut.",
   "keywords": [],
   "mempalace_context": [],
   "top_cards": [
     {
-      "headline": "BerriAI/litellm",
-      "title": "BerriAI/litellm — The fastest, litest AI Gateway. Rust core with Python SDK. Call 100+ LLM APIs in OpenAI (or native) format with cost tracking, guardrails, load balancing, and logging [Bedrock, Azure, OpenAI, Anthropic, OpenAI, VertexAI, vLLM, Nvidia NIM]",
-      "url": "https://github.com/BerriAI/litellm",
+      "headline": "vllm-project/vllm",
+      "title": "vllm-project/vllm — A high-throughput and memory-efficient inference and serving engine for LLMs",
+      "url": "https://github.com/vllm-project/vllm",
       "source": "github.com",
       "tags": [
         "AI"
       ],
-      "score": 22.173,
-      "raw_score": 17.944,
-      "published_hours_ago": 961,
-      "stars": 54123,
-      "image_url": "https://opengraph.githubassets.com/1/BerriAI/litellm",
+      "score": 21.655,
+      "raw_score": 17.452,
+      "published_hours_ago": 1106,
+      "stars": 86342,
+      "image_url": "https://opengraph.githubassets.com/1/vllm-project/vllm",
       "badge": "Repo",
-      "deck": "The fastest, litest AI Gateway. Rust core with Python SDK. Call 100+ LLM APIs in OpenAI (or native) format with cost tracking, guardrails, load balancing, and logging [Bedrock, Azure, OpenA…",
-      "meta": "GitHub · 54123 stars · +714/7d · created 1130d ago · updated 40d ago · up 1 · signal 22.17",
+      "deck": "A high-throughput and memory-efficient inference and serving engine for LLMs. Updated 46d ago. 86342 stars, +679/7d, created 1298d ago.",
+      "meta": "GitHub · 86342 stars · +679/7d · created 1298d ago · updated 46d ago · signal 21.66",
       "rank": 1,
-      "rank_delta": 1
+      "rank_delta": null
     },
     {
       "headline": "TTPO: Test-Time Policy Optimization",
@@ -32,75 +32,75 @@
       "url": "https://huggingface.co/papers/2608.27448",
       "source": "huggingface.co",
       "tags": [],
-      "score": 5.283,
-      "raw_score": 3.673,
-      "published_hours_ago": 41,
+      "score": 4.679,
+      "raw_score": 3.346,
+      "published_hours_ago": 66,
       "stars": 0,
       "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2608.27448.png",
       "badge": "Paper",
       "deck": "Test-Time Policy Optimization enables label-free test-time training for mathematical reasoning by asymmetrically distilling agreeing rollouts and penalizing disagreeing ones, matching super…",
-      "meta": "HF Papers · 2d ago · down 139 · signal 5.28",
-      "rank": 186,
-      "rank_delta": -139
+      "meta": "HF Papers · 3d ago · down 138 · signal 4.68",
+      "rank": 187,
+      "rank_delta": -138
     },
     {
-      "headline": "Decisions made by OpenAI following SpaceX's acquisition of Cursor",
-      "title": "Decisions made by OpenAI following SpaceX's acquisition of Cursor",
-      "url": "https://news.hada.io/topic?id=33003",
+      "headline": "StemDeck - Free, open source local AI sound source separation tool",
+      "title": "StemDeck - Free, open source local AI sound source separation tool",
+      "url": "https://news.hada.io/topic?id=33039",
       "source": "geeknews",
       "tags": [
         "social"
       ],
-      "score": 4.78,
-      "raw_score": 2.914,
-      "published_hours_ago": 11,
+      "score": 4.125,
+      "raw_score": 2.181,
+      "published_hours_ago": 2,
       "stars": 0,
       "image_url": "/assets/news/thumb-ai.svg",
       "badge": "Social",
-      "deck": "Community signal picked up on GeekNews 11h ago.",
-      "meta": "GeekNews · 11h ago · signal 4.78",
-      "rank": 236,
+      "deck": "Community signal picked up on GeekNews 2h ago.",
+      "meta": "GeekNews · 2h ago · signal 4.12",
+      "rank": 999,
       "rank_delta": null
     },
     {
-      "headline": "PACE: A Unified Condense-and-Extract Paradigm for Fast VLM Inference",
-      "title": "PACE: A Unified Condense-and-Extract Paradigm for Fast VLM Inference",
-      "url": "http://arxiv.org/abs/2608.27206v1",
+      "headline": "How AI Experiences Art: Emergent Aesthetic Structure in a Self-Supervised Multimodal Embedding…",
+      "title": "How AI Experiences Art: Emergent Aesthetic Structure in a Self-Supervised Multimodal Embedding Space",
+      "url": "http://arxiv.org/abs/2608.27121v1",
       "source": "arxiv.org",
       "tags": [
         "AI"
       ],
-      "score": 3.787,
-      "raw_score": 2.454,
-      "published_hours_ago": 50,
+      "score": 3.394,
+      "raw_score": 2.387,
+      "published_hours_ago": 76,
       "stars": 0,
       "image_url": "/assets/news/thumb-paper.svg",
       "badge": "Paper",
-      "deck": "Fresh arXiv paper from the ai cluster, posted 2d ago.",
-      "meta": "arXiv · 2d ago · signal 3.79",
-      "rank": 258,
+      "deck": "Fresh arXiv paper from the ai cluster, posted 3d ago.",
+      "meta": "arXiv · 3d ago · signal 3.39",
+      "rank": 237,
       "rank_delta": null
     }
   ],
   "repo_scoreboard": [
     {
-      "headline": "BerriAI/litellm",
-      "title": "BerriAI/litellm — The fastest, litest AI Gateway. Rust core with Python SDK. Call 100+ LLM APIs in OpenAI (or native) format with cost tracking, guardrails, load balancing, and logging [Bedrock, Azure, OpenAI, Anthropic, OpenAI, VertexAI, vLLM, Nvidia NIM]",
-      "url": "https://github.com/BerriAI/litellm",
+      "headline": "vllm-project/vllm",
+      "title": "vllm-project/vllm — A high-throughput and memory-efficient inference and serving engine for LLMs",
+      "url": "https://github.com/vllm-project/vllm",
       "source": "github.com",
       "tags": [
         "AI"
       ],
-      "score": 22.173,
-      "raw_score": 17.944,
-      "published_hours_ago": 961,
-      "stars": 54123,
-      "image_url": "https://opengraph.githubassets.com/1/BerriAI/litellm",
+      "score": 21.655,
+      "raw_score": 17.452,
+      "published_hours_ago": 1106,
+      "stars": 86342,
+      "image_url": "https://opengraph.githubassets.com/1/vllm-project/vllm",
       "badge": "Repo",
-      "deck": "The fastest, litest AI Gateway. Rust core with Python SDK. Call 100+ LLM APIs in OpenAI (or native) format with cost tracking, guardrails, load balancing, and logging [Bedrock, Azure, OpenA…",
-      "meta": "GitHub · 54123 stars · +714/7d · created 1130d ago · updated 40d ago · up 1 · signal 22.17",
+      "deck": "A high-throughput and memory-efficient inference and serving engine for LLMs. Updated 46d ago. 86342 stars, +679/7d, created 1298d ago.",
+      "meta": "GitHub · 86342 stars · +679/7d · created 1298d ago · updated 46d ago · signal 21.66",
       "rank": 1,
-      "rank_delta": 1
+      "rank_delta": null
     },
     {
       "headline": "headroomlabs-ai/headroom",
@@ -110,35 +110,16 @@
       "tags": [
         "AI"
       ],
-      "score": 21.221,
-      "raw_score": 16.915,
-      "published_hours_ago": 972,
+      "score": 21.195,
+      "raw_score": 16.974,
+      "published_hours_ago": 996,
       "stars": 60623,
       "image_url": "https://opengraph.githubassets.com/1/headroomlabs-ai/headroom",
       "badge": "Repo",
       "deck": "Compress tool outputs, logs, files, and RAG chunks before they reach the LLM. 20% fewer tokens for coding agents, 60-95% fewer tokens for JSON, same answers. Library, proxy, MCP server. Upd…",
-      "meta": "GitHub · 60623 stars · +800/7d · created 234d ago · updated 40d ago · up 2 · signal 21.22",
+      "meta": "GitHub · 60623 stars · +800/7d · created 235d ago · updated 42d ago · signal 21.20",
       "rank": 2,
-      "rank_delta": 2
-    },
-    {
-      "headline": "sickn33/agentic-awesome-skills",
-      "title": "sickn33/agentic-awesome-skills — AAS Core is the local, agent-first control plane for complete catalog discovery, agent-owned selection, stack validation, and planning, backed by 2,005+ agentic skills. Includes CLI, local MCP, catalog, plugins, and Workbench.",
-      "url": "https://github.com/sickn33/agentic-awesome-skills",
-      "source": "github.com",
-      "tags": [
-        "AI"
-      ],
-      "score": 20.934,
-      "raw_score": 16.172,
-      "published_hours_ago": 957,
-      "stars": 43666,
-      "image_url": "https://opengraph.githubassets.com/1/sickn33/agentic-awesome-skills",
-      "badge": "Repo",
-      "deck": "AAS Core is the local, agent-first control plane for complete catalog discovery, agent-owned selection, stack validation, and planning, backed by 2,005+ agentic skills. Includes CLI, local…",
-      "meta": "GitHub · 43666 stars · +526/7d · created 227d ago · updated 40d ago · up 31 · signal 20.93",
-      "rank": 7,
-      "rank_delta": 31
+      "rank_delta": 0
     },
     {
       "headline": "ggml-org/llama.cpp",
@@ -148,16 +129,16 @@
       "tags": [
         "AI"
       ],
-      "score": 20.817,
-      "raw_score": 16.693,
-      "published_hours_ago": 1058,
+      "score": 20.638,
+      "raw_score": 16.536,
+      "published_hours_ago": 1082,
       "stars": 120604,
       "image_url": "https://opengraph.githubassets.com/1/ggml-org/llama.cpp",
       "badge": "Repo",
-      "deck": "LLM inference in C/C++. Updated 44d ago. 120604 stars, +800/7d, created 1268d ago.",
-      "meta": "GitHub · 120604 stars · +800/7d · created 1268d ago · updated 44d ago · signal 20.82",
-      "rank": 4,
-      "rank_delta": null
+      "deck": "LLM inference in C/C++. Updated 45d ago. 120604 stars, +800/7d, created 1269d ago.",
+      "meta": "GitHub · 120604 stars · +800/7d · created 1269d ago · updated 45d ago · down 1 · signal 20.64",
+      "rank": 5,
+      "rank_delta": -1
     },
     {
       "headline": "code-yeongyu/oh-my-openagent",
@@ -165,35 +146,50 @@
       "url": "https://github.com/code-yeongyu/oh-my-openagent",
       "source": "github.com",
       "tags": [],
-      "score": 20.654,
+      "score": 20.564,
       "raw_score": 16.793,
-      "published_hours_ago": 962,
+      "published_hours_ago": 986,
       "stars": 66245,
       "image_url": "https://opengraph.githubassets.com/1/code-yeongyu/oh-my-openagent",
       "badge": "Repo",
-      "deck": "omo/lazycodex: The coding agent for tokenmaxxers;the one and only agent harness for complex codebases. For your Codex, for your OpenCode. Updated 40d ago. 66245 stars, +650/7d, created 270d…",
-      "meta": "GitHub · 66245 stars · +650/7d · created 270d ago · updated 40d ago · up 2 · signal 20.65",
+      "deck": "omo/lazycodex: The coding agent for tokenmaxxers;the one and only agent harness for complex codebases. For your Codex, for your OpenCode. Updated 41d ago. 66245 stars, +650/7d, created 271d…",
+      "meta": "GitHub · 66245 stars · +650/7d · created 271d ago · updated 41d ago · signal 20.56",
       "rank": 3,
-      "rank_delta": 2
+      "rank_delta": 0
     },
     {
-      "headline": "shanraisshan/claude-code-best-practice",
-      "title": "shanraisshan/claude-code-best-practice — from vibe coding to agentic engineering - practice makes claude perfect",
-      "url": "https://github.com/shanraisshan/claude-code-best-practice",
+      "headline": "anomalyco/opencode",
+      "title": "anomalyco/opencode — The open source coding agent.",
+      "url": "https://github.com/anomalyco/opencode",
       "source": "github.com",
-      "tags": [
-        "AI"
-      ],
-      "score": 20.512,
-      "raw_score": 16.267,
-      "published_hours_ago": 971,
-      "stars": 63155,
-      "image_url": "https://opengraph.githubassets.com/1/shanraisshan/claude-code-best-practice",
+      "tags": [],
+      "score": 20.495,
+      "raw_score": 16.727,
+      "published_hours_ago": 986,
+      "stars": 187809,
+      "image_url": "https://opengraph.githubassets.com/1/anomalyco/opencode",
       "badge": "Repo",
-      "deck": "from vibe coding to agentic engineering - practice makes claude perfect. Updated 40d ago. 63155 stars, +674/7d, created 302d ago.",
-      "meta": "GitHub · 63155 stars · +674/7d · created 302d ago · updated 40d ago · up 1 · signal 20.51",
-      "rank": 6,
-      "rank_delta": 1
+      "deck": "The open source coding agent. Updated 41d ago. 187809 stars, +800/7d, created 487d ago.",
+      "meta": "GitHub · 187809 stars · +800/7d · created 487d ago · updated 41d ago · signal 20.50",
+      "rank": 4,
+      "rank_delta": null
+    },
+    {
+      "headline": "OpenHands/OpenHands",
+      "title": "OpenHands/OpenHands — 🙌 OpenHands: AI-Driven Development",
+      "url": "https://github.com/OpenHands/OpenHands",
+      "source": "github.com",
+      "tags": [],
+      "score": 17.587,
+      "raw_score": 14.179,
+      "published_hours_ago": 1106,
+      "stars": 80871,
+      "image_url": "https://opengraph.githubassets.com/1/OpenHands/OpenHands",
+      "badge": "Repo",
+      "deck": "🙌 OpenHands: AI-Driven Development. Updated 46d ago. 80871 stars, +800/7d, created 901d ago.",
+      "meta": "GitHub · 80871 stars · +800/7d · created 901d ago · updated 46d ago · signal 17.59",
+      "rank": 16,
+      "rank_delta": null
     },
     {
       "headline": "MemPalace/mempalace",
@@ -203,16 +199,16 @@
       "tags": [
         "AI"
       ],
-      "score": 17.006,
+      "score": 16.974,
       "raw_score": 13.327,
-      "published_hours_ago": 1039,
+      "published_hours_ago": 1063,
       "stars": 57506,
       "image_url": "https://opengraph.githubassets.com/1/MemPalace/mempalace",
       "badge": "Repo",
-      "deck": "The best-benchmarked open-source AI memory system. And it's free. Updated 43d ago. 57506 stars, +268/7d, created 147d ago.",
-      "meta": "GitHub · 57506 stars · +268/7d · created 147d ago · updated 43d ago · signal 17.01",
-      "rank": 16,
-      "rank_delta": 0
+      "deck": "The best-benchmarked open-source AI memory system. And it's free. Updated 44d ago. 57506 stars, +268/7d, created 148d ago.",
+      "meta": "GitHub · 57506 stars · +268/7d · created 148d ago · updated 44d ago · down 2 · signal 16.97",
+      "rank": 18,
+      "rank_delta": -2
     },
     {
       "headline": "rtk-ai/rtk",
@@ -222,16 +218,16 @@
       "tags": [
         "AI"
       ],
-      "score": 16.688,
+      "score": 16.656,
       "raw_score": 13.04,
-      "published_hours_ago": 944,
+      "published_hours_ago": 968,
       "stars": 72291,
       "image_url": "https://opengraph.githubassets.com/1/rtk-ai/rtk",
       "badge": "Repo",
-      "deck": "CLI proxy that reduces LLM token consumption by 60-90% on common dev commands. Single Rust binary, zero dependencies. Updated 39d ago. 72291 stars, +800/7d, created 219d ago.",
-      "meta": "GitHub · 72291 stars · +800/7d · created 219d ago · updated 39d ago · signal 16.69",
-      "rank": 18,
-      "rank_delta": 0
+      "deck": "CLI proxy that reduces LLM token consumption by 60-90% on common dev commands. Single Rust binary, zero dependencies. Updated 40d ago. 72291 stars, +800/7d, created 220d ago.",
+      "meta": "GitHub · 72291 stars · +800/7d · created 220d ago · updated 40d ago · down 2 · signal 16.66",
+      "rank": 20,
+      "rank_delta": -2
     }
   ],
   "sections": [
@@ -241,23 +237,40 @@
       "description": "The fastest-moving items across repos, papers, and community chatter.",
       "items": [
         {
-          "headline": "BerriAI/litellm",
-          "title": "BerriAI/litellm — The fastest, litest AI Gateway. Rust core with Python SDK. Call 100+ LLM APIs in OpenAI (or native) format with cost tracking, guardrails, load balancing, and logging [Bedrock, Azure, OpenAI, Anthropic, OpenAI, VertexAI, vLLM, Nvidia NIM]",
-          "url": "https://github.com/BerriAI/litellm",
+          "headline": "vllm-project/vllm",
+          "title": "vllm-project/vllm — A high-throughput and memory-efficient inference and serving engine for LLMs",
+          "url": "https://github.com/vllm-project/vllm",
           "source": "github.com",
           "tags": [
             "AI"
           ],
-          "score": 22.173,
-          "raw_score": 17.944,
-          "published_hours_ago": 961,
-          "stars": 54123,
-          "image_url": "https://opengraph.githubassets.com/1/BerriAI/litellm",
+          "score": 21.655,
+          "raw_score": 17.452,
+          "published_hours_ago": 1106,
+          "stars": 86342,
+          "image_url": "https://opengraph.githubassets.com/1/vllm-project/vllm",
           "badge": "Repo",
-          "deck": "The fastest, litest AI Gateway. Rust core with Python SDK. Call 100+ LLM APIs in OpenAI (or native) format with cost tracking, guardrails, load balancing, and logging [Bedrock, Azure, OpenA…",
-          "meta": "GitHub · 54123 stars · +714/7d · created 1130d ago · updated 40d ago · up 1 · signal 22.17",
+          "deck": "A high-throughput and memory-efficient inference and serving engine for LLMs. Updated 46d ago. 86342 stars, +679/7d, created 1298d ago.",
+          "meta": "GitHub · 86342 stars · +679/7d · created 1298d ago · updated 46d ago · signal 21.66",
           "rank": 1,
-          "rank_delta": 1
+          "rank_delta": null
+        },
+        {
+          "headline": "rohitg00/ai-engineering-from-scratch",
+          "title": "rohitg00/ai-engineering-from-scratch — Learn it. Build it. Ship it for others.",
+          "url": "https://github.com/rohitg00/ai-engineering-from-scratch",
+          "source": "github.com",
+          "tags": [],
+          "score": 11.707,
+          "raw_score": 8.194,
+          "published_hours_ago": 8,
+          "stars": 51219,
+          "image_url": "https://opengraph.githubassets.com/1/rohitg00/ai-engineering-from-scratch",
+          "badge": "Repo",
+          "deck": "Learn it. Build it. Ship it for others. Updated 8h ago. 51219 stars, avg 310.4/day, created 165d ago.",
+          "meta": "GitHub · 51219 stars · avg 310.4/day · created 165d ago · updated 8h ago · down 7 · signal 11.71",
+          "rank": 50,
+          "rank_delta": -7
         },
         {
           "headline": "TTPO: Test-Time Policy Optimization",
@@ -265,54 +278,35 @@
           "url": "https://huggingface.co/papers/2608.27448",
           "source": "huggingface.co",
           "tags": [],
-          "score": 5.283,
-          "raw_score": 3.673,
-          "published_hours_ago": 41,
+          "score": 4.679,
+          "raw_score": 3.346,
+          "published_hours_ago": 66,
           "stars": 0,
           "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2608.27448.png",
           "badge": "Paper",
           "deck": "Test-Time Policy Optimization enables label-free test-time training for mathematical reasoning by asymmetrically distilling agreeing rollouts and penalizing disagreeing ones, matching super…",
-          "meta": "HF Papers · 2d ago · down 139 · signal 5.28",
-          "rank": 186,
-          "rank_delta": -139
+          "meta": "HF Papers · 3d ago · down 138 · signal 4.68",
+          "rank": 187,
+          "rank_delta": -138
         },
         {
-          "headline": "Decisions made by OpenAI following SpaceX's acquisition of Cursor",
-          "title": "Decisions made by OpenAI following SpaceX's acquisition of Cursor",
-          "url": "https://news.hada.io/topic?id=33003",
+          "headline": "StemDeck - Free, open source local AI sound source separation tool",
+          "title": "StemDeck - Free, open source local AI sound source separation tool",
+          "url": "https://news.hada.io/topic?id=33039",
           "source": "geeknews",
           "tags": [
             "social"
           ],
-          "score": 4.78,
-          "raw_score": 2.914,
-          "published_hours_ago": 11,
+          "score": 4.125,
+          "raw_score": 2.181,
+          "published_hours_ago": 2,
           "stars": 0,
           "image_url": "/assets/news/thumb-ai.svg",
           "badge": "Social",
-          "deck": "Community signal picked up on GeekNews 11h ago.",
-          "meta": "GeekNews · 11h ago · signal 4.78",
-          "rank": 236,
+          "deck": "Community signal picked up on GeekNews 2h ago.",
+          "meta": "GeekNews · 2h ago · signal 4.12",
+          "rank": 999,
           "rank_delta": null
-        },
-        {
-          "headline": "UrbanGround: From Local Perception to Spatial Agency in a Real-Scale City",
-          "title": "UrbanGround: From Local Perception to Spatial Agency in a Real-Scale City",
-          "url": "https://huggingface.co/papers/2608.27456",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 5.688,
-          "raw_score": 3.745,
-          "published_hours_ago": 41,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2608.27456.png",
-          "badge": "Paper",
-          "deck": "UrbanGround evaluates whether multimodal language model agents can sustain reliable navigation and spatial reasoning in a realistic 3D city replica, revealing that local perceptual skills f…",
-          "meta": "HF Papers · 2d ago · down 138 · signal 5.69",
-          "rank": 183,
-          "rank_delta": -138
         }
       ]
     },
@@ -322,23 +316,23 @@
       "description": "Fresh GitHub projects worth scanning before the feed turns over.",
       "items": [
         {
-          "headline": "BerriAI/litellm",
-          "title": "BerriAI/litellm — The fastest, litest AI Gateway. Rust core with Python SDK. Call 100+ LLM APIs in OpenAI (or native) format with cost tracking, guardrails, load balancing, and logging [Bedrock, Azure, OpenAI, Anthropic, OpenAI, VertexAI, vLLM, Nvidia NIM]",
-          "url": "https://github.com/BerriAI/litellm",
+          "headline": "vllm-project/vllm",
+          "title": "vllm-project/vllm — A high-throughput and memory-efficient inference and serving engine for LLMs",
+          "url": "https://github.com/vllm-project/vllm",
           "source": "github.com",
           "tags": [
             "AI"
           ],
-          "score": 22.173,
-          "raw_score": 17.944,
-          "published_hours_ago": 961,
-          "stars": 54123,
-          "image_url": "https://opengraph.githubassets.com/1/BerriAI/litellm",
+          "score": 21.655,
+          "raw_score": 17.452,
+          "published_hours_ago": 1106,
+          "stars": 86342,
+          "image_url": "https://opengraph.githubassets.com/1/vllm-project/vllm",
           "badge": "Repo",
-          "deck": "The fastest, litest AI Gateway. Rust core with Python SDK. Call 100+ LLM APIs in OpenAI (or native) format with cost tracking, guardrails, load balancing, and logging [Bedrock, Azure, OpenA…",
-          "meta": "GitHub · 54123 stars · +714/7d · created 1130d ago · updated 40d ago · up 1 · signal 22.17",
+          "deck": "A high-throughput and memory-efficient inference and serving engine for LLMs. Updated 46d ago. 86342 stars, +679/7d, created 1298d ago.",
+          "meta": "GitHub · 86342 stars · +679/7d · created 1298d ago · updated 46d ago · signal 21.66",
           "rank": 1,
-          "rank_delta": 1
+          "rank_delta": null
         },
         {
           "headline": "headroomlabs-ai/headroom",
@@ -348,35 +342,16 @@
           "tags": [
             "AI"
           ],
-          "score": 21.221,
-          "raw_score": 16.915,
-          "published_hours_ago": 972,
+          "score": 21.195,
+          "raw_score": 16.974,
+          "published_hours_ago": 996,
           "stars": 60623,
           "image_url": "https://opengraph.githubassets.com/1/headroomlabs-ai/headroom",
           "badge": "Repo",
           "deck": "Compress tool outputs, logs, files, and RAG chunks before they reach the LLM. 20% fewer tokens for coding agents, 60-95% fewer tokens for JSON, same answers. Library, proxy, MCP server. Upd…",
-          "meta": "GitHub · 60623 stars · +800/7d · created 234d ago · updated 40d ago · up 2 · signal 21.22",
+          "meta": "GitHub · 60623 stars · +800/7d · created 235d ago · updated 42d ago · signal 21.20",
           "rank": 2,
-          "rank_delta": 2
-        },
-        {
-          "headline": "sickn33/agentic-awesome-skills",
-          "title": "sickn33/agentic-awesome-skills — AAS Core is the local, agent-first control plane for complete catalog discovery, agent-owned selection, stack validation, and planning, backed by 2,005+ agentic skills. Includes CLI, local MCP, catalog, plugins, and Workbench.",
-          "url": "https://github.com/sickn33/agentic-awesome-skills",
-          "source": "github.com",
-          "tags": [
-            "AI"
-          ],
-          "score": 20.934,
-          "raw_score": 16.172,
-          "published_hours_ago": 957,
-          "stars": 43666,
-          "image_url": "https://opengraph.githubassets.com/1/sickn33/agentic-awesome-skills",
-          "badge": "Repo",
-          "deck": "AAS Core is the local, agent-first control plane for complete catalog discovery, agent-owned selection, stack validation, and planning, backed by 2,005+ agentic skills. Includes CLI, local…",
-          "meta": "GitHub · 43666 stars · +526/7d · created 227d ago · updated 40d ago · up 31 · signal 20.93",
-          "rank": 7,
-          "rank_delta": 31
+          "rank_delta": 0
         },
         {
           "headline": "ggml-org/llama.cpp",
@@ -386,16 +361,16 @@
           "tags": [
             "AI"
           ],
-          "score": 20.817,
-          "raw_score": 16.693,
-          "published_hours_ago": 1058,
+          "score": 20.638,
+          "raw_score": 16.536,
+          "published_hours_ago": 1082,
           "stars": 120604,
           "image_url": "https://opengraph.githubassets.com/1/ggml-org/llama.cpp",
           "badge": "Repo",
-          "deck": "LLM inference in C/C++. Updated 44d ago. 120604 stars, +800/7d, created 1268d ago.",
-          "meta": "GitHub · 120604 stars · +800/7d · created 1268d ago · updated 44d ago · signal 20.82",
-          "rank": 4,
-          "rank_delta": null
+          "deck": "LLM inference in C/C++. Updated 45d ago. 120604 stars, +800/7d, created 1269d ago.",
+          "meta": "GitHub · 120604 stars · +800/7d · created 1269d ago · updated 45d ago · down 1 · signal 20.64",
+          "rank": 5,
+          "rank_delta": -1
         },
         {
           "headline": "code-yeongyu/oh-my-openagent",
@@ -403,35 +378,50 @@
           "url": "https://github.com/code-yeongyu/oh-my-openagent",
           "source": "github.com",
           "tags": [],
-          "score": 20.654,
+          "score": 20.564,
           "raw_score": 16.793,
-          "published_hours_ago": 962,
+          "published_hours_ago": 986,
           "stars": 66245,
           "image_url": "https://opengraph.githubassets.com/1/code-yeongyu/oh-my-openagent",
           "badge": "Repo",
-          "deck": "omo/lazycodex: The coding agent for tokenmaxxers;the one and only agent harness for complex codebases. For your Codex, for your OpenCode. Updated 40d ago. 66245 stars, +650/7d, created 270d…",
-          "meta": "GitHub · 66245 stars · +650/7d · created 270d ago · updated 40d ago · up 2 · signal 20.65",
+          "deck": "omo/lazycodex: The coding agent for tokenmaxxers;the one and only agent harness for complex codebases. For your Codex, for your OpenCode. Updated 41d ago. 66245 stars, +650/7d, created 271d…",
+          "meta": "GitHub · 66245 stars · +650/7d · created 271d ago · updated 41d ago · signal 20.56",
           "rank": 3,
-          "rank_delta": 2
+          "rank_delta": 0
         },
         {
-          "headline": "shanraisshan/claude-code-best-practice",
-          "title": "shanraisshan/claude-code-best-practice — from vibe coding to agentic engineering - practice makes claude perfect",
-          "url": "https://github.com/shanraisshan/claude-code-best-practice",
+          "headline": "anomalyco/opencode",
+          "title": "anomalyco/opencode — The open source coding agent.",
+          "url": "https://github.com/anomalyco/opencode",
           "source": "github.com",
-          "tags": [
-            "AI"
-          ],
-          "score": 20.512,
-          "raw_score": 16.267,
-          "published_hours_ago": 971,
-          "stars": 63155,
-          "image_url": "https://opengraph.githubassets.com/1/shanraisshan/claude-code-best-practice",
+          "tags": [],
+          "score": 20.495,
+          "raw_score": 16.727,
+          "published_hours_ago": 986,
+          "stars": 187809,
+          "image_url": "https://opengraph.githubassets.com/1/anomalyco/opencode",
           "badge": "Repo",
-          "deck": "from vibe coding to agentic engineering - practice makes claude perfect. Updated 40d ago. 63155 stars, +674/7d, created 302d ago.",
-          "meta": "GitHub · 63155 stars · +674/7d · created 302d ago · updated 40d ago · up 1 · signal 20.51",
-          "rank": 6,
-          "rank_delta": 1
+          "deck": "The open source coding agent. Updated 41d ago. 187809 stars, +800/7d, created 487d ago.",
+          "meta": "GitHub · 187809 stars · +800/7d · created 487d ago · updated 41d ago · signal 20.50",
+          "rank": 4,
+          "rank_delta": null
+        },
+        {
+          "headline": "OpenHands/OpenHands",
+          "title": "OpenHands/OpenHands — 🙌 OpenHands: AI-Driven Development",
+          "url": "https://github.com/OpenHands/OpenHands",
+          "source": "github.com",
+          "tags": [],
+          "score": 17.587,
+          "raw_score": 14.179,
+          "published_hours_ago": 1106,
+          "stars": 80871,
+          "image_url": "https://opengraph.githubassets.com/1/OpenHands/OpenHands",
+          "badge": "Repo",
+          "deck": "🙌 OpenHands: AI-Driven Development. Updated 46d ago. 80871 stars, +800/7d, created 901d ago.",
+          "meta": "GitHub · 80871 stars · +800/7d · created 901d ago · updated 46d ago · signal 17.59",
+          "rank": 16,
+          "rank_delta": null
         },
         {
           "headline": "MemPalace/mempalace",
@@ -441,16 +431,16 @@
           "tags": [
             "AI"
           ],
-          "score": 17.006,
+          "score": 16.974,
           "raw_score": 13.327,
-          "published_hours_ago": 1039,
+          "published_hours_ago": 1063,
           "stars": 57506,
           "image_url": "https://opengraph.githubassets.com/1/MemPalace/mempalace",
           "badge": "Repo",
-          "deck": "The best-benchmarked open-source AI memory system. And it's free. Updated 43d ago. 57506 stars, +268/7d, created 147d ago.",
-          "meta": "GitHub · 57506 stars · +268/7d · created 147d ago · updated 43d ago · signal 17.01",
-          "rank": 16,
-          "rank_delta": 0
+          "deck": "The best-benchmarked open-source AI memory system. And it's free. Updated 44d ago. 57506 stars, +268/7d, created 148d ago.",
+          "meta": "GitHub · 57506 stars · +268/7d · created 148d ago · updated 44d ago · down 2 · signal 16.97",
+          "rank": 18,
+          "rank_delta": -2
         },
         {
           "headline": "rtk-ai/rtk",
@@ -460,16 +450,16 @@
           "tags": [
             "AI"
           ],
-          "score": 16.688,
+          "score": 16.656,
           "raw_score": 13.04,
-          "published_hours_ago": 944,
+          "published_hours_ago": 968,
           "stars": 72291,
           "image_url": "https://opengraph.githubassets.com/1/rtk-ai/rtk",
           "badge": "Repo",
-          "deck": "CLI proxy that reduces LLM token consumption by 60-90% on common dev commands. Single Rust binary, zero dependencies. Updated 39d ago. 72291 stars, +800/7d, created 219d ago.",
-          "meta": "GitHub · 72291 stars · +800/7d · created 219d ago · updated 39d ago · signal 16.69",
-          "rank": 18,
-          "rank_delta": 0
+          "deck": "CLI proxy that reduces LLM token consumption by 60-90% on common dev commands. Single Rust binary, zero dependencies. Updated 40d ago. 72291 stars, +800/7d, created 220d ago.",
+          "meta": "GitHub · 72291 stars · +800/7d · created 220d ago · updated 40d ago · down 2 · signal 16.66",
+          "rank": 20,
+          "rank_delta": -2
         },
         {
           "headline": "rohitg00/ai-engineering-from-scratch",
@@ -477,32 +467,32 @@
           "url": "https://github.com/rohitg00/ai-engineering-from-scratch",
           "source": "github.com",
           "tags": [],
-          "score": 12.607,
-          "raw_score": 8.737,
-          "published_hours_ago": 0,
-          "stars": 50906,
+          "score": 11.707,
+          "raw_score": 8.194,
+          "published_hours_ago": 8,
+          "stars": 51219,
           "image_url": "https://opengraph.githubassets.com/1/rohitg00/ai-engineering-from-scratch",
           "badge": "Repo",
-          "deck": "Learn it. Build it. Ship it for others. Updated <1h ago. 50906 stars, avg 310.5/day, created 164d ago.",
-          "meta": "GitHub · 50906 stars · avg 310.5/day · created 164d ago · updated <1h ago · signal 12.61",
-          "rank": 43,
-          "rank_delta": null
+          "deck": "Learn it. Build it. Ship it for others. Updated 8h ago. 51219 stars, avg 310.4/day, created 165d ago.",
+          "meta": "GitHub · 51219 stars · avg 310.4/day · created 165d ago · updated 8h ago · down 7 · signal 11.71",
+          "rank": 50,
+          "rank_delta": -7
         },
         {
-          "headline": "kortix-ai/suna",
-          "title": "kortix-ai/suna — The open-source AI Management System",
-          "url": "https://github.com/kortix-ai/suna",
+          "headline": "apache/seatunnel",
+          "title": "apache/seatunnel — SeaTunnel is a multimodal, high-performance, distributed, massive data integration tool.",
+          "url": "https://github.com/apache/seatunnel",
           "source": "github.com",
           "tags": [],
-          "score": 12.018,
-          "raw_score": 8.242,
+          "score": 12.409,
+          "raw_score": 9.03,
           "published_hours_ago": 0,
-          "stars": 20157,
-          "image_url": "https://opengraph.githubassets.com/1/kortix-ai/suna",
+          "stars": 9600,
+          "image_url": "https://opengraph.githubassets.com/1/apache/seatunnel",
           "badge": "Repo",
-          "deck": "The open-source AI Management System. Updated <1h ago. 20157 stars, avg 29.1/day, created 693d ago.",
-          "meta": "GitHub · 20157 stars · avg 29.1/day · created 693d ago · updated <1h ago · signal 12.02",
-          "rank": 56,
+          "deck": "SeaTunnel is a multimodal, high-performance, distributed, massive data integration tool. Updated <1h ago. 9600 stars, avg 2.9/day, created 3312d ago.",
+          "meta": "GitHub · 9600 stars · avg 2.9/day · created 3312d ago · updated <1h ago · signal 12.41",
+          "rank": 37,
           "rank_delta": null
         }
       ]
@@ -518,16 +508,33 @@
           "url": "https://huggingface.co/papers/2608.27448",
           "source": "huggingface.co",
           "tags": [],
-          "score": 5.283,
-          "raw_score": 3.673,
-          "published_hours_ago": 41,
+          "score": 4.679,
+          "raw_score": 3.346,
+          "published_hours_ago": 66,
           "stars": 0,
           "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2608.27448.png",
           "badge": "Paper",
           "deck": "Test-Time Policy Optimization enables label-free test-time training for mathematical reasoning by asymmetrically distilling agreeing rollouts and penalizing disagreeing ones, matching super…",
-          "meta": "HF Papers · 2d ago · down 139 · signal 5.28",
-          "rank": 186,
-          "rank_delta": -139
+          "meta": "HF Papers · 3d ago · down 138 · signal 4.68",
+          "rank": 187,
+          "rank_delta": -138
+        },
+        {
+          "headline": "Is Next-Chunk Reasoning RL Really Better than SFT? Revisiting Training Strategies under no-CoT…",
+          "title": "Is Next-Chunk Reasoning RL Really Better than SFT? Revisiting Training Strategies under no-CoT Data",
+          "url": "https://huggingface.co/papers/2608.23256",
+          "source": "huggingface.co",
+          "tags": [],
+          "score": 3.911,
+          "raw_score": 2.837,
+          "published_hours_ago": 90,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2608.23256.png",
+          "badge": "Paper",
+          "deck": "Mixed supervised fine-tuning on combined reasoning corpora outperforms next-chunk reinforcement learning in efficiency and final accuracy across mathematical and out-of-domain tasks. Surfac…",
+          "meta": "HF Papers · 4d ago · signal 3.91",
+          "rank": 216,
+          "rank_delta": null
         },
         {
           "headline": "UrbanGround: From Local Perception to Spatial Agency in a Real-Scale City",
@@ -537,73 +544,16 @@
           "tags": [
             "AI"
           ],
-          "score": 5.688,
-          "raw_score": 3.745,
-          "published_hours_ago": 41,
+          "score": 5.049,
+          "raw_score": 3.394,
+          "published_hours_ago": 66,
           "stars": 0,
           "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2608.27456.png",
           "badge": "Paper",
           "deck": "UrbanGround evaluates whether multimodal language model agents can sustain reliable navigation and spatial reasoning in a realistic 3D city replica, revealing that local perceptual skills f…",
-          "meta": "HF Papers · 2d ago · down 138 · signal 5.69",
+          "meta": "HF Papers · 3d ago · down 136 · signal 5.05",
           "rank": 183,
-          "rank_delta": -138
-        },
-        {
-          "headline": "Luce: Relightable Gaussians for 3D Asset Generation",
-          "title": "Luce: Relightable Gaussians for 3D Asset Generation",
-          "url": "https://huggingface.co/papers/2608.23943",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 4.86,
-          "raw_score": 3.077,
-          "published_hours_ago": 41,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2608.23943.png",
-          "badge": "Paper",
-          "deck": "Luce unifies geometry and PBR materials in a voxelized Gaussian cloud, using a variational autoencoder and rectified-flow transformer to generate relightable 3D assets from single images. S…",
-          "meta": "HF Papers · 2d ago · signal 4.86",
-          "rank": 219,
-          "rank_delta": null
-        },
-        {
-          "headline": "Thinking on Shots: Consistent Multi-Shot Video Editing with Agentic Reasoning",
-          "title": "Thinking on Shots: Consistent Multi-Shot Video Editing with Agentic Reasoning",
-          "url": "https://huggingface.co/papers/2608.26809",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 5.277,
-          "raw_score": 3.347,
-          "published_hours_ago": 41,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2608.26809.png",
-          "badge": "Paper",
-          "deck": "An agentic framework combining LLMs and VLMs enables consistent, multi-instruction editing of long multi-shot videos while preserving spatiotemporal structure. Surfaced via HF Papers 2d ago.",
-          "meta": "HF Papers · 2d ago · down 131 · signal 5.28",
-          "rank": 198,
-          "rank_delta": -131
-        },
-        {
-          "headline": "Agentic Game Development as a Verifiable Trajectory Data Engine for Scaling World Models",
-          "title": "Agentic Game Development as a Verifiable Trajectory Data Engine for Scaling World Models",
-          "url": "https://huggingface.co/papers/2608.25518",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 5.251,
-          "raw_score": 3.609,
-          "published_hours_ago": 41,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2608.25518.png",
-          "badge": "Paper",
-          "deck": "Game engines provide executable verification and long-horizon trajectories for reinforcement learning post-training of spatial world models, motivating a human-engine verification paradigm.…",
-          "meta": "HF Papers · 2d ago · down 137 · signal 5.25",
-          "rank": 187,
-          "rank_delta": -137
+          "rank_delta": -136
         },
         {
           "headline": "When Text Misleads: Inconsistent-Aware Reasoning for Audio-Grounded Dialogue",
@@ -613,15 +563,15 @@
           "tags": [
             "AI"
           ],
-          "score": 3.828,
-          "raw_score": 2.501,
-          "published_hours_ago": 51,
+          "score": 3.365,
+          "raw_score": 2.368,
+          "published_hours_ago": 75,
           "stars": 0,
           "image_url": "/assets/news/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 2d ago.",
-          "meta": "arXiv · 2d ago · signal 3.83",
-          "rank": 256,
+          "deck": "Fresh arXiv paper from the ai cluster, posted 3d ago.",
+          "meta": "arXiv · 3d ago · signal 3.37",
+          "rank": 238,
           "rank_delta": null
         },
         {
@@ -632,71 +582,111 @@
           "tags": [
             "AI"
           ],
-          "score": 5.196,
-          "raw_score": 3.405,
-          "published_hours_ago": 65,
+          "score": 4.747,
+          "raw_score": 3.285,
+          "published_hours_ago": 90,
           "stars": 0,
           "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2608.26067.png",
           "badge": "Paper",
           "deck": "StreamPI enhances single-frame vision-language-action models with streaming temporal reasoning via instruction-anchored attention and randomized interval training, improving robot manipulat…",
-          "meta": "HF Papers · 3d ago · down 138 · signal 5.20",
-          "rank": 193,
-          "rank_delta": -138
+          "meta": "HF Papers · 4d ago · down 128 · signal 4.75",
+          "rank": 188,
+          "rank_delta": -128
         },
         {
-          "headline": "PACE: A Unified Condense-and-Extract Paradigm for Fast VLM Inference",
-          "title": "PACE: A Unified Condense-and-Extract Paradigm for Fast VLM Inference",
-          "url": "http://arxiv.org/abs/2608.27206v1",
+          "headline": "Luce: Relightable Gaussians for 3D Asset Generation",
+          "title": "Luce: Relightable Gaussians for 3D Asset Generation",
+          "url": "https://huggingface.co/papers/2608.23943",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 4.303,
+          "raw_score": 2.802,
+          "published_hours_ago": 66,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2608.23943.png",
+          "badge": "Paper",
+          "deck": "Luce unifies geometry and PBR materials in a voxelized Gaussian cloud, using a variational autoencoder and rectified-flow transformer to generate relightable 3D assets from single images. S…",
+          "meta": "HF Papers · 3d ago · signal 4.30",
+          "rank": 218,
+          "rank_delta": null
+        },
+        {
+          "headline": "Thinking on Shots: Consistent Multi-Shot Video Editing with Agentic Reasoning",
+          "title": "Thinking on Shots: Consistent Multi-Shot Video Editing with Agentic Reasoning",
+          "url": "https://huggingface.co/papers/2608.26809",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 4.638,
+          "raw_score": 2.996,
+          "published_hours_ago": 66,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2608.26809.png",
+          "badge": "Paper",
+          "deck": "An agentic framework combining LLMs and VLMs enables consistent, multi-instruction editing of long multi-shot videos while preserving spatiotemporal structure. Surfaced via HF Papers 3d ago.",
+          "meta": "HF Papers · 3d ago · down 136 · signal 4.64",
+          "rank": 203,
+          "rank_delta": -136
+        },
+        {
+          "headline": "How AI Experiences Art: Emergent Aesthetic Structure in a Self-Supervised Multimodal Embedding…",
+          "title": "How AI Experiences Art: Emergent Aesthetic Structure in a Self-Supervised Multimodal Embedding Space",
+          "url": "http://arxiv.org/abs/2608.27121v1",
           "source": "arxiv.org",
           "tags": [
             "AI"
           ],
-          "score": 3.787,
-          "raw_score": 2.454,
-          "published_hours_ago": 50,
+          "score": 3.394,
+          "raw_score": 2.387,
+          "published_hours_ago": 76,
           "stars": 0,
           "image_url": "/assets/news/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 2d ago.",
-          "meta": "arXiv · 2d ago · signal 3.79",
-          "rank": 258,
+          "deck": "Fresh arXiv paper from the ai cluster, posted 3d ago.",
+          "meta": "arXiv · 3d ago · signal 3.39",
+          "rank": 237,
           "rank_delta": null
         },
         {
-          "headline": "A blueprint for the formalization of norm-variation of multiple ergodic averages for commuting…",
-          "title": "A blueprint for the formalization of norm-variation of multiple ergodic averages for commuting transformations",
-          "url": "http://arxiv.org/abs/2608.27321v1",
-          "source": "arxiv.org",
-          "tags": [],
-          "score": 3.59,
-          "raw_score": 2.337,
-          "published_hours_ago": 49,
-          "stars": 0,
-          "image_url": "/assets/news/thumb-paper.svg",
-          "badge": "Paper",
-          "deck": "Fresh arXiv paper posted 2d ago and surfacing in the current feed.",
-          "meta": "arXiv · 2d ago · signal 3.59",
-          "rank": 261,
-          "rank_delta": null
-        },
-        {
-          "headline": "Pair-Level Essay-Scale Republication and Reuse from Fragmented Historical Text Reuse: A Workflo…",
-          "title": "Pair-Level Essay-Scale Republication and Reuse from Fragmented Historical Text Reuse: A Workflow Study on Eighteenth-Century Books and Newspapers",
-          "url": "http://arxiv.org/abs/2608.27343v1",
+          "headline": "GRAIN: Bridging Name and Narrative Shifts in Real-World Graph Reasoning through Invariance-Rewa…",
+          "title": "GRAIN: Bridging Name and Narrative Shifts in Real-World Graph Reasoning through Invariance-Rewarded Agentic RL",
+          "url": "http://arxiv.org/abs/2608.27142v1",
           "source": "arxiv.org",
           "tags": [
             "AI"
           ],
-          "score": 3.55,
-          "raw_score": 2.337,
-          "published_hours_ago": 49,
+          "score": 3.521,
+          "raw_score": 2.573,
+          "published_hours_ago": 76,
           "stars": 0,
           "image_url": "/assets/news/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 2d ago.",
-          "meta": "arXiv · 2d ago · down 185 · signal 3.55",
-          "rank": 260,
-          "rank_delta": -185
+          "deck": "Fresh arXiv paper from the ai cluster, posted 3d ago.",
+          "meta": "arXiv · 3d ago · down 167 · signal 3.52",
+          "rank": 230,
+          "rank_delta": -167
+        },
+        {
+          "headline": "BALMS: Benchmarking Agentic LLMs for Longitudinal Mental Health Sensing",
+          "title": "BALMS: Benchmarking Agentic LLMs for Longitudinal Mental Health Sensing",
+          "url": "http://arxiv.org/abs/2608.27219v1",
+          "source": "arxiv.org",
+          "tags": [
+            "AI"
+          ],
+          "score": 3.45,
+          "raw_score": 2.44,
+          "published_hours_ago": 75,
+          "stars": 0,
+          "image_url": "/assets/news/thumb-paper.svg",
+          "badge": "Paper",
+          "deck": "Fresh arXiv paper from the ai cluster, posted 3d ago.",
+          "meta": "arXiv · 3d ago · down 161 · signal 3.45",
+          "rank": 234,
+          "rank_delta": -161
         }
       ]
     },
@@ -706,79 +696,140 @@
       "description": "Directional signals from discussion-heavy sources.",
       "items": [
         {
-          "headline": "Decisions made by OpenAI following SpaceX's acquisition of Cursor",
-          "title": "Decisions made by OpenAI following SpaceX's acquisition of Cursor",
-          "url": "https://news.hada.io/topic?id=33003",
+          "headline": "StemDeck - Free, open source local AI sound source separation tool",
+          "title": "StemDeck - Free, open source local AI sound source separation tool",
+          "url": "https://news.hada.io/topic?id=33039",
           "source": "geeknews",
           "tags": [
             "social"
           ],
-          "score": 4.78,
-          "raw_score": 2.914,
-          "published_hours_ago": 11,
-          "stars": 0,
-          "image_url": "/assets/news/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews 11h ago.",
-          "meta": "GeekNews · 11h ago · signal 4.78",
-          "rank": 236,
-          "rank_delta": null
-        },
-        {
-          "headline": "Hiring a Senior Open Source Maintainer: Permanent volunteer position with $0 compensation",
-          "title": "Hiring a Senior Open Source Maintainer: Permanent volunteer position with $0 compensation",
-          "url": "https://news.hada.io/topic?id=32996",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 3.126,
-          "raw_score": 1.441,
-          "published_hours_ago": 17,
-          "stars": 0,
-          "image_url": "/assets/news/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews 17h ago.",
-          "meta": "GeekNews · 17h ago · signal 3.13",
-          "rank": 999,
-          "rank_delta": null
-        },
-        {
-          "headline": "The birth of Suica, Japan’s first IC transportation card",
-          "title": "The birth of Suica, Japan’s first IC transportation card",
-          "url": "https://news.hada.io/topic?id=33009",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 4.025,
+          "score": 4.125,
           "raw_score": 2.181,
           "published_hours_ago": 2,
           "stars": 0,
           "image_url": "/assets/news/thumb-ai.svg",
           "badge": "Social",
           "deck": "Community signal picked up on GeekNews 2h ago.",
-          "meta": "GeekNews · 2h ago · signal 4.03",
+          "meta": "GeekNews · 2h ago · signal 4.12",
           "rank": 999,
           "rank_delta": null
         },
         {
-          "headline": "New productivity upgrades to Gemini Live bring in agentic capabilities, so you can do more with…",
-          "title": "New productivity upgrades to Gemini Live bring in agentic capabilities, so you can do more with your voice. Now you can listen to your Daily Brief, triage your email, or get help from Spark, all by talking with Gemini.",
-          "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE4wRC1BVzJ4OVFPRkdsN01qb1ZCUjJ5bUN0OTVOM1M1VWJyeUZHWHdJQkp0MHFDZFlqdUZRd3JmZnF4MTFmeUlrN292TXBkRWFDZk85YjhtR1hMOE5WRFBj?oc=5",
+          "headline": "Every dollar you put on car insurance leads to 3,200 Flock cameras across Texas",
+          "title": "Every dollar you put on car insurance leads to 3,200 Flock cameras across Texas",
+          "url": "https://news.hada.io/topic?id=33030",
+          "source": "geeknews",
+          "tags": [
+            "social"
+          ],
+          "score": 3.401,
+          "raw_score": 1.788,
+          "published_hours_ago": 9,
+          "stars": 0,
+          "image_url": "/assets/news/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on GeekNews 9h ago.",
+          "meta": "GeekNews · 9h ago · signal 3.40",
+          "rank": 999,
+          "rank_delta": null
+        },
+        {
+          "headline": "Between wallets for agents with @link (and @privy), MPP, Tempo, MCP, Stripe CLI, Agentic Commer…",
+          "title": "Between wallets for agents with @link (and @privy), MPP, Tempo, MCP, Stripe CLI, Agentic Commerce Suite, sandboxes, OpenRouter, Metronome/metered billing, Radar and distillation/token fraud, it turns out that \"the economic infrastructure for AI\" implicates",
+          "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE50RWpFdlFzQzlxVTNwMjFka0huUy0xUjNvaDd6Zy10WWd5c01vYjg2b2VJTi10dU85eThNMVpkYVR5SjRwN2FRTlJhbE5BbWdXQVE3dkZ4YWVoUGY5ckE?oc=5",
           "source": "x.com",
           "tags": [
             "AI",
             "social"
           ],
-          "score": 3.621,
-          "raw_score": 2.208,
+          "score": 3.447,
+          "raw_score": 2.106,
           "published_hours_ago": 72,
           "stars": 0,
           "image_url": "/assets/news/thumb-ai.svg",
           "badge": "Social",
           "deck": "Community signal picked up on X 3d ago.",
-          "meta": "X · 3d ago · signal 3.62",
+          "meta": "X · 3d ago · signal 3.45",
+          "rank": 999,
+          "rank_delta": null
+        },
+        {
+          "headline": "Yesterday, we rolled out a configuration update for GLM-5.3-Flash to improve performance in som…",
+          "title": "Yesterday, we rolled out a configuration update for GLM-5.3-Flash to improve performance in some agentic use cases. If it underperformed Ox Alpha in your workflow between August 26 and 27, please give it another try and let us know if the experience has im",
+          "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBZUzhkM2ktcHdKWkRFMkxDVE1UeUtHWjFla0pzdUFCSUVpc3ZTOFhrU1ZtM3RNdnFyLVg5OFhPXzl4ZVJHMjhMNEVEVzE0dEhRZ256MTBKYmY0UmpZMlp3?oc=5",
+          "source": "x.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 3.216,
+          "raw_score": 1.95,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/assets/news/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X 3d ago.",
+          "meta": "X · 3d ago · signal 3.22",
+          "rank": 999,
+          "rank_delta": null
+        },
+        {
+          "headline": "How have software engineering fundamentals changed with agentic coding?",
+          "title": "How have software engineering fundamentals changed with agentic coding? Here is our AI Engineering Skills map for software engineering fundamentals. https://t.co/cnRLj43DLs",
+          "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE16U2liM01QbUdMcGFka1UxLUhudFc0SnFXUjJOSktvVW9xOU05NzRiTjdSRlhxLUw4NS1YaFRkUUpVbG95ZkFjTHRTMFhjU1BHMEhkeXlIQUkwVXNMQnJV?oc=5",
+          "source": "x.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 3.116,
+          "raw_score": 1.95,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/assets/news/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X 3d ago.",
+          "meta": "X · 3d ago · signal 3.12",
+          "rank": 999,
+          "rank_delta": null
+        },
+        {
+          "headline": "Databricks, Snowflake, Microsoft Fabric, BigQuery.",
+          "title": "Databricks, Snowflake, Microsoft Fabric, BigQuery. All four say they're the agentic AI foundation. They can't all be right. But that's not even the right argument. Honestly, they're all pretty good platforms. Teradata surveyed 1,000 tech leaders this year. 63% report",
+          "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNMmpvQzk1NUFENjduUE55Z2tzcW85dUVtUDg1aXlqRTB1OHZveUtSM1FYRmdZX0NGbk8yLXFPVHNtVTBzQTk5eXFRQ2kxOF8zTFFtTXRHX3pNbDU1UEt0WURVSHRudkdkNmh6cUxheWxndUdEOGZ3NUZpQnBDMzMyU0RfbW54QzZRemVuTVpYcl9zRGR6MVJZNmNzSXpEeGJfdVJIQzM1ckJTbWZBU0E?oc=5",
+          "source": "linkedin.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 3.026,
+          "raw_score": 1.867,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/assets/news/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on LinkedIn 3d ago.",
+          "meta": "LinkedIn · 3d ago · signal 3.03",
+          "rank": 999,
+          "rank_delta": null
+        },
+        {
+          "headline": "The Agentic AI Foundation is a great resource, and I'm thrilled that Jon Zeolla is repping it h…",
+          "title": "The Agentic AI Foundation is a great resource, and I'm thrilled that Jon Zeolla is repping it here in PGH. He gave the room a whole firehose of great info, which I immediately put to use. (Enterprise admin for MCP!)",
+          "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNbHg0Q1ptU2U5ZlhJcFR1MU9PZFg2RzliWU4zSEM5SW9UUXFVWVdwYUNVeUFhZmE4Q3lmV1B6UTRiRTlLQV96YnVrZVM3VVM2Nm9MaEY2QlVhX3V0U2VGcmtYdWsxTkVWNkpKVEVTaGZsWG5Za19qd2hhNnA0eS1ERmNDdzJIdVB5RWlGU1dkUzg4R0pBUkxlY2dCNmVoM21qeXZXX1JfVXVncC1VbHN5bW1MYjNGcWF5NWR3?oc=5",
+          "source": "linkedin.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 3.026,
+          "raw_score": 1.867,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/assets/news/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on LinkedIn 3d ago.",
+          "meta": "LinkedIn · 3d ago · signal 3.03",
           "rank": 999,
           "rank_delta": null
         },
@@ -803,66 +854,6 @@
           "rank_delta": null
         },
         {
-          "headline": "GLM-5.3-Flash can now be run locally! ✨ Run 3-bit on 128GB RAM via Unsloth GGUF.",
-          "title": "GLM-5.3-Flash can now be run locally! ✨ Run 3-bit on 128GB RAM via Unsloth GGUF. GLM-5.3-Flash (ox-alpha) rivals Claude Opus 4.8 on DeepSWE, coding & agentic benchmarks. Guide: https://t.co/oItBKYNrl9 GGUF: https://t.co/E73FKC7IKM",
-          "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1RbzN2YVFMVVVnMUlrTU03Vll6Y1dKVmpCTkNyY2loSDVTZjdPU3Z0dENqQXNuV2IzeEJCZllmbFM3dmZCWThFVEJDbWEzN3A1dmM2Mk5BSG5LRnNIRkVj?oc=5",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social"
-          ],
-          "score": 3.416,
-          "raw_score": 1.95,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/assets/news/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X 3d ago.",
-          "meta": "X · 3d ago · signal 3.42",
-          "rank": 999,
-          "rank_delta": null
-        },
-        {
-          "headline": "GLM-5.3 is now open-weight. Our most capable model for agentic coding and cyber defense is now…",
-          "title": "GLM-5.3 is now open-weight. Our most capable model for agentic coding and cyber defense is now available to download, run, and customize. Weights: https://t.co/v1IbWMXxg4 Tech blog: https://t.co/ekQkO83jCv",
-          "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBiWW1CVDRGeHJzTDNMeE9BWmJObkkzMmY4N0lDY0gzQlladU82c05TNnRKY3ZNNFNPR0wwRjY0dGJ3dThxUXg2X011UU5VbmRidEI4alltY3lFc0Fq?oc=5",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social"
-          ],
-          "score": 3.216,
-          "raw_score": 1.95,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/assets/news/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X 3d ago.",
-          "meta": "X · 3d ago · signal 3.22",
-          "rank": 999,
-          "rank_delta": null
-        },
-        {
-          "headline": "AGENTIC AI",
-          "title": "AGENTIC AI",
-          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOMnpGZ3k2UU5aZFAxaG9HTDI2cWlPX3hQanVSNnNoRDNZT29hTWhDbGFWNm1uYXF0Y21MRmdvaTEweHFWUVpFU2U1d1VrNC03S1hERDN0dEcxR201WGlXYUhSeWRzcTlSSFVsWl95c09acU5RNDF2ZmRIRUJIRnVZdk50NE54bmoxRVVVeHR3Z2ZWMzVSZ1NR?oc=5",
-          "source": "linkedin.com",
-          "tags": [
-            "AI",
-            "social"
-          ],
-          "score": 3.066,
-          "raw_score": 1.867,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/assets/news/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on LinkedIn 3d ago.",
-          "meta": "LinkedIn · 3d ago · signal 3.07",
-          "rank": 999,
-          "rank_delta": null
-        },
-        {
           "headline": "Introducing GLM-5.3-Flash - Leading capabilities at a highly competitive price - Natively multi…",
           "title": "Introducing GLM-5.3-Flash - Leading capabilities at a highly competitive price - Natively multimodal with a 1M-token context window - A 320B-A18B model released under the MIT License - Previously previewed as Ox Alpha, running entirely on Chinese AI chi",
           "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE5hNlZpYkkyVjRWQVhsZFU5Ri1vY3lPa0RObEIwYlFoSzJGMEJZOGlFUjlWMVp0TjNCR2wwS3ktbS1JVnBsQmdRSjlGMEp6Ump6bmFBWHl4S3owQ3hO?oc=5",
@@ -871,33 +862,33 @@
             "AI",
             "social"
           ],
-          "score": 2.999,
-          "raw_score": 1.808,
+          "score": 3.042,
+          "raw_score": 1.848,
           "published_hours_ago": 72,
           "stars": 0,
           "image_url": "/assets/news/thumb-ai.svg",
           "badge": "Social",
           "deck": "Community signal picked up on X 3d ago.",
-          "meta": "X · 3d ago · signal 3.00",
+          "meta": "X · 3d ago · signal 3.04",
           "rank": 999,
           "rank_delta": null
         },
         {
-          "headline": "Yap – The ‘comment slop’ that LLM leaves in your code",
-          "title": "Yap – The ‘comment slop’ that LLM leaves in your code",
-          "url": "https://news.hada.io/topic?id=32999",
-          "source": "geeknews",
+          "headline": "Meet Gemini Omni 1.1 Flash ⚡️ Our newest multimodal model for video generation and editing.",
+          "title": "Meet Gemini Omni 1.1 Flash ⚡️ Our newest multimodal model for video generation and editing. It now features your favorite creative controls from Veo, plus brand new capabilities. Enjoy features like 4K upscaling, first / last frame control, and fast 360p draftin",
+          "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE9rVFV1OEJESDBObnBkVGE5eWxHa3NjNEZoUEdXRldtMXkxZHJXekhuNUw4blN5MU9fVTFORjN0X0NYWlR6U1k1SXNTU0g0WE5jdm1FRTdod0Uwc2hXTXc?oc=5",
+          "source": "x.com",
           "tags": [
             "social"
           ],
-          "score": 3.026,
-          "raw_score": 1.441,
-          "published_hours_ago": 17,
+          "score": 3.361,
+          "raw_score": 2.055,
+          "published_hours_ago": 72,
           "stars": 0,
           "image_url": "/assets/news/thumb-ai.svg",
           "badge": "Social",
-          "deck": "Community signal picked up on GeekNews 17h ago.",
-          "meta": "GeekNews · 17h ago · signal 3.03",
+          "deck": "Community signal picked up on X 3d ago.",
+          "meta": "X · 3d ago · signal 3.36",
           "rank": 999,
           "rank_delta": null
         }
@@ -915,34 +906,40 @@
     },
     {
       "label": "X",
-      "value": 5
-    },
-    {
-      "label": "GeekNews",
-      "value": 4
+      "value": 6
     },
     {
       "label": "arXiv",
       "value": 4
     },
     {
+      "label": "GeekNews",
+      "value": 2
+    },
+    {
       "label": "LinkedIn",
-      "value": 1
+      "value": 2
     }
   ],
   "digest": {
-    "title": "AI News Brief — 2026-08-30",
-    "url": "/posts/2026-08-30-ai-news-digest/",
-    "description": "GitHub velocity is led by BerriAI/litellm; paper attention is clustering around TTPO: Test-Time Policy Optimization; social attention is tilting toward Decisions made by OpenAI following SpaceX's acquisition of Cursor. 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+    "title": "AI News Brief — 2026-08-31",
+    "url": "/posts/2026-08-31-ai-news-digest/",
+    "description": "GitHub velocity is led by vllm-project/vllm; paper attention is clustering around TTPO: Test-Time Policy Optimization; social attention is tilting toward StemDeck - Free, open source local AI sound source separation tool. 10 repo signals, 10 paper picks, and 10 community items made today's cut."
   },
   "structured_digest": {
-    "title": "AI News Brief — 2026-08-30",
-    "url": "/posts/2026-08-30-ai-news-digest/",
-    "description": "GitHub velocity is led by BerriAI/litellm; paper attention is clustering around TTPO: Test-Time Policy Optimization; social attention is tilting toward Decisions made by OpenAI following SpaceX's acquisition of Cursor. 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+    "title": "AI News Brief — 2026-08-31",
+    "url": "/posts/2026-08-31-ai-news-digest/",
+    "description": "GitHub velocity is led by vllm-project/vllm; paper attention is clustering around TTPO: Test-Time Policy Optimization; social attention is tilting toward StemDeck - Free, open source local AI sound source separation tool. 10 repo signals, 10 paper picks, and 10 community items made today's cut."
   },
   "beta_digest": null,
   "archive_url": "/posts/news-digest-archive/",
   "archives": [
+    {
+      "title": "AI News Brief — 2026-08-31",
+      "url": "/posts/2026-08-31-ai-news-digest/",
+      "date_label": "2026-08-31",
+      "description": "Today's AI landscape highlights strong development in LLM inference engines, new research in test-time policy optimization, and growing community interest in local AI sound separation tools."
+    },
     {
       "title": "AI News Brief — 2026-08-30",
       "url": "/posts/2026-08-30-ai-news-digest/",
@@ -984,12 +981,6 @@
       "url": "/posts/2026-08-24-ai-news-digest/",
       "date_label": "2026-08-24",
       "description": "Today's AI landscape highlights advancements in code compression for LLMs, new research in embodied AI and memory benchmarking, and continued community discussion around agentic systems."
-    },
-    {
-      "title": "AI News Brief — 2026-08-23",
-      "url": "/posts/2026-08-23-ai-news-digest/",
-      "date_label": "2026-08-23",
-      "description": "Today's AI digest highlights advancements in token compression, new research on LLM cognitive traps, and evolving community sentiment regarding AI-generated content."
     }
   ]
 }
