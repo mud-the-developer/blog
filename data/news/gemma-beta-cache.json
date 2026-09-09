@@ -3270,6 +3270,44 @@
     ],
     "title": "AI Daily Brief - August 19, 2026"
   },
+  "bf97cfa289abe249b25e4f371f9e06e51ebfb9abb891ca2a76118dc71538e98f": {
+    "article_body": [
+      "Agent development continues to drive significant activity on GitHub, with NousResearch/hermes-agent emerging as a top-ranked repository. This project, described as 'the agent that grows with you,' shows sustained velocity, accumulating over 218,000 stars. Other notable projects in the repository momentum section include BerriAI/litellm, an AI Gateway, and openai/codex, a lightweight coding agent, indicating broad interest in practical AI deployment and tooling.",
+      "In research, the paper 'Marigold V2: Revisiting Diffusion Transformers for Monocular Depth Estimation' is garnering considerable attention. Published recently, Marigold V2 introduces advancements in repurposing diffusion transformers for depth estimation through single-step flow-matching inference and a two-stage fine-tuning protocol. This suggests continued innovation in computer vision, particularly in efficient and accurate 3D understanding from 2D inputs. Other papers like 'CoVeR' and 'Mask Forcing' also explore novel approaches in VLM reasoning and video diffusion distillation.",
+      "Community discussions are prominently featuring allegations against OpenAI regarding competitive practices in solving difficult mathematical problems. Reports from sources like GeekNews indicate a tilt in social attention towards these suspicions. This chatter highlights ongoing scrutiny of leading AI developers and the ethical considerations surrounding their operational methods and competitive integrity within the rapidly advancing AI field.",
+      "Overall, today's digest reflects a dynamic interplay between practical application, foundational research, and critical community oversight. The consistent emergence of agent-focused tools and advanced perception models underscores the rapid pace of AI innovation, while public dialogue ensures accountability and transparency remain key considerations for the sector."
+    ],
+    "closing": "This concludes today's AI Beta Brief for September 10, 2026. We will continue to monitor these developments.",
+    "dek": "Today's AI brief highlights strong activity in agent development led by NousResearch/hermes-agent, significant research in monocular depth estimation with Marigold V2, and community discussion surrounding OpenAI's competitive practices.",
+    "lead": "The AI landscape on September 10, 2026, saw notable developments across agentic systems, computer vision research, and community discourse. Leading GitHub velocity is NousResearch/hermes-agent, an evolving agent framework gaining significant traction. Concurrently, academic attention is drawn to Marigold V2, a paper revisiting diffusion transformers for monocular depth estimation. Social channels, however, are focused on allegations concerning OpenAI's competitive methods in solving complex math problems.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "Agent development, exemplified by NousResearch/hermes-agent, continues to show strong velocity in the open-source community.",
+      "Research in monocular depth estimation is advancing, with Marigold V2 leading paper attention through novel diffusion transformer applications.",
+      "OpenAI is facing community scrutiny over alleged unfair competitive practices in solving mathematical problems.",
+      "The AI ecosystem balances rapid technological innovation with increasing public and ethical oversight."
+    ],
+    "title": "Daily AI Beta Brief: Agent Development, Depth Estimation, and OpenAI Scrutiny"
+  },
+  "bf97cfa289abe249b25e4f371f9e06e51ebfb9abb891ca2a76118dc71538e98f::overview": {
+    "article_body": [
+      "Agent development continues to drive significant activity on GitHub, with NousResearch/hermes-agent emerging as a top-ranked repository. This project, described as 'the agent that grows with you,' shows sustained velocity, accumulating over 218,000 stars. Other notable projects in the repository momentum section include BerriAI/litellm, an AI Gateway, and openai/codex, a lightweight coding agent, indicating broad interest in practical AI deployment and tooling.",
+      "In research, the paper 'Marigold V2: Revisiting Diffusion Transformers for Monocular Depth Estimation' is garnering considerable attention. Published recently, Marigold V2 introduces advancements in repurposing diffusion transformers for depth estimation through single-step flow-matching inference and a two-stage fine-tuning protocol. This suggests continued innovation in computer vision, particularly in efficient and accurate 3D understanding from 2D inputs. Other papers like 'CoVeR' and 'Mask Forcing' also explore novel approaches in VLM reasoning and video diffusion distillation.",
+      "Community discussions are prominently featuring allegations against OpenAI regarding competitive practices in solving difficult mathematical problems. Reports from sources like GeekNews indicate a tilt in social attention towards these suspicions. This chatter highlights ongoing scrutiny of leading AI developers and the ethical considerations surrounding their operational methods and competitive integrity within the rapidly advancing AI field.",
+      "Overall, today's digest reflects a dynamic interplay between practical application, foundational research, and critical community oversight. The consistent emergence of agent-focused tools and advanced perception models underscores the rapid pace of AI innovation, while public dialogue ensures accountability and transparency remain key considerations for the sector."
+    ],
+    "closing": "This concludes today's AI Beta Brief for September 10, 2026. We will continue to monitor these developments.",
+    "dek": "Today's AI brief highlights strong activity in agent development led by NousResearch/hermes-agent, significant research in monocular depth estimation with Marigold V2, and community discussion surrounding OpenAI's competitive practices.",
+    "lead": "The AI landscape on September 10, 2026, saw notable developments across agentic systems, computer vision research, and community discourse. Leading GitHub velocity is NousResearch/hermes-agent, an evolving agent framework gaining significant traction. Concurrently, academic attention is drawn to Marigold V2, a paper revisiting diffusion transformers for monocular depth estimation. Social channels, however, are focused on allegations concerning OpenAI's competitive methods in solving complex math problems.",
+    "takeaways": [
+      "Agent development, exemplified by NousResearch/hermes-agent, continues to show strong velocity in the open-source community.",
+      "Research in monocular depth estimation is advancing, with Marigold V2 leading paper attention through novel diffusion transformer applications.",
+      "OpenAI is facing community scrutiny over alleged unfair competitive practices in solving mathematical problems.",
+      "The AI ecosystem balances rapid technological innovation with increasing public and ethical oversight."
+    ],
+    "title": "Daily AI Beta Brief: Agent Development, Depth Estimation, and OpenAI Scrutiny"
+  },
   "bfd020afa1c23e482bd592df223424461abce60a77322fa54b126be9f46a08a1": {
     "paragraphs": [
       "Recent research is shifting toward a new paradigm for agentic search, proposing that retrieval models be trained directly from multi-step agent interaction data. This approach aims to mine supervision from agent trajectories to improve accuracy, addressing a critical gap highlighted by benchmarks showing that LLM skill utilization degrades significantly in realistic settings where skills must be retrieved and refined rather than handcrafted.",
