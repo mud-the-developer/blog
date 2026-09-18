@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-09-18
+date: 2026-09-19
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/posts/2026-09-18-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/posts/2026-09-19-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-09-18T04:04:26.110247+09:00">Sep 18, 2026 · 4:04 AM KST</time></strong>
+        <strong><time datetime="2026-09-19T03:31:39.423651+09:00">Sep 19, 2026 · 3:31 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>178</strong>
+        <strong>179</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-09-18">Sep 18, 2026</time></strong>
+        <strong><time datetime="2026-09-19">Sep 19, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Gaze as Evidence for Common Grounding: A Cross-Corpus Analysis of MapTask and MUNDEX; social attention is tilting toward In 1977, Lynyrd Skynyrd’s plane ran out of fuel and tragically crashed, claiming the lives of s… 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Can MiniMax-H3 Reason About the Physical World? An Evaluation of Omni-Modal Generative Model; social attention is tilting toward OpenAI Hacking. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>September 2026</span><span class="news-digest-month-count">18 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>September 2026</span><span class="news-digest-month-count">19 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-09-19-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-09-19</span>
+            <strong>AI News Brief — 2026-09-19</strong>
+            <span>Today&#x27;s AI landscape highlights strong momentum in agentic development, new research into omni-modal generative models, and growing community discussion around AI security and data ethics.</span>
+          </a>
           <a class="news-digest-archive-item" href="/posts/2026-09-18-ai-news-digest/">
             <span class="news-digest-archive-date">2026-09-18</span>
             <strong>AI News Brief — 2026-09-18</strong>
