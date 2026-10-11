@@ -1,6 +1,6 @@
 ---
-title: "CFP Radar — 2026-10-05"
-date: 2026-10-05
+title: "CFP Radar — 2026-10-12"
+date: 2026-10-12
 slug: cfp-radar
 tags:
   - cfp
@@ -21,14 +21,14 @@ Weekly CFP radar for conferences, workshops, and journal special issues relevant
 
 ## Snapshot
 
-- Generated: `2026-10-04T18:46:18Z`
+- Generated: `2026-10-11T19:39:58Z`
 - Sources watched: **67**
 - Conferences: **46**
 - Workshops: **11**
 - Journal special-issue sources: **10**
 - Wireless / communications-heavy sources: **49**
-- Sources fetched this run: **61**
-- Entries with configured or detected deadlines: **56**
+- Sources fetched this run: **60**
+- Entries with configured or detected deadlines: **55**
 
 ## Source quality filters
 
@@ -42,12 +42,12 @@ Configured or automatically detected open deadlines, sorted from the current iss
 
 | Deadline | Venue | Kind | Field | Link |
 | --- | --- | --- | --- | --- |
-| 2026-10-15 (due in 10 days) | Computer Networks — Calls for Papers / Special Issues (Computer Networks SI) | Journal special issue | Journal Special Issues / Networking | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.sciencedirect.com/journal/computer-networks/about/call-for-papers) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20Computer%20Networks%20SI%20%28Journal%20special%20issue%29%20Submission&dates=20261015/20261016&details=Track%3A%20Journal%20Special%20Issues%20%2F%20Networking%0ADeadline%20Status%3A%20due%20in%2010%20days%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Fwww.sciencedirect.com%2Fjournal%2Fcomputer-networks%2Fabout%2Fcall-for-papers%0ANote%3A%20Official%20ScienceDirect%20Computer%20Networks%20call-for-papers%20page%3B%20next%20open%20special-issue%20deadline%20observed%20in%20official%20page%20data.&location=Journal%20%2F%20online%20submission) |
-| 2026-10-31 (upcoming in 26 days) | IEEE Internet of Things Journal — Special Issues (IEEE IoT-J SI) | Journal special issue | Journal Special Issues / IoT and Edge | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://ieee-iotj.org/special-issues/) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20IEEE%20IoT-J%20SI%20%28Journal%20special%20issue%29%20Submission&dates=20261031/20261101&details=Track%3A%20Journal%20Special%20Issues%20%2F%20IoT%20and%20Edge%0ADeadline%20Status%3A%20upcoming%20in%2026%20days%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Fieee-iotj.org%2Fspecial-issues%2F%0ANote%3A%20Special%20issues%20for%20IoT%2C%20edge%2C%20sensing%2C%20wireless%20systems%2C%20and%20connected-device%20communications.&location=Journal%20%2F%20online%20submission) |
-| 2026-12-31 (watching: 87 days out) | IEEE Network — Calls for Papers (IEEE Network CFP) | Journal special issue | Journal Special Issues / Networking | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/magazines/ieee-network/cfp) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20IEEE%20Network%20CFP%20%28Journal%20special%20issue%29%20Submission&dates=20261231/20270101&details=Track%3A%20Journal%20Special%20Issues%20%2F%20Networking%0ADeadline%20Status%3A%20watching%3A%2087%20days%20out%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-network%2Fcfp%0ANote%3A%20Networking%20special-issue%20CFP%20source%20for%20network%20architectures%2C%20telecom%20operations%2C%20programmability%2C%20and%20edge%20networking.&location=Magazine%20%2F%20online%20submission) |
-| 2027-02-15 (watching: 133 days out) | IEEE Communications Magazine — Feature Topics / Calls for Papers (IEEE ComMag CFP) | Journal special issue | Journal Special Issues / Communications | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20IEEE%20ComMag%20CFP%20%28Journal%20special%20issue%29%20Submission&dates=20270215/20270216&details=Track%3A%20Journal%20Special%20Issues%20%2F%20Communications%0ADeadline%20Status%3A%20watching%3A%20133%20days%20out%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-communications-magazine%2Fcfp%0ANote%3A%20Feature-topic%20CFP%20source%20for%20communications%20systems%2C%20wireless%2C%20networking%2C%206G%2C%20and%20telecom%20operations.&location=Magazine%20%2F%20online%20submission) |
-| 2027-03-01 (watching: 147 days out) | IEEE Wireless Communications — Calls for Papers (IEEE Wireless Commun. CFP) | Journal special issue | Journal Special Issues / Wireless | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/magazines/ieee-wireless-communications/cfp) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20IEEE%20Wireless%20Commun.%20CFP%20%28Journal%20special%20issue%29%20Submission&dates=20270301/20270302&details=Track%3A%20Journal%20Special%20Issues%20%2F%20Wireless%0ADeadline%20Status%3A%20watching%3A%20147%20days%20out%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-wireless-communications%2Fcfp%0ANote%3A%20Wireless%20communications%20feature-topic%20CFP%20source%20for%20RAN%2C%205G%2F6G%2C%20spectrum%2C%20mobile%20networking%2C%20and%20PHY%2FMAC%20themes.&location=Magazine%20%2F%20online%20submission) |
-| 2027-03-31 (watching: 177 days out) | IEEE Journal on Selected Areas in Communications — Calls for Papers (IEEE JSAC CFP) | Journal special issue | Journal Special Issues / Communications | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/journals/ieee-jsac/cfp) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20IEEE%20JSAC%20CFP%20%28Journal%20special%20issue%29%20Submission&dates=20270331/20270401&details=Track%3A%20Journal%20Special%20Issues%20%2F%20Communications%0ADeadline%20Status%3A%20watching%3A%20177%20days%20out%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fjournals%2Fieee-jsac%2Fcfp%0ANote%3A%20Special-issue%20CFP%20hub%20for%20selected%20areas%20in%20communications%3B%20add%20individual%20SI%20deadlines%20as%20configured%20deadlines%20when%20posted.&location=Journal%20%2F%20online%20submission) |
+| 2026-10-15 (due in 3 days) | Computer Networks — Calls for Papers / Special Issues (Computer Networks SI) | Journal special issue | Journal Special Issues / Networking | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.sciencedirect.com/journal/computer-networks/about/call-for-papers) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20Computer%20Networks%20SI%20%28Journal%20special%20issue%29%20Submission&dates=20261015/20261016&details=Track%3A%20Journal%20Special%20Issues%20%2F%20Networking%0ADeadline%20Status%3A%20due%20in%203%20days%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Fwww.sciencedirect.com%2Fjournal%2Fcomputer-networks%2Fabout%2Fcall-for-papers%0ANote%3A%20Official%20ScienceDirect%20Computer%20Networks%20call-for-papers%20page%3B%20next%20open%20special-issue%20deadline%20observed%20in%20official%20page%20data.&location=Journal%20%2F%20online%20submission) |
+| 2026-10-31 (upcoming in 19 days) | IEEE Internet of Things Journal — Special Issues (IEEE IoT-J SI) | Journal special issue | Journal Special Issues / IoT and Edge | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://ieee-iotj.org/special-issues/) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20IEEE%20IoT-J%20SI%20%28Journal%20special%20issue%29%20Submission&dates=20261031/20261101&details=Track%3A%20Journal%20Special%20Issues%20%2F%20IoT%20and%20Edge%0ADeadline%20Status%3A%20upcoming%20in%2019%20days%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Fieee-iotj.org%2Fspecial-issues%2F%0ANote%3A%20Special%20issues%20for%20IoT%2C%20edge%2C%20sensing%2C%20wireless%20systems%2C%20and%20connected-device%20communications.&location=Journal%20%2F%20online%20submission) |
+| 2026-12-31 (watching: 80 days out) | IEEE Network — Calls for Papers (IEEE Network CFP) | Journal special issue | Journal Special Issues / Networking | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/magazines/ieee-network/cfp) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20IEEE%20Network%20CFP%20%28Journal%20special%20issue%29%20Submission&dates=20261231/20270101&details=Track%3A%20Journal%20Special%20Issues%20%2F%20Networking%0ADeadline%20Status%3A%20watching%3A%2080%20days%20out%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-network%2Fcfp%0ANote%3A%20Networking%20special-issue%20CFP%20source%20for%20network%20architectures%2C%20telecom%20operations%2C%20programmability%2C%20and%20edge%20networking.&location=Magazine%20%2F%20online%20submission) |
+| 2027-03-01 (watching: 140 days out) | IEEE Wireless Communications — Calls for Papers (IEEE Wireless Commun. CFP) | Journal special issue | Journal Special Issues / Wireless | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/magazines/ieee-wireless-communications/cfp) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20IEEE%20Wireless%20Commun.%20CFP%20%28Journal%20special%20issue%29%20Submission&dates=20270301/20270302&details=Track%3A%20Journal%20Special%20Issues%20%2F%20Wireless%0ADeadline%20Status%3A%20watching%3A%20140%20days%20out%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-wireless-communications%2Fcfp%0ANote%3A%20Wireless%20communications%20feature-topic%20CFP%20source%20for%20RAN%2C%205G%2F6G%2C%20spectrum%2C%20mobile%20networking%2C%20and%20PHY%2FMAC%20themes.&location=Magazine%20%2F%20online%20submission) |
+| 2027-03-15 (watching: 154 days out) | IEEE Communications Magazine — Feature Topics / Calls for Papers (IEEE ComMag CFP) | Journal special issue | Journal Special Issues / Communications | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20IEEE%20ComMag%20CFP%20%28Journal%20special%20issue%29%20Submission&dates=20270315/20270316&details=Track%3A%20Journal%20Special%20Issues%20%2F%20Communications%0ADeadline%20Status%3A%20watching%3A%20154%20days%20out%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-communications-magazine%2Fcfp%0ANote%3A%20Feature-topic%20CFP%20source%20for%20communications%20systems%2C%20wireless%2C%20networking%2C%206G%2C%20and%20telecom%20operations.&location=Magazine%20%2F%20online%20submission) |
+| 2027-03-31 (watching: 170 days out) | IEEE Journal on Selected Areas in Communications — Calls for Papers (IEEE JSAC CFP) | Journal special issue | Journal Special Issues / Communications | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/journals/ieee-jsac/cfp) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20IEEE%20JSAC%20CFP%20%28Journal%20special%20issue%29%20Submission&dates=20270331/20270401&details=Track%3A%20Journal%20Special%20Issues%20%2F%20Communications%0ADeadline%20Status%3A%20watching%3A%20170%20days%20out%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fjournals%2Fieee-jsac%2Fcfp%0ANote%3A%20Special-issue%20CFP%20hub%20for%20selected%20areas%20in%20communications%3B%20add%20individual%20SI%20deadlines%20as%20configured%20deadlines%20when%20posted.&location=Journal%20%2F%20online%20submission) |
 
 ## Three-by-three quick view
 
@@ -73,9 +73,9 @@ Three compact rows per venue type, keeping only the fields needed for quick scan
 
 | Venue | Field | Dates | Deadline | Location | Link |
 | --- | --- | --- | --- | --- | --- |
-| Computer Networks — Calls for Papers / Special Issues (Computer Networks SI) | Journal Special Issues / Networking | Special issue schedule / official CFP page | 2026-10-15 (due in 10 days) | Journal / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.sciencedirect.com/journal/computer-networks/about/call-for-papers) |
-| IEEE Internet of Things Journal — Special Issues (IEEE IoT-J SI) | Journal Special Issues / IoT and Edge | Special issue schedule / official CFP page | 2026-10-31 (upcoming in 26 days) | Journal / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://ieee-iotj.org/special-issues/) |
-| IEEE Network — Calls for Papers (IEEE Network CFP) | Journal Special Issues / Networking | Special issue schedule / official CFP page | 2026-12-31 (watching: 87 days out) | Magazine / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/magazines/ieee-network/cfp) |
+| Computer Networks — Calls for Papers / Special Issues (Computer Networks SI) | Journal Special Issues / Networking | Special issue schedule / official CFP page | 2026-10-15 (due in 3 days) | Journal / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.sciencedirect.com/journal/computer-networks/about/call-for-papers) |
+| IEEE Internet of Things Journal — Special Issues (IEEE IoT-J SI) | Journal Special Issues / IoT and Edge | Special issue schedule / official CFP page | 2026-10-31 (upcoming in 19 days) | Journal / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://ieee-iotj.org/special-issues/) |
+| IEEE Network — Calls for Papers (IEEE Network CFP) | Journal Special Issues / Networking | Special issue schedule / official CFP page | 2026-12-31 (watching: 80 days out) | Magazine / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/magazines/ieee-network/cfp) |
 
 ## Full grouped watchlists
 
@@ -92,7 +92,6 @@ Three compact rows per venue type, keeping only the fields needed for quick scan
 | IEEE International Conference on Communications (ICC) | Wireless / Communications | TBD / official page | 2025-11-10 (closed) | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://icc2026.ieee-icc.org/authors/call-symposia-papers) |
 | IEEE Symposium on Security and Privacy (IEEE S&P) | Security | TBD / official page | 2025-11-13 (closed) | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.ieee-security.org/TC/SP2026/cfpapers.html) |
 | ACM International Conference on Mobile Systems, Applications, and Services (MobiSys) | Wireless / Mobile | TBD / official page | 2025-12-05 (closed) | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.sigmobile.org/mobisys/2026/) |
-| IEEE International Conference on Machine Learning for Communication and Networking (ICMLCN) | AI / ML for Communications | TBD / official page | 2025-12-10 (closed) | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://icmlcn2026.ieee-icmlcn.org/) |
 | IEEE International Conference on Sensing, Communication, and Networking (SECON) | Wireless / Mobile | TBD / official page | 2025-12-30 (closed) | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://secon2026.ieee-secon.org/) |
 | IEEE International Symposium on Information Theory (ISIT) | Communications / Information Theory | TBD / official page | 2026-01-16 (closed) | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://2026.ieee-isit.org/) |
 | International Conference on Machine Learning (ICML) | AI / ML | TBD / official page | 2026-01-23 (closed) | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://icml.cc/Conferences/2026/CallForPapers) |
@@ -121,6 +120,7 @@ Three compact rows per venue type, keeping only the fields needed for quick scan
 | IEEE Conference on Standards for Communications and Networking (CSCN) | Wireless / Standards | TBD / official page | 2026-07-15 (closed) | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://cscn2026.ieee-cscn.org/) |
 | IEEE Vehicular Technology Conference Fall (VTC-Fall) | Wireless / Vehicular | TBD / official page | 2026-07-15 (closed) | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://events.vtsociety.org/vtc2026-fall/) |
 | AAAI Conference on Artificial Intelligence (AAAI) | AI / ML | February 16-23, 2027 | 2026-07-28 (closed) | Montréal, Canada | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://aaai.org/conference/aaai/aaai-27/main-technical-track-call/) |
+| IEEE International Conference on Machine Learning for Communication and Networking (ICMLCN) | AI / ML for Communications | TBD / official page | Fetch blocked — verify official link | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://icmlcn2026.ieee-icmlcn.org/) |
 | ACM Symposium on Cloud Computing (SoCC) | Cloud / Edge | TBD / official page | No dated CFP posted on official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://acmsocc.org/2026/) |
 | ACM/IEEE International Conference on Cyber-Physical Systems (ICCPS) | Cyber-Physical / Edge Systems | TBD / official page | No dated CFP posted on official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://iccps.acm.org/2026/) |
 | IEEE International Conference on High Performance Switching and Routing (HPSR) | Networking / Communications | TBD / official page | No dated CFP posted on official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://hpsr2026.ieee-hpsr.org/) |
@@ -151,12 +151,12 @@ Three compact rows per venue type, keeping only the fields needed for quick scan
 | Venue | Field | Dates | Deadline | Location | Link |
 | --- | --- | --- | --- | --- | --- |
 | Ad Hoc Networks — Calls for Papers / Special Issues (Ad Hoc Networks SI) | Journal Special Issues / Wireless | Special issue schedule / official CFP page | 2026-08-08 (closed) | Journal / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.sciencedirect.com/journal/ad-hoc-networks/about/call-for-papers) |
-| Computer Networks — Calls for Papers / Special Issues (Computer Networks SI) | Journal Special Issues / Networking | Special issue schedule / official CFP page | 2026-10-15 (due in 10 days) | Journal / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.sciencedirect.com/journal/computer-networks/about/call-for-papers) |
-| IEEE Internet of Things Journal — Special Issues (IEEE IoT-J SI) | Journal Special Issues / IoT and Edge | Special issue schedule / official CFP page | 2026-10-31 (upcoming in 26 days) | Journal / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://ieee-iotj.org/special-issues/) |
-| IEEE Network — Calls for Papers (IEEE Network CFP) | Journal Special Issues / Networking | Special issue schedule / official CFP page | 2026-12-31 (watching: 87 days out) | Magazine / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/magazines/ieee-network/cfp) |
-| IEEE Communications Magazine — Feature Topics / Calls for Papers (IEEE ComMag CFP) | Journal Special Issues / Communications | Feature topic schedule / official CFP page | 2027-02-15 (watching: 133 days out) | Magazine / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp) |
-| IEEE Wireless Communications — Calls for Papers (IEEE Wireless Commun. CFP) | Journal Special Issues / Wireless | Feature topic schedule / official CFP page | 2027-03-01 (watching: 147 days out) | Magazine / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/magazines/ieee-wireless-communications/cfp) |
-| IEEE Journal on Selected Areas in Communications — Calls for Papers (IEEE JSAC CFP) | Journal Special Issues / Communications | Special issue schedule / official CFP page | 2027-03-31 (watching: 177 days out) | Journal / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/journals/ieee-jsac/cfp) |
+| Computer Networks — Calls for Papers / Special Issues (Computer Networks SI) | Journal Special Issues / Networking | Special issue schedule / official CFP page | 2026-10-15 (due in 3 days) | Journal / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.sciencedirect.com/journal/computer-networks/about/call-for-papers) |
+| IEEE Internet of Things Journal — Special Issues (IEEE IoT-J SI) | Journal Special Issues / IoT and Edge | Special issue schedule / official CFP page | 2026-10-31 (upcoming in 19 days) | Journal / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://ieee-iotj.org/special-issues/) |
+| IEEE Network — Calls for Papers (IEEE Network CFP) | Journal Special Issues / Networking | Special issue schedule / official CFP page | 2026-12-31 (watching: 80 days out) | Magazine / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/magazines/ieee-network/cfp) |
+| IEEE Wireless Communications — Calls for Papers (IEEE Wireless Commun. CFP) | Journal Special Issues / Wireless | Feature topic schedule / official CFP page | 2027-03-01 (watching: 140 days out) | Magazine / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/magazines/ieee-wireless-communications/cfp) |
+| IEEE Communications Magazine — Feature Topics / Calls for Papers (IEEE ComMag CFP) | Journal Special Issues / Communications | Feature topic schedule / official CFP page | 2027-03-15 (watching: 154 days out) | Magazine / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp) |
+| IEEE Journal on Selected Areas in Communications — Calls for Papers (IEEE JSAC CFP) | Journal Special Issues / Communications | Special issue schedule / official CFP page | 2027-03-31 (watching: 170 days out) | Journal / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/journals/ieee-jsac/cfp) |
 | IEEE Transactions on Network and Service Management — Special Issues (IEEE TNSM SI) | Journal Special Issues / Network Management | Special issue schedule / official CFP page | No dated CFP posted on official page | Journal / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/journals/ieee-tnsm/cfp) |
 | IEEE Transactions on Cognitive Communications and Networking — Calls for Papers (IEEE TCCN CFP) | Journal Special Issues / Wireless | Continuous submissions / special issues via official page | No dated CFP posted on official page | Journal / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/journals/ieee-tccn/cfp) |
 | IEEE Transactions on Green Communications and Networking — Calls for Papers (IEEE TGCN CFP) | Journal Special Issues / Wireless | Continuous submissions / special issues via official page | No dated CFP posted on official page | Journal / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/journals/ieee-tgcn/cfp) |
@@ -315,22 +315,6 @@ Audit trail for the official-page snippets used by the crawler. Use this section
   - il 16th, 2026 - Registration is open April 10th, 2026 - Call for Posters deadline is extended Feb 24th, 2026 - Artefact Evaluation deadline is updated Jan 31st, 2026 - Accepted Workshops is now available Jan 31st, 2026 - Attending Information is now available Dec 11th, 2025 - Keynotes are available Nov 14th, 2025 - Program Committee is available Aug 29th, 2025 - PC Self Nomination is due Aug 8th, 2025 - Paper Submission is open Aug 8th, 2025 - TPC Self Nomination is open Aug 8th, 2025 - Call for Papers is updated Jul, 2025 - ACM MobiSys 2026 webpage goes live Sponsors Gold Sponsors
   - Call for Posters deadline is extended Feb 24th, 2026 - Artefact Evaluation deadline is updated Jan 31st, 2026 - Accepted Workshops is now available Jan 31st, 2026 - Attending Information is now available Dec 11th, 2025 - Keynotes are available Nov 14th, 2025 - Program Committee is available Aug 29th, 2025 - PC Self Nomination is due Aug 8th, 2025 - Paper Submission is open Aug 8th, 2025 - TPC Self Nomination is open Aug 8th, 2025 - Call for Papers is updated Jul, 2025 - ACM MobiSys 2026 webpage goes live Sponsors Gold Sponsors Silver Sponsors Bronze Sponsors
   - able Aug 29th, 2025 - PC Self Nomination is due Aug 8th, 2025 - Paper Submission is open Aug 8th, 2025 - TPC Self Nomination is open Aug 8th, 2025 - Call for Papers is updated Jul, 2025 - ACM MobiSys 2026 webpage goes live Sponsors Gold Sponsors Silver Sponsors Bronze Sponsors .academic-sponsor{height:auto} Academic Sponsors &copy; 2026 ACM | Header &copy; Wikimedia
-
-### IEEE International Conference on Machine Learning for Communication and Networking (ICMLCN)
-
-- Type: Conference
-- Field: AI / ML for Communications
-- Event / issue dates: TBD / official page
-- Location: TBD / official page
-- Source: [https://icmlcn2026.ieee-icmlcn.org/](https://icmlcn2026.ieee-icmlcn.org/)
-- Fetch status: `fetched`
-- Configured deadline: `2025-12-10` (closed)
-- Note: IEEE machine-learning-for-communications venue; important for AI-native wireless, network optimization, and learning-enabled RAN work.
-- Page signals:
-  - 10 Dec 2025 Paper Submission Deadline : Deadline Extended 09 Feb 2026 Acceptance Notification 01 May 2026 Camera Ready Due 08 Jun 2026 Conference Begins See All Dates Welcome to IEEE ICMLCN 2026! IEEE International Conference on Machine Learning for Communication and Networking (ICMLCN) brings together res
-  - 10 Dec 2025 Paper Submission Deadline : Deadline Extended 09 Feb 2026 Acceptance Notification 01 May 2026 Camera Ready Due 08 Jun 2026 Conference Begins See All Dates Welcome to IEEE ICMLCN 2026! IEEE International Conference on Machine Learning for Communication and Networking (ICMLCN) brings together researchers fro
-  - 10 Dec 2025 Paper Submission Deadline : Deadline Extended 09 Feb 2026 Acceptance Notification 01 May 2026 Camera Ready Due 08 Jun 2026 Conference Begins See All Dates Welcome to IEEE ICMLCN 2026! IEEE International Conference on Machine Learning for Communication and Networking (ICMLCN) brings t
-  - Important Dates 10 Dec 2025 Paper Submission Deadline : Deadline Extended 09 Feb 2026 Acceptance Notification 01 May 2026 Camera Ready Due 08 Jun 2026 Conference Begins See All Dates Welcome to IEE
 
 ### IEEE International Conference on Sensing, Communication, and Networking (SECON)
 
@@ -580,11 +564,11 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Note: Mobile ad hoc, sensor, and wireless networking CFP source.
 - Page signals:
   - September 30, 2026 Workshop Paper Camera-Ready Deadline October 12, 2026 Student Travel Grant Application Deadline October 20, 2026 Student Travel Grant Notification of Acceptance
-  - September 28, 2026 Author Registration Deadline September 7, 2026 Poster/Demo Submission Deadline September 21, 2026 Poster/Demo Acceptance Notification September 30, 2026 Poster/Demo Camera-R
-  - September 7, 2026 Poster/Demo Submission Deadline September 21, 2026 Poster/Demo Acceptance Notification September 30, 2026 Poster/Demo Camera-Ready Deadline August 31, 2026 Workshop Paper Submi
-  - September 7, 2026 Poster/Demo Submission Deadline September 21, 2026 Poster/Demo Acceptance Notification September 30, 2026 Poster/Demo Camera-Ready Deadline August 31, 2026 Workshop
+  - September 28, 2026 Author Registration Deadline September 7, 2026 Poster/Demo Submission Deadline September 21, 2026 Poster/Demo Acceptance Notification September 30, 2026 Poster/Demo Came
+  - September 7, 2026 Poster/Demo Submission Deadline September 21, 2026 Poster/Demo Acceptance Notification September 30, 2026 Poster/Demo Camera-Ready Deadline August 31, 2026 Workshop Paper S
+  - September 7, 2026 Poster/Demo Submission Deadline September 21, 2026 Poster/Demo Acceptance Notification September 30, 2026 Poster/Demo Camera-Ready Deadline August 31, 2026 Works
   - Aug 31, 2026 Poster and demo submission deadline extended to September 7, 2026 Sept 22, 2026 Registration is now open. Author registration deadline is September 28, 2026. Sept 28, 2026 Applications for the Student Travel Grant are now open. Important Dates
-  - September 30, 2026 Poster/Demo Camera-Ready Deadline August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper C
+  - September 30, 2026 Poster/Demo Camera-Ready Deadline August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Pap
   - August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline
   - April 13, 2026 Paper Registration Deadline (11:59pm AoE) April 20, 2026 Paper Submission Deadline (11:59pm AoE) July 20, 2026 Rebuttal Start July 26, 2026 Rebuttal Deadline
 
@@ -908,7 +892,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Page signals:
   - chnical Track) February 16-23, 2027 AAAI-27 Conference Note: Deadlines are track-specific and may differ from those listed above. Track-specific deadlines are listed on their respective CFP. Main Technical Track: Call for Papers Jump to Detailed Instructions We are pleased to announce the Forty-First AAAI Conference on Artificial Intelligence (AAAI-27), which will be held in Montréal, Canada, from February 16 to February 23, 2027. The purpose of the AAAI conference series is to promote research in Artificial Intelligence (AI) and foster scientific exchange between researchers, practitioners, scientists, students, and engineers across th
   - Note: Deadlines are track-specific and may differ from those listed above. Track-specific deadlines are listed on their respective CFP. Main Technical Track: Call for Papers Jump to Detailed Instructions We are pleased to announce the Forty-First AAAI Conference on Artificial Intelligence (AAAI-27), which will be held in Montréal, Canada, from February 16 to February 23, 2027. The purpose of the AAAI conference series is to promote research in Artificial Intelligence (AI) and foster scientific exchange between researchers, practitioners, scientists, students, and engineers across the entirety of AI and its affiliated disciplines. AAAI-27 is the Forty-First AAAI Con
-  - 7 Author Kit Main Conference Timetable for Authors Note: all deadlines are “anywhere on earth” (UTC-12) June 17, 2026 OpenReview submission site opens for author registration June 30, 2026 OpenReview submission site opens for paper submission July 21, 2026 Abstracts due at 11:59 PM UTC-12 July 28, 2026 Full papers due at 11:59 PM UTC-12 July 31, 2026 Supplementary material and code due by 11:59 PM UTC-12 September 24, 2026 Notification of Phase 1 rejections October 19-25, 2026 Author feedback window November 30, 2026 Notification of final acceptance or rejection (Main Technical Track)
+  - 7 Author Kit Main Conference Timetable for Authors Note: all deadlines are “anywhere on earth” (UTC-12) June 17, 2026 OpenReview submission site opens for author registration June 30, 2026 OpenReview submission site opens for paper submission July 21, 2026 Abstracts due at 11:59 PM UTC-12 July 28, 2026 Full papers due at 11:59 PM UTC-12 July 31, 2026 Supplementary material and code due by 11:59 PM UTC-12 September 24, 2026 Notification of Phase 1 rejections October 19-25, 2026 October 24-31, 2026 Author feedback window November 30, 2026 Notification of final acceptance or rejection (
 
 ### Ad Hoc Networks — Calls for Papers / Special Issues (Ad Hoc Networks SI)
 
@@ -929,7 +913,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Event / issue dates: TBD / official page
 - Location: TBD / official page
 - Source: [https://globecom2026.ieee-globecom.org/call-workshop-proposals](https://globecom2026.ieee-globecom.org/call-workshop-proposals)
-- Fetch status: `fetch failed`
+- Fetch status: `http 404 Not Found`
 - Configured deadline: `2026-08-10` (closed)
 - Note: Workshop CFP source for emerging wireless, RAN, edge, and 6G topics. Official GLOBECOM 2026 workshop-proposals page lists the workshop paper submission deadline.
 - Page signal: no compact deadline snippet was detected in this run.
@@ -945,8 +929,8 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Configured deadline: `2026-08-31` (closed)
 - Note: Official MobiHoc 2026 AI-RAN workshop page with explicit workshop paper submission deadline; highly relevant to AI-native RAN work.
 - Page signals:
-  - August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop Event Date
-  - August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop
+  - August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop Event
+  - August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Work
 
 ### MobiHoc Workshop on Machine Learning for NextG Networks (MobiHoc ML4NxtGNet)
 
@@ -959,8 +943,8 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Configured deadline: `2026-08-31` (closed)
 - Note: Official MobiHoc 2026 ML4NxtGNet workshop page with explicit workshop paper submission deadline; relevant to ML for wireless and next-generation networks.
 - Page signals:
-  - August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop Event Date
-  - August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop
+  - August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop Event
+  - August 31, 2026 Workshop Paper Submission Deadline September 21, 2026 Workshop Paper Acceptance Notification September 30, 2026 Workshop Paper Camera-Ready Deadline November 26, 2026 Work
 
 ### Computer Networks — Calls for Papers / Special Issues (Computer Networks SI)
 
@@ -970,7 +954,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Location: Journal / online submission
 - Source: [https://www.sciencedirect.com/journal/computer-networks/about/call-for-papers](https://www.sciencedirect.com/journal/computer-networks/about/call-for-papers)
 - Fetch status: `http 403 Forbidden`
-- Configured deadline: `2026-10-15` (due in 10 days)
+- Configured deadline: `2026-10-15` (due in 3 days)
 - Note: Official ScienceDirect Computer Networks call-for-papers page; next open special-issue deadline observed in official page data.
 - Page signal: no compact deadline snippet was detected in this run.
 
@@ -982,7 +966,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Location: Journal / online submission
 - Source: [https://ieee-iotj.org/special-issues/](https://ieee-iotj.org/special-issues/)
 - Fetch status: `fetched`
-- Configured deadline: `2026-10-31` (upcoming in 26 days)
+- Configured deadline: `2026-10-31` (upcoming in 19 days)
 - Note: Special issues for IoT, edge, sensing, wireless systems, and connected-device communications.
 - Page signals:
   - Ping Wang Graph Representation on Learning for Internet of Things Submission Deadline: November 30th, 2026 Guest Editors: Yang Lu, Zhiguo Ding, Arumugam Nallanathan, Derrick Wing Kwan Ng, Octavia A. Dobre AI-Driven Network Forensics for Edge-Intelligent Internet of Things Submission Deadline: October 31st, 2026 Guest Editors: Jialing He, Akhilesh S. Thyagaturu, Marco Di Renzo, Sinem Coleri, Tao Xiang Integrated Sensing, Memory, Communication, and Computation for Large-Scale AI Based IoT Systems Submission Deadline: June 5th, 2026 Guest Editors: Xu Zhou, Jemal Abawajy, Tongfeng Weng, Gang Liu, Xiaoyang Lu AI at the Edge for Vehicular and Low-Altitude IoT Networks Submission Dea
@@ -1002,27 +986,12 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Location: Magazine / online submission
 - Source: [https://www.comsoc.org/publications/magazines/ieee-network/cfp](https://www.comsoc.org/publications/magazines/ieee-network/cfp)
 - Fetch status: `fetched`
-- Configured deadline: `2026-12-31` (watching: 87 days out)
+- Configured deadline: `2026-12-31` (watching: 80 days out)
 - Note: Networking special-issue CFP source for network architectures, telecom operations, programmability, and edge networking.
 - Page signals:
   - lication Date Manuscript Submission Deadline Distributed Intelligence and Collaborative Inference for Foundation Models over Wireless Edge September 2027 31 December 2026 Towards Intellicise Agent Co
   - Publication Date Manuscript Submission Deadline Distributed Intelligence and Collaborative Inference for Foundation Models over Wireless Edge September 2027 31 December 2026 Towards Intellici
   - Publication Date Manuscript Submission Deadline Distributed Intelligence and Collaborative Inference for Foundation Models over Wireless Edge September 2027 31 December 2026 Toward
-
-### IEEE Communications Magazine — Feature Topics / Calls for Papers (IEEE ComMag CFP)
-
-- Type: Journal special issue
-- Field: Journal Special Issues / Communications
-- Event / issue dates: Feature topic schedule / official CFP page
-- Location: Magazine / online submission
-- Source: [https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp](https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp)
-- Fetch status: `fetched`
-- Configured deadline: `2027-02-15` (watching: 133 days out)
-- Note: Feature-topic CFP source for communications systems, wireless, networking, 6G, and telecom operations.
-- Page signals:
-  - lication Date Manuscript Submission Deadline Post-Quantum Cryptography for Real-World Deployment September 2027 15 February 2027 Internet of Agents for Communications and Networking: Architectures, P
-  - Publication Date Manuscript Submission Deadline Post-Quantum Cryptography for Real-World Deployment September 2027 15 February 2027 Internet of Agents for Communications and Networking: Archi
-  - Publication Date Manuscript Submission Deadline Post-Quantum Cryptography for Real-World Deployment September 2027 15 February 2027 Internet of Agents for Communications and Networ
 
 ### IEEE Wireless Communications — Calls for Papers (IEEE Wireless Commun. CFP)
 
@@ -1032,12 +1001,27 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Location: Magazine / online submission
 - Source: [https://www.comsoc.org/publications/magazines/ieee-wireless-communications/cfp](https://www.comsoc.org/publications/magazines/ieee-wireless-communications/cfp)
 - Fetch status: `fetched`
-- Configured deadline: `2027-03-01` (watching: 147 days out)
+- Configured deadline: `2027-03-01` (watching: 140 days out)
 - Note: Wireless communications feature-topic CFP source for RAN, 5G/6G, spectrum, mobile networking, and PHY/MAC themes.
 - Page signals:
   - lication Date Manuscript Submission Deadline Atomic-to-Network: Quantum Radio Front-Ends for 6G Wireless Communications and Sensing December 2027 1 March 2027 3D Metasurface-Assisted Wireless Communi
   - Publication Date Manuscript Submission Deadline Atomic-to-Network: Quantum Radio Front-Ends for 6G Wireless Communications and Sensing December 2027 1 March 2027 3D Metasurface-Assisted Wirel
   - Publication Date Manuscript Submission Deadline Atomic-to-Network: Quantum Radio Front-Ends for 6G Wireless Communications and Sensing December 2027 1 March 2027 3D Metasurface-Ass
+
+### IEEE Communications Magazine — Feature Topics / Calls for Papers (IEEE ComMag CFP)
+
+- Type: Journal special issue
+- Field: Journal Special Issues / Communications
+- Event / issue dates: Feature topic schedule / official CFP page
+- Location: Magazine / online submission
+- Source: [https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp](https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp)
+- Fetch status: `fetched`
+- Configured deadline: `2027-03-15` (watching: 154 days out)
+- Note: Feature-topic CFP source for communications systems, wireless, networking, 6G, and telecom operations.
+- Page signals:
+  - lication Date Manuscript Submission Deadline Memory Poisoning Across Networked Learning-Enabled Agents: Threats, Detection, and Defense October 2027 15 March 2027 The Upper Mid-Band (FR3) for 6G: Tec
+  - Publication Date Manuscript Submission Deadline Memory Poisoning Across Networked Learning-Enabled Agents: Threats, Detection, and Defense October 2027 15 March 2027 The Upper Mid-Band (FR3)
+  - Publication Date Manuscript Submission Deadline Memory Poisoning Across Networked Learning-Enabled Agents: Threats, Detection, and Defense October 2027 15 March 2027 The Upper Mid-
 
 ### IEEE Journal on Selected Areas in Communications — Calls for Papers (IEEE JSAC CFP)
 
@@ -1047,7 +1031,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Location: Journal / online submission
 - Source: [https://www.comsoc.org/publications/journals/ieee-jsac/cfp](https://www.comsoc.org/publications/journals/ieee-jsac/cfp)
 - Fetch status: `fetched`
-- Configured deadline: `2027-03-31` (watching: 177 days out)
+- Configured deadline: `2027-03-31` (watching: 170 days out)
 - Note: Special-issue CFP hub for selected areas in communications; add individual SI deadlines as configured deadlines when posted.
 - Page signals:
   - lication Date Manuscript Submission Deadline Next-Generation Underwater Acoustic Communication Systems Second/Third Quarter 2028 31 March 2027 Exploiting Flexible Positioning: Movable and Pinching Antenn
@@ -1055,6 +1039,17 @@ Audit trail for the official-page snippets used by the crawler. Use this section
   - Publication Date Manuscript Submission Deadline Next-Generation Underwater Acoustic Communication Systems Second/Third Quarter 2028 31 March 2027 Exploiting Flexible Positioning: Movab
   - lication Date Manuscript Submission Deadline Machine Learning in Communications and Networks July 2022 Closed Internet of Things for In-Home Health Monitoring
   - Publication Date Manuscript Submission Deadline Machine Learning in Communications and Networks July 2022 Closed Internet of Things for In-Home Health Monitoring
+
+### IEEE International Conference on Machine Learning for Communication and Networking (ICMLCN)
+
+- Type: Conference
+- Field: AI / ML for Communications
+- Event / issue dates: TBD / official page
+- Location: TBD / official page
+- Source: [https://icmlcn2026.ieee-icmlcn.org/](https://icmlcn2026.ieee-icmlcn.org/)
+- Fetch status: `fetch failed`
+- Note: IEEE machine-learning-for-communications venue; important for AI-native wireless, network optimization, and learning-enabled RAN work.
+- Page signal: no compact deadline snippet was detected in this run.
 
 ### ACM Symposium on Cloud Computing (SoCC)
 
