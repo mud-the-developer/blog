@@ -6,7 +6,7 @@
   "scripts": {
     "build": "cargo run --quiet -- build",
     "dev": "zsh -lc 'source ~/.zshrc >/dev/null 2>&1 || true; cargo run --quiet -- serve --host 0.0.0.0 --port 4173'",
-    "test": "cargo test && python3 -m unittest discover -s tests -p \"test_*.py\" && node --test tests/functions/*.test.mjs",
+    "test": "cargo test && python -B -m unittest discover -s tests -p \"test_*.py\" && node --test tests/functions/*.test.mjs",
     "test:browser": "npm run build && playwright test --config=playwright.config.mjs",
     "lint": "npm run lint:rust && node scripts/check-state-architecture.mjs && npm run lint:web",
     "lint:rust": "cargo fmt --all --check && cargo fmt --manifest-path fuzz/Cargo.toml --check && cargo clippy --workspace --all-targets -- -D warnings",

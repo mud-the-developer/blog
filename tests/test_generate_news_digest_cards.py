@@ -6,12 +6,12 @@ import tempfile
 import unittest
 from datetime import datetime
 from pathlib import Path
-from zoneinfo import ZoneInfo
-
+from unittest.mock import patch
 
 MODULE_PATH = Path(__file__).resolve().parents[1] / "scripts" / "generate_news_digest.py"
 SPEC = importlib.util.spec_from_file_location("generate_news_digest", MODULE_PATH)
-assert SPEC and SPEC.loader
+if SPEC is None or SPEC.loader is None:
+    raise RuntimeError("Cannot load the news generator for tests")
 MODULE = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = MODULE
 SPEC.loader.exec_module(MODULE)
@@ -73,7 +73,7 @@ class GenerateNewsDigestCardRenderingTests(unittest.TestCase):
         self.assertNotIn("On-Policy Reinforcement…", card_html)
 
     def test_render_markdown_uses_signal_brief_rhythm_instead_of_repeated_cards(self) -> None:
-        def card(headline: str, badge: str, source: str, score: float, rank: int) -> MODULE.NewsItem:
+        def card(headline: str, badge: str, source: str, score: float, rank: int):
             return MODULE.NewsItem(
                 headline=headline,
                 title=headline,
@@ -117,8 +117,8 @@ class GenerateNewsDigestCardRenderingTests(unittest.TestCase):
             closing="Keep the ledger for audit.",
         )
         html, _stem = MODULE.render_markdown(
-            datetime(2026, 4, 14, tzinfo=ZoneInfo("Asia/Seoul")),
-            datetime(2026, 4, 14, 9, 30, tzinfo=ZoneInfo("Asia/Seoul")),
+            datetime(2026, 4, 14, tzinfo=MODULE.KST),
+            datetime(2026, 4, 14, 9, 30, tzinfo=MODULE.KST),
             context,
             brief,
             [],
@@ -140,8 +140,38 @@ class GenerateNewsDigestCardRenderingTests(unittest.TestCase):
 
 
 class GenerateNewsDigestAutomationTests(unittest.TestCase):
+    def test_json_file_reader_requires_utf8_objects_and_never_overwrites_bad_data(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "feed.json"
+            path.write_text('{"note":"연구"}', encoding="utf-8")
+            self.assertEqual(MODULE.read_json_object(path), {"note": "연구"})
+            for invalid in ["not-json", "[]"]:
+                path.write_text(invalid, encoding="utf-8")
+                with self.assertRaises(ValueError):
+                    MODULE.read_json_object(path)
+                self.assertEqual(path.read_text(encoding="utf-8"), invalid)
+
+    def test_model_json_requires_an_object(self) -> None:
+        for invalid in ["", "not-json", "[]"]:
+            with self.assertRaises(ValueError):
+                MODULE.parse_llm_json(invalid)
+        self.assertEqual(MODULE.parse_llm_json('{"ok":true}'), {"ok": True})
+
+    def test_model_endpoints_reject_file_urls_before_network_io(self) -> None:
+        with patch.dict(os.environ, {"NVIDIA_API_KEY": "test-key", "NVIDIA_NIM_BASE_URL": "file:///tmp"}, clear=True), patch.dict(MODULE.BETA_DIGEST_CACHE, {}, clear=True), patch.object(MODULE.urllib.request, "urlopen") as fetch:
+            with self.assertRaises(MODULE.GemmaRequestError):
+                MODULE.gemma_json_request("unsafe-endpoint-test", {"task": "test"})
+            fetch.assert_not_called()
+
+    def test_modern_kst_dates_use_portable_labels(self) -> None:
+        issue = MODULE.issue_date_from_args("2026-04-14")
+        self.assertEqual(issue.utcoffset().total_seconds(), 9 * 60 * 60)
+        self.assertEqual(MODULE.issue_date_label(issue), "Apr 14, 2026")
+        generated = datetime(2026, 4, 14, 9, 30, tzinfo=MODULE.KST)
+        self.assertEqual(MODULE.generated_timestamp_label(generated), "Apr 14, 2026 · 9:30 AM KST")
+
     def test_keyword_digest_stem_uses_date_and_keywords(self) -> None:
-        issue_dt = datetime(2026, 4, 14, tzinfo=ZoneInfo("Asia/Seoul"))
+        issue_dt = datetime(2026, 4, 14, tzinfo=MODULE.KST)
         self.assertEqual(
             MODULE.digest_stem_for(issue_dt, ["open RAN", "Gemma 4"]),
             "2026-04-14-open-ran-gemma-4-news-digest",
@@ -219,7 +249,7 @@ class GenerateNewsDigestAutomationTests(unittest.TestCase):
             keywords=["open ran"],
             mempalace_context=[{"content": "User tracks O-RAN RIC and xApp news.", "wing": "projects", "room": "blog"}],
         )
-        payload = MODULE.gemma_overview_payload(datetime(2026, 4, 14, tzinfo=ZoneInfo("Asia/Seoul")), context)
+        payload = MODULE.gemma_overview_payload(datetime(2026, 4, 14, tzinfo=MODULE.KST), context)
         self.assertEqual(payload["keyword_focus"], ["open ran"])
         self.assertIn("mempalace_context", payload)
         self.assertIn("O-RAN RIC", payload["mempalace_context"][0]["content"])

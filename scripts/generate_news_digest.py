@@ -19,18 +19,17 @@ import re
 import sqlite3
 import sys
 import time
-from collections import Counter, defaultdict
-from dataclasses import dataclass, field
-from datetime import datetime
-from html import escape as html_escape, unescape as html_unescape
-from pathlib import Path
-from typing import Any
 import urllib.error
 import urllib.request
+from collections import Counter, defaultdict
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta, timezone
+from html import escape as html_escape
+from html import unescape as html_unescape
+from pathlib import Path
+from typing import Any
 from urllib.parse import quote, urlparse
 from urllib.request import urlopen
-from zoneinfo import ZoneInfo
-
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_PATH = ROOT / "vendor" / "blog_news" / "data" / "latest.json"
@@ -39,7 +38,8 @@ GENERATED_DIR = ROOT / "data" / "news"
 POSTS_DIR = ROOT / "posts" / "news"
 TRANSLATION_CACHE_PATH = GENERATED_DIR / "translation-cache.json"
 BETA_DIGEST_CACHE_PATH = GENERATED_DIR / "gemma-beta-cache.json"
-KST = ZoneInfo("Asia/Seoul")
+# shortcut: modern KST dates only; use IANA timezone data for historical Korean dates.
+KST = timezone(timedelta(hours=9), "KST")
 ARCHIVE_STEM = "news-digest-archive"
 ARCHIVE_URL = f"/posts/{ARCHIVE_STEM}/"
 NEWS_ASSET_DIR = ROOT / "static" / "news" / "assets"
@@ -310,11 +310,12 @@ def load_mempalace_context(
 
 
 def issue_date_label(issue_dt: datetime) -> str:
-    return issue_dt.strftime("%b %-d, %Y")
+    return f"{issue_dt:%b} {issue_dt.day}, {issue_dt.year}"
 
 
 def generated_timestamp_label(generated_at: datetime) -> str:
-    return generated_at.strftime("%b %-d, %Y · %-I:%M %p KST")
+    hour = generated_at.hour % 12 or 12
+    return f"{issue_date_label(generated_at)} · {hour}:{generated_at:%M %p} KST"
 
 
 def recent_digest_paths(issue_dt: datetime, lookback_days: int = RECENT_DIGEST_LOOKBACK_DAYS) -> list[Path]:
@@ -332,10 +333,20 @@ def recent_digest_paths(issue_dt: datetime, lookback_days: int = RECENT_DIGEST_L
     return [path for _, path in dated_paths]
 
 
+def read_json_object(path: Path) -> dict[str, Any]:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(payload, dict):
+            raise ValueError("expected a JSON object")
+        return payload
+    except (OSError, ValueError) as error:
+        raise ValueError(f"Cannot load JSON object from {path}") from error
+
+
 def load_source_feed() -> dict[str, Any]:
     for path in (SOURCE_PATH, SNAPSHOT_PATH):
         if path.exists():
-            return json.loads(path.read_text())
+            return read_json_object(path)
     raise FileNotFoundError(
         f"missing news source data at {SOURCE_PATH} and fallback snapshot at {SNAPSHOT_PATH}"
     )
@@ -372,7 +383,7 @@ def write_source_snapshot(payload: dict[str, Any]) -> None:
 def load_translation_cache() -> None:
     TRANSLATION_CACHE.clear()
     if TRANSLATION_CACHE_PATH.exists():
-        TRANSLATION_CACHE.update(json.loads(TRANSLATION_CACHE_PATH.read_text()))
+        TRANSLATION_CACHE.update(read_json_object(TRANSLATION_CACHE_PATH))
 
 
 def save_translation_cache() -> None:
@@ -384,7 +395,7 @@ def save_translation_cache() -> None:
 def load_beta_digest_cache() -> None:
     BETA_DIGEST_CACHE.clear()
     if BETA_DIGEST_CACHE_PATH.exists():
-        BETA_DIGEST_CACHE.update(json.loads(BETA_DIGEST_CACHE_PATH.read_text()))
+        BETA_DIGEST_CACHE.update(read_json_object(BETA_DIGEST_CACHE_PATH))
 
 
 def save_beta_digest_cache() -> None:
@@ -488,7 +499,7 @@ def compact_count(value: int) -> str:
     return str(value)
 
 
-def public_meta_without_score(card: "NewsItem", *, limit: int = 3) -> str:
+def public_meta_without_score(card: NewsItem, *, limit: int = 3) -> str:
     bits = [bit.strip() for bit in meta_without_source(card.meta, card.source).split("·")]
     public_bits: list[str] = []
     for bit in bits:
@@ -507,7 +518,7 @@ def public_meta_without_score(card: "NewsItem", *, limit: int = 3) -> str:
     return " · ".join(public_bits[:limit])
 
 
-def compact_metric_for(card: "NewsItem") -> tuple[str, str]:
+def compact_metric_for(card: NewsItem) -> tuple[str, str]:
     if card.badge == "Repo" and card.stars > 0:
         return compact_count(card.stars), "stars"
     if card.badge == "Paper":
@@ -535,9 +546,7 @@ def looks_feed_artifact(title: str) -> bool:
         return True
     if lowered.startswith(("engineering.fb.com", "docs.cloud.google.com")):
         return True
-    if "release notes" in lowered:
-        return True
-    return False
+    return "release notes" in lowered
 
 
 def needs_translation(value: str) -> bool:
@@ -556,14 +565,14 @@ def translate_to_english(value: str) -> str:
         f"?client=gtx&sl=auto&tl=en&dt=t&q={quote(value)}"
     )
     try:
-        with urlopen(url, timeout=8) as response:
+        with urlopen(url, timeout=8) as response:  # noqa: S310 — fixed HTTPS Google endpoint
             payload = json.loads(response.read().decode("utf-8"))
         translated = "".join(part[0] for part in payload[0] if part and part[0]).strip()
         if translated:
             TRANSLATION_CACHE[value] = translated
             return translated
-    except Exception:
-        pass
+    except Exception as error:
+        warn_digest(f"Translation skipped ({type(error).__name__}).")
     return value
 
 
@@ -853,9 +862,7 @@ def looks_low_signal_social(item: dict[str, Any]) -> bool:
         return True
     if source == "geeknews" and title.lower().startswith("show gn:") and relevance < 2:
         return True
-    if source in {"x.com", "linkedin.com"} and len(title) > 220 and relevance < 4:
-        return True
-    return False
+    return source in {"x.com", "linkedin.com"} and len(title) > 220 and relevance < 4
 
 
 def include_item(item: dict[str, Any]) -> bool:
@@ -1198,9 +1205,7 @@ def description_from_post(path: Path) -> str:
 def deck_for(item: dict[str, Any], badge: str) -> str:
     hours = int(item.get("publishedHoursAgo") or 0)
     stars = int(item.get("stars") or 0)
-    stars_per_day = float(item.get("starsPerDay") or 0.0)
     title = item_title(item)
-    rank_delta = item.get("rank_delta")
     tags = [tag for tag in item.get("tags") or [] if tag.lower() != "other"]
     tag_text = ", ".join(tags[:3]).lower()
     movement = ""
@@ -1264,7 +1269,6 @@ def deck_for(item: dict[str, Any], badge: str) -> str:
 def meta_for(item: dict[str, Any]) -> str:
     bits: list[str] = [source_label(item.get("source", ""))]
     stars = int(item.get("stars") or 0)
-    stars_per_day = float(item.get("starsPerDay") or 0.0)
     hours = int(item.get("publishedHoursAgo") or 0)
     score = local_signal_score(item)
     rank_delta = item.get("rank_delta")
@@ -1726,7 +1730,13 @@ def parse_llm_json(text: str) -> dict[str, Any]:
     first_json = min([idx for idx in [raw.find("{"), raw.find("[")] if idx != -1], default=-1)
     if first_json > 0:
         raw = raw[first_json:]
-    return json.loads(raw)
+    try:
+        parsed = json.loads(raw)
+    except json.JSONDecodeError as error:
+        raise ValueError("Invalid model JSON") from error
+    if not isinstance(parsed, dict):
+        raise ValueError("Model response must be a JSON object")
+    return parsed
 
 
 def join_phrases(parts: list[str]) -> str:
@@ -1828,9 +1838,7 @@ def is_retryable_gemma_error(error: Exception) -> bool:
         return True
     if isinstance(error, json.JSONDecodeError):
         return True
-    if isinstance(error, ValueError):
-        return True
-    return False
+    return isinstance(error, ValueError)
 
 
 def gemma_overview_payload(issue_dt: datetime, context: DigestContext) -> dict[str, Any]:
@@ -1991,14 +1999,17 @@ def gemma_json_request(cache_key: str, payload: dict[str, Any], *, temperature: 
     attempts = gemma_request_attempts()
     last_error: Exception | None = None
     for provider_name, endpoint, headers, request_body in providers:
-        req = urllib.request.Request(
+        parsed_endpoint = urlparse(endpoint)
+        if parsed_endpoint.scheme not in {"https", "http"} or not parsed_endpoint.hostname:
+            raise GemmaRequestError("Model API endpoint must be an HTTP(S) URL.")
+        req = urllib.request.Request(  # noqa: S310 — HTTP(S) endpoint validated above
             endpoint,
             data=json.dumps(request_body).encode("utf-8"),
             headers=headers,
         )
         for attempt in range(1, attempts + 1):
             try:
-                with urllib.request.urlopen(req, timeout=gemma_request_timeout_seconds()) as response:
+                with urllib.request.urlopen(req, timeout=gemma_request_timeout_seconds()) as response:  # noqa: S310 — validated request
                     api_payload = json.loads(response.read().decode("utf-8"))
                 if provider_name == "NVIDIA NIM":
                     response_text = (((api_payload.get("choices") or [{}])[0].get("message") or {}).get("content") or "")
@@ -2151,7 +2162,7 @@ def render_beta_section_mix(sections: list[tuple[str, str, str, list[NewsItem]]]
         '        <p class="section-kicker">Section load</p>',
         '        <div class="news-digest-beta-bars">',
     ]
-    for slug, heading, _description, cards in sections:
+    for _slug, heading, _description, cards in sections:
         value = len(cards)
         lines.extend(
             [
@@ -2557,7 +2568,7 @@ def render_signal_lead_strip(context: DigestContext, brief: BetaDigest) -> list[
         '      </article>',
         '      <div class="news-digest-lead-cards">',
     ]
-    for index, card in enumerate(lead_cards, start=1):
+    for card in lead_cards:
         metric_value, metric_label = compact_metric_for(card)
         lines.extend(
             [
@@ -2739,7 +2750,7 @@ def render_markdown(
     if social_cards:
         body.extend(
             [
-                f'  <section id="digest-social" class="news-digest-section">',
+                '  <section id="digest-social" class="news-digest-section">',
                 '    <header class="news-digest-section-head">',
                 '      <p class="section-kicker">Wire</p>',
                 f'      <h2 data-pretext-target>{safe_text(social_title)}</h2>',

@@ -6,517 +6,785 @@ METHOD:PUBLISH
 X-WR-CALNAME:CFP Radar Deadlines
 X-WR-TIMEZONE:Asia/Seoul
 BEGIN:VEVENT
-UID:INFOCOM-2025-07-24@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20250724
-DTEND;VALUE=DATE:20250725
-SUMMARY:[CFP] INFOCOM (Conference) Submission Deadline
-DESCRIPTION:Field: Networking / Systems\nStatus: closed\nOfficial CFP: https://infocom2026.ieee-infocom.org/call-papers\nNote: Flagship computer networking CFP source; important for wireless, edge, and network systems work.
-URL:https://infocom2026.ieee-infocom.org/call-papers
+UID:https%3A%2F%2Fwww.ieee-security.org%2FTC%2FSP2027%2Fcfpapers.html%3AIEE
+ E%20Symposium%20on%20Security%20and%20Privacy@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20261016
+DTEND;VALUE=DATE:20261017
+SUMMARY:[CFP] IEEE Symposium on Security and Privacy (IEEE S&P 2027) Submis
+ sion Deadline
+DESCRIPTION:Field: Security\nStatus: due in 1 days\nOfficial CFP: https://w
+ ww.ieee-security.org/TC/SP2027/cfpapers.html\nNote: Security CFP source\; 
+ useful for AI systems\, network security\, and privacy-related submissions
+ .
+URL:https://www.ieee-security.org/TC/SP2027/cfpapers.html
 END:VEVENT
 BEGIN:VEVENT
-UID:CCNC-2025-08-31@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20250831
-DTEND;VALUE=DATE:20250901
-SUMMARY:[CFP] CCNC (Conference) Submission Deadline
-DESCRIPTION:Field: Wireless / Consumer Networking\nStatus: closed\nOfficial CFP: https://ccnc2026.ieee-ccnc.org/call-technical-papers\nNote: Consumer communications and networking CFP source; useful for IoT, edge, wireless, and consumer network systems.
-URL:https://ccnc2026.ieee-ccnc.org/call-technical-papers
+UID:https%3A%2F%2Fwcnc2027.ieee-wcnc.org%2Fcall-workshop-papers-0%3AIEEE%20
+ Wireless%20Communications%20and%20Networking%20Conference%20Workshops@mud-
+ blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20261016
+DTEND;VALUE=DATE:20261017
+SUMMARY:[CFP] IEEE Wireless Communications and Networking Conference Worksh
+ ops (WCNC Workshops 2027) Submission Deadline
+DESCRIPTION:Field: Wireless / Workshops\nStatus: due in 1 days\nOfficial CF
+ P: https://wcnc2027.ieee-wcnc.org/call-workshop-papers-0\nNote: Official W
+ CNC 2026 call for workshop papers\; monitored for wireless\, RAN\, 6G\, an
+ d communications workshop deadlines.
+URL:https://wcnc2027.ieee-wcnc.org/call-workshop-papers-0
 END:VEVENT
 BEGIN:VEVENT
-UID:NSDI-2025-09-18@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20250918
-DTEND;VALUE=DATE:20250919
-SUMMARY:[CFP] NSDI (Conference) Submission Deadline
-DESCRIPTION:Field: Networking / Systems\nStatus: closed\nOfficial CFP: https://www.usenix.org/conference/nsdi26/call-for-papers\nNote: Networked systems CFP source; useful for systems/networking submission windows.
-URL:https://www.usenix.org/conference/nsdi26/call-for-papers
+UID:http%3A%2F%2Fwww.conf-icnc.org%2F2027%2Fcfp.html%3AInternational%20Conf
+ erence%20on%20Computing%2C%20Networking%20and%20Communications@mud-blog.pa
+ ges.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20261018
+DTEND;VALUE=DATE:20261019
+SUMMARY:[CFP] International Conference on Computing\, Networking and Commun
+ ications (ICNC 2027) Submission Deadline
+DESCRIPTION:Field: Networking / Communications\nStatus: due in 3 days\nOffi
+ cial CFP: http://www.conf-icnc.org/2027/cfp.html\nNote: Official ICNC 2027
+  submission call. Automatically resolved from http://conf-icnc.org/2026/cf
+ p.htm.
+URL:http://www.conf-icnc.org/2027/cfp.html
 END:VEVENT
 BEGIN:VEVENT
-UID:ICLR-2025-09-24@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20250924
-DTEND;VALUE=DATE:20250925
-SUMMARY:[CFP] ICLR (Conference) Submission Deadline
-DESCRIPTION:Field: AI / ML\nStatus: closed\nOfficial CFP: https://iclr.cc/Conferences/2026/CallForPapers\nNote: Official ICLR 2026 CFP; submission date is Sep 24, 2025. Keep closed until ICLR 2027 CFP is published.
-URL:https://iclr.cc/Conferences/2026/CallForPapers
+UID:https%3A%2F%2Fsensys.acm.org%2F2027%2F%3AACM%20Conference%20on%20Embedd
+ ed%20Networked%20Sensor%20Systems@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20261029
+DTEND;VALUE=DATE:20261030
+SUMMARY:[CFP] ACM Conference on Embedded Networked Sensor Systems (SenSys 2
+ 027) Submission Deadline
+DESCRIPTION:Field: IoT / Edge / Sensing\nStatus: due in 14 days\nOfficial C
+ FP: https://sensys.acm.org/2027/\nNote: ACM SenSys official site\; useful 
+ for sensing\, IoT\, mobile/edge systems\, and wireless sensor-network subm
+ issions.
+URL:https://sensys.acm.org/2027/
 END:VEVENT
 BEGIN:VEVENT
-UID:ICNC-2025-10-12@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20251012
-DTEND;VALUE=DATE:20251013
-SUMMARY:[CFP] ICNC (Conference) Submission Deadline
-DESCRIPTION:Field: Networking / Communications\nStatus: closed\nOfficial CFP: http://conf-icnc.org/2026/cfp.htm\nNote: Official ICNC 2026 CFP page with symposium CFP links and paper-submission dates.
-URL:http://conf-icnc.org/2026/cfp.htm
-LOCATION:Maui, Hawaii, USA
-END:VEVENT
-BEGIN:VEVENT
-UID:WCNC-2025-10-26@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20251026
-DTEND;VALUE=DATE:20251027
-SUMMARY:[CFP] WCNC (Conference) Submission Deadline
-DESCRIPTION:Field: Wireless / Communications\nStatus: closed\nOfficial CFP: https://wcnc2026.ieee-wcnc.org/call-papers\nNote: Major IEEE wireless communications venue; important for RAN, 5G/6G, and wireless networking CFP tracking.
-URL:https://wcnc2026.ieee-wcnc.org/call-papers
-END:VEVENT
-BEGIN:VEVENT
-UID:ICC-2025-11-10@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20251110
-DTEND;VALUE=DATE:20251111
-SUMMARY:[CFP] ICC (Conference) Submission Deadline
-DESCRIPTION:Field: Wireless / Communications\nStatus: closed\nOfficial CFP: https://icc2026.ieee-icc.org/authors/call-symposia-papers\nNote: Communications venue CFP source; monitored for symposium and workshop calls.
-URL:https://icc2026.ieee-icc.org/authors/call-symposia-papers
-END:VEVENT
-BEGIN:VEVENT
-UID:IEEE_S&P-2025-11-13@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20251113
-DTEND;VALUE=DATE:20251114
-SUMMARY:[CFP] IEEE S&P (Conference) Submission Deadline
-DESCRIPTION:Field: Security\nStatus: closed\nOfficial CFP: https://www.ieee-security.org/TC/SP2026/cfpapers.html\nNote: Security CFP source; useful for AI systems, network security, and privacy-related submissions.
-URL:https://www.ieee-security.org/TC/SP2026/cfpapers.html
-END:VEVENT
-BEGIN:VEVENT
-UID:MobiSys-2025-12-05@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20251205
-DTEND;VALUE=DATE:20251206
-SUMMARY:[CFP] MobiSys (Conference) Submission Deadline
-DESCRIPTION:Field: Wireless / Mobile\nStatus: closed\nOfficial CFP: https://www.sigmobile.org/mobisys/2026/\nNote: Mobile systems venue; useful for edge AI, mobile computing, sensing, and wireless systems submissions.
-URL:https://www.sigmobile.org/mobisys/2026/
-END:VEVENT
-BEGIN:VEVENT
-UID:SECON-2025-12-30@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20251230
-DTEND;VALUE=DATE:20251231
-SUMMARY:[CFP] SECON (Conference) Submission Deadline
-DESCRIPTION:Field: Wireless / Mobile\nStatus: closed\nOfficial CFP: https://secon2026.ieee-secon.org/\nNote: Sensing, communication, mobile networking, edge/IoT, and wireless systems CFP source.
-URL:https://secon2026.ieee-secon.org/
-END:VEVENT
-BEGIN:VEVENT
-UID:WCNC_Workshops-2026-01-12@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260112
-DTEND;VALUE=DATE:20260113
-SUMMARY:[CFP] WCNC Workshops (Workshop) Submission Deadline
-DESCRIPTION:Field: Wireless / Workshops\nStatus: closed\nOfficial CFP: https://wcnc2026.ieee-wcnc.org/call-workshop-papers-0\nNote: Official WCNC 2026 call for workshop papers; monitored for wireless, RAN, 6G, and communications workshop deadlines.
-URL:https://wcnc2026.ieee-wcnc.org/call-workshop-papers-0
-LOCATION:Marrakesh, Morocco / official page
-END:VEVENT
-BEGIN:VEVENT
-UID:ISIT-2026-01-16@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260116
-DTEND;VALUE=DATE:20260117
-SUMMARY:[CFP] ISIT (Conference) Submission Deadline
-DESCRIPTION:Field: Communications / Information Theory\nStatus: closed\nOfficial CFP: https://2026.ieee-isit.org/\nNote: Information theory flagship CFP source; useful for coding, communication theory, and learning-theoretic communications.
-URL:https://2026.ieee-isit.org/
-END:VEVENT
-BEGIN:VEVENT
-UID:ICML-2026-01-23@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260123
-DTEND;VALUE=DATE:20260124
-SUMMARY:[CFP] ICML (Conference) Submission Deadline
-DESCRIPTION:Field: AI / ML\nStatus: closed\nOfficial CFP: https://icml.cc/Conferences/2026/CallForPapers\nNote: Core ML venue; the CFP page is monitored for abstract, paper, and supplementary deadline language.
-URL:https://icml.cc/Conferences/2026/CallForPapers
-END:VEVENT
-BEGIN:VEVENT
-UID:ICC_Workshops-2026-01-31@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260131
-DTEND;VALUE=DATE:20260201
-SUMMARY:[CFP] ICC Workshops (Workshop) Submission Deadline
-DESCRIPTION:Field: Wireless / Workshops\nStatus: closed\nOfficial CFP: https://icc2026.ieee-icc.org/program/workshops\nNote: Workshop CFP source for specialized RAN, AI-native communications, edge, and 6G topics. Official ICC 2026 workshop-paper page lists an extended firm workshop paper deadline of 2026-01-31.
-URL:https://icc2026.ieee-icc.org/program/workshops
-END:VEVENT
-BEGIN:VEVENT
-UID:NetSoft-2026-02-06@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260206
-DTEND;VALUE=DATE:20260207
-SUMMARY:[CFP] NetSoft (Conference) Submission Deadline
-DESCRIPTION:Field: Networking / Softwarization\nStatus: closed\nOfficial CFP: https://netsoft2026.ieee-netsoft.org/\nNote: SDN/NFV/network softwarization CFP source; relevant to O-RAN, xApps/rApps, and programmable telecom systems.
-URL:https://netsoft2026.ieee-netsoft.org/
-END:VEVENT
-BEGIN:VEVENT
-UID:SIGCOMM-2026-02-06@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260206
-DTEND;VALUE=DATE:20260207
-SUMMARY:[CFP] SIGCOMM (Conference) Submission Deadline
-DESCRIPTION:Field: Networking / Systems\nStatus: closed\nOfficial CFP: https://conferences.sigcomm.org/sigcomm/2026/cfp/\nNote: Official SIGCOMM 2026 CFP page with main-track abstract and paper-submission dates.
-URL:https://conferences.sigcomm.org/sigcomm/2026/cfp/
-END:VEVENT
-BEGIN:VEVENT
-UID:IWQoS-2026-02-23@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260223
-DTEND;VALUE=DATE:20260224
-SUMMARY:[CFP] IWQoS (Conference) Submission Deadline
-DESCRIPTION:Field: Networking / QoS\nStatus: closed\nOfficial CFP: https://iwqos2026.ieee-iwqos.org/\nNote: IWQoS official annual site; monitor for QoS, scheduling, network management, edge/cloud, and AI-for-networking calls.
-URL:https://iwqos2026.ieee-iwqos.org/
-END:VEVENT
-BEGIN:VEVENT
-UID:SenSys-2026-02-27@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260227
-DTEND;VALUE=DATE:20260228
-SUMMARY:[CFP] SenSys (Conference) Submission Deadline
-DESCRIPTION:Field: IoT / Edge / Sensing\nStatus: closed\nOfficial CFP: https://sensys.acm.org/2026/\nNote: ACM SenSys official site; useful for sensing, IoT, mobile/edge systems, and wireless sensor-network submissions.
-URL:https://sensys.acm.org/2026/
-END:VEVENT
-BEGIN:VEVENT
-UID:IFIP_Networking-2026-02-28@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260228
-DTEND;VALUE=DATE:20260301
-SUMMARY:[CFP] IFIP Networking (Conference) Submission Deadline
-DESCRIPTION:Field: Networking / Systems\nStatus: closed\nOfficial CFP: https://networking.ifip.org/2026/\nNote: Broad networking CFP source that often includes wireless, programmable networks, and networked systems tracks.
-URL:https://networking.ifip.org/2026/
-END:VEVENT
-BEGIN:VEVENT
-UID:BlackSeaCom-2026-03-01@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260301
-DTEND;VALUE=DATE:20260302
-SUMMARY:[CFP] BlackSeaCom (Conference) Submission Deadline
-DESCRIPTION:Field: Wireless / Communications\nStatus: closed\nOfficial CFP: https://blackseacom2026.ieee-blackseacom.org/\nNote: IEEE ComSoc regional communications/networking venue; useful for 5G/6G, wireless, satellite, IoT, and network applications.
-URL:https://blackseacom2026.ieee-blackseacom.org/
-END:VEVENT
-BEGIN:VEVENT
-UID:MeditCom-2026-03-26@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260326
-DTEND;VALUE=DATE:20260327
-SUMMARY:[CFP] MeditCom (Conference) Submission Deadline
-DESCRIPTION:Field: Wireless / Communications\nStatus: closed\nOfficial CFP: https://meditcom2026.ieee-meditcom.org/\nNote: Regional IEEE ComSoc communications and networking CFP source with wireless, 5G/6G, IoT, and networked systems tracks.
-URL:https://meditcom2026.ieee-meditcom.org/
-END:VEVENT
-BEGIN:VEVENT
-UID:EuCNC_Workshops-2026-04-10@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260410
-DTEND;VALUE=DATE:20260411
-SUMMARY:[CFP] EuCNC Workshops (Workshop) Submission Deadline
-DESCRIPTION:Field: Wireless / 6G Workshops\nStatus: closed\nOfficial CFP: https://www.eucnc.eu/authors/call-for-workshops/\nNote: Official EuCNC & 6G Summit workshop page; tracks 6G workshop proposal and workshop paper submission deadlines.
-URL:https://www.eucnc.eu/authors/call-for-workshops/
-LOCATION:Málaga, Spain / official page
-END:VEVENT
-BEGIN:VEVENT
-UID:IFIP_Networking_Workshops-2026-04-14@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260414
-DTEND;VALUE=DATE:20260415
-SUMMARY:[CFP] IFIP Networking Workshops (Workshop) Submission Deadline
-DESCRIPTION:Field: Networking / Workshops\nStatus: closed\nOfficial CFP: https://networking.ifip.org/2026/index.php/workshops.html\nNote: Official IFIP Networking 2026 workshops page with firm workshop paper submission deadline.
-URL:https://networking.ifip.org/2026/index.php/workshops.html
-LOCATION:Lugano, Switzerland / official page
-END:VEVENT
-BEGIN:VEVENT
-UID:PIMRC-2026-04-16@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260416
-DTEND;VALUE=DATE:20260417
-SUMMARY:[CFP] PIMRC (Conference) Submission Deadline
-DESCRIPTION:Field: Wireless / Communications\nStatus: closed\nOfficial CFP: https://pimrc2026.ieee-pimrc.org/call-papers\nNote: Wireless and mobile radio CFP source; useful for cellular, RAN, and radio access work.
-URL:https://pimrc2026.ieee-pimrc.org/call-papers
-END:VEVENT
-BEGIN:VEVENT
-UID:MobiHoc-2026-04-20@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260420
-DTEND;VALUE=DATE:20260421
-SUMMARY:[CFP] MobiHoc (Conference) Submission Deadline
-DESCRIPTION:Field: Wireless / Mobile\nStatus: closed\nOfficial CFP: https://www.sigmobile.org/mobihoc/2026/\nNote: Mobile ad hoc, sensor, and wireless networking CFP source.
-URL:https://www.sigmobile.org/mobihoc/2026/
-END:VEVENT
-BEGIN:VEVENT
-UID:VTC-Spring-2026-04-28@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260428
-DTEND;VALUE=DATE:20260429
-SUMMARY:[CFP] VTC-Spring (Conference) Submission Deadline
-DESCRIPTION:Field: Wireless / Vehicular\nStatus: closed\nOfficial CFP: https://events.vtsociety.org/vtc2026-spring/\nNote: Vehicular and wireless communications CFP source; useful for mobility, V2X, and cellular tracks.
-URL:https://events.vtsociety.org/vtc2026-spring/
-END:VEVENT
-BEGIN:VEVENT
-UID:CCS-2026-04-29@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260429
-DTEND;VALUE=DATE:20260430
-SUMMARY:[CFP] CCS (Conference) Submission Deadline
-DESCRIPTION:Field: Security\nStatus: closed\nOfficial CFP: https://www.sigsac.org/ccs/CCS2026/call-for/call-for-papers.html\nNote: Security CFP source; monitored for main-track and artifact deadline signals.
-URL:https://www.sigsac.org/ccs/CCS2026/call-for/call-for-papers.html
-END:VEVENT
-BEGIN:VEVENT
-UID:GLOBECOM-2026-05-03@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260503
-DTEND;VALUE=DATE:20260504
-SUMMARY:[CFP] GLOBECOM (Conference) Submission Deadline
-DESCRIPTION:Field: Wireless / Communications\nStatus: closed\nOfficial CFP: https://globecom2026.ieee-globecom.org/call-symposium-papers\nNote: Communications and networking CFP source; relevant to 5G/6G, RAN, and edge networking tracks.
-URL:https://globecom2026.ieee-globecom.org/call-symposium-papers
-END:VEVENT
-BEGIN:VEVENT
-UID:LANMAN-2026-05-05@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260505
-DTEND;VALUE=DATE:20260506
-SUMMARY:[CFP] LANMAN (Conference) Submission Deadline
-DESCRIPTION:Field: Networking / Communications\nStatus: closed\nOfficial CFP: https://lanman2026.ieee-lanman.org/\nNote: LAN/MAN, edge networking, programmable networks, and metro-access systems CFP source.
-URL:https://lanman2026.ieee-lanman.org/
-END:VEVENT
-BEGIN:VEVENT
-UID:NeurIPS-2026-05-06@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260506
-DTEND;VALUE=DATE:20260507
-SUMMARY:[CFP] NeurIPS (Conference) Submission Deadline
-DESCRIPTION:Field: AI / ML\nStatus: closed\nOfficial CFP: https://neurips.cc/Conferences/2026/CallForPapers\nNote: Primary machine-learning conference CFP page; use this source for main-track deadline verification.
-URL:https://neurips.cc/Conferences/2026/CallForPapers
-END:VEVENT
-BEGIN:VEVENT
-UID:SEC-2026-05-08@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260508
-DTEND;VALUE=DATE:20260509
-SUMMARY:[CFP] SEC (Conference) Submission Deadline
-DESCRIPTION:Field: Edge / Cloud / Systems\nStatus: closed\nOfficial CFP: https://acm-ieee-sec.org/2026/\nNote: ACM/IEEE SEC annual site; monitor for edge AI, cloud-edge systems, and networked edge CFP windows.
-URL:https://acm-ieee-sec.org/2026/
-END:VEVENT
-BEGIN:VEVENT
-UID:SUN_@_IWQoS-2026-05-10@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260510
-DTEND;VALUE=DATE:20260511
-SUMMARY:[CFP] SUN @ IWQoS (Workshop) Submission Deadline
-DESCRIPTION:Field: Networking / Workshops\nStatus: closed\nOfficial CFP: https://iwqos2026.ieee-iwqos.org/ieeeacm-international-symposium-quality-service-iwqos-2026-206/cfp/sun-2026-1st-international\nNote: Official IWQoS 2026 workshop CFP with an explicit submission deadline; replaces the previous SPAWC placeholder because its 2026 site is not resolving from the crawler.
-URL:https://iwqos2026.ieee-iwqos.org/ieeeacm-international-symposium-quality-service-iwqos-2026-206/cfp/sun-2026-1st-international
-LOCATION:Co-located with IEEE/ACM IWQoS 2026 / official page
-END:VEVENT
-BEGIN:VEVENT
-UID:CNS-2026-05-18@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260518
-DTEND;VALUE=DATE:20260519
-SUMMARY:[CFP] CNS (Conference) Submission Deadline
-DESCRIPTION:Field: Security / Communications\nStatus: closed\nOfficial CFP: https://cns2026.ieee-cns.org/\nNote: Security-focused communications/networking CFP source for secure wireless, network security, privacy, and critical infrastructure.
-URL:https://cns2026.ieee-cns.org/
-END:VEVENT
-BEGIN:VEVENT
-UID:VTC-Fall_Workshops-2026-05-19@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260519
-DTEND;VALUE=DATE:20260520
-SUMMARY:[CFP] VTC-Fall Workshops (Workshop) Submission Deadline
-DESCRIPTION:Field: Wireless / Vehicular Workshops\nStatus: closed\nOfficial CFP: https://events.vtsociety.org/vtc2026-fall/conference-sessions/current-workshops-available/\nNote: Official VTC-Fall 2026 current workshops page; includes paper submission deadline for generative-AI air-ground collaborative robotics networks workshop.
-URL:https://events.vtsociety.org/vtc2026-fall/conference-sessions/current-workshops-available/
-LOCATION:Boston, MA, USA / official page
-END:VEVENT
-BEGIN:VEVENT
-UID:MILCOM-2026-05-31@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260531
-DTEND;VALUE=DATE:20260601
-SUMMARY:[CFP] MILCOM (Conference) Submission Deadline
-DESCRIPTION:Field: Wireless / Communications\nStatus: closed\nOfficial CFP: https://milcom2026.ieee-milcom.org/\nNote: Military, tactical, resilient, satellite, spectrum, and wireless communications CFP source. Official current-year site may reject automated fetches; keep as manual official source until CFP text is crawlable.
-URL:https://milcom2026.ieee-milcom.org/
-END:VEVENT
-BEGIN:VEVENT
-UID:CoNEXT-2026-06-05@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260605
-DTEND;VALUE=DATE:20260606
-SUMMARY:[CFP] CoNEXT (Conference) Submission Deadline
-DESCRIPTION:Field: Networking / Systems\nStatus: closed\nOfficial CFP: https://conferences2.sigcomm.org/co-next/2026/partials/cfp.html\nNote: Official CoNEXT 2026 CFP partial used because the public route is Angular-rendered.
-URL:https://conferences2.sigcomm.org/co-next/2026/partials/cfp.html
-LOCATION:Utrecht, The Netherlands
-END:VEVENT
-BEGIN:VEVENT
-UID:MobiCom_Workshops-2026-06-05@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260605
-DTEND;VALUE=DATE:20260606
-SUMMARY:[CFP] MobiCom Workshops (Workshop) Submission Deadline
-DESCRIPTION:Field: Wireless / Mobile Workshops\nStatus: closed\nOfficial CFP: https://www.sigmobile.org/mobicom/2026/workshop_cfp.html\nNote: Official MobiCom 2026 workshop/tutorial CFP page; includes workshop paper submission date for mobile/wireless/networking workshops.
-URL:https://www.sigmobile.org/mobicom/2026/workshop_cfp.html
-LOCATION:Austin, Texas, USA / official page
-END:VEVENT
-BEGIN:VEVENT
-UID:CAMAD-2026-06-06@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260606
-DTEND;VALUE=DATE:20260607
-SUMMARY:[CFP] CAMAD (Workshop) Submission Deadline
-DESCRIPTION:Field: Wireless / Communications\nStatus: closed\nOfficial CFP: https://camad2026.ieee-camad.org/\nNote: Official CAMAD 2026 page; main paper submission deadline recorded to avoid selecting acceptance/camera-ready dates.
-URL:https://camad2026.ieee-camad.org/
-END:VEVENT
-BEGIN:VEVENT
-UID:WiMob-2026-06-28@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260628
-DTEND;VALUE=DATE:20260629
-SUMMARY:[CFP] WiMob (Conference) Submission Deadline
-DESCRIPTION:Field: Wireless / Mobile\nStatus: closed\nOfficial CFP: http://wimob.org/wimob2026/dates.php\nNote: Official WiMob 2026 important-dates page; main conference submission date is June 28, 2026 firm.
-URL:http://wimob.org/wimob2026/dates.php
-LOCATION:Avignon, France
-END:VEVENT
-BEGIN:VEVENT
-UID:LATINCOM-2026-07-05@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260705
-DTEND;VALUE=DATE:20260706
-SUMMARY:[CFP] LATINCOM (Conference) Submission Deadline
-DESCRIPTION:Field: Wireless / Communications\nStatus: closed\nOfficial CFP: https://latincom2026.ieee-latincom.org/\nNote: IEEE ComSoc regional communications conference for wireless, optical, networking, IoT, and communication theory topics.
-URL:https://latincom2026.ieee-latincom.org/
-END:VEVENT
-BEGIN:VEVENT
-UID:ANTS-2026-07-08@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260708
-DTEND;VALUE=DATE:20260709
-SUMMARY:[CFP] ANTS (Conference) Submission Deadline
-DESCRIPTION:Field: Networking / Communications\nStatus: closed\nOfficial CFP: https://ants2026.ieee-ants.org/\nNote: Advanced networks, telecommunications systems, optical/wireless networks, SDN/NFV, and 5G/6G CFP source. Official current-year site may reject automated fetches; keep as manual official source until CFP text is crawlable.
-URL:https://ants2026.ieee-ants.org/
-END:VEVENT
-BEGIN:VEVENT
-UID:CloudNet-2026-07-10@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260710
-DTEND;VALUE=DATE:20260711
-SUMMARY:[CFP] CloudNet (Conference) Submission Deadline
-DESCRIPTION:Field: Networking / Cloud\nStatus: closed\nOfficial CFP: https://cloudnet2026.ieee-cloudnet.org/\nNote: Cloud networking, edge/cloud systems, network softwarization, and telecom cloud CFP source.
-URL:https://cloudnet2026.ieee-cloudnet.org/
-END:VEVENT
-BEGIN:VEVENT
-UID:CSCN-2026-07-15@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260715
-DTEND;VALUE=DATE:20260716
-SUMMARY:[CFP] CSCN (Conference) Submission Deadline
-DESCRIPTION:Field: Wireless / Standards\nStatus: closed\nOfficial CFP: https://cscn2026.ieee-cscn.org/\nNote: Communications standards CFP source; relevant to 3GPP, O-RAN, 5G/6G, and networking standards.
-URL:https://cscn2026.ieee-cscn.org/
-END:VEVENT
-BEGIN:VEVENT
-UID:VTC-Fall-2026-07-15@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260715
-DTEND;VALUE=DATE:20260716
-SUMMARY:[CFP] VTC-Fall (Conference) Submission Deadline
-DESCRIPTION:Field: Wireless / Vehicular\nStatus: closed\nOfficial CFP: https://events.vtsociety.org/vtc2026-fall/\nNote: Fall VTC CFP source; complements VTC-Spring for vehicular, mobile, and wireless communications.
-URL:https://events.vtsociety.org/vtc2026-fall/
-END:VEVENT
-BEGIN:VEVENT
-UID:AAAI-2026-07-28@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260728
-DTEND;VALUE=DATE:20260729
-SUMMARY:[CFP] AAAI (Conference) Submission Deadline
-DESCRIPTION:Field: AI / ML\nStatus: closed\nOfficial CFP: https://aaai.org/conference/aaai/aaai-27/main-technical-track-call/\nNote: Official AAAI-27 main technical track CFP; full papers due July 28, 2026 after abstracts on July 21.
-URL:https://aaai.org/conference/aaai/aaai-27/main-technical-track-call/
-LOCATION:Montréal, Canada
-END:VEVENT
-BEGIN:VEVENT
-UID:Ad_Hoc_Networks_SI-2026-08-08@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260808
-DTEND;VALUE=DATE:20260809
-SUMMARY:[CFP] Ad Hoc Networks SI (Journal special issue) Submission Deadline
-DESCRIPTION:Field: Journal Special Issues / Wireless\nStatus: closed\nOfficial CFP: https://www.sciencedirect.com/journal/ad-hoc-networks/about/call-for-papers\nNote: Official ScienceDirect Ad Hoc Networks call-for-papers page; next open special-issue deadline observed in official page data.
-URL:https://www.sciencedirect.com/journal/ad-hoc-networks/about/call-for-papers
+UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fjournals%2Fieee-jsac%2Fcf
+ p%2Fexploiting-flexible-positioning-movable-and-pinching-antennas-next-gen
+ eration-wireless-networks%3AIEEE%20Journal%20on%20Selected%20Areas%20in%20
+ Communications%20%E2%80%94%20Exploiting%20Flexible%20Positioning%3A%20Mova
+ ble%20and%20Pinching%20Antennas%20for%20Next-Generation%20Wireless%20Netwo
+ rks@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20261030
+DTEND;VALUE=DATE:20261031
+SUMMARY:[CFP] IEEE Journal on Selected Areas in Communications — Exploiti
+ ng Flexible Positioning: Movable and Pinching Antennas for Next-Generation
+  Wireless Networks (IEEE JSAC CFP) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / Communications\nStatus: upcomin
+ g in 15 days\nOfficial CFP: https://www.comsoc.org/publications/journals/i
+ eee-jsac/cfp/exploiting-flexible-positioning-movable-and-pinching-antennas
+ -next-generation-wireless-networks\nNote: Special issue: Exploiting Flexib
+ le Positioning: Movable and Pinching Antennas for Next-Generation Wireless
+  Networks. Manuscript submission deadline: 2026-10-30. Source hub: https:/
+ /www.comsoc.org/publications/journals/ieee-jsac/cfp
+URL:https://www.comsoc.org/publications/journals/ieee-jsac/cfp/exploiting-f
+ lexible-positioning-movable-and-pinching-antennas-next-generation-wireless
+ -networks
 LOCATION:Journal / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:GLOBECOM_Workshops-2026-08-10@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260810
-DTEND;VALUE=DATE:20260811
-SUMMARY:[CFP] GLOBECOM Workshops (Workshop) Submission Deadline
-DESCRIPTION:Field: Wireless / Workshops\nStatus: closed\nOfficial CFP: https://globecom2026.ieee-globecom.org/call-workshop-proposals\nNote: Workshop CFP source for emerging wireless, RAN, edge, and 6G topics. Official GLOBECOM 2026 workshop-proposals page lists the workshop paper submission deadline.
-URL:https://globecom2026.ieee-globecom.org/call-workshop-proposals
-END:VEVENT
-BEGIN:VEVENT
-UID:MobiHoc_AI-RAN-2026-08-31@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260831
-DTEND;VALUE=DATE:20260901
-SUMMARY:[CFP] MobiHoc AI-RAN (Workshop) Submission Deadline
-DESCRIPTION:Field: Wireless / AI-RAN Workshops\nStatus: closed\nOfficial CFP: https://www.sigmobile.org/mobihoc/2026/workshop-ai-ran.html\nNote: Official MobiHoc 2026 AI-RAN workshop page with explicit workshop paper submission deadline; highly relevant to AI-native RAN work.
-URL:https://www.sigmobile.org/mobihoc/2026/workshop-ai-ran.html
-LOCATION:Houston, Texas, USA / official page
-END:VEVENT
-BEGIN:VEVENT
-UID:MobiHoc_ML4NxtGNet-2026-08-31@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20260831
-DTEND;VALUE=DATE:20260901
-SUMMARY:[CFP] MobiHoc ML4NxtGNet (Workshop) Submission Deadline
-DESCRIPTION:Field: Wireless / NextG Workshops\nStatus: closed\nOfficial CFP: https://www.sigmobile.org/mobihoc/2026/workshop-ml4nxtgnet.html\nNote: Official MobiHoc 2026 ML4NxtGNet workshop page with explicit workshop paper submission deadline; relevant to ML for wireless and next-generation networks.
-URL:https://www.sigmobile.org/mobihoc/2026/workshop-ml4nxtgnet.html
-LOCATION:Houston, Texas, USA / official page
-END:VEVENT
-BEGIN:VEVENT
-UID:Computer_Networks_SI-2026-10-15@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
-DTSTART;VALUE=DATE:20261015
-DTEND;VALUE=DATE:20261016
-SUMMARY:[CFP] Computer Networks SI (Journal special issue) Submission Deadline
-DESCRIPTION:Field: Journal Special Issues / Networking\nStatus: due in 3 days\nOfficial CFP: https://www.sciencedirect.com/journal/computer-networks/about/call-for-papers\nNote: Official ScienceDirect Computer Networks call-for-papers page; next open special-issue deadline observed in official page data.
-URL:https://www.sciencedirect.com/journal/computer-networks/about/call-for-papers
-LOCATION:Journal / online submission
-END:VEVENT
-BEGIN:VEVENT
-UID:IEEE_IoT-J_SI-2026-10-31@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
+UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F05%2FAI_Dri
+ ven_Network.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E2%80%94%20AI
+ -Driven%20Network%20Forensics%20for%20Edge-Intelligent%20Internet%20of%20T
+ hings@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
 DTSTART;VALUE=DATE:20261031
 DTEND;VALUE=DATE:20261101
-SUMMARY:[CFP] IEEE IoT-J SI (Journal special issue) Submission Deadline
-DESCRIPTION:Field: Journal Special Issues / IoT and Edge\nStatus: upcoming in 19 days\nOfficial CFP: https://ieee-iotj.org/special-issues/\nNote: Special issues for IoT, edge, sensing, wireless systems, and connected-device communications.
-URL:https://ieee-iotj.org/special-issues/
+SUMMARY:[CFP] IEEE Internet of Things Journal — AI-Driven Network Forensi
+ cs for Edge-Intelligent Internet of Things (IEEE IoT-J SI) Submission Dead
+ line
+DESCRIPTION:Field: Journal Special Issues / IoT and Edge\nStatus: upcoming 
+ in 16 days\nOfficial CFP: https://ieee-iotj.org/wp-content/uploads/2026/05
+ /AI_Driven_Network.pdf\nNote: Special issue: AI-Driven Network Forensics f
+ or Edge-Intelligent Internet of Things. Manuscript submission deadline: 20
+ 26-10-31. Source hub: https://ieee-iotj.org/special-issues/
+URL:https://ieee-iotj.org/wp-content/uploads/2026/05/AI_Driven_Network.pdf
 LOCATION:Journal / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:IEEE_Network_CFP-2026-12-31@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
+UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-network%
+ 2Fcfp%2Fai-empowered-cognitive-digital-twin-future-network%3AIEEE%20Networ
+ k%20%E2%80%94%20AI-Empowered%20Cognitive%20Digital%20Twin%20for%20Future%2
+ 0Network%20Ecosystems@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20261031
+DTEND;VALUE=DATE:20261101
+SUMMARY:[CFP] IEEE Network — AI-Empowered Cognitive Digital Twin for Futu
+ re Network Ecosystems (IEEE Network CFP) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / Networking\nStatus: upcoming in
+  16 days\nOfficial CFP: https://www.comsoc.org/publications/magazines/ieee
+ -network/cfp/ai-empowered-cognitive-digital-twin-future-network\nNote: Spe
+ cial issue: AI-Empowered Cognitive Digital Twin for Future Network Ecosyst
+ ems. Manuscript submission deadline: 2026-10-31. Source hub: https://www.c
+ omsoc.org/publications/magazines/ieee-network/cfp
+URL:https://www.comsoc.org/publications/magazines/ieee-network/cfp/ai-empow
+ ered-cognitive-digital-twin-future-network
+LOCATION:Magazine / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-communic
+ ations-magazine%2Fcfp%2Fsecurity-and-privacy-multimodal-embodied-iot%3AIEE
+ E%20Communications%20Magazine%20%E2%80%94%20Security%20and%20Privacy%20of%
+ 20Multimodal%20Embodied%20IoT@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20261101
+DTEND;VALUE=DATE:20261102
+SUMMARY:[CFP] IEEE Communications Magazine — Security and Privacy of Mult
+ imodal Embodied IoT (IEEE ComMag CFP) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / Communications\nStatus: upcomin
+ g in 17 days\nOfficial CFP: https://www.comsoc.org/publications/magazines/
+ ieee-communications-magazine/cfp/security-and-privacy-multimodal-embodied-
+ iot\nNote: Special issue: Security and Privacy of Multimodal Embodied IoT.
+  Manuscript submission deadline: 2026-11-01. Source hub: https://www.comso
+ c.org/publications/magazines/ieee-communications-magazine/cfp
+URL:https://www.comsoc.org/publications/magazines/ieee-communications-magaz
+ ine/cfp/security-and-privacy-multimodal-embodied-iot
+LOCATION:Magazine / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-wireless
+ -communications%2Fcfp%2Fai-empowered-underwater-wireless-optical-communica
+ tions-science-exploration-and-defense-applications%3AIEEE%20Wireless%20Com
+ munications%20%E2%80%94%20AI-Empowered%20Underwater%20Wireless%20Optical%2
+ 0Communications%20for%20Science%20Exploration%20and%20Defense%20Applicatio
+ ns@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20261101
+DTEND;VALUE=DATE:20261102
+SUMMARY:[CFP] IEEE Wireless Communications — AI-Empowered Underwater Wire
+ less Optical Communications for Science Exploration and Defense Applicatio
+ ns (IEEE Wireless Commun. CFP) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / Wireless\nStatus: upcoming in 1
+ 7 days\nOfficial CFP: https://www.comsoc.org/publications/magazines/ieee-w
+ ireless-communications/cfp/ai-empowered-underwater-wireless-optical-commun
+ ications-science-exploration-and-defense-applications\nNote: Special issue
+ : AI-Empowered Underwater Wireless Optical Communications for Science Expl
+ oration and Defense Applications. Manuscript submission deadline: 2026-11-
+ 01. Source hub: https://www.comsoc.org/publications/magazines/ieee-wireles
+ s-communications/cfp
+URL:https://www.comsoc.org/publications/magazines/ieee-wireless-communicati
+ ons/cfp/ai-empowered-underwater-wireless-optical-communications-science-ex
+ ploration-and-defense-applications
+LOCATION:Magazine / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-wireless
+ -communications%2Fcfp%2Forbit-computing-striding-era-space-centric-intelli
+ gence%3AIEEE%20Wireless%20Communications%20%E2%80%94%20In-Orbit%20Computin
+ g%3A%20Striding%20into%20the%20Era%20of%20Space-Centric%20Intelligence@mud
+ -blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20261101
+DTEND;VALUE=DATE:20261102
+SUMMARY:[CFP] IEEE Wireless Communications — In-Orbit Computing: Striding
+  into the Era of Space-Centric Intelligence (IEEE Wireless Commun. CFP) Su
+ bmission Deadline
+DESCRIPTION:Field: Journal Special Issues / Wireless\nStatus: upcoming in 1
+ 7 days\nOfficial CFP: https://www.comsoc.org/publications/magazines/ieee-w
+ ireless-communications/cfp/orbit-computing-striding-era-space-centric-inte
+ lligence\nNote: Special issue: In-Orbit Computing: Striding into the Era o
+ f Space-Centric Intelligence. Manuscript submission deadline: 2026-11-01. 
+ Source hub: https://www.comsoc.org/publications/magazines/ieee-wireless-co
+ mmunications/cfp
+URL:https://www.comsoc.org/publications/magazines/ieee-wireless-communicati
+ ons/cfp/orbit-computing-striding-era-space-centric-intelligence
+LOCATION:Magazine / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fnoms2027.ieee-noms.org%2F%3AIEEE%2FIFIP%20Network%20Opera
+ tions%20and%20Management%20Symposium@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20261109
+DTEND;VALUE=DATE:20261110
+SUMMARY:[CFP] IEEE/IFIP Network Operations and Management Symposium (NOMS 2
+ 027) Submission Deadline
+DESCRIPTION:Field: Networking / Management\nStatus: upcoming in 25 days\nOf
+ ficial CFP: https://noms2027.ieee-noms.org/\nNote: Network operations and 
+ management CFP source\; useful for autonomous network operations and telec
+ om management.
+URL:https://noms2027.ieee-noms.org/
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F06%2FGraph_
+ Representation_Learning.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E
+ 2%80%94%20Graph%20Representation%20on%20Learning%20for%20Internet%20of%20T
+ hings@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20261130
+DTEND;VALUE=DATE:20261201
+SUMMARY:[CFP] IEEE Internet of Things Journal — Graph Representation on L
+ earning for Internet of Things (IEEE IoT-J SI) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / IoT and Edge\nStatus: watching:
+  46 days out\nOfficial CFP: https://ieee-iotj.org/wp-content/uploads/2026/
+ 06/Graph_Representation_Learning.pdf\nNote: Special issue: Graph Represent
+ ation on Learning for Internet of Things. Manuscript submission deadline: 
+ 2026-11-30. Source hub: https://ieee-iotj.org/special-issues/
+URL:https://ieee-iotj.org/wp-content/uploads/2026/06/Graph_Representation_L
+ earning.pdf
+LOCATION:Journal / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-network%
+ 2Fcfp%2Ftowards-intellicise-agent-communication-networks-autonomous-integr
+ ation-and-evolution-humans-and-networks%3AIEEE%20Network%20%E2%80%94%20Tow
+ ards%20Intellicise%20Agent%20Communication%20Networks%3A%20Autonomous%20In
+ tegration%20and%20Evolution%20of%20Humans%20and%20Networks@mud-blog.pages.
+ dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20261130
+DTEND;VALUE=DATE:20261201
+SUMMARY:[CFP] IEEE Network — Towards Intellicise Agent Communication Netw
+ orks: Autonomous Integration and Evolution of Humans and Networks (IEEE Ne
+ twork CFP) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / Networking\nStatus: watching: 4
+ 6 days out\nOfficial CFP: https://www.comsoc.org/publications/magazines/ie
+ ee-network/cfp/towards-intellicise-agent-communication-networks-autonomous
+ -integration-and-evolution-humans-and-networks\nNote: Special issue: Towar
+ ds Intellicise Agent Communication Networks: Autonomous Integration and Ev
+ olution of Humans and Networks. Manuscript submission deadline: 2026-11-30
+ . Source hub: https://www.comsoc.org/publications/magazines/ieee-network/c
+ fp
+URL:https://www.comsoc.org/publications/magazines/ieee-network/cfp/towards-
+ intellicise-agent-communication-networks-autonomous-integration-and-evolut
+ ion-humans-and-networks
+LOCATION:Magazine / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fhpsr2027.ieee-hpsr.org%2F%3AIEEE%20International%20Confer
+ ence%20on%20High%20Performance%20Switching%20and%20Routing@mud-blog.pages.
+ dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20261130
+DTEND;VALUE=DATE:20261201
+SUMMARY:[CFP] IEEE International Conference on High Performance Switching a
+ nd Routing (HPSR 2027) Submission Deadline
+DESCRIPTION:Field: Networking / Communications\nStatus: watching: 46 days o
+ ut\nOfficial CFP: https://hpsr2027.ieee-hpsr.org/\nNote: Routing\, switchi
+ ng\, transport\, programmable networking\, and carrier-network CFP source 
+ relevant to telecom infrastructure.
+URL:https://hpsr2027.ieee-hpsr.org/
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fsecon2027.ieee-secon.org%2F%3AIEEE%20International%20Conf
+ erence%20on%20Sensing%2C%20Communication%2C%20and%20Networking@mud-blog.pa
+ ges.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20261130
+DTEND;VALUE=DATE:20261201
+SUMMARY:[CFP] IEEE International Conference on Sensing\, Communication\, an
+ d Networking (SECON 2027) Submission Deadline
+DESCRIPTION:Field: Wireless / Mobile\nStatus: watching: 46 days out\nOffici
+ al CFP: https://secon2027.ieee-secon.org/\nNote: Sensing\, communication\,
+  mobile networking\, edge/IoT\, and wireless systems CFP source.
+URL:https://secon2027.ieee-secon.org/
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fdyspan2027.ieee-dyspan.org%2F%3AIEEE%20International%20Sy
+ mposium%20on%20Dynamic%20Spectrum%20Access%20Networks@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20261207
+DTEND;VALUE=DATE:20261208
+SUMMARY:[CFP] IEEE International Symposium on Dynamic Spectrum Access Netwo
+ rks (DySPAN 2027) Submission Deadline
+DESCRIPTION:Field: Wireless / Spectrum\nStatus: watching: 53 days out\nOffi
+ cial CFP: https://dyspan2027.ieee-dyspan.org/\nNote: Spectrum sharing\, co
+ gnitive radio\, and dynamic spectrum access CFP source.
+URL:https://dyspan2027.ieee-dyspan.org/
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F07%2FAI_Age
+ nt_Enabled.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E2%80%94%20AI%
+ 20Agent%20Enabled%20Small-Large%20Model%20Collaboration%20for%20Internet%2
+ 0of%20Things@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20261215
+DTEND;VALUE=DATE:20261216
+SUMMARY:[CFP] IEEE Internet of Things Journal — AI Agent Enabled Small-La
+ rge Model Collaboration for Internet of Things (IEEE IoT-J SI) Submission 
+ Deadline
+DESCRIPTION:Field: Journal Special Issues / IoT and Edge\nStatus: watching:
+  61 days out\nOfficial CFP: https://ieee-iotj.org/wp-content/uploads/2026/
+ 07/AI_Agent_Enabled.pdf\nNote: Special issue: AI Agent Enabled Small-Large
+  Model Collaboration for Internet of Things. Manuscript submission deadlin
+ e: 2026-12-15. Source hub: https://ieee-iotj.org/special-issues/
+URL:https://ieee-iotj.org/wp-content/uploads/2026/07/AI_Agent_Enabled.pdf
+LOCATION:Journal / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F07%2FFluid_
+ Antenna_Systems.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E2%80%94%
+ 20Fluid%20Antenna%20Systems%20for%20Autonomous%20IoT%3A%20Agentic%20AI%2C%
+ 20Edge%20Intelligence%2C%20and%20Foundation%20Models@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
 DTSTART;VALUE=DATE:20261231
 DTEND;VALUE=DATE:20270101
-SUMMARY:[CFP] IEEE Network CFP (Journal special issue) Submission Deadline
-DESCRIPTION:Field: Journal Special Issues / Networking\nStatus: watching: 80 days out\nOfficial CFP: https://www.comsoc.org/publications/magazines/ieee-network/cfp\nNote: Networking special-issue CFP source for network architectures, telecom operations, programmability, and edge networking.
-URL:https://www.comsoc.org/publications/magazines/ieee-network/cfp
+SUMMARY:[CFP] IEEE Internet of Things Journal — Fluid Antenna Systems for
+  Autonomous IoT: Agentic AI\, Edge Intelligence\, and Foundation Models (I
+ EEE IoT-J SI) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / IoT and Edge\nStatus: watching:
+  77 days out\nOfficial CFP: https://ieee-iotj.org/wp-content/uploads/2026/
+ 07/Fluid_Antenna_Systems.pdf\nNote: Special issue: Fluid Antenna Systems f
+ or Autonomous IoT: Agentic AI\, Edge Intelligence\, and Foundation Models.
+  Manuscript submission deadline: 2026-12-31. Source hub: https://ieee-iotj
+ .org/special-issues/
+URL:https://ieee-iotj.org/wp-content/uploads/2026/07/Fluid_Antenna_Systems.
+ pdf
+LOCATION:Journal / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-network%
+ 2Fcfp%2Fdistributed-intelligence-and-collaborative-inference-foundation-mo
+ dels-over-wireless-edge%3AIEEE%20Network%20%E2%80%94%20Distributed%20Intel
+ ligence%20and%20Collaborative%20Inference%20for%20Foundation%20Models%20ov
+ er%20Wireless%20Edge@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20261231
+DTEND;VALUE=DATE:20270101
+SUMMARY:[CFP] IEEE Network — Distributed Intelligence and Collaborative I
+ nference for Foundation Models over Wireless Edge (IEEE Network CFP) Submi
+ ssion Deadline
+DESCRIPTION:Field: Journal Special Issues / Networking\nStatus: watching: 7
+ 7 days out\nOfficial CFP: https://www.comsoc.org/publications/magazines/ie
+ ee-network/cfp/distributed-intelligence-and-collaborative-inference-founda
+ tion-models-over-wireless-edge\nNote: Special issue: Distributed Intellige
+ nce and Collaborative Inference for Foundation Models over Wireless Edge. 
+ Manuscript submission deadline: 2026-12-31. Source hub: https://www.comsoc
+ .org/publications/magazines/ieee-network/cfp
+URL:https://www.comsoc.org/publications/magazines/ieee-network/cfp/distribu
+ ted-intelligence-and-collaborative-inference-foundation-models-over-wirele
+ ss-edge
 LOCATION:Magazine / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:IEEE_Wireless_Commun._CFP-2027-03-01@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
+UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-communic
+ ations-magazine%2Fcfp%2Fedge-and-network-computing-underwater-communicatio
+ n%3AIEEE%20Communications%20Magazine%20%E2%80%94%20Edge%20and%20In-Network
+ %20Computing%20for%20Underwater%20Communication@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270101
+DTEND;VALUE=DATE:20270102
+SUMMARY:[CFP] IEEE Communications Magazine — Edge and In-Network Computin
+ g for Underwater Communication (IEEE ComMag CFP) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / Communications\nStatus: watchin
+ g: 78 days out\nOfficial CFP: https://www.comsoc.org/publications/magazine
+ s/ieee-communications-magazine/cfp/edge-and-network-computing-underwater-c
+ ommunication\nNote: Special issue: Edge and In-Network Computing for Under
+ water Communication. Manuscript submission deadline: 2027-01-01. Source hu
+ b: https://www.comsoc.org/publications/magazines/ieee-communications-magaz
+ ine/cfp
+URL:https://www.comsoc.org/publications/magazines/ieee-communications-magaz
+ ine/cfp/edge-and-network-computing-underwater-communication
+LOCATION:Magazine / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-wireless
+ -communications%2Fcfp%2F3d-metasurface-assisted-wireless-communications-mo
+ del-based-designs-ai-driven-approaches%3AIEEE%20Wireless%20Communications%
+ 20%E2%80%94%203D%20Metasurface-Assisted%20Wireless%20Communications%3A%20F
+ rom%20Model-Based%20Designs%20to%20AI-Driven%20Approaches@mud-blog.pages.d
+ ev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270101
+DTEND;VALUE=DATE:20270102
+SUMMARY:[CFP] IEEE Wireless Communications — 3D Metasurface-Assisted Wire
+ less Communications: From Model-Based Designs to AI-Driven Approaches (IEE
+ E Wireless Commun. CFP) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / Wireless\nStatus: watching: 78 
+ days out\nOfficial CFP: https://www.comsoc.org/publications/magazines/ieee
+ -wireless-communications/cfp/3d-metasurface-assisted-wireless-communicatio
+ ns-model-based-designs-ai-driven-approaches\nNote: Special issue: 3D Metas
+ urface-Assisted Wireless Communications: From Model-Based Designs to AI-Dr
+ iven Approaches. Manuscript submission deadline: 2027-01-01. Source hub: h
+ ttps://www.comsoc.org/publications/magazines/ieee-wireless-communications/
+ cfp
+URL:https://www.comsoc.org/publications/magazines/ieee-wireless-communicati
+ ons/cfp/3d-metasurface-assisted-wireless-communications-model-based-design
+ s-ai-driven-approaches
+LOCATION:Magazine / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2F2027.ieee-isit.org%2F%3AIEEE%20International%20Symposium%
+ 20on%20Information%20Theory@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270110
+DTEND;VALUE=DATE:20270111
+SUMMARY:[CFP] IEEE International Symposium on Information Theory (ISIT 2027
+ ) Submission Deadline
+DESCRIPTION:Field: Communications / Information Theory\nStatus: watching: 8
+ 7 days out\nOfficial CFP: https://2027.ieee-isit.org/\nNote: Information t
+ heory flagship CFP source\; useful for coding\, communication theory\, and
+  learning-theoretic communications.
+URL:https://2027.ieee-isit.org/
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F07%2FCausal
+ _AI_Counterfactual.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E2%80%
+ 94%20Causal%20AI%20and%20Counterfactual%20Optimization%20for%20Autonomous%
+ 20IoT%20Systems@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270115
+DTEND;VALUE=DATE:20270116
+SUMMARY:[CFP] IEEE Internet of Things Journal — Causal AI and Counterfact
+ ual Optimization for Autonomous IoT Systems (IEEE IoT-J SI) Submission Dea
+ dline
+DESCRIPTION:Field: Journal Special Issues / IoT and Edge\nStatus: watching:
+  92 days out\nOfficial CFP: https://ieee-iotj.org/wp-content/uploads/2026/
+ 07/Causal_AI_Counterfactual.pdf\nNote: Special issue: Causal AI and Counte
+ rfactual Optimization for Autonomous IoT Systems. Manuscript submission de
+ adline: 2027-01-15. Source hub: https://ieee-iotj.org/special-issues/
+URL:https://ieee-iotj.org/wp-content/uploads/2026/07/Causal_AI_Counterfactu
+ al.pdf
+LOCATION:Journal / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fnetsoft2027.ieee-netsoft.org%2F%3AIEEE%20International%20
+ Conference%20on%20Network%20Softwarization@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270115
+DTEND;VALUE=DATE:20270116
+SUMMARY:[CFP] IEEE International Conference on Network Softwarization (NetS
+ oft 2027) Submission Deadline
+DESCRIPTION:Field: Networking / Softwarization\nStatus: watching: 92 days o
+ ut\nOfficial CFP: https://netsoft2027.ieee-netsoft.org/\nNote: SDN/NFV/net
+ work softwarization CFP source\; relevant to O-RAN\, xApps/rApps\, and pro
+ grammable telecom systems.
+URL:https://netsoft2027.ieee-netsoft.org/
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fpimrc2027.ieee-pimrc.org%2Fnode%2F27056%3AIEEE%20Internat
+ ional%20Symposium%20on%20Personal%2C%20Indoor%20and%20Mobile%20Radio%20Com
+ munications@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270115
+DTEND;VALUE=DATE:20270116
+SUMMARY:[CFP] IEEE International Symposium on Personal\, Indoor and Mobile 
+ Radio Communications (PIMRC 2027) Submission Deadline
+DESCRIPTION:Field: Wireless / Communications\nStatus: watching: 92 days out
+ \nOfficial CFP: https://pimrc2027.ieee-pimrc.org/node/27056\nNote: Wireles
+ s and mobile radio CFP source\; useful for cellular\, RAN\, and radio acce
+ ss work.
+URL:https://pimrc2027.ieee-pimrc.org/node/27056
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fwcnc2027.ieee-wcnc.org%2Fnode%2F27056%3AIEEE%20Wireless%2
+ 0Communications%20and%20Networking%20Conference@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270115
+DTEND;VALUE=DATE:20270116
+SUMMARY:[CFP] IEEE Wireless Communications and Networking Conference (WCNC 
+ 2027) Submission Deadline
+DESCRIPTION:Field: Wireless / Communications\nStatus: watching: 92 days out
+ \nOfficial CFP: https://wcnc2027.ieee-wcnc.org/node/27056\nNote: Major IEE
+ E wireless communications venue\; important for RAN\, 5G/6G\, and wireless
+  networking CFP tracking.
+URL:https://wcnc2027.ieee-wcnc.org/node/27056
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F08%2FEmbodi
+ ed_Active_Sensing.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E2%80%9
+ 4%20Embodied%20Active%20Sensing%20and%20Environment-Aware%20IoT%20Systems%
+ 20in%206G@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270131
+DTEND;VALUE=DATE:20270201
+SUMMARY:[CFP] IEEE Internet of Things Journal — Embodied Active Sensing a
+ nd Environment-Aware IoT Systems in 6G (IEEE IoT-J SI) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / IoT and Edge\nStatus: watching:
+  108 days out\nOfficial CFP: https://ieee-iotj.org/wp-content/uploads/2026
+ /08/Embodied_Active_Sensing.pdf\nNote: Special issue: Embodied Active Sens
+ ing and Environment-Aware IoT Systems in 6G. Manuscript submission deadlin
+ e: 2027-01-31. Source hub: https://ieee-iotj.org/special-issues/
+URL:https://ieee-iotj.org/wp-content/uploads/2026/08/Embodied_Active_Sensin
+ g.pdf
+LOCATION:Journal / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-communic
+ ations-magazine%2Fcfp%2Finternet-agents-communications-and-networking-arch
+ itectures-protocols-and-orchestration%3AIEEE%20Communications%20Magazine%2
+ 0%E2%80%94%20Internet%20of%20Agents%20for%20Communications%20and%20Network
+ ing%3A%20Architectures%2C%20Protocols%2C%20and%20Orchestration@mud-blog.pa
+ ges.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270201
+DTEND;VALUE=DATE:20270202
+SUMMARY:[CFP] IEEE Communications Magazine — Internet of Agents for Commu
+ nications and Networking: Architectures\, Protocols\, and Orchestration (I
+ EEE ComMag CFP) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / Communications\nStatus: watchin
+ g: 109 days out\nOfficial CFP: https://www.comsoc.org/publications/magazin
+ es/ieee-communications-magazine/cfp/internet-agents-communications-and-net
+ working-architectures-protocols-and-orchestration\nNote: Special issue: In
+ ternet of Agents for Communications and Networking: Architectures\, Protoc
+ ols\, and Orchestration. Manuscript submission deadline: 2027-02-01. Sourc
+ e hub: https://www.comsoc.org/publications/magazines/ieee-communications-m
+ agazine/cfp
+URL:https://www.comsoc.org/publications/magazines/ieee-communications-magaz
+ ine/cfp/internet-agents-communications-and-networking-architectures-protoc
+ ols-and-orchestration
+LOCATION:Magazine / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fevents.vtsociety.org%2Fvtc2027-fall%2F%3AIEEE%20Vehicular
+ %20Technology%20Conference%20Fall@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270201
+DTEND;VALUE=DATE:20270202
+SUMMARY:[CFP] IEEE Vehicular Technology Conference Fall (VTC-Fall 2027) Sub
+ mission Deadline
+DESCRIPTION:Field: Wireless / Vehicular\nStatus: watching: 109 days out\nOf
+ ficial CFP: https://events.vtsociety.org/vtc2027-fall/\nNote: Official VTC
+ -Fall 2027 submission call. Automatically resolved from https://events.vts
+ ociety.org/vtc2026-fall/.
+URL:https://events.vtsociety.org/vtc2027-fall/
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-communic
+ ations-magazine%2Fcfp%2Fagent-gateways-enabling-secure-scalable-and-autono
+ mous-interoperability-agentic-ai-environment%3AIEEE%20Communications%20Mag
+ azine%20%E2%80%94%20Agent%20Gateways%3A%20Enabling%20Secure%2C%20Scalable%
+ 2C%20and%20Autonomous%20Interoperability%20in%20Agentic%20AI%20Environment
+ @mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270215
+DTEND;VALUE=DATE:20270216
+SUMMARY:[CFP] IEEE Communications Magazine — Agent Gateways: Enabling Sec
+ ure\, Scalable\, and Autonomous Interoperability in Agentic AI Environment
+  (IEEE ComMag CFP) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / Communications\nStatus: watchin
+ g: 123 days out\nOfficial CFP: https://www.comsoc.org/publications/magazin
+ es/ieee-communications-magazine/cfp/agent-gateways-enabling-secure-scalabl
+ e-and-autonomous-interoperability-agentic-ai-environment\nNote: Special is
+ sue: Agent Gateways: Enabling Secure\, Scalable\, and Autonomous Interoper
+ ability in Agentic AI Environment. Manuscript submission deadline: 2027-02
+ -15. Source hub: https://www.comsoc.org/publications/magazines/ieee-commun
+ ications-magazine/cfp
+URL:https://www.comsoc.org/publications/magazines/ieee-communications-magaz
+ ine/cfp/agent-gateways-enabling-secure-scalable-and-autonomous-interoperab
+ ility-agentic-ai-environment
+LOCATION:Magazine / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-communic
+ ations-magazine%2Fcfp%2Fpost-quantum-cryptography-real-world-deployment%3A
+ IEEE%20Communications%20Magazine%20%E2%80%94%20Post-Quantum%20Cryptography
+ %20for%20Real-World%20Deployment@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270215
+DTEND;VALUE=DATE:20270216
+SUMMARY:[CFP] IEEE Communications Magazine — Post-Quantum Cryptography fo
+ r Real-World Deployment (IEEE ComMag CFP) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / Communications\nStatus: watchin
+ g: 123 days out\nOfficial CFP: https://www.comsoc.org/publications/magazin
+ es/ieee-communications-magazine/cfp/post-quantum-cryptography-real-world-d
+ eployment\nNote: Special issue: Post-Quantum Cryptography for Real-World D
+ eployment. Manuscript submission deadline: 2027-02-15. Source hub: https:/
+ /www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp
+URL:https://www.comsoc.org/publications/magazines/ieee-communications-magaz
+ ine/cfp/post-quantum-cryptography-real-world-deployment
+LOCATION:Magazine / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F08%2FAmbien
+ t_Intelligence_AI.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E2%80%9
+ 4%20Ambient%20Intelligence%20for%20AI-Native%20IoT%3A%20Invisible%2C%20Con
+ text-Aware%2C%20and%20Autonomous%20Experiences@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270215
+DTEND;VALUE=DATE:20270216
+SUMMARY:[CFP] IEEE Internet of Things Journal — Ambient Intelligence for 
+ AI-Native IoT: Invisible\, Context-Aware\, and Autonomous Experiences (IEE
+ E IoT-J SI) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / IoT and Edge\nStatus: watching:
+  123 days out\nOfficial CFP: https://ieee-iotj.org/wp-content/uploads/2026
+ /08/Ambient_Intelligence_AI.pdf\nNote: Special issue: Ambient Intelligence
+  for AI-Native IoT: Invisible\, Context-Aware\, and Autonomous Experiences
+ . Manuscript submission deadline: 2027-02-15. Source hub: https://ieee-iot
+ j.org/special-issues/
+URL:https://ieee-iotj.org/wp-content/uploads/2026/08/Ambient_Intelligence_A
+ I.pdf
+LOCATION:Journal / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fmeditcom2027.ieee-meditcom.org%2F%3AIEEE%20International%
+ 20Mediterranean%20Conference%20on%20Communications%20and%20Networking@mud-
+ blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270226
+DTEND;VALUE=DATE:20270227
+SUMMARY:[CFP] IEEE International Mediterranean Conference on Communications
+  and Networking (MeditCom 2027) Submission Deadline
+DESCRIPTION:Field: Wireless / Communications\nStatus: watching: 134 days ou
+ t\nOfficial CFP: https://meditcom2027.ieee-meditcom.org/\nNote: Regional I
+ EEE ComSoc communications and networking CFP source with wireless\, 5G/6G\
+ , IoT\, and networked systems tracks.
+URL:https://meditcom2027.ieee-meditcom.org/
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F08%2FDistri
+ buted_Communication_Aware.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20
+ %E2%80%94%20Distributed%20Communication-Aware%20Agentic%20Artificial%20Int
+ elligence%20for%20the%20Internet%20of%20Things@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270228
+DTEND;VALUE=DATE:20270301
+SUMMARY:[CFP] IEEE Internet of Things Journal — Distributed Communication
+ -Aware Agentic Artificial Intelligence for the Internet of Things (IEEE Io
+ T-J SI) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / IoT and Edge\nStatus: watching:
+  136 days out\nOfficial CFP: https://ieee-iotj.org/wp-content/uploads/2026
+ /08/Distributed_Communication_Aware.pdf\nNote: Special issue: Distributed 
+ Communication-Aware Agentic Artificial Intelligence for the Internet of Th
+ ings. Manuscript submission deadline: 2027-02-28. Source hub: https://ieee
+ -iotj.org/special-issues/
+URL:https://ieee-iotj.org/wp-content/uploads/2026/08/Distributed_Communicat
+ ion_Aware.pdf
+LOCATION:Journal / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-wireless
+ -communications%2Fcfp%2Fatomic-network-quantum-radio-front-ends-6g-wireles
+ s-communications-and-sensing%3AIEEE%20Wireless%20Communications%20%E2%80%9
+ 4%20Atomic-to-Network%3A%20Quantum%20Radio%20Front-Ends%20for%206G%20Wirel
+ ess%20Communications%20and%20Sensing@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
 DTSTART;VALUE=DATE:20270301
 DTEND;VALUE=DATE:20270302
-SUMMARY:[CFP] IEEE Wireless Commun. CFP (Journal special issue) Submission Deadline
-DESCRIPTION:Field: Journal Special Issues / Wireless\nStatus: watching: 140 days out\nOfficial CFP: https://www.comsoc.org/publications/magazines/ieee-wireless-communications/cfp\nNote: Wireless communications feature-topic CFP source for RAN, 5G/6G, spectrum, mobile networking, and PHY/MAC themes.
-URL:https://www.comsoc.org/publications/magazines/ieee-wireless-communications/cfp
+SUMMARY:[CFP] IEEE Wireless Communications — Atomic-to-Network: Quantum R
+ adio Front-Ends for 6G Wireless Communications and Sensing (IEEE Wireless 
+ Commun. CFP) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / Wireless\nStatus: watching: 137
+  days out\nOfficial CFP: https://www.comsoc.org/publications/magazines/iee
+ e-wireless-communications/cfp/atomic-network-quantum-radio-front-ends-6g-w
+ ireless-communications-and-sensing\nNote: Special issue: Atomic-to-Network
+ : Quantum Radio Front-Ends for 6G Wireless Communications and Sensing. Man
+ uscript submission deadline: 2027-03-01. Source hub: https://www.comsoc.or
+ g/publications/magazines/ieee-wireless-communications/cfp
+URL:https://www.comsoc.org/publications/magazines/ieee-wireless-communicati
+ ons/cfp/atomic-network-quantum-radio-front-ends-6g-wireless-communications
+ -and-sensing
 LOCATION:Magazine / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:IEEE_ComMag_CFP-2027-03-15@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
+UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-communic
+ ations-magazine%2Fcfp%2Fmemory-poisoning-across-networked-learning-enabled
+ -agents-threats-detection-and-defense%3AIEEE%20Communications%20Magazine%2
+ 0%E2%80%94%20Memory%20Poisoning%20Across%20Networked%20Learning-Enabled%20
+ Agents%3A%20Threats%2C%20Detection%2C%20and%20Defense@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
 DTSTART;VALUE=DATE:20270315
 DTEND;VALUE=DATE:20270316
-SUMMARY:[CFP] IEEE ComMag CFP (Journal special issue) Submission Deadline
-DESCRIPTION:Field: Journal Special Issues / Communications\nStatus: watching: 154 days out\nOfficial CFP: https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp\nNote: Feature-topic CFP source for communications systems, wireless, networking, 6G, and telecom operations.
-URL:https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp
+SUMMARY:[CFP] IEEE Communications Magazine — Memory Poisoning Across Netw
+ orked Learning-Enabled Agents: Threats\, Detection\, and Defense (IEEE Com
+ Mag CFP) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / Communications\nStatus: watchin
+ g: 151 days out\nOfficial CFP: https://www.comsoc.org/publications/magazin
+ es/ieee-communications-magazine/cfp/memory-poisoning-across-networked-lear
+ ning-enabled-agents-threats-detection-and-defense\nNote: Special issue: Me
+ mory Poisoning Across Networked Learning-Enabled Agents: Threats\, Detecti
+ on\, and Defense. Manuscript submission deadline: 2027-03-15. Source hub: 
+ https://www.comsoc.org/publications/magazines/ieee-communications-magazine
+ /cfp
+URL:https://www.comsoc.org/publications/magazines/ieee-communications-magaz
+ ine/cfp/memory-poisoning-across-networked-learning-enabled-agents-threats-
+ detection-and-defense
 LOCATION:Magazine / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:IEEE_JSAC_CFP-2027-03-31@mud-blog.pages.dev
-DTSTAMP:20261011T193958Z
+UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-communic
+ ations-magazine%2Fcfp%2Fupper-mid-band-fr3-6g-technologies-systems-and-dep
+ loyment%3AIEEE%20Communications%20Magazine%20%E2%80%94%20The%20Upper%20Mid
+ -Band%20%28FR3%29%20for%206G%3A%20Technologies%2C%20Systems%2C%20and%20Dep
+ loyment@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270315
+DTEND;VALUE=DATE:20270316
+SUMMARY:[CFP] IEEE Communications Magazine — The Upper Mid-Band (FR3) for
+  6G: Technologies\, Systems\, and Deployment (IEEE ComMag CFP) Submission 
+ Deadline
+DESCRIPTION:Field: Journal Special Issues / Communications\nStatus: watchin
+ g: 151 days out\nOfficial CFP: https://www.comsoc.org/publications/magazin
+ es/ieee-communications-magazine/cfp/upper-mid-band-fr3-6g-technologies-sys
+ tems-and-deployment\nNote: Special issue: The Upper Mid-Band (FR3) for 6G:
+  Technologies\, Systems\, and Deployment. Manuscript submission deadline: 
+ 2027-03-15. Source hub: https://www.comsoc.org/publications/magazines/ieee
+ -communications-magazine/cfp
+URL:https://www.comsoc.org/publications/magazines/ieee-communications-magaz
+ ine/cfp/upper-mid-band-fr3-6g-technologies-systems-and-deployment
+LOCATION:Magazine / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F09%2FFedera
+ ted_Unlearning_Model.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E2%8
+ 0%94%20Federated%20Unlearning%20and%20Model%20Governance%20for%20Trustwort
+ hy%20IoT%3A%20Selective%20Forgetting%2C%20Provenance%2C%20and%20Auditabili
+ ty%20at%20the%20Edge@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270315
+DTEND;VALUE=DATE:20270316
+SUMMARY:[CFP] IEEE Internet of Things Journal — Federated Unlearning and 
+ Model Governance for Trustworthy IoT: Selective Forgetting\, Provenance\, 
+ and Auditability at the Edge (IEEE IoT-J SI) Submission Deadline
+DESCRIPTION:Field: Journal Special Issues / IoT and Edge\nStatus: watching:
+  151 days out\nOfficial CFP: https://ieee-iotj.org/wp-content/uploads/2026
+ /09/Federated_Unlearning_Model.pdf\nNote: Special issue: Federated Unlearn
+ ing and Model Governance for Trustworthy IoT: Selective Forgetting\, Prove
+ nance\, and Auditability at the Edge. Manuscript submission deadline: 2027
+ -03-15. Source hub: https://ieee-iotj.org/special-issues/
+URL:https://ieee-iotj.org/wp-content/uploads/2026/09/Federated_Unlearning_M
+ odel.pdf
+LOCATION:Journal / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fjournals%2Fieee-jsac%2Fcf
+ p%2Fnext-generation-underwater-acoustic-communication-systems%3AIEEE%20Jou
+ rnal%20on%20Selected%20Areas%20in%20Communications%20%E2%80%94%20Next-Gene
+ ration%20Underwater%20Acoustic%20Communication%20Systems@mud-blog.pages.de
+ v
+DTSTAMP:20261014T170256Z
 DTSTART;VALUE=DATE:20270331
 DTEND;VALUE=DATE:20270401
-SUMMARY:[CFP] IEEE JSAC CFP (Journal special issue) Submission Deadline
-DESCRIPTION:Field: Journal Special Issues / Communications\nStatus: watching: 170 days out\nOfficial CFP: https://www.comsoc.org/publications/journals/ieee-jsac/cfp\nNote: Special-issue CFP hub for selected areas in communications; add individual SI deadlines as configured deadlines when posted.
-URL:https://www.comsoc.org/publications/journals/ieee-jsac/cfp
+SUMMARY:[CFP] IEEE Journal on Selected Areas in Communications — Next-Gen
+ eration Underwater Acoustic Communication Systems (IEEE JSAC CFP) Submissi
+ on Deadline
+DESCRIPTION:Field: Journal Special Issues / Communications\nStatus: watchin
+ g: 167 days out\nOfficial CFP: https://www.comsoc.org/publications/journal
+ s/ieee-jsac/cfp/next-generation-underwater-acoustic-communication-systems\
+ nNote: Special issue: Next-Generation Underwater Acoustic Communication Sy
+ stems. Manuscript submission deadline: 2027-03-31. Source hub: https://www
+ .comsoc.org/publications/journals/ieee-jsac/cfp
+URL:https://www.comsoc.org/publications/journals/ieee-jsac/cfp/next-generat
+ ion-underwater-acoustic-communication-systems
+LOCATION:Journal / online submission
+END:VEVENT
+BEGIN:VEVENT
+UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F09%2FIndust
+ rial_Internet_Things.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E2%8
+ 0%94%20Industrial%20Internet%20of%20Things%20Communication%20Networks%20%2
+ 8IIoT-CNets%29%3A%20Architectures%2C%20Protocols%2C%20and%20Intelligence%2
+ 0for%20Next-Generation%20Industrial%20Systems@mud-blog.pages.dev
+DTSTAMP:20261014T170256Z
+DTSTART;VALUE=DATE:20270331
+DTEND;VALUE=DATE:20270401
+SUMMARY:[CFP] IEEE Internet of Things Journal — Industrial Internet of Th
+ ings Communication Networks (IIoT-CNets): Architectures\, Protocols\, and 
+ Intelligence for Next-Generation Industrial Systems (IEEE IoT-J SI) Submis
+ sion Deadline
+DESCRIPTION:Field: Journal Special Issues / IoT and Edge\nStatus: watching:
+  167 days out\nOfficial CFP: https://ieee-iotj.org/wp-content/uploads/2026
+ /09/Industrial_Internet_Things.pdf\nNote: Special issue: Industrial Intern
+ et of Things Communication Networks (IIoT-CNets): Architectures\, Protocol
+ s\, and Intelligence for Next-Generation Industrial Systems. Manuscript su
+ bmission deadline: 2027-03-31. Source hub: https://ieee-iotj.org/special-i
+ ssues/
+URL:https://ieee-iotj.org/wp-content/uploads/2026/09/Industrial_Internet_Th
+ ings.pdf
 LOCATION:Journal / online submission
 END:VEVENT
 END:VCALENDAR

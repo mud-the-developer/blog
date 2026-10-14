@@ -19,7 +19,10 @@ use pulldown_cmark::{Options, Parser, html};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use tokio::{fs, net::TcpListener};
-use tower_http::{compression::CompressionLayer, services::ServeDir};
+use tower_http::{
+    compression::CompressionLayer,
+    services::{ServeDir, ServeFile},
+};
 
 pub mod cfp;
 
@@ -157,6 +160,7 @@ struct NewsTemplate<'a> {
 #[template(path = "cfp.html")]
 struct CfpTemplate<'a> {
     latest_issue: Vec<&'a Post>,
+    weekly_issues: Vec<&'a Post>,
     archive_json: &'a str,
 }
 
@@ -198,6 +202,8 @@ pub fn slugify(value: &str) -> String {
 }
 
 fn parse_frontmatter(source: &str) -> (Vec<(String, String)>, String) {
+    let normalized = source.replace("\r\n", "\n");
+    let source = normalized.as_str();
     if !source.starts_with("---\n") {
         return (Vec::new(), source.to_string());
     }
@@ -849,11 +855,15 @@ pub fn render_cfp_page(posts: &[Post]) -> BlogResult<String> {
     let archive_json = archive_json(posts)?;
     let latest_issue = posts
         .iter()
-        .filter(|post| post.folder == "cfp")
-        .take(1)
+        .filter(|post| post.folder == "cfp" && post.slug == "cfp-radar")
         .collect::<Vec<_>>();
+    let weekly_issues = posts
+        .iter()
+        .filter(|post| post.folder == "cfp" && post.slug != "cfp-radar")
+        .collect();
     Ok(CfpTemplate {
         latest_issue,
+        weekly_issues,
         archive_json: &archive_json,
     }
     .render()?)
@@ -1005,6 +1015,10 @@ pub fn router(posts: Vec<Post>, assets_root: impl Into<PathBuf>) -> BlogResult<R
         .route("/api/focused-issue", post(focused_issue_handler))
         .route("/api/news-search", post(news_search_handler))
         .route("/posts/{slug}/", get(post_handler))
+        .route_service(
+            "/cfp/radar.ics",
+            ServeFile::new(assets_root.join("cfp/radar.ics")),
+        )
         .nest_service("/cfp/data", ServeDir::new(assets_root.join("cfp/data")))
         .nest_service("/news/data", ServeDir::new(assets_root.join("news/data")))
         .nest_service("/assets", ServeDir::new(assets_root.join("assets")))

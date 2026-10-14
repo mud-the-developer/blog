@@ -3,7 +3,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use mud_blog::{build_static_site, render_posts_fragment};
+use mud_blog::{build_static_site, parse_markdown_post, render_posts_fragment};
 
 fn count_markdown_posts(dir: &Path) -> Result<usize, Box<dyn std::error::Error>> {
     let mut count = 0;
@@ -16,6 +16,20 @@ fn count_markdown_posts(dir: &Path) -> Result<usize, Box<dyn std::error::Error>>
         }
     }
     Ok(count)
+}
+
+#[test]
+fn parses_windows_and_unix_frontmatter_identically() {
+    let source =
+        "---\ntitle: Research\nslug: research\ndate: 2026-10-15\ntags: [cfp, wireless]\n---\nBody";
+    let unix = parse_markdown_post(source, "fallback");
+    let windows = parse_markdown_post(&source.replace('\n', "\r\n"), "fallback");
+    assert_eq!(windows.title, unix.title);
+    assert_eq!(windows.slug, unix.slug);
+    assert_eq!(windows.date, unix.date);
+    assert_eq!(windows.tags, unix.tags);
+    assert_eq!(windows.body, unix.body);
+    assert_eq!(windows.html, unix.html);
 }
 
 fn test_output_dir(name: &str) -> PathBuf {

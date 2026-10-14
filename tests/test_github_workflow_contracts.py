@@ -2,7 +2,6 @@ import re
 import unittest
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 UPDATE_WORKFLOW = ROOT / ".github" / "workflows" / "update-news-digest.yml"
 CFP_WORKFLOW = ROOT / ".github" / "workflows" / "update-cfp-radar.yml"
@@ -75,19 +74,23 @@ class GithubWorkflowContractTests(unittest.TestCase):
         self.assertIn("api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${CF_PAGES_PROJECT}", deploy)
         self.assertNotIn("npx wrangler@4 whoami", deploy)
 
-    def test_cfp_workflow_generates_weekly_rust_artifacts_and_deploys_via_main(self) -> None:
+    def test_cfp_workflow_refreshes_daily_and_publishes_all_weekly_artifacts(self) -> None:
         cfp = self.read_cfp_workflow()
 
         self.assertIn('name: Update CFP Radar', cfp)
-        self.assertIn('cron: "30 15 * * 0"', cfp)
+        self.assertIn('cron: "30 15 * * *"', cfp)
         self.assertIn("workflow_dispatch:", cfp)
         self.assertIn("date:", cfp)
         self.assertIn("cargo run -- cfp update", cfp)
         self.assertIn("cargo run -- cfp validate", cfp)
         self.assertIn("npm run build", cfp)
-        self.assertIn("paths=(data/cfp posts/cfp static/cfp/data)", cfp)
+        self.assertIn("paths=(data/cfp posts/cfp static/cfp)", cfp)
+        self.assertIn("npm test", cfp)
+        self.assertIn("npm run lint", cfp)
+        self.assertIn("git pull --rebase origin main", cfp)
         self.assertIn("git push origin HEAD:main", cfp)
-        self.assertIn("Deploy Cloudflare Pages will run from the Update CFP Radar workflow_run event", cfp)
+        self.assertIn("deploy runs via workflow_run", cfp)
+        self.assertNotRegex(cfp, r"uses: [^\n]+@(?:v[0-9]+|stable)\b")
 
 
 if __name__ == "__main__":

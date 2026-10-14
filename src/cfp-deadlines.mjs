@@ -1,10 +1,11 @@
 const DAY_MS = 24 * 60 * 60 * 1000;
-const DEADLINE_CELL_PATTERN = /^(\d{4}-\d{2}-\d{2}) \((?:closed|due today|due in \d+ days|upcoming in \d+ days|watching: \d+ days out)\)$/;
+const DEADLINE_CELL_PATTERN =
+  /^(\d{4}-\d{2}-\d{2}) \((?:closed|due today|due in \d+ days|upcoming in \d+ days|watching: \d+ days out)\)( · cached.*)?$/;
 
 function isoDateValue(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
   const timestamp = Date.parse(`${value}T00:00:00Z`);
-  return Number.isNaN(timestamp) ? null : timestamp;
+  return Number.isNaN(timestamp) || new Date(timestamp).toISOString().slice(0, 10) !== value ? null : timestamp;
 }
 
 export function currentDateInKst(now = new Date()) {
@@ -39,7 +40,7 @@ export function refreshCfpDeadlineCells(root = document, currentDate = currentDa
 
     const status = deadlineStatus(match[1], currentDate);
     if (!status) continue;
-    cell.textContent = `${match[1]} (${status})`;
+    cell.textContent = `${match[1]} (${status})${match[2] || ''}`;
     cell.dataset.cfpDeadlineAsOf = currentDate;
     refreshed += 1;
   }
@@ -48,7 +49,7 @@ export function refreshCfpDeadlineCells(root = document, currentDate = currentDa
 
 if (typeof document !== 'undefined') {
   const title = document.querySelector('.post-reader h1')?.textContent || '';
-  if (title.includes('CFP Radar')) {
+  if (document.body?.dataset.layout === 'cfp-index' || (title.includes('CFP Radar') && !title.includes('Week of'))) {
     refreshCfpDeadlineCells();
   }
 }

@@ -20,6 +20,10 @@ npm run test:browser
 npm run dev         # serves 0.0.0.0:4173
 ```
 
+## CFP automation
+
+The CFP dashboard refreshes daily and keeps one note per KST week. See [CFP automation](docs/cfp-automation.md) for edition discovery, verification, weekly archives, and calendar feeds.
+
 ## Content
 
 Add posts as Markdown files under `posts/` with frontmatter:

@@ -1,0 +1,3 @@
+# Preserve RFC 5545 line endings and meaningful whitespace in folded lines.
+*.ics -text whitespace=-blank-at-eol,cr-at-eol
+posts/cfp/*.md text eol=lf

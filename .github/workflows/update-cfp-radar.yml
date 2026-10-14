@@ -2,7 +2,7 @@ name: Update CFP Radar
 
 on:
   schedule:
-    - cron: "30 15 * * 0"
+    - cron: "30 15 * * *"
   workflow_dispatch:
     inputs:
       date:
@@ -24,18 +24,18 @@ jobs:
       TZ: Asia/Seoul
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           fetch-depth: 0
 
       - name: Set up Rust
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@686976e191b89faba57d3206551f0f330d8cb249
 
       - name: Cache Rust build
-        uses: Swatinem/rust-cache@v2
+        uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
 
       - name: Set up Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: "22"
           cache: "npm"
@@ -60,11 +60,13 @@ jobs:
           cargo run -- cfp update "${args[@]}"
           cargo run -- cfp validate
           npm run build
+          npm test
+          npm run lint
 
       - name: Commit and push CFP artifacts
         run: |
           set -euo pipefail
-          paths=(data/cfp posts/cfp static/cfp/data)
+          paths=(data/cfp posts/cfp static/cfp)
 
           if git diff --quiet -- "${paths[@]}"; then
             echo "No CFP Radar changes to commit."
@@ -72,11 +74,13 @@ jobs:
           fi
 
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add "${paths[@]}"
           issue_date="$(date +%F)"
-          git commit -m "Refresh the weekly CFP Radar for ${issue_date}"
+          git commit -m "Refresh CFP Radar and weekly note for ${issue_date}"
+          git pull --rebase origin main
           git push origin HEAD:main
 
-          echo "Pushed CFP artifacts to main; Deploy Cloudflare Pages will run from the Update CFP Radar workflow_run event."
+          echo "CFP artifacts pushed; deploy runs via workflow_run."
