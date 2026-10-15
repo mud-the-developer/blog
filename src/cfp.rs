@@ -2717,7 +2717,7 @@ mod tests {
             for (status, body) in pages {
                 let (mut stream, _) = listener.accept().await.unwrap();
                 let mut request = [0; 4096];
-                stream.read(&mut request).await.unwrap();
+                assert!(stream.read(&mut request).await.unwrap() > 0);
                 let response = format!(
                     "HTTP/1.1 {status} Response\r\nContent-Type: text/html\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
                     body.len()
