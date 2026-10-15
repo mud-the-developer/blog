@@ -2,7 +2,7 @@ use std::path::PathBuf;
 
 use mud_blog::{
     BlogResult, build_static_site,
-    cfp::{update_cfp_artifacts, validate_cfp_artifacts},
+    cfp::{render_cfp_artifacts, update_cfp_artifacts, validate_cfp_artifacts},
     serve,
 };
 
@@ -38,6 +38,13 @@ async fn main() -> BlogResult<()> {
                         issue.issue_date, issue.source_count, issue.fetched_count
                     );
                 }
+                "render" => {
+                    let issue = render_cfp_artifacts(".").await?;
+                    println!(
+                        "Rendered CFP Radar from the existing {} snapshot without fetching sources",
+                        issue.issue_date
+                    );
+                }
                 "validate" => {
                     let issue = validate_cfp_artifacts(".").await?;
                     println!(
@@ -49,7 +56,7 @@ async fn main() -> BlogResult<()> {
                 }
                 other => {
                     eprintln!(
-                        "unknown cfp command: {other}\nusage: mud-blog cfp [update|validate] [--date YYYY-MM-DD]"
+                        "unknown cfp command: {other}\nusage: mud-blog cfp [update|render|validate] [--date YYYY-MM-DD]"
                     );
                     std::process::exit(2);
                 }
@@ -77,7 +84,7 @@ async fn main() -> BlogResult<()> {
         }
         other => {
             eprintln!(
-                "unknown command: {other}\nusage: mud-blog [build|cfp update|cfp validate|serve --host 0.0.0.0 --port 4173]"
+                "unknown command: {other}\nusage: mud-blog [build|cfp update|cfp render|cfp validate|serve --host 0.0.0.0 --port 4173]"
             );
             std::process::exit(2);
         }

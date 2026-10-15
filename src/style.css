@@ -1279,6 +1279,33 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
   color: var(--muted);
   opacity: 0.6;
 }
+.cfp-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.cfp-actions .cfp-sync-link { max-width: 100%; padding: 9px 12px; white-space: normal; }
+[data-layout="cfp-index"] .cfp-calendar-sync-banner { display: none; }
+.post-body .cfp-table-scroll { width: 100%; max-width: 100%; overflow-x: auto; margin: 14px 0 22px; -webkit-overflow-scrolling: touch; }
+.post-body .cfp-table-scroll:focus-visible,
+.post-body .cfp-venue > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.post-body .cfp-table-scroll table { display: table; width: 100%; min-width: 860px; margin: 0; table-layout: fixed; }
+.post-body .cfp-table-scroll td { min-width: 0; max-width: none; vertical-align: top; font-family: var(--font-body); font-size: .88rem; font-weight: 400; white-space: normal; overflow-wrap: break-word; }
+.post-body .cfp-watchlist-table th:first-child { width: 26%; }
+.post-body .cfp-watchlist-table th:nth-child(2) { width: 22%; }
+.post-body .cfp-watchlist-table th:nth-child(3),
+.post-body .cfp-watchlist-table th:nth-child(4) { width: 16%; }
+.post-body .cfp-watchlist-table th:nth-child(5) { width: 12%; }
+.post-body .cfp-watchlist-table th:last-child { width: 8%; }
+.post-body .cfp-radar-table th:first-child { width: 24%; }
+.post-body .cfp-radar-table th:nth-child(2) { width: 34%; }
+.post-body .cfp-radar-table th:nth-child(3) { width: 14%; }
+.post-body .cfp-radar-table th:nth-child(4) { width: 16%; }
+.post-body .cfp-radar-table th:last-child { width: 12%; }
+.cfp-venue { margin: 0; }
+.cfp-venue > summary { cursor: pointer; line-height: 1.4; }
+.cfp-venue-name { font-family: var(--font-mono); font-weight: 700; }
+.cfp-venue-topic { display: block; margin-top: 5px; font-size: .83rem; color: var(--muted); }
+.cfp-venue:not([open]) .cfp-venue-topic { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.cfp-venue-full { display: block; margin-top: 8px; font-size: .83rem; line-height: 1.5; color: var(--muted); }
+.cfp-collection-details { margin-block: 16px; }
+.cfp-collection-details > summary { cursor: pointer; color: var(--muted); font-size: .9rem; font-weight: 650; }
 .cfp-post-body {
   width: 100%;
   max-width: 100%;

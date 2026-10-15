@@ -365,12 +365,16 @@ fn candidate_deadline_dates_from_signal(signal: &str) -> Vec<chrono::NaiveDate> 
     for keyword in [
         "submission deadline",
         "paper submission",
+        "paper deadline",
+        "papers deadline",
+        "deadline for paper",
         "manuscript deadline",
+        "manuscript submission",
+        "papers due",
         "final deadline",
+        "extended deadline",
         "extended",
         "extension",
-        "deadline",
-        "due",
     ] {
         let mut search_from = 0;
         while let Some(relative) = lowered[search_from..].find(keyword) {
@@ -431,6 +435,7 @@ fn candidate_deadline_dates_from_signal(signal: &str) -> Vec<chrono::NaiveDate> 
                                             | "submission"
                                             | "full"
                                             | "technical"
+                                            | "regular"
                                             | "workshop"
                                             | "firm"
                                             | "final"
@@ -441,9 +446,37 @@ fn candidate_deadline_dates_from_signal(signal: &str) -> Vec<chrono::NaiveDate> 
             let after_start = ceil_char_boundary(signal, position + keyword.len());
             let after_end = ceil_char_boundary(signal, (after_start + 200).min(signal.len()));
             let after = &signal[after_start..after_end];
+            let lowered_after = after.to_ascii_lowercase();
+            if matches!(
+                keyword,
+                "paper submission" | "manuscript submission" | "extended"
+            ) && lowered_after.trim_start().starts_with("deadline")
+            {
+                search_from = (position + keyword.len()).min(lowered.len());
+                continue;
+            }
+            let next_milestone = [
+                "notification",
+                "acceptance",
+                "camera",
+                "registration",
+                "travel grant",
+                "workshop event",
+                "event date",
+                "conference begins",
+                "tutorial",
+                "poster",
+                "rebuttal",
+                "final papers",
+            ]
+            .iter()
+            .filter_map(|label| lowered_after.find(label))
+            .min()
+            .unwrap_or(after.len());
+            let after = &after[..floor_char_boundary(after, next_milestone)];
             let after_dates = candidate_dates_from_text(after);
-            let prefer_after = (!after_dates.is_empty() && after.trim_start().starts_with(':'))
-                || before_date.is_none();
+            let prefer_after = before_date.is_none()
+                || (!after_dates.is_empty() && after.trim_start().starts_with(':'));
             push_unique_date(
                 &mut dates,
                 if prefer_after {
@@ -873,6 +906,8 @@ fn validate_source_quality(items: &[CfpItem]) -> BlogResult<()> {
 }
 
 fn deadline_signals_from_text(text: &str, issue_date: &str) -> Vec<String> {
+    let compact = compact_whitespace(text);
+    let text = compact.as_str();
     let lowered = text.to_ascii_lowercase();
     let keywords = [
         "deadline",
@@ -1369,6 +1404,20 @@ fn special_issue_source(
     call
 }
 
+fn has_dated_submission_evidence(item: &CfpItem) -> bool {
+    let Some(deadline) = item
+        .configured_deadline
+        .as_deref()
+        .and_then(|date| chrono::NaiveDate::parse_from_str(date, "%Y-%m-%d").ok())
+    else {
+        return false;
+    };
+    item.deadline_signals
+        .iter()
+        .flat_map(|signal| candidate_deadline_dates_from_signal(signal))
+        .any(|date| date == deadline)
+}
+
 fn item_from_source(
     source: CfpSource,
     fetch_status: String,
@@ -1378,7 +1427,11 @@ fn item_from_source(
     verified_deadline: Option<String>,
 ) -> CfpItem {
     let cached = previous.filter(|item| {
-        fetch_status != "fetched" && item.url == source.url && item.deadline_verified
+        fetch_status != "fetched"
+            && fetch_status != "primary CFP has no verified submission date"
+            && item.url == source.url
+            && item.deadline_verified
+            && has_dated_submission_evidence(item)
     });
     let detected = verified_deadline
         .or_else(|| inferred_deadline_from_signals(&signals, issue_date))
@@ -1591,6 +1644,41 @@ fn sorted_item_refs<'a>(items: impl Iterator<Item = &'a CfpItem>) -> Vec<&'a Cfp
     refs
 }
 
+fn venue_cell(item: &CfpItem) -> String {
+    let short = item
+        .acronym
+        .strip_suffix(" CFP")
+        .or_else(|| item.acronym.strip_suffix(" SI"))
+        .unwrap_or(&item.acronym);
+    let short = match item.edition {
+        Some(year) => format!("{short} {year}"),
+        None => short.to_string(),
+    };
+    let escape = |text: &str| {
+        text.replace('&', "&amp;")
+            .replace('<', "&lt;")
+            .replace('>', "&gt;")
+            .replace('|', "&#124;")
+            .replace(['\r', '\n'], " ")
+    };
+    let (full, topic) = if is_journal(item) {
+        item.title
+            .split_once(" — ")
+            .map(|(full, topic)| (full, Some(topic)))
+            .unwrap_or((&item.title, None))
+    } else {
+        (item.title.as_str(), None)
+    };
+    let topic = topic
+        .map(|topic| format!("<span class=\"cfp-venue-topic\">{}</span>", escape(topic)))
+        .unwrap_or_default();
+    format!(
+        "<details class=\"cfp-venue\"><summary><span class=\"cfp-venue-name\">{}</span>{topic}</summary><span class=\"cfp-venue-full\">{}</span></details>",
+        escape(&short),
+        escape(full)
+    )
+}
+
 fn render_watchlist_table(output: &mut String, items: &[&CfpItem]) {
     if items.is_empty() {
         output.push_str(
@@ -1600,10 +1688,11 @@ fn render_watchlist_table(output: &mut String, items: &[&CfpItem]) {
         );
         return;
     }
+    output.push_str("<div class=\"cfp-table-scroll cfp-watchlist-table\" role=\"region\" aria-label=\"CFP watchlist\" tabindex=\"0\">\n\n");
     let show_rank_columns = items.iter().any(|item| has_verified_rank_or_metric(item));
     if show_rank_columns {
         output.push_str(
-            "| Venue | Field | Dates | Deadline | Location | Verified rank | Rank source | Metric | Link |
+            "| Venue | Deadline | Field | Dates | Location | Verified rank | Rank source | Metric | Link |
 ",
         );
         output.push_str(
@@ -1612,7 +1701,7 @@ fn render_watchlist_table(output: &mut String, items: &[&CfpItem]) {
         );
     } else {
         output.push_str(
-            "| Venue | Field | Dates | Deadline | Location | Link |
+            "| Venue | Deadline | Field | Dates | Location | Link |
 ",
         );
         output.push_str(
@@ -1621,7 +1710,7 @@ fn render_watchlist_table(output: &mut String, items: &[&CfpItem]) {
         );
     }
     for item in items {
-        let venue = venue_label(item);
+        let venue = venue_cell(item);
         let cfp_link = format!(
             "[<span class=\"ui-icon\" data-icon=\"external-link\"></span> CFP]({})",
             item.url
@@ -1629,10 +1718,10 @@ fn render_watchlist_table(output: &mut String, items: &[&CfpItem]) {
         if show_rank_columns {
             output.push_str(&format!(
                 "| {} | {} | {} | {} | {} | {} | {} | {} | {} |\n",
-                markdown_escape(&venue),
+                venue,
+                markdown_escape(&deadline_label(item)),
                 markdown_escape(&item.track),
                 markdown_escape(&item.conference_dates),
-                markdown_escape(&deadline_label(item)),
                 markdown_escape(&item.location),
                 markdown_escape(&verified_rank_label(item)),
                 markdown_escape(&verified_rank_source_label(item)),
@@ -1642,16 +1731,16 @@ fn render_watchlist_table(output: &mut String, items: &[&CfpItem]) {
         } else {
             output.push_str(&format!(
                 "| {} | {} | {} | {} | {} | {} |\n",
-                markdown_escape(&venue),
+                venue,
+                markdown_escape(&deadline_label(item)),
                 markdown_escape(&item.track),
                 markdown_escape(&item.conference_dates),
-                markdown_escape(&deadline_label(item)),
                 markdown_escape(&item.location),
                 cfp_link
             ));
         }
     }
-    output.push('\n');
+    output.push_str("\n</div>\n\n");
 }
 
 fn percent_encode(input: &str) -> String {
@@ -1805,10 +1894,11 @@ fn render_deadline_radar(output: &mut String, issue: &CfpIssue) {
         output.push_str("No open configured or detected submission deadlines are available yet; check the grouped watchlists below for official CFP pages being monitored.\n\n");
         return;
     }
+    output.push_str("<div class=\"cfp-table-scroll cfp-radar-table\" role=\"region\" aria-label=\"Nearest CFP deadlines\" tabindex=\"0\">\n\n");
     output.push_str("| Deadline | Venue | Kind | Field | Link |\n");
     output.push_str("| --- | --- | --- | --- | --- |\n");
     for item in upcoming.iter().take(12) {
-        let venue = venue_label(item);
+        let venue = venue_cell(item);
         let link_col = match google_calendar_url(item) {
             Some(gcal) => format!(
                 "[<span class=\"ui-icon\" data-icon=\"external-link\"></span> CFP]({}) · [<span class=\"ui-icon\" data-icon=\"calendar-plus\"></span> + GCal]({})",
@@ -1822,23 +1912,24 @@ fn render_deadline_radar(output: &mut String, issue: &CfpIssue) {
         output.push_str(&format!(
             "| {} | {} | {} | {} | {} |\n",
             markdown_escape(&deadline_label(item)),
-            markdown_escape(&venue),
+            venue,
             markdown_escape(&item.venue_type),
             markdown_escape(&item.track),
             link_col
         ));
     }
-    output.push('\n');
+    output.push_str("\n</div>\n\n");
 }
 
 fn render_type_preview(output: &mut String, title: &str, items: Vec<&CfpItem>) {
     output.push_str(&format!("### {title}\n\n"));
-    let mut ranked = items;
+    let mut ranked: Vec<&CfpItem> = items
+        .into_iter()
+        .filter(|item| !item.days_until_deadline.is_some_and(|days| days < 0))
+        .collect();
     ranked.sort_by(|a, b| {
-        let a_closed = a.days_until_deadline.is_some_and(|days| days < 0);
-        let b_closed = b.days_until_deadline.is_some_and(|days| days < 0);
-        a_closed
-            .cmp(&b_closed)
+        b.deadline_verified
+            .cmp(&a.deadline_verified)
             .then_with(|| deadline_sort_value(a).cmp(&deadline_sort_value(b)))
             .then_with(|| a.acronym.cmp(&b.acronym))
     });
@@ -1855,7 +1946,8 @@ fn render_markdown(issue: &CfpIssue) -> String {
     output.push_str("tags:\n  - cfp\n  - conferences\n  - workshops\n  - journals\n  - special-issues\n  - wireless\n  - communications\nexcerpt: \"Weekly Call For Papers Dashboard with nearest submission deadlines, 1-click Google Calendar add links, and grouped watchlists for wireless/communications venues.\"\n---\n\n");
     output.push_str("Weekly CFP radar for conferences, workshops, and journal special issues relevant to wireless communications, RAN/6G, networking, edge systems, AI systems, and security. Dates are operational leads: always verify the linked official CFP page before planning a submission.\n\n");
     output.push_str("<div class=\"cfp-calendar-sync-banner\"><span class=\"ui-icon\" data-icon=\"calendar\"></span> <strong>1-Click Calendar Sync:</strong> <a class=\"cfp-sync-link\" href=\"webcal://mud-blog.pages.dev/cfp/radar.ics\"><span class=\"ui-icon\" data-icon=\"calendar-plus\"></span><span>Subscribe via Webcal</span></a> <span class=\"cfp-sync-sep\">|</span> <a class=\"cfp-sync-link\" href=\"/cfp/radar.ics\" download><span class=\"ui-icon\" data-icon=\"download\"></span><span>Download .ics</span></a></div>\n\n");
-    output.push_str("**Ranking note.** Rank cells are verified-only: they stay `—` until a concrete source/year is recorded, such as CORE A*/A/B/C, CCF A/B/C, SCImago/JCR Q1/Q2, or an official society flagship statement. Conferences and workshops do not have journal-style Impact Factors or official Q1/Q2 quartiles.\n\n");
+    output.push_str(&format!("**Last refreshed:** `{}` · **{} confirmed open** · **{}/{} sources fetched**. Expand a venue to see its full name or special-issue topic. Tables scroll horizontally on narrow screens.\n\n", issue.generated_at, issue.active_count, issue.fetched_count, issue.source_count));
+    output.push_str("<details class=\"cfp-collection-details\">\n<summary>Collection status and source policy</summary>\n\n");
     let wireless_count = issue
         .items
         .iter()
@@ -1893,6 +1985,7 @@ fn render_markdown(issue: &CfpIssue) -> String {
     output.push_str("- Next editions are adopted only after their official page and a submission date are confirmed. A failed candidate URL never replaces the last known edition.\n");
     output.push_str("- Configured dates without official evidence are marked unverified and excluded from the deadline radar and calendar. Fetch failures retain last-confirmed dates with a cached warning.\n\n");
 
+    output.push_str("</details>\n\n");
     render_deadline_radar(&mut output, issue);
 
     output.push_str("## Three-by-three quick view\n\n");
@@ -1953,12 +2046,15 @@ fn render_markdown(issue: &CfpIssue) -> String {
     render_watchlist_table(&mut output, &closed);
     output.push_str("</details>\n\n");
 
-    output.push_str("## Ranking policy\n\n");
+    output.push_str(
+        "<details class=\"cfp-collection-details\">\n<summary>Ranking policy</summary>\n\n",
+    );
     output.push_str("- **Verified-rank only:** table rank cells stay `—` unless a concrete source/year is recorded, such as CORE A*/A/B/C, CCF A/B/C, SCImago/JCR Q1/Q2, or an official society flagship statement.\n");
     output.push_str("- **No proxy levels:** conferences and workshops do not use journal Impact Factors or journal-style Q1/Q2 quartiles. Heuristic labels such as top-tier, flagship, or specialized are not shown as verified rank.\n");
     output.push_str("- **Annual refresh:** verified rank and journal metrics must be refreshed when new JCR/SJR/CORE/CCF releases are available.\n\n");
 
-    output.push_str("## Detailed source evidence\n\n");
+    output.push_str("</details>\n\n## Detailed source evidence\n\n");
+    output.push_str(&format!("<details class=\"cfp-collection-details\">\n<summary>Inspect all {} source evidence records</summary>\n\n", issue.items.len()));
     output.push_str("Audit trail for the official-page snippets used by the crawler. Use this section for verification; the deadline radar and quick view above are the readable operating view.\n\n");
     for item in &issue.items {
         output.push_str(&format!("### {}\n\n", markdown_escape(&venue_label(item))));
@@ -2006,7 +2102,7 @@ fn render_markdown(issue: &CfpIssue) -> String {
         }
     }
 
-    output.push_str("## Track coverage\n\n");
+    output.push_str("</details>\n\n## Track coverage\n\n");
     for (track, count) in &issue.tracks {
         output.push_str(&format!("- **{}**: {} source(s)\n", track, count));
     }
@@ -2186,6 +2282,15 @@ fn cfp_week_start(issue_date: &str) -> BlogResult<String> {
     Ok((date - chrono::Days::new(date.weekday().num_days_from_monday().into())).to_string())
 }
 
+pub async fn render_cfp_artifacts(root: impl AsRef<Path>) -> BlogResult<CfpIssue> {
+    let root = root.as_ref();
+    let issue: CfpIssue =
+        serde_json::from_str(&fs::read_to_string(root.join("data/cfp/latest.json")).await?)?;
+    validate_issue(&issue)?;
+    persist_cfp_artifacts(root, &issue).await?;
+    Ok(issue)
+}
+
 async fn persist_cfp_artifacts(root: &Path, issue: &CfpIssue) -> BlogResult<()> {
     let data_dir = root.join("data/cfp");
     let static_data_dir = root.join("static/cfp/data");
@@ -2295,7 +2400,7 @@ fn validate_issue(issue: &CfpIssue) -> BlogResult<()> {
         if item.deadline_verified
             && (item.last_verified_at.is_none()
                 || item.configured_deadline.is_none()
-                || item.deadline_signals.is_empty())
+                || !has_dated_submission_evidence(item))
         {
             return Err(format!("Verified CFP lacks dated evidence: {}", item.acronym).into());
         }
@@ -2856,6 +2961,118 @@ mod tests {
     }
 
     #[test]
+    fn venue_cells_are_compact_expandable_and_escape_untrusted_titles() {
+        let mut item = quality_test_item("ICC", "https://icc2027.ieee-icc.org/cfp");
+        item.title = "IEEE International Conference on Communications".to_string();
+        item.edition = Some(2027);
+        let cell = venue_cell(&item);
+        assert!(cell.contains("class=\"cfp-venue-name\">ICC 2027</span>"));
+        assert!(
+            !cell
+                .split("</summary>")
+                .next()
+                .unwrap()
+                .contains(&item.title)
+        );
+        assert!(cell.contains(&item.title));
+        assert!(venue_label(&item).starts_with(&item.title));
+        item.acronym = "IEEE JSAC CFP".to_string();
+        item.venue_type = "Journal special issue".to_string();
+        item.edition = None;
+        item.title = "IEEE Journal — <img src=x onerror=alert(1)> A | B".to_string();
+        let cell = venue_cell(&item);
+        assert!(cell.contains(">IEEE JSAC</span>"));
+        assert!(!cell.contains("<img"));
+        assert!(cell.contains("&lt;img"));
+        assert!(cell.contains("&#124;"));
+        let mut markdown = String::new();
+        render_watchlist_table(&mut markdown, &[&item]);
+        let html = crate::markdown_to_html(&markdown);
+        assert_eq!(html.matches("<td>").count(), 6);
+        assert!(markdown.contains("| Venue | Deadline | Field | Dates | Location | Link |"));
+    }
+
+    #[test]
+    fn preview_prioritizes_confirmed_calls_over_earlier_unverified_dates() {
+        let mut uncertain = quality_test_item("UNCERTAIN", "https://www.ieee.org/cfp/uncertain");
+        uncertain.days_until_deadline = Some(0);
+        let mut confirmed = quality_test_item("CONFIRMED", "https://www.ieee.org/cfp/confirmed");
+        confirmed.days_until_deadline = Some(15);
+        confirmed.deadline_verified = true;
+        let mut expired = quality_test_item("EXPIRED", "https://www.ieee.org/cfp/expired");
+        expired.days_until_deadline = Some(-30);
+        let mut output = String::new();
+        render_type_preview(
+            &mut output,
+            "Journal calls",
+            vec![&expired, &uncertain, &confirmed],
+        );
+        assert!(!output.contains("EXPIRED"));
+        assert!(output.find("CONFIRMED").unwrap() < output.find("UNCERTAIN").unwrap());
+    }
+
+    #[test]
+    fn camera_ready_abstract_and_event_dates_never_become_paper_deadlines() {
+        for (html, expected) in [
+            (
+                include_str!("../tests/fixtures/cfp/sp2027-submission-cycles.html"),
+                Some("2026-11-17"),
+            ),
+            (
+                include_str!("../tests/fixtures/cfp/sensys2027-submission.html"),
+                Some("2026-11-05"),
+            ),
+            (
+                include_str!("../tests/fixtures/cfp/mobihoc-closed-workshop.html"),
+                None,
+            ),
+        ] {
+            let signals = deadline_signals_from_text(&strip_html(html), "2026-10-15");
+            assert_eq!(
+                inferred_deadline_from_signals(&signals, "2026-10-15").as_deref(),
+                expected
+            );
+        }
+        let html = "<span>Paper submission deadline: 16 October 2026</span><s>2 October 2026</s>";
+        assert_eq!(
+            inferred_deadline_from_signals(
+                &deadline_signals_from_text(&strip_html(html), "2026-10-01"),
+                "2026-10-01"
+            )
+            .as_deref(),
+            Some("2026-10-16")
+        );
+    }
+
+    #[test]
+    fn disproved_cached_dates_are_invalidated_instead_of_preserved() {
+        let mut previous = quality_test_item(
+            "MobiHoc AI-RAN",
+            "https://www.sigmobile.org/mobihoc/2026/workshop-ai-ran.html",
+        );
+        previous.configured_deadline = Some("2026-11-26".to_string());
+        previous.deadline_verified = true;
+        previous.last_verified_at = Some(generated_at_utc());
+        previous.deadline_signals = vec!["Workshop Paper Submission Deadline Workshop Paper Acceptance Notification Workshop Paper Camera-Ready Deadline November 26, 2026 Workshop Event Date".to_string()];
+        assert!(!has_dated_submission_evidence(&previous));
+        let source = quality_test_source("MobiHoc AI-RAN", &previous.url);
+        let item = item_from_source(
+            source,
+            "primary CFP has no verified submission date".to_string(),
+            vec![],
+            "2026-10-15",
+            Some(&previous),
+            None,
+        );
+        assert!(!item.deadline_verified);
+        assert!(item.configured_deadline.is_none());
+        let mut issue = test_issue("2026-10-15");
+        issue.items[0].deadline_signals =
+            vec!["Camera-ready deadline: October 30, 2026".to_string()];
+        assert!(validate_issue(&issue).is_err());
+    }
+
+    #[test]
     fn official_deadline_changes_override_config_and_survive_fetch_failures() {
         let mut source = quality_test_source("ICC", "https://icc2027.ieee-icc.org/cfp");
         source.deadline = Some("2026-10-02".to_string());
@@ -3058,6 +3275,18 @@ mod tests {
         let page = crate::render_cfp_page(&posts)?;
         assert!(page.contains("/posts/2026-10-12-cfp-radar/"));
         assert!(page.contains("/posts/2026-10-19-cfp-radar/"));
+        validate_cfp_artifacts(&root).await?;
+        let data_before = fs::read(root.join("data/cfp/latest.json")).await?;
+        let calendar_before = fs::read(root.join("data/cfp/radar.ics")).await?;
+        render_cfp_artifacts(&root).await?;
+        assert_eq!(
+            fs::read(root.join("data/cfp/latest.json")).await?,
+            data_before
+        );
+        assert_eq!(
+            fs::read(root.join("data/cfp/radar.ics")).await?,
+            calendar_before
+        );
         validate_cfp_artifacts(&root).await?;
         fs::remove_dir_all(root).await?;
         Ok(())

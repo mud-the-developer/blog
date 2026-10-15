@@ -1473,6 +1473,14 @@ fn xml_blocks<'a>(xml: &'a str, tag: &str) -> Vec<&'a str> {
     let mut rest = xml;
     while let Some(start) = rest.find(&open) {
         let after_start = &rest[start..];
+        if !after_start
+            .as_bytes()
+            .get(open.len())
+            .is_some_and(|byte| byte.is_ascii_whitespace() || *byte == b'>')
+        {
+            rest = &after_start[open.len()..];
+            continue;
+        }
         let Some(end) = after_start.find(&close) else {
             break;
         };

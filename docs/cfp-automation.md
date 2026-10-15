@@ -13,9 +13,14 @@
 npm run cfp:update
 npm run cfp:validate
 npm run build
+
+# Refresh presentation from the existing snapshot without network or AI requests:
+cargo run -- cfp render
 ```
 
-Validation is read-only. It rejects stale snapshots, inconsistent dates/counts, unsafe source URLs, missing evidence, and mismatched calendar or note artifacts. Failed validation must not be treated as successful publication.
+Venue cells show the acronym and edition first. Native disclosure controls expose full venue names and complete journal topics by mouse, touch, or keyboard. On narrow screens, tables scroll within a labelled, focusable region; the watchlist puts venue and deadline first. Expired calls are excluded from quick previews and kept in the closed-call reference section.
+
+Validation is read-only. It rejects stale snapshots, inconsistent dates/counts, unsafe source URLs, missing or mismatched submission-date evidence, and mismatched calendar or note artifacts. Failed validation must not be treated as successful publication.
 
 The GitHub `Update CFP Radar` workflow runs daily at 15:30 UTC (00:30 KST; GitHub can delay scheduled runs). It refreshes, validates, builds, tests, and lints before committing all CFP artifacts. A successful run triggers the existing Cloudflare Pages deployment workflow. Enable Actions and retain the workflow on the default branch.
 
@@ -42,6 +47,6 @@ HTTPS uses the normal Rust TLS client first. If it cannot establish a connection
 
 Officially detected deadlines take priority over configured dates. A configured date without official evidence is labelled unverified and stays out of the deadline radar/calendar. Fetch failures preserve the last confirmed date and verification time, with a cached warning. Dates are submission leads, not a guarantee: verify the official page and its cutoff timezone before submitting.
 
-Journal tables and dated list entries are split into separate calls with their topic, individual link, and deadline. Publication dates are not used as submission dates. HTML comments, scripts, and withdrawn dates inside `del`/`s`/`strike` tags are ignored.
+Journal tables and dated list entries are split into separate calls with their topic, individual link, and deadline. Publication dates are not used as submission dates. HTML comments, scripts, and withdrawn dates inside `del`/`s`/`strike` tags are ignored. Whitespace is compacted before evidence windows are selected. A submission label cannot borrow a later acceptance, camera-ready, registration, or event date. Cached dates must still match submission evidence under the current parser; a previously misclassified event date cannot remain verified merely because fetching failed.
 
 The existing Google Search-assisted fallback remains optional and bounded by `CFP_AI_MAX_REQUESTS` and `CFP_AI_TARGETS`. Local verification does not require an AI API key. Official-domain validation and quoted-date checks also apply to AI findings.
