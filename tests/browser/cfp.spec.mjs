@@ -8,7 +8,10 @@ test('CFP dashboard refreshes dates on entry and links the weekly archive', asyn
   await expect(page.locator('[data-cfp-history] a').first()).toHaveAttribute('href', /\/posts\/\d{4}-\d{2}-\d{2}-cfp-radar\//);
   const response = await page.request.get('/cfp/data/latest.json');
   const issue = await response.json();
-  expect(issue.items.find((item) => item.acronym === 'ICC').edition).toBeGreaterThanOrEqual(2027);
+  const icc = issue.items.find((item) => item.acronym === 'ICC');
+  expect(icc.edition).toBeGreaterThanOrEqual(2027);
+  expect(icc.url).toContain('ieee-icc.org/authors/');
+  expect(icc.deadlineVerified).toBe(true);
   const feed = await page.request.get('/cfp/radar.ics');
   const mirror = await page.request.get('/cfp/data/radar.ics');
   expect(await feed.text()).toBe(await mirror.text());

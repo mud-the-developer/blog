@@ -1194,6 +1194,7 @@ async fn call_nim_chat(
     max_tokens: u64,
 ) -> Result<String, String> {
     let client = reqwest::Client::builder()
+        .use_rustls_tls()
         .timeout(Duration::from_secs(25))
         .build()
         .unwrap_or_else(|_| reqwest::Client::new());
@@ -1309,6 +1310,7 @@ async fn call_gemma_for_issue(
         api_key
     );
     let client = reqwest::Client::builder()
+        .use_rustls_tls()
         .timeout(Duration::from_secs(25))
         .build()
         .unwrap_or_else(|_| reqwest::Client::new());
@@ -1606,6 +1608,7 @@ async fn call_gemma_for_query_plan(query: &str) -> Result<(Vec<String>, String),
         api_key
     );
     let client = reqwest::Client::builder()
+        .use_rustls_tls()
         .timeout(Duration::from_secs(16))
         .build()
         .unwrap_or_else(|_| reqwest::Client::new());
@@ -2384,6 +2387,7 @@ async fn news_search_handler(
     };
     let keywords = query_plan.keywords.clone();
     let client = reqwest::Client::builder()
+        .use_rustls_tls()
         .timeout(Duration::from_secs(12))
         .build()
         .unwrap_or_else(|_| reqwest::Client::new());

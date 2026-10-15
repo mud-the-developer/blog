@@ -228,7 +228,7 @@ fn html_without_comments(input: &str) -> String {
 
 fn strip_html(input: &str) -> String {
     let mut cleaned = html_without_comments(input);
-    for tag in ["script", "style", "noscript"] {
+    for tag in ["script", "style", "noscript", "del", "s", "strike"] {
         for block in crate::xml_blocks(input, tag) {
             cleaned = cleaned.replace(block, " ");
         }
@@ -927,7 +927,42 @@ struct CfpPage {
     html: String,
 }
 
-async fn fetch_cfp_page(client: &reqwest::Client, url: &str) -> CfpPage {
+#[derive(Clone)]
+struct CfpHttpClient {
+    primary: reqwest::Client,
+    system: reqwest::Client,
+}
+
+impl CfpHttpClient {
+    async fn get(&self, url: &str) -> Result<reqwest::Response, reqwest::Error> {
+        match self.primary.get(url).send().await {
+            Ok(response) => Ok(response),
+            Err(error) if error.is_timeout() => Err(error),
+            Err(_) => self.system.get(url).send().await,
+        }
+    }
+}
+
+fn cfp_http_client(system_tls: bool) -> BlogResult<reqwest::Client> {
+    let builder = reqwest::Client::builder()
+        .timeout(Duration::from_secs(18))
+        .user_agent(USER_AGENT)
+        .redirect(reqwest::redirect::Policy::custom(|attempt| {
+            if attempt.previous().len() >= 5 || !trusted_cfp_url(attempt.url().as_str()) {
+                attempt.stop()
+            } else {
+                attempt.follow()
+            }
+        }));
+    Ok(if system_tls {
+        builder.use_native_tls()
+    } else {
+        builder.use_rustls_tls()
+    }
+    .build()?)
+}
+
+async fn fetch_cfp_page(client: &CfpHttpClient, url: &str) -> CfpPage {
     let mut page = CfpPage {
         status: "fetch failed".to_string(),
         url: url.to_string(),
@@ -937,7 +972,7 @@ async fn fetch_cfp_page(client: &reqwest::Client, url: &str) -> CfpPage {
         page.status = "untrusted URL".to_string();
         return page;
     }
-    let Ok(response) = client.get(url).send().await else {
+    let Ok(response) = client.get(url).await else {
         return page;
     };
     if !response.status().is_success() {
@@ -952,7 +987,7 @@ async fn fetch_cfp_page(client: &reqwest::Client, url: &str) -> CfpPage {
             let has_frames = !frames.is_empty();
             page.html = html;
             for url in frames {
-                if let Ok(response) = client.get(url).send().await
+                if let Ok(response) = client.get(&url).await
                     && response.status().is_success()
                     && let Ok(html) = response.text().await
                 {
@@ -974,7 +1009,7 @@ async fn fetch_cfp_page(client: &reqwest::Client, url: &str) -> CfpPage {
                             .then_some(url)
                     });
                 if let Some(url) = call_url
-                    && let Ok(response) = client.get(url).send().await
+                    && let Ok(response) = client.get(url.as_str()).await
                     && response.status().is_success()
                 {
                     let url = response.url().to_string();
@@ -1078,8 +1113,120 @@ fn confirms_edition(
         })
 }
 
+fn is_cfp_document_url(value: &str) -> bool {
+    let Ok(url) = reqwest::Url::parse(value) else {
+        return false;
+    };
+    let path = url.path().to_ascii_lowercase();
+    path.contains("cfp") || (path.contains("call") && path.contains("paper"))
+}
+
+fn same_venue_url(source: &CfpSource, base_url: &str, target: &str) -> bool {
+    if trusted_ai_source_url(target, source) {
+        return true;
+    }
+    let (Ok(base), Ok(target)) = (reqwest::Url::parse(base_url), reqwest::Url::parse(target))
+    else {
+        return false;
+    };
+    let Some((directory, _)) = base.path().rsplit_once('/') else {
+        return false;
+    };
+    base.host_str().map(|host| host.trim_start_matches("www."))
+        == target
+            .host_str()
+            .map(|host| host.trim_start_matches("www."))
+        && target.path().starts_with(&format!("{directory}/"))
+}
+
+fn official_cfp_link(source: &CfpSource, page: &CfpPage) -> Option<String> {
+    if is_cfp_document_url(&page.url) || source.venue_type.to_ascii_lowercase().contains("journal")
+    {
+        return None;
+    }
+    let base = reqwest::Url::parse(&page.url).ok()?;
+    let edition = edition_in_url(&page.url).or(source.edition);
+    let workshop = source.venue_type.to_ascii_lowercase().contains("workshop");
+    crate::xml_blocks(&html_without_comments(&page.html), "a")
+        .into_iter()
+        .filter_map(|link| {
+            let (href, label) = crate::html_link(link);
+            let url = base.join(&href).ok()?;
+            let label = label.to_ascii_lowercase();
+            let path = url.path().to_ascii_lowercase();
+            let context = format!("{label} {path}");
+            let same_venue = same_venue_url(source, &page.url, url.as_str());
+            if !trusted_cfp_url(url.as_str())
+                || !same_venue
+                || url.as_str() == page.url
+                || path.ends_with(".pdf")
+                || edition
+                    .zip(edition_in_url(url.as_str()))
+                    .is_some_and(|(expected, found)| expected != found)
+                || ["proposal", "poster", "tutorial", "demo"]
+                    .iter()
+                    .any(|word| context.contains(word))
+                || context.contains("workshop") != workshop
+            {
+                return None;
+            }
+            let priority = if (label.contains("call") && label.contains("paper"))
+                || is_cfp_document_url(url.as_str())
+            {
+                0
+            } else if label.contains("website") && url.host_str() != base.host_str() {
+                1
+            } else {
+                return None;
+            };
+            Some((priority, url.to_string()))
+        })
+        .min_by_key(|(priority, _)| *priority)
+        .map(|(_, url)| url)
+}
+
+async fn resolve_primary_cfp_page(
+    client: &CfpHttpClient,
+    source: &CfpSource,
+    mut page: CfpPage,
+    issue_date: &str,
+) -> CfpPage {
+    for _ in 0..2 {
+        let Some(url) = official_cfp_link(source, &page) else {
+            break;
+        };
+        let next = fetch_cfp_page(client, &url).await;
+        let same_edition = source
+            .edition
+            .is_none_or(|year| edition_in_url(&next.url).is_none_or(|found| found == year));
+        if next.status != "fetched"
+            || !same_edition
+            || !same_venue_url(source, &page.url, &next.url)
+        {
+            page.status = "primary CFP unavailable — verify official link".to_string();
+            page.html.clear();
+            break;
+        }
+        page = next;
+    }
+    if is_cfp_document_url(&page.url)
+        && page.status == "fetched"
+        && let Some(year) = source.edition
+        && !inferred_deadline_from_signals(
+            &deadline_signals_from_text(&strip_html(&page.html), issue_date),
+            issue_date,
+        )
+        .and_then(|date| chrono::NaiveDate::parse_from_str(&date, "%Y-%m-%d").ok())
+        .is_some_and(|date| (year - 1..=year).contains(&date.year()))
+    {
+        page.status = "primary CFP has no verified submission date".to_string();
+        page.html.clear();
+    }
+    page
+}
+
 async fn resolve_source_page(
-    client: &reqwest::Client,
+    client: &CfpHttpClient,
     mut source: CfpSource,
     issue_date: &str,
     previous: Option<&CfpItem>,
@@ -1087,8 +1234,11 @@ async fn resolve_source_page(
     source.edition = source_edition(&source);
     if let Some(previous) = previous
         && previous.deadline_verified
-        && previous.edition > source.edition
-        && previous.configured_deadline.as_deref() > source.deadline.as_deref()
+        && ((previous.edition > source.edition
+            && previous.configured_deadline.as_deref() > source.deadline.as_deref())
+            || (previous.edition == source.edition
+                && is_cfp_document_url(&previous.url)
+                && !is_cfp_document_url(&source.url)))
         && trusted_cfp_url(&previous.url)
     {
         source.url = previous.url.clone();
@@ -1106,8 +1256,12 @@ async fn resolve_source_page(
         && !source.venue_type.to_ascii_lowercase().contains("journal")
         && let Some(url) = next_edition_url(&source, (edition + 1).max(issue_year))
     {
-        let page = fetch_cfp_page(client, &url).await;
         let next_year = (edition + 1).max(issue_year);
+        let mut next_source = source.clone();
+        next_source.url = url.clone();
+        next_source.edition = Some(next_year);
+        let page = fetch_cfp_page(client, &url).await;
+        let page = resolve_primary_cfp_page(client, &next_source, page, issue_date).await;
         let previous_deadline = previous
             .and_then(|item| item.configured_deadline.as_deref())
             .or(source.deadline.as_deref());
@@ -1125,6 +1279,7 @@ async fn resolve_source_page(
         }
     }
     let page = fetch_cfp_page(client, &source.url).await;
+    let page = resolve_primary_cfp_page(client, &source, page, issue_date).await;
     if page.status == "fetched" {
         source.url = page.url.clone();
     }
@@ -1222,12 +1377,17 @@ fn item_from_source(
     previous: Option<&CfpItem>,
     verified_deadline: Option<String>,
 ) -> CfpItem {
-    let detected =
-        verified_deadline.or_else(|| inferred_deadline_from_signals(&signals, issue_date));
-    let verified = detected.is_some();
     let cached = previous.filter(|item| {
         fetch_status != "fetched" && item.url == source.url && item.deadline_verified
     });
+    let detected = verified_deadline
+        .or_else(|| inferred_deadline_from_signals(&signals, issue_date))
+        .filter(|candidate| {
+            cached
+                .and_then(|item| item.configured_deadline.as_ref())
+                .is_none_or(|confirmed| candidate >= confirmed)
+        });
+    let verified = detected.is_some();
     let deadline = detected
         .or_else(|| cached.and_then(|item| item.configured_deadline.clone()))
         .or(source.deadline);
@@ -1258,7 +1418,7 @@ fn item_from_source(
         days_until_deadline: days,
         deadline_status: deadline_status(days),
         fetch_status,
-        deadline_signals: if signals.is_empty() {
+        deadline_signals: if signals.is_empty() || (!verified && cached.is_some()) {
             cached
                 .map(|item| item.deadline_signals.clone())
                 .unwrap_or_default()
@@ -1313,7 +1473,10 @@ fn deadline_label(item: &CfpItem) -> String {
         .unwrap_or_else(|| {
             if item.fetch_status == "fetched" {
                 "No dated CFP posted on official page".to_string()
-            } else if item.fetch_status.starts_with("http") || item.fetch_status == "fetch failed" {
+            } else if item.fetch_status.starts_with("http")
+                || item.fetch_status == "fetch failed"
+                || item.fetch_status.starts_with("primary CFP")
+            {
                 "Fetch blocked — verify official link".to_string()
             } else {
                 "TBD / official page".to_string()
@@ -1876,17 +2039,10 @@ pub async fn update_cfp_artifacts(
             Err(error) if error.kind() == std::io::ErrorKind::NotFound => None,
             Err(error) => return Err(error.into()),
         };
-    let client = reqwest::Client::builder()
-        .timeout(Duration::from_secs(18))
-        .user_agent(USER_AGENT)
-        .redirect(reqwest::redirect::Policy::custom(|attempt| {
-            if attempt.previous().len() >= 5 || !trusted_cfp_url(attempt.url().as_str()) {
-                attempt.stop()
-            } else {
-                attempt.follow()
-            }
-        }))
-        .build()?;
+    let client = CfpHttpClient {
+        primary: cfp_http_client(false)?,
+        system: cfp_http_client(true)?,
+    };
     let source_count = config.conferences.len();
     let mut pending = tokio::task::JoinSet::new();
     let mut sources = config.conferences.into_iter();
@@ -1969,7 +2125,8 @@ pub async fn update_cfp_artifacts(
             && should_use_ai_deadline_fallback(&source, &page.status, &ai_targets)
         {
             ai_requests_remaining -= 1;
-            if let Some(ai) = ai_deadline_signal(&client, &source, &issue_date, &page.status).await
+            if let Some(ai) =
+                ai_deadline_signal(&client.primary, &source, &issue_date, &page.status).await
                 && edition_in_url(&ai.source_url).is_none_or(|edition| {
                     source
                         .edition
@@ -2550,6 +2707,154 @@ mod tests {
         assert_eq!(inferred_deadline_from_signals(&signals, "2026-10-15"), None);
     }
 
+    async fn mock_icc_pages(
+        pages: Vec<(u16, String)>,
+    ) -> (CfpHttpClient, String, tokio::task::JoinHandle<()>) {
+        use tokio::io::{AsyncReadExt, AsyncWriteExt};
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let address = listener.local_addr().unwrap();
+        let server = tokio::spawn(async move {
+            for (status, body) in pages {
+                let (mut stream, _) = listener.accept().await.unwrap();
+                let mut request = [0; 4096];
+                stream.read(&mut request).await.unwrap();
+                let response = format!(
+                    "HTTP/1.1 {status} Response\r\nContent-Type: text/html\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
+                    body.len()
+                );
+                stream.write_all(response.as_bytes()).await.unwrap();
+            }
+        });
+        let client = reqwest::Client::builder()
+            .no_proxy()
+            .resolve("icc2027.ieee-icc.org", address)
+            .timeout(Duration::from_secs(2))
+            .build()
+            .unwrap();
+        (
+            CfpHttpClient {
+                primary: client.clone(),
+                system: client,
+            },
+            format!("http://icc2027.ieee-icc.org:{}/", address.port()),
+            server,
+        )
+    }
+
+    #[tokio::test]
+    async fn dated_catalogue_still_follows_the_live_cfp_and_uses_its_extension() {
+        let source = quality_test_source(
+            "ICC",
+            "https://www.comsoc.org/conferences-events/ieee-international-conference-communications-2027",
+        );
+        let primary = include_str!("../tests/fixtures/cfp/icc2027-submission.html");
+        let (client, root, server) = mock_icc_pages(vec![
+            (200, "<title>IEEE ICC 2027</title><a href='/authors/call-workshop-papers'>Call for Workshop Papers</a><a href='/authors/call-symposium-papers'>Call for Symposium Papers</a>".to_string()),
+            (200, primary.to_string()),
+        ]).await;
+        let catalogue = CfpPage {
+            status: "fetched".to_string(),
+            url: source.url.clone(),
+            html: format!(
+                "<h1>IEEE ICC 2027</h1><p>Call for Technical Papers Deadline 2 October 2026</p><a href='{root}'>Visit the 2027 IEEE ICC Website!</a>"
+            ),
+        };
+        assert_eq!(
+            inferred_deadline_from_signals(
+                &deadline_signals_from_text(&strip_html(&catalogue.html), "2026-10-01"),
+                "2026-10-01"
+            )
+            .as_deref(),
+            Some("2026-10-02")
+        );
+        let page = resolve_primary_cfp_page(&client, &source, catalogue, "2026-10-01").await;
+        server.abort();
+        assert_eq!(page.status, "fetched");
+        assert!(page.url.ends_with("/authors/call-symposium-papers"));
+        let signals = deadline_signals_from_text(&strip_html(&page.html), "2026-10-01");
+        assert_eq!(
+            inferred_deadline_from_signals(&signals, "2026-10-01").as_deref(),
+            Some("2026-10-16")
+        );
+    }
+
+    #[tokio::test]
+    async fn unavailable_primary_does_not_freshly_verify_the_old_catalogue_date() {
+        let source = quality_test_source(
+            "ICC",
+            "https://www.comsoc.org/conferences-events/ieee-international-conference-communications-2027",
+        );
+        let (client, root, server) = mock_icc_pages(vec![(503, "Unavailable".to_string())]).await;
+        let catalogue = CfpPage {
+            status: "fetched".to_string(),
+            url: source.url.clone(),
+            html: format!(
+                "<h1>IEEE ICC 2027</h1><p>Call for Technical Papers Deadline 2 October 2026</p><a href='{root}'>Visit Website</a>"
+            ),
+        };
+        let page = resolve_primary_cfp_page(&client, &source, catalogue, "2026-10-15").await;
+        server.abort();
+        let signals = deadline_signals_from_text(&strip_html(&page.html), "2026-10-15");
+        let item = item_from_source(source, page.status, signals, "2026-10-15", None, None);
+        assert!(!item.deadline_verified);
+        assert!(item.last_verified_at.is_none());
+        assert!(item.configured_deadline.is_none());
+    }
+
+    #[tokio::test]
+    async fn confirmed_primary_is_reused_in_the_same_edition_and_never_reverts_to_catalogue() {
+        let mut source = quality_test_source(
+            "ICC",
+            "https://www.comsoc.org/conferences-events/ieee-international-conference-communications-2027",
+        );
+        source.edition = Some(2027);
+        let (client, root, server) = mock_icc_pages(vec![(503, "Unavailable".to_string())]).await;
+        let mut previous =
+            quality_test_item("ICC", &format!("{root}authors/call-symposium-papers"));
+        previous.edition = Some(2027);
+        previous.configured_deadline = Some("2026-10-16".to_string());
+        previous.deadline_verified = true;
+        previous.last_verified_at = Some("2026-10-06T08:00:00Z".to_string());
+        previous.deadline_signals = vec!["Paper Submission Deadline 16 October 2026".to_string()];
+        let (source, page) =
+            resolve_source_page(&client, source, "2026-10-15", Some(&previous)).await;
+        server.abort();
+        assert_eq!(source.url, previous.url);
+        let item = item_from_source(
+            source,
+            page.status,
+            vec![],
+            "2026-10-15",
+            Some(&previous),
+            None,
+        );
+        assert_eq!(item.configured_deadline.as_deref(), Some("2026-10-16"));
+        assert_eq!(item.last_verified_at, previous.last_verified_at);
+        assert!(deadline_label(&item).contains("cached"));
+    }
+
+    #[test]
+    fn withdrawn_dates_and_wrong_edition_or_workshop_links_are_not_primary() {
+        for tag in ["del", "s", "strike"] {
+            let html = format!(
+                "<p>Paper submission deadline: <{tag}>2 October 2026</{tag}> 16 October 2026</p>"
+            );
+            let signals = deadline_signals_from_text(&strip_html(&html), "2026-10-01");
+            assert_eq!(
+                inferred_deadline_from_signals(&signals, "2026-10-01").as_deref(),
+                Some("2026-10-16")
+            );
+        }
+        let mut source = quality_test_source("ICC", "https://icc2027.ieee-icc.org/");
+        source.edition = Some(2027);
+        let page = CfpPage {status: "fetched".to_string(), url: source.url.clone(), html:
+            "<a href='https://icc2026.ieee-icc.org/authors/call-papers'>Call for Papers</a><a href='/authors/call-workshop-papers'>Call for Workshop Papers</a><a href='https://evil.example/cfp'>Call for Papers</a><a href='/authors/call-symposium-papers'>Call for Symposium Papers</a>".to_string()};
+        assert_eq!(
+            official_cfp_link(&source, &page).as_deref(),
+            Some("https://icc2027.ieee-icc.org/authors/call-symposium-papers")
+        );
+    }
+
     #[test]
     fn official_deadline_changes_override_config_and_survive_fetch_failures() {
         let mut source = quality_test_source("ICC", "https://icc2027.ieee-icc.org/cfp");
@@ -2575,6 +2880,29 @@ mod tests {
         assert_eq!(cached.configured_deadline, item.configured_deadline);
         assert_eq!(cached.last_verified_at, item.last_verified_at);
         assert!(deadline_label(&cached).contains("cached"));
+        let stale_lookup = item_from_source(
+            source.clone(),
+            "fetch failed".to_string(),
+            vec!["Paper submission deadline: 2 October 2026".to_string()],
+            "2026-10-15",
+            Some(&item),
+            Some("2026-10-02".to_string()),
+        );
+        assert_eq!(stale_lookup.configured_deadline, item.configured_deadline);
+        assert_eq!(stale_lookup.last_verified_at, item.last_verified_at);
+        assert_eq!(stale_lookup.deadline_signals, item.deadline_signals);
+        let corrected_primary = item_from_source(
+            source.clone(),
+            "fetched".to_string(),
+            vec!["Paper submission deadline: 2 October 2026".to_string()],
+            "2026-10-15",
+            Some(&item),
+            Some("2026-10-02".to_string()),
+        );
+        assert_eq!(
+            corrected_primary.configured_deadline.as_deref(),
+            Some("2026-10-02")
+        );
         let unverified = item_from_source(
             source,
             "http 403 Forbidden".to_string(),

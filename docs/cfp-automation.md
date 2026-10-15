@@ -23,7 +23,7 @@ The GitHub `Update CFP Radar` workflow runs daily at 15:30 UTC (00:30 KST; GitHu
 
 For year-bearing official URLs, the crawler probes the next applicable edition. A guessed URL is only a candidate: the response must identify that edition and contain a submission deadline in the expected year range. Redirects to unsafe domains, missing pages, registration-only dates, and old-edition pages do not replace the current source.
 
-Use optional `edition` and `editionUrlTemplate` settings when the venue's URL is irregular or the conference site blocks crawling. For example, ICC uses the official ComSoc event catalog:
+Use optional `edition` and `editionUrlTemplate` settings when the venue's URL is irregular. ICC's primary `url` is its live symposium CFP, not the ComSoc event catalog: a society's event listing can retain the original deadline after the conference extends it. The catalog is used only to discover subsequent editions:
 
 ```json
 {
@@ -36,8 +36,12 @@ The last resolved edition is retained in `latest.json`, so subsequent refreshes 
 
 ## Deadlines and journal calls
 
+Conference websites and linked CFP pages are checked before accepting a date from an event listing, even when that listing already contains a date. Discovery follows at most two official links (catalog → venue → CFP), stays within the venue/edition, and keeps workshops separate from main-paper calls. If the linked CFP cannot be checked, the catalog date is not freshly verified; the last confirmed primary date is retained with a warning when available.
+
+HTTPS uses the normal Rust TLS client first. If it cannot establish a connection, a native system-TLS client can validate the server with the operating system's certificate-chain handling. Both clients verify certificates and apply the official-domain redirect policy; certificate verification is never disabled. HTTP error responses such as 403/418 are not retried through the alternative TLS client and remain visible as fetch failures.
+
 Officially detected deadlines take priority over configured dates. A configured date without official evidence is labelled unverified and stays out of the deadline radar/calendar. Fetch failures preserve the last confirmed date and verification time, with a cached warning. Dates are submission leads, not a guarantee: verify the official page and its cutoff timezone before submitting.
 
-Journal tables and dated list entries are split into separate calls with their topic, individual link, and deadline. Publication dates are not used as submission dates. HTML comments and scripts are ignored.
+Journal tables and dated list entries are split into separate calls with their topic, individual link, and deadline. Publication dates are not used as submission dates. HTML comments, scripts, and withdrawn dates inside `del`/`s`/`strike` tags are ignored.
 
 The existing Google Search-assisted fallback remains optional and bounded by `CFP_AI_MAX_REQUESTS` and `CFP_AI_TARGETS`. Local verification does not require an AI API key. Official-domain validation and quoted-date checks also apply to AI findings.
