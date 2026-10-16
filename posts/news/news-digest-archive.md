@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-10-16
+date: 2026-10-17
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/posts/2026-10-16-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/posts/2026-10-17-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-10-16T04:12:27.442968+09:00">Oct 16, 2026 · 4:12 AM KST</time></strong>
+        <strong><time datetime="2026-10-17T03:49:32.863681+09:00">Oct 17, 2026 · 3:49 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>206</strong>
+        <strong>207</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-10-16">Oct 16, 2026</time></strong>
+        <strong><time datetime="2026-10-17">Oct 17, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around VASPO: Self-Distillation with Privileged Value Estimation; social attention is tilting toward Show HN: Petal, finally a free and open source CoScreen/ScreenHero alternative. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by headroomlabs-ai/headroom; paper attention is clustering around Waypoint-OPD: Transferring RL-Induced Policy Shifts via Gated On-Policy Distillation; social attention is tilting toward Folders - a programming language that expresses code in terms of the containing relationships a… 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>October 2026</span><span class="news-digest-month-count">16 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>October 2026</span><span class="news-digest-month-count">17 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-10-17-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-10-17</span>
+            <strong>AI News Brief — 2026-10-17</strong>
+            <span>Today&#x27;s AI beta landscape highlights advancements in LLM token compression, new research in policy shift distillation, and community interest in novel programming paradigms.</span>
+          </a>
           <a class="news-digest-archive-item" href="/posts/2026-10-16-ai-news-digest/">
             <span class="news-digest-archive-date">2026-10-16</span>
             <strong>AI News Brief — 2026-10-16</strong>
