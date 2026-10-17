@@ -17,21 +17,21 @@ Weekly CFP radar for conferences, workshops, and journal special issues relevant
 
 <div class="cfp-calendar-sync-banner"><span class="ui-icon" data-icon="calendar"></span> <strong>1-Click Calendar Sync:</strong> <a class="cfp-sync-link" href="webcal://mud-blog.pages.dev/cfp/radar.ics"><span class="ui-icon" data-icon="calendar-plus"></span><span>Subscribe via Webcal</span></a> <span class="cfp-sync-sep">|</span> <a class="cfp-sync-link" href="/cfp/radar.ics" download><span class="ui-icon" data-icon="download"></span><span>Download .ics</span></a></div>
 
-**Last refreshed:** `2026-10-17T10:09:12Z` · **41 confirmed open** · **53/67 sources fetched**. Expand a venue to see its full name or special-issue topic. Tables scroll horizontally on narrow screens.
+**Last refreshed:** `2026-10-17T10:15:36Z` · **41 confirmed open** · **56/67 sources fetched**. Expand a venue to see its full name or special-issue topic. Tables scroll horizontally on narrow screens.
 
 <details class="cfp-collection-details">
 <summary>Collection status and source policy</summary>
 
 ## Snapshot
 
-- Generated: `2026-10-17T10:09:12Z`
+- Generated: `2026-10-17T10:15:36Z`
 - Sources watched: **67**
 - Confirmed open submission deadlines: **41**
 - Conferences: **46**
 - Workshops: **11**
 - Journal special-issue entries: **78**
 - Wireless / communications-heavy entries: **117**
-- Sources fetched this run: **53**
+- Sources fetched this run: **56**
 - Entries with configured or detected deadlines: **127**
 
 ## Source quality filters
@@ -54,7 +54,7 @@ Configured or automatically detected open deadlines, sorted from the current iss
 | 2026-10-18 (due in 1 days) | <details class="cfp-venue"><summary><span class="cfp-venue-name">ICNC 2027</span></summary><span class="cfp-venue-full">International Conference on Computing, Networking and Communications</span></details> | Conference | Networking / Communications | [<span class="ui-icon" data-icon="external-link"></span> CFP](http://www.conf-icnc.org/2027/cfp.html) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20ICNC%20%28Conference%29%20Submission&dates=20261018/20261019&details=Track%3A%20Networking%20%2F%20Communications%0ADeadline%20Status%3A%20due%20in%201%20days%0AOfficial%20CFP%20Page%3A%20http%3A%2F%2Fwww.conf-icnc.org%2F2027%2Fcfp.html%0ANote%3A%20Official%20ICNC%202027%20submission%20call.%20Automatically%20resolved%20from%20http%3A%2F%2Fconf-icnc.org%2F2026%2Fcfp.htm.) |
 | 2026-10-26 (due in 9 days) | <details class="cfp-venue"><summary><span class="cfp-venue-name">WCNC 2027</span></summary><span class="cfp-venue-full">IEEE Wireless Communications and Networking Conference</span></details> | Conference | Wireless / Communications | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://wcnc2027.ieee-wcnc.org/authors/call-papers) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20WCNC%20%28Conference%29%20Submission&dates=20261026/20261027&details=Track%3A%20Wireless%20%2F%20Communications%0ADeadline%20Status%3A%20due%20in%209%20days%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Fwcnc2027.ieee-wcnc.org%2Fauthors%2Fcall-papers%0ANote%3A%20Major%20IEEE%20wireless%20communications%20venue%3B%20important%20for%20RAN%2C%205G%2F6G%2C%20and%20wireless%20networking%20CFP%20tracking.) |
 | 2026-10-30 (due in 13 days) | <details class="cfp-venue"><summary><span class="cfp-venue-name">IEEE JSAC</span><span class="cfp-venue-topic">Exploiting Flexible Positioning: Movable and Pinching Antennas for Next-Generation Wireless Networks</span></summary><span class="cfp-venue-full">IEEE Journal on Selected Areas in Communications</span></details> | Journal special issue | Journal Special Issues / Communications | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/journals/ieee-jsac/cfp/exploiting-flexible-positioning-movable-and-pinching-antennas-next-generation-wireless-networks) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20IEEE%20JSAC%20CFP%20%28Journal%20special%20issue%29%20Submission&dates=20261030/20261031&details=Track%3A%20Journal%20Special%20Issues%20%2F%20Communications%0ADeadline%20Status%3A%20due%20in%2013%20days%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fjournals%2Fieee-jsac%2Fcfp%2Fexploiting-flexible-positioning-movable-and-pinching-antennas-next-generation-wireless-networks%0ANote%3A%20Special%20issue%3A%20Exploiting%20Flexible%20Positioning%3A%20Movable%20and%20Pinching%20Antennas%20for%20Next-Generation%20Wireless%20Networks.%20Manuscript%20submission%20deadline%3A%202026-10-30.%20Source%20hub%3A%20https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fjournals%2Fieee-jsac%2Fcfp&location=Journal%20%2F%20online%20submission) |
-| 2026-10-30 (due in 13 days) · cached; verify official page | <details class="cfp-venue"><summary><span class="cfp-venue-name">ICC 2027</span></summary><span class="cfp-venue-full">IEEE International Conference on Communications</span></details> | Conference | Wireless / Communications | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://icc2027.ieee-icc.org/authors/call-symposium-papers) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20ICC%20%28Conference%29%20Submission&dates=20261030/20261031&details=Track%3A%20Wireless%20%2F%20Communications%0ADeadline%20Status%3A%20due%20in%2013%20days%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Ficc2027.ieee-icc.org%2Fauthors%2Fcall-symposium-papers%0ANote%3A%20Use%20the%20conference%27s%20live%20symposium%20CFP%20for%20submission%20deadlines%3B%20the%20ComSoc%20event%20catalog%20can%20lag%20deadline%20extensions.&location=Washington%2C%20DC%2C%20USA) |
+| 2026-10-30 (due in 13 days) | <details class="cfp-venue"><summary><span class="cfp-venue-name">ICC 2027</span></summary><span class="cfp-venue-full">IEEE International Conference on Communications</span></details> | Conference | Wireless / Communications | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://icc2027.ieee-icc.org/authors/call-symposium-papers) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20ICC%20%28Conference%29%20Submission&dates=20261030/20261031&details=Track%3A%20Wireless%20%2F%20Communications%0ADeadline%20Status%3A%20due%20in%2013%20days%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Ficc2027.ieee-icc.org%2Fauthors%2Fcall-symposium-papers%0ANote%3A%20Use%20the%20conference%27s%20live%20symposium%20CFP%20for%20submission%20deadlines%3B%20the%20ComSoc%20event%20catalog%20can%20lag%20deadline%20extensions.&location=Washington%2C%20DC%2C%20USA) |
 | 2026-10-31 (due in 14 days) | <details class="cfp-venue"><summary><span class="cfp-venue-name">IEEE IoT-J</span><span class="cfp-venue-topic">AI-Driven Network Forensics for Edge-Intelligent Internet of Things</span></summary><span class="cfp-venue-full">IEEE Internet of Things Journal</span></details> | Journal special issue | Journal Special Issues / IoT and Edge | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://ieee-iotj.org/wp-content/uploads/2026/05/AI_Driven_Network.pdf) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20IEEE%20IoT-J%20SI%20%28Journal%20special%20issue%29%20Submission&dates=20261031/20261101&details=Track%3A%20Journal%20Special%20Issues%20%2F%20IoT%20and%20Edge%0ADeadline%20Status%3A%20due%20in%2014%20days%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F05%2FAI_Driven_Network.pdf%0ANote%3A%20Special%20issue%3A%20AI-Driven%20Network%20Forensics%20for%20Edge-Intelligent%20Internet%20of%20Things.%20Manuscript%20submission%20deadline%3A%202026-10-31.%20Source%20hub%3A%20https%3A%2F%2Fieee-iotj.org%2Fspecial-issues%2F&location=Journal%20%2F%20online%20submission) |
 | 2026-10-31 (due in 14 days) | <details class="cfp-venue"><summary><span class="cfp-venue-name">IEEE Network</span><span class="cfp-venue-topic">AI-Empowered Cognitive Digital Twin for Future Network Ecosystems</span></summary><span class="cfp-venue-full">IEEE Network</span></details> | Journal special issue | Journal Special Issues / Networking | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/magazines/ieee-network/cfp/ai-empowered-cognitive-digital-twin-future-network) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20IEEE%20Network%20CFP%20%28Journal%20special%20issue%29%20Submission&dates=20261031/20261101&details=Track%3A%20Journal%20Special%20Issues%20%2F%20Networking%0ADeadline%20Status%3A%20due%20in%2014%20days%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-network%2Fcfp%2Fai-empowered-cognitive-digital-twin-future-network%0ANote%3A%20Special%20issue%3A%20AI-Empowered%20Cognitive%20Digital%20Twin%20for%20Future%20Network%20Ecosystems.%20Manuscript%20submission%20deadline%3A%202026-10-31.%20Source%20hub%3A%20https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-network%2Fcfp&location=Magazine%20%2F%20online%20submission) |
 | 2026-11-01 (upcoming in 15 days) | <details class="cfp-venue"><summary><span class="cfp-venue-name">IEEE Wireless Commun.</span><span class="cfp-venue-topic">AI-Empowered Underwater Wireless Optical Communications for Science Exploration and Defense Applications</span></summary><span class="cfp-venue-full">IEEE Wireless Communications</span></details> | Journal special issue | Journal Special Issues / Wireless | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.comsoc.org/publications/magazines/ieee-wireless-communications/cfp/ai-empowered-underwater-wireless-optical-communications-science-exploration-and-defense-applications) · [<span class="ui-icon" data-icon="calendar-plus"></span> + GCal](https://calendar.google.com/calendar/render?action=TEMPLATE&text=%5BCFP%5D%20IEEE%20Wireless%20Commun.%20CFP%20%28Journal%20special%20issue%29%20Submission&dates=20261101/20261102&details=Track%3A%20Journal%20Special%20Issues%20%2F%20Wireless%0ADeadline%20Status%3A%20upcoming%20in%2015%20days%0AOfficial%20CFP%20Page%3A%20https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-wireless-communications%2Fcfp%2Fai-empowered-underwater-wireless-optical-communications-science-exploration-and-defense-applications%0ANote%3A%20Special%20issue%3A%20AI-Empowered%20Underwater%20Wireless%20Optical%20Communications%20for%20Science%20Exploration%20and%20Defense%20Applications.%20Manuscript%20submission%20deadline%3A%202026-11-01.%20Source%20hub%3A%20https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-wireless-communications%2Fcfp&location=Magazine%20%2F%20online%20submission) |
@@ -78,7 +78,7 @@ Three compact rows per venue type, keeping only the fields needed for quick scan
 | --- | --- | --- | --- | --- | --- |
 | <details class="cfp-venue"><summary><span class="cfp-venue-name">ICNC 2027</span></summary><span class="cfp-venue-full">International Conference on Computing, Networking and Communications</span></details> | 2026-10-18 (due in 1 days) | Networking / Communications | TBD / official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](http://www.conf-icnc.org/2027/cfp.html) |
 | <details class="cfp-venue"><summary><span class="cfp-venue-name">WCNC 2027</span></summary><span class="cfp-venue-full">IEEE Wireless Communications and Networking Conference</span></details> | 2026-10-26 (due in 9 days) | Wireless / Communications | TBD / official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://wcnc2027.ieee-wcnc.org/authors/call-papers) |
-| <details class="cfp-venue"><summary><span class="cfp-venue-name">ICC 2027</span></summary><span class="cfp-venue-full">IEEE International Conference on Communications</span></details> | 2026-10-30 (due in 13 days) · cached; verify official page | Wireless / Communications | May 30 - June 3, 2027 | Washington, DC, USA | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://icc2027.ieee-icc.org/authors/call-symposium-papers) |
+| <details class="cfp-venue"><summary><span class="cfp-venue-name">ICC 2027</span></summary><span class="cfp-venue-full">IEEE International Conference on Communications</span></details> | 2026-10-30 (due in 13 days) | Wireless / Communications | May 30 - June 3, 2027 | Washington, DC, USA | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://icc2027.ieee-icc.org/authors/call-symposium-papers) |
 
 </div>
 
@@ -114,7 +114,7 @@ Three compact rows per venue type, keeping only the fields needed for quick scan
 | --- | --- | --- | --- | --- | --- |
 | <details class="cfp-venue"><summary><span class="cfp-venue-name">ICNC 2027</span></summary><span class="cfp-venue-full">International Conference on Computing, Networking and Communications</span></details> | 2026-10-18 (due in 1 days) | Networking / Communications | TBD / official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](http://www.conf-icnc.org/2027/cfp.html) |
 | <details class="cfp-venue"><summary><span class="cfp-venue-name">WCNC 2027</span></summary><span class="cfp-venue-full">IEEE Wireless Communications and Networking Conference</span></details> | 2026-10-26 (due in 9 days) | Wireless / Communications | TBD / official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://wcnc2027.ieee-wcnc.org/authors/call-papers) |
-| <details class="cfp-venue"><summary><span class="cfp-venue-name">ICC 2027</span></summary><span class="cfp-venue-full">IEEE International Conference on Communications</span></details> | 2026-10-30 (due in 13 days) · cached; verify official page | Wireless / Communications | May 30 - June 3, 2027 | Washington, DC, USA | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://icc2027.ieee-icc.org/authors/call-symposium-papers) |
+| <details class="cfp-venue"><summary><span class="cfp-venue-name">ICC 2027</span></summary><span class="cfp-venue-full">IEEE International Conference on Communications</span></details> | 2026-10-30 (due in 13 days) | Wireless / Communications | May 30 - June 3, 2027 | Washington, DC, USA | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://icc2027.ieee-icc.org/authors/call-symposium-papers) |
 | <details class="cfp-venue"><summary><span class="cfp-venue-name">SenSys 2027</span></summary><span class="cfp-venue-full">ACM Conference on Embedded Networked Sensor Systems</span></details> | 2026-11-05 (upcoming in 19 days) | IoT / Edge / Sensing | TBD / official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://sensys.acm.org/2027/cfp.html) |
 | <details class="cfp-venue"><summary><span class="cfp-venue-name">NOMS 2027</span></summary><span class="cfp-venue-full">IEEE/IFIP Network Operations and Management Symposium</span></details> | 2026-11-09 (upcoming in 23 days) | Networking / Management | TBD / official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://noms2027.ieee-noms.org/authors/call-technical-session-paper) |
 | <details class="cfp-venue"><summary><span class="cfp-venue-name">IEEE S&amp;P 2027</span></summary><span class="cfp-venue-full">IEEE Symposium on Security and Privacy</span></details> | 2026-11-17 (upcoming in 31 days) | Security | TBD / official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://www.ieee-security.org/TC/SP2027/cfpapers.html) |
@@ -237,9 +237,9 @@ Three compact rows per venue type, keeping only the fields needed for quick scan
 | <details class="cfp-venue"><summary><span class="cfp-venue-name">ICLR 2026</span></summary><span class="cfp-venue-full">International Conference on Learning Representations</span></details> | 2025-09-24 (unverified — check official page) | AI / ML | TBD / official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://iclr.cc/Conferences/2026/CallForPapers) |
 | <details class="cfp-venue"><summary><span class="cfp-venue-name">IEEE IoT-J</span><span class="cfp-venue-topic">Effective, Efficient, and Trustworthy AI Agents for the Internet of Things</span></summary><span class="cfp-venue-full">IEEE Internet of Things Journal</span></details> | 2026-01-15 (closed) | Journal Special Issues / IoT and Edge | Special issue schedule / official CFP page | Journal / online submission | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://ieee-iotj.org/wp-content/uploads/2025/12/Effective_Efficient_Trustworthy_AI_Agents_New.pdf) |
 | <details class="cfp-venue"><summary><span class="cfp-venue-name">ICML 2026</span></summary><span class="cfp-venue-full">International Conference on Machine Learning</span></details> | 2026-01-28 (closed) | AI / ML | TBD / official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://icml.cc/Conferences/2026/CallForPapers) |
-| <details class="cfp-venue"><summary><span class="cfp-venue-name">ICC Workshops 2026</span></summary><span class="cfp-venue-full">IEEE International Conference on Communications Workshops</span></details> | 2026-01-31 (closed) · cached; verify official page | Wireless / Workshops | TBD / official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://icc2026.ieee-icc.org/program/workshops) |
+| <details class="cfp-venue"><summary><span class="cfp-venue-name">ICC Workshops 2026</span></summary><span class="cfp-venue-full">IEEE International Conference on Communications Workshops</span></details> | 2026-01-31 (closed) | Wireless / Workshops | TBD / official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://icc2026.ieee-icc.org/program/workshops) |
 | <details class="cfp-venue"><summary><span class="cfp-venue-name">SIGCOMM 2026</span></summary><span class="cfp-venue-full">ACM SIGCOMM</span></details> | 2026-02-06 (closed) | Networking / Systems | TBD / official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://conferences.sigcomm.org/sigcomm/2026/cfp/) |
-| <details class="cfp-venue"><summary><span class="cfp-venue-name">ICMLCN 2026</span></summary><span class="cfp-venue-full">IEEE International Conference on Machine Learning for Communication and Networking</span></details> | 2026-02-23 (closed) · cached; verify official page | AI / ML for Communications | TBD / official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://icmlcn2026.ieee-icmlcn.org/call-papers) |
+| <details class="cfp-venue"><summary><span class="cfp-venue-name">ICMLCN 2026</span></summary><span class="cfp-venue-full">IEEE International Conference on Machine Learning for Communication and Networking</span></details> | 2026-02-23 (closed) | AI / ML for Communications | TBD / official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://icmlcn2026.ieee-icmlcn.org/call-papers) |
 | <details class="cfp-venue"><summary><span class="cfp-venue-name">IWQoS 2026</span></summary><span class="cfp-venue-full">IEEE/ACM International Symposium on Quality of Service</span></details> | 2026-02-23 (closed) | Networking / QoS | TBD / official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://iwqos2026.ieee-iwqos.org/call-papers) |
 | <details class="cfp-venue"><summary><span class="cfp-venue-name">IFIP Networking 2026</span></summary><span class="cfp-venue-full">IFIP Networking Conference</span></details> | 2026-02-28 (unverified — check official page) | Networking / Systems | TBD / official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://networking.ifip.org/2026/) |
 | <details class="cfp-venue"><summary><span class="cfp-venue-name">BlackSeaCom 2026</span></summary><span class="cfp-venue-full">IEEE International Black Sea Conference on Communications and Networking</span></details> | 2026-03-01 (closed) | Wireless / Communications | TBD / official page | TBD / official page | [<span class="ui-icon" data-icon="external-link"></span> CFP](https://blackseacom2026.ieee-blackseacom.org/call-papers) |
@@ -308,7 +308,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2023-12-01` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Tiny Machine Learning in Internet of Unmanned Aerial Vehicles. Manuscript submission deadline: 2023-12-01. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Tiny Machine Learning in Internet of Unmanned Aerial Vehicles. Manuscript submission deadline: 2023-12-01. Source hub: https://ieee-iotj.org/special-issues/
@@ -323,7 +323,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-01-01` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Energy Internet: A Cyber-Physical-Social Perspective. Manuscript submission deadline: 2024-01-01. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Energy Internet: A Cyber-Physical-Social Perspective. Manuscript submission deadline: 2024-01-01. Source hub: https://ieee-iotj.org/special-issues/
@@ -338,7 +338,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-01-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Positioning and Sensing for Near Field (NF)-driven Internet-of-Everything. Manuscript submission deadline: 2024-01-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Positioning and Sensing for Near Field (NF)-driven Internet-of-Everything. Manuscript submission deadline: 2024-01-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -353,7 +353,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-01-31` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Prognostics and Health Management using the Internet of Things. Manuscript submission deadline: 2024-01-31. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Prognostics and Health Management using the Internet of Things. Manuscript submission deadline: 2024-01-31. Source hub: https://ieee-iotj.org/special-issues/
@@ -368,7 +368,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-02-01` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Data Management and Security in Resource-constrained Intelligent IoT Systems. Manuscript submission deadline: 2024-02-01. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Data Management and Security in Resource-constrained Intelligent IoT Systems. Manuscript submission deadline: 2024-02-01. Source hub: https://ieee-iotj.org/special-issues/
@@ -383,7 +383,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-02-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Current Research Trend and Open Challenge for Industrial Internet-of-Things. Manuscript submission deadline: 2024-02-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Current Research Trend and Open Challenge for Industrial Internet-of-Things. Manuscript submission deadline: 2024-02-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -398,7 +398,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-03-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Next Generation Multiple Access for Internet-of-Things. Manuscript submission deadline: 2024-03-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Next Generation Multiple Access for Internet-of-Things. Manuscript submission deadline: 2024-03-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -413,7 +413,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-04-01` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Integrated Sensing and Communications (ISAC) for 6G IoE. Manuscript submission deadline: 2024-04-01. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Integrated Sensing and Communications (ISAC) for 6G IoE. Manuscript submission deadline: 2024-04-01. Source hub: https://ieee-iotj.org/special-issues/
@@ -428,7 +428,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-04-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Edge Learning in B5G IoT Systems. Manuscript submission deadline: 2024-04-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Edge Learning in B5G IoT Systems. Manuscript submission deadline: 2024-04-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -443,7 +443,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-04-22` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Integrated Sensing, Computing and Communication for Internet of Robotic Things. Manuscript submission deadline: 2024-04-22. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Integrated Sensing, Computing and Communication for Internet of Robotic Things. Manuscript submission deadline: 2024-04-22. Source hub: https://ieee-iotj.org/special-issues/
@@ -458,7 +458,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-06-01` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Efficient, Effective, and Explicable Artificial Intelligence Inspired IoT over Non-Terrestrial Networks. Manuscript submission deadline: 2024-06-01. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Efficient, Effective, and Explicable Artificial Intelligence Inspired IoT over Non-Terrestrial Networks. Manuscript submission deadline: 2024-06-01. Source hub: https://ieee-iotj.org/special-issues/
@@ -473,7 +473,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-06-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Augmented Intelligence of Things for Vehicle Road Cooperation Systems. Manuscript submission deadline: 2024-06-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Augmented Intelligence of Things for Vehicle Road Cooperation Systems. Manuscript submission deadline: 2024-06-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -488,7 +488,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-08-01` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Low-Carbon Sustainable Computing Enabled Artificial Intelligence of Things. Manuscript submission deadline: 2024-08-01. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Low-Carbon Sustainable Computing Enabled Artificial Intelligence of Things. Manuscript submission deadline: 2024-08-01. Source hub: https://ieee-iotj.org/special-issues/
@@ -503,7 +503,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-08-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Graph-Powered Intelligent Computing for the Internet of Everything. Manuscript submission deadline: 2024-08-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Graph-Powered Intelligent Computing for the Internet of Everything. Manuscript submission deadline: 2024-08-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -518,7 +518,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-08-31` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Distributed Edge Intelligence empowered Internet-of-Vehicles. Manuscript submission deadline: 2024-08-31. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Distributed Edge Intelligence empowered Internet-of-Vehicles. Manuscript submission deadline: 2024-08-31. Source hub: https://ieee-iotj.org/special-issues/
@@ -533,7 +533,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-09-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Security and Privacy of Intelligent Vehicles. Manuscript submission deadline: 2024-09-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Security and Privacy of Intelligent Vehicles. Manuscript submission deadline: 2024-09-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -548,7 +548,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-09-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Large Language Models for Intelligent Network Operation and Optimization in the Internet of Things. Manuscript submission deadline: 2024-09-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Large Language Models for Intelligent Network Operation and Optimization in the Internet of Things. Manuscript submission deadline: 2024-09-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -563,7 +563,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-09-30` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: UAV Networks for Internet of Things. Manuscript submission deadline: 2024-09-30. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: UAV Networks for Internet of Things. Manuscript submission deadline: 2024-09-30. Source hub: https://ieee-iotj.org/special-issues/
@@ -578,7 +578,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-10-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Integrating Cognitive IoT Sensors with UAVs in Aerial Computing &amp;#8211; Next Generation Industrial Systems. Manuscript submission deadline: 2024-10-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Integrating Cognitive IoT Sensors with UAVs in Aerial Computing &amp;#8211; Next Generation Industrial Systems. Manuscript submission deadline: 2024-10-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -593,7 +593,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-11-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Collaborative Intelligence via Meta-Computing in the Industrial Internet of Things. Manuscript submission deadline: 2024-11-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Collaborative Intelligence via Meta-Computing in the Industrial Internet of Things. Manuscript submission deadline: 2024-11-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -608,7 +608,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-11-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Integration of Generative AI and Internet of Things. Manuscript submission deadline: 2024-11-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Integration of Generative AI and Internet of Things. Manuscript submission deadline: 2024-11-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -623,7 +623,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2024-12-30` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: 6G Near-Field Technologies for The Internet of Things. Manuscript submission deadline: 2024-12-30. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: 6G Near-Field Technologies for The Internet of Things. Manuscript submission deadline: 2024-12-30. Source hub: https://ieee-iotj.org/special-issues/
@@ -638,7 +638,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-01-01` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Near-Field Communications (NFC) in Internet-of-Everything. Manuscript submission deadline: 2025-01-01. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Near-Field Communications (NFC) in Internet-of-Everything. Manuscript submission deadline: 2025-01-01. Source hub: https://ieee-iotj.org/special-issues/
@@ -653,7 +653,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-01-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Digital Twin for 6G Internet of Everything. Manuscript submission deadline: 2025-01-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Digital Twin for 6G Internet of Everything. Manuscript submission deadline: 2025-01-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -668,7 +668,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-01-31` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Human Machine Interaction in Industrial IoT Flexible Manufacturing with Advanced AI Tools: Emerging Application and Challenges. Manuscript submission deadline: 2025-01-31. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Human Machine Interaction in Industrial IoT Flexible Manufacturing with Advanced AI Tools: Emerging Application and Challenges. Manuscript submission deadline: 2025-01-31. Source hub: https://ieee-iotj.org/special-issues/
@@ -683,7 +683,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-02-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Carbon Intelligent Industrial Internet of Things. Manuscript submission deadline: 2025-02-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Carbon Intelligent Industrial Internet of Things. Manuscript submission deadline: 2025-02-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -698,7 +698,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-02-28` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Edge AI Models for Social Internet of Things. Manuscript submission deadline: 2025-02-28. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Edge AI Models for Social Internet of Things. Manuscript submission deadline: 2025-02-28. Source hub: https://ieee-iotj.org/special-issues/
@@ -713,7 +713,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-03-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Responsible and Federated Foundation Models for IIoT. Manuscript submission deadline: 2025-03-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Responsible and Federated Foundation Models for IIoT. Manuscript submission deadline: 2025-03-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -728,7 +728,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-04-03` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: AIoT-enabled Secured and Green Supply Chain Systems: Challenges &amp; Opportunities. Manuscript submission deadline: 2025-04-03. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: AIoT-enabled Secured and Green Supply Chain Systems: Challenges &amp; Opportunities. Manuscript submission deadline: 2025-04-03. Source hub: https://ieee-iotj.org/special-issues/
@@ -743,7 +743,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-04-03` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Security and Privacy in Large Language Models for Internet of Things (IoT). Manuscript submission deadline: 2025-04-03. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Security and Privacy in Large Language Models for Internet of Things (IoT). Manuscript submission deadline: 2025-04-03. Source hub: https://ieee-iotj.org/special-issues/
@@ -758,7 +758,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-04-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Symbiotic Internet-of-Things for Giant AI in the 6G Era. Manuscript submission deadline: 2025-04-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Symbiotic Internet-of-Things for Giant AI in the 6G Era. Manuscript submission deadline: 2025-04-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -773,7 +773,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-04-30` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Data and Knowledge-Empowered Distributed Learning for Internet of Unmanned Agents. Manuscript submission deadline: 2025-04-30. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Data and Knowledge-Empowered Distributed Learning for Internet of Unmanned Agents. Manuscript submission deadline: 2025-04-30. Source hub: https://ieee-iotj.org/special-issues/
@@ -788,7 +788,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-05-31` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Challenges and Opportunities of IoT-based Healthcare Industry 5.0. Manuscript submission deadline: 2025-05-31. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Challenges and Opportunities of IoT-based Healthcare Industry 5.0. Manuscript submission deadline: 2025-05-31. Source hub: https://ieee-iotj.org/special-issues/
@@ -803,7 +803,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-05-31` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Ultra-Reliable and Low-Latency Satellite Communications for Ubiquitous Internet of Everything (IoE). Manuscript submission deadline: 2025-05-31. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Ultra-Reliable and Low-Latency Satellite Communications for Ubiquitous Internet of Everything (IoE). Manuscript submission deadline: 2025-05-31. Source hub: https://ieee-iotj.org/special-issues/
@@ -818,7 +818,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-06-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Augmented Edge Sensing Intelligence for Low-Altitude IoT Systems. Manuscript submission deadline: 2025-06-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Augmented Edge Sensing Intelligence for Low-Altitude IoT Systems. Manuscript submission deadline: 2025-06-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -833,7 +833,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-06-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Integrated Transmissions and Computations for Non-Terrestrial Network-Assisted Internet of Things. Manuscript submission deadline: 2025-06-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Integrated Transmissions and Computations for Non-Terrestrial Network-Assisted Internet of Things. Manuscript submission deadline: 2025-06-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -848,7 +848,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-07-30` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Responsible and Trustworthy AI for 6G Internet of Things (6G-IoT). Manuscript submission deadline: 2025-07-30. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Responsible and Trustworthy AI for 6G Internet of Things (6G-IoT). Manuscript submission deadline: 2025-07-30. Source hub: https://ieee-iotj.org/special-issues/
@@ -863,7 +863,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-07-31` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Intelligent IoT for Sustainable Agriculture and Food Industries. Manuscript submission deadline: 2025-07-31. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Intelligent IoT for Sustainable Agriculture and Food Industries. Manuscript submission deadline: 2025-07-31. Source hub: https://ieee-iotj.org/special-issues/
@@ -878,7 +878,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-08-31` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:27Z`
 - Note: Consumer communications and networking CFP source; useful for IoT, edge, wireless, and consumer network systems.
 - Page signals:
   - o consumer communications and networking. Submit a Paper Important Dates Paper Submission Deadline 31 August 2025 Firm Deadline Notification of Acceptance 1 October 2025 Extended Final Camera Ready 16 November 2025 Technical Tracks Track 1: Edge/Cloud Computing and Networking The rapid evolution in computing and communication technologies in recent years has revolutionized the accessibility and location of applications, data storage, and processing resources. For efficient computing resource utilization and ubiquitous connections from any network end devices with limited computing capability, the cloud computing paradigm which focuses on reliable and cost-efficient computing, software, storage, and virtualization of the hardware r
@@ -896,7 +896,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-09-03` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Advancing Intelligent IoT Systems through Transformer Architectures: New Paradigms, Applications, and Challenges. Manuscript submission deadline: 2025-09-03. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Advancing Intelligent IoT Systems through Transformer Architectures: New Paradigms, Applications, and Challenges. Manuscript submission deadline: 2025-09-03. Source hub: https://ieee-iotj.org/special-issues/
@@ -911,7 +911,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-09-03` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:08:58Z`
+- Last verified: `2026-10-17T10:15:26Z`
 - Note: Mobile and wireless networking CFP source; relevant to RAN, edge, and mobile systems work.
 - Page signals:
   - mmer Winter Abstract Registration August 27, 2025 23:59 AoE March 6, 2026 23:59 AoE Paper Submission September 3, 2025 23:59 AoE March 13, 2026 23:59 AoE Early Reject Notification October 28th, 2025 May 21st, 2026 Rebuttal Period November 11th - 14th, 2025 June 4th - 9th, 2026 Acceptance Notification November 24th, 2025 June 29, 2026 Camera-Ready Deadline February 17, 2026 August 31, 2026 Topics We invite submissions on a wide range of wireless networking, mobile computing, mobile systems and mobile applications research, including but not limited to the following: Next generation wireless and mobile networks (including beyond 5G and 6G systems) Satellite networks and integrated satellite-terrestrial networks Vehicular, robotic an
@@ -927,7 +927,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-09-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Intent-based Networking for AI powered IoT Communications. Manuscript submission deadline: 2025-09-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Intent-based Networking for AI powered IoT Communications. Manuscript submission deadline: 2025-09-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -942,7 +942,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2025-09-18` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:08:58Z`
+- Last verified: `2026-10-17T10:15:26Z`
 - Note: Networked systems CFP source; useful for systems/networking submission windows.
 - Page signals:
   - Sponsored by USENIX , the Advanced Computing Systems Association. Important Dates Spring deadline: Paper titles and abstracts due: Friday, April 18, 2025, 11:59 pm US PDT Full paper submissions due: Friday, April 25, 2025, 11:59 pm US PDT Notification to authors: Thursday, July 24, 2025 Final paper files due: Monday, October 27, 2025 Fall deadline: Paper titles and abstracts due: Thursday, September 11, 2025, 11:59 pm US PDT Full paper submissions due: Thursday, September 18, 2025, 11:59 pm US PDT Notification to authors: Tuesday, December 9, 2025 Final paper files due: Thursday, March 5, 2026 Download Call for Papers PDF Overview NSDI focuses on the design principles, implementation, and practical evaluation of networked and dis
@@ -976,7 +976,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-01-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Effective, Efficient, and Trustworthy AI Agents for the Internet of Things. Manuscript submission deadline: 2026-01-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Effective, Efficient, and Trustworthy AI Agents for the Internet of Things. Manuscript submission deadline: 2026-01-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -991,7 +991,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-01-28` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:08:58Z`
+- Last verified: `2026-10-17T10:15:25Z`
 - Note: Core ML venue; the CFP page is monitored for abstract, paper, and supplementary deadline language.
 - Page signals:
   - ission Site Submission site opens: January 8, 2026. Suggested OpenReview account creation deadline: January 8, 2026. (If you do not already have an OpenReview account, please register by this date, otherwise we cannot guarantee that your account will be activated in time.\*\*) Abstract submission deadline: January 23, 2026 AoE (Jan 24, 2026, 12 Noon UTC-0). Full paper submission deadline: January 28, 2026 AoE (Jan 29, 2026, 12 Noon UTC-0). Abstracts and papers can be submitted through OpenReview: https://openreview.net/group?id=ICML.cc/2026/Conference Note: Position papers should be submitted through a separate OpenReview site, as outlined in the Call for Position Papers . \*\* OpenReview: All authors must have an OpenReview account.
@@ -1010,10 +1010,10 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Event / issue dates: TBD / official page
 - Location: TBD / official page
 - Source: [https://icc2026.ieee-icc.org/program/workshops](https://icc2026.ieee-icc.org/program/workshops)
-- Fetch status: `fetch failed`
+- Fetch status: `fetched`
 - Configured deadline: `2026-01-31` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:04:23Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Workshop CFP source for specialized RAN, AI-native communications, edge, and 6G topics. Official ICC 2026 workshop-paper page lists an extended firm workshop paper deadline of 2026-01-31.
 - Page signals:
   - borative Robotics in the Era of 6G Communication Important Dates Call for Workshop Papers Deadline: Extended to 31 January 2026 (FIRM) Acceptance Notification: 08 March 2026 Camera Ready Papers Deadline: 22 March 2026 Submission Guidelines Prospective authors are invited to submit original workshop papers for presentation and publication. Accepted and presented workshop papers will be published in the IEEE ICC 2026 Conference Proceedings and submitted to IEEE Xplore®. Please address questions regarding a specific workshop to the respective workshop organizers listed on the workshop page. Please make sure to follow the Author and Submission Guidelines listed below. IEEE ICC 2026 will feature a series of half and full-day workshops
@@ -1029,7 +1029,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-02-06` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:08:57Z`
+- Last verified: `2026-10-17T10:15:25Z`
 - Note: Official SIGCOMM 2026 CFP page with main-track abstract and paper-submission dates.
 - Page signals:
   - sals. Further details and CFP will be posted later. Important Dates Abstract registration deadline Friday, January 30, 2026 (AoE) Paper submission deadline Friday, February 6, 2026 (AoE) Early notification Thursday, April 2, 2026 Rebuttal period April 27 - April 29, 2026 Review results notification Monday, May 11, 2026 One-shot revision deadline Friday, June 19, 2026 One-shot revision results notification Monday, June 29, 2026 Camera-ready deadline Friday, July 3, 2026 Conference August 17 - 21, 2026 Contact the PC Chairs
@@ -1046,10 +1046,10 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Event / issue dates: TBD / official page
 - Location: TBD / official page
 - Source: [https://icmlcn2026.ieee-icmlcn.org/call-papers](https://icmlcn2026.ieee-icmlcn.org/call-papers)
-- Fetch status: `fetch failed`
+- Fetch status: `fetched`
 - Configured deadline: `2026-02-23` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:04:33Z`
+- Last verified: `2026-10-17T10:15:29Z`
 - Note: IEEE machine-learning-for-communications venue; important for AI-native wireless, network optimization, and learning-enabled RAN work.
 - Page signals:
   - elecom • AI-enabled spectrum management Submit a Paper Important Dates Paper Submission Deadline - Extended 23 February 2026 Notification of Acceptance 28 February 2026 Camera-Ready Papers Due 6 March 2026 Submit a Paper Program Committees Call For Technical Papers About Contact © IEEE ICMLCN 2026 Footer Menu Accessibility Sitemap Contact &amp; Support Home Nondiscrimination Policy IEEE Ethics Reporting IEEE Privacy Policy Terms © Copyright 2026 IEEE – All rights reserved. A public charity, IEEE is the world&amp;#039;s largest technical professional organization dedicated to advancing technology for the benefit of humanity.
@@ -1066,7 +1066,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-02-23` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:10Z`
+- Last verified: `2026-10-17T10:15:29Z`
 - Note: IWQoS official annual site; monitor for QoS, scheduling, network management, edge/cloud, and AI-for-networking calls.
 - Page signals:
   - computing systems with integrated QoS QoS for quantum computing Important Dates Abstract Deadline 16 February 2026 Deadline Extended! Full Paper Deadline 23 February 2026 Deadline Extended! Notification of Acceptance 30 April 2026 Deadline Extended! Camera Ready Deadline 20 May 2026 Deadline Extended! Submit a Paper © IEEE/ACM International Symposium on Quality of Service (IWQoS) 2026 Footer Menu Accessibility Sitemap Contact &amp; Support Home Nondiscrimination Policy IEEE Ethics Reporting IEEE Privacy Policy Terms © Copyright 2026 IEEE – All rights reserved. A public charity, IEEE is the world&amp;#039;s largest technical professional organization dedicated to advancing technology for the benefit of humanity.
@@ -1098,7 +1098,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-03-01` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:09Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: IEEE ComSoc regional communications/networking venue; useful for 5G/6G, wireless, satellite, IoT, and network applications.
 - Page signals:
   - communications Cloud-based data streaming Submit a Paper Important Dates Paper Submission Deadline 1 March 2026 Final Deadline Call for Tutorials 15 February 2026 Notification of Acceptance 29 March 2026 Camera-Ready Papers Due 29 April 2026 FINAL DEADLINE Submit a Paper Program Committees Hotel &amp; Travel Call For Technical Papers About Contact © IEEE International Black Sea Conference on Communications and Networking 2026 Footer Menu Accessibility Sitemap Contact &amp; Support Home Nondiscrimination Policy IEEE Ethics Reporting IEEE Privacy Policy Terms © Copyright 2026 IEEE – All rights reserved. A public charity, IEEE is the world&amp;#039;s largest technical professional organization dedicated to advancing technology for the benefi
@@ -1116,7 +1116,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-03-22` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:11Z`
+- Last verified: `2026-10-17T10:15:30Z`
 - Note: Official IFIP Networking 2026 workshops page with firm workshop paper submission deadline.
 - Page signals:
   - be followed. Important Dates Conference dates: May 24 th to 27 th , 2026 Paper submission deadline: March 22, 2026 April 7, 2026 April 14, 2026 (AoE) - Firm Notification of acceptance: April 21 st , 2026 April 28, 2026 Camera-ready deadline: April 30 th , 2026 May 4, 2026 Workshop date: May 24 th Workshop Chairs Davide Andreoletti, University of Applied Sciences of Southern Switzerland, Switzerland ( This email address is being protected from spambots. You need JavaScript enabled to view it. ) Frank Loh, University of Wurzburg, Germany ( This email address is being protected from spambots. You need JavaScript enabled to view it. ) Elisa Rojas, University of Alcala, Spain ( This email address is being protected from spambots. You n
@@ -1134,7 +1134,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-03-31` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:09Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: LAN/MAN, edge networking, programmable networks, and metro-access systems CFP source.
 - Page signals:
   - t and control, services and applications. Submit a Paper Important Dates Paper Submission Deadline 31 March 2026 (Firm Deadline) Notification of Acceptance 30 April 2026 Camera-Ready Papers Due 25 May 2026 Topics Papers are solicited on any topic in networking, including, but not limited to: B5G and 6G cellular data networking and communications AI and machine learning for local and metropolitan area networking and communications AI and machine learning for network measurement and traffic analysis Cloud, edge, and fog computing integration Co-existence and heterogeneity support at the edge (HetNets) Datacenter networks Energy efficiency for local and metropolitan area networking Information-centric networking in local and metropol
@@ -1178,7 +1178,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-04-20` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:08:58Z`
+- Last verified: `2026-10-17T10:15:25Z`
 - Note: Mobile systems venue; useful for edge AI, mobile computing, sensing, and wireless systems submissions.
 - Page signals:
   - February 13, 2026 23:59 AoE Final Decision Notification March 2, 2026 Final Camera-ready Deadline April 13, 2026 IoT Day June 21, 2026 Rising Stars Forum June 21, 2026 N 2 Women Workshop June 21, 2026 Main Conference June 22 - 24, 2026 Workshops June 25, 2026 Announcements June 23rd, 2026 - Awards have been announced NEW June 19th, 2026 - Program and detailed venue floor plans are updated May 6th, 2026 - ASSET Symposium application is open April 25th, 2026 - N2Women Workshop submission deadline has been extended April 20th, 2026 - Accepted Papers have now been rleased April 16th, 2026 - Registration is open April 10th, 2026 - Call for Posters deadline is extended Feb 24th, 2026 - Artefact Evaluation deadline is updated Jan 31st,
@@ -1198,7 +1198,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-04-29` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Security CFP source; monitored for main-track and artifact deadline signals.
 - Page signals:
   - ute a submission for this purpose. Important Dates First Review Cycle Abstract submission deadline Jan 7, 2026 (Mandatory: all papers must have an abstract submitted by this date) Full paper submission deadline Jan 14, 2026 Notification of early-rejection papers Feb 20, 2026 Author rebuttal period Mar 17–20, 2026 Rebuttal deadline Mar 20, 2026 Author notification Apr 9, 2026 Minor revision approval deadline June 5, 2026 Camera ready deadline August 9, 2026 Second Review Cycle Abstract submission deadline Apr 22, 2026 (Mandatory: all papers must have a title, an abstract submitted and a track selected by this date) Full paper submission deadline Apr 29, 2026 Online artifact deadline May 2, 2026 Notification of early-rejection pap
@@ -1220,7 +1220,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-05-03` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:07Z`
+- Last verified: `2026-10-17T10:15:27Z`
 - Note: Communications and networking CFP source; relevant to 5G/6G, RAN, and edge networking tracks.
 - Page signals:
   - eadcrumb Home Authors Call for Symposium Papers Call for Symposium Papers Important Dates Deadline for Paper Submission 3 May 2026 Firm Deadline! Notification Date 1 August 2026 Final Paper Upload and Registration Deadline (NEW) 8 September 2026 The 2026 IEEE Global Communications Conference (GLOBECOM) will be held in the vibrant city of Macau, China from 7 to 11 December 2026. Themed “Communications, Innovation, Inspiration, Intelligence”, this flagship conference of IEEE Communications society will feature a comprehensive high-quality technical program including 12 Symposia and 13 SAC Tracks, and a number of Tutorials and Workshops. IEEE GLOBECOM 2026 will also include an attractive Industry Forum &amp; Exhibition Program with K
@@ -1238,7 +1238,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-05-06` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:08:58Z`
+- Last verified: `2026-10-17T10:15:25Z`
 - Note: Primary machine-learning conference CFP page; use this source for main-track deadline verification.
 - Page signals:
   - tations or behavior beyond the scope of the original work. Key dates: Abstract submission deadline: May 4, 2026 (AOE). All authors must have an OpenReview profile when submitting Full paper submission deadline, including all supplementary materials: May 6, 2026 AOE Author notification: September 24, 2026 AoE Key links: Paper template Submission link Note that the different tracks (main, evaluations and datasets , position papers ) have different calls for papers, different submission portals, and possibly different timelines. Please note that there will be no possibility to switch tracks or types and that papers cannot be submitted to multiple tracks or types simultaneously. Irrelevant or duplicate papers risk desk rejection from
@@ -1270,7 +1270,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-05-18` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:09Z`
+- Last verified: `2026-10-17T10:15:29Z`
 - Note: Security-focused communications/networking CFP source for secure wireless, network security, privacy, and critical infrastructure.
 - Page signals:
   - networks security, quantum networks, etc. Submit a Paper Important Dates Paper Submission Deadline 18 May 2026 Deadline Extended Notification of Acceptance 18 July 2026 Camera-Ready Papers Due (main &amp; workshop papers) 14 August 2026 Submit a Paper Submit a Paper Program Committees Hotel &amp; Travel Call For Technical Papers About Contact © IEEE Conference on Communications and Network Security 2026 Footer Menu Accessibility Sitemap Contact &amp; Support Home Nondiscrimination Policy IEEE Ethics Reporting IEEE Privacy Policy Terms © Copyright 2026 IEEE – All rights reserved. A public charity, IEEE is the world&amp;#039;s largest technical professional organization dedicated to advancing technology for the benefit of humanity.
@@ -1288,7 +1288,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-05-19` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:12Z`
+- Last verified: `2026-10-17T10:15:36Z`
 - Note: Official VTC-Fall 2026 current workshops page; includes paper submission deadline for generative-AI air-ground collaborative robotics networks workshop.
 - Page signals:
   - Generative AI for 4D Dynamic Air-Ground Collaborative Robotics Networks Paper submission deadline Extended: 19 May 2026 Acceptance notification: 3 July 2026 Final paper submission deadline: 15 July 2026 Submission requirements: 5-page paper (without overlength charge) and up to 2 additional pages are allowed with the purchase of additional page charges in the amount of $100 USD per additional page at the time of registration and final paper submission. Paper submission can be located here: https://vtc2026f-rr-wks.trackchair.com/ Boston, MA USA IEEE VTS VTC2026-Fall Conference Contact Contact Us &amp;copy; Copyright IEEE - All rights reserved. Use of this website signifies your agreement to the IEEE Terms and Conditions . A public cha
@@ -1306,7 +1306,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-05-31` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: AI at the Edge for Vehicular and Low-Altitude IoT Networks. Manuscript submission deadline: 2026-05-31. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: AI at the Edge for Vehicular and Low-Altitude IoT Networks. Manuscript submission deadline: 2026-05-31. Source hub: https://ieee-iotj.org/special-issues/
@@ -1321,7 +1321,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-05-31` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:10Z`
+- Last verified: `2026-10-17T10:15:29Z`
 - Note: Military, tactical, resilient, satellite, spectrum, and wireless communications CFP source. Official current-year site may reject automated fetches; keep as manual official source until CFP text is crawlable.
 - Page signals:
   - on Guidelines before submitting your paper. IMPORTANT DATES Unclassified Paper Submission Deadline: 31 May 2026 (!!! FIRM DEADLINE !!!) Unclassified Paper Notification of Acceptance : 9 August 2026 Unclassified Camera-Ready Papers Due: 11 September 2026 USE OF GENERATIVE AI While we acknowledge that generative AI is seamlessly integrated into many editing tools, e.g., Grammarly, and is therefore often difficult to detect, authors shall not submit papers generated entirely using generative AI tools. In particular, for papers with content generated entirely by generative AI, authorship may not be clearly attributable to the authors. Accordingly, such papers will be desk-rejected. Authors are required to confirm during submission in
@@ -1340,7 +1340,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-06-05` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Integrated Sensing, Memory, Communication, and Computation for Large-Scale AI Based IoT Systems. Manuscript submission deadline: 2026-06-05. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Integrated Sensing, Memory, Communication, and Computation for Large-Scale AI Based IoT Systems. Manuscript submission deadline: 2026-06-05. Source hub: https://ieee-iotj.org/special-issues/
@@ -1394,7 +1394,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-06-30` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: IoT Empowered AI4Science: Data Acquisition, System Modeling, and Knowledge Discovery. Manuscript submission deadline: 2026-06-30. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: IoT Empowered AI4Science: Data Acquisition, System Modeling, and Knowledge Discovery. Manuscript submission deadline: 2026-06-30. Source hub: https://ieee-iotj.org/special-issues/
@@ -1409,7 +1409,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-07-08` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:10Z`
+- Last verified: `2026-10-17T10:15:29Z`
 - Note: Advanced networks, telecommunications systems, optical/wireless networks, SDN/NFV, and 5G/6G CFP source. Official current-year site may reject automated fetches; keep as manual official source until CFP text is crawlable.
 - Page signals:
   - nvited talks, and industry exhibits. Submit a Paper Important Dates Main Conference Paper Submissions Due 8 July 2026 (Firm) Acceptance Notification 1 September 2026 Camera Ready Submission 25 October 2026 Technical Tracks Track 1: Wireless Communication and Networks Topics 5G-Advanced and 6G Technologies Information and Coding Theory Cognitive Radio Networks Energy Harvesting Holographic Surfaces and Reconfigurable Surfaces Millimeter Wave and Terahertz Channel Modelling and Estimation Next Generation MIMO Satellite and Radar Communications Spectrum Sensing, Access, and Sharing Energy-Efficient and Green Networking Track 2: Optical and Quantum Communication Networks Topics Fiber Optical Communication Visible Light Communication M
@@ -1425,7 +1425,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-07-10` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:10Z`
+- Last verified: `2026-10-17T10:15:29Z`
 - Note: Cloud networking, edge/cloud systems, network softwarization, and telecom cloud CFP source.
 - Page signals:
   - itation of 6 pages Submit a Paper Download the CFP Flyer Important Dates Paper Submission Deadline 10 July 2026 Notification of Acceptance 9 September 2026 Camera-Ready Papers Due 27 September 2026 Submit a Paper Program Committees Hotel &amp; Travel Call For Technical Papers About Contact © IEEE International Conference on Cloud Networking Footer Menu Accessibility Sitemap Contact &amp; Support Home Nondiscrimination Policy IEEE Ethics Reporting IEEE Privacy Policy Terms © Copyright 2026 IEEE – All rights reserved. A public charity, IEEE is the world&amp;#039;s largest technical professional organization dedicated to advancing technology for the benefit of humanity.
@@ -1445,7 +1445,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-07-10` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:09Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Official CAMAD 2026 page; main paper submission deadline recorded to avoid selecting acceptance/camera-ready dates.
 - Page signals:
   - unced at a later stage through this website. Important Dates 06 Jun 2026 Paper Submission Deadline : Final Deadline 10 Jul 2026 Acceptance Notification 04 Sep 2026 Camera-ready Due : Deadline Extended 07 Sep 2026 Conference Begins See All Dates The Destination Nicosia, Cyprus Travel Information Hotel &amp; Travel Visa Information Submit a Paper Program Committees Hotel &amp; Travel Call For Technical Papers About Contact © IEEE International Workshop on Computer Aided Modeling and Design of Communication Links and Networks 2026 Footer Menu Accessibility Sitemap Contact &amp; Support Home Nondiscrimination Policy IEEE Ethics Reporting IEEE Privacy Policy Terms © Copyright 2026 IEEE – All rights reserved. A public charity, IEEE is the world
@@ -1464,7 +1464,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-07-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Large Model-Driven Intelligent Computing Optimization in the Artificial Intelligence of Things (AIoT). Manuscript submission deadline: 2026-07-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Large Model-Driven Intelligent Computing Optimization in the Artificial Intelligence of Things (AIoT). Manuscript submission deadline: 2026-07-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -1479,7 +1479,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-07-15` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:07Z`
+- Last verified: `2026-10-17T10:15:27Z`
 - Note: Communications standards CFP source; relevant to 3GPP, O-RAN, 5G/6G, and networking standards.
 - Page signals:
   - r Download the CFP Flyer Important Dates Submission (Long/Short/ECSU papers) 15 July 2026 Deadline extended, firm Submission (Special Session on Research Projects) 15 July 2026 Deadline extended, firm Submission (Workshop/Special Session papers) 15 July 2026 Deadline extended, firm Paper acceptance notification: 27 July 2026 Camera-Ready papers and registration: 10 August 2026 Technical Tracks Track 1 Emerging Wireless Communications towards 6G Moving towards 6G era, mobile services are expected to be support the following key services: mobile broadband reliable low latency communication (MBRLLC), massive ultra-reliable, low latency communications (MURLLC), human-centric services (HCS), and multi-purpose Communications, Computing,
@@ -1527,7 +1527,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-08-09` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:09Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: IEEE ComSoc regional communications conference for wireless, optical, networking, IoT, and communication theory topics.
 - Page signals:
   - me Authors Call for Papers Call for Papers Important Dates Paper Submission 9 August 2026 Deadline Extended Notification of Acceptance 22 September 2026 Notification Deadline Extended Camera-Ready Papers 10 October 2026 Authors Registration Deadline 10 October 2026 The Technical Program Committee of IEEE LATINCOM 2026 warmly invites the submission of high-quality, original research contributions addressing current and emerging challenges in communications and networking. Submit a Paper LATINCOM 2026 aims to bring together researchers and practitioners from academia, industry, and government to exchange ideas, present cutting-edge results, and foster collaborations across the Latin American region and beyond. The conference covers
@@ -1562,7 +1562,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-08-31` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Smart Radio Environments for the Internet of Everything. Manuscript submission deadline: 2026-08-31. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Smart Radio Environments for the Internet of Everything. Manuscript submission deadline: 2026-08-31. Source hub: https://ieee-iotj.org/special-issues/
@@ -1603,7 +1603,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-09-01` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Multimodal Integrated Sensing and Communication for IoT Networking in 6G and Beyond. Manuscript submission deadline: 2026-09-01. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Multimodal Integrated Sensing and Communication for IoT Networking in 6G and Beyond. Manuscript submission deadline: 2026-09-01. Source hub: https://ieee-iotj.org/special-issues/
@@ -1618,7 +1618,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-10-13` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:10Z`
+- Last verified: `2026-10-17T10:15:29Z`
 - Note: ACM/IEEE SEC annual site; monitor for edge AI, cloud-edge systems, and networked edge CFP windows.
 - Page signals:
   - y disciplinary backgrounds. IMPORTANT DATES Abstract registration: May 8, 2026 Main paper submission due: May 8, 2026 Rebuttal period: July 18-22, 2026 Acceptance notification: July 29, 2026 Camera ready date: September 4, 2026 Conference dates: October 13-16, 2026 PAPER SUBMISSION LINK https://sec26.hotcrp.com PREVIOUS CONFERENCES https://acm-ieee-sec.org/list
@@ -1635,7 +1635,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-10-14` (closed)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:08:58Z`
+- Last verified: `2026-10-17T10:15:26Z`
 - Note: Vehicular and wireless communications CFP source; useful for mobility, V2X, and cellular tracks.
 - Page signals:
   - apers. vtc27-spring-cfp\_web-11 Submit Your Paper Important Dates Regular Paper Submission Deadline Final Extension 14 October 2026 Acceptance Notification 20 December 2026 Paper Revisions Due 15 March 2027 Early Bird Registration Ends 9 May 2027 Topics Antenna Systems, Propagation, and RF Design Emerging Technologies, 6G and Beyond IoT, M2M, Sensor Networks, and Ad-Hoc Networking, Cooperative Communication Artificial Intelligence and Machine Learning for Communications Open, Virtual, and Interoperable Networks and Services Protocol, Security and Services for Wireless Networks Radio Access Technology and Heterogeneous Networks Positioning Technologies, Localization and Navigation Signal Processing for Wireless Communications Space,
@@ -1668,7 +1668,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-10-18` (due in 1 days)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:09Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Official ICNC 2027 submission call. Automatically resolved from http://conf-icnc.org/2026/cfp.htm.
 - Page signals:
   - ASN) Submit Papers CfP: Wireless Communications (WC) Submit Papers Important Dates: Paper submission: Extended: October 18, 2026 (Firm) Paper Acceptance: November 15, 2026 Camera-ready paper: November 30, 2026
@@ -1690,7 +1690,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-10-26` (due in 9 days)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:07Z`
+- Last verified: `2026-10-17T10:15:26Z`
 - Note: Major IEEE wireless communications venue; important for RAN, 5G/6G, and wireless networking CFP tracking.
 - Page signals:
   - all communication and networking topics. Submit a Paper Important Dates Paper Submission Deadline 26 October 2026 Final Deadline Acceptance Notification 15 January 2027 Camera-Ready Papers 8 February 2027 Technical Tracks Track 1: Physical Layer and Communication Theory Track Co-Chairs Mark Flanagan , University College Dublin, Ireland Shuowen Zhang , Hong Kong Polytechnic University, China Ming Zeng , Université de Laval, Canada Topics Antennas and RF Channel Modeling and Estimation Coding Theory and Techniques Detection and Estimation Theory Energy Harvesting and Low Energy Communication Feedback and Two-Way Communication Free Space Optical Communication Holographic Surfaces and Reconfigurable Intelligent Surfaces Information
@@ -1708,7 +1708,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-10-30` (due in 13 days)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Exploiting Flexible Positioning: Movable and Pinching Antennas for Next-Generation Wireless Networks. Manuscript submission deadline: 2026-10-30. Source hub: https://www.comsoc.org/publications/journals/ieee-jsac/cfp
 - Page signals:
   - Special issue: Exploiting Flexible Positioning: Movable and Pinching Antennas for Next-Generation Wireless Networks. Manuscript submission deadline: 2026-10-30. Source hub: https://www.comsoc.org/publications/journals/ieee-jsac/cfp
@@ -1720,10 +1720,10 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Event / issue dates: May 30 - June 3, 2027
 - Location: Washington, DC, USA
 - Source: [https://icc2027.ieee-icc.org/authors/call-symposium-papers](https://icc2027.ieee-icc.org/authors/call-symposium-papers)
-- Fetch status: `fetch failed`
+- Fetch status: `fetched`
 - Configured deadline: `2026-10-30` (due in 13 days)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:04:17Z`
+- Last verified: `2026-10-17T10:15:26Z`
 - Note: Use the conference's live symposium CFP for submission deadlines; the ComSoc event catalog can lag deadline extensions.
 - Page signals:
   - hors Call for Symposium Papers Call for Symposium Papers Important Dates Paper Submission Deadline 30 October 2026 Firm Deadline Notification of Acceptance 15 January 2027 Camera-Ready Papers Due 19 February 2027 The 2027 IEEE International Conference on Communications (ICC 2027) will be held in Washington DC, USA from May 30 to June 3, 2027, with the theme of “Confluence of Communications and AI.” This flagship conference of the IEEE Communications Society will feature a comprehensive high quality technical program including 12 symposia, 13 tracks of Selected Areas in Communications and a variety of tutorials and workshops. IEEE ICC 2027 will also include an attractive industry program aimed at practitioners, with keynotes an
@@ -1743,7 +1743,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-10-31` (due in 14 days)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: AI-Driven Network Forensics for Edge-Intelligent Internet of Things. Manuscript submission deadline: 2026-10-31. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: AI-Driven Network Forensics for Edge-Intelligent Internet of Things. Manuscript submission deadline: 2026-10-31. Source hub: https://ieee-iotj.org/special-issues/
@@ -1758,7 +1758,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-10-31` (due in 14 days)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: AI-Empowered Cognitive Digital Twin for Future Network Ecosystems. Manuscript submission deadline: 2026-10-31. Source hub: https://www.comsoc.org/publications/magazines/ieee-network/cfp
 - Page signals:
   - Special issue: AI-Empowered Cognitive Digital Twin for Future Network Ecosystems. Manuscript submission deadline: 2026-10-31. Source hub: https://www.comsoc.org/publications/magazines/ieee-network/cfp
@@ -1773,7 +1773,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-11-01` (upcoming in 15 days)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: AI-Empowered Underwater Wireless Optical Communications for Science Exploration and Defense Applications. Manuscript submission deadline: 2026-11-01. Source hub: https://www.comsoc.org/publications/magazines/ieee-wireless-communications/cfp
 - Page signals:
   - Special issue: AI-Empowered Underwater Wireless Optical Communications for Science Exploration and Defense Applications. Manuscript submission deadline: 2026-11-01. Source hub: https://www.comsoc.org/publications/magazines/ieee-wireless-communications/cfp
@@ -1788,7 +1788,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-11-01` (upcoming in 15 days)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: In-Orbit Computing: Striding into the Era of Space-Centric Intelligence. Manuscript submission deadline: 2026-11-01. Source hub: https://www.comsoc.org/publications/magazines/ieee-wireless-communications/cfp
 - Page signals:
   - Special issue: In-Orbit Computing: Striding into the Era of Space-Centric Intelligence. Manuscript submission deadline: 2026-11-01. Source hub: https://www.comsoc.org/publications/magazines/ieee-wireless-communications/cfp
@@ -1803,7 +1803,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-11-05` (upcoming in 19 days)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:09Z`
+- Last verified: `2026-10-17T10:15:29Z`
 - Note: ACM SenSys official site; useful for sensing, IoT, mobile/edge systems, and wireless sensor-network submissions.
 - Page signals:
   - conduct of the research itself, addressed in item 1 above).&amp;rdquo; Important Dates First deadline: Abstract registration deadline: Friday, May 29, 2026 (AoE) Paper submission deadline: Friday, June 5, 2026 (AoE) Early notification: Wednesday, July 17, 2026 Review results notification: Monday, August 31, 2026 Second deadline: Abstract registration deadline: Thursday, October 29, 2026 (AoE) Paper submission deadline: Thursday, November 5, 2026 (AoE) Early notification: Thursday, December 17, 2026 Review results notification: Thursday, January 28, 2027 Please note that authors of submissions for which there is a consensus on rejection will be notified earlier than the review results notification date. © SenSys 2026: ACM/IEEE Confer
@@ -1825,7 +1825,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-11-06` (upcoming in 20 days)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:10Z`
+- Last verified: `2026-10-17T10:15:30Z`
 - Note: Official WCNC 2026 call for workshop papers; monitored for wireless, RAN, 6G, and communications workshop deadlines.
 - Page signals:
   - d@u-pec.fr Zhijin Qin qinzhijin@tsinghua.edu.cn Important Dates Workshop Paper Submission Deadline: 06 November 2026 Acceptance Notification: 22 January 2027 Final Papers Due: 18 February 2027 All workshop papers should be submitted through the individual EDAS links listed below. Authors should follow the IEEE WCNC 2027 author submission and publication guidelines. WS01. Workshop on Fluid Antenna System (FAS) for 6G Abstract The upcoming sixth-generation (6G) wireless networks are expected to provide extremely high capacity, reliability, massive connectivity, and services beyond communications. In compliance with this trend, next-generation reconfigurable antenna (NGRA) technologies have been proposed for enabling flexible and ada
@@ -1842,7 +1842,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-11-09` (upcoming in 23 days)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:07Z`
+- Last verified: `2026-10-17T10:15:27Z`
 - Note: Network operations and management CFP source; useful for autonomous network operations and telecom management.
 - Page signals:
   - cia, Federal University of Parana, Brazil Submit a Paper Important Dates Paper Submission Deadline 9 November 2026 Notification of Acceptance 15 February 2027 Camera-Ready Papers Due 28 February 2027 Submit a Paper Submit a Paper Program Committees Hotel &amp; Travel Call For Technical Papers About Contact © IEEE/IFIP Network Operations and Management Symposium 2027 Footer Menu Accessibility Sitemap Contact &amp; Support Home Nondiscrimination Policy IEEE Ethics Reporting IEEE Privacy Policy Terms © Copyright 2026 IEEE – All rights reserved. A public charity, IEEE is the world&amp;#039;s largest technical professional organization dedicated to advancing technology for the benefit of humanity.
@@ -1861,7 +1861,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-11-17` (upcoming in 31 days)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:27Z`
 - Note: Security CFP source; useful for AI systems, network security, and privacy-related submissions.
 - Page signals:
   - given an opportunity to address any discrepancies identified before the paper submission deadline. First deadline Abstract registration deadline: June 4, 2026 Paper submission deadline: June 11, 2026 Early-reject notification: July 27, 2026 Reviews released: August 20, 2026 Rebuttal text due: August 27, 2026 Beginning of the interactive period for papers assigned an interactive rebuttal: August 26, 2026 End of the interactive rebuttal and revised manuscript due: September 3, 2026 Acceptance notification: September 11, 2026 Submission to shepherd: October 2, 2026 Camera-ready deadline: October 16, 2026 Second deadline Abstract registration deadline: November 10, 2026 Paper submission deadline: November 17, 2026 Early-reject notifi
@@ -1883,7 +1883,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-11-30` (upcoming in 44 days)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Graph Representation on Learning for Internet of Things. Manuscript submission deadline: 2026-11-30. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Graph Representation on Learning for Internet of Things. Manuscript submission deadline: 2026-11-30. Source hub: https://ieee-iotj.org/special-issues/
@@ -1898,7 +1898,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-11-30` (upcoming in 44 days)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Towards Intellicise Agent Communication Networks: Autonomous Integration and Evolution of Humans and Networks. Manuscript submission deadline: 2026-11-30. Source hub: https://www.comsoc.org/publications/magazines/ieee-network/cfp
 - Page signals:
   - Special issue: Towards Intellicise Agent Communication Networks: Autonomous Integration and Evolution of Humans and Networks. Manuscript submission deadline: 2026-11-30. Source hub: https://www.comsoc.org/publications/magazines/ieee-network/cfp
@@ -1913,7 +1913,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-11-30` (upcoming in 44 days)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Routing, switching, transport, programmable networking, and carrier-network CFP source relevant to telecom infrastructure.
 - Page signals:
   - ation networks and systems are solicited. Submit a Paper Important Dates Paper Submission Deadline 30 November 2026 Notification of Acceptance 1 March 2027 Camera-Ready Papers Due 19 April 2027 Technical Tracks Track A: Integrated Communications and Computing Systems Artificial intelligent routing and resource-allocation algorithms Generative AI traffic modeling, routing and switching strategies Collective communications and optimal AI traffic scheduling Digital Continuum – device-to-edge-to-fog-to-Cloud continuum Dynamic bandwidth access and management for smart-factory/Industry 4.0 applications Experimental measurements and testbed implementations Game theory enabling resource allocation and routing High performance, programma
@@ -1930,7 +1930,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-11-30` (upcoming in 44 days)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:09Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Sensing, communication, mobile networking, edge/IoT, and wireless systems CFP source.
 - Page signals:
   - policies will be rejected without review. Submit a Paper Important Dates Paper Submission Deadline 30 November 2026 Notification of Acceptance 15 February 2027 Camera-Ready Papers Due 15 March 2027 Submit a Paper Submit a Paper Program Committees Hotel &amp; Travel Call For Technical Papers About Contact © 23rd Annual IEEE International Conference on Sensing, Communication, and Networking 2027 (SECON) Footer Menu Accessibility Sitemap Contact &amp; Support Home Nondiscrimination Policy IEEE Ethics Reporting IEEE Privacy Policy Terms © Copyright 2026 IEEE – All rights reserved. A public charity, IEEE is the world&amp;#039;s largest technical professional organization dedicated to advancing technology for the benefit of humanity.
@@ -1949,7 +1949,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-12-07` (watching: 51 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:07Z`
+- Last verified: `2026-10-17T10:15:26Z`
 - Note: Spectrum sharing, cognitive radio, and dynamic spectrum access CFP source.
 - Page signals:
   - of wireless technologies in a multi-disciplinary manner. Important Dates Paper Submission Deadline 7 December 2026 Notification of Acceptance 15 February 2027 Camera-Ready Papers Due 5 March 2027 Technical topics of interest to the conference include but are not limited to: Models and simulation Spectrum access modelling and simulation Channel models for microwave, mmWave and subTHz and THz access Emerging topics in spectrum modeling such as digital twins and advanced channel modeling Spectrum analytics for mutual awareness and coexistence Spectrum access and management in mobile environments directional wireless systems the Internet-of-Things (IoT) in satellite networking including direct-to-device spectrum sharing for 6G coverin
@@ -1966,7 +1966,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-12-15` (watching: 59 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Security and Privacy of Multimodal Embodied IoT. Manuscript submission deadline: 2026-12-15. Source hub: https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp
 - Page signals:
   - Special issue: Security and Privacy of Multimodal Embodied IoT. Manuscript submission deadline: 2026-12-15. Source hub: https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp
@@ -1981,7 +1981,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-12-15` (watching: 59 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: AI Agent Enabled Small-Large Model Collaboration for Internet of Things. Manuscript submission deadline: 2026-12-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: AI Agent Enabled Small-Large Model Collaboration for Internet of Things. Manuscript submission deadline: 2026-12-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -1996,7 +1996,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-12-31` (watching: 75 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Fluid Antenna Systems for Autonomous IoT: Agentic AI, Edge Intelligence, and Foundation Models. Manuscript submission deadline: 2026-12-31. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Fluid Antenna Systems for Autonomous IoT: Agentic AI, Edge Intelligence, and Foundation Models. Manuscript submission deadline: 2026-12-31. Source hub: https://ieee-iotj.org/special-issues/
@@ -2011,7 +2011,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2026-12-31` (watching: 75 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Distributed Intelligence and Collaborative Inference for Foundation Models over Wireless Edge. Manuscript submission deadline: 2026-12-31. Source hub: https://www.comsoc.org/publications/magazines/ieee-network/cfp
 - Page signals:
   - Special issue: Distributed Intelligence and Collaborative Inference for Foundation Models over Wireless Edge. Manuscript submission deadline: 2026-12-31. Source hub: https://www.comsoc.org/publications/magazines/ieee-network/cfp
@@ -2026,7 +2026,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-01-01` (watching: 76 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Edge and In-Network Computing for Underwater Communication. Manuscript submission deadline: 2027-01-01. Source hub: https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp
 - Page signals:
   - Special issue: Edge and In-Network Computing for Underwater Communication. Manuscript submission deadline: 2027-01-01. Source hub: https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp
@@ -2041,7 +2041,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-01-01` (watching: 76 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: 3D Metasurface-Assisted Wireless Communications: From Model-Based Designs to AI-Driven Approaches. Manuscript submission deadline: 2027-01-01. Source hub: https://www.comsoc.org/publications/magazines/ieee-wireless-communications/cfp
 - Page signals:
   - Special issue: 3D Metasurface-Assisted Wireless Communications: From Model-Based Designs to AI-Driven Approaches. Manuscript submission deadline: 2027-01-01. Source hub: https://www.comsoc.org/publications/magazines/ieee-wireless-communications/cfp
@@ -2056,7 +2056,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-01-10` (watching: 85 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:08:59Z`
+- Last verified: `2026-10-17T10:15:26Z`
 - Note: Information theory flagship CFP source; useful for coding, communication theory, and learning-theoretic communications.
 - Page signals:
   - e presented in person by one of its authors during the conference. Dates Paper submission deadline: January 10, 2027 (23:59 AoE) Acceptance notification : March 27, 2027 Final manuscript submission : April 17, 2027 (23:59 AoE) Early registration deadline : April 17, 2027 AoE means Anywhere on Earth Contact \[email&amp;#160;protected\] --&gt; Download the call for papers as a PDF file &lt;-- Submission Guidelines J.K. Wolf Student Paper Award Call for Papers Call for Workshops Call for Recent Results Travel and Visa Visa Getting to Sorrento Taxi Information Footer menu IEEE Information Theory Society Code of Conduct Contact ©2026 IEEE – All rights reserved. Use of this website signifies your agreement to the IEEE Terms and Conditions. For m
@@ -2073,7 +2073,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-01-15` (watching: 90 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Causal AI and Counterfactual Optimization for Autonomous IoT Systems. Manuscript submission deadline: 2027-01-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Causal AI and Counterfactual Optimization for Autonomous IoT Systems. Manuscript submission deadline: 2027-01-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -2088,7 +2088,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-01-15` (watching: 90 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:27Z`
 - Note: SDN/NFV/network softwarization CFP source; relevant to O-RAN, xApps/rApps, and programmable telecom systems.
 - Page signals:
   - ertation sessions. Submit a Paper Download the CFP Flyer Important Dates Paper Submission Deadline 15 January 2027 Notification of Acceptance 26 March 2027 Camera-Ready Papers Due 23 April 2027 Topics of Interest Authors are invited to submit papers that fall into or are related to the following topics of interest: Architecture and Infrastructure AI-native 5G/6G and beyond architecture Future Internet and New IP architecture Internet re-engineering Network softwarization for non-terrestrial and terrestrial integration Quantum-safe and post-quantum networking architectures Softwarized cloud, fog, and edge infrastructures Abstractions and virtualization of resources, services, and functions Cooperative multi-domain, multi-tenant env
@@ -2106,7 +2106,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-01-25` (watching: 100 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:08:58Z`
+- Last verified: `2026-10-17T10:15:26Z`
 - Note: Official VTC-Fall 2027 submission call. Automatically resolved from https://events.vtsociety.org/vtc2026-fall/.
 - Page signals:
   - sal Submission 25 January 2027 Regular Paper Submission 1 February 2027 Tutorial Proposal Submission 3 March 2027 Acceptance Notification 14 April 2027 Topics 1. 6G and Emerging Technologies 2. AI and Machine Learning for Communications 3. Antenna Design, RF Design, and Propagation 4. Electric Vehicles, Vehicular Electronics, and Intelligent Transportation 5. IoV, IoT, M2M, Sensor Networks, and Related Networking Technologies 6. Multiple Antennas and Cooperative Communications 7. Non-Terrestrial Networks 8. Positioning Technologies, Localization, and Navigation 9. Radio Access Technologies and Heterogeneous Networks 10. Signal Processing for Wireless Communications 11. Spectrum Management, Spectrum Sharing, and Green Communication
@@ -2121,7 +2121,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-01-31` (watching: 106 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Embodied Active Sensing and Environment-Aware IoT Systems in 6G. Manuscript submission deadline: 2027-01-31. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Embodied Active Sensing and Environment-Aware IoT Systems in 6G. Manuscript submission deadline: 2027-01-31. Source hub: https://ieee-iotj.org/special-issues/
@@ -2136,7 +2136,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-02-01` (watching: 107 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Internet of Agents for Communications and Networking: Architectures, Protocols, and Orchestration. Manuscript submission deadline: 2027-02-01. Source hub: https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp
 - Page signals:
   - Special issue: Internet of Agents for Communications and Networking: Architectures, Protocols, and Orchestration. Manuscript submission deadline: 2027-02-01. Source hub: https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp
@@ -2151,7 +2151,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-02-15` (watching: 121 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Agent Gateways: Enabling Secure, Scalable, and Autonomous Interoperability in Agentic AI Environment. Manuscript submission deadline: 2027-02-15. Source hub: https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp
 - Page signals:
   - Special issue: Agent Gateways: Enabling Secure, Scalable, and Autonomous Interoperability in Agentic AI Environment. Manuscript submission deadline: 2027-02-15. Source hub: https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp
@@ -2166,7 +2166,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-02-15` (watching: 121 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Post-Quantum Cryptography for Real-World Deployment. Manuscript submission deadline: 2027-02-15. Source hub: https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp
 - Page signals:
   - Special issue: Post-Quantum Cryptography for Real-World Deployment. Manuscript submission deadline: 2027-02-15. Source hub: https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp
@@ -2181,7 +2181,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-02-15` (watching: 121 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Ambient Intelligence for AI-Native IoT: Invisible, Context-Aware, and Autonomous Experiences. Manuscript submission deadline: 2027-02-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Ambient Intelligence for AI-Native IoT: Invisible, Context-Aware, and Autonomous Experiences. Manuscript submission deadline: 2027-02-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -2196,7 +2196,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-02-26` (watching: 132 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Regional IEEE ComSoc communications and networking CFP source with wireless, 5G/6G, IoT, and networked systems tracks.
 - Page signals:
   - applied research. Download Call for Paper Submit a Paper Important Dates Paper Submission Deadline 26 February 2027 Acceptance Notification 7 May 2027 Camera-Ready Papers Due 21 May 2027 SUBMISSION GUIDELINES Please use the Standard IEEE conference templates for LaTeX formats, which are found here . You may also use one of the following templates for Microsoft Word: A4, US letter. Only PDF files of the full papers will be accepted for the review process, and all submissions must be done through EDAS. Papers should not have plagiarized material and should not have been submitted to any other conference at the same time (double submission). Check these links to learn more: IEEE Policy on Plagiarism IEEE Policy on Double Submission T
@@ -2213,7 +2213,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-02-28` (watching: 134 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Distributed Communication-Aware Agentic Artificial Intelligence for the Internet of Things. Manuscript submission deadline: 2027-02-28. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Distributed Communication-Aware Agentic Artificial Intelligence for the Internet of Things. Manuscript submission deadline: 2027-02-28. Source hub: https://ieee-iotj.org/special-issues/
@@ -2228,7 +2228,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-03-01` (watching: 135 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Atomic-to-Network: Quantum Radio Front-Ends for 6G Wireless Communications and Sensing. Manuscript submission deadline: 2027-03-01. Source hub: https://www.comsoc.org/publications/magazines/ieee-wireless-communications/cfp
 - Page signals:
   - Special issue: Atomic-to-Network: Quantum Radio Front-Ends for 6G Wireless Communications and Sensing. Manuscript submission deadline: 2027-03-01. Source hub: https://www.comsoc.org/publications/magazines/ieee-wireless-communications/cfp
@@ -2243,7 +2243,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-03-12` (watching: 146 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:07Z`
+- Last verified: `2026-10-17T10:15:26Z`
 - Note: Wireless and mobile radio CFP source; useful for cellular, RAN, and radio access work.
 - Page signals:
   - are defined radio and networks Low-altitude-economy enabling technologies Important Dates Deadline for Paper Submissions 12 March 2027 Notification of Acceptance 11 June 2027 Final Manuscript Due 16 July 2027 Submit a Paper Submit a Paper Program Committees Hotel &amp; Travel Call For Technical Papers About Contact © IEEE International Symposium on Personal, Indoor and Mobile Radio Communications (PIMRC) Footer Menu Accessibility Sitemap Contact &amp; Support Home Nondiscrimination Policy IEEE Ethics Reporting IEEE Privacy Policy Terms © Copyright 2026 IEEE – All rights reserved. A public charity, IEEE is the world&amp;#039;s largest technical professional organization dedicated to advancing technology for the benefit of humanity.
@@ -2261,7 +2261,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-03-15` (watching: 149 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Memory Poisoning Across Networked Learning-Enabled Agents: Threats, Detection, and Defense. Manuscript submission deadline: 2027-03-15. Source hub: https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp
 - Page signals:
   - Special issue: Memory Poisoning Across Networked Learning-Enabled Agents: Threats, Detection, and Defense. Manuscript submission deadline: 2027-03-15. Source hub: https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp
@@ -2276,7 +2276,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-03-15` (watching: 149 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: The Upper Mid-Band (FR3) for 6G: Technologies, Systems, and Deployment. Manuscript submission deadline: 2027-03-15. Source hub: https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp
 - Page signals:
   - Special issue: The Upper Mid-Band (FR3) for 6G: Technologies, Systems, and Deployment. Manuscript submission deadline: 2027-03-15. Source hub: https://www.comsoc.org/publications/magazines/ieee-communications-magazine/cfp
@@ -2291,7 +2291,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-03-15` (watching: 149 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Federated Unlearning and Model Governance for Trustworthy IoT: Selective Forgetting, Provenance, and Auditability at the Edge. Manuscript submission deadline: 2027-03-15. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Federated Unlearning and Model Governance for Trustworthy IoT: Selective Forgetting, Provenance, and Auditability at the Edge. Manuscript submission deadline: 2027-03-15. Source hub: https://ieee-iotj.org/special-issues/
@@ -2306,7 +2306,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-03-31` (watching: 165 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Next-Generation Underwater Acoustic Communication Systems. Manuscript submission deadline: 2027-03-31. Source hub: https://www.comsoc.org/publications/journals/ieee-jsac/cfp
 - Page signals:
   - Special issue: Next-Generation Underwater Acoustic Communication Systems. Manuscript submission deadline: 2027-03-31. Source hub: https://www.comsoc.org/publications/journals/ieee-jsac/cfp
@@ -2321,7 +2321,7 @@ Audit trail for the official-page snippets used by the crawler. Use this section
 - Fetch status: `fetched`
 - Configured deadline: `2027-03-31` (watching: 165 days out)
 - Date verified: **true**
-- Last verified: `2026-10-17T10:09:08Z`
+- Last verified: `2026-10-17T10:15:28Z`
 - Note: Special issue: Industrial Internet of Things Communication Networks (IIoT-CNets): Architectures, Protocols, and Intelligence for Next-Generation Industrial Systems. Manuscript submission deadline: 2027-03-31. Source hub: https://ieee-iotj.org/special-issues/
 - Page signals:
   - Special issue: Industrial Internet of Things Communication Networks (IIoT-CNets): Architectures, Protocols, and Intelligence for Next-Generation Industrial Systems. Manuscript submission deadline: 2027-03-31. Source hub: https://ieee-iotj.org/special-issues/
