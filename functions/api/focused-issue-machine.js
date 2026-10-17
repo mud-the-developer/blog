@@ -1,4 +1,5 @@
 import { normalizeKeywords, parseMaybeJson, sanitizeText, stripModelThinking } from './_shared.js';
+import { safeUrl } from '../../src/safe-url.mjs';
 
 function itemText(item) {
   return [item.title, item.summary, item.description, item.excerpt, item.source, ...(item.categories || []), ...(item.tags || [])]
@@ -38,37 +39,40 @@ function normalizeSourceItem(item, index, keywords, nowMs) {
   const normalized = {
     title: sanitizeText(item.title || item.name || `source ${index + 1}`, 180),
     summary: sanitizeText(item.summary || item.description || item.excerpt || '', 420),
-    url: String(item.url || item.link || ''),
-    source: String(item.source || item.domain || ''),
-    publishedAt: String(item.publishedAt || item.date || ''),
+    url: safeUrl(item.url || item.link),
+    source: sanitizeText(item.source || item.domain, 160),
+    publishedAt: sanitizeText(item.publishedAt || item.date, 80),
     tags: [...(item.categories || []), ...(item.tags || [])].map((tag) => String(tag)).slice(0, 8),
     score: Number.isFinite(Number(item.score)) ? Number(Number(item.score).toFixed(3)) : scoreItem(item, keywords, nowMs),
     origin: String(item.origin || (item.source === 'blog archive' ? 'archive' : 'digest-data')),
-    type: String(item.type || '')
+    type: String(item.type || ''),
   };
-  return { ...normalized, thumbnail: String(item.thumbnail || item.image_url || item.imageUrl || thumbnailForSource(normalized)) };
+  return { ...normalized, thumbnail: safeUrl(item.thumbnail || item.image_url || item.imageUrl, thumbnailForSource(normalized)) };
 }
 
 export function rankedNewsItems(feed, archive, keywords, limit, candidates = [], nowMs = Date.now()) {
   const searchedCandidates = Array.isArray(candidates)
-    ? candidates.map((item) => ({ ...item, origin: item.origin || 'live-search' }))
+    ? candidates
+        .slice(0, 12)
+        .filter((item) => item && typeof item === 'object')
+        .map((item) => ({ ...item, origin: item.origin || 'live-search' }))
     : [];
   if (searchedCandidates.length) {
     const cap = Math.max(1, Math.min(Number(limit) || searchedCandidates.length, searchedCandidates.length, 12));
-    return searchedCandidates
-      .map((item, index) => normalizeSourceItem(item, index, keywords, nowMs))
-      .slice(0, cap);
+    return searchedCandidates.slice(0, cap).map((item, index) => normalizeSourceItem(item, index, keywords, nowMs));
   }
   const rawNews = Array.isArray(feed?.all) ? feed.all : [];
   const archiveNews = Array.isArray(archive)
-    ? archive.filter((post) => post.folder === 'news').map((post) => ({
-        title: post.title,
-        summary: post.excerpt,
-        url: post.url,
-        source: 'blog archive',
-        date: post.date,
-        tags: [post.primary_tag, post.folder].filter(Boolean)
-      }))
+    ? archive
+        .filter((post) => post.folder === 'news')
+        .map((post) => ({
+          title: post.title,
+          summary: post.excerpt,
+          url: post.url,
+          source: 'blog archive',
+          date: post.date,
+          tags: [post.primary_tag, post.folder].filter(Boolean),
+        }))
     : [];
   return [...searchedCandidates, ...rawNews, ...archiveNews]
     .map((item, index) => normalizeSourceItem(item, index, keywords, nowMs))
@@ -88,7 +92,7 @@ function fallbackIssue({ date, keywords, sources, gemmaText }) {
     title,
     summary: cleanGemmaText || `Draft focused issue from ${sources.length} ranked source candidates.`,
     markdown: `## ${title}\n\n${cleanGemmaText || `Keywords: ${focus || 'AI news'}.`}\n\n### Ranked sources\n${sourceLines}`,
-    bullets: sources.slice(0, 3).map((source) => source.title)
+    bullets: sources.slice(0, 3).map((source) => source.title),
   };
 }
 
@@ -106,13 +110,13 @@ function issueFromGemma({ gemma, date, keywords, sources }) {
     const issue = {
       title: sanitizeText(parsed.title || `${keywords.join(', ')} Focused Brief — ${date}`, 200),
       summary: sanitizeText(parsed.summary || '', 800),
-      markdown: stripModelThinking(parsed.markdown || ''),
-      bullets: Array.isArray(parsed.bullets) ? parsed.bullets.map((item) => sanitizeText(item, 220)).slice(0, 6) : []
+      markdown: stripModelThinking(parsed.markdown || '').slice(0, 20000),
+      bullets: Array.isArray(parsed.bullets) ? parsed.bullets.map((item) => sanitizeText(item, 220)).slice(0, 6) : [],
     };
     if (sources.length && isNoMatchIssue(issue)) {
       return {
         issue: fallbackIssue({ date, keywords, sources, gemmaText: '' }),
-        warning: 'Gemma returned a no-match draft despite selected source cards, so the server generated a source-backed fallback.'
+        warning: 'Gemma returned a no-match draft despite selected source cards, so the server generated a source-backed fallback.',
       };
     }
     return { issue };
@@ -133,7 +137,7 @@ function buildGemmaPayload({ date, keywords, hasSelectedCandidates, sources, blo
       : 'Use live searched candidates first, then latest digest/archive context as fallback. Score by query match, recency, source quality, and blog relevance. Do not invent unsupported facts.',
     searched_news_candidates: sources.filter((source) => source.origin === 'live-search'),
     ranked_news_items: sources,
-    blog_archive_context: blogContext
+    blog_archive_context: blogContext,
   };
 }
 
@@ -149,12 +153,12 @@ export function createFocusedIssueState(input = {}) {
       limit: input.limit,
       candidates,
       hasSelectedCandidates: Array.isArray(input.candidates) && input.candidates.length > 0,
-      nowMs: Number.isFinite(Number(input.nowMs)) ? Number(input.nowMs) : Date.now()
+      nowMs: Number.isFinite(Number(input.nowMs)) ? Number(input.nowMs) : Date.now(),
     },
     sources: [],
     blogContext: [],
     gemma: null,
-    response: null
+    response: null,
   };
 }
 
@@ -162,20 +166,21 @@ export function focusedIssueReducer(state, event) {
   if (state.phase === 'accepted' && event.type === 'request.accepted') {
     return {
       state: { ...state, phase: 'reading-context' },
-      effects: [{ type: 'read-context-assets' }]
+      effects: [{ type: 'read-context-assets' }],
     };
   }
 
   if (state.phase === 'reading-context' && event.type === 'context.loaded') {
     const { date, keywords, limit, candidates, hasSelectedCandidates, nowMs } = state.request;
     const sources = rankedNewsItems(event.feed, event.archive, keywords, limit, candidates, nowMs);
-    const blogContext = !hasSelectedCandidates && Array.isArray(event.archive)
-      ? event.archive.slice(0, 24).map((post) => ({ title: post.title, folder: post.folder, excerpt: post.excerpt, url: post.url }))
-      : [];
+    const blogContext =
+      !hasSelectedCandidates && Array.isArray(event.archive)
+        ? event.archive.slice(0, 24).map((post) => ({ title: post.title, folder: post.folder, excerpt: post.excerpt, url: post.url }))
+        : [];
     const payload = buildGemmaPayload({ date, keywords, hasSelectedCandidates, sources, blogContext });
     return {
       state: { ...state, phase: 'drafting', sources, blogContext },
-      effects: [{ type: 'call-gemma', payload }]
+      effects: [{ type: 'call-gemma', payload }],
     };
   }
 
@@ -183,10 +188,11 @@ export function focusedIssueReducer(state, event) {
     const { date, keywords } = state.request;
     const gemma = event.gemma || { text: '', usedGemma: false };
     const draft = issueFromGemma({ gemma, date, keywords, sources: state.sources });
-    const warning = draft.warning
-      || (gemma.missingKey ? 'GOOGLE_AI_API_KEY/GOOGLE_API_KEY/GEMINI_API_KEY is not configured on the server.' : undefined)
-      || gemma.error
-      || undefined;
+    const warning =
+      draft.warning ||
+      (gemma.missingKey ? 'GOOGLE_AI_API_KEY/GOOGLE_API_KEY/GEMINI_API_KEY is not configured on the server.' : undefined) ||
+      gemma.error ||
+      undefined;
     return {
       state: {
         ...state,
@@ -201,10 +207,10 @@ export function focusedIssueReducer(state, event) {
           usedGemma: Boolean(gemma.usedGemma && !gemma.error && !draft.warning),
           modelName: gemma.modelName,
           modelFallbackFrom: gemma.modelFallbackFrom,
-          warning
-        }
+          warning,
+        },
       },
-      effects: []
+      effects: [],
     };
   }
 

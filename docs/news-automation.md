@@ -4,7 +4,7 @@ The blog keeps a daily AI news digest and supports keyword-focused manual issues
 
 ## Interactive search-backed issue drafting
 
-The public `/news/` page includes an interactive news desk. It does **not** expose a Google API key to the browser. The browser first posts a query and the user-selected source IDs to:
+The public `/news/search/` page hosts the interactive news desk. It does **not** expose a Google API key to the browser. The browser first posts a query and the user-selected source IDs to:
 
 ```text
 POST /api/news-search
@@ -17,6 +17,16 @@ POST /api/focused-issue
 ```
 
 The function uses selected searched candidates first, adds deployed blog assets (`/archive.json` and `/news/data/latest.json`) only as context/fallback, then calls Gemma 4 server-side. The response contains a reviewable markdown draft and ranked source list that the frontend renders as a polished generated-news card. Publishing still requires an explicit repo edit/commit so an unreviewed browser click cannot silently publish. Local `npm run dev` sources `~/.zshrc` before starting Rust preview, so local smoke tests use `GOOGLE_AI_API_KEY`, `GOOGLE_API_KEY`, or `GEMINI_API_KEY` when present; otherwise the local route falls back to deterministic ranked-source text.
+
+## Safety and request budgets
+
+- Pages APIs require a JSON object and cap streamed request bodies at **32 KiB**, even without `Content-Length`. Candidate lists are limited to 12, keywords to six bounded terms, and source IDs are deduplicated before upstream requests.
+- Search-cache lookup happens **before** AI keyword expansion. Each provider attempt has a **15-second** timeout including JSON reading; at most three models are attempted. Network/JSON failures return a source-backed fallback instead of leaking transport details or credentials.
+- Cross-site browser requests are rejected. A per-client, per-isolate burst guard allows **20 searches / 6 drafts per minute**, returning 429 and `Retry-After`. This is a local safeguard, **not a distributed or account-wide spending quota**: configure Cloudflare WAF rate limits on both API paths and provider-side budget controls before relying on public AI access at scale. No WAF resources are provisioned by the code change.
+- The Rust local preview caps bodies at 32 KiB and has a shared process-wide 20-search/6-draft per-minute budget. It is intended for trusted development networks, not an Internet-facing production API.
+- Model/source links and thumbnails accept HTTP(S) or site-relative destinations only. Invalid links remain plain text. New requests cancel preceding UI requests, and request IDs prevent late responses from overwriting current results.
+- PDF export opens the browser print flow in a script-disabled, same-origin iframe. Choose **Save as PDF** in the print dialog; the UI no longer downloads HTML under the PDF action.
+- Generated Markdown/JSON/cache text is read and written as UTF-8 on all platforms. Raw `mempalace_context` is never included in public hub JSON; local memory may still be sent intentionally to the configured AI provider as editorial context. Use `--no-mempalace` to disable that enrichment.
 
 ## Daily issue
 
@@ -35,7 +45,7 @@ Local equivalent:
 ```bash
 npm run news:daily
 # or
-python3 scripts/generate_news_digest.py
+python scripts/generate_news_digest.py
 ```
 
 ## Keyword + date issue
@@ -45,7 +55,7 @@ Use this when you want a focused issue for a specific topic/date without replaci
 ```bash
 npm run news:keyword -- --date 2026-04-14 --keywords "open RAN, Gemma 4"
 # or multiple flags
-python3 scripts/generate_news_digest.py --date 2026-04-14 --keyword "open RAN" --keyword "Gemma 4"
+python scripts/generate_news_digest.py --date 2026-04-14 --keyword "open RAN" --keyword "Gemma 4"
 ```
 
 This writes:

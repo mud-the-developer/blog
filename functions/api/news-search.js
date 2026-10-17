@@ -1,4 +1,6 @@
 import { callGemma, jsonResponse, normalizeKeywords, parseMaybeJson, readJsonAsset, sanitizeText } from './_shared.js';
+import { readApiInput, requestLimit } from './_request.js';
+import { safeUrl } from '../../src/safe-url.mjs';
 
 const SEARCH_RESPONSE_CACHE = new Map();
 const SOURCE_COOLDOWNS = new Map();
@@ -20,7 +22,7 @@ function cacheKeyHash(value) {
 
 function edgeCacheRequest(cacheKey, requestUrl) {
   return new Request(new URL(`/api/news-search-cache/${cacheKeyHash(cacheKey)}`, requestUrl).toString(), {
-    headers: { 'x-news-search-cache-key': cacheKey }
+    headers: { 'x-news-search-cache-key': cacheKey },
   });
 }
 
@@ -45,12 +47,15 @@ async function writeCachedSearchResponse(cacheKey, requestUrl, body, nowMs = Dat
   const edgeCache = globalThis.caches?.default;
   if (!edgeCache) return;
   try {
-    await edgeCache.put(edgeCacheRequest(cacheKey, requestUrl), new Response(JSON.stringify(body), {
-      headers: {
-        'content-type': 'application/json; charset=utf-8',
-        'cache-control': `public, max-age=${Math.floor(SEARCH_CACHE_TTL_MS / 1000)}`
-      }
-    }));
+    await edgeCache.put(
+      edgeCacheRequest(cacheKey, requestUrl),
+      new Response(JSON.stringify(body), {
+        headers: {
+          'content-type': 'application/json; charset=utf-8',
+          'cache-control': `public, max-age=${Math.floor(SEARCH_CACHE_TTL_MS / 1000)}`,
+        },
+      }),
+    );
   } catch (_error) {
     // Cache API is opportunistic on Pages Functions; in-memory cache still covers warm isolates.
   }
@@ -70,6 +75,8 @@ function readFreshCache(key, nowMs = Date.now()) {
 }
 
 function writeFreshCache(key, body, nowMs = Date.now()) {
+  if (SEARCH_RESPONSE_CACHE.size >= 128 && !SEARCH_RESPONSE_CACHE.has(key))
+    SEARCH_RESPONSE_CACHE.delete(SEARCH_RESPONSE_CACHE.keys().next().value);
   SEARCH_RESPONSE_CACHE.set(key, { expiresAt: nowMs + SEARCH_CACHE_TTL_MS, body });
 }
 
@@ -84,9 +91,10 @@ function cooldownFor(source, searchQuery, nowMs = Date.now()) {
 }
 
 function putOnCooldown(source, searchQuery, reason, nowMs = Date.now()) {
+  if (SOURCE_COOLDOWNS.size >= 256) SOURCE_COOLDOWNS.delete(SOURCE_COOLDOWNS.keys().next().value);
   SOURCE_COOLDOWNS.set(sourceStateKey(source, searchQuery), {
     until: nowMs + SOURCE_COOLDOWN_MS,
-    reason
+    reason,
   });
 }
 
@@ -119,16 +127,39 @@ function queryTokens(query) {
 }
 
 const FALLBACK_STOPWORDS = new Set([
-  'about', 'into', 'from', 'with', 'using', 'what', 'when', 'where', 'why', 'how',
-  'news', 'update', 'updates', 'release', 'releases', 'paper', 'papers',
-  'feature', 'features', 'model', 'models', 'agent', 'agents', 'tool', 'tools'
+  'about',
+  'into',
+  'from',
+  'with',
+  'using',
+  'what',
+  'when',
+  'where',
+  'why',
+  'how',
+  'news',
+  'update',
+  'updates',
+  'release',
+  'releases',
+  'paper',
+  'papers',
+  'feature',
+  'features',
+  'model',
+  'models',
+  'agent',
+  'agents',
+  'tool',
+  'tools',
 ]);
 
 function fallbackMatchesQuery(item, query) {
-  const haystack = [item.title, item.summary, item.description, item.source, ...(item.categories || [])]
-    .join(' ')
-    .toLowerCase();
-  const normalizedQuery = String(query || '').toLowerCase().replace(/\s+/g, ' ').trim();
+  const haystack = [item.title, item.summary, item.description, item.source, ...(item.categories || [])].join(' ').toLowerCase();
+  const normalizedQuery = String(query || '')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim();
   if (normalizedQuery.length > 3 && haystack.includes(normalizedQuery)) return true;
   const tokens = queryTokens(query);
   const compoundTokens = tokens.filter((token) => /[-+]/.test(token));
@@ -153,14 +184,16 @@ function normalizeExpandedKeywords(query, values = []) {
   const seen = new Set();
   const keywords = [];
   for (const raw of [query, ...values]) {
-    const keyword = sanitizeText(raw, 70).replace(/["`{}[\]<>]/g, '').trim();
+    const keyword = sanitizeText(raw, 70)
+      .replace(/["`{}[\]<>]/g, '')
+      .trim();
     if (!keyword || keyword.length < 2) continue;
     const key = keyword.toLowerCase();
     if (seen.has(key)) continue;
     seen.add(key);
     keywords.push(keyword);
   }
-  return keywords.slice(0, 8);
+  return keywords.slice(0, 6);
 }
 
 function queryFromKeywords(keywords = []) {
@@ -179,10 +212,10 @@ async function planSearchQuery(query, queryMode, env = {}) {
     instructions: [
       'Return JSON only: {"keywords": string[], "searchQuery": string}.',
       'Preserve the original phrase as the first keyword.',
-      'Add 4-7 adjacent technical keywords, aliases, paper terms, and community phrases that improve search recall.',
+      'Add 3-5 adjacent technical keywords, aliases, paper terms, and community phrases that improve search recall.',
       'Keep each keyword short enough for Google News, arXiv, Scholar, GitHub, and social/search sources.',
-      'Do not invent specific paper titles, dates, companies, or claims.'
-    ]
+      'Do not invent specific paper titles, dates, companies, or claims.',
+    ],
   });
   const parsed = parseMaybeJson(gemma.text);
   if (!parsed) {
@@ -193,14 +226,20 @@ async function planSearchQuery(query, queryMode, env = {}) {
       searchQuery: query,
       keywords,
       usedGemma: false,
-      warning: gemma.error || (gemma.missingKey ? 'Gemma keyword expansion is unavailable without a Google AI API key; using the exact query.' : 'Gemma keyword expansion returned no usable keyword plan; using the exact query.')
+      warning:
+        gemma.error ||
+        (gemma.missingKey
+          ? 'Gemma keyword expansion is unavailable without a Google AI API key; using the exact query.'
+          : 'Gemma keyword expansion returned no usable keyword plan; using the exact query.'),
     };
   }
   const keywords = normalizeExpandedKeywords(query, Array.isArray(parsed?.keywords) ? parsed.keywords : []);
   const parsedSearch = sanitizeText(parsed?.searchQuery || '', 260);
-  const searchQuery = parsedSearch && keywords.some((keyword) => parsedSearch.toLowerCase().includes(keyword.toLowerCase().slice(0, Math.min(keyword.length, 16))))
-    ? parsedSearch
-    : queryFromKeywords(keywords);
+  const searchQuery =
+    parsedSearch &&
+    keywords.some((keyword) => parsedSearch.toLowerCase().includes(keyword.toLowerCase().slice(0, Math.min(keyword.length, 16))))
+      ? parsedSearch
+      : queryFromKeywords(keywords);
   return {
     mode,
     originalQuery: query,
@@ -209,7 +248,9 @@ async function planSearchQuery(query, queryMode, env = {}) {
     usedGemma: gemma.usedGemma && !!parsed,
     modelName: gemma.modelName,
     modelFallbackFrom: gemma.modelFallbackFrom,
-    warning: gemma.error || (gemma.missingKey ? 'Gemma keyword expansion is unavailable without a Google AI API key; using the exact query.' : undefined)
+    warning:
+      gemma.error ||
+      (gemma.missingKey ? 'Gemma keyword expansion is unavailable without a Google AI API key; using the exact query.' : undefined),
   };
 }
 
@@ -228,7 +269,9 @@ function scoreCandidate(candidate, tokens, index = 0) {
 }
 
 function thumbnailForCandidate(candidate = {}) {
-  const text = [candidate.source, candidate.type, candidate.url, ...(candidate.categories || []), ...(candidate.tags || [])].join(' ').toLowerCase();
+  const text = [candidate.source, candidate.type, candidate.url, ...(candidate.categories || []), ...(candidate.tags || [])]
+    .join(' ')
+    .toLowerCase();
   if (text.includes('github') || text.includes('repo')) return '/assets/news/thumb-repo.svg';
   if (text.includes('arxiv') || text.includes('paper') || text.includes('huggingface')) return '/assets/news/thumb-paper.svg';
   if (text.includes('ran') || text.includes('vran') || text.includes('o-ran')) return '/assets/news/thumb-vran.svg';
@@ -240,15 +283,19 @@ function normalizeCandidate(candidate, query, index) {
   const item = {
     id: sanitizeText(candidate.id || `${candidate.source || 'source'}-${index + 1}`, 120),
     title: sanitizeText(candidate.title || `News candidate ${index + 1}`, 220),
-    url: String(candidate.url || ''),
+    url: safeUrl(candidate.url),
     source: sanitizeText(candidate.source || '', 120),
     summary: sanitizeText(candidate.summary || '', 520),
     publishedAt: sanitizeText(candidate.publishedAt || '', 80),
     origin: sanitizeText(candidate.origin || 'live-search', 40),
     type: sanitizeText(candidate.type || 'news', 40),
-    stars: candidate.stars ? Number(candidate.stars) : undefined
+    stars: candidate.stars ? Number(candidate.stars) : undefined,
   };
-  return { ...item, score: scoreCandidate(item, tokens, index), thumbnail: String(candidate.thumbnail || candidate.image_url || candidate.imageUrl || thumbnailForCandidate(item)) };
+  return {
+    ...item,
+    score: scoreCandidate(item, tokens, index),
+    thumbnail: safeUrl(candidate.thumbnail || candidate.image_url || candidate.imageUrl, thumbnailForCandidate(item)),
+  };
 }
 
 function dedupeCandidates(candidates) {
@@ -266,7 +313,7 @@ function dedupeCandidates(candidates) {
 const SEARCH_HEADERS = {
   'user-agent': 'Mozilla/5.0 (compatible; mud-blog-news-search/1.0; +https://mud.blog/news/search)',
   accept: 'application/json, application/rss+xml, application/atom+xml, text/xml, text/html;q=0.8, */*;q=0.5',
-  'accept-language': 'en-US,en;q=0.9,ko;q=0.7'
+  'accept-language': 'en-US,en;q=0.9,ko;q=0.7',
 };
 
 function fetchWithTimeout(url, options = {}, timeoutMs = 12_000) {
@@ -295,10 +342,13 @@ function publishedDateFromParts(parts) {
 
 function openAlexAbstract(inverted = {}) {
   const entries = Object.entries(inverted || {}).flatMap(([word, positions]) =>
-    (Array.isArray(positions) ? positions : []).map((position) => [Number(position), word])
+    (Array.isArray(positions) ? positions : []).map((position) => [Number(position), word]),
   );
   if (!entries.length) return '';
-  return entries.sort((a, b) => a[0] - b[0]).map((entry) => entry[1]).join(' ');
+  return entries
+    .sort((a, b) => a[0] - b[0])
+    .map((entry) => entry[1])
+    .join(' ');
 }
 
 async function searchGoogleNews(query, limit) {
@@ -313,7 +363,7 @@ async function searchGoogleNews(query, limit) {
     source: xmlTag(match[0], 'source') || 'Google News',
     summary: xmlTag(match[0], 'description'),
     publishedAt: xmlTag(match[0], 'pubDate'),
-    type: 'news'
+    type: 'news',
   }));
 }
 
@@ -335,10 +385,12 @@ async function searchGdelt(query, limit) {
     title: article.title || `GDELT article ${index + 1}`,
     url: article.url || '',
     source: article.sourceCommonName || article.domain || 'GDELT',
-    summary: article.seendate ? `Seen by GDELT ${article.seendate}. ${article.language ? `Language: ${article.language}.` : ''}` : 'Live web/news article indexed by GDELT.',
+    summary: article.seendate
+      ? `Seen by GDELT ${article.seendate}. ${article.language ? `Language: ${article.language}.` : ''}`
+      : 'Live web/news article indexed by GDELT.',
     publishedAt: article.seendate || '',
     type: 'news',
-    thumbnail: article.socialimage || undefined
+    thumbnail: article.socialimage || undefined,
   }));
 }
 
@@ -355,7 +407,7 @@ async function searchGithub(query, limit) {
     summary: repo.description || '',
     publishedAt: repo.updated_at || '',
     type: 'repo',
-    stars: repo.stargazers_count || 0
+    stars: repo.stargazers_count || 0,
   }));
 }
 
@@ -371,7 +423,7 @@ async function searchArxiv(query, limit) {
     source: 'arXiv',
     summary: xmlTag(match[0], 'summary'),
     publishedAt: xmlTag(match[0], 'published') || xmlTag(match[0], 'updated'),
-    type: 'paper'
+    type: 'paper',
   }));
 }
 
@@ -382,16 +434,24 @@ async function searchOpenAlex(query, limit) {
   const json = await response.json();
   return (json.results || []).slice(0, limit).map((work, index) => {
     const doi = String(work.doi || '').replace(/^https?:\/\/doi\.org\//i, '');
-    const url = doi ? `https://doi.org/${doi}` : (work.primary_location?.landing_page_url || work.id || '');
-    const authors = (work.authorships || []).slice(0, 3).map((entry) => entry.author?.display_name).filter(Boolean).join(', ');
+    const url = doi ? `https://doi.org/${doi}` : work.primary_location?.landing_page_url || work.id || '';
+    const authors = (work.authorships || [])
+      .slice(0, 3)
+      .map((entry) => entry.author?.display_name)
+      .filter(Boolean)
+      .join(', ');
     return {
       id: `openalex-${index + 1}`,
       title: work.display_name || `OpenAlex work ${index + 1}`,
       url,
       source: 'OpenAlex',
-      summary: sanitizeText(openAlexAbstract(work.abstract_inverted_index) || [authors, work.primary_location?.source?.display_name].filter(Boolean).join(' · '), 520),
+      summary: sanitizeText(
+        openAlexAbstract(work.abstract_inverted_index) ||
+          [authors, work.primary_location?.source?.display_name].filter(Boolean).join(' · '),
+        520,
+      ),
       publishedAt: work.publication_date || (work.publication_year ? `${work.publication_year}-01-01` : ''),
-      type: 'paper'
+      type: 'paper',
     };
   });
 }
@@ -406,9 +466,18 @@ async function searchCrossref(query, limit) {
     title: (work.title || [])[0] || `Crossref work ${index + 1}`,
     url: work.URL || (work.DOI ? `https://doi.org/${work.DOI}` : ''),
     source: 'Crossref',
-    summary: sanitizeText([...(work.author || []).slice(0, 3).map((author) => [author.given, author.family].filter(Boolean).join(' ')), work['container-title']?.[0], work.publisher].filter(Boolean).join(' · '), 520),
+    summary: sanitizeText(
+      [
+        ...(work.author || []).slice(0, 3).map((author) => [author.given, author.family].filter(Boolean).join(' ')),
+        work['container-title']?.[0],
+        work.publisher,
+      ]
+        .filter(Boolean)
+        .join(' · '),
+      520,
+    ),
     publishedAt: publishedDateFromParts(work.published?.['date-parts'] || work.issued?.['date-parts']),
-    type: 'paper'
+    type: 'paper',
   }));
 }
 
@@ -424,9 +493,22 @@ async function searchSemanticScholar(query, limit, env = {}) {
     title: paper.title || `Semantic Scholar paper ${index + 1}`,
     url: paper.url || '',
     source: 'Semantic Scholar',
-    summary: sanitizeText(paper.abstract || [(paper.authors || []).slice(0, 3).map((author) => author.name).filter(Boolean).join(', '), paper.venue].filter(Boolean).join(' · '), 520),
+    summary: sanitizeText(
+      paper.abstract ||
+        [
+          (paper.authors || [])
+            .slice(0, 3)
+            .map((author) => author.name)
+            .filter(Boolean)
+            .join(', '),
+          paper.venue,
+        ]
+          .filter(Boolean)
+          .join(' · '),
+      520,
+    ),
     publishedAt: paper.publicationDate || (paper.year ? `${paper.year}-01-01` : ''),
-    type: 'paper'
+    type: 'paper',
   }));
 }
 
@@ -440,9 +522,18 @@ async function searchHackerNews(query, limit) {
     title: hit.title || hit.story_title || `Hacker News story ${index + 1}`,
     url: hit.url || `https://news.ycombinator.com/item?id=${hit.objectID}`,
     source: 'Hacker News',
-    summary: sanitizeText([hit.author ? `by ${hit.author}` : '', Number.isFinite(hit.points) ? `${hit.points} points` : '', Number.isFinite(hit.num_comments) ? `${hit.num_comments} comments` : ''].filter(Boolean).join(' · '), 300),
+    summary: sanitizeText(
+      [
+        hit.author ? `by ${hit.author}` : '',
+        Number.isFinite(hit.points) ? `${hit.points} points` : '',
+        Number.isFinite(hit.num_comments) ? `${hit.num_comments} comments` : '',
+      ]
+        .filter(Boolean)
+        .join(' · '),
+      300,
+    ),
     publishedAt: hit.created_at || '',
-    type: 'social'
+    type: 'social',
   }));
 }
 
@@ -466,7 +557,7 @@ async function searchHuggingFacePapersLive(query, limit) {
       source: 'HF Papers',
       summary: 'Paper card surfaced from HF Papers search.',
       publishedAt: '',
-      type: 'paper'
+      type: 'paper',
     });
     if (items.length >= limit) break;
   }
@@ -483,7 +574,11 @@ async function searchGoogleScholar(query, limit) {
   const response = await fetchWithTimeout(url, { headers: SEARCH_HEADERS });
   if (!response.ok) throw new Error(`Google Scholar ${response.status}`);
   const html = await response.text();
-  const items = [...html.matchAll(/<div[^>]+class=["'][^"']*gs_r[^"']*["'][^>]*>[\s\S]*?(?=<div[^>]+class=["'][^"']*gs_r[^"']*["']|<div[^>]+id=["']gs_res_ccl_bot["']|<\/body>|$)/gi)]
+  const items = [
+    ...html.matchAll(
+      /<div[^>]+class=["'][^"']*gs_r[^"']*["'][^>]*>[\s\S]*?(?=<div[^>]+class=["'][^"']*gs_r[^"']*["']|<div[^>]+id=["']gs_res_ccl_bot["']|<\/body>|$)/gi,
+    ),
+  ]
     .slice(0, limit)
     .map((match, index) => {
       const block = match[0];
@@ -498,20 +593,22 @@ async function searchGoogleScholar(query, limit) {
         source: 'Google Scholar',
         summary: decodeXml(block.match(/<div[^>]+class=["'][^"']*gs_rs[^"']*["'][^>]*>([\s\S]*?)<\/div>/i)?.[1] || meta),
         publishedAt: year ? `${year}-01-01` : '',
-        type: 'paper'
+        type: 'paper',
       };
     })
     .filter((item) => item.title && !/Google Scholar result \d+/.test(item.title));
   if (items.length) return items;
-  return [{
-    id: 'google-scholar-search',
-    title: `Open Google Scholar results for ${query}`,
-    url,
-    source: 'Google Scholar',
-    summary: 'Google Scholar did not expose parseable result cards to this runtime; open the citation search page directly.',
-    publishedAt: '',
-    type: 'paper'
-  }];
+  return [
+    {
+      id: 'google-scholar-search',
+      title: `Open Google Scholar results for ${query}`,
+      url,
+      source: 'Google Scholar',
+      summary: 'Google Scholar did not expose parseable result cards to this runtime; open the citation search page directly.',
+      publishedAt: '',
+      type: 'paper',
+    },
+  ];
 }
 
 const DIGEST_SOURCE_DOMAINS = {
@@ -528,7 +625,7 @@ const DIGEST_SOURCE_DOMAINS = {
   endigest: ['endigest.dev'],
   arxiv: ['arxiv.org'],
   'google-scholar': ['scholar.google.com'],
-  'github-repositories': ['github.com']
+  'github-repositories': ['github.com'],
 };
 
 function sourceMatchesSelection(item, sourceIds) {
@@ -543,45 +640,65 @@ function fallbackFromAsset(feed, query, limit, sourceIds = ['digest-snapshot']) 
     .filter((item) => sourceMatchesSelection(item, sourceIds))
     .filter((item) => tokens.length === 0 || fallbackMatchesQuery(item, query))
     .slice(0, limit)
-    .map((item, index) => normalizeCandidate({
-      id: `asset-${index + 1}`,
-      title: item.title,
-      url: item.url,
-      source: item.source || 'latest digest',
-      summary: item.summary || item.description || item.excerpt || '',
-      publishedAt: item.publishedAt || item.date || '',
-      type: (item.categories || [])[0] || 'news',
-      origin: 'digest-snapshot',
-      thumbnail: item.image_url || item.imageUrl
-    }, query, index));
+    .map((item, index) =>
+      normalizeCandidate(
+        {
+          id: `asset-${index + 1}`,
+          title: item.title,
+          url: item.url,
+          source: item.source || 'latest digest',
+          summary: item.summary || item.description || item.excerpt || '',
+          publishedAt: item.publishedAt || item.date || '',
+          type: (item.categories || [])[0] || 'news',
+          origin: 'digest-snapshot',
+          thumbnail: item.image_url || item.imageUrl,
+        },
+        query,
+        index,
+      ),
+    );
 }
 
 function selectedSourceIds(inputSources) {
-  const allowed = new Set(['gdelt', 'google-news-rss', 'hacker-news', 'github-repositories', 'arxiv', 'huggingface-papers', 'openalex', 'crossref', 'semantic-scholar', 'google-scholar', 'x', 'linkedin', 'geeknews', 'endigest']);
+  const allowed = new Set([
+    'gdelt',
+    'google-news-rss',
+    'hacker-news',
+    'github-repositories',
+    'arxiv',
+    'huggingface-papers',
+    'openalex',
+    'crossref',
+    'semantic-scholar',
+    'google-scholar',
+    'x',
+    'linkedin',
+    'geeknews',
+    'endigest',
+  ]);
   const requested = Array.isArray(inputSources)
-    ? inputSources.map((source) => String(source)).filter((source) => allowed.has(source))
+    ? [...new Set(inputSources.map((source) => String(source)).filter((source) => allowed.has(source)))]
     : [];
   return requested.length ? requested : [...allowed];
 }
 
 export async function onRequestPost({ request, env }) {
-  let input;
-  try {
-    input = await request.json();
-  } catch (_error) {
-    return jsonResponse({ ok: false, error: 'Expected a JSON request body.' }, { status: 400 });
-  }
+  const limited = requestLimit(request, 'search');
+  if (limited) return limited;
+  const input = await readApiInput(request, 'search');
+  if (input instanceof Response) return input;
   const query = sanitizeText(input.query || input.keywords || input.keyword, 160);
   if (!query) return jsonResponse({ ok: false, error: 'Search query is required.' }, { status: 400 });
-  const queryPlan = await planSearchQuery(query, input.queryMode || input.searchMode, env);
-  const searchQuery = queryPlan.searchQuery || query;
+  const mode = normalizeQueryMode(input.queryMode || input.searchMode);
   const limit = Math.max(3, Math.min(Number(input.limit) || 9, 15));
   const sourceIds = selectedSourceIds(input.sources).sort();
-  const cacheKey = stableCacheKey({ version: 3, query, searchQuery, mode: queryPlan.mode, limit, sourceIds });
+  const cacheKey = stableCacheKey({ version: 4, query, mode, limit, sourceIds });
   const cached = await readCachedSearchResponse(cacheKey, request.url);
   if (cached) {
     return jsonResponse({ ...cached, cacheStatus: 'hit' });
   }
+  const queryPlan = await planSearchQuery(query, mode, env);
+  const searchQuery = queryPlan.searchQuery || query;
   const perSource = Math.max(3, Math.ceil(limit / 3));
   const searched = [];
   const sourceStatus = [];
@@ -609,25 +726,27 @@ export async function onRequestPost({ request, env }) {
     x: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['x'])),
     linkedin: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['linkedin'])),
     geeknews: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['geeknews'])),
-    endigest: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['endigest']))
+    endigest: () => Promise.resolve(fallbackFromAsset(feed, searchQuery, perSource, ['endigest'])),
   };
-  const batches = await Promise.allSettled(sourceIds.map(async (source) => {
-    const cooldown = cooldownFor(source, searchQuery);
-    if (cooldown) {
-      return {
-        source,
-        skipped: true,
-        reason: cooldown.reason || 'provider cooldown'
-      };
-    }
-    try {
-      const value = await sourceTasks[source]();
-      return { source, value };
-    } catch (error) {
-      putOnCooldown(source, searchQuery, error?.message || 'search failed');
-      throw error;
-    }
-  }));
+  const batches = await Promise.allSettled(
+    sourceIds.map(async (source) => {
+      const cooldown = cooldownFor(source, searchQuery);
+      if (cooldown) {
+        return {
+          source,
+          skipped: true,
+          reason: cooldown.reason || 'provider cooldown',
+        };
+      }
+      try {
+        const value = await sourceTasks[source]();
+        return { source, value };
+      } catch (error) {
+        putOnCooldown(source, searchQuery, error?.message || 'search failed');
+        throw error;
+      }
+    }),
+  );
   const candidates = [];
   batches.forEach((batch, index) => {
     const name = sourceIds[index];
@@ -665,7 +784,7 @@ export async function onRequestPost({ request, env }) {
     sourceStatus,
     candidates: normalized,
     warning: warnings.length ? warnings.join('; ') : undefined,
-    cacheStatus: 'miss'
+    cacheStatus: 'miss',
   };
   if (sourceStatus.every((source) => source.status === 'ok')) {
     await writeCachedSearchResponse(cacheKey, request.url, body);

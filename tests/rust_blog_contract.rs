@@ -32,6 +32,28 @@ fn parses_windows_and_unix_frontmatter_identically() {
     assert_eq!(windows.html, unix.html);
 }
 
+#[tokio::test]
+async fn heading_links_have_unique_ids_without_changing_cfp_rendering()
+-> Result<(), Box<dyn std::error::Error>> {
+    let root = test_output_dir("heading-links");
+    fs::create_dir_all(root.join("blog"))?;
+    fs::create_dir_all(root.join("cfp"))?;
+    let source = "---\ntitle: Main Heading\n---\n# Main Heading\n## Details\n## Details\n## Kept {#explicit}\n";
+    fs::write(root.join("blog/test.md"), source)?;
+    fs::write(root.join("cfp/test.md"), source)?;
+    let posts = mud_blog::load_posts(&root).await?;
+    let blog = posts.iter().find(|post| post.folder == "blog").unwrap();
+    let page = mud_blog::render_post_page(blog, &posts)?;
+    assert!(page.contains("<h1 id=\"main-heading\">Main Heading</h1>"));
+    assert!(page.contains("<h2 id=\"details\">"));
+    assert!(page.contains("<h2 id=\"details-2\">"));
+    assert!(page.contains("<h2 id=\"explicit\">"));
+    let cfp = posts.iter().find(|post| post.folder == "cfp").unwrap();
+    assert!(cfp.html.contains("<h2>Details</h2>"));
+    fs::remove_dir_all(root)?;
+    Ok(())
+}
+
 fn test_output_dir(name: &str) -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
         .join("target")
@@ -57,6 +79,10 @@ async fn builds_public_polished_home_with_filetree_and_no_decorative_pretext_mot
     assert!(out_dir.join("index.html").exists());
     assert!(out_dir.join("archive.json").exists());
     assert!(out_dir.join("robots.txt").exists());
+    let not_found = fs::read_to_string(out_dir.join("404.html"))?;
+    assert!(not_found.contains("Page not found"));
+    assert!(not_found.contains("noindex"));
+    assert!(out_dir.join("assets/safe-url.mjs").exists());
     assert!(out_dir.join("sitemap.xml").exists());
     assert!(out_dir.join("news/index.html").exists());
     assert!(out_dir.join("news/search/index.html").exists());
@@ -100,7 +126,7 @@ async fn builds_public_polished_home_with_filetree_and_no_decorative_pretext_mot
     assert!(!index.contains("data-pretext-editorial"));
     assert!(!index.contains("archive typography motion"));
     assert!(!index.contains("/assets/pretext-editorial.mjs"));
-    assert!(index.contains("<h2>Hi 🙋</h2>"));
+    assert!(index.contains("<h2 id=\"hi\">Hi 🙋</h2>"));
     assert!(index.contains("Welcome to my blog"));
     assert!(index.contains("<span>About me</span>"));
     assert!(!index.contains("Public writing"));

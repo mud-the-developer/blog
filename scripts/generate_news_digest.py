@@ -376,7 +376,7 @@ def snapshot_feed_payload(payload: dict[str, Any]) -> dict[str, Any]:
 def write_source_snapshot(payload: dict[str, Any]) -> None:
     SNAPSHOT_PATH.write_text(
         json.dumps(snapshot_feed_payload(payload), ensure_ascii=False, separators=(",", ":"))
-        + "\n"
+        + "\n", encoding="utf-8"
     )
 
 
@@ -388,7 +388,7 @@ def load_translation_cache() -> None:
 
 def save_translation_cache() -> None:
     TRANSLATION_CACHE_PATH.write_text(
-        json.dumps(TRANSLATION_CACHE, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        json.dumps(TRANSLATION_CACHE, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
 
 
@@ -400,7 +400,7 @@ def load_beta_digest_cache() -> None:
 
 def save_beta_digest_cache() -> None:
     BETA_DIGEST_CACHE_PATH.write_text(
-        json.dumps(BETA_DIGEST_CACHE, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        json.dumps(BETA_DIGEST_CACHE, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
 
 
@@ -788,7 +788,7 @@ def load_recent_digest_memory(issue_dt: datetime) -> RecentDigestMemory:
         re.DOTALL,
     )
     for path in recent_digest_paths(issue_dt):
-        raw = path.read_text()
+        raw = path.read_text(encoding="utf-8")
         day_urls: set[str] = set()
         day_keys: set[str] = set()
         day_topics: set[str] = set()
@@ -1187,7 +1187,7 @@ def public_summary_text(value: str) -> str:
 
 
 def description_from_post(path: Path) -> str:
-    raw = path.read_text()
+    raw = path.read_text(encoding="utf-8")
     match = re.search(r'^description:\s*(.+)$', raw, flags=re.MULTILINE)
     if not match:
         return ""
@@ -2448,7 +2448,7 @@ def write_beta_post(issue_dt: datetime, generated_dt: datetime, context: DigestC
     if beta is None:
         return None
     markdown, stem = render_beta_markdown(issue_dt, generated_dt, context, beta)
-    (POSTS_DIR / f"{stem}.md").write_text(markdown)
+    (POSTS_DIR / f"{stem}.md").write_text(markdown, encoding="utf-8")
     return stem
 
 
@@ -2890,7 +2890,7 @@ def write_post(issue_dt: datetime, generated_dt: datetime, context: DigestContex
     brief = generate_gemma_beta_digest(issue_dt, context) or fallback_beta_digest(issue_dt, context)
     markdown, stem = render_markdown(issue_dt, generated_dt, context, brief, archives)
     target = POSTS_DIR / f"{stem}.md"
-    target.write_text(markdown)
+    target.write_text(markdown, encoding="utf-8")
     return stem
 
 
@@ -2902,7 +2902,7 @@ def write_archive_post(
 ) -> None:
     entries = archive_entries(digest_stem, current_summary)
     markdown = render_archive_markdown(issue_dt, generated_dt, current_summary, entries)
-    (POSTS_DIR / f"{ARCHIVE_STEM}.md").write_text(markdown)
+    (POSTS_DIR / f"{ARCHIVE_STEM}.md").write_text(markdown, encoding="utf-8")
 
 
 def write_hub_json(issue_dt: datetime, generated_dt: datetime, context: DigestContext, digest_stem: str) -> None:
@@ -2923,7 +2923,6 @@ def write_hub_json(issue_dt: datetime, generated_dt: datetime, context: DigestCo
         "issue_label": issue_date_label(issue_dt),
         "summary": context.summary,
         "keywords": context.keywords,
-        "mempalace_context": context.mempalace_context[:6],
         "top_cards": [card.__dict__ for card in context.top_cards],
         "repo_scoreboard": [card.__dict__ for card in context.repo_scoreboard],
         "sections": sections,
@@ -2943,7 +2942,7 @@ def write_hub_json(issue_dt: datetime, generated_dt: datetime, context: DigestCo
         "archives": recent_archive_entries(digest_stem, context.summary),
     }
     target_name = "latest.json" if not context.keywords else f"{digest_stem}.json"
-    (GENERATED_DIR / target_name).write_text(json.dumps(hub, ensure_ascii=False, indent=2) + "\n")
+    (GENERATED_DIR / target_name).write_text(json.dumps(hub, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 def main() -> None:

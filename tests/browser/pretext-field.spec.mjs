@@ -122,7 +122,9 @@ test('homepage is a polished public filetree without decorative background motio
       animatedCount: columns.some((column) => {
         const columnStyle = getComputedStyle(column);
         return columnStyle.animationName !== 'none' && columnStyle.animationDuration !== '0s';
-      }) ? 1 : 0,
+      })
+        ? 1
+        : 0,
       ambientLayerCount: document.querySelectorAll('.pretext-ambient-layer').length,
       scene: stage?.dataset.pretextScene || '',
       references: stage?.dataset.pretextReferences || '',
@@ -140,7 +142,8 @@ test('homepage is a polished public filetree without decorative background motio
       catCopyCount: (stage?.textContent || '').match(/CAT-LINK|tail-sweep|large-tail|oneko|ascii cat/g)?.length || 0,
       interactive: stage?.dataset.pretextInteractive || '',
       columnFontSize: columns[0] ? Number.parseFloat(style.fontSize || '0') : 0,
-      decorativeNodeCount: document.querySelectorAll('.pretext-cat-paw,.pretext-cat-shadow,.pretext-ambient-layer,.pretext-front-glass').length,
+      decorativeNodeCount: document.querySelectorAll('.pretext-cat-paw,.pretext-cat-shadow,.pretext-ambient-layer,.pretext-front-glass')
+        .length,
       filetreeWidth: document.querySelector('.filetree')?.getBoundingClientRect().width || 0,
       hasRainCss: css.includes('pretext-rain-fall') && css.includes('pretext-rain-column') && css.includes('font-variant-ligatures'),
       hasLoomCss: css.includes('pretext-loom-breathe') || css.includes('pretext-loom-row'),
@@ -199,7 +202,7 @@ test('homepage is a polished public filetree without decorative background motio
 
 test('local preview serves focused issue API and a dedicated news page', async ({ page, request }) => {
   const api = await request.post('/api/focused-issue', {
-    data: { date: '2026-04-14', keywords: 'open RAN, Gemma', limit: 4 }
+    data: { date: '2026-04-14', keywords: 'open RAN, Gemma', limit: 4 },
   });
   expect(api.status()).not.toBe(404);
   expect(api.ok()).toBe(true);
@@ -265,15 +268,19 @@ test('mobile news digest keeps every paper title visible without overflow', asyn
         return style.webkitLineClamp && style.webkitLineClamp !== 'none' && style.webkitLineClamp !== 'unset';
       }).length,
       scrollWidth: document.documentElement.scrollWidth,
-      clientWidth: document.documentElement.clientWidth
+      clientWidth: document.documentElement.clientWidth,
     };
   });
 
   expect(audit.visiblePaperRows).toBe(6);
   expect(audit.visibleRepoRows).toBe(3);
-  expect(audit.paperTitles).toContain('Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning');
+  expect(audit.paperTitles).toContain(
+    'Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning',
+  );
   expect(audit.paperTitles).toContain('SG-OPD: Sign-Gated On-Policy Distillation via Sign-Consistency Gating and Phased Teacher Sampling');
-  expect(audit.visiblePaperLeadTitles).toContain('Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning');
+  expect(audit.visiblePaperLeadTitles).toContain(
+    'Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning',
+  );
   expect(audit.paperTitles.some((title) => title.endsWith('…'))).toBe(false);
   expect(audit.visiblePaperLeadTitles.some((title) => title.endsWith('…'))).toBe(false);
   expect(audit.clampedPaperTitles).toBe(0);
@@ -293,7 +300,7 @@ test('theme follows the system default and can be toggled without local persiste
       bg: style.backgroundColor,
       pressed: document.querySelector('[data-theme-toggle]')?.getAttribute('aria-pressed'),
       iconLabel: document.querySelector('[data-theme-toggle] .theme-toggle-label')?.textContent || '',
-      saved: window.localStorage.getItem('mud-blog-theme')
+      saved: window.localStorage.getItem('mud-blog-theme'),
     };
   });
   expect(themeAudit.htmlTheme).toBe('');
@@ -308,7 +315,7 @@ test('theme follows the system default and can be toggled without local persiste
   await expect(darkPage.locator('[data-theme-toggle]')).toHaveAttribute('data-active-theme', 'light');
   themeAudit = await darkPage.evaluate(() => ({
     saved: window.localStorage.getItem('mud-blog-theme'),
-    iconLabel: document.querySelector('[data-theme-toggle] .theme-toggle-label')?.textContent || ''
+    iconLabel: document.querySelector('[data-theme-toggle] .theme-toggle-label')?.textContent || '',
   }));
   expect(themeAudit.saved).toBeNull();
   expect(themeAudit.iconLabel).toContain('Light');
@@ -323,38 +330,45 @@ test('global blog chrome is glass over space black with an inverted light mode a
   const page = await context.newPage();
   await page.goto('/news/search/');
 
-  const auditTheme = async (selectors = ['.site-header nav a', '.focused-issue-lab', '.news-desk-grid', '.source-picker', '.news-command-strip span']) => page.evaluate((selectorsToAudit) => {
-    const css = [...document.styleSheets]
-      .flatMap((sheet) => {
-        try { return [...sheet.cssRules].map((rule) => rule.cssText); }
-        catch (_error) { return []; }
-      })
-      .join('\n');
-    const parseRgb = (value) => (value.match(/rgba?\(([^)]+)\)/)?.[1] || '')
-      .split(',')
-      .slice(0, 3)
-      .map((part) => Number.parseFloat(part));
-    const bodyRgb = parseRgb(getComputedStyle(document.body).backgroundColor);
-    const glass = selectorsToAudit.map((selector) => {
-      const node = document.querySelector(selector);
-      const style = node ? getComputedStyle(node) : null;
+  const auditTheme = async (
+    selectors = ['.site-header nav a', '.focused-issue-lab', '.news-desk-grid', '.source-picker', '.news-command-strip span'],
+  ) =>
+    page.evaluate((selectorsToAudit) => {
+      const css = [...document.styleSheets]
+        .flatMap((sheet) => {
+          try {
+            return [...sheet.cssRules].map((rule) => rule.cssText);
+          } catch (_error) {
+            return [];
+          }
+        })
+        .join('\n');
+      const parseRgb = (value) =>
+        (value.match(/rgba?\(([^)]+)\)/)?.[1] || '')
+          .split(',')
+          .slice(0, 3)
+          .map((part) => Number.parseFloat(part));
+      const bodyRgb = parseRgb(getComputedStyle(document.body).backgroundColor);
+      const glass = selectorsToAudit.map((selector) => {
+        const node = document.querySelector(selector);
+        const style = node ? getComputedStyle(node) : null;
+        return {
+          selector,
+          present: Boolean(node),
+          background: style?.backgroundColor || '',
+          backdrop: style ? style.backdropFilter || style.webkitBackdropFilter || '' : '',
+          border: style?.borderColor || '',
+        };
+      });
       return {
-        selector,
-        present: Boolean(node),
-        background: style?.backgroundColor || '',
-        backdrop: style ? (style.backdropFilter || style.webkitBackdropFilter || '') : '',
-        border: style?.borderColor || ''
+        bodyRgb,
+        hasPatterns: /radial-gradient|repeating-linear-gradient|skewY|orbit|bubble|stripe/i.test(css),
+        hasSpaceTokens: css.includes('--space-bg') && css.includes('--glass-bg') && css.includes('--glass-blur'),
+        glass,
+        scrollWidth: document.documentElement.scrollWidth,
+        clientWidth: document.documentElement.clientWidth,
       };
-    });
-    return {
-      bodyRgb,
-      hasPatterns: /radial-gradient|repeating-linear-gradient|skewY|orbit|bubble|stripe/i.test(css),
-      hasSpaceTokens: css.includes('--space-bg') && css.includes('--glass-bg') && css.includes('--glass-blur'),
-      glass,
-      scrollWidth: document.documentElement.scrollWidth,
-      clientWidth: document.documentElement.clientWidth
-    };
-  }, selectors);
+    }, selectors);
 
   const dark = await auditTheme();
   expect(dark.bodyRgb.every((channel) => channel <= 22)).toBe(true);
@@ -381,8 +395,6 @@ test('global blog chrome is glass over space black with an inverted light mode a
   await context.close();
 });
 
-
-
 test('dark mode keeps news desk buttons and chips readable', async ({ page }) => {
   await page.goto('/news/search/');
   await page.locator('[data-theme-toggle]').click();
@@ -406,7 +418,7 @@ test('dark mode keeps news desk buttons and chips readable', async ({ page }) =>
       r: fg.r * fg.a + bg.r * (1 - fg.a),
       g: fg.g * fg.a + bg.g * (1 - fg.a),
       b: fg.b * fg.a + bg.b * (1 - fg.a),
-      a: 1
+      a: 1,
     });
     const luminance = (color) => {
       const channel = (value) => {
@@ -428,7 +440,7 @@ test('dark mode keeps news desk buttons and chips readable', async ({ page }) =>
       ['disabled draft button', '.draft-selected-button:disabled', 3.6],
       ['disabled markdown button', '.download-draft-button:disabled', 3.6],
       ['source chip', '.source-picker label', 4.5],
-      ['pipeline chip', '.news-command-strip span', 4.5]
+      ['pipeline chip', '.news-command-strip span', 4.5],
     ];
     return checks.map(([name, selector, minimum]) => {
       const node = document.querySelector(selector);
@@ -443,7 +455,6 @@ test('dark mode keeps news desk buttons and chips readable', async ({ page }) =>
   const failing = contrastAudit.filter((item) => item.ratio < item.minimum);
   expect(failing).toEqual([]);
 });
-
 
 test('post pages keep rich media and inline html aligned with the article width', async ({ page }) => {
   await page.goto('/posts/jinhyuk-kim/');
@@ -498,10 +509,19 @@ test('narrow news search and post chrome keep controls separated without overlap
       const box = node.getBoundingClientRect();
       return { left: box.left, top: box.top, right: box.right, bottom: box.bottom, width: box.width, height: box.height };
     };
-    const rects = (selector) => [...document.querySelectorAll(selector)].map((node) => {
-      const box = node.getBoundingClientRect();
-      return { left: box.left, top: box.top, right: box.right, bottom: box.bottom, width: box.width, height: box.height, text: node.textContent.trim() };
-    });
+    const rects = (selector) =>
+      [...document.querySelectorAll(selector)].map((node) => {
+        const box = node.getBoundingClientRect();
+        return {
+          left: box.left,
+          top: box.top,
+          right: box.right,
+          bottom: box.bottom,
+          width: box.width,
+          height: box.height,
+          text: node.textContent.trim(),
+        };
+      });
     const overlaps = (a, b) => a && b && a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
     const inside = (child, parent) => child && parent && child.left >= parent.left - 1 && child.right <= parent.right + 1;
     const query = rect('.query-mode-picker');
@@ -587,7 +607,22 @@ test('news page searches candidates before drafting an issue and does not expose
     const body = route.request().postDataJSON();
     expect(body.query).toContain('open RAN');
     expect(body.queryMode).toBe('gemma-expand');
-    expect(body.sources).toEqual(['gdelt', 'google-news-rss', 'github-repositories', 'arxiv', 'huggingface-papers', 'openalex', 'crossref', 'semantic-scholar', 'google-scholar', 'hacker-news', 'x', 'linkedin', 'geeknews', 'endigest']);
+    expect(body.sources).toEqual([
+      'gdelt',
+      'google-news-rss',
+      'github-repositories',
+      'arxiv',
+      'huggingface-papers',
+      'openalex',
+      'crossref',
+      'semantic-scholar',
+      'google-scholar',
+      'hacker-news',
+      'x',
+      'linkedin',
+      'geeknews',
+      'endigest',
+    ]);
     await route.fulfill({
       contentType: 'application/json',
       body: JSON.stringify({
@@ -596,12 +631,47 @@ test('news page searches candidates before drafting an issue and does not expose
         queryMode: body.queryMode,
         searchQuery: 'open RAN Gemma OR O-RAN automation OR agentic RAN operations',
         keywords: ['open RAN Gemma', 'O-RAN automation', 'agentic RAN operations'],
-        searched: ['gdelt', 'google-news-rss', 'github-repositories', 'arxiv', 'huggingface-papers', 'openalex', 'crossref', 'semantic-scholar', 'google-scholar', 'hacker-news', 'x', 'linkedin', 'geeknews', 'endigest'],
+        searched: [
+          'gdelt',
+          'google-news-rss',
+          'github-repositories',
+          'arxiv',
+          'huggingface-papers',
+          'openalex',
+          'crossref',
+          'semantic-scholar',
+          'google-scholar',
+          'hacker-news',
+          'x',
+          'linkedin',
+          'geeknews',
+          'endigest',
+        ],
         candidates: [
-          { id: 'gnews-1', title: 'Open RAN Gemma operations update', url: 'https://news.example/oran-gemma', source: 'Example News', summary: 'Search result about Gemma and O-RAN operations.', publishedAt: '2026-04-14T08:00:00Z', score: 12, origin: 'live-search', thumbnail: '/assets/news/thumb-vran.svg' },
-          { id: 'github-1', title: 'ran-lab/gemma-oran', url: 'https://github.com/ran-lab/gemma-oran', source: 'GitHub', summary: 'Repository signal from search.', publishedAt: '2026-04-14T09:00:00Z', score: 9, origin: 'live-search', thumbnail: '/assets/news/thumb-repo.svg' }
-        ]
-      })
+          {
+            id: 'gnews-1',
+            title: 'Open RAN Gemma operations update',
+            url: 'https://news.example/oran-gemma',
+            source: 'Example News',
+            summary: 'Search result about Gemma and O-RAN operations.',
+            publishedAt: '2026-04-14T08:00:00Z',
+            score: 12,
+            origin: 'live-search',
+            thumbnail: '/assets/news/thumb-vran.svg',
+          },
+          {
+            id: 'github-1',
+            title: 'ran-lab/gemma-oran',
+            url: 'https://github.com/ran-lab/gemma-oran',
+            source: 'GitHub',
+            summary: 'Repository signal from search.',
+            publishedAt: '2026-04-14T09:00:00Z',
+            score: 9,
+            origin: 'live-search',
+            thumbnail: '/assets/news/thumb-repo.svg',
+          },
+        ],
+      }),
     });
   });
   await page.route('/api/focused-issue', async (route) => {
@@ -618,25 +688,40 @@ test('news page searches candidates before drafting an issue and does not expose
         issue: {
           title: 'Open RAN + Gemma Brief — 2026-04-14',
           summary: 'Ranked source context ready for review.',
-          markdown: `## Open RAN + Gemma\nRanked **source context** ready for review.\n\n${'verylongtoken'.repeat(80)}`
+          markdown: `## Open RAN + Gemma\nRanked **source context** ready for review.\n\n${'verylongtoken'.repeat(80)}`,
         },
-        sources: [{ title: 'Open RAN accelerator stack', score: 8.5, url: 'https://example.test/oran', source: 'Example News', thumbnail: '/assets/news/thumb-vran.svg' }],
-        warning: 'Gemma is not configured; rendered a source-backed fallback.'
-      })
+        sources: [
+          {
+            title: 'Open RAN accelerator stack',
+            score: 8.5,
+            url: 'https://example.test/oran',
+            source: 'Example News',
+            thumbnail: '/assets/news/thumb-vran.svg',
+          },
+        ],
+        warning: 'Gemma is not configured; rendered a source-backed fallback.',
+      }),
     });
   });
 
   await page.addInitScript(() => {
     window.__newsPrintDocuments = [];
     window.__newsPrintCalled = false;
-    window.open = () => ({
-      document: {
-        open() {},
-        write(html) { window.__newsPrintDocuments.push(String(html)); },
-        close() {}
+    const descriptor = Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype, 'contentWindow');
+    Object.defineProperty(HTMLIFrameElement.prototype, 'contentWindow', {
+      configurable: true,
+      get() {
+        if (!this.hasAttribute('data-news-print-frame')) return descriptor.get.call(this);
+        return {
+          document: { fonts: { ready: Promise.resolve() } },
+          focus() {},
+          addEventListener() {},
+          print: () => {
+            window.__newsPrintDocuments.push(this.srcdoc);
+            window.__newsPrintCalled = true;
+          },
+        };
       },
-      focus() {},
-      print() { window.__newsPrintCalled = true; }
     });
   });
 
@@ -682,7 +767,10 @@ test('news page searches candidates before drafting an issue and does not expose
   await expect(page.locator('[data-news-signal-stack] .signal-row')).toHaveCount(7);
   await expect(page.locator('[data-news-pretext-board]')).toHaveCount(0);
   await expect(page.getByText('RANKING LANES')).toHaveCount(0);
-  const stackMotion = await page.locator('[data-news-signal-stack] .signal-row').first().evaluate((node) => getComputedStyle(node).animationName);
+  const stackMotion = await page
+    .locator('[data-news-signal-stack] .signal-row')
+    .first()
+    .evaluate((node) => getComputedStyle(node).animationName);
   expect(stackMotion).toContain('signal-row-drift');
 
   await page.getByRole('searchbox', { name: 'Search query' }).fill('open RAN AI');
@@ -697,7 +785,7 @@ test('news page searches candidates before drafting an issue and does not expose
       formRight: form?.right || 0,
       inputRight: input.right,
       pageScroll: document.documentElement.scrollWidth,
-      pageWidth: document.documentElement.clientWidth
+      pageWidth: document.documentElement.clientWidth,
     };
   });
   expect(dateLayout.inputWidth).toBeGreaterThanOrEqual(140);
@@ -717,7 +805,10 @@ test('news page searches candidates before drafting an issue and does not expose
   await expect(page.locator('.news-candidate-rank')).toHaveCount(0);
   await expect(page.locator('[data-news-search-results]')).not.toContainText(/score \d/i);
   await expect(page.locator('.news-candidate-meter')).toHaveCount(2);
-  const candidateAnimation = await page.locator('.news-candidate-card').first().evaluate((node) => getComputedStyle(node).animationName);
+  const candidateAnimation = await page
+    .locator('.news-candidate-card')
+    .first()
+    .evaluate((node) => getComputedStyle(node).animationName);
   expect(candidateAnimation).toContain('candidate-rise');
   await page.setViewportSize({ width: 390, height: 844 });
   const mobileNewsLayout = await page.evaluate(() => {
@@ -733,7 +824,7 @@ test('news page searches candidates before drafting an issue and does not expose
       cardRight: cardBox?.right || 0,
       viewportRight: document.documentElement.clientWidth,
       thumbWidth: Math.round(thumbBox?.width || 0),
-      crampedSourceLabels: labels.filter((box) => box.width < 92).length
+      crampedSourceLabels: labels.filter((box) => box.width < 92).length,
     };
   });
   expect(mobileNewsLayout.pageScroll).toBeLessThanOrEqual(mobileNewsLayout.pageWidth + 1);
@@ -753,7 +844,9 @@ test('news page searches candidates before drafting an issue and does not expose
   await expect(page.locator('[data-focused-issue-output] .generated-news-cover')).toBeVisible();
   await expect(page.locator('[data-focused-issue-output] .generated-news-metrics')).toContainText('sources');
   await expect(page.locator('[data-focused-issue-output] .generated-news-tape')).toContainText(/Example News/i);
-  const draftAnimation = await page.locator('[data-focused-issue-output] .generated-news-card').evaluate((node) => getComputedStyle(node).animationName);
+  const draftAnimation = await page
+    .locator('[data-focused-issue-output] .generated-news-card')
+    .evaluate((node) => getComputedStyle(node).animationName);
   expect(draftAnimation).toContain('generated-card-enter');
   await expect(page.locator('[data-focused-issue-output] strong').filter({ hasText: 'source context' })).toBeVisible();
   await expect(page.locator('[data-news-search-results]')).not.toContainText(/score \d/i);
@@ -764,9 +857,10 @@ test('news page searches candidates before drafting an issue and does not expose
   await expect(page.getByRole('button', { name: 'Download Markdown' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Download PDF' })).toBeVisible();
   await page.getByRole('button', { name: 'Download PDF' }).click();
+  await expect.poll(() => page.evaluate(() => window.__newsPrintCalled)).toBe(true);
   const printAudit = await page.evaluate(() => ({
     called: window.__newsPrintCalled,
-    html: window.__newsPrintDocuments?.[0] || ''
+    html: window.__newsPrintDocuments?.[0] || '',
   }));
   expect(printAudit.called).toBe(true);
   expect(printAudit.html).toContain('generated-news-print');
@@ -778,7 +872,7 @@ test('news page searches candidates before drafting an issue and does not expose
     outputScroll: document.querySelector('[data-focused-issue-output]')?.scrollWidth || 0,
     outputWidth: document.querySelector('[data-focused-issue-output]')?.clientWidth || 0,
     pageScroll: document.documentElement.scrollWidth,
-    pageWidth: document.documentElement.clientWidth
+    pageWidth: document.documentElement.clientWidth,
   }));
   expect(draftLayout.outputScroll).toBeLessThanOrEqual(draftLayout.outputWidth + 1);
   expect(draftLayout.pageScroll).toBeLessThanOrEqual(draftLayout.pageWidth + 1);
@@ -787,4 +881,3 @@ test('news page searches candidates before drafting an issue and does not expose
   expect(html).not.toContain('GOOGLE_AI_API_KEY');
   expect(html).not.toContain('GEMINI_API_KEY');
 });
-

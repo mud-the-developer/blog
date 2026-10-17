@@ -31,7 +31,11 @@
     <article class="post-reader">
       <a class="back-link" href="/">← Home</a>
       <p class="eyebrow">{{ post.date }} · {{ post.folder }} · {{ post.tags_label }}</p>
+      {% if post.folder == "cfp" %}
       <h1>{{ post.title }}</h1>
+      {% else %}
+      <h1 id="{{ title_id }}">{{ post.title }}</h1>
+      {% endif %}
       <div class="post-body">{{ post.html|safe }}</div>
     </article>
   </main>

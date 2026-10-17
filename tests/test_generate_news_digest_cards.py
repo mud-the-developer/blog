@@ -1,4 +1,5 @@
 import importlib.util
+import json
 import os
 import sqlite3
 import sys
@@ -140,6 +141,20 @@ class GenerateNewsDigestCardRenderingTests(unittest.TestCase):
 
 
 class GenerateNewsDigestAutomationTests(unittest.TestCase):
+    def test_public_hub_is_utf8_and_never_contains_private_memory(self) -> None:
+        context = MODULE.DigestContext(
+            summary="연구 — résumé", top_cards=[], repo_scoreboard=[], sections=[], source_counts=[],
+            mempalace_context=[{"content": "PRIVATE_CONTEXT_TEST_MARKER", "wing": "private"}],
+        )
+        issue = datetime(2026, 10, 17, tzinfo=MODULE.KST)
+        with tempfile.TemporaryDirectory() as directory, patch.object(MODULE, "GENERATED_DIR", Path(directory)), patch.object(MODULE, "recent_archive_entries", return_value=[]):
+            MODULE.write_hub_json(issue, issue, context, "audit")
+            text = (Path(directory) / "latest.json").read_bytes().decode("utf-8")
+            self.assertNotIn("PRIVATE_CONTEXT_TEST_MARKER", text)
+            self.assertNotIn("mempalace_context", json.loads(text))
+            self.assertEqual(json.loads(text)["summary"], "연구 — résumé")
+        self.assertEqual(context.mempalace_context[0]["content"], "PRIVATE_CONTEXT_TEST_MARKER")
+
     def test_json_file_reader_requires_utf8_objects_and_never_overwrites_bad_data(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             path = Path(temp_dir) / "feed.json"

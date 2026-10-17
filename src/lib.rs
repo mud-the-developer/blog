@@ -3,19 +3,19 @@ use std::{
     ffi::OsStr,
     fs as std_fs,
     path::{Path, PathBuf},
-    sync::Arc,
-    time::Duration,
+    sync::{Arc, Mutex},
+    time::{Duration, Instant},
 };
 
 use askama::Template;
 use axum::{
     Json, Router,
-    extract::{Path as AxumPath, State},
+    extract::{DefaultBodyLimit, Path as AxumPath, State},
     http::{StatusCode, header::CONTENT_TYPE},
     response::{Html, IntoResponse},
     routing::{get, post},
 };
-use pulldown_cmark::{Options, Parser, html};
+use pulldown_cmark::{Event, Options, Parser, Tag, TagEnd, html};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use tokio::{fs, net::TcpListener};
@@ -28,6 +28,7 @@ pub mod cfp;
 
 pub type BlogResult<T> = Result<T, Box<dyn std::error::Error>>;
 const PUBLIC_SITE_URL: &str = "https://mud-blog.pages.dev";
+const NOT_FOUND_HTML: &str = include_str!("../templates/not_found.html");
 
 #[derive(Debug, Clone, Serialize, PartialEq, Eq)]
 pub struct Post {
@@ -80,12 +81,13 @@ struct NewsMonthGroup<'a> {
 struct AppState {
     posts: Arc<Vec<Post>>,
     archive_json: Arc<String>,
+    api_windows: Arc<Mutex<HashMap<&'static str, (Instant, u32)>>>,
 }
 
 #[derive(Debug, Deserialize)]
 struct FocusedIssueRequest {
     date: Option<String>,
-    keywords: Option<String>,
+    keywords: Option<serde_json::Value>,
     keyword: Option<Vec<String>>,
     candidates: Option<Vec<serde_json::Value>>,
     sources: Option<Vec<serde_json::Value>>,
@@ -143,6 +145,7 @@ struct IndexTemplate<'a> {
 #[template(path = "post.html")]
 struct PostTemplate<'a> {
     post: &'a Post,
+    title_id: String,
 }
 
 #[derive(Template)]
@@ -400,17 +403,56 @@ fn rewrite_legacy_note_hrefs(html: &str, link_index: &HashMap<String, String>) -
 }
 
 fn markdown_to_html(markdown: &str) -> String {
-    markdown_to_html_with_links(markdown, &HashMap::new())
+    markdown_to_html_with_links(markdown, &HashMap::new(), None)
 }
 
-fn markdown_to_html_with_links(markdown: &str, link_index: &HashMap<String, String>) -> String {
+fn markdown_to_html_with_links(
+    markdown: &str,
+    link_index: &HashMap<String, String>,
+    title_id: Option<&str>,
+) -> String {
     let markdown = rewrite_wikilinks(markdown, link_index);
     let mut output = String::new();
     let parser = Parser::new_ext(
         &markdown,
         Options::ENABLE_TABLES | Options::ENABLE_STRIKETHROUGH | Options::ENABLE_HEADING_ATTRIBUTES,
     );
-    html::push_html(&mut output, parser);
+    let mut events: Vec<_> = parser.collect();
+    if let Some(title_id) = title_id {
+        let mut used: std::collections::HashSet<String> = events
+            .iter()
+            .filter_map(|event| match event {
+                Event::Start(Tag::Heading { id: Some(id), .. }) => Some(id.to_string()),
+                _ => None,
+            })
+            .collect();
+        used.insert(title_id.to_string());
+        for index in 0..events.len() {
+            if !matches!(&events[index], Event::Start(Tag::Heading { id: None, .. })) {
+                continue;
+            }
+            let title = events[index + 1..]
+                .iter()
+                .take_while(|event| !matches!(event, Event::End(TagEnd::Heading(_))))
+                .filter_map(|event| match event {
+                    Event::Text(text) | Event::Code(text) => Some(text.as_ref()),
+                    Event::SoftBreak | Event::HardBreak => Some(" "),
+                    _ => None,
+                })
+                .collect::<String>();
+            let base = slugify(&title);
+            let mut id = base.clone();
+            let mut suffix = 2;
+            while !used.insert(id.clone()) {
+                id = format!("{base}-{suffix}");
+                suffix += 1;
+            }
+            if let Event::Start(Tag::Heading { id: slot, .. }) = &mut events[index] {
+                *slot = Some(id.into());
+            }
+        }
+    }
+    html::push_html(&mut output, events.into_iter());
     rewrite_legacy_note_hrefs(&output, link_index)
 }
 
@@ -532,7 +574,12 @@ pub async fn load_posts(posts_dir: impl AsRef<Path>) -> BlogResult<Vec<Post>> {
 
     let mut posts = Vec::new();
     for (source, mut post) in entries {
-        post.html = markdown_to_html_with_links(&post.body, &link_index);
+        let title_id = slugify(&post.title);
+        post.html = markdown_to_html_with_links(
+            &post.body,
+            &link_index,
+            (post.folder != "cfp").then_some(title_id.as_str()),
+        );
         if post.folder == "news" {
             post.html = demote_first_h1(&post.html);
         } else {
@@ -809,7 +856,11 @@ pub fn render_index_page(posts: &[Post]) -> BlogResult<String> {
 }
 
 pub fn render_post_page(post: &Post, _posts: &[Post]) -> BlogResult<String> {
-    Ok(PostTemplate { post }.render()?)
+    Ok(PostTemplate {
+        post,
+        title_id: slugify(&post.title),
+    }
+    .render()?)
 }
 
 pub fn render_news_page(posts: &[Post]) -> BlogResult<String> {
@@ -921,6 +972,7 @@ pub async fn build_static_site(
     let css = fs::read_to_string("src/style.css").await?;
     fs::write(assets_dir.join("style.css"), minify_css(&css)).await?;
     fs::copy("src/blog-lab.mjs", assets_dir.join("blog-lab.mjs")).await?;
+    fs::copy("src/safe-url.mjs", assets_dir.join("safe-url.mjs")).await?;
     fs::copy(
         "src/blog-lab-machine.mjs",
         assets_dir.join("blog-lab-machine.mjs"),
@@ -950,6 +1002,7 @@ pub async fn build_static_site(
     let archive = archive_json(&posts)?;
     fs::write(out_dir.join("archive.json"), archive).await?;
     fs::write(out_dir.join("robots.txt"), render_robots_txt()).await?;
+    fs::write(out_dir.join("404.html"), NOT_FOUND_HTML).await?;
     fs::write(out_dir.join("sitemap.xml"), render_sitemap_xml(&posts)).await?;
     fs::write(out_dir.join("index.html"), render_index_page(&posts)?).await?;
     fs::write(news_dir.join("index.html"), render_news_page(&posts)?).await?;
@@ -969,6 +1022,7 @@ pub async fn build_static_site(
         "index.html".to_string(),
         "archive.json".to_string(),
         "robots.txt".to_string(),
+        "404.html".to_string(),
         "sitemap.xml".to_string(),
         "news/index.html".to_string(),
         "news/search/index.html".to_string(),
@@ -990,6 +1044,7 @@ pub fn router(posts: Vec<Post>, assets_root: impl Into<PathBuf>) -> BlogResult<R
     let state = AppState {
         posts: Arc::new(posts),
         archive_json: Arc::new(archive_json),
+        api_windows: Arc::new(Mutex::new(HashMap::new())),
     };
     let assets_root = assets_root.into();
 
@@ -1016,6 +1071,8 @@ pub fn router(posts: Vec<Post>, assets_root: impl Into<PathBuf>) -> BlogResult<R
         .nest_service("/cfp/data", ServeDir::new(assets_root.join("cfp/data")))
         .nest_service("/news/data", ServeDir::new(assets_root.join("news/data")))
         .nest_service("/assets", ServeDir::new(assets_root.join("assets")))
+        .fallback(|| async { (StatusCode::NOT_FOUND, Html(NOT_FOUND_HTML)) })
+        .layer(DefaultBodyLimit::max(32 * 1024))
         .layer(CompressionLayer::new())
         .with_state(state))
 }
@@ -1080,10 +1137,32 @@ async fn vitals_handler() -> StatusCode {
     StatusCode::NO_CONTENT
 }
 
+fn local_api_allowed(state: &AppState, kind: &'static str, limit: u32) -> bool {
+    let Ok(mut windows) = state.api_windows.lock() else {
+        return false;
+    };
+    let entry = windows.entry(kind).or_insert((Instant::now(), 0));
+    if entry.0.elapsed() >= Duration::from_secs(60) {
+        *entry = (Instant::now(), 0);
+    }
+    if entry.1 >= limit {
+        return false;
+    }
+    entry.1 += 1;
+    true
+}
+
 async fn focused_issue_handler(
     State(state): State<AppState>,
     Json(request): Json<FocusedIssueRequest>,
 ) -> impl IntoResponse {
+    if !local_api_allowed(&state, "draft", 6) {
+        return (
+            StatusCode::TOO_MANY_REQUESTS,
+            Json(json!({ "ok": false, "error": "Too many draft requests; retry in a minute." })),
+        )
+            .into_response();
+    }
     let keywords = normalize_api_keywords(&request);
     if keywords.is_empty() {
         return (
@@ -1092,7 +1171,23 @@ async fn focused_issue_handler(
         )
             .into_response();
     }
-    let date = request.date.unwrap_or_else(|| "today".to_string());
+    if request
+        .candidates
+        .as_ref()
+        .or(request.sources.as_ref())
+        .is_some_and(|items| items.len() > 12 || items.iter().any(|item| !item.is_object()))
+        || request.date.as_ref().is_some_and(|date| date.len() > 10)
+    {
+        return (
+            StatusCode::BAD_REQUEST,
+            Json(json!({ "ok": false, "error": "Oversized draft fields." })),
+        )
+            .into_response();
+    }
+    let date = request
+        .date
+        .filter(|date| !date.trim().is_empty())
+        .unwrap_or_else(|| "today".to_string());
     let limit = request.limit.unwrap_or(8).clamp(1, 12);
     let selected_candidates = request
         .candidates
@@ -1495,6 +1590,9 @@ fn api_query_text(request: &NewsSearchRequest) -> String {
         .split_whitespace()
         .collect::<Vec<_>>()
         .join(" ")
+        .chars()
+        .take(160)
+        .collect()
 }
 
 fn news_query_mode(request: &NewsSearchRequest) -> String {
@@ -1523,7 +1621,7 @@ fn normalize_expanded_keywords(query: &str, values: Vec<String>) -> Vec<String> 
             continue;
         }
         keywords.push(keyword.chars().take(70).collect());
-        if keywords.len() >= 8 {
+        if keywords.len() >= 6 {
             break;
         }
     }
@@ -1727,6 +1825,7 @@ fn selected_news_sources(request: &NewsSearchRequest) -> Vec<&'static str> {
         "geeknews",
         "endigest",
     ];
+    let mut seen = std::collections::HashSet::new();
     let requested = request
         .sources
         .as_deref()
@@ -1738,6 +1837,7 @@ fn selected_news_sources(request: &NewsSearchRequest) -> Vec<&'static str> {
                 .copied()
                 .find(|allowed_source| allowed_source == source)
         })
+        .filter(|source| seen.insert(*source))
         .collect::<Vec<_>>();
     if requested.is_empty() {
         allowed.to_vec()
@@ -1796,6 +1896,30 @@ fn thumbnail_for_source(candidate: &serde_json::Value) -> &'static str {
     }
 }
 
+fn safe_news_url(value: &str) -> &str {
+    let value = value.trim();
+    if value.len() > 2048
+        || value
+            .chars()
+            .any(|ch| ch.is_control() || ch.is_whitespace() || ch == '\\')
+    {
+        return "";
+    }
+    if (value.starts_with('/') && !value.starts_with("//")) || value.starts_with('#') {
+        return value;
+    }
+    if let Ok(url) = reqwest::Url::parse(value)
+        && matches!(url.scheme(), "http" | "https")
+        && url.host_str().is_some()
+        && url.username().is_empty()
+        && url.password().is_none()
+    {
+        value
+    } else {
+        ""
+    }
+}
+
 fn normalize_selected_candidates(
     candidates: Vec<serde_json::Value>,
     keywords: &[String],
@@ -1809,16 +1933,17 @@ fn normalize_selected_candidates(
                 .as_f64()
                 .map(|score| score as f32)
                 .unwrap_or_else(|| candidate_score(&candidate, keywords, index));
+            let thumbnail = safe_news_url(candidate["thumbnail"].as_str().unwrap_or_default());
             json!({
-                "title": candidate["title"].as_str().unwrap_or("Untitled candidate"),
-                "summary": candidate["summary"].as_str().unwrap_or_default(),
-                "url": candidate["url"].as_str().unwrap_or_default(),
-                "source": candidate["source"].as_str().unwrap_or("live search"),
-                "publishedAt": candidate["publishedAt"].as_str().unwrap_or_default(),
+                "title": candidate["title"].as_str().unwrap_or("Untitled candidate").chars().take(220).collect::<String>(),
+                "summary": candidate["summary"].as_str().unwrap_or_default().chars().take(520).collect::<String>(),
+                "url": safe_news_url(candidate["url"].as_str().unwrap_or_default()),
+                "source": candidate["source"].as_str().unwrap_or("live search").chars().take(160).collect::<String>(),
+                "publishedAt": candidate["publishedAt"].as_str().unwrap_or_default().chars().take(80).collect::<String>(),
                 "score": (score * 100.0).round() / 100.0,
-                "origin": candidate["origin"].as_str().unwrap_or("live-search"),
-                "type": candidate["type"].as_str().unwrap_or("news"),
-                "thumbnail": candidate["thumbnail"].as_str().unwrap_or_else(|| thumbnail_for_source(&candidate))
+                "origin": candidate["origin"].as_str().unwrap_or("live-search").chars().take(80).collect::<String>(),
+                "type": candidate["type"].as_str().unwrap_or("news").chars().take(80).collect::<String>(),
+                "thumbnail": if thumbnail.is_empty() { thumbnail_for_source(&candidate) } else { thumbnail }
             })
         })
         .collect::<Vec<_>>();
@@ -2371,6 +2496,13 @@ async fn news_search_handler(
     State(state): State<AppState>,
     Json(request): Json<NewsSearchRequest>,
 ) -> impl IntoResponse {
+    if !local_api_allowed(&state, "search", 20) {
+        return (
+            StatusCode::TOO_MANY_REQUESTS,
+            Json(json!({ "ok": false, "error": "Too many search requests; retry in a minute." })),
+        )
+            .into_response();
+    }
     let query = api_query_text(&request);
     if query.is_empty() {
         return (
@@ -2465,13 +2597,17 @@ async fn news_search_handler(
 }
 
 fn normalize_api_keywords(request: &FocusedIssueRequest) -> Vec<String> {
-    let mut raw = request
-        .keywords
-        .as_deref()
-        .unwrap_or_default()
-        .split([',', ';'])
-        .map(str::to_string)
-        .collect::<Vec<_>>();
+    let mut raw = match request.keywords.as_ref() {
+        Some(serde_json::Value::String(value)) => value
+            .split([',', ';'])
+            .map(str::to_string)
+            .collect::<Vec<_>>(),
+        Some(serde_json::Value::Array(values)) => values
+            .iter()
+            .filter_map(|value| value.as_str().map(str::to_string))
+            .collect(),
+        _ => Vec::new(),
+    };
     if let Some(items) = &request.keyword {
         raw.extend(items.iter().cloned());
     }
@@ -2485,7 +2621,10 @@ fn normalize_api_keywords(request: &FocusedIssueRequest) -> Vec<String> {
         {
             continue;
         }
-        keywords.push(trimmed.to_string());
+        keywords.push(trimmed.chars().take(160).collect());
+        if keywords.len() == 6 {
+            break;
+        }
     }
     keywords.truncate(6);
     keywords
@@ -2545,7 +2684,7 @@ async fn post_handler(
     AxumPath(slug): AxumPath<String>,
 ) -> impl IntoResponse {
     let Some(post) = state.posts.iter().find(|post| post.slug == slug) else {
-        return (StatusCode::NOT_FOUND, "post not found").into_response();
+        return (StatusCode::NOT_FOUND, Html(NOT_FOUND_HTML)).into_response();
     };
 
     match render_post_page(post, &state.posts) {
@@ -2570,4 +2709,53 @@ pub async fn serve(
         })
         .await?;
     Ok(())
+}
+
+#[cfg(test)]
+mod news_api_tests {
+    use super::*;
+
+    #[test]
+    fn local_preview_accepts_browser_keyword_arrays_and_bounds_sources() {
+        let request: FocusedIssueRequest =
+            serde_json::from_value(json!({"keywords": ["open RAN", "x".repeat(1000)]})).unwrap();
+        let keywords = normalize_api_keywords(&request);
+        assert_eq!(keywords[0], "open RAN");
+        assert_eq!(keywords[1].len(), 160);
+        let search: NewsSearchRequest = serde_json::from_value(
+            json!({"sources": ["arxiv", "arxiv"], "query": "x".repeat(1000)}),
+        )
+        .unwrap();
+        assert_eq!(selected_news_sources(&search), vec!["arxiv"]);
+        assert_eq!(api_query_text(&search).len(), 160);
+        let sources = normalize_selected_candidates(
+            vec![
+                json!({"url":"javascript:alert(1)", "thumbnail":"data:text/html,unsafe", "title":"x".repeat(500)}),
+            ],
+            &keywords,
+            1,
+        );
+        assert_eq!(sources[0]["url"], "");
+        assert_eq!(sources[0]["title"].as_str().unwrap().len(), 220);
+        assert!(
+            sources[0]["thumbnail"]
+                .as_str()
+                .unwrap()
+                .starts_with("/assets/news/")
+        );
+    }
+
+    #[test]
+    fn local_preview_caps_aggregate_draft_calls() {
+        let state = AppState {
+            posts: Arc::new(vec![]),
+            archive_json: Arc::new("[]".into()),
+            api_windows: Arc::new(Mutex::new(HashMap::new())),
+        };
+        for _ in 0..6 {
+            assert!(local_api_allowed(&state, "draft", 6));
+        }
+        assert!(!local_api_allowed(&state, "draft", 6));
+        assert!(local_api_allowed(&state, "search", 20));
+    }
 }

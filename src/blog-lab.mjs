@@ -1,4 +1,5 @@
 import { createNewsDeskState, newsDeskReducer, runNewsDeskEffect } from './blog-lab-machine.mjs';
+import { safeUrl } from './safe-url.mjs';
 
 function setStatus(node, message, kind = '') {
   if (!node) return;
@@ -24,12 +25,14 @@ function fallbackThumbnail(source = {}) {
 }
 
 function sourceKey(source = {}) {
-  return String(source.source || source.type || source.url || 'source')
-    .toLowerCase()
-    .replace(/https?:\/\//, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 24) || 'source';
+  return (
+    String(source.source || source.type || source.url || 'source')
+      .toLowerCase()
+      .replace(/https?:\/\//, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 24) || 'source'
+  );
 }
 
 function displaySourceName(value = '') {
@@ -59,9 +62,10 @@ function appendInlineMarkdown(container, text = '') {
       container.append(code);
     } else {
       const linkMatch = token.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-      const anchor = document.createElement('a');
+      const href = safeUrl(linkMatch?.[2]);
+      const anchor = document.createElement(href ? 'a' : 'span');
       anchor.textContent = linkMatch?.[1] || token;
-      anchor.href = linkMatch?.[2] || '#';
+      if (href) anchor.href = href;
       anchor.rel = 'noopener noreferrer';
       container.append(anchor);
     }
@@ -71,7 +75,10 @@ function appendInlineMarkdown(container, text = '') {
 }
 
 function appendMarkdownBlocks(container, markdown = '') {
-  const lines = String(markdown || '').split(/\n+/).map((line) => line.trim()).filter(Boolean);
+  const lines = String(markdown || '')
+    .split(/\n+/)
+    .map((line) => line.trim())
+    .filter(Boolean);
   for (const line of lines) {
     const heading = line.match(/^(#{2,3})\s+(.+)/);
     const list = line.match(/^[-*]\s+(.+)/);
@@ -103,15 +110,11 @@ function renderFocusedIssue(output, data) {
   summary.textContent = data.issue?.summary || '';
   const metrics = document.createElement('div');
   metrics.className = 'generated-news-metrics';
-  const modelLabel = data.provider
-    ? String(data.provider).replace(/^models\//, '')
-    : data.usedGemma
-      ? 'AI-assisted'
-      : 'local fallback';
+  const modelLabel = data.provider ? String(data.provider).replace(/^models\//, '') : data.usedGemma ? 'AI-assisted' : 'local fallback';
   const metricRows = [
     ['sources', String((data.sources || []).length)],
     ['model', modelLabel],
-    ['mode', 'review']
+    ['mode', 'review'],
   ];
   for (const [label, value] of metricRows) {
     const chip = document.createElement('span');
@@ -124,7 +127,12 @@ function renderFocusedIssue(output, data) {
   }
   const tape = document.createElement('div');
   tape.className = 'generated-news-tape';
-  tape.textContent = (data.sources || []).slice(0, 5).map((source) => displaySourceName(source.source || source.title)).filter(Boolean).join('  ·  ') || 'source context';
+  tape.textContent =
+    (data.sources || [])
+      .slice(0, 5)
+      .map((source) => displaySourceName(source.source || source.title))
+      .filter(Boolean)
+      .join('  ·  ') || 'source context';
   const warning = document.createElement('p');
   warning.className = 'generated-news-warning';
   warning.textContent = data.warning || '';
@@ -143,12 +151,13 @@ function renderFocusedIssue(output, data) {
   const sourceGrid = document.createElement('div');
   sourceGrid.className = 'generated-news-source-grid';
   for (const source of (data.sources || []).slice(0, 8)) {
-    const link = document.createElement(source.url ? 'a' : 'span');
+    const href = safeUrl(source.url);
+    const link = document.createElement(href ? 'a' : 'span');
     link.className = 'generated-news-source';
-    if (source.url) link.href = source.url;
+    if (href) link.href = href;
     const thumb = document.createElement('img');
     thumb.className = 'generated-news-thumbnail';
-    thumb.src = source.thumbnail || fallbackThumbnail(source);
+    thumb.src = safeUrl(source.thumbnail, fallbackThumbnail(source));
     thumb.alt = '';
     thumb.loading = 'lazy';
     const sourceBody = document.createElement('span');
@@ -170,21 +179,26 @@ function renderFocusedIssue(output, data) {
     title: data.issue?.title || 'generated-news-draft',
     summary: data.issue?.summary || '',
     markdown: data.issue?.markdown || '',
-    sources: data.sources || []
+    sources: data.sources || [],
   };
 }
 
-async function postJson(path, body) {
-  const response = await fetch(path, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(body)
-  });
-  const payload = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    throw new Error(payload.error || `Request failed: ${response.status}`);
+async function postJson(path, body, signal) {
+  const timeout = AbortSignal.timeout(60_000);
+  try {
+    const response = await fetch(path, {
+      method: 'POST',
+      signal: signal ? AbortSignal.any([signal, timeout]) : timeout,
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const payload = await response.json();
+    if (!response.ok || payload?.ok === false) throw new Error(payload?.error || `Request failed: ${response.status}`);
+    return payload;
+  } catch (error) {
+    if (timeout.aborted) throw new Error('Request timed out. Please try again.', { cause: error });
+    throw error;
   }
-  return payload;
 }
 
 function renderSearchResults(container, candidates) {
@@ -194,7 +208,9 @@ function renderSearchResults(container, candidates) {
     container.textContent = 'No candidates found. Try a broader query.';
     return;
   }
-  const sources = [...new Set(candidates.map((candidate) => displaySourceName(candidate.source || candidate.type || 'source')).filter(Boolean))].slice(0, 8);
+  const sources = [
+    ...new Set(candidates.map((candidate) => displaySourceName(candidate.source || candidate.type || 'source')).filter(Boolean)),
+  ].slice(0, 8);
   const board = document.createElement('div');
   board.className = 'news-source-radar';
   const boardTitle = document.createElement('strong');
@@ -229,7 +245,7 @@ function renderSearchResults(container, candidates) {
     checkbox.dataset.candidateIndex = String(index);
     const thumb = document.createElement('img');
     thumb.className = 'news-candidate-thumbnail';
-    thumb.src = candidate.thumbnail || fallbackThumbnail(candidate);
+    thumb.src = safeUrl(candidate.thumbnail, fallbackThumbnail(candidate));
     thumb.alt = '';
     thumb.loading = 'lazy';
     const body = document.createElement('span');
@@ -252,21 +268,27 @@ function renderSearchResults(container, candidates) {
 }
 
 function slugify(value = 'generated-news-draft') {
-  return String(value).toLowerCase().replace(/[^a-z0-9가-힣]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80) || 'generated-news-draft';
+  return (
+    String(value)
+      .toLowerCase()
+      .replace(/[^a-z0-9가-힣]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 80) || 'generated-news-draft'
+  );
 }
 
 function draftMarkdown(draft) {
-  const sourceLines = (draft.sources || []).map((source, index) => `${index + 1}. [${source.title || 'Untitled source'}](${source.url || '#'}) — ${source.summary || source.source || ''}`).join('\n');
+  const sourceLines = (draft.sources || [])
+    .map(
+      (source, index) =>
+        `${index + 1}. [${source.title || 'Untitled source'}](${source.url || '#'}) — ${source.summary || source.source || ''}`,
+    )
+    .join('\n');
   return `# ${draft.title}\n\n${draft.summary}\n\n${draft.markdown}\n\n## Sources\n${sourceLines}\n`;
 }
 
 function escapeHtml(value = '') {
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+  return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
 function inlineMarkdownHtml(text = '') {
@@ -293,15 +315,19 @@ function markdownBlocksHtml(markdown = '') {
 
 function buildPrintIssueHtml(draft) {
   const sources = (draft.sources || []).slice(0, 10);
-  const sourceCards = sources.map((source, index) => `
-    <a class="news-digest-card generated-news-print-source" href="${escapeHtml(source.url || '#')}">
+  const sourceCards = sources
+    .map(
+      (source, index) => `
+    <a class="news-digest-card generated-news-print-source" href="${escapeHtml(safeUrl(source.url, '#'))}">
       <span class="news-digest-card-index">${String(index + 1).padStart(2, '0')}</span>
       <span class="news-digest-card-copy">
         <strong>${escapeHtml(source.title || 'Untitled source')}</strong>
         <em>${escapeHtml(displayMeta([source.source, source.publishedAt]))}</em>
         <span>${escapeHtml(source.summary || source.url || '')}</span>
       </span>
-    </a>`).join('\n');
+    </a>`,
+    )
+    .join('\n');
   const generatedAt = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', dateStyle: 'medium', timeStyle: 'short' });
   return `<!doctype html>
 <html lang="ko">
@@ -365,17 +391,28 @@ function buildPrintIssueHtml(draft) {
 }
 
 function openPrintIssue(draft) {
-  const html = buildPrintIssueHtml(draft);
-  const printWindow = window.open('', '_blank', 'noopener,noreferrer');
-  if (!printWindow) {
-    downloadBlob(new Blob([html], { type: 'text/html;charset=utf-8' }), `${slugify(draft.title)}-print.html`);
-    return;
-  }
-  printWindow.document.open();
-  printWindow.document.write(html);
-  printWindow.document.close();
-  printWindow.focus?.();
-  printWindow.print?.();
+  document.querySelector('[data-news-print-frame]')?.remove();
+  const frame = document.createElement('iframe');
+  frame.dataset.newsPrintFrame = '';
+  frame.title = 'Print focused brief';
+  frame.setAttribute('aria-hidden', 'true');
+  frame.setAttribute('sandbox', 'allow-same-origin allow-modals');
+  frame.style.cssText = 'position:fixed;right:0;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;border:0';
+  frame.addEventListener(
+    'load',
+    async () => {
+      const printWindow = frame.contentWindow;
+      if (!printWindow) return;
+      await printWindow.document.fonts?.ready;
+      if (!frame.isConnected) return;
+      printWindow.addEventListener('afterprint', () => frame.remove(), { once: true });
+      printWindow.focus();
+      printWindow.print();
+    },
+    { once: true },
+  );
+  frame.srcdoc = buildPrintIssueHtml(draft);
+  document.body.append(frame);
 }
 
 function downloadBlob(blob, filename) {
@@ -402,6 +439,7 @@ function setupFocusedIssueLab() {
   if (dateInput && !dateInput.value) dateInput.value = new Date().toISOString().slice(0, 10);
 
   let currentDraft = null;
+  let pendingRequest = null;
   let state = createNewsDeskState({ date: dateInput?.value });
 
   const setDownloadEnabled = (enabled) => {
@@ -412,13 +450,12 @@ function setupFocusedIssueLab() {
     if (draftButton) draftButton.disabled = !enabled;
   };
 
-  const selectedSources = () => [...lab.querySelectorAll('input[name="sources"]:checked')]
-    .map((input) => input.value)
-    .filter(Boolean);
+  const selectedSources = () => [...lab.querySelectorAll('input[name="sources"]:checked')].map((input) => input.value).filter(Boolean);
 
-  const selectedIndexes = () => [...lab.querySelectorAll('[data-candidate-index]:checked')]
-    .map((checkbox) => Number(checkbox.dataset.candidateIndex))
-    .filter((index) => Number.isInteger(index));
+  const selectedIndexes = () =>
+    [...lab.querySelectorAll('[data-candidate-index]:checked')]
+      .map((checkbox) => Number(checkbox.dataset.candidateIndex))
+      .filter((index) => Number.isInteger(index));
 
   const setCandidateSelection = (checked) => {
     for (const checkbox of lab.querySelectorAll('[data-candidate-index]')) {
@@ -450,8 +487,15 @@ function setupFocusedIssueLab() {
       renderSearchResults(results, effect.candidates);
     } else if (effect.type === 'render-draft') {
       currentDraft = renderFocusedIssue(output, effect.data);
+    } else if (effect.type === 'cancel-request') {
+      pendingRequest?.abort();
+      pendingRequest = null;
     } else if (effect.type === 'post-json') {
-      const event = await runNewsDeskEffect(effect, { postJson });
+      pendingRequest?.abort();
+      const controller = new AbortController();
+      pendingRequest = controller;
+      const event = await runNewsDeskEffect(effect, { postJson: (path, body) => postJson(path, body, controller.signal) });
+      if (pendingRequest === controller) pendingRequest = null;
       if (event) await dispatch(event);
     }
   };
@@ -491,13 +535,12 @@ function setupFocusedIssueLab() {
       query: formData.get('query'),
       queryMode: formData.get('queryMode'),
       date: formData.get('date'),
-      sources: selectedSources()
+      sources: selectedSources(),
     });
   });
 
   draftButton?.addEventListener('click', () => {
-    dispatch({ type: 'candidate.selection.changed', selectedIndexes: selectedIndexes() })
-      .then(() => dispatch({ type: 'draft.requested' }));
+    dispatch({ type: 'candidate.selection.changed', selectedIndexes: selectedIndexes() }).then(() => dispatch({ type: 'draft.requested' }));
   });
 
   for (const button of downloadButtons) {

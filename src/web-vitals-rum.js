@@ -12,7 +12,7 @@
     const navigation = performance.getEntriesByType('navigation')[0];
     const body = JSON.stringify({
       name: metric.name,
-      value: Math.round(metric.value),
+      value: metric.name === 'CLS' ? metric.value : Math.round(metric.value),
       rating: metric.rating,
       id: metric.id,
       delta: metric.delta,

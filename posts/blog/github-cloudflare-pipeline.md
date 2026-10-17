@@ -31,4 +31,4 @@ Related:
 
 - [[second-brain|Second Brain Architecture]]
 - [[seo-performance-guide|SEO and Performance Guide]]
-- [[home#Mud's Blog|Home intro]]
+- [[home#Hi|Home intro]]

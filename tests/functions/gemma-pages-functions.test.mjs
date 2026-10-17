@@ -12,7 +12,7 @@ const archive = [
     folder: 'news',
     url: '/posts/2026-04-14-ai-news-digest/',
     date: '2026-04-14',
-    primary_tag: 'news'
+    primary_tag: 'news',
   },
   {
     title: 'Rust Rendering Notes',
@@ -20,8 +20,8 @@ const archive = [
     folder: 'blog',
     url: '/posts/rust-rendering-notes/',
     date: '2026-02-11',
-    primary_tag: 'rust'
-  }
+    primary_tag: 'rust',
+  },
 ];
 
 const newsFeed = {
@@ -33,7 +33,7 @@ const newsFeed = {
       source: 'example.test',
       summary: 'A vendor connected O-RAN telemetry ranking with Gemma-based planning.',
       categories: ['open-ran', 'gemma'],
-      publishedAt: '2026-04-14T08:00:00Z'
+      publishedAt: '2026-04-14T08:00:00Z',
     },
     {
       title: 'General model serving update',
@@ -41,7 +41,7 @@ const newsFeed = {
       source: 'example.test',
       summary: 'Serving improvements for AI systems.',
       categories: ['inference'],
-      publishedAt: '2026-04-14T09:00:00Z'
+      publishedAt: '2026-04-14T09:00:00Z',
     },
     {
       title: 'Gemma paper implementation notes',
@@ -49,7 +49,7 @@ const newsFeed = {
       source: 'huggingface.co',
       summary: 'A paper card from the existing digest snapshot sources.',
       categories: ['papers', 'gemma'],
-      publishedAt: '2026-04-14T10:00:00Z'
+      publishedAt: '2026-04-14T10:00:00Z',
     },
     {
       title: 'GeekNews open RAN agent thread',
@@ -57,9 +57,9 @@ const newsFeed = {
       source: 'geeknews',
       summary: 'Community discussion about open RAN agents.',
       categories: ['social', 'openran'],
-      publishedAt: '2026-04-14T11:00:00Z'
-    }
-  ]
+      publishedAt: '2026-04-14T11:00:00Z',
+    },
+  ],
 };
 
 const originalFetch = globalThis.fetch;
@@ -68,11 +68,12 @@ afterEach(() => {
   globalThis.fetch = originalFetch;
 });
 
+let requestId = 0;
 function jsonRequest(body) {
   return new Request('https://blog.example.test/api/focused-issue', {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(body)
+    headers: { 'content-type': 'application/json', 'cf-connecting-ip': `test-${++requestId}` },
+    body: JSON.stringify(body),
   });
 }
 
@@ -89,19 +90,18 @@ function mockEnv() {
           return Response.json(newsFeed);
         }
         return new Response('not found', { status: 404 });
-      }
-    }
+      },
+    },
   };
 }
 
 test('Gemma calls default to a Gemma 4 model unless overridden', () => {
   assert.equal(modelNameFromEnv({}), 'models/gemma-4-31b-it');
   assert.equal(modelNameFromEnv({ GOOGLE_AI_MODEL: 'gemma-4-26b-a4b-it' }), 'models/gemma-4-26b-a4b-it');
-  assert.deepEqual(modelNamesFromEnv({ GOOGLE_AI_MODEL: 'models/gemma-4-31b-it', GOOGLE_AI_FALLBACK_MODELS: 'gemini-2.5-flash,models/gemma-3-27b-it' }), [
-    'models/gemma-4-31b-it',
-    'models/gemini-2.5-flash',
-    'models/gemma-3-27b-it'
-  ]);
+  assert.deepEqual(
+    modelNamesFromEnv({ GOOGLE_AI_MODEL: 'models/gemma-4-31b-it', GOOGLE_AI_FALLBACK_MODELS: 'gemini-2.5-flash,models/gemma-3-27b-it' }),
+    ['models/gemma-4-31b-it', 'models/gemini-2.5-flash', 'models/gemma-3-27b-it'],
+  );
 });
 
 test('Gemma API helper falls back to another Google model when the primary model is unavailable', async () => {
@@ -111,7 +111,9 @@ test('Gemma API helper falls back to another Google model when the primary model
     if (String(url).includes('/models/gemma-4-31b-it:generateContent')) {
       return new Response(JSON.stringify({ error: { message: 'temporarily unavailable' } }), { status: 503 });
     }
-    return Response.json({ candidates: [{ content: { parts: [{ text: '{"title":"Fallback model draft","markdown":"## Fallback model draft"}' }] } }] });
+    return Response.json({
+      candidates: [{ content: { parts: [{ text: '{"title":"Fallback model draft","markdown":"## Fallback model draft"}' }] } }],
+    });
   };
 
   const result = await callGemma({ ...mockEnv(), GOOGLE_AI_FALLBACK_MODELS: 'models/gemini-2.5-flash' }, { task: 'return json' });
@@ -140,19 +142,19 @@ test('focused issue function ranks keyword news, calls Gemma server-side, and ne
                   title: 'Open RAN + Gemma Brief — 2026-04-14',
                   summary: 'Open RAN and Gemma planning are converging.',
                   markdown: '## Open RAN + Gemma\nRanked sources show **O-RAN telemetry** feeding Gemma planning.',
-                  bullets: ['O-RAN telemetry is the strongest match.', 'Gemma should receive ranked source context.']
-                })
-              }
-            ]
-          }
-        }
-      ]
+                  bullets: ['O-RAN telemetry is the strongest match.', 'Gemma should receive ranked source context.'],
+                }),
+              },
+            ],
+          },
+        },
+      ],
     });
   };
 
   const response = await focusedIssuePost({
     request: jsonRequest({ date: '2026-04-14', keywords: 'open RAN, Gemma', limit: 4 }),
-    env: mockEnv()
+    env: mockEnv(),
   });
 
   assert.equal(response.status, 200);
@@ -178,36 +180,105 @@ test('news search function searches live-style sources before Gemma drafting use
   globalThis.fetch = async (url, init) => {
     requests.push(String(url));
     if (String(url).includes('news.google.com/rss/search')) {
-      return new Response(`<?xml version="1.0"?><rss><channel>
+      return new Response(
+        `<?xml version="1.0"?><rss><channel>
         <item><title>Gemma agents reshape open RAN operations</title><link>https://news.example/oran-gemma</link><source>Example News</source><pubDate>Tue, 14 Apr 2026 08:00:00 GMT</pubDate><description>&lt;a href=&quot;https://news.example/oran-gemma&quot;&gt;Operators are testing Gemma agents&lt;/a&gt;&amp;nbsp;for O-RAN issue planning.</description></item>
-      </channel></rss>`, { headers: { 'content-type': 'application/rss+xml' } });
+      </channel></rss>`,
+        { headers: { 'content-type': 'application/rss+xml' } },
+      );
     }
     if (String(url).includes('api.github.com/search/repositories')) {
-      return Response.json({ items: [{ full_name: 'ran-lab/gemma-oran', html_url: 'https://github.com/ran-lab/gemma-oran', description: 'Gemma planning for open RAN labs', stargazers_count: 420, updated_at: '2026-04-14T09:00:00Z' }] });
+      return Response.json({
+        items: [
+          {
+            full_name: 'ran-lab/gemma-oran',
+            html_url: 'https://github.com/ran-lab/gemma-oran',
+            description: 'Gemma planning for open RAN labs',
+            stargazers_count: 420,
+            updated_at: '2026-04-14T09:00:00Z',
+          },
+        ],
+      });
     }
     if (String(url).includes('export.arxiv.org/api/query')) {
-      return new Response(`<feed><entry><title>Gemma assisted RAN planning</title><id>https://arxiv.org/abs/2604.00001</id><summary>Open RAN planning with small language models.</summary><updated>2026-04-14T10:00:00Z</updated></entry></feed>`, { headers: { 'content-type': 'application/atom+xml' } });
+      return new Response(
+        `<feed><entry><title>Gemma assisted RAN planning</title><id>https://arxiv.org/abs/2604.00001</id><summary>Open RAN planning with small language models.</summary><updated>2026-04-14T10:00:00Z</updated></entry></feed>`,
+        { headers: { 'content-type': 'application/atom+xml' } },
+      );
     }
     if (String(url).includes('api.gdeltproject.org/api/v2/doc/doc')) {
-      return Response.json({ articles: [{ title: 'Gemma RAN operators brief', url: 'https://news.example/gdelt-ran', sourceCommonName: 'Example Wire', seendate: '20260414T090000Z' }] });
+      return Response.json({
+        articles: [
+          {
+            title: 'Gemma RAN operators brief',
+            url: 'https://news.example/gdelt-ran',
+            sourceCommonName: 'Example Wire',
+            seendate: '20260414T090000Z',
+          },
+        ],
+      });
     }
     if (String(url).includes('hn.algolia.com/api/v1/search')) {
-      return Response.json({ hits: [{ title: 'HN discusses Gemma RAN agents', url: 'https://news.ycombinator.com/item?id=1', objectID: '1', created_at: '2026-04-14T12:00:00Z', points: 50, num_comments: 12, author: 'hn-user' }] });
+      return Response.json({
+        hits: [
+          {
+            title: 'HN discusses Gemma RAN agents',
+            url: 'https://news.ycombinator.com/item?id=1',
+            objectID: '1',
+            created_at: '2026-04-14T12:00:00Z',
+            points: 50,
+            num_comments: 12,
+            author: 'hn-user',
+          },
+        ],
+      });
     }
     if (String(url).includes('huggingface.co/papers')) {
-      return new Response('<html><body><a href="/papers/2604.00002">Gemma paper implementation notes</a></body></html>', { headers: { 'content-type': 'text/html' } });
+      return new Response('<html><body><a href="/papers/2604.00002">Gemma paper implementation notes</a></body></html>', {
+        headers: { 'content-type': 'text/html' },
+      });
     }
     if (String(url).includes('api.openalex.org/works')) {
-      return Response.json({ results: [{ display_name: 'OpenAlex Gemma RAN automation paper', id: 'https://openalex.org/W1', publication_date: '2026-04-14', abstract_inverted_index: { Gemma: [0], planning: [1], RAN: [2] } }] });
+      return Response.json({
+        results: [
+          {
+            display_name: 'OpenAlex Gemma RAN automation paper',
+            id: 'https://openalex.org/W1',
+            publication_date: '2026-04-14',
+            abstract_inverted_index: { Gemma: [0], planning: [1], RAN: [2] },
+          },
+        ],
+      });
     }
     if (String(url).includes('api.crossref.org/works')) {
-      return Response.json({ message: { items: [{ title: ['Crossref Gemma RAN paper'], URL: 'https://doi.org/10.0000/gemma-ran', issued: { 'date-parts': [[2026, 4, 14]] }, publisher: 'Example Press' }] } });
+      return Response.json({
+        message: {
+          items: [
+            {
+              title: ['Crossref Gemma RAN paper'],
+              URL: 'https://doi.org/10.0000/gemma-ran',
+              issued: { 'date-parts': [[2026, 4, 14]] },
+              publisher: 'Example Press',
+            },
+          ],
+        },
+      });
     }
     if (String(url).includes('api.semanticscholar.org/graph/v1/paper/search')) {
-      return Response.json({ data: [{ title: 'Semantic Scholar Gemma RAN automation', url: 'https://semanticscholar.org/paper/1', abstract: 'Gemma planning for Open RAN.', publicationDate: '2026-04-14' }] });
+      return Response.json({
+        data: [
+          {
+            title: 'Semantic Scholar Gemma RAN automation',
+            url: 'https://semanticscholar.org/paper/1',
+            abstract: 'Gemma planning for Open RAN.',
+            publicationDate: '2026-04-14',
+          },
+        ],
+      });
     }
     if (String(url).includes('scholar.google.com/scholar')) {
-      return new Response(`<html><body>
+      return new Response(
+        `<html><body>
         <div class="gs_r gs_or gs_scl">
           <div class="gs_ri">
             <h3 class="gs_rt"><a href="https://scholar.example/gemma-ran">Gemma planning for Open RAN automation</a></h3>
@@ -215,7 +286,9 @@ test('news search function searches live-style sources before Gemma drafting use
             <div class="gs_rs">Paper result from Google Scholar about Gemma planning in O-RAN operations.</div>
           </div>
         </div>
-      </body></html>`, { headers: { 'content-type': 'text/html' } });
+      </body></html>`,
+        { headers: { 'content-type': 'text/html' } },
+      );
     }
     assert.match(String(url), /generativelanguage\.googleapis\.com/);
     const gemmaPayload = JSON.parse(init.body);
@@ -223,7 +296,22 @@ test('news search function searches live-style sources before Gemma drafting use
     assert.ok(prompt.includes('searched_news_candidates'));
     assert.ok(prompt.includes('Gemma agents reshape open RAN operations'));
     return Response.json({
-      candidates: [{ content: { parts: [{ text: JSON.stringify({ title: 'Search-backed Gemma RAN Brief', summary: 'Drafted from selected search results.', markdown: '## Search-backed Gemma RAN Brief', bullets: [] }) }] } }]
+      candidates: [
+        {
+          content: {
+            parts: [
+              {
+                text: JSON.stringify({
+                  title: 'Search-backed Gemma RAN Brief',
+                  summary: 'Drafted from selected search results.',
+                  markdown: '## Search-backed Gemma RAN Brief',
+                  bullets: [],
+                }),
+              },
+            ],
+          },
+        },
+      ],
     });
   };
 
@@ -231,9 +319,27 @@ test('news search function searches live-style sources before Gemma drafting use
     request: new Request('https://blog.example.test/api/news-search', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ query: 'Gemma open RAN', limit: 9, sources: ['gdelt', 'google-news-rss', 'arxiv', 'huggingface-papers', 'openalex', 'crossref', 'semantic-scholar', 'google-scholar', 'hacker-news', 'x', 'linkedin', 'geeknews', 'endigest'] })
+      body: JSON.stringify({
+        query: 'Gemma open RAN',
+        limit: 9,
+        sources: [
+          'gdelt',
+          'google-news-rss',
+          'arxiv',
+          'huggingface-papers',
+          'openalex',
+          'crossref',
+          'semantic-scholar',
+          'google-scholar',
+          'hacker-news',
+          'x',
+          'linkedin',
+          'geeknews',
+          'endigest',
+        ],
+      }),
     }),
-    env: mockEnv()
+    env: mockEnv(),
   });
 
   assert.equal(searchResponse.status, 200);
@@ -262,13 +368,17 @@ test('news search function searches live-style sources before Gemma drafting use
   assert.ok(requests.some((url) => url.includes('scholar.google.com/scholar')));
   assert.equal(searchBody.candidates[0].origin, 'live-search');
   assert.ok(!searchBody.candidates.some((candidate) => /<\/?a\b|&nbsp;/.test(candidate.summary)));
-  assert.ok(searchBody.candidates.some((candidate) => candidate.source === 'HF Papers' || candidate.source === 'huggingface.co' || candidate.source === 'geeknews'));
+  assert.ok(
+    searchBody.candidates.some(
+      (candidate) => candidate.source === 'HF Papers' || candidate.source === 'huggingface.co' || candidate.source === 'geeknews',
+    ),
+  );
   assert.ok(searchBody.candidates.some((candidate) => candidate.source === 'Google Scholar' && candidate.type === 'paper'));
   assert.ok(searchBody.candidates.every((candidate) => candidate.thumbnail?.startsWith('/assets/news/thumb-')));
 
   const draftResponse = await focusedIssuePost({
     request: jsonRequest({ date: '2026-04-14', keywords: 'Gemma open RAN', candidates: searchBody.candidates.slice(0, 3), limit: 3 }),
-    env: mockEnv()
+    env: mockEnv(),
   });
   const draftBody = await draftResponse.json();
   assert.equal(draftBody.ok, true);
@@ -287,17 +397,37 @@ test('news search expands natural-language queries with Gemma but preserves exac
       assert.equal(plannerPayload.task, 'Expand an editorial news search query into precise source-search keywords.');
       assert.equal(plannerPayload.originalQuery, 'model-intrinsic feature');
       return Response.json({
-        candidates: [{ content: { parts: [{ text: JSON.stringify({
-          keywords: ['model-intrinsic feature', 'mechanistic interpretability', 'feature geometry', 'SAE features', 'representation analysis'],
-          searchQuery: 'model-intrinsic feature OR mechanistic interpretability OR feature geometry OR SAE features OR representation analysis'
-        }) }] } }]
+        candidates: [
+          {
+            content: {
+              parts: [
+                {
+                  text: JSON.stringify({
+                    keywords: [
+                      'model-intrinsic feature',
+                      'mechanistic interpretability',
+                      'feature geometry',
+                      'SAE features',
+                      'representation analysis',
+                    ],
+                    searchQuery:
+                      'model-intrinsic feature OR mechanistic interpretability OR feature geometry OR SAE features OR representation analysis',
+                  }),
+                },
+              ],
+            },
+          },
+        ],
       });
     }
     if (String(url).includes('news.google.com/rss/search')) {
       assert.ok(String(url).includes('mechanistic%20interpretability') || String(url).includes('mechanistic+interpretability'));
-      return new Response(`<?xml version="1.0"?><rss><channel>
+      return new Response(
+        `<?xml version="1.0"?><rss><channel>
         <item><title>Mechanistic interpretability feature geometry update</title><link>https://news.example/features</link><source>Example News</source><pubDate>Tue, 09 Jun 2026 08:00:00 GMT</pubDate><description>Researchers discuss model-intrinsic feature geometry.</description></item>
-      </channel></rss>`, { headers: { 'content-type': 'application/rss+xml' } });
+      </channel></rss>`,
+        { headers: { 'content-type': 'application/rss+xml' } },
+      );
     }
     throw new Error(`Unexpected request ${url}`);
   };
@@ -306,9 +436,9 @@ test('news search expands natural-language queries with Gemma but preserves exac
     request: new Request('https://blog.example.test/api/news-search', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ query: 'model-intrinsic feature', queryMode: 'gemma-expand', limit: 3, sources: ['google-news-rss'] })
+      body: JSON.stringify({ query: 'model-intrinsic feature', queryMode: 'gemma-expand', limit: 3, sources: ['google-news-rss'] }),
     }),
-    env: mockEnv()
+    env: mockEnv(),
   });
   const expanded = await expandedResponse.json();
 
@@ -316,7 +446,12 @@ test('news search expands natural-language queries with Gemma but preserves exac
   assert.equal(expanded.query, 'model-intrinsic feature');
   assert.equal(expanded.queryMode, 'gemma-expand');
   assert.equal(expanded.queryPlan.usedGemma, true);
-  assert.deepEqual(expanded.keywords.slice(0, 4), ['model-intrinsic feature', 'mechanistic interpretability', 'feature geometry', 'SAE features']);
+  assert.deepEqual(expanded.keywords.slice(0, 4), [
+    'model-intrinsic feature',
+    'mechanistic interpretability',
+    'feature geometry',
+    'SAE features',
+  ]);
   assert.match(expanded.searchQuery, /mechanistic interpretability/);
   assert.ok(expanded.candidates.some((candidate) => /feature geometry/i.test(candidate.summary)));
 
@@ -334,9 +469,9 @@ test('news search expands natural-language queries with Gemma but preserves exac
     request: new Request('https://blog.example.test/api/news-search', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ query: 'model-intrinsic feature', queryMode: 'exact', limit: 3, sources: ['google-news-rss'] })
+      body: JSON.stringify({ query: 'model-intrinsic feature', queryMode: 'exact', limit: 3, sources: ['google-news-rss'] }),
     }),
-    env: mockEnv()
+    env: mockEnv(),
   });
   const exact = await exactResponse.json();
 
@@ -354,9 +489,12 @@ test('news search Gemma-expand falls back to unquoted exact query when Gemma key
     if (String(url).includes('news.google.com/rss/search')) {
       assert.ok(!String(url).includes('%22'), 'missing-key fallback should not quote the whole phrase');
       assert.ok(String(url).includes('about%20model-intrinsic%20feature') || String(url).includes('about+model-intrinsic+feature'));
-      return new Response(`<?xml version="1.0"?><rss><channel>
+      return new Response(
+        `<?xml version="1.0"?><rss><channel>
         <item><title>Model-intrinsic feature discussion</title><link>https://news.example/model-features</link><source>Example News</source><description>Feature geometry for model internals.</description></item>
-      </channel></rss>`, { headers: { 'content-type': 'application/rss+xml' } });
+      </channel></rss>`,
+        { headers: { 'content-type': 'application/rss+xml' } },
+      );
     }
     throw new Error(`Missing-key fallback must not call Gemma: ${url}`);
   };
@@ -365,9 +503,9 @@ test('news search Gemma-expand falls back to unquoted exact query when Gemma key
     request: new Request('https://blog.example.test/api/news-search', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ query: 'about model-intrinsic feature', queryMode: 'gemma-expand', limit: 3, sources: ['google-news-rss'] })
+      body: JSON.stringify({ query: 'about model-intrinsic feature', queryMode: 'gemma-expand', limit: 3, sources: ['google-news-rss'] }),
     }),
-    env: { ASSETS: mockEnv().ASSETS }
+    env: { ASSETS: mockEnv().ASSETS },
   });
   const body = await response.json();
 
@@ -395,24 +533,34 @@ test('news search does not use digest fallback items that only match generic que
         if (path === '/news/data/latest.json') {
           return Response.json({
             all: [
-              { title: 'generic agent harness', url: 'https://github.com/example/agent', source: 'github.com', summary: 'Features agent workflows and model switching.' },
-              { title: 'chat tool release', url: 'https://github.com/example/chat', source: 'github.com', summary: 'More features for AI model routing.' }
-            ]
+              {
+                title: 'generic agent harness',
+                url: 'https://github.com/example/agent',
+                source: 'github.com',
+                summary: 'Features agent workflows and model switching.',
+              },
+              {
+                title: 'chat tool release',
+                url: 'https://github.com/example/chat',
+                source: 'github.com',
+                summary: 'More features for AI model routing.',
+              },
+            ],
           });
         }
         if (path === '/archive.json') return Response.json([]);
         return new Response('not found', { status: 404 });
-      }
-    }
+      },
+    },
   };
 
   const response = await newsSearchPost({
     request: new Request('https://blog.example.test/api/news-search', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ query: 'about model-intrinsic feature', queryMode: 'exact', limit: 3, sources: ['github-repositories'] })
+      body: JSON.stringify({ query: 'about model-intrinsic feature', queryMode: 'exact', limit: 3, sources: ['github-repositories'] }),
     }),
-    env
+    env,
   });
   const body = await response.json();
 
@@ -425,9 +573,12 @@ test('news search caches identical exact-source responses to avoid repeated prov
   globalThis.fetch = async (url) => {
     if (String(url).includes('news.google.com/rss/search')) {
       providerFetches += 1;
-      return new Response(`<?xml version="1.0"?><rss><channel>
+      return new Response(
+        `<?xml version="1.0"?><rss><channel>
         <item><title>Cacheable model-intrinsic feature result</title><link>https://news.example/cacheable-feature</link><source>Example News</source><description>Feature geometry cache fixture.</description></item>
-      </channel></rss>`, { headers: { 'content-type': 'application/rss+xml' } });
+      </channel></rss>`,
+        { headers: { 'content-type': 'application/rss+xml' } },
+      );
     }
     throw new Error(`Unexpected request ${url}`);
   };
@@ -437,9 +588,9 @@ test('news search caches identical exact-source responses to avoid repeated prov
     request: new Request('https://blog.example.test/api/news-search', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(requestBody)
+      body: JSON.stringify(requestBody),
     }),
-    env: mockEnv()
+    env: mockEnv(),
   });
   const firstBody = await first.json();
 
@@ -447,9 +598,9 @@ test('news search caches identical exact-source responses to avoid repeated prov
     request: new Request('https://blog.example.test/api/news-search', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(requestBody)
+      body: JSON.stringify(requestBody),
     }),
-    env: mockEnv()
+    env: mockEnv(),
   });
   const secondBody = await second.json();
 
@@ -458,7 +609,10 @@ test('news search caches identical exact-source responses to avoid repeated prov
   assert.equal(providerFetches, 1);
   assert.equal(firstBody.cacheStatus, 'miss');
   assert.equal(secondBody.cacheStatus, 'hit');
-  assert.deepEqual(secondBody.candidates.map((candidate) => candidate.url), firstBody.candidates.map((candidate) => candidate.url));
+  assert.deepEqual(
+    secondBody.candidates.map((candidate) => candidate.url),
+    firstBody.candidates.map((candidate) => candidate.url),
+  );
 });
 
 test('news search puts failing providers on cooldown instead of retrying them on the next request', async () => {
@@ -476,9 +630,9 @@ test('news search puts failing providers on cooldown instead of retrying them on
     request: new Request('https://blog.example.test/api/news-search', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(requestBody)
+      body: JSON.stringify(requestBody),
     }),
-    env: mockEnv()
+    env: mockEnv(),
   });
   const firstBody = await first.json();
 
@@ -486,9 +640,9 @@ test('news search puts failing providers on cooldown instead of retrying them on
     request: new Request('https://blog.example.test/api/news-search', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(requestBody)
+      body: JSON.stringify(requestBody),
     }),
-    env: mockEnv()
+    env: mockEnv(),
   });
   const secondBody = await second.json();
 
@@ -505,12 +659,15 @@ test('news search keeps all-source fanout wide before final ranking', async () =
   globalThis.fetch = async (url) => {
     requests.push(String(url));
     if (String(url).includes('news.google.com/rss/search')) {
-      return new Response(`<?xml version="1.0"?><rss><channel>
+      return new Response(
+        `<?xml version="1.0"?><rss><channel>
         <item><title>Feature item one</title><link>https://news.example/1</link><source>Example News</source></item>
         <item><title>Feature item two</title><link>https://news.example/2</link><source>Example News</source></item>
         <item><title>Feature item three</title><link>https://news.example/3</link><source>Example News</source></item>
         <item><title>Feature item four</title><link>https://news.example/4</link><source>Example News</source></item>
-      </channel></rss>`, { headers: { 'content-type': 'application/rss+xml' } });
+      </channel></rss>`,
+        { headers: { 'content-type': 'application/rss+xml' } },
+      );
     }
     if (String(url).includes('api.github.com/search/repositories')) {
       assert.ok(String(url).includes('per_page=4'), `expected wider GitHub fanout, got ${url}`);
@@ -552,10 +709,25 @@ test('news search keeps all-source fanout wide before final ranking', async () =
         query: 'model-intrinsic feature',
         queryMode: 'exact',
         limit: 12,
-        sources: ['gdelt', 'google-news-rss', 'hacker-news', 'github-repositories', 'arxiv', 'huggingface-papers', 'openalex', 'crossref', 'semantic-scholar', 'google-scholar', 'x', 'linkedin', 'geeknews', 'endigest']
-      })
+        sources: [
+          'gdelt',
+          'google-news-rss',
+          'hacker-news',
+          'github-repositories',
+          'arxiv',
+          'huggingface-papers',
+          'openalex',
+          'crossref',
+          'semantic-scholar',
+          'google-scholar',
+          'x',
+          'linkedin',
+          'geeknews',
+          'endigest',
+        ],
+      }),
     }),
-    env: mockEnv()
+    env: mockEnv(),
   });
   const body = await response.json();
 
@@ -572,7 +744,22 @@ test('focused issue drafting treats selected search results as the authoritative
     const gemmaPayload = JSON.parse(init.body);
     promptPayload = JSON.parse(gemmaPayload.contents[0].parts[0].text);
     return Response.json({
-      candidates: [{ content: { parts: [{ text: JSON.stringify({ title: 'Selected Source Brief', summary: 'Only selected sources were used.', markdown: '## Selected Source Brief\n\nSelected source only.', bullets: [] }) }] } }]
+      candidates: [
+        {
+          content: {
+            parts: [
+              {
+                text: JSON.stringify({
+                  title: 'Selected Source Brief',
+                  summary: 'Only selected sources were used.',
+                  markdown: '## Selected Source Brief\n\nSelected source only.',
+                  bullets: [],
+                }),
+              },
+            ],
+          },
+        },
+      ],
     });
   };
 
@@ -583,20 +770,26 @@ test('focused issue drafting treats selected search results as the authoritative
       source: 'Selected Wire',
       summary: 'A selected search result about photonics compilers, not agent products.',
       origin: 'live-search',
-      score: 0
-    }
+      score: 0,
+    },
   ];
 
   const response = await focusedIssuePost({
     request: jsonRequest({ date: '2026-06-09', keywords: 'agent', candidates: selected, limit: 4 }),
-    env: mockEnv()
+    env: mockEnv(),
   });
   const body = await response.json();
 
   assert.equal(response.status, 200);
   assert.equal(body.ok, true);
-  assert.deepEqual(promptPayload.ranked_news_items.map((item) => item.url), ['https://selected.example/photonics-compiler']);
-  assert.deepEqual(body.sources.map((item) => item.url), ['https://selected.example/photonics-compiler']);
+  assert.deepEqual(
+    promptPayload.ranked_news_items.map((item) => item.url),
+    ['https://selected.example/photonics-compiler'],
+  );
+  assert.deepEqual(
+    body.sources.map((item) => item.url),
+    ['https://selected.example/photonics-compiler'],
+  );
   assert.ok(!JSON.stringify(promptPayload.ranked_news_items).includes('agent workflows'));
   assert.ok(!JSON.stringify(promptPayload.blog_archive_context).includes('agent workflows'));
 });
@@ -607,7 +800,13 @@ test('Gemma draft fallback and API response do not leak model thinking into mark
     const gemmaPayload = JSON.parse(init.body);
     assert.equal(gemmaPayload.generationConfig.responseMimeType, 'application/json');
     return Response.json({
-      candidates: [{ content: { parts: [{ text: '<think>I will ignore the selected source and write about agents.</think>\nDraft prose that is not JSON.' }] } }]
+      candidates: [
+        {
+          content: {
+            parts: [{ text: '<think>I will ignore the selected source and write about agents.</think>\nDraft prose that is not JSON.' }],
+          },
+        },
+      ],
     });
   };
 
@@ -615,10 +814,18 @@ test('Gemma draft fallback and API response do not leak model thinking into mark
     request: jsonRequest({
       date: '2026-06-09',
       keywords: 'photonics compiler',
-      candidates: [{ title: 'Photonics compiler release notes', url: 'https://selected.example/photonics-compiler', source: 'Selected Wire', summary: 'Selected source summary.', origin: 'live-search' }],
-      limit: 1
+      candidates: [
+        {
+          title: 'Photonics compiler release notes',
+          url: 'https://selected.example/photonics-compiler',
+          source: 'Selected Wire',
+          summary: 'Selected source summary.',
+          origin: 'live-search',
+        },
+      ],
+      limit: 1,
     }),
-    env: mockEnv()
+    env: mockEnv(),
   });
   const body = await response.json();
 
@@ -631,12 +838,23 @@ test('selected source drafts reject Gemma no-match output when candidate cards e
   globalThis.fetch = async (url) => {
     assert.match(String(url), /generativelanguage\.googleapis\.com/);
     return Response.json({
-      candidates: [{ content: { parts: [{ text: JSON.stringify({
-        title: "No matching news found for 'deepseek ocr'",
-        summary: 'No relevant information was found in the provided search results.',
-        markdown: "No matching news found for 'deepseek ocr'\n\nNo relevant information was found in the provided search results.",
-        bullets: []
-      }) }] } }]
+      candidates: [
+        {
+          content: {
+            parts: [
+              {
+                text: JSON.stringify({
+                  title: "No matching news found for 'deepseek ocr'",
+                  summary: 'No relevant information was found in the provided search results.',
+                  markdown:
+                    "No matching news found for 'deepseek ocr'\n\nNo relevant information was found in the provided search results.",
+                  bullets: [],
+                }),
+              },
+            ],
+          },
+        },
+      ],
     });
   };
 
@@ -646,20 +864,20 @@ test('selected source drafts reject Gemma no-match output when candidate cards e
       url: 'https://selected.example/deepseek-ocr',
       source: 'Selected Wire',
       summary: 'Selected candidate card describes DeepSeek OCR for structured document extraction.',
-      origin: 'live-search'
+      origin: 'live-search',
     },
     {
       title: 'DeepSeek OCR implementation notes',
       url: 'https://github.com/example/deepseek-ocr',
       source: 'GitHub',
       summary: 'Repository notes for running DeepSeek OCR examples.',
-      origin: 'live-search'
-    }
+      origin: 'live-search',
+    },
   ];
 
   const response = await focusedIssuePost({
     request: jsonRequest({ date: '2026-06-09', keywords: 'deepseek ocr', candidates: selected, limit: 2 }),
-    env: mockEnv()
+    env: mockEnv(),
   });
   const body = await response.json();
 
@@ -678,10 +896,16 @@ test('Gemma API helper ignores thought parts returned by the model transport', a
   globalThis.fetch = async (_url, init) => {
     requestBody = JSON.parse(init.body);
     return Response.json({
-      candidates: [{ content: { parts: [
-        { text: 'private chain of thought about agents', thought: true },
-        { text: '{"title":"Clean Draft","markdown":"## Clean Draft"}' }
-      ] } }]
+      candidates: [
+        {
+          content: {
+            parts: [
+              { text: 'private chain of thought about agents', thought: true },
+              { text: '{"title":"Clean Draft","markdown":"## Clean Draft"}' },
+            ],
+          },
+        },
+      ],
     });
   };
 

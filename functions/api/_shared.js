@@ -4,8 +4,8 @@ export function jsonResponse(payload, init = {}) {
     headers: {
       'content-type': 'application/json; charset=utf-8',
       'cache-control': 'no-store',
-      ...(init.headers || {})
-    }
+      ...(init.headers || {}),
+    },
   });
 }
 
@@ -24,7 +24,7 @@ export function modelNamesFromEnv(env = {}) {
     .map((raw) => String(raw || '').trim())
     .filter(Boolean)
     .map((raw) => (raw.startsWith('models/') ? raw : `models/${raw}`));
-  return [...new Set(names)];
+  return [...new Set(names)].slice(0, 3);
 }
 
 export function normalizeKeywords(value) {
@@ -32,18 +32,25 @@ export function normalizeKeywords(value) {
   const seen = new Set();
   const keywords = [];
   for (const raw of parts) {
-    const keyword = String(raw || '').replace(/\s+/g, ' ').trim();
+    const keyword = String(raw || '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, 160);
     if (!keyword) continue;
     const key = keyword.toLowerCase();
     if (seen.has(key)) continue;
     seen.add(key);
     keywords.push(keyword);
+    if (keywords.length === 6) break;
   }
   return keywords.slice(0, 6);
 }
 
 export function sanitizeText(value, max = 6000) {
-  return String(value || '').replace(/\s+/g, ' ').trim().slice(0, max);
+  return String(value || '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, max);
 }
 
 export function stripModelThinking(value) {
@@ -71,48 +78,50 @@ export async function callGemma(env, payload) {
   if (!apiKey) {
     return { text: '', usedGemma: false, missingKey: true };
   }
+  const prompt = JSON.stringify(payload);
+  if (new TextEncoder().encode(prompt).byteLength > 64 * 1024) {
+    return { text: '', usedGemma: false, error: 'AI input exceeds the safe size limit.' };
+  }
   const models = modelNamesFromEnv(env);
   const attempted = [];
   for (const model of models) {
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({
-        contents: [
-          {
-            role: 'user',
-            parts: [{ text: JSON.stringify(payload, null, 2) }]
-          }
-        ],
-        generationConfig: {
-          temperature: 0.35,
-          topP: 0.9,
-          maxOutputTokens: 2400,
-          responseMimeType: 'application/json'
-        }
-      })
-    });
-    attempted.push(`${model}:${response.status}`);
-    if (!response.ok) {
-      if (![404, 429, 500, 502, 503, 504].includes(response.status)) break;
-      continue;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15_000);
+    try {
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        signal: controller.signal,
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.35, topP: 0.9, maxOutputTokens: 2400, responseMimeType: 'application/json' },
+        }),
+      });
+      attempted.push(`${model}:${response.status}`);
+      if (!response.ok) {
+        if (![404, 429, 500, 502, 503, 504].includes(response.status)) break;
+        continue;
+      }
+      const json = await response.json();
+      const parts = json?.candidates?.[0]?.content?.parts;
+      const text = stripModelThinking(
+        Array.isArray(parts)
+          ? parts
+              .filter((part) => part?.thought !== true)
+              .map((part) => part?.text || '')
+              .join('\n')
+          : '',
+      );
+      if (!text || !parseMaybeJson(text)) continue;
+      return { text, usedGemma: true, modelName: model, modelFallbackFrom: model === models[0] ? undefined : models[0] };
+    } catch {
+      attempted.push(`${model}:${controller.signal.aborted ? 'timeout' : 'transport-or-response-error'}`);
+    } finally {
+      clearTimeout(timeout);
     }
-    const json = await response.json();
-    const text = stripModelThinking(
-      json?.candidates?.[0]?.content?.parts
-        ?.filter((part) => part?.thought !== true)
-        .map((part) => part.text || '')
-        .join('\n') || ''
-    );
-    return {
-      text,
-      usedGemma: true,
-      modelName: model,
-      modelFallbackFrom: model === models[0] ? undefined : models[0]
-    };
   }
-  return { text: '', usedGemma: true, error: `Gemma request failed: ${attempted.join(', ')}`, modelName: models[0] };
+  return { text: '', usedGemma: false, error: `AI generation unavailable: ${attempted.join(', ')}`, modelName: models[0] };
 }
 
 export function parseMaybeJson(text) {
@@ -120,9 +129,10 @@ export function parseMaybeJson(text) {
   if (!raw) return null;
   const fenced = raw.match(/```(?:json)?\s*([\s\S]*?)```/i);
   const candidate = fenced ? fenced[1].trim() : raw;
-  const objectCandidate = candidate.includes('{') && candidate.includes('}')
-    ? candidate.slice(candidate.indexOf('{'), candidate.lastIndexOf('}') + 1)
-    : candidate;
+  const objectCandidate =
+    candidate.includes('{') && candidate.includes('}')
+      ? candidate.slice(candidate.indexOf('{'), candidate.lastIndexOf('}') + 1)
+      : candidate;
   try {
     return JSON.parse(objectCandidate);
   } catch (_error) {
