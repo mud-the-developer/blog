@@ -3211,6 +3211,83 @@ mod tests {
     }
 
     #[test]
+    fn icc2027_firm_extension_updates_notes_and_calendar_without_date_overrides() {
+        let source = quality_test_source(
+            "ICC",
+            "https://icc2027.ieee-icc.org/authors/call-symposium-papers",
+        );
+        assert!(source.deadline.is_none());
+        let before = item_from_source(
+            source.clone(),
+            "fetched".to_string(),
+            deadline_signals_from_text(
+                &strip_html(include_str!(
+                    "../tests/fixtures/cfp/icc2027-submission.html"
+                )),
+                "2026-10-15",
+            ),
+            "2026-10-15",
+            None,
+            None,
+        );
+        assert_eq!(before.configured_deadline.as_deref(), Some("2026-10-16"));
+        let after = item_from_source(
+            source.clone(),
+            "fetched".to_string(),
+            deadline_signals_from_text(
+                &strip_html(include_str!(
+                    "../tests/fixtures/cfp/icc2027-firm-extension.html"
+                )),
+                "2026-10-17",
+            ),
+            "2026-10-17",
+            Some(&before),
+            None,
+        );
+        assert_eq!(after.configured_deadline.as_deref(), Some("2026-10-30"));
+        assert_eq!(after.days_until_deadline, Some(13));
+        assert!(after.deadline_verified);
+        assert!(
+            after
+                .deadline_signals
+                .iter()
+                .any(|signal| signal.contains("Firm Deadline"))
+        );
+        let cached = item_from_source(
+            source,
+            "fetch failed".to_string(),
+            vec![],
+            "2026-10-18",
+            Some(&after),
+            None,
+        );
+        assert_eq!(cached.configured_deadline, after.configured_deadline);
+        assert_eq!(cached.last_verified_at, after.last_verified_at);
+        assert!(deadline_label(&cached).contains("cached"));
+        let mut old_issue = test_issue("2026-10-15");
+        old_issue.items[0] = before;
+        let old_calendar = render_ics(&old_issue).replace("\r\n ", "");
+        let mut issue = test_issue("2026-10-17");
+        issue.items[0] = after;
+        let calendar = render_ics(&issue).replace("\r\n ", "");
+        assert!(old_calendar.contains("DTSTART;VALUE=DATE:20261016"));
+        assert!(calendar.contains("DTSTART;VALUE=DATE:20261030"));
+        assert!(!calendar.contains("DTSTART;VALUE=DATE:20261016"));
+        assert_eq!(calendar.matches("BEGIN:VEVENT").count(), 1);
+        assert_eq!(
+            old_calendar.lines().find(|line| line.starts_with("UID:")),
+            calendar.lines().find(|line| line.starts_with("UID:"))
+        );
+        let markdown = render_markdown(&issue);
+        assert!(
+            markdown
+                .lines()
+                .any(|line| line.starts_with("| 2026-10-30") && line.contains(">ICC</span>"))
+        );
+        assert!(!markdown.contains("2026-10-16"));
+    }
+
+    #[test]
     fn calendar_is_reproducible_and_uids_survive_deadline_extensions() {
         let mut issue = test_issue("2026-10-15");
         issue.items[0].title = "A, B; 연구".to_string();
