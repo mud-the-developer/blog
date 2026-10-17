@@ -19,7 +19,11 @@ concurrency:
 
 jobs:
   update-cfp:
-    runs-on: ubuntu-latest
+    # ICC omits an intermediate; Windows native TLS can complete its chain.
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
     env:
       TZ: Asia/Seoul
     steps:

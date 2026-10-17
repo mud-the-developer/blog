@@ -22,7 +22,7 @@ Venue cells show the acronym and edition first. Native disclosure controls expos
 
 Validation is read-only. It rejects stale snapshots, inconsistent dates/counts, unsafe source URLs, missing or mismatched submission-date evidence, and mismatched calendar or note artifacts. Failed validation must not be treated as successful publication.
 
-The GitHub `Update CFP Radar` workflow runs daily at 15:30 UTC (00:30 KST; GitHub can delay scheduled runs). It refreshes, validates, builds, tests, and lints before committing all CFP artifacts. A successful run triggers the existing Cloudflare Pages deployment workflow. Enable Actions and retain the workflow on the default branch.
+The GitHub `Update CFP Radar` workflow runs daily at 15:30 UTC (00:30 KST; GitHub can delay scheduled runs). The collection job uses a Windows runner and Bash: ICC's server omits its GlobalSign intermediate certificate, and Windows native TLS can build the missing chain without disabling verification. Linux remains the deployment/build verification environment. Reassess the collection runner once the official server supplies a complete chain. It refreshes, validates, builds, tests, and lints before committing all CFP artifacts. A successful run triggers the existing Cloudflare Pages deployment workflow. Enable Actions and retain the workflow on the default branch.
 
 ## Conference editions
 

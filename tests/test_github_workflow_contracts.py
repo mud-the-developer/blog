@@ -79,6 +79,8 @@ class GithubWorkflowContractTests(unittest.TestCase):
 
         self.assertIn('name: Update CFP Radar', cfp)
         self.assertIn('cron: "30 15 * * *"', cfp)
+        self.assertIn("runs-on: windows-latest", cfp)
+        self.assertIn("defaults:\n      run:\n        shell: bash", cfp)
         self.assertIn("workflow_dispatch:", cfp)
         self.assertIn("date:", cfp)
         self.assertIn("cargo run -- cfp update", cfp)
