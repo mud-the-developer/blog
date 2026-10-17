@@ -22,7 +22,7 @@ npm run dev         # serves 0.0.0.0:4173
 
 ## CFP automation
 
-The CFP dashboard refreshes daily and keeps one note per KST week. See [CFP automation](docs/cfp-automation.md) for edition discovery, verification, weekly archives, and calendar feeds.
+The CFP dashboard refreshes every day and replaces a single latest note, without an archive. See [CFP automation](docs/cfp-automation.md) for edition discovery, verification, and calendar feeds.
 
 ## Content
 

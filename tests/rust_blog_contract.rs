@@ -259,6 +259,17 @@ async fn builds_public_polished_home_with_filetree_and_no_decorative_pretext_mot
     assert!(cfp.contains("wireless communications"));
     assert!(cfp.contains("/cfp/data/latest.json"));
     assert!(cfp.contains("Nearest submission deadlines"));
+    assert!(!cfp.contains("data-cfp-history"));
+    assert!(!cfp.contains("Weekly CFP archive"));
+    assert_eq!(
+        result
+            .posts
+            .iter()
+            .filter(|post| post.folder == "cfp")
+            .count(),
+        1
+    );
+    assert!(!out_dir.join("posts/2026-10-12-cfp-radar").exists());
     assert!(out_dir.join("cfp/data/latest.json").exists());
     assert!(out_dir.join("cfp/radar.ics").exists());
 

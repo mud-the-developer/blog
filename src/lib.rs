@@ -160,7 +160,6 @@ struct NewsTemplate<'a> {
 #[template(path = "cfp.html")]
 struct CfpTemplate<'a> {
     latest_issue: Vec<&'a Post>,
-    weekly_issues: Vec<&'a Post>,
     archive_json: &'a str,
 }
 
@@ -857,13 +856,8 @@ pub fn render_cfp_page(posts: &[Post]) -> BlogResult<String> {
         .iter()
         .filter(|post| post.folder == "cfp" && post.slug == "cfp-radar")
         .collect::<Vec<_>>();
-    let weekly_issues = posts
-        .iter()
-        .filter(|post| post.folder == "cfp" && post.slug != "cfp-radar")
-        .collect();
     Ok(CfpTemplate {
         latest_issue,
-        weekly_issues,
         archive_json: &archive_json,
     }
     .render()?)

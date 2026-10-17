@@ -74,7 +74,7 @@ class GithubWorkflowContractTests(unittest.TestCase):
         self.assertIn("api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${CF_PAGES_PROJECT}", deploy)
         self.assertNotIn("npx wrangler@4 whoami", deploy)
 
-    def test_cfp_workflow_refreshes_daily_and_publishes_all_weekly_artifacts(self) -> None:
+    def test_cfp_workflow_refreshes_daily_and_publishes_only_current_artifacts(self) -> None:
         cfp = self.read_cfp_workflow()
 
         self.assertIn('name: Update CFP Radar', cfp)
@@ -92,6 +92,8 @@ class GithubWorkflowContractTests(unittest.TestCase):
         self.assertIn("git pull --rebase origin main", cfp)
         self.assertIn("git push origin HEAD:main", cfp)
         self.assertIn("deploy runs via workflow_run", cfp)
+        self.assertIn("Refresh daily CFP Radar", cfp)
+        self.assertNotIn("weekly", cfp)
         self.assertNotRegex(cfp, r"uses: [^\n]+@(?:v[0-9]+|stable)\b")
 
 

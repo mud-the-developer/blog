@@ -1299,6 +1299,21 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
 .post-body .cfp-radar-table th:nth-child(4) { width: 16%; }
 .post-body .cfp-radar-table th:last-child { width: 12%; }
 .cfp-venue { margin: 0; }
+.cfp-mobile-details { display: none; }
+.cfp-warning, [data-cfp-stale-warning] { border-inline-start: 3px solid var(--accent); padding-inline-start: 12px; }
+.cfp-table-scroll tr[hidden], [data-cfp-stale-warning][hidden], [data-cfp-empty][hidden] { display: none !important; }
+.cfp-radar-table:not([data-cfp-ready]) tbody tr:nth-child(n+13),
+.cfp-preview .cfp-table-scroll:not([data-cfp-ready]) tbody tr:nth-child(n+4) { display: none; }
+@media (max-width: 600px) {
+  .post-body .cfp-table-scroll table { min-width: 0; }
+  .post-body .cfp-table-scroll :is(th, td):nth-child(n+3) { display: none; }
+  .post-body .cfp-watchlist-table th:first-child { width: 56%; }
+  .post-body .cfp-watchlist-table th:nth-child(2) { width: 44%; }
+  .post-body .cfp-radar-table th:first-child { width: 44%; }
+  .post-body .cfp-radar-table th:nth-child(2) { width: 56%; }
+  .post-body .cfp-table-scroll :is(th, td) { padding: 9px 8px; }
+  .cfp-mobile-details { display: block; margin-top: 8px; font-size: .8rem; overflow-wrap: anywhere; }
+}
 .cfp-venue > summary { cursor: pointer; line-height: 1.4; }
 .cfp-venue-name { font-family: var(--font-mono); font-weight: 700; }
 .cfp-venue-topic { display: block; margin-top: 5px; font-size: .83rem; color: var(--muted); }

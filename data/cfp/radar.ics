@@ -6,10 +6,8 @@ METHOD:PUBLISH
 X-WR-CALNAME:CFP Radar Deadlines
 X-WR-TIMEZONE:Asia/Seoul
 BEGIN:VEVENT
-UID:http%3A%2F%2Fwww.conf-icnc.org%2F2027%2Fcfp.html%3AInternational%20Conf
- erence%20on%20Computing%2C%20Networking%20and%20Communications@mud-blog.pa
- ges.dev
-DTSTAMP:20261017T101536Z
+UID:ICNC%3ASome%282027%29%3AConference%3A@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261018
 DTEND;VALUE=DATE:20261019
 SUMMARY:[CFP] International Conference on Computing\, Networking and Commun
@@ -21,10 +19,8 @@ DESCRIPTION:Field: Networking / Communications\nStatus: due in 1 days\nOffi
 URL:http://www.conf-icnc.org/2027/cfp.html
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwcnc2027.ieee-wcnc.org%2Fauthors%2Fcall-papers%3AIEEE%20W
- ireless%20Communications%20and%20Networking%20Conference@mud-blog.pages.de
- v
-DTSTAMP:20261017T101536Z
+UID:WCNC%3ASome%282027%29%3AConference%3A@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261026
 DTEND;VALUE=DATE:20261027
 SUMMARY:[CFP] IEEE Wireless Communications and Networking Conference (WCNC 
@@ -36,13 +32,11 @@ DESCRIPTION:Field: Wireless / Communications\nStatus: due in 9 days\nOffici
 URL:https://wcnc2027.ieee-wcnc.org/authors/call-papers
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fjournals%2Fieee-jsac%2Fcf
- p%2Fexploiting-flexible-positioning-movable-and-pinching-antennas-next-gen
- eration-wireless-networks%3AIEEE%20Journal%20on%20Selected%20Areas%20in%20
- Communications%20%E2%80%94%20Exploiting%20Flexible%20Positioning%3A%20Mova
- ble%20and%20Pinching%20Antennas%20for%20Next-Generation%20Wireless%20Netwo
- rks@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20JSAC%20CFP%3ANone%3AJournal%20special%20issue%3AIEEE%20Journal%2
+ 0on%20Selected%20Areas%20in%20Communications%20%E2%80%94%20Exploiting%20Fl
+ exible%20Positioning%3A%20Movable%20and%20Pinching%20Antennas%20for%20Next
+ -Generation%20Wireless%20Networks@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261030
 DTEND;VALUE=DATE:20261031
 SUMMARY:[CFP] IEEE Journal on Selected Areas in Communications — Exploiti
@@ -61,9 +55,8 @@ URL:https://www.comsoc.org/publications/journals/ieee-jsac/cfp/exploiting-f
 LOCATION:Journal / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Ficc2027.ieee-icc.org%2Fauthors%2Fcall-symposium-papers%3A
- IEEE%20International%20Conference%20on%20Communications@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:ICC%3ASome%282027%29%3AConference%3A@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261030
 DTEND;VALUE=DATE:20261031
 SUMMARY:[CFP] IEEE International Conference on Communications (ICC 2027) Su
@@ -76,11 +69,10 @@ URL:https://icc2027.ieee-icc.org/authors/call-symposium-papers
 LOCATION:Washington\, DC\, USA
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F05%2FAI_Dri
- ven_Network.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E2%80%94%20AI
- -Driven%20Network%20Forensics%20for%20Edge-Intelligent%20Internet%20of%20T
- hings@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20IoT-J%20SI%3ANone%3AJournal%20special%20issue%3AIEEE%20Internet%
+ 20of%20Things%20Journal%20%E2%80%94%20AI-Driven%20Network%20Forensics%20fo
+ r%20Edge-Intelligent%20Internet%20of%20Things@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261031
 DTEND;VALUE=DATE:20261101
 SUMMARY:[CFP] IEEE Internet of Things Journal — AI-Driven Network Forensi
@@ -95,11 +87,10 @@ URL:https://ieee-iotj.org/wp-content/uploads/2026/05/AI_Driven_Network.pdf
 LOCATION:Journal / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-network%
- 2Fcfp%2Fai-empowered-cognitive-digital-twin-future-network%3AIEEE%20Networ
+UID:IEEE%20Network%20CFP%3ANone%3AJournal%20special%20issue%3AIEEE%20Networ
  k%20%E2%80%94%20AI-Empowered%20Cognitive%20Digital%20Twin%20for%20Future%2
  0Network%20Ecosystems@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261031
 DTEND;VALUE=DATE:20261101
 SUMMARY:[CFP] IEEE Network — AI-Empowered Cognitive Digital Twin for Futu
@@ -115,13 +106,11 @@ URL:https://www.comsoc.org/publications/magazines/ieee-network/cfp/ai-empow
 LOCATION:Magazine / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-wireless
- -communications%2Fcfp%2Fai-empowered-underwater-wireless-optical-communica
- tions-science-exploration-and-defense-applications%3AIEEE%20Wireless%20Com
- munications%20%E2%80%94%20AI-Empowered%20Underwater%20Wireless%20Optical%2
- 0Communications%20for%20Science%20Exploration%20and%20Defense%20Applicatio
- ns@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20Wireless%20Commun.%20CFP%3ANone%3AJournal%20special%20issue%3AIE
+ EE%20Wireless%20Communications%20%E2%80%94%20AI-Empowered%20Underwater%20W
+ ireless%20Optical%20Communications%20for%20Science%20Exploration%20and%20D
+ efense%20Applications@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261101
 DTEND;VALUE=DATE:20261102
 SUMMARY:[CFP] IEEE Wireless Communications — AI-Empowered Underwater Wire
@@ -141,12 +130,11 @@ URL:https://www.comsoc.org/publications/magazines/ieee-wireless-communicati
 LOCATION:Magazine / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-wireless
- -communications%2Fcfp%2Forbit-computing-striding-era-space-centric-intelli
- gence%3AIEEE%20Wireless%20Communications%20%E2%80%94%20In-Orbit%20Computin
- g%3A%20Striding%20into%20the%20Era%20of%20Space-Centric%20Intelligence@mud
- -blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20Wireless%20Commun.%20CFP%3ANone%3AJournal%20special%20issue%3AIE
+ EE%20Wireless%20Communications%20%E2%80%94%20In-Orbit%20Computing%3A%20Str
+ iding%20into%20the%20Era%20of%20Space-Centric%20Intelligence@mud-blog.page
+ s.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261101
 DTEND;VALUE=DATE:20261102
 SUMMARY:[CFP] IEEE Wireless Communications — In-Orbit Computing: Striding
@@ -164,9 +152,8 @@ URL:https://www.comsoc.org/publications/magazines/ieee-wireless-communicati
 LOCATION:Magazine / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fsensys.acm.org%2F2027%2Fcfp.html%3AACM%20Conference%20on%
- 20Embedded%20Networked%20Sensor%20Systems@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:SenSys%3ASome%282027%29%3AConference%3A@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261105
 DTEND;VALUE=DATE:20261106
 SUMMARY:[CFP] ACM Conference on Embedded Networked Sensor Systems (SenSys 2
@@ -178,10 +165,8 @@ DESCRIPTION:Field: IoT / Edge / Sensing\nStatus: upcoming in 19 days\nOffic
 URL:https://sensys.acm.org/2027/cfp.html
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwcnc2027.ieee-wcnc.org%2Fcall-workshop-papers-0%3AIEEE%20
- Wireless%20Communications%20and%20Networking%20Conference%20Workshops@mud-
- blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:WCNC%20Workshops%3ASome%282027%29%3AWorkshop%3A@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261106
 DTEND;VALUE=DATE:20261107
 SUMMARY:[CFP] IEEE Wireless Communications and Networking Conference Worksh
@@ -193,10 +178,8 @@ DESCRIPTION:Field: Wireless / Workshops\nStatus: upcoming in 20 days\nOffic
 URL:https://wcnc2027.ieee-wcnc.org/call-workshop-papers-0
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fnoms2027.ieee-noms.org%2Fauthors%2Fcall-technical-session
- -paper%3AIEEE%2FIFIP%20Network%20Operations%20and%20Management%20Symposium
- @mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:NOMS%3ASome%282027%29%3AConference%3A@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261109
 DTEND;VALUE=DATE:20261110
 SUMMARY:[CFP] IEEE/IFIP Network Operations and Management Symposium (NOMS 2
@@ -208,9 +191,8 @@ DESCRIPTION:Field: Networking / Management\nStatus: upcoming in 23 days\nOf
 URL:https://noms2027.ieee-noms.org/authors/call-technical-session-paper
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwww.ieee-security.org%2FTC%2FSP2027%2Fcfpapers.html%3AIEE
- E%20Symposium%20on%20Security%20and%20Privacy@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20S%26P%3ASome%282027%29%3AConference%3A@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261117
 DTEND;VALUE=DATE:20261118
 SUMMARY:[CFP] IEEE Symposium on Security and Privacy (IEEE S&P 2027) Submis
@@ -222,11 +204,10 @@ DESCRIPTION:Field: Security\nStatus: upcoming in 31 days\nOfficial CFP: htt
 URL:https://www.ieee-security.org/TC/SP2027/cfpapers.html
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F06%2FGraph_
- Representation_Learning.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E
- 2%80%94%20Graph%20Representation%20on%20Learning%20for%20Internet%20of%20T
- hings@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20IoT-J%20SI%3ANone%3AJournal%20special%20issue%3AIEEE%20Internet%
+ 20of%20Things%20Journal%20%E2%80%94%20Graph%20Representation%20on%20Learni
+ ng%20for%20Internet%20of%20Things@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261130
 DTEND;VALUE=DATE:20261201
 SUMMARY:[CFP] IEEE Internet of Things Journal — Graph Representation on L
@@ -241,13 +222,11 @@ URL:https://ieee-iotj.org/wp-content/uploads/2026/06/Graph_Representation_L
 LOCATION:Journal / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-network%
- 2Fcfp%2Ftowards-intellicise-agent-communication-networks-autonomous-integr
- ation-and-evolution-humans-and-networks%3AIEEE%20Network%20%E2%80%94%20Tow
- ards%20Intellicise%20Agent%20Communication%20Networks%3A%20Autonomous%20In
- tegration%20and%20Evolution%20of%20Humans%20and%20Networks@mud-blog.pages.
- dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20Network%20CFP%3ANone%3AJournal%20special%20issue%3AIEEE%20Networ
+ k%20%E2%80%94%20Towards%20Intellicise%20Agent%20Communication%20Networks%3
+ A%20Autonomous%20Integration%20and%20Evolution%20of%20Humans%20and%20Netwo
+ rks@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261130
 DTEND;VALUE=DATE:20261201
 SUMMARY:[CFP] IEEE Network — Towards Intellicise Agent Communication Netw
@@ -266,10 +245,8 @@ URL:https://www.comsoc.org/publications/magazines/ieee-network/cfp/towards-
 LOCATION:Magazine / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fhpsr2027.ieee-hpsr.org%2Fcall-papers%3AIEEE%20Internation
- al%20Conference%20on%20High%20Performance%20Switching%20and%20Routing@mud-
- blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:HPSR%3ASome%282027%29%3AConference%3A@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261130
 DTEND;VALUE=DATE:20261201
 SUMMARY:[CFP] IEEE International Conference on High Performance Switching a
@@ -281,10 +258,8 @@ DESCRIPTION:Field: Networking / Communications\nStatus: upcoming in 44 days
 URL:https://hpsr2027.ieee-hpsr.org/call-papers
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fsecon2027.ieee-secon.org%2Fcall-papers%3AIEEE%20Internati
- onal%20Conference%20on%20Sensing%2C%20Communication%2C%20and%20Networking@
- mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:SECON%3ASome%282027%29%3AConference%3A@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261130
 DTEND;VALUE=DATE:20261201
 SUMMARY:[CFP] IEEE International Conference on Sensing\, Communication\, an
@@ -295,10 +270,34 @@ DESCRIPTION:Field: Wireless / Mobile\nStatus: upcoming in 44 days\nOfficial
 URL:https://secon2027.ieee-secon.org/call-papers
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fdyspan2027.ieee-dyspan.org%2Fcall-papers%3AIEEE%20Interna
- tional%20Symposium%20on%20Dynamic%20Spectrum%20Access%20Networks@mud-blog.
- pages.dev
-DTSTAMP:20261017T101536Z
+UID:CoNEXT%3ASome%282027%29%3AConference%3A@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
+DTSTART;VALUE=DATE:20261204
+DTEND;VALUE=DATE:20261205
+SUMMARY:[CFP] ACM International Conference on Emerging Networking Experimen
+ ts and Technologies (CoNEXT 2027) Submission Deadline
+DESCRIPTION:Field: Networking / Systems\nStatus: watching: 48 days out\nOff
+ icial CFP: https://conferences2.sigcomm.org/co-next/2027/partials/cfp.html
+ \nNote: Official CoNEXT 2027 submission call. Automatically resolved from 
+ https://conferences2.sigcomm.org/co-next/2026/partials/cfp.html.
+URL:https://conferences2.sigcomm.org/co-next/2027/partials/cfp.html
+END:VEVENT
+BEGIN:VEVENT
+UID:MobiSys%3ASome%282027%29%3AConference%3A@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
+DTSTART;VALUE=DATE:20261204
+DTEND;VALUE=DATE:20261205
+SUMMARY:[CFP] ACM International Conference on Mobile Systems\, Applications
+ \, and Services (MobiSys 2027) Submission Deadline
+DESCRIPTION:Field: Wireless / Mobile\nStatus: watching: 48 days out\nOffici
+ al CFP: https://www.sigmobile.org/mobisys/2027/\nNote: Official MobiSys 20
+ 27 submission call. Automatically resolved from https://www.sigmobile.org/
+ mobisys/2026/.
+URL:https://www.sigmobile.org/mobisys/2027/
+END:VEVENT
+BEGIN:VEVENT
+UID:DySPAN%3ASome%282027%29%3AConference%3A@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261207
 DTEND;VALUE=DATE:20261208
 SUMMARY:[CFP] IEEE International Symposium on Dynamic Spectrum Access Netwo
@@ -309,11 +308,10 @@ DESCRIPTION:Field: Wireless / Spectrum\nStatus: watching: 51 days out\nOffi
 URL:https://dyspan2027.ieee-dyspan.org/call-papers
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-communic
- ations-magazine%2Fcfp%2Fsecurity-and-privacy-multimodal-embodied-iot%3AIEE
- E%20Communications%20Magazine%20%E2%80%94%20Security%20and%20Privacy%20of%
- 20Multimodal%20Embodied%20IoT@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20ComMag%20CFP%3ANone%3AJournal%20special%20issue%3AIEEE%20Communi
+ cations%20Magazine%20%E2%80%94%20Security%20and%20Privacy%20of%20Multimoda
+ l%20Embodied%20IoT@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261215
 DTEND;VALUE=DATE:20261216
 SUMMARY:[CFP] IEEE Communications Magazine — Security and Privacy of Mult
@@ -329,11 +327,10 @@ URL:https://www.comsoc.org/publications/magazines/ieee-communications-magaz
 LOCATION:Magazine / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F07%2FAI_Age
- nt_Enabled.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E2%80%94%20AI%
- 20Agent%20Enabled%20Small-Large%20Model%20Collaboration%20for%20Internet%2
- 0of%20Things@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20IoT-J%20SI%3ANone%3AJournal%20special%20issue%3AIEEE%20Internet%
+ 20of%20Things%20Journal%20%E2%80%94%20AI%20Agent%20Enabled%20Small-Large%2
+ 0Model%20Collaboration%20for%20Internet%20of%20Things@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261215
 DTEND;VALUE=DATE:20261216
 SUMMARY:[CFP] IEEE Internet of Things Journal — AI Agent Enabled Small-La
@@ -348,11 +345,11 @@ URL:https://ieee-iotj.org/wp-content/uploads/2026/07/AI_Agent_Enabled.pdf
 LOCATION:Journal / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F07%2FFluid_
- Antenna_Systems.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E2%80%94%
- 20Fluid%20Antenna%20Systems%20for%20Autonomous%20IoT%3A%20Agentic%20AI%2C%
- 20Edge%20Intelligence%2C%20and%20Foundation%20Models@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20IoT-J%20SI%3ANone%3AJournal%20special%20issue%3AIEEE%20Internet%
+ 20of%20Things%20Journal%20%E2%80%94%20Fluid%20Antenna%20Systems%20for%20Au
+ tonomous%20IoT%3A%20Agentic%20AI%2C%20Edge%20Intelligence%2C%20and%20Found
+ ation%20Models@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261231
 DTEND;VALUE=DATE:20270101
 SUMMARY:[CFP] IEEE Internet of Things Journal — Fluid Antenna Systems for
@@ -369,12 +366,10 @@ URL:https://ieee-iotj.org/wp-content/uploads/2026/07/Fluid_Antenna_Systems.
 LOCATION:Journal / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-network%
- 2Fcfp%2Fdistributed-intelligence-and-collaborative-inference-foundation-mo
- dels-over-wireless-edge%3AIEEE%20Network%20%E2%80%94%20Distributed%20Intel
- ligence%20and%20Collaborative%20Inference%20for%20Foundation%20Models%20ov
- er%20Wireless%20Edge@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20Network%20CFP%3ANone%3AJournal%20special%20issue%3AIEEE%20Networ
+ k%20%E2%80%94%20Distributed%20Intelligence%20and%20Collaborative%20Inferen
+ ce%20for%20Foundation%20Models%20over%20Wireless%20Edge@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20261231
 DTEND;VALUE=DATE:20270101
 SUMMARY:[CFP] IEEE Network — Distributed Intelligence and Collaborative I
@@ -393,11 +388,10 @@ URL:https://www.comsoc.org/publications/magazines/ieee-network/cfp/distribu
 LOCATION:Magazine / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-communic
- ations-magazine%2Fcfp%2Fedge-and-network-computing-underwater-communicatio
- n%3AIEEE%20Communications%20Magazine%20%E2%80%94%20Edge%20and%20In-Network
- %20Computing%20for%20Underwater%20Communication@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20ComMag%20CFP%3ANone%3AJournal%20special%20issue%3AIEEE%20Communi
+ cations%20Magazine%20%E2%80%94%20Edge%20and%20In-Network%20Computing%20for
+ %20Underwater%20Communication@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270101
 DTEND;VALUE=DATE:20270102
 SUMMARY:[CFP] IEEE Communications Magazine — Edge and In-Network Computin
@@ -414,13 +408,11 @@ URL:https://www.comsoc.org/publications/magazines/ieee-communications-magaz
 LOCATION:Magazine / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-wireless
- -communications%2Fcfp%2F3d-metasurface-assisted-wireless-communications-mo
- del-based-designs-ai-driven-approaches%3AIEEE%20Wireless%20Communications%
- 20%E2%80%94%203D%20Metasurface-Assisted%20Wireless%20Communications%3A%20F
- rom%20Model-Based%20Designs%20to%20AI-Driven%20Approaches@mud-blog.pages.d
- ev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20Wireless%20Commun.%20CFP%3ANone%3AJournal%20special%20issue%3AIE
+ EE%20Wireless%20Communications%20%E2%80%94%203D%20Metasurface-Assisted%20W
+ ireless%20Communications%3A%20From%20Model-Based%20Designs%20to%20AI-Drive
+ n%20Approaches@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270101
 DTEND;VALUE=DATE:20270102
 SUMMARY:[CFP] IEEE Wireless Communications — 3D Metasurface-Assisted Wire
@@ -440,9 +432,8 @@ URL:https://www.comsoc.org/publications/magazines/ieee-wireless-communicati
 LOCATION:Magazine / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2F2027.ieee-isit.org%2Fcall-papers%3AIEEE%20International%2
- 0Symposium%20on%20Information%20Theory@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:ISIT%3ASome%282027%29%3AConference%3A@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270110
 DTEND;VALUE=DATE:20270111
 SUMMARY:[CFP] IEEE International Symposium on Information Theory (ISIT 2027
@@ -454,11 +445,10 @@ DESCRIPTION:Field: Communications / Information Theory\nStatus: watching: 8
 URL:https://2027.ieee-isit.org/call-papers
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F07%2FCausal
- _AI_Counterfactual.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E2%80%
- 94%20Causal%20AI%20and%20Counterfactual%20Optimization%20for%20Autonomous%
- 20IoT%20Systems@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20IoT-J%20SI%3ANone%3AJournal%20special%20issue%3AIEEE%20Internet%
+ 20of%20Things%20Journal%20%E2%80%94%20Causal%20AI%20and%20Counterfactual%2
+ 0Optimization%20for%20Autonomous%20IoT%20Systems@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270115
 DTEND;VALUE=DATE:20270116
 SUMMARY:[CFP] IEEE Internet of Things Journal — Causal AI and Counterfact
@@ -474,10 +464,8 @@ URL:https://ieee-iotj.org/wp-content/uploads/2026/07/Causal_AI_Counterfactu
 LOCATION:Journal / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fnetsoft2027.ieee-netsoft.org%2Fauthors%2Fcall-papers%3AIE
- EE%20International%20Conference%20on%20Network%20Softwarization@mud-blog.p
- ages.dev
-DTSTAMP:20261017T101536Z
+UID:NetSoft%3ASome%282027%29%3AConference%3A@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270115
 DTEND;VALUE=DATE:20270116
 SUMMARY:[CFP] IEEE International Conference on Network Softwarization (NetS
@@ -489,25 +477,10 @@ DESCRIPTION:Field: Networking / Softwarization\nStatus: watching: 90 days o
 URL:https://netsoft2027.ieee-netsoft.org/authors/call-papers
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fevents.vtsociety.org%2Fvtc2027-fall%2Fcall-for-papers%2F%
- 3AIEEE%20Vehicular%20Technology%20Conference%20Fall@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
-DTSTART;VALUE=DATE:20270125
-DTEND;VALUE=DATE:20270126
-SUMMARY:[CFP] IEEE Vehicular Technology Conference Fall (VTC-Fall 2027) Sub
- mission Deadline
-DESCRIPTION:Field: Wireless / Vehicular\nStatus: watching: 100 days out\nOf
- ficial CFP: https://events.vtsociety.org/vtc2027-fall/call-for-papers/\nNo
- te: Official VTC-Fall 2027 submission call. Automatically resolved from ht
- tps://events.vtsociety.org/vtc2026-fall/.
-URL:https://events.vtsociety.org/vtc2027-fall/call-for-papers/
-END:VEVENT
-BEGIN:VEVENT
-UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F08%2FEmbodi
- ed_Active_Sensing.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E2%80%9
- 4%20Embodied%20Active%20Sensing%20and%20Environment-Aware%20IoT%20Systems%
- 20in%206G@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20IoT-J%20SI%3ANone%3AJournal%20special%20issue%3AIEEE%20Internet%
+ 20of%20Things%20Journal%20%E2%80%94%20Embodied%20Active%20Sensing%20and%20
+ Environment-Aware%20IoT%20Systems%20in%206G@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270131
 DTEND;VALUE=DATE:20270201
 SUMMARY:[CFP] IEEE Internet of Things Journal — Embodied Active Sensing a
@@ -522,13 +495,11 @@ URL:https://ieee-iotj.org/wp-content/uploads/2026/08/Embodied_Active_Sensin
 LOCATION:Journal / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-communic
- ations-magazine%2Fcfp%2Finternet-agents-communications-and-networking-arch
- itectures-protocols-and-orchestration%3AIEEE%20Communications%20Magazine%2
- 0%E2%80%94%20Internet%20of%20Agents%20for%20Communications%20and%20Network
- ing%3A%20Architectures%2C%20Protocols%2C%20and%20Orchestration@mud-blog.pa
- ges.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20ComMag%20CFP%3ANone%3AJournal%20special%20issue%3AIEEE%20Communi
+ cations%20Magazine%20%E2%80%94%20Internet%20of%20Agents%20for%20Communicat
+ ions%20and%20Networking%3A%20Architectures%2C%20Protocols%2C%20and%20Orche
+ stration@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270201
 DTEND;VALUE=DATE:20270202
 SUMMARY:[CFP] IEEE Communications Magazine — Internet of Agents for Commu
@@ -548,13 +519,24 @@ URL:https://www.comsoc.org/publications/magazines/ieee-communications-magaz
 LOCATION:Magazine / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-communic
- ations-magazine%2Fcfp%2Fagent-gateways-enabling-secure-scalable-and-autono
- mous-interoperability-agentic-ai-environment%3AIEEE%20Communications%20Mag
- azine%20%E2%80%94%20Agent%20Gateways%3A%20Enabling%20Secure%2C%20Scalable%
- 2C%20and%20Autonomous%20Interoperability%20in%20Agentic%20AI%20Environment
- @mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:VTC-Fall%3ASome%282027%29%3AConference%3A@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
+DTSTART;VALUE=DATE:20270201
+DTEND;VALUE=DATE:20270202
+SUMMARY:[CFP] IEEE Vehicular Technology Conference Fall (VTC-Fall 2027) Sub
+ mission Deadline
+DESCRIPTION:Field: Wireless / Vehicular\nStatus: watching: 107 days out\nOf
+ ficial CFP: https://events.vtsociety.org/vtc2027-fall/call-for-papers/\nNo
+ te: Official VTC-Fall 2027 submission call. Automatically resolved from ht
+ tps://events.vtsociety.org/vtc2026-fall/.
+URL:https://events.vtsociety.org/vtc2027-fall/call-for-papers/
+END:VEVENT
+BEGIN:VEVENT
+UID:IEEE%20ComMag%20CFP%3ANone%3AJournal%20special%20issue%3AIEEE%20Communi
+ cations%20Magazine%20%E2%80%94%20Agent%20Gateways%3A%20Enabling%20Secure%2
+ C%20Scalable%2C%20and%20Autonomous%20Interoperability%20in%20Agentic%20AI%
+ 20Environment@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270215
 DTEND;VALUE=DATE:20270216
 SUMMARY:[CFP] IEEE Communications Magazine — Agent Gateways: Enabling Sec
@@ -574,11 +556,10 @@ URL:https://www.comsoc.org/publications/magazines/ieee-communications-magaz
 LOCATION:Magazine / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-communic
- ations-magazine%2Fcfp%2Fpost-quantum-cryptography-real-world-deployment%3A
- IEEE%20Communications%20Magazine%20%E2%80%94%20Post-Quantum%20Cryptography
- %20for%20Real-World%20Deployment@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20ComMag%20CFP%3ANone%3AJournal%20special%20issue%3AIEEE%20Communi
+ cations%20Magazine%20%E2%80%94%20Post-Quantum%20Cryptography%20for%20Real-
+ World%20Deployment@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270215
 DTEND;VALUE=DATE:20270216
 SUMMARY:[CFP] IEEE Communications Magazine — Post-Quantum Cryptography fo
@@ -594,11 +575,11 @@ URL:https://www.comsoc.org/publications/magazines/ieee-communications-magaz
 LOCATION:Magazine / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F08%2FAmbien
- t_Intelligence_AI.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E2%80%9
- 4%20Ambient%20Intelligence%20for%20AI-Native%20IoT%3A%20Invisible%2C%20Con
- text-Aware%2C%20and%20Autonomous%20Experiences@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20IoT-J%20SI%3ANone%3AJournal%20special%20issue%3AIEEE%20Internet%
+ 20of%20Things%20Journal%20%E2%80%94%20Ambient%20Intelligence%20for%20AI-Na
+ tive%20IoT%3A%20Invisible%2C%20Context-Aware%2C%20and%20Autonomous%20Exper
+ iences@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270215
 DTEND;VALUE=DATE:20270216
 SUMMARY:[CFP] IEEE Internet of Things Journal — Ambient Intelligence for 
@@ -615,10 +596,8 @@ URL:https://ieee-iotj.org/wp-content/uploads/2026/08/Ambient_Intelligence_A
 LOCATION:Journal / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fmeditcom2027.ieee-meditcom.org%2Fauthors%2Fcall-papers%3A
- IEEE%20International%20Mediterranean%20Conference%20on%20Communications%20
- and%20Networking@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:MeditCom%3ASome%282027%29%3AConference%3A@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270226
 DTEND;VALUE=DATE:20270227
 SUMMARY:[CFP] IEEE International Mediterranean Conference on Communications
@@ -630,11 +609,11 @@ DESCRIPTION:Field: Wireless / Communications\nStatus: watching: 132 days ou
 URL:https://meditcom2027.ieee-meditcom.org/authors/call-papers
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F08%2FDistri
- buted_Communication_Aware.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20
- %E2%80%94%20Distributed%20Communication-Aware%20Agentic%20Artificial%20Int
- elligence%20for%20the%20Internet%20of%20Things@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20IoT-J%20SI%3ANone%3AJournal%20special%20issue%3AIEEE%20Internet%
+ 20of%20Things%20Journal%20%E2%80%94%20Distributed%20Communication-Aware%20
+ Agentic%20Artificial%20Intelligence%20for%20the%20Internet%20of%20Things@m
+ ud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270228
 DTEND;VALUE=DATE:20270301
 SUMMARY:[CFP] IEEE Internet of Things Journal — Distributed Communication
@@ -651,12 +630,11 @@ URL:https://ieee-iotj.org/wp-content/uploads/2026/08/Distributed_Communicat
 LOCATION:Journal / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-wireless
- -communications%2Fcfp%2Fatomic-network-quantum-radio-front-ends-6g-wireles
- s-communications-and-sensing%3AIEEE%20Wireless%20Communications%20%E2%80%9
- 4%20Atomic-to-Network%3A%20Quantum%20Radio%20Front-Ends%20for%206G%20Wirel
- ess%20Communications%20and%20Sensing@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20Wireless%20Commun.%20CFP%3ANone%3AJournal%20special%20issue%3AIE
+ EE%20Wireless%20Communications%20%E2%80%94%20Atomic-to-Network%3A%20Quantu
+ m%20Radio%20Front-Ends%20for%206G%20Wireless%20Communications%20and%20Sens
+ ing@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270301
 DTEND;VALUE=DATE:20270302
 SUMMARY:[CFP] IEEE Wireless Communications — Atomic-to-Network: Quantum R
@@ -675,10 +653,8 @@ URL:https://www.comsoc.org/publications/magazines/ieee-wireless-communicati
 LOCATION:Magazine / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fpimrc2027.ieee-pimrc.org%2Fauthors%2Fcall-papers%3AIEEE%2
- 0International%20Symposium%20on%20Personal%2C%20Indoor%20and%20Mobile%20Ra
- dio%20Communications@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:PIMRC%3ASome%282027%29%3AConference%3A@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270312
 DTEND;VALUE=DATE:20270313
 SUMMARY:[CFP] IEEE International Symposium on Personal\, Indoor and Mobile 
@@ -690,12 +666,11 @@ DESCRIPTION:Field: Wireless / Communications\nStatus: watching: 146 days ou
 URL:https://pimrc2027.ieee-pimrc.org/authors/call-papers
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-communic
- ations-magazine%2Fcfp%2Fmemory-poisoning-across-networked-learning-enabled
- -agents-threats-detection-and-defense%3AIEEE%20Communications%20Magazine%2
- 0%E2%80%94%20Memory%20Poisoning%20Across%20Networked%20Learning-Enabled%20
- Agents%3A%20Threats%2C%20Detection%2C%20and%20Defense@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20ComMag%20CFP%3ANone%3AJournal%20special%20issue%3AIEEE%20Communi
+ cations%20Magazine%20%E2%80%94%20Memory%20Poisoning%20Across%20Networked%2
+ 0Learning-Enabled%20Agents%3A%20Threats%2C%20Detection%2C%20and%20Defense@
+ mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270315
 DTEND;VALUE=DATE:20270316
 SUMMARY:[CFP] IEEE Communications Magazine — Memory Poisoning Across Netw
@@ -715,12 +690,11 @@ URL:https://www.comsoc.org/publications/magazines/ieee-communications-magaz
 LOCATION:Magazine / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fmagazines%2Fieee-communic
- ations-magazine%2Fcfp%2Fupper-mid-band-fr3-6g-technologies-systems-and-dep
- loyment%3AIEEE%20Communications%20Magazine%20%E2%80%94%20The%20Upper%20Mid
- -Band%20%28FR3%29%20for%206G%3A%20Technologies%2C%20Systems%2C%20and%20Dep
- loyment@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20ComMag%20CFP%3ANone%3AJournal%20special%20issue%3AIEEE%20Communi
+ cations%20Magazine%20%E2%80%94%20The%20Upper%20Mid-Band%20%28FR3%29%20for%
+ 206G%3A%20Technologies%2C%20Systems%2C%20and%20Deployment@mud-blog.pages.d
+ ev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270315
 DTEND;VALUE=DATE:20270316
 SUMMARY:[CFP] IEEE Communications Magazine — The Upper Mid-Band (FR3) for
@@ -738,12 +712,11 @@ URL:https://www.comsoc.org/publications/magazines/ieee-communications-magaz
 LOCATION:Magazine / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F09%2FFedera
- ted_Unlearning_Model.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E2%8
- 0%94%20Federated%20Unlearning%20and%20Model%20Governance%20for%20Trustwort
- hy%20IoT%3A%20Selective%20Forgetting%2C%20Provenance%2C%20and%20Auditabili
- ty%20at%20the%20Edge@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20IoT-J%20SI%3ANone%3AJournal%20special%20issue%3AIEEE%20Internet%
+ 20of%20Things%20Journal%20%E2%80%94%20Federated%20Unlearning%20and%20Model
+ %20Governance%20for%20Trustworthy%20IoT%3A%20Selective%20Forgetting%2C%20P
+ rovenance%2C%20and%20Auditability%20at%20the%20Edge@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270315
 DTEND;VALUE=DATE:20270316
 SUMMARY:[CFP] IEEE Internet of Things Journal — Federated Unlearning and 
@@ -760,12 +733,10 @@ URL:https://ieee-iotj.org/wp-content/uploads/2026/09/Federated_Unlearning_M
 LOCATION:Journal / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fwww.comsoc.org%2Fpublications%2Fjournals%2Fieee-jsac%2Fcf
- p%2Fnext-generation-underwater-acoustic-communication-systems%3AIEEE%20Jou
- rnal%20on%20Selected%20Areas%20in%20Communications%20%E2%80%94%20Next-Gene
- ration%20Underwater%20Acoustic%20Communication%20Systems@mud-blog.pages.de
- v
-DTSTAMP:20261017T101536Z
+UID:IEEE%20JSAC%20CFP%3ANone%3AJournal%20special%20issue%3AIEEE%20Journal%2
+ 0on%20Selected%20Areas%20in%20Communications%20%E2%80%94%20Next-Generation
+ %20Underwater%20Acoustic%20Communication%20Systems@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270331
 DTEND;VALUE=DATE:20270401
 SUMMARY:[CFP] IEEE Journal on Selected Areas in Communications — Next-Gen
@@ -782,12 +753,12 @@ URL:https://www.comsoc.org/publications/journals/ieee-jsac/cfp/next-generat
 LOCATION:Journal / online submission
 END:VEVENT
 BEGIN:VEVENT
-UID:https%3A%2F%2Fieee-iotj.org%2Fwp-content%2Fuploads%2F2026%2F09%2FIndust
- rial_Internet_Things.pdf%3AIEEE%20Internet%20of%20Things%20Journal%20%E2%8
- 0%94%20Industrial%20Internet%20of%20Things%20Communication%20Networks%20%2
- 8IIoT-CNets%29%3A%20Architectures%2C%20Protocols%2C%20and%20Intelligence%2
- 0for%20Next-Generation%20Industrial%20Systems@mud-blog.pages.dev
-DTSTAMP:20261017T101536Z
+UID:IEEE%20IoT-J%20SI%3ANone%3AJournal%20special%20issue%3AIEEE%20Internet%
+ 20of%20Things%20Journal%20%E2%80%94%20Industrial%20Internet%20of%20Things%
+ 20Communication%20Networks%20%28IIoT-CNets%29%3A%20Architectures%2C%20Prot
+ ocols%2C%20and%20Intelligence%20for%20Next-Generation%20Industrial%20Syste
+ ms@mud-blog.pages.dev
+DTSTAMP:20261017T104540Z
 DTSTART;VALUE=DATE:20270331
 DTEND;VALUE=DATE:20270401
 SUMMARY:[CFP] IEEE Internet of Things Journal — Industrial Internet of Th

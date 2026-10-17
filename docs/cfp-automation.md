@@ -1,52 +1,46 @@
-# CFP automation
+# Daily CFP dashboard
 
 ## Published views
 
-- `/cfp/` and `/posts/cfp-radar/`: the latest dashboard.
-- `posts/cfp/YYYY-MM-DD-cfp-radar.md`: one note per KST week, keyed by Monday. Daily refreshes update the current week's note; earlier weeks remain unchanged. `/cfp/` links the weekly archive.
-- `/cfp/data/latest.json`: the source snapshot, including edition, date verification, fetch status, and last verification time.
-- `/cfp/radar.ics` and `/cfp/data/radar.ics`: identical feeds of confirmed, open submission deadlines. Event IDs do not change when a deadline is extended.
-
-## Run locally
+- `/cfp/` and `/posts/cfp-radar/` show the same latest dashboard.
+- `posts/cfp/cfp-radar.md` is replaced on every successful daily update. There are no dated CFP posts or weekly archive links. Git history retains previous revisions.
+- `/cfp/data/latest.json` holds collection time, venue edition, detected date, verification state, fetch status, original verification time, and the evidence URL.
+- `/cfp/radar.ics` and `/cfp/data/radar.ics` are identical feeds of confirmed open deadlines. Calendar identity uses venue, edition, and call type (plus journal topic), not a changeable source URL or deadline.
 
 ```bash
-npm run cfp:update
-npm run cfp:validate
-npm run build
-
-# Refresh presentation from the existing snapshot without network or AI requests:
-cargo run -- cfp render
+npm run cfp:daily       # collect, validate, build
+npm run cfp:validate    # read-only checks
+cargo run -- cfp render # re-render the existing snapshot; no network/AI calls
 ```
 
-Venue cells show the acronym and edition first. Native disclosure controls expose full venue names and complete journal topics by mouse, touch, or keyboard. On narrow screens, tables scroll within a labelled, focusable region; the watchlist puts venue and deadline first. Expired calls are excluded from quick previews and kept in the closed-call reference section.
+## Daily automation and health
 
-Validation is read-only. It rejects stale snapshots, inconsistent dates/counts, unsafe source URLs, missing or mismatched submission-date evidence, and mismatched calendar or note artifacts. Failed validation must not be treated as successful publication.
+`Update CFP Radar` runs every day at **15:30 UTC / 00:30 KST**. GitHub can delay scheduled jobs. Collection uses a Windows runner and Bash because ICC's server omits its GlobalSign intermediate certificate; Windows native TLS can complete the certificate chain without disabling verification. Deployment and its build/test/lint checks remain on Linux.
 
-The GitHub `Update CFP Radar` workflow runs daily at 15:30 UTC (00:30 KST; GitHub can delay scheduled runs). The collection job uses a Windows runner and Bash: ICC's server omits its GlobalSign intermediate certificate, and Windows native TLS can build the missing chain without disabling verification. Linux remains the deployment/build verification environment. Reassess the collection runner once the official server supplies a complete chain. It refreshes, validates, builds, tests, and lints before committing all CFP artifacts. A successful run triggers the existing Cloudflare Pages deployment workflow. Enable Actions and retain the workflow on the default branch.
+The collector validates before writing or publishing:
 
-## Conference editions
+- At least **60%** of configured sources must fetch successfully.
+- A drop of more than **20 percentage points** from the preceding collection rejects the update and preserves the previous snapshot. Exactly 20 points is allowed; the comparison uses integer ratios.
+- Previously verified dates are usable for at most **7 days**. After that, the value and original evidence remain for inspection, but are marked stale and excluded from confirmed-open counts and calendars.
+- Failed sources and stale records produce GitHub warning annotations and a visible dashboard warning. A green workflow is not a claim that every source fetched successfully.
+- Dates, counters, source identity, official domains, submission evidence, and calendar/note consistency are checked. `cfp validate` never silently repairs artifacts.
 
-For year-bearing official URLs, the crawler probes the next applicable edition. A guessed URL is only a candidate: the response must identify that edition and contain a submission deadline in the expected year range. Redirects to unsafe domains, missing pages, registration-only dates, and old-edition pages do not replace the current source.
+A successful collection replaces the daily artifacts and triggers the existing Cloudflare Pages deployment workflow. The scheduler remains enabled on the default branch.
 
-Use optional `edition` and `editionUrlTemplate` settings when the venue's URL is irregular. ICC's primary `url` is its live symposium CFP, not the ComSoc event catalog: a society's event listing can retain the original deadline after the conference extends it. The catalog is used only to discover subsequent editions:
+## Extraction and source identity
 
-```json
-{
-  "edition": 2027,
-  "editionUrlTemplate": "https://www.comsoc.org/conferences-events/ieee-international-conference-communications-{year}"
-}
-```
+The HTML parser reads submission dates in their own table row, paragraph, list item, definition entry, or conference date block before falling back to text evidence. Paragraphs inside a record do not discard the enclosing label/date pair; containers of multiple nested records are skipped instead. Adjacent abstract, proposal, camera-ready, acceptance, or event dates must not be substituted. Deleted/struck-out dates and scripts are ignored. Journal topic/link/date triples stay together; explicitly extended/final dates take precedence over an earlier date in the same cell. Ambiguous multiple-date cells are not guessed.
 
-The last resolved edition is retained in `latest.json`, so subsequent refreshes do not revert to the old configured URL. Sources without a predictable year URL, an official template, or readable evidence still require a source-config update; no model or crawler can guarantee discovery of unpublished CFPs.
+The collector follows at most two official venue links (catalog → venue → CFP) before accepting an event-catalog date. Main papers and workshops remain separate. Candidate next editions must identify the edition and a plausible submission date. ICC uses its live symposium CFP; its ComSoc catalog template is only for discovering future editions.
 
-## Deadlines and journal calls
+Cache matching uses venue, edition, and call type, with journal topic identity as well. The source URL can change without discarding a confirmed date. Expiring date verification does not erase the discovered edition or official URL: repeated fetch failures retain that identity and the original evidence without making the stale deadline current again. `evidenceUrl` and `lastVerifiedAt` identify where and when the cached fact was checked; another edition or workshop cannot reuse it. A successful page that no longer contains valid dated submission evidence does not automatically keep a previous verified date.
 
-Conference websites and linked CFP pages are checked before accepting a date from an event listing, even when that listing already contains a date. Discovery follows at most two official links (catalog → venue → CFP), stays within the venue/edition, and keeps workshops separate from main-paper calls. If the linked CFP cannot be checked, the catalog date is not freshly verified; the last confirmed primary date is retained with a warning when available.
+HTTPS uses Rust TLS first and native TLS on connection failure; both verify certificates and official-domain redirects. HTTP 403/418 responses remain failures, not an excuse to disable verification. Optional Google Search assistance remains quota/target bounded and must return official-venue evidence matching its date.
 
-HTTPS uses the normal Rust TLS client first. If it cannot establish a connection, a native system-TLS client can validate the server with the operating system's certificate-chain handling. Both clients verify certificates and apply the official-domain redirect policy; certificate verification is never disabled. HTTP error responses such as 403/418 are not retried through the alternative TLS client and remain visible as fetch failures.
+## Display and mobile
 
-Officially detected deadlines take priority over configured dates. A configured date without official evidence is labelled unverified and stays out of the deadline radar/calendar. Fetch failures preserve the last confirmed date and verification time, with a cached warning. Dates are submission leads, not a guarantee: verify the official page and its cutoff timezone before submitting.
+The latest page recalculates dates, visible rows, and open/fresh/cached counts on entry, every minute, and when returning to the tab. Expired rows leave current lists; later rows fill the nearest-deadline and three-row previews. A snapshot older than **36 hours** shows a warning. Browser updates do not claim that sources have been fetched again. Calendar-add links are hidden for expired, stale, or unverified calls; the official CFP link stays available for rechecking.
 
-Journal tables and dated list entries are split into separate calls with their topic, individual link, and deadline. Publication dates are not used as submission dates. HTML comments, scripts, and withdrawn dates inside `del`/`s`/`strike` tags are ignored. Whitespace is compacted before evidence windows are selected. A submission label cannot borrow a later acceptance, camera-ready, registration, or event date. Cached dates must still match submission evidence under the current parser; a previously misclassified event date cannot remain verified merely because fetching failed.
+Mobile displays **Venue and Deadline together without horizontal scrolling**. Full names, topics, field, event date, location, and official/calendar links are accessible through native keyboard/touch disclosure controls. Desktop retains the extra columns. Source-policy and evidence sections remain available, but there is no CFP archive or historical call table.
 
-The existing Google Search-assisted fallback remains optional and bounded by `CFP_AI_MAX_REQUESTS` and `CFP_AI_TARGETS`. Local verification does not require an AI API key. Official-domain validation and quoted-date checks also apply to AI findings.
+Dates remain date-only planning leads, not a guarantee of the exact cutoff timezone. Not every site/PDF can be parsed; check the linked official call before submitting. Future annual URL changes can still require source-config maintenance.

@@ -83,7 +83,7 @@ jobs:
 
           git add "${paths[@]}"
           issue_date="$(date +%F)"
-          git commit -m "Refresh CFP Radar and weekly note for ${issue_date}"
+          git commit -m "Refresh daily CFP Radar for ${issue_date}"
           git pull --rebase origin main
           git push origin HEAD:main
 
