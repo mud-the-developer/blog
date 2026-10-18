@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-10-18
+date: 2026-10-19
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/posts/2026-10-18-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/posts/2026-10-19-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-10-18T02:52:08.715522+09:00">Oct 18, 2026 · 2:52 AM KST</time></strong>
+        <strong><time datetime="2026-10-19T03:10:28.446697+09:00">Oct 19, 2026 · 3:10 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>208</strong>
+        <strong>209</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-10-18">Oct 18, 2026</time></strong>
+        <strong><time datetime="2026-10-19">Oct 19, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Waypoint-OPD: Transferring RL-Induced Policy Shifts via Gated On-Policy Distillation; social attention is tilting toward The incoherence trap: When low-quality AI content buries the signal in endless noise. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by headroomlabs-ai/headroom; paper attention is clustering around Waypoint-OPD: Transferring RL-Induced Policy Shifts via Gated On-Policy Distillation; social attention is tilting toward We are software engineers - worrying about AI is ultimately something we have always done. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>October 2026</span><span class="news-digest-month-count">18 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>October 2026</span><span class="news-digest-month-count">19 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-10-19-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-10-19</span>
+            <strong>AI News Brief — 2026-10-19</strong>
+            <span>Today&#x27;s AI developments highlight advancements in token compression for large language models, novel approaches to reinforcement learning policy transfer, and ongoing community discourse on the role of software engineers in the AI era.</span>
+          </a>
           <a class="news-digest-archive-item" href="/posts/2026-10-18-ai-news-digest/">
             <span class="news-digest-archive-date">2026-10-18</span>
             <strong>AI News Brief — 2026-10-18</strong>
