@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-20T05:36:40.570587+09:00",
-  "generated_label": "Oct 20, 2026 · 5:36 AM KST",
-  "issue_date": "2026-10-20",
-  "issue_label": "Oct 20, 2026",
-  "summary": "GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Speculative Sampling in Interactive Video Generation; social attention is tilting toward Poor availability of GitHub Actions, GitHub Pages, and Webhooks. 10 repo signals, 10 paper picks, and 10 community items made today's cut.",
+  "generated_at": "2026-10-21T04:19:40.314998+09:00",
+  "generated_label": "Oct 21, 2026 · 4:19 AM KST",
+  "issue_date": "2026-10-21",
+  "issue_label": "Oct 21, 2026",
+  "summary": "GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around OpenVLHarness: Real World Visual Agentic Tool-Use with Multimodal Memory; social attention is tilting toward Bank services interrupted due to Google Cloud failure. 10 repo signals, 10 paper picks, and 10 community items made today's cut.",
   "keywords": [],
   "top_cards": [
     {
@@ -14,68 +14,68 @@
       "tags": [],
       "score": 22.916,
       "raw_score": 19.056,
-      "published_hours_ago": 2164,
+      "published_hours_ago": 2186,
       "stars": 218250,
       "image_url": "https://opengraph.githubassets.com/1/NousResearch/hermes-agent",
       "badge": "Repo",
-      "deck": "The agent that grows with you. Updated 90d ago. 218250 stars, +800/7d, created 454d ago.",
-      "meta": "GitHub · 218250 stars · +800/7d · created 454d ago · updated 90d ago · signal 22.92",
+      "deck": "The agent that grows with you. Updated 91d ago. 218250 stars, +800/7d, created 455d ago.",
+      "meta": "GitHub · 218250 stars · +800/7d · created 455d ago · updated 91d ago · signal 22.92",
       "rank": 1,
-      "rank_delta": null
+      "rank_delta": 0
     },
     {
-      "headline": "Speculative Sampling in Interactive Video Generation",
-      "title": "Speculative Sampling in Interactive Video Generation",
-      "url": "https://huggingface.co/papers/2610.20556",
+      "headline": "OpenVLHarness: Real World Visual Agentic Tool-Use with Multimodal Memory",
+      "title": "OpenVLHarness: Real World Visual Agentic Tool-Use with Multimodal Memory",
+      "url": "https://huggingface.co/papers/2610.26860",
       "source": "huggingface.co",
-      "tags": [],
-      "score": 5.004,
-      "raw_score": 3.116,
-      "published_hours_ago": 20,
+      "tags": [
+        "AI"
+      ],
+      "score": 6.828,
+      "raw_score": 4.166,
+      "published_hours_ago": 18,
       "stars": 0,
-      "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.20556.png",
+      "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.26860.png",
       "badge": "Paper",
-      "deck": "Speculative Sampling enables interactive video generation with large bidirectional windows by caching predictions and delivering them incrementally, reducing latency without sacrificing qua…",
-      "meta": "HF Papers · 20h ago · signal 5.00",
-      "rank": 217,
+      "deck": "OpenVLHarness improves multimodal reasoning by integrating persistent memory, heterogeneous tool interfaces, and iterative evidence composition across 22 benchmarks. Surfaced via HF Papers…",
+      "meta": "HF Papers · 18h ago · signal 6.83",
+      "rank": 156,
       "rank_delta": null
     },
     {
-      "headline": "Poor availability of GitHub Actions, GitHub Pages, and Webhooks",
-      "title": "Poor availability of GitHub Actions, GitHub Pages, and Webhooks",
-      "url": "https://news.hada.io/topic?id=35656",
+      "headline": "Get Citations from LLM by Posting Fake Statistics",
+      "title": "Get Citations from LLM by Posting Fake Statistics",
+      "url": "https://news.hada.io/topic?id=35721",
       "source": "geeknews",
       "tags": [
         "social"
       ],
-      "score": 4.082,
-      "raw_score": 2.233,
-      "published_hours_ago": 1,
+      "score": 4.025,
+      "raw_score": 2.181,
+      "published_hours_ago": 2,
       "stars": 0,
       "image_url": "/assets/news/thumb-ai.svg",
       "badge": "Social",
-      "deck": "Community signal picked up on GeekNews 1h ago.",
-      "meta": "GeekNews · 1h ago · signal 4.08",
+      "deck": "Community signal picked up on GeekNews 2h ago.",
+      "meta": "GeekNews · 2h ago · signal 4.03",
       "rank": 999,
       "rank_delta": null
     },
     {
-      "headline": "Enhancing RAG-based Medical VQA with Gated Multimodal Representations",
-      "title": "Enhancing RAG-based Medical VQA with Gated Multimodal Representations",
-      "url": "http://arxiv.org/abs/2610.23588v1",
-      "source": "arxiv.org",
-      "tags": [
-        "AI"
-      ],
-      "score": 3.736,
-      "raw_score": 2.568,
-      "published_hours_ago": 77,
+      "headline": "Holi-World: Building Holistic World Intelligence from Human-Ego Experience",
+      "title": "Holi-World: Building Holistic World Intelligence from Human-Ego Experience",
+      "url": "https://huggingface.co/papers/2610.26549",
+      "source": "huggingface.co",
+      "tags": [],
+      "score": 5.822,
+      "raw_score": 3.671,
+      "published_hours_ago": 18,
       "stars": 0,
-      "image_url": "/assets/news/thumb-paper.svg",
+      "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.26549.png",
       "badge": "Paper",
-      "deck": "Fresh arXiv paper from the ai cluster, posted 3d ago.",
-      "meta": "arXiv · 3d ago · signal 3.74",
-      "rank": 249,
+      "deck": "HOLI-WORLD is an integrated ecosystem that automates the construction of large-scale learning resources from egocentric recordings to improve machine understanding of dynamic scenes and int…",
+      "meta": "HF Papers · 18h ago · signal 5.82",
+      "rank": 182,
       "rank_delta": null
     }
   ],
@@ -88,31 +88,31 @@
       "tags": [],
       "score": 22.916,
       "raw_score": 19.056,
-      "published_hours_ago": 2164,
+      "published_hours_ago": 2186,
       "stars": 218250,
       "image_url": "https://opengraph.githubassets.com/1/NousResearch/hermes-agent",
       "badge": "Repo",
-      "deck": "The agent that grows with you. Updated 90d ago. 218250 stars, +800/7d, created 454d ago.",
-      "meta": "GitHub · 218250 stars · +800/7d · created 454d ago · updated 90d ago · signal 22.92",
+      "deck": "The agent that grows with you. Updated 91d ago. 218250 stars, +800/7d, created 455d ago.",
+      "meta": "GitHub · 218250 stars · +800/7d · created 455d ago · updated 91d ago · signal 22.92",
       "rank": 1,
-      "rank_delta": null
+      "rank_delta": 0
     },
     {
-      "headline": "openai/codex",
-      "title": "openai/codex — Lightweight coding agent that runs in your terminal",
-      "url": "https://github.com/openai/codex",
+      "headline": "BerriAI/litellm",
+      "title": "BerriAI/litellm — The fastest, litest AI Gateway. Rust core with Python SDK. Call 100+ LLM APIs in OpenAI (or native) format with cost tracking, guardrails, load balancing, and logging [Bedrock, Azure, OpenAI, Anthropic, OpenAI, VertexAI, vLLM, Nvidia NIM]",
+      "url": "https://github.com/BerriAI/litellm",
       "source": "github.com",
       "tags": [
         "AI"
       ],
-      "score": 21.916,
-      "raw_score": 17.616,
-      "published_hours_ago": 2164,
-      "stars": 100336,
-      "image_url": "https://opengraph.githubassets.com/1/openai/codex",
+      "score": 22.182,
+      "raw_score": 17.986,
+      "published_hours_ago": 2210,
+      "stars": 54123,
+      "image_url": "https://opengraph.githubassets.com/1/BerriAI/litellm",
       "badge": "Repo",
-      "deck": "Lightweight coding agent that runs in your terminal. Updated 90d ago. 100336 stars, +800/7d, created 555d ago.",
-      "meta": "GitHub · 100336 stars · +800/7d · created 555d ago · updated 90d ago · signal 21.92",
+      "deck": "The fastest, litest AI Gateway. Rust core with Python SDK. Call 100+ LLM APIs in OpenAI (or native) format with cost tracking, guardrails, load balancing, and logging [Bedrock, Azure, OpenA…",
+      "meta": "GitHub · 54123 stars · +714/7d · created 1182d ago · updated 92d ago · signal 22.18",
       "rank": 2,
       "rank_delta": null
     },
@@ -124,16 +124,16 @@
       "tags": [
         "AI"
       ],
-      "score": 20.993,
-      "raw_score": 16.834,
-      "published_hours_ago": 2198,
+      "score": 20.966,
+      "raw_score": 16.775,
+      "published_hours_ago": 2221,
       "stars": 60623,
       "image_url": "https://opengraph.githubassets.com/1/headroomlabs-ai/headroom",
       "badge": "Repo",
       "deck": "Compress tool outputs, logs, files, and RAG chunks before they reach the LLM. 20% fewer tokens for coding agents, 60-95% fewer tokens for JSON, same answers. Library, proxy, MCP server. Upd…",
-      "meta": "GitHub · 60623 stars · +800/7d · created 285d ago · updated 92d ago · down 3 · signal 20.99",
+      "meta": "GitHub · 60623 stars · +800/7d · created 286d ago · updated 93d ago · signal 20.97",
       "rank": 4,
-      "rank_delta": -3
+      "rank_delta": 0
     },
     {
       "headline": "anomalyco/opencode",
@@ -141,16 +141,16 @@
       "url": "https://github.com/anomalyco/opencode",
       "source": "github.com",
       "tags": [],
-      "score": 20.692,
-      "raw_score": 16.906,
-      "published_hours_ago": 2188,
+      "score": 20.627,
+      "raw_score": 16.846,
+      "published_hours_ago": 2210,
       "stars": 187809,
       "image_url": "https://opengraph.githubassets.com/1/anomalyco/opencode",
       "badge": "Repo",
-      "deck": "The open source coding agent. Updated 91d ago. 187809 stars, +800/7d, created 537d ago.",
-      "meta": "GitHub · 187809 stars · +800/7d · created 537d ago · updated 91d ago · signal 20.69",
+      "deck": "The open source coding agent. Updated 92d ago. 187809 stars, +800/7d, created 538d ago.",
+      "meta": "GitHub · 187809 stars · +800/7d · created 538d ago · updated 92d ago · signal 20.63",
       "rank": 3,
-      "rank_delta": null
+      "rank_delta": 0
     },
     {
       "headline": "shanraisshan/claude-code-best-practice",
@@ -160,35 +160,16 @@
       "tags": [
         "AI"
       ],
-      "score": 20.448,
-      "raw_score": 16.267,
-      "published_hours_ago": 2197,
+      "score": 20.443,
+      "raw_score": 16.246,
+      "published_hours_ago": 2220,
       "stars": 63155,
       "image_url": "https://opengraph.githubassets.com/1/shanraisshan/claude-code-best-practice",
       "badge": "Repo",
-      "deck": "from vibe coding to agentic engineering - practice makes claude perfect. Updated 92d ago. 63155 stars, +674/7d, created 353d ago.",
-      "meta": "GitHub · 63155 stars · +674/7d · created 353d ago · updated 92d ago · down 2 · signal 20.45",
+      "deck": "from vibe coding to agentic engineering - practice makes claude perfect. Updated 92d ago. 63155 stars, +674/7d, created 354d ago.",
+      "meta": "GitHub · 63155 stars · +674/7d · created 354d ago · updated 92d ago · signal 20.44",
       "rank": 5,
-      "rank_delta": -2
-    },
-    {
-      "headline": "unslothai/unsloth",
-      "title": "unslothai/unsloth — Local UI to run and train LLMs and diffusion models. Supports GGUF, MLX, Qwen3.8, DeepSeek-V4, MiniMax-H3, Gemma 4, FLUX and more.",
-      "url": "https://github.com/unslothai/unsloth",
-      "source": "github.com",
-      "tags": [
-        "AI"
-      ],
-      "score": 18.801,
-      "raw_score": 14.877,
-      "published_hours_ago": 2212,
-      "stars": 68408,
-      "image_url": "https://opengraph.githubassets.com/1/unslothai/unsloth",
-      "badge": "Repo",
-      "deck": "Local UI to run and train LLMs and diffusion models. Supports GGUF, MLX, Qwen3.8, DeepSeek-V4, MiniMax-H3, Gemma 4, FLUX and more. Updated 92d ago. 68408 stars, +392/7d, created 1055d ago.",
-      "meta": "GitHub · 68408 stars · +392/7d · created 1055d ago · updated 92d ago · signal 18.80",
-      "rank": 11,
-      "rank_delta": null
+      "rank_delta": 0
     },
     {
       "headline": "MemPalace/mempalace",
@@ -198,16 +179,16 @@
       "tags": [
         "AI"
       ],
-      "score": 17.003,
+      "score": 17.064,
       "raw_score": 13.327,
-      "published_hours_ago": 2265,
+      "published_hours_ago": 2287,
       "stars": 57506,
       "image_url": "https://opengraph.githubassets.com/1/MemPalace/mempalace",
       "badge": "Repo",
-      "deck": "The best-benchmarked open-source AI memory system. And it's free. Updated 94d ago. 57506 stars, +268/7d, created 198d ago.",
-      "meta": "GitHub · 57506 stars · +268/7d · created 198d ago · updated 94d ago · down 1 · signal 17.00",
-      "rank": 14,
-      "rank_delta": -1
+      "deck": "The best-benchmarked open-source AI memory system. And it's free. Updated 95d ago. 57506 stars, +268/7d, created 199d ago.",
+      "meta": "GitHub · 57506 stars · +268/7d · created 199d ago · updated 95d ago · up 1 · signal 17.06",
+      "rank": 13,
+      "rank_delta": 1
     },
     {
       "headline": "rtk-ai/rtk",
@@ -217,16 +198,33 @@
       "tags": [
         "AI"
       ],
-      "score": 16.685,
+      "score": 16.746,
       "raw_score": 13.04,
-      "published_hours_ago": 2170,
+      "published_hours_ago": 2193,
       "stars": 72291,
       "image_url": "https://opengraph.githubassets.com/1/rtk-ai/rtk",
       "badge": "Repo",
-      "deck": "CLI proxy that reduces LLM token consumption by 60-90% on common dev commands. Single Rust binary, zero dependencies. Updated 90d ago. 72291 stars, +800/7d, created 270d ago.",
-      "meta": "GitHub · 72291 stars · +800/7d · created 270d ago · updated 90d ago · down 1 · signal 16.68",
-      "rank": 16,
-      "rank_delta": -1
+      "deck": "CLI proxy that reduces LLM token consumption by 60-90% on common dev commands. Single Rust binary, zero dependencies. Updated 91d ago. 72291 stars, +800/7d, created 271d ago.",
+      "meta": "GitHub · 72291 stars · +800/7d · created 271d ago · updated 91d ago · up 1 · signal 16.75",
+      "rank": 15,
+      "rank_delta": 1
+    },
+    {
+      "headline": "open-webui/open-webui",
+      "title": "open-webui/open-webui — User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
+      "url": "https://github.com/open-webui/open-webui",
+      "source": "github.com",
+      "tags": [],
+      "score": 15.179,
+      "raw_score": 11.855,
+      "published_hours_ago": 2713,
+      "stars": 143438,
+      "image_url": "https://opengraph.githubassets.com/1/open-webui/open-webui",
+      "badge": "Repo",
+      "deck": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...). Updated 113d ago. 143438 stars, +800/7d, created 1110d ago.",
+      "meta": "GitHub · 143438 stars · +800/7d · created 1110d ago · updated 113d ago · signal 15.18",
+      "rank": 20,
+      "rank_delta": null
     }
   ],
   "sections": [
@@ -243,66 +241,68 @@
           "tags": [],
           "score": 22.916,
           "raw_score": 19.056,
-          "published_hours_ago": 2164,
+          "published_hours_ago": 2186,
           "stars": 218250,
           "image_url": "https://opengraph.githubassets.com/1/NousResearch/hermes-agent",
           "badge": "Repo",
-          "deck": "The agent that grows with you. Updated 90d ago. 218250 stars, +800/7d, created 454d ago.",
-          "meta": "GitHub · 218250 stars · +800/7d · created 454d ago · updated 90d ago · signal 22.92",
+          "deck": "The agent that grows with you. Updated 91d ago. 218250 stars, +800/7d, created 455d ago.",
+          "meta": "GitHub · 218250 stars · +800/7d · created 455d ago · updated 91d ago · signal 22.92",
           "rank": 1,
-          "rank_delta": null
+          "rank_delta": 0
         },
         {
-          "headline": "rohitg00/ai-engineering-from-scratch",
-          "title": "rohitg00/ai-engineering-from-scratch — Learn AI Engineering! Learn it. Build it. Ship it for others.",
-          "url": "https://github.com/rohitg00/ai-engineering-from-scratch",
-          "source": "github.com",
-          "tags": [],
-          "score": 11.513,
-          "raw_score": 8.226,
-          "published_hours_ago": 11,
-          "stars": 71408,
-          "image_url": "https://opengraph.githubassets.com/1/rohitg00/ai-engineering-from-scratch",
-          "badge": "Repo",
-          "deck": "Learn AI Engineering! Learn it. Build it. Ship it for others. Updated 11h ago. 71408 stars, avg 332.0/day, created 215d ago.",
-          "meta": "GitHub · 71408 stars · avg 332.0/day · created 215d ago · updated 11h ago · down 24 · signal 11.51",
-          "rank": 56,
-          "rank_delta": -24
-        },
-        {
-          "headline": "Speculative Sampling in Interactive Video Generation",
-          "title": "Speculative Sampling in Interactive Video Generation",
-          "url": "https://huggingface.co/papers/2610.20556",
-          "source": "huggingface.co",
-          "tags": [],
-          "score": 5.004,
-          "raw_score": 3.116,
-          "published_hours_ago": 20,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.20556.png",
-          "badge": "Paper",
-          "deck": "Speculative Sampling enables interactive video generation with large bidirectional windows by caching predictions and delivering them incrementally, reducing latency without sacrificing qua…",
-          "meta": "HF Papers · 20h ago · signal 5.00",
-          "rank": 217,
-          "rank_delta": null
-        },
-        {
-          "headline": "Xiaomi-Lens-0 Technical Report",
-          "title": "Xiaomi-Lens-0 Technical Report",
-          "url": "https://huggingface.co/papers/2610.23279",
+          "headline": "OpenVLHarness: Real World Visual Agentic Tool-Use with Multimodal Memory",
+          "title": "OpenVLHarness: Real World Visual Agentic Tool-Use with Multimodal Memory",
+          "url": "https://huggingface.co/papers/2610.26860",
           "source": "huggingface.co",
           "tags": [
             "AI"
           ],
-          "score": 6.223,
-          "raw_score": 3.916,
-          "published_hours_ago": 20,
+          "score": 6.828,
+          "raw_score": 4.166,
+          "published_hours_ago": 18,
           "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.23279.png",
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.26860.png",
           "badge": "Paper",
-          "deck": "Xiaomi-Lens-0 is a 4B multimodal model that predicts masks from internal visual representations to improve fine-grained region reasoning and referring comprehension. Surfaced via HF Papers…",
-          "meta": "HF Papers · 20h ago · signal 6.22",
-          "rank": 168,
+          "deck": "OpenVLHarness improves multimodal reasoning by integrating persistent memory, heterogeneous tool interfaces, and iterative evidence composition across 22 benchmarks. Surfaced via HF Papers…",
+          "meta": "HF Papers · 18h ago · signal 6.83",
+          "rank": 156,
+          "rank_delta": null
+        },
+        {
+          "headline": "MemT-1.0: Towards Memory-Native Evolution",
+          "title": "MemT-1.0: Towards Memory-Native Evolution",
+          "url": "https://huggingface.co/papers/2610.26825",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 6.628,
+          "raw_score": 4.08,
+          "published_hours_ago": 18,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.26825.png",
+          "badge": "Paper",
+          "deck": "MemT-1.0 introduces a memory-native architecture that embeds continuous memory into foundation model computation, improving long-context efficiency and agentic task performance. Surfaced vi…",
+          "meta": "HF Papers · 18h ago · signal 6.63",
+          "rank": 161,
+          "rank_delta": null
+        },
+        {
+          "headline": "Holi-World: Building Holistic World Intelligence from Human-Ego Experience",
+          "title": "Holi-World: Building Holistic World Intelligence from Human-Ego Experience",
+          "url": "https://huggingface.co/papers/2610.26549",
+          "source": "huggingface.co",
+          "tags": [],
+          "score": 5.822,
+          "raw_score": 3.671,
+          "published_hours_ago": 18,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.26549.png",
+          "badge": "Paper",
+          "deck": "HOLI-WORLD is an integrated ecosystem that automates the construction of large-scale learning resources from egocentric recordings to improve machine understanding of dynamic scenes and int…",
+          "meta": "HF Papers · 18h ago · signal 5.82",
+          "rank": 182,
           "rank_delta": null
         }
       ]
@@ -320,31 +320,31 @@
           "tags": [],
           "score": 22.916,
           "raw_score": 19.056,
-          "published_hours_ago": 2164,
+          "published_hours_ago": 2186,
           "stars": 218250,
           "image_url": "https://opengraph.githubassets.com/1/NousResearch/hermes-agent",
           "badge": "Repo",
-          "deck": "The agent that grows with you. Updated 90d ago. 218250 stars, +800/7d, created 454d ago.",
-          "meta": "GitHub · 218250 stars · +800/7d · created 454d ago · updated 90d ago · signal 22.92",
+          "deck": "The agent that grows with you. Updated 91d ago. 218250 stars, +800/7d, created 455d ago.",
+          "meta": "GitHub · 218250 stars · +800/7d · created 455d ago · updated 91d ago · signal 22.92",
           "rank": 1,
-          "rank_delta": null
+          "rank_delta": 0
         },
         {
-          "headline": "openai/codex",
-          "title": "openai/codex — Lightweight coding agent that runs in your terminal",
-          "url": "https://github.com/openai/codex",
+          "headline": "BerriAI/litellm",
+          "title": "BerriAI/litellm — The fastest, litest AI Gateway. Rust core with Python SDK. Call 100+ LLM APIs in OpenAI (or native) format with cost tracking, guardrails, load balancing, and logging [Bedrock, Azure, OpenAI, Anthropic, OpenAI, VertexAI, vLLM, Nvidia NIM]",
+          "url": "https://github.com/BerriAI/litellm",
           "source": "github.com",
           "tags": [
             "AI"
           ],
-          "score": 21.916,
-          "raw_score": 17.616,
-          "published_hours_ago": 2164,
-          "stars": 100336,
-          "image_url": "https://opengraph.githubassets.com/1/openai/codex",
+          "score": 22.182,
+          "raw_score": 17.986,
+          "published_hours_ago": 2210,
+          "stars": 54123,
+          "image_url": "https://opengraph.githubassets.com/1/BerriAI/litellm",
           "badge": "Repo",
-          "deck": "Lightweight coding agent that runs in your terminal. Updated 90d ago. 100336 stars, +800/7d, created 555d ago.",
-          "meta": "GitHub · 100336 stars · +800/7d · created 555d ago · updated 90d ago · signal 21.92",
+          "deck": "The fastest, litest AI Gateway. Rust core with Python SDK. Call 100+ LLM APIs in OpenAI (or native) format with cost tracking, guardrails, load balancing, and logging [Bedrock, Azure, OpenA…",
+          "meta": "GitHub · 54123 stars · +714/7d · created 1182d ago · updated 92d ago · signal 22.18",
           "rank": 2,
           "rank_delta": null
         },
@@ -356,16 +356,16 @@
           "tags": [
             "AI"
           ],
-          "score": 20.993,
-          "raw_score": 16.834,
-          "published_hours_ago": 2198,
+          "score": 20.966,
+          "raw_score": 16.775,
+          "published_hours_ago": 2221,
           "stars": 60623,
           "image_url": "https://opengraph.githubassets.com/1/headroomlabs-ai/headroom",
           "badge": "Repo",
           "deck": "Compress tool outputs, logs, files, and RAG chunks before they reach the LLM. 20% fewer tokens for coding agents, 60-95% fewer tokens for JSON, same answers. Library, proxy, MCP server. Upd…",
-          "meta": "GitHub · 60623 stars · +800/7d · created 285d ago · updated 92d ago · down 3 · signal 20.99",
+          "meta": "GitHub · 60623 stars · +800/7d · created 286d ago · updated 93d ago · signal 20.97",
           "rank": 4,
-          "rank_delta": -3
+          "rank_delta": 0
         },
         {
           "headline": "anomalyco/opencode",
@@ -373,16 +373,16 @@
           "url": "https://github.com/anomalyco/opencode",
           "source": "github.com",
           "tags": [],
-          "score": 20.692,
-          "raw_score": 16.906,
-          "published_hours_ago": 2188,
+          "score": 20.627,
+          "raw_score": 16.846,
+          "published_hours_ago": 2210,
           "stars": 187809,
           "image_url": "https://opengraph.githubassets.com/1/anomalyco/opencode",
           "badge": "Repo",
-          "deck": "The open source coding agent. Updated 91d ago. 187809 stars, +800/7d, created 537d ago.",
-          "meta": "GitHub · 187809 stars · +800/7d · created 537d ago · updated 91d ago · signal 20.69",
+          "deck": "The open source coding agent. Updated 92d ago. 187809 stars, +800/7d, created 538d ago.",
+          "meta": "GitHub · 187809 stars · +800/7d · created 538d ago · updated 92d ago · signal 20.63",
           "rank": 3,
-          "rank_delta": null
+          "rank_delta": 0
         },
         {
           "headline": "shanraisshan/claude-code-best-practice",
@@ -392,35 +392,16 @@
           "tags": [
             "AI"
           ],
-          "score": 20.448,
-          "raw_score": 16.267,
-          "published_hours_ago": 2197,
+          "score": 20.443,
+          "raw_score": 16.246,
+          "published_hours_ago": 2220,
           "stars": 63155,
           "image_url": "https://opengraph.githubassets.com/1/shanraisshan/claude-code-best-practice",
           "badge": "Repo",
-          "deck": "from vibe coding to agentic engineering - practice makes claude perfect. Updated 92d ago. 63155 stars, +674/7d, created 353d ago.",
-          "meta": "GitHub · 63155 stars · +674/7d · created 353d ago · updated 92d ago · down 2 · signal 20.45",
+          "deck": "from vibe coding to agentic engineering - practice makes claude perfect. Updated 92d ago. 63155 stars, +674/7d, created 354d ago.",
+          "meta": "GitHub · 63155 stars · +674/7d · created 354d ago · updated 92d ago · signal 20.44",
           "rank": 5,
-          "rank_delta": -2
-        },
-        {
-          "headline": "unslothai/unsloth",
-          "title": "unslothai/unsloth — Local UI to run and train LLMs and diffusion models. Supports GGUF, MLX, Qwen3.8, DeepSeek-V4, MiniMax-H3, Gemma 4, FLUX and more.",
-          "url": "https://github.com/unslothai/unsloth",
-          "source": "github.com",
-          "tags": [
-            "AI"
-          ],
-          "score": 18.801,
-          "raw_score": 14.877,
-          "published_hours_ago": 2212,
-          "stars": 68408,
-          "image_url": "https://opengraph.githubassets.com/1/unslothai/unsloth",
-          "badge": "Repo",
-          "deck": "Local UI to run and train LLMs and diffusion models. Supports GGUF, MLX, Qwen3.8, DeepSeek-V4, MiniMax-H3, Gemma 4, FLUX and more. Updated 92d ago. 68408 stars, +392/7d, created 1055d ago.",
-          "meta": "GitHub · 68408 stars · +392/7d · created 1055d ago · updated 92d ago · signal 18.80",
-          "rank": 11,
-          "rank_delta": null
+          "rank_delta": 0
         },
         {
           "headline": "MemPalace/mempalace",
@@ -430,16 +411,16 @@
           "tags": [
             "AI"
           ],
-          "score": 17.003,
+          "score": 17.064,
           "raw_score": 13.327,
-          "published_hours_ago": 2265,
+          "published_hours_ago": 2287,
           "stars": 57506,
           "image_url": "https://opengraph.githubassets.com/1/MemPalace/mempalace",
           "badge": "Repo",
-          "deck": "The best-benchmarked open-source AI memory system. And it's free. Updated 94d ago. 57506 stars, +268/7d, created 198d ago.",
-          "meta": "GitHub · 57506 stars · +268/7d · created 198d ago · updated 94d ago · down 1 · signal 17.00",
-          "rank": 14,
-          "rank_delta": -1
+          "deck": "The best-benchmarked open-source AI memory system. And it's free. Updated 95d ago. 57506 stars, +268/7d, created 199d ago.",
+          "meta": "GitHub · 57506 stars · +268/7d · created 199d ago · updated 95d ago · up 1 · signal 17.06",
+          "rank": 13,
+          "rank_delta": 1
         },
         {
           "headline": "rtk-ai/rtk",
@@ -449,16 +430,33 @@
           "tags": [
             "AI"
           ],
-          "score": 16.685,
+          "score": 16.746,
           "raw_score": 13.04,
-          "published_hours_ago": 2170,
+          "published_hours_ago": 2193,
           "stars": 72291,
           "image_url": "https://opengraph.githubassets.com/1/rtk-ai/rtk",
           "badge": "Repo",
-          "deck": "CLI proxy that reduces LLM token consumption by 60-90% on common dev commands. Single Rust binary, zero dependencies. Updated 90d ago. 72291 stars, +800/7d, created 270d ago.",
-          "meta": "GitHub · 72291 stars · +800/7d · created 270d ago · updated 90d ago · down 1 · signal 16.68",
-          "rank": 16,
-          "rank_delta": -1
+          "deck": "CLI proxy that reduces LLM token consumption by 60-90% on common dev commands. Single Rust binary, zero dependencies. Updated 91d ago. 72291 stars, +800/7d, created 271d ago.",
+          "meta": "GitHub · 72291 stars · +800/7d · created 271d ago · updated 91d ago · up 1 · signal 16.75",
+          "rank": 15,
+          "rank_delta": 1
+        },
+        {
+          "headline": "open-webui/open-webui",
+          "title": "open-webui/open-webui — User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
+          "url": "https://github.com/open-webui/open-webui",
+          "source": "github.com",
+          "tags": [],
+          "score": 15.179,
+          "raw_score": 11.855,
+          "published_hours_ago": 2713,
+          "stars": 143438,
+          "image_url": "https://opengraph.githubassets.com/1/open-webui/open-webui",
+          "badge": "Repo",
+          "deck": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...). Updated 113d ago. 143438 stars, +800/7d, created 1110d ago.",
+          "meta": "GitHub · 143438 stars · +800/7d · created 1110d ago · updated 113d ago · signal 15.18",
+          "rank": 20,
+          "rank_delta": null
         },
         {
           "headline": "ZhuLinsen/daily_stock_analysis",
@@ -468,33 +466,33 @@
           "tags": [
             "AI"
           ],
-          "score": 16.345,
+          "score": 16.406,
           "raw_score": 12.867,
-          "published_hours_ago": 2189,
+          "published_hours_ago": 2211,
           "stars": 58009,
           "image_url": "https://opengraph.githubassets.com/1/ZhuLinsen/daily_stock_analysis",
           "badge": "Repo",
           "deck": "LLM-driven multi-market stock intelligent analysis system: multi-source quotes, real-time news, decision-making boards and automatic push, supporting zero-cost scheduled operation. LLM-powe…",
-          "meta": "GitHub · 58009 stars · +800/7d · created 282d ago · updated 91d ago · down 1 · signal 16.34",
-          "rank": 19,
-          "rank_delta": -1
+          "meta": "GitHub · 58009 stars · +800/7d · created 284d ago · updated 92d ago · up 1 · signal 16.41",
+          "rank": 18,
+          "rank_delta": 1
         },
         {
-          "headline": "rohitg00/ai-engineering-from-scratch",
-          "title": "rohitg00/ai-engineering-from-scratch — Learn AI Engineering! Learn it. Build it. Ship it for others.",
-          "url": "https://github.com/rohitg00/ai-engineering-from-scratch",
+          "headline": "kortix-ai/suna",
+          "title": "kortix-ai/suna — The open-source AI Operating System",
+          "url": "https://github.com/kortix-ai/suna",
           "source": "github.com",
           "tags": [],
-          "score": 11.513,
-          "raw_score": 8.226,
-          "published_hours_ago": 11,
-          "stars": 71408,
-          "image_url": "https://opengraph.githubassets.com/1/rohitg00/ai-engineering-from-scratch",
+          "score": 12.037,
+          "raw_score": 8.244,
+          "published_hours_ago": 0,
+          "stars": 20289,
+          "image_url": "https://opengraph.githubassets.com/1/kortix-ai/suna",
           "badge": "Repo",
-          "deck": "Learn AI Engineering! Learn it. Build it. Ship it for others. Updated 11h ago. 71408 stars, avg 332.0/day, created 215d ago.",
-          "meta": "GitHub · 71408 stars · avg 332.0/day · created 215d ago · updated 11h ago · down 24 · signal 11.51",
-          "rank": 56,
-          "rank_delta": -24
+          "deck": "The open-source AI Operating System. Updated <1h ago. 20289 stars, avg 27.2/day, created 745d ago.",
+          "meta": "GitHub · 20289 stars · avg 27.2/day · created 745d ago · updated <1h ago · signal 12.04",
+          "rank": 52,
+          "rank_delta": null
         }
       ]
     },
@@ -504,189 +502,185 @@
       "description": "New research worth bookmarking for a deeper read.",
       "items": [
         {
-          "headline": "Speculative Sampling in Interactive Video Generation",
-          "title": "Speculative Sampling in Interactive Video Generation",
-          "url": "https://huggingface.co/papers/2610.20556",
+          "headline": "OpenVLHarness: Real World Visual Agentic Tool-Use with Multimodal Memory",
+          "title": "OpenVLHarness: Real World Visual Agentic Tool-Use with Multimodal Memory",
+          "url": "https://huggingface.co/papers/2610.26860",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 6.828,
+          "raw_score": 4.166,
+          "published_hours_ago": 18,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.26860.png",
+          "badge": "Paper",
+          "deck": "OpenVLHarness improves multimodal reasoning by integrating persistent memory, heterogeneous tool interfaces, and iterative evidence composition across 22 benchmarks. Surfaced via HF Papers…",
+          "meta": "HF Papers · 18h ago · signal 6.83",
+          "rank": 156,
+          "rank_delta": null
+        },
+        {
+          "headline": "MemT-1.0: Towards Memory-Native Evolution",
+          "title": "MemT-1.0: Towards Memory-Native Evolution",
+          "url": "https://huggingface.co/papers/2610.26825",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 6.628,
+          "raw_score": 4.08,
+          "published_hours_ago": 18,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.26825.png",
+          "badge": "Paper",
+          "deck": "MemT-1.0 introduces a memory-native architecture that embeds continuous memory into foundation model computation, improving long-context efficiency and agentic task performance. Surfaced vi…",
+          "meta": "HF Papers · 18h ago · signal 6.63",
+          "rank": 161,
+          "rank_delta": null
+        },
+        {
+          "headline": "BlenderWorld: Benchmarking Visual Agents for 3D Creation from Real-World References",
+          "title": "BlenderWorld: Benchmarking Visual Agents for 3D Creation from Real-World References",
+          "url": "https://huggingface.co/papers/2610.23986",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 6.598,
+          "raw_score": 3.96,
+          "published_hours_ago": 18,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.23986.png",
+          "badge": "Paper",
+          "deck": "BlenderWorld is a benchmark for evaluating multimodal language models on realistic 3D creation tasks using rendered outputs and binary rubrics, revealing significant gaps in spatial coheren…",
+          "meta": "HF Papers · 18h ago · signal 6.60",
+          "rank": 166,
+          "rank_delta": null
+        },
+        {
+          "headline": "Holi-World: Building Holistic World Intelligence from Human-Ego Experience",
+          "title": "Holi-World: Building Holistic World Intelligence from Human-Ego Experience",
+          "url": "https://huggingface.co/papers/2610.26549",
           "source": "huggingface.co",
           "tags": [],
-          "score": 5.004,
-          "raw_score": 3.116,
-          "published_hours_ago": 20,
+          "score": 5.822,
+          "raw_score": 3.671,
+          "published_hours_ago": 18,
           "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.20556.png",
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.26549.png",
           "badge": "Paper",
-          "deck": "Speculative Sampling enables interactive video generation with large bidirectional windows by caching predictions and delivering them incrementally, reducing latency without sacrificing qua…",
-          "meta": "HF Papers · 20h ago · signal 5.00",
-          "rank": 217,
-          "rank_delta": null
-        },
-        {
-          "headline": "Xiaomi-Lens-0 Technical Report",
-          "title": "Xiaomi-Lens-0 Technical Report",
-          "url": "https://huggingface.co/papers/2610.23279",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 6.223,
-          "raw_score": 3.916,
-          "published_hours_ago": 20,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.23279.png",
-          "badge": "Paper",
-          "deck": "Xiaomi-Lens-0 is a 4B multimodal model that predicts masks from internal visual representations to improve fine-grained region reasoning and referring comprehension. Surfaced via HF Papers…",
-          "meta": "HF Papers · 20h ago · signal 6.22",
-          "rank": 168,
-          "rank_delta": null
-        },
-        {
-          "headline": "MOSS-Image Technical Report",
-          "title": "MOSS-Image Technical Report",
-          "url": "https://huggingface.co/papers/2610.23374",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 6.207,
-          "raw_score": 3.724,
-          "published_hours_ago": 20,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.23374.png",
-          "badge": "Paper",
-          "deck": "MOSS-Image is an open diffusion transformer that combines high-fidelity synthesis with intent-aware prompt enhancement to generate text-rich, layout-coherent images, achieving state-of-the-…",
-          "meta": "HF Papers · 20h ago · signal 6.21",
-          "rank": 176,
-          "rank_delta": null
-        },
-        {
-          "headline": "Scene-Designer: Learning Design Intelligence for Agentic 3D Scene Generation",
-          "title": "Scene-Designer: Learning Design Intelligence for Agentic 3D Scene Generation",
-          "url": "https://huggingface.co/papers/2610.23121",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 6.198,
-          "raw_score": 3.901,
-          "published_hours_ago": 20,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.23121.png",
-          "badge": "Paper",
-          "deck": "Generating complete, coherent, and usable 3D indoor scenes from natural language requires strong design intelligence: the ability to design high-quality scenes and critique their quality. H…",
-          "meta": "HF Papers · 20h ago · signal 6.20",
-          "rank": 169,
-          "rank_delta": null
-        },
-        {
-          "headline": "Stuck on Shuffle: On Attribute-Object Binding in Vision-Language Models",
-          "title": "Stuck on Shuffle: On Attribute-Object Binding in Vision-Language Models",
-          "url": "https://huggingface.co/papers/2610.22602",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 5.748,
-          "raw_score": 3.4,
-          "published_hours_ago": 20,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.22602.png",
-          "badge": "Paper",
-          "deck": "A new benchmark reveals widespread attribute-object binding failures in multimodal retrievers, and fine-tuning on synthetic text improves cross-modal binding without image supervision. Surf…",
-          "meta": "HF Papers · 20h ago · signal 5.75",
-          "rank": 191,
-          "rank_delta": null
-        },
-        {
-          "headline": "RAP: A Dataset for Paper-to-Poster Generation via Declarative Markup from Human-Crafted Exempla…",
-          "title": "RAP: A Dataset for Paper-to-Poster Generation via Declarative Markup from Human-Crafted Exemplars",
-          "url": "https://huggingface.co/papers/2610.23230",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 5.724,
-          "raw_score": 3.479,
-          "published_hours_ago": 20,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.23230.png",
-          "badge": "Paper",
-          "deck": "RAP introduces a large-scale dataset and benchmark for generating conference posters from papers as a visual coding task, providing verified paper-poster-markup triplets and both retrieval-…",
-          "meta": "HF Papers · 20h ago · signal 5.72",
-          "rank": 183,
-          "rank_delta": null
-        },
-        {
-          "headline": "Can Visual Generation Expand What Unified Multimodal Models Know?",
-          "title": "Can Visual Generation Expand What Unified Multimodal Models Know?",
-          "url": "https://huggingface.co/papers/2610.21459",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 5.691,
-          "raw_score": 3.44,
-          "published_hours_ago": 20,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.21459.png",
-          "badge": "Paper",
-          "deck": "Visual image-generation training can expand pretrained multimodal models' knowledge, with alignment techniques improving text-based access to that visually acquired information. Surfaced vi…",
-          "meta": "HF Papers · 20h ago · signal 5.69",
-          "rank": 185,
-          "rank_delta": null
-        },
-        {
-          "headline": "OPMD: On-Policy Mechanism Distillation Beyond Output Supervision",
-          "title": "OPMD: On-Policy Mechanism Distillation Beyond Output Supervision",
-          "url": "https://huggingface.co/papers/2610.14022",
-          "source": "huggingface.co",
-          "tags": [],
-          "score": 5.667,
-          "raw_score": 3.511,
-          "published_hours_ago": 20,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.14022.png",
-          "badge": "Paper",
-          "deck": "On-Policy Mechanism Distillation improves language model distillation by transferring teacher intermediate computations compatible with the student's architecture, yielding stronger reasoni…",
-          "meta": "HF Papers · 20h ago · signal 5.67",
+          "deck": "HOLI-WORLD is an integrated ecosystem that automates the construction of large-scale learning resources from egocentric recordings to improve machine understanding of dynamic scenes and int…",
+          "meta": "HF Papers · 18h ago · signal 5.82",
           "rank": 182,
           "rank_delta": null
         },
         {
-          "headline": "Enhancing RAG-based Medical VQA with Gated Multimodal Representations",
-          "title": "Enhancing RAG-based Medical VQA with Gated Multimodal Representations",
-          "url": "http://arxiv.org/abs/2610.23588v1",
-          "source": "arxiv.org",
+          "headline": "ECHO: Efficient Causal Self-Recursion Beyond Auxiliary Multi-Token Prediction",
+          "title": "ECHO: Efficient Causal Self-Recursion Beyond Auxiliary Multi-Token Prediction",
+          "url": "https://huggingface.co/papers/2610.24766",
+          "source": "huggingface.co",
           "tags": [
             "AI"
           ],
-          "score": 3.736,
-          "raw_score": 2.568,
-          "published_hours_ago": 77,
+          "score": 5.362,
+          "raw_score": 3.329,
+          "published_hours_ago": 18,
           "stars": 0,
-          "image_url": "/assets/news/thumb-paper.svg",
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.24766.png",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 3d ago.",
-          "meta": "arXiv · 3d ago · signal 3.74",
-          "rank": 249,
+          "deck": "ECHO integrates multi-horizon prediction into the backbone via self-recursion and dynamic depth sampling, improving pretraining efficiency and inference drafting without auxiliary modules.…",
+          "meta": "HF Papers · 18h ago · signal 5.36",
+          "rank": 201,
           "rank_delta": null
         },
         {
-          "headline": "Leveraging verifiable structure in quantum circuits to find more efficient compilations with ag…",
-          "title": "Leveraging verifiable structure in quantum circuits to find more efficient compilations with agentic AI",
-          "url": "http://arxiv.org/abs/2610.23832v1",
-          "source": "arxiv.org",
+          "headline": "Scaling Parameter-Efficient Fine-Tuning for Brain Encoding",
+          "title": "Scaling Parameter-Efficient Fine-Tuning for Brain Encoding",
+          "url": "https://huggingface.co/papers/2610.26802",
+          "source": "huggingface.co",
           "tags": [
             "AI"
           ],
-          "score": 3.807,
-          "raw_score": 2.607,
-          "published_hours_ago": 74,
+          "score": 5.32,
+          "raw_score": 3.29,
+          "published_hours_ago": 18,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.26802.png",
+          "badge": "Paper",
+          "deck": "Parameter-efficient fine-tuning with low-rank adapters enables efficient adaptation of very large multimodal backbones for brain encoding, improving performance and interpretability while r…",
+          "meta": "HF Papers · 18h ago · signal 5.32",
+          "rank": 207,
+          "rank_delta": null
+        },
+        {
+          "headline": "From Data to Deployment: A Scoping Review of Empirical Tools, Techniques, and Operational Readi…",
+          "title": "From Data to Deployment: A Scoping Review of Empirical Tools, Techniques, and Operational Readiness in Data-Driven 5G/6G Network Optimization",
+          "url": "http://arxiv.org/abs/2610.26566v1",
+          "source": "arxiv.org",
+          "tags": [
+            "vRAN"
+          ],
+          "score": 4.34,
+          "raw_score": 2.707,
+          "published_hours_ago": 27,
           "stars": 0,
           "image_url": "/assets/news/thumb-paper.svg",
           "badge": "Paper",
-          "deck": "Fresh arXiv paper from the ai cluster, posted 3d ago.",
-          "meta": "arXiv · 3d ago · signal 3.81",
-          "rank": 247,
+          "deck": "Fresh arXiv paper from the vran cluster, posted 1d ago.",
+          "meta": "arXiv · 1d ago · signal 4.34",
+          "rank": 254,
+          "rank_delta": null
+        },
+        {
+          "headline": "ForagerSim: Evaluating Embodied Map-Based Reasoning in Large-Scale Dynamic Worlds",
+          "title": "ForagerSim: Evaluating Embodied Map-Based Reasoning in Large-Scale Dynamic Worlds",
+          "url": "http://arxiv.org/abs/2610.26395v1",
+          "source": "arxiv.org",
+          "tags": [],
+          "score": 4.688,
+          "raw_score": 3.022,
+          "published_hours_ago": 28,
+          "stars": 0,
+          "image_url": "/assets/news/thumb-paper.svg",
+          "badge": "Paper",
+          "deck": "Fresh arXiv paper posted 1d ago and surfacing in the current feed.",
+          "meta": "arXiv · 1d ago · signal 4.69",
+          "rank": 230,
+          "rank_delta": null
+        },
+        {
+          "headline": "Proof-of-Machine-Learning-Inference: Mining Knowledge, Not Hashes",
+          "title": "Proof-of-Machine-Learning-Inference: Mining Knowledge, Not Hashes",
+          "url": "http://arxiv.org/abs/2610.26713v1",
+          "source": "arxiv.org",
+          "tags": [],
+          "score": 4.114,
+          "raw_score": 2.683,
+          "published_hours_ago": 25,
+          "stars": 0,
+          "image_url": "/assets/news/thumb-paper.svg",
+          "badge": "Paper",
+          "deck": "Fresh arXiv paper posted 1d ago and surfacing in the current feed.",
+          "meta": "arXiv · 1d ago · signal 4.11",
+          "rank": 256,
+          "rank_delta": null
+        },
+        {
+          "headline": "EpiLens: Lightweight RAG for Epidemiological Knowledge Acquisition",
+          "title": "EpiLens: Lightweight RAG for Epidemiological Knowledge Acquisition",
+          "url": "http://arxiv.org/abs/2610.26730v1",
+          "source": "arxiv.org",
+          "tags": [],
+          "score": 4.088,
+          "raw_score": 2.585,
+          "published_hours_ago": 25,
+          "stars": 0,
+          "image_url": "/assets/news/thumb-paper.svg",
+          "badge": "Paper",
+          "deck": "Fresh arXiv paper posted 1d ago and surfacing in the current feed.",
+          "meta": "arXiv · 1d ago · signal 4.09",
+          "rank": 264,
           "rank_delta": null
         }
       ]
@@ -697,28 +691,9 @@
       "description": "Directional signals from discussion-heavy sources.",
       "items": [
         {
-          "headline": "Poor availability of GitHub Actions, GitHub Pages, and Webhooks",
-          "title": "Poor availability of GitHub Actions, GitHub Pages, and Webhooks",
-          "url": "https://news.hada.io/topic?id=35656",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 4.082,
-          "raw_score": 2.233,
-          "published_hours_ago": 1,
-          "stars": 0,
-          "image_url": "/assets/news/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews 1h ago.",
-          "meta": "GeekNews · 1h ago · signal 4.08",
-          "rank": 999,
-          "rank_delta": null
-        },
-        {
-          "headline": "Let's Encrypt adds two remote observation points for domain verification",
-          "title": "Let's Encrypt adds two remote observation points for domain verification",
-          "url": "https://news.hada.io/topic?id=35648",
+          "headline": "Bank services interrupted due to Google Cloud failure",
+          "title": "Bank services interrupted due to Google Cloud failure",
+          "url": "https://news.hada.io/topic?id=35714",
           "source": "geeknews",
           "tags": [
             "social"
@@ -735,66 +710,67 @@
           "rank_delta": null
         },
         {
-          "headline": "Show HN: WhatsApp MCP runs for free on Cloudflare",
-          "title": "Show HN: WhatsApp MCP runs for free on Cloudflare",
-          "url": "https://news.hada.io/topic?id=35643",
+          "headline": "DeepSeek releases inference engine as open source",
+          "title": "DeepSeek releases inference engine as open source",
+          "url": "https://news.hada.io/topic?id=35703",
           "source": "geeknews",
           "tags": [
             "social"
           ],
-          "score": 3.818,
-          "raw_score": 1.989,
-          "published_hours_ago": 6,
+          "score": 3.545,
+          "raw_score": 1.829,
+          "published_hours_ago": 8,
           "stars": 0,
           "image_url": "/assets/news/thumb-ai.svg",
           "badge": "Social",
-          "deck": "Community signal picked up on GeekNews 6h ago.",
-          "meta": "GeekNews · 6h ago · signal 3.82",
+          "deck": "Community signal picked up on GeekNews 8h ago.",
+          "meta": "GeekNews · 8h ago · signal 3.54",
           "rank": 999,
           "rank_delta": null
         },
         {
-          "headline": "Show HN: A model that removes Qwen3-4B’s AI-specific writing habits through learning",
-          "title": "Show HN: A model that removes Qwen3-4B’s AI-specific writing habits through learning",
-          "url": "https://news.hada.io/topic?id=35655",
+          "headline": "AfD leak: The reality of Germany's far-right revealed by 421,179 hacked emails",
+          "title": "AfD leak: The reality of Germany's far-right revealed by 421,179 hacked emails",
+          "url": "https://news.hada.io/topic?id=35704",
           "source": "geeknews",
           "tags": [
             "social"
           ],
-          "score": 4.182,
-          "raw_score": 2.233,
-          "published_hours_ago": 1,
+          "score": 3.49,
+          "raw_score": 1.87,
+          "published_hours_ago": 7,
           "stars": 0,
           "image_url": "/assets/news/thumb-ai.svg",
           "badge": "Social",
-          "deck": "Community signal picked up on GeekNews 1h ago.",
-          "meta": "GeekNews · 1h ago · signal 4.18",
+          "deck": "Community signal picked up on GeekNews 7h ago.",
+          "meta": "GeekNews · 7h ago · signal 3.49",
           "rank": 999,
           "rank_delta": null
         },
         {
-          "headline": "Harness Engineering 101: LLM is the Brain, Harness is the Body",
-          "title": "Harness Engineering 101: LLM is the Brain, Harness is the Body",
-          "url": "https://news.hada.io/topic?id=35651",
-          "source": "geeknews",
+          "headline": "ALERT🚨: Vera Rubin NVL72 is up to 7.3x better in perf per dollar than GB300 NVL72 for 1 million…",
+          "title": "ALERT🚨: Vera Rubin NVL72 is up to 7.3x better in perf per dollar than GB300 NVL72 for 1 million context length agentic inference workloads! THE MORE U BUY, THE MORE U EARN 👇️(1/3)🧵 - X",
+          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5VS3VvbjVGMEhFdXZucmhzUEo2dWM1ZHhFX2g2bGN3aHdtRXQ3TnY5cWI4R0kwM0I5QXo5aldSYS1zZmpkZXRDZFdpRW9NT3h2azdwZHRuNndmdVVaTWIyZTZxMzY?oc=5",
+          "source": "x.com",
           "tags": [
+            "AI",
             "social"
           ],
-          "score": 4.125,
-          "raw_score": 2.181,
-          "published_hours_ago": 2,
+          "score": 3.621,
+          "raw_score": 2.208,
+          "published_hours_ago": 72,
           "stars": 0,
           "image_url": "/assets/news/thumb-ai.svg",
           "badge": "Social",
-          "deck": "Community signal picked up on GeekNews 2h ago.",
-          "meta": "GeekNews · 2h ago · signal 4.12",
+          "deck": "Community signal picked up on X 3d ago.",
+          "meta": "X · 3d ago · signal 3.62",
           "rank": 999,
           "rank_delta": null
         },
         {
-          "headline": "tmux and Claude Code: Sessions, send-keys, and limits",
-          "title": "tmux and Claude Code: Sessions, send-keys, and limits",
-          "url": "https://news.hada.io/topic?id=35650",
+          "headline": "Get Citations from LLM by Posting Fake Statistics",
+          "title": "Get Citations from LLM by Posting Fake Statistics",
+          "url": "https://news.hada.io/topic?id=35721",
           "source": "geeknews",
           "tags": [
             "social"
@@ -811,81 +787,100 @@
           "rank_delta": null
         },
         {
-          "headline": "Family birthday parties have a way of bringing you back down to earth.",
-          "title": "Family birthday parties have a way of bringing you back down to earth. 90% of people have never heard of \"Claude\" or \"agentic AI.\" They have no idea what today’s AI is capable of or what is currently unfolding. We live in an ivory tower; the average person, at - X",
-          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTFBzdHY3bmNzbVhtcEFRQTFEc283YXB0Z3ZaUzlwaVVvakJ0TmxJMHRHcjhUVUNNVXJUbTB1MmI3WmZtWFliX0ktNE9fMzR6UlBkSnItR0RueXpyRnZBb2FqeWN3?oc=5",
+          "headline": "Concerning. DeepSeek is baking safety into the model at a deep level.",
+          "title": "Concerning. DeepSeek is baking safety into the model at a deep level. I don't think it's just XinjiangQA.csv this time, and it's not a distillation artifact. Also, I see 1017 cheating *a lot*. After scaling up agentic RL, they must have become spooked. Frontier proble - X",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1nbUNUZ0x3dXcteWFFZzJOWTNWWlFORFBQcG9EZWNncXZMZ09PUXppeVpUa1JvOFRrMng5b2lBTTlnSEsySmIySmd2WDEtRXhsWUgzMTZaZXZaU2ltMlpvZE8xYw?oc=5",
           "source": "x.com",
           "tags": [
             "AI",
             "social"
           ],
-          "score": 3.721,
-          "raw_score": 2.208,
+          "score": 3.361,
+          "raw_score": 2.055,
           "published_hours_ago": 72,
           "stars": 0,
           "image_url": "/assets/news/thumb-ai.svg",
           "badge": "Social",
           "deck": "Community signal picked up on X 3d ago.",
-          "meta": "X · 3d ago · signal 3.72",
+          "meta": "X · 3d ago · signal 3.36",
           "rank": 999,
           "rank_delta": null
         },
         {
-          "headline": "Unintentional contrarian take: I'm surprised by how low some AI utilization figures still are e…",
-          "title": "Unintentional contrarian take: I'm surprised by how low some AI utilization figures still are even within Anthropic and OpenAI. For example: Only 85% of hours at Anthropic [1] and 76% of workdays at OpenAI [2] are agentic. Isn't this low? - X",
-          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9WdVdCaWxYOVl4Vk4xMmQwUVlaMUNUWi1rWU11UlhjZVBfSFdJN0p4SEN1d0Yxc2VjeWhld1ZHdzFpWGs3U2dTWEVDaTdwZ0lHMDVqOEV2V09qUnExakdjNWxB?oc=5",
+          "headline": "New Blog: Towards the Agentic Era of Video Understanding For complex tasks, agents have become…",
+          "title": "New Blog: Towards the Agentic Era of Video Understanding For complex tasks, agents have become the default. Nobody uses chat mode for that work anymore: people hand it to Claude Code, Codex or Antigravity (yes sometimes🤣), which open files, run com - X",
+          "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9SeXNnZDJlamlkRDJHRzVNWGc2WlNaRkNhYXA3N2VSWURsYkZJTS1MdkVQaVBhWHUtRmlBUDBmV0Q3NWVaazJ1QWIyNEFRcktyZWwwSVVWTEticl9oeFpUSQ?oc=5",
           "source": "x.com",
           "tags": [
             "AI",
             "social"
           ],
-          "score": 3.663,
-          "raw_score": 2.154,
+          "score": 3.316,
+          "raw_score": 1.95,
           "published_hours_ago": 72,
           "stars": 0,
           "image_url": "/assets/news/thumb-ai.svg",
           "badge": "Social",
           "deck": "Community signal picked up on X 3d ago.",
-          "meta": "X · 3d ago · signal 3.66",
+          "meta": "X · 3d ago · signal 3.32",
           "rank": 999,
           "rank_delta": null
         },
         {
-          "headline": "The Top AI Papers of the Week (October 12 - 18): - Harness^2 - ReHarness - LongHarness - The Ag…",
-          "title": "The Top AI Papers of the Week (October 12 - 18): - Harness^2 - ReHarness - LongHarness - The Agentic Scientist - Hybrid Reasoning Agents - Quantum Circuit Discovery - Scaling Discovery Requires Forgetting Read on for more: - X",
-          "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9VN3RUVUxlWnptM2ppR0VxX0txQk1nWFBCVXBWT1lvMFBmaGp3ZTk2YVdWTTFCX3lFQnFMXzlMbU1VbUlPUkl1SmdPU0dZYlBVdEFTdXI0eHhsSFpN?oc=5",
+          "headline": "Why a model with the rejection function removed can become a conduit for hacking",
+          "title": "Why a model with the rejection function removed can become a conduit for hacking",
+          "url": "https://news.hada.io/topic?id=35709",
+          "source": "geeknews",
+          "tags": [
+            "social"
+          ],
+          "score": 3.818,
+          "raw_score": 1.989,
+          "published_hours_ago": 6,
+          "stars": 0,
+          "image_url": "/assets/news/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on GeekNews 6h ago.",
+          "meta": "GeekNews · 6h ago · signal 3.82",
+          "rank": 999,
+          "rank_delta": null
+        },
+        {
+          "headline": "Today we published a technical report on Muse Glimmer, our 30B open-weight model built for agen…",
+          "title": "Today we published a technical report on Muse Glimmer, our 30B open-weight model built for agentic tasks on consumer hardware. It runs at practical speeds on a Mac or PC with a single consumer GPU at 4-bit precision, and leads comparably-sized open m - X",
+          "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE5OaUJiWmdMMHcwTW5HX2NjOXZVYnV1Y2h5SHlFb0NZSEI2NFYtbzBBVEduMF9yNlZldGVKb19VRjl3ME5JVTdxUlFwZlByc3BEQWx4NmVXRXI2SVNXX0E?oc=5",
           "source": "x.com",
           "tags": [
             "AI",
             "social"
           ],
-          "score": 3.447,
-          "raw_score": 2.106,
+          "score": 3.216,
+          "raw_score": 1.95,
           "published_hours_ago": 72,
           "stars": 0,
           "image_url": "/assets/news/thumb-ai.svg",
           "badge": "Social",
           "deck": "Community signal picked up on X 3d ago.",
-          "meta": "X · 3d ago · signal 3.45",
+          "meta": "X · 3d ago · signal 3.22",
           "rank": 999,
           "rank_delta": null
         },
         {
-          "headline": "ANTHROPIC 🔥: According to The Information, Anthropic will release a new model this month, along…",
-          "title": "ANTHROPIC 🔥: According to The Information, Anthropic will release a new model this month, along with Gemini 4 Carbon and a new Terra model from OpenAI. > \"The unreleased model is especially good at discerning a person’s underlying intentions and goa - X",
-          "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFBGSktpWG9hZ082M0JWck9BT1d3YUdDNUFNMy1tUU5tQTBBczFyT0JZU1pLVXhoZkFHdkNRcDFaYkJPa3h3cmRCVlQ5em1fd3ZFeDJMak50UjB4bHRRckp6OExIdUFTZw?oc=5",
+          "headline": "OpenAI got its own Pro reasoning mode wrong.",
+          "title": "OpenAI got its own Pro reasoning mode wrong. They quietly corrected \"GPT-6 Pro\" to \"GPT-6 Astra Pro\". I spent yesterday digging through this confusing mess. fml. What I figured out: - GPT-6 Pro is powered by Astra, but Pro isn't simply another reasoning-effort - X",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTFBMLWNrdEVhUVpjZGRtQ2dINFFlblhJMjRaYVdPbEVmeXE2V0RmXzBwbDNtTmw2YUlTTmRFSlBLbmV3WW5pVlZzNE1iT1BDU2NFaUpaUS1TOW95TVQwWlYyVXV3?oc=5",
           "source": "x.com",
           "tags": [
             "social"
           ],
-          "score": 3.257,
-          "raw_score": 1.896,
+          "score": 3.216,
+          "raw_score": 1.95,
           "published_hours_ago": 72,
           "stars": 0,
           "image_url": "/assets/news/thumb-ai.svg",
           "badge": "Social",
           "deck": "Community signal picked up on X 3d ago.",
-          "meta": "X · 3d ago · signal 3.26",
+          "meta": "X · 3d ago · signal 3.22",
           "rank": 999,
           "rank_delta": null
         }
@@ -899,34 +894,40 @@
     },
     {
       "label": "HF Papers",
-      "value": 8
-    },
-    {
-      "label": "GeekNews",
       "value": 6
     },
     {
+      "label": "GeekNews",
+      "value": 5
+    },
+    {
       "label": "X",
-      "value": 4
+      "value": 5
     },
     {
       "label": "arXiv",
-      "value": 2
+      "value": 4
     }
   ],
   "digest": {
-    "title": "AI News Brief — 2026-10-20",
-    "url": "/posts/2026-10-20-ai-news-digest/",
-    "description": "GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Speculative Sampling in Interactive Video Generation; social attention is tilting toward Poor availability of GitHub Actions, GitHub Pages, and Webhooks. 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+    "title": "AI News Brief — 2026-10-21",
+    "url": "/posts/2026-10-21-ai-news-digest/",
+    "description": "GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around OpenVLHarness: Real World Visual Agentic Tool-Use with Multimodal Memory; social attention is tilting toward Bank services interrupted due to Google Cloud failure. 10 repo signals, 10 paper picks, and 10 community items made today's cut."
   },
   "structured_digest": {
-    "title": "AI News Brief — 2026-10-20",
-    "url": "/posts/2026-10-20-ai-news-digest/",
-    "description": "GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Speculative Sampling in Interactive Video Generation; social attention is tilting toward Poor availability of GitHub Actions, GitHub Pages, and Webhooks. 10 repo signals, 10 paper picks, and 10 community items made today's cut."
+    "title": "AI News Brief — 2026-10-21",
+    "url": "/posts/2026-10-21-ai-news-digest/",
+    "description": "GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around OpenVLHarness: Real World Visual Agentic Tool-Use with Multimodal Memory; social attention is tilting toward Bank services interrupted due to Google Cloud failure. 10 repo signals, 10 paper picks, and 10 community items made today's cut."
   },
   "beta_digest": null,
   "archive_url": "/posts/news-digest-archive/",
   "archives": [
+    {
+      "title": "AI News Brief — 2026-10-21",
+      "url": "/posts/2026-10-21-ai-news-digest/",
+      "date_label": "2026-10-21",
+      "description": "Agentic systems continue to drive GitHub development, while new research explores multimodal memory and visual agentic tool-use. Community discussions include cloud infrastructure stability and open-source inference engines."
+    },
     {
       "title": "AI News Brief — 2026-10-20",
       "url": "/posts/2026-10-20-ai-news-digest/",
@@ -968,12 +969,6 @@
       "url": "/posts/2026-10-14-ai-news-digest/",
       "date_label": "2026-10-14",
       "description": "Today's AI landscape is marked by significant activity in agentic GitHub projects, new research on attention mechanisms, and community discussion around OpenAI's Fourier transform claims."
-    },
-    {
-      "title": "AI News Brief — 2026-10-13",
-      "url": "/posts/2026-10-13-ai-news-digest/",
-      "date_label": "2026-10-13",
-      "description": "Today's AI landscape highlights significant activity in LLM gateway development, novel image editing research, and community discussions on AI ethics and regulation."
     }
   ]
 }
