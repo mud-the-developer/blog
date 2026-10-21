@@ -1976,6 +1976,44 @@
     ],
     "title": "Daily AI Beta Brief: Agentic Workflows and Lightweight Inpainting Lead Trends"
   },
+  "5e7c58daa73c35b9c1591b1ff1cec85154e4b339b3eec2a92c20e1b21cffd9f3": {
+    "article_body": [
+      "Today's digest reflects a dynamic environment across AI development, research, and community engagement. Ten repository signals, ten paper picks, and ten community items made today's cut, indicating broad activity. GitHub velocity is notably led by projects centered around AI agents, while paper attention clusters around methods for diffusion acceleration and agentic model capabilities. Social platforms are engaging with both practical AI applications and new model releases.",
+      "On GitHub, agentic projects continue to show significant momentum. NousResearch/hermes-agent remains a top performer, alongside headroomlabs-ai/headroom, which focuses on token compression for LLMs and coding agents. Other trending repositories include shanraisshan/claude-code-best-practice for agentic engineering and nexu-io/open-design, a collaborative AI design agent workspace. The unslothai/unsloth project also maintains attention for its local UI supporting various LLMs and diffusion models.",
+      "In research, new papers are exploring critical areas of AI advancement. SpecKCast: Spectral Kalman Forecasting for Diffusion Acceleration is a key highlight, proposing methods to accelerate inference with minimal memory overhead. S-Agent 2.0 introduces improvements in spatial reasoning for coding agents, while Muse Glimmer 30B presents an on-device agentic model. An arXiv paper also details a multimodal engineering GraphRAG framework for post-wind-event building assessment.",
+      "Community chatter reflects these trends and introduces new points of discussion. The PHP2Shell project, highlighted on GeekNews, demonstrates AI's role in discovering remote code execution vulnerabilities in PHP. On X, several posts discuss new agentic models like Muse Spark Open and Raon-1 mini, emphasizing their capabilities in coding and long-horizon tasks. Discussions also touch upon scaling laws for agentic reinforcement learning data, indicating a deeper engagement with foundational aspects of agent development."
+    ],
+    "closing": "This brief summarizes key movements in AI development and research for October 22, 2026, offering a snapshot of emerging trends and community focus.",
+    "dek": "Today's AI landscape is characterized by robust development in agentic systems on GitHub, new research in diffusion model acceleration, and community discussion on AI-driven security vulnerability discovery.",
+    "lead": "The AI development sphere on October 22, 2026, shows a strong focus on agentic systems, with NousResearch's hermes-agent leading GitHub velocity. Academic attention is drawn to advancements in diffusion model acceleration, particularly with SpecKCast. Concurrently, community discussions highlight the application of AI in discovering critical PHP vulnerabilities, as seen with PHP2Shell.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "Agentic AI systems continue to drive significant development velocity on GitHub.",
+      "New research is advancing diffusion model efficiency and spatial reasoning capabilities.",
+      "Community discussions highlight both the practical application of AI in security and the release of new agentic models.",
+      "The focus on local and on-device agentic models suggests a trend towards more accessible and efficient AI deployment."
+    ],
+    "title": "Daily AI Beta Brief: October 22, 2026"
+  },
+  "5e7c58daa73c35b9c1591b1ff1cec85154e4b339b3eec2a92c20e1b21cffd9f3::overview": {
+    "article_body": [
+      "Today's digest reflects a dynamic environment across AI development, research, and community engagement. Ten repository signals, ten paper picks, and ten community items made today's cut, indicating broad activity. GitHub velocity is notably led by projects centered around AI agents, while paper attention clusters around methods for diffusion acceleration and agentic model capabilities. Social platforms are engaging with both practical AI applications and new model releases.",
+      "On GitHub, agentic projects continue to show significant momentum. NousResearch/hermes-agent remains a top performer, alongside headroomlabs-ai/headroom, which focuses on token compression for LLMs and coding agents. Other trending repositories include shanraisshan/claude-code-best-practice for agentic engineering and nexu-io/open-design, a collaborative AI design agent workspace. The unslothai/unsloth project also maintains attention for its local UI supporting various LLMs and diffusion models.",
+      "In research, new papers are exploring critical areas of AI advancement. SpecKCast: Spectral Kalman Forecasting for Diffusion Acceleration is a key highlight, proposing methods to accelerate inference with minimal memory overhead. S-Agent 2.0 introduces improvements in spatial reasoning for coding agents, while Muse Glimmer 30B presents an on-device agentic model. An arXiv paper also details a multimodal engineering GraphRAG framework for post-wind-event building assessment.",
+      "Community chatter reflects these trends and introduces new points of discussion. The PHP2Shell project, highlighted on GeekNews, demonstrates AI's role in discovering remote code execution vulnerabilities in PHP. On X, several posts discuss new agentic models like Muse Spark Open and Raon-1 mini, emphasizing their capabilities in coding and long-horizon tasks. Discussions also touch upon scaling laws for agentic reinforcement learning data, indicating a deeper engagement with foundational aspects of agent development."
+    ],
+    "closing": "This brief summarizes key movements in AI development and research for October 22, 2026, offering a snapshot of emerging trends and community focus.",
+    "dek": "Today's AI landscape is characterized by robust development in agentic systems on GitHub, new research in diffusion model acceleration, and community discussion on AI-driven security vulnerability discovery.",
+    "lead": "The AI development sphere on October 22, 2026, shows a strong focus on agentic systems, with NousResearch's hermes-agent leading GitHub velocity. Academic attention is drawn to advancements in diffusion model acceleration, particularly with SpecKCast. Concurrently, community discussions highlight the application of AI in discovering critical PHP vulnerabilities, as seen with PHP2Shell.",
+    "takeaways": [
+      "Agentic AI systems continue to drive significant development velocity on GitHub.",
+      "New research is advancing diffusion model efficiency and spatial reasoning capabilities.",
+      "Community discussions highlight both the practical application of AI in security and the release of new agentic models.",
+      "The focus on local and on-device agentic models suggests a trend towards more accessible and efficient AI deployment."
+    ],
+    "title": "Daily AI Beta Brief: October 22, 2026"
+  },
   "5f39eb1b8c348a51f39d0038066a6d0e5253327d681db40c4b0cc8651d59c9f9": {
     "paragraphs": [
       "Community discourse is currently centering on the technical architecture of coding agents. Backend developers are conducting source code analyses to compare the implementations of Claude Code and AutoBe, signaling a deeper interest in the underlying mechanics of these agentic tools.",
