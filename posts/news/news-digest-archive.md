@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-10-23
+date: 2026-10-24
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/posts/2026-10-23-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/posts/2026-10-24-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-10-23T04:14:21.265536+09:00">Oct 23, 2026 · 4:14 AM KST</time></strong>
+        <strong><time datetime="2026-10-24T04:18:42.305827+09:00">Oct 24, 2026 · 4:18 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>213</strong>
+        <strong>214</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-10-23">Oct 23, 2026</time></strong>
+        <strong><time datetime="2026-10-24">Oct 24, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by headroomlabs-ai/headroom; paper attention is clustering around Agentic World Action Models; social attention is tilting toward OpenAI CLI - OpenAI REST API를 위한 공식 명령줄 도구. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around Making MLLM Latents Matter: Factor-Aware Predictive Learning for Cinematic Video Generation; social attention is tilting toward Ask HN: 모델이 그렇게 뛰어나다면, OpenAI는 왜 직접 회사 100개를 세우지 않을까? 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>October 2026</span><span class="news-digest-month-count">23 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>October 2026</span><span class="news-digest-month-count">24 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-10-24-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-10-24</span>
+            <strong>AI News Brief — 2026-10-24</strong>
+            <span>Today&#x27;s AI landscape highlights significant activity in agentic systems, particularly on GitHub with NousResearch/hermes-agent, alongside emerging research in multimodal language models for cinematic video generation, and community discussion on OpenAI&#x27;s market strategy.</span>
+          </a>
           <a class="news-digest-archive-item" href="/posts/2026-10-23-ai-news-digest/">
             <span class="news-digest-archive-date">2026-10-23</span>
             <strong>AI News Brief — 2026-10-23</strong>
