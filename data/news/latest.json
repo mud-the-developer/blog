@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-25T03:12:10.472093+09:00",
-  "generated_label": "Oct 25, 2026 · 3:12 AM KST",
-  "issue_date": "2026-10-25",
-  "issue_label": "Oct 25, 2026",
+  "generated_at": "2026-10-26T03:25:54.880355+09:00",
+  "generated_label": "Oct 26, 2026 · 3:25 AM KST",
+  "issue_date": "2026-10-26",
+  "issue_label": "Oct 26, 2026",
   "summary": "GitHub velocity is led by headroomlabs-ai/headroom; paper attention is clustering around Making MLLM Latents Matter: Factor-Aware Predictive Learning for Cinematic Video Generation; social attention is tilting toward 삼성 TV를 역공학 분석해서 공유하던 해커, OpenAI 계정 정지 경험 공개. 10 repo signals, 10 paper picks, and 10 community items made today's cut.",
   "keywords": [],
   "top_cards": [
@@ -259,25 +259,6 @@
           "rank_delta": 5
         },
         {
-          "headline": "삼성 TV를 역공학 분석해서 공유하던 해커, OpenAI 계정 정지 경험 공개",
-          "title": "삼성 TV를 역공학 분석해서 공유하던 해커, OpenAI 계정 정지 경험 공개",
-          "url": "https://news.hada.io/topic?id=35918",
-          "source": "geeknews",
-          "tags": [
-            "social"
-          ],
-          "score": 5.453,
-          "raw_score": 3.293,
-          "published_hours_ago": 6,
-          "stars": 0,
-          "image_url": "/assets/news/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on GeekNews 6h ago.",
-          "meta": "GeekNews · 6h ago · signal 5.45",
-          "rank": 201,
-          "rank_delta": null
-        },
-        {
           "headline": "Making MLLM Latents Matter: Factor-Aware Predictive Learning for Cinematic Video Generation",
           "title": "Making MLLM Latents Matter: Factor-Aware Predictive Learning for Cinematic Video Generation",
           "url": "https://huggingface.co/papers/2610.30926",
@@ -295,6 +276,23 @@
           "meta": "HF Papers · 2d ago · down 117 · signal 6.07",
           "rank": 160,
           "rank_delta": -117
+        },
+        {
+          "headline": "MolLean: A Process-Verifiable Language for Chemical Reasoning",
+          "title": "MolLean: A Process-Verifiable Language for Chemical Reasoning",
+          "url": "https://huggingface.co/papers/2610.20459",
+          "source": "huggingface.co",
+          "tags": [],
+          "score": 4.586,
+          "raw_score": 2.748,
+          "published_hours_ago": 41,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.20459.png",
+          "badge": "Paper",
+          "deck": "MolLean introduces a verifiable chemical reasoning framework with explicit molecular states, Lean-based verification, and interactive tool feedback to reduce hallucinations across generatio…",
+          "meta": "HF Papers · 2d ago · signal 4.59",
+          "rank": 231,
+          "rank_delta": null
         },
         {
           "headline": "Is Complex Agentic Memory Always Needed? Naive RAG Is Stronger Than We Thought",
@@ -537,6 +535,23 @@
           "rank_delta": -117
         },
         {
+          "headline": "MolLean: A Process-Verifiable Language for Chemical Reasoning",
+          "title": "MolLean: A Process-Verifiable Language for Chemical Reasoning",
+          "url": "https://huggingface.co/papers/2610.20459",
+          "source": "huggingface.co",
+          "tags": [],
+          "score": 4.586,
+          "raw_score": 2.748,
+          "published_hours_ago": 41,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.20459.png",
+          "badge": "Paper",
+          "deck": "MolLean introduces a verifiable chemical reasoning framework with explicit molecular states, Lean-based verification, and interactive tool feedback to reduce hallucinations across generatio…",
+          "meta": "HF Papers · 2d ago · signal 4.59",
+          "rank": 231,
+          "rank_delta": null
+        },
+        {
           "headline": "Is Complex Agentic Memory Always Needed? Naive RAG Is Stronger Than We Thought",
           "title": "Is Complex Agentic Memory Always Needed? Naive RAG Is Stronger Than We Thought",
           "url": "https://huggingface.co/papers/2610.30755",
@@ -556,21 +571,42 @@
           "rank_delta": -128
         },
         {
-          "headline": "MolLean: A Process-Verifiable Language for Chemical Reasoning",
-          "title": "MolLean: A Process-Verifiable Language for Chemical Reasoning",
-          "url": "https://huggingface.co/papers/2610.20459",
+          "headline": "What Generation Knows: Unlocking Fine-Grained Understanding in Unified Multimodal Models",
+          "title": "What Generation Knows: Unlocking Fine-Grained Understanding in Unified Multimodal Models",
+          "url": "https://huggingface.co/papers/2610.23987",
           "source": "huggingface.co",
-          "tags": [],
-          "score": 4.586,
-          "raw_score": 2.748,
+          "tags": [
+            "AI"
+          ],
+          "score": 5.533,
+          "raw_score": 3.769,
           "published_hours_ago": 41,
           "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.20459.png",
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.23987.png",
           "badge": "Paper",
-          "deck": "MolLean introduces a verifiable chemical reasoning framework with explicit molecular states, Lean-based verification, and interactive tool feedback to reduce hallucinations across generatio…",
-          "meta": "HF Papers · 2d ago · signal 4.59",
-          "rank": 231,
-          "rank_delta": null
+          "deck": "GAFU leverages native generation-side representations to improve fine-grained visual understanding in unified multimodal models by compressing them into compact tokens for task-conditioned…",
+          "meta": "HF Papers · 2d ago · down 123 · signal 5.53",
+          "rank": 170,
+          "rank_delta": -123
+        },
+        {
+          "headline": "Code2Video-Compass: A Comprehensive Benchmark for General-Purpose Code-Based Video Generation a…",
+          "title": "Code2Video-Compass: A Comprehensive Benchmark for General-Purpose Code-Based Video Generation across T2V, I2V, and V2V",
+          "url": "https://huggingface.co/papers/2610.28416",
+          "source": "huggingface.co",
+          "tags": [
+            "AI"
+          ],
+          "score": 5.4,
+          "raw_score": 3.495,
+          "published_hours_ago": 41,
+          "stars": 0,
+          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.28416.png",
+          "badge": "Paper",
+          "deck": "Code2Video-Compass is a benchmark evaluating multimodal language models on code-based video generation across text, image, and video inputs, revealing significant challenges in complex dyna…",
+          "meta": "HF Papers · 2d ago · down 121 · signal 5.40",
+          "rank": 185,
+          "rank_delta": -121
         },
         {
           "headline": "Beyond Watching and Searching: Benchmarking Agents for Video-centered Deep Research Reports",
@@ -590,63 +626,6 @@
           "meta": "HF Papers · 2d ago · signal 5.35",
           "rank": 203,
           "rank_delta": null
-        },
-        {
-          "headline": "BrickWright: Agentic Creation of Physically Feasible Brick Builds",
-          "title": "BrickWright: Agentic Creation of Physically Feasible Brick Builds",
-          "url": "https://huggingface.co/papers/2610.31651",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 5.324,
-          "raw_score": 3.475,
-          "published_hours_ago": 41,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.31651.png",
-          "badge": "Paper",
-          "deck": "BrickWright improves physical validity of AI-generated LEGO assemblies by providing agents with an assembly API and feasibility validator, achieving perfect validity while preserving prompt…",
-          "meta": "HF Papers · 2d ago · down 122 · signal 5.32",
-          "rank": 188,
-          "rank_delta": -122
-        },
-        {
-          "headline": "IQuest-Q1: Advancing Foundation Capabilities for Agentic CLI Systems",
-          "title": "IQuest-Q1: Advancing Foundation Capabilities for Agentic CLI Systems",
-          "url": "https://huggingface.co/papers/2610.30949",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 5.281,
-          "raw_score": 3.561,
-          "published_hours_ago": 41,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.30949.png",
-          "badge": "Paper",
-          "deck": "IQuest-Q1 is a sparse Mixture-of-Experts foundation model trained via multi-stage pre-training, mid-training, and post-training to achieve strong agentic coding and general capabilities. Su…",
-          "meta": "HF Papers · 2d ago · down 129 · signal 5.28",
-          "rank": 180,
-          "rank_delta": -129
-        },
-        {
-          "headline": "What Generation Knows: Unlocking Fine-Grained Understanding in Unified Multimodal Models",
-          "title": "What Generation Knows: Unlocking Fine-Grained Understanding in Unified Multimodal Models",
-          "url": "https://huggingface.co/papers/2610.23987",
-          "source": "huggingface.co",
-          "tags": [
-            "AI"
-          ],
-          "score": 5.533,
-          "raw_score": 3.769,
-          "published_hours_ago": 41,
-          "stars": 0,
-          "image_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.23987.png",
-          "badge": "Paper",
-          "deck": "GAFU leverages native generation-side representations to improve fine-grained visual understanding in unified multimodal models by compressing them into compact tokens for task-conditioned…",
-          "meta": "HF Papers · 2d ago · down 123 · signal 5.53",
-          "rank": 170,
-          "rank_delta": -123
         },
         {
           "headline": "Controlled Radio Fault Injection and Telemetry Evaluation for Open 5G RANs",
@@ -683,23 +662,42 @@
           "rank_delta": null
         },
         {
-          "headline": "Evaluating the Applicability of LLM Inference Optimizations on Apple Silicon",
-          "title": "Evaluating the Applicability of LLM Inference Optimizations on Apple Silicon",
-          "url": "http://arxiv.org/abs/2610.31479v1",
+          "headline": "Can an Agent Debug a Web Corpus? Agentic Auditing of Slovak FineWeb2",
+          "title": "Can an Agent Debug a Web Corpus? Agentic Auditing of Slovak FineWeb2",
+          "url": "http://arxiv.org/abs/2610.31636v1",
           "source": "arxiv.org",
           "tags": [
             "AI"
           ],
-          "score": 3.555,
-          "raw_score": 2.435,
-          "published_hours_ago": 49,
+          "score": 4.182,
+          "raw_score": 2.774,
+          "published_hours_ago": 47,
           "stars": 0,
           "image_url": "/assets/news/thumb-paper.svg",
           "badge": "Paper",
           "deck": "Fresh arXiv paper from the ai cluster, posted 2d ago.",
-          "meta": "arXiv · 2d ago · down 179 · signal 3.56",
-          "rank": 246,
-          "rank_delta": -179
+          "meta": "arXiv · 2d ago · down 168 · signal 4.18",
+          "rank": 230,
+          "rank_delta": -168
+        },
+        {
+          "headline": "Certified Execution Harness for Agentic AI: Safe and Least-Intrusive Petri-Net Supervisory Cont…",
+          "title": "Certified Execution Harness for Agentic AI: Safe and Least-Intrusive Petri-Net Supervisory Control Between Reasoning and Action",
+          "url": "http://arxiv.org/abs/2610.31376v1",
+          "source": "arxiv.org",
+          "tags": [
+            "AI"
+          ],
+          "score": 3.926,
+          "raw_score": 2.669,
+          "published_hours_ago": 50,
+          "stars": 0,
+          "image_url": "/assets/news/thumb-paper.svg",
+          "badge": "Paper",
+          "deck": "Fresh arXiv paper from the ai cluster, posted 2d ago.",
+          "meta": "arXiv · 2d ago · down 177 · signal 3.93",
+          "rank": 236,
+          "rank_delta": -177
         }
       ]
     },
@@ -725,6 +723,46 @@
           "deck": "Community signal picked up on GeekNews 6h ago.",
           "meta": "GeekNews · 6h ago · signal 5.45",
           "rank": 201,
+          "rank_delta": null
+        },
+        {
+          "headline": "How We Built Europe's Largest Agentic Workforce: 60k AI Agents (and Why Most Companies Get It W…",
+          "title": "How We Built Europe's Largest Agentic Workforce: 60k AI Agents (and Why Most Companies Get It Wrong)",
+          "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPWGtOdTN4ZDRCV2d1RFJjUElIMmN4b2pJcS1WR09xcnk5WEIxc1NCWWhmY2VGRW5NYlRWcHJXcFFkb1ZETkgtV2F6M2ZRemhHemFyMDFUd181U01tRXVyWVRQV2x1U18zLWlYQTVnZVQwMDIwMEV3cWdVQ2ZpNm9LeDJ6MEg0dE5fUXJuXzA2ZDhTTmtjX25FdUlWNFRGamNyVjN1bWk0Njk3QlZNUWUtMTZWUGdhaGpzRHRhbWNubVd5Y29GTXExZUh2UUI?oc=5",
+          "source": "linkedin.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 2.979,
+          "raw_score": 1.816,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/assets/news/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on LinkedIn 3d ago.",
+          "meta": "LinkedIn · 3d ago · signal 2.98",
+          "rank": 999,
+          "rank_delta": null
+        },
+        {
+          "headline": "The newest exciting release on our X-Suite of platforms driving AI-drug discovery.",
+          "title": "The newest exciting release on our X-Suite of platforms driving AI-drug discovery. Check out all recent blog posts across agentic, physical AI and molecular design on our website (https://lnkd.in/gasN_aHX)",
+          "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPaXFQXzdhZTJmMGNVb2tPZmhYRzliVFhtekZwbjZ1cEl0RHVONmZRb3Q5VFpNMEVZRVRybFVVZ1RhQkVnX1R3RHJlR0dfMHF1ek5PRXF3eGdqOGxQYmdWQkJIZlBmelR1blF4c1IyamJ1aDhRdm1VU3VWc1ZZQkQ5VTBGellUWFhpa0hiTHNEUzVZSTBhUFFTSjZHdDl3QnFMWU1DZUxuSnFKaWFhemd5SzJ3LVBJbjBPTldjbUdPVkk?oc=5",
+          "source": "linkedin.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 2.839,
+          "raw_score": 1.816,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/assets/news/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on LinkedIn 3d ago.",
+          "meta": "LinkedIn · 3d ago · signal 2.84",
+          "rank": 999,
           "rank_delta": null
         },
         {
@@ -768,106 +806,6 @@
           "rank_delta": null
         },
         {
-          "headline": "Kimi K3.1 Pro is the new #1 openly-available model for agentic cyber defense, behind only trust…",
-          "title": "Kimi K3.1 Pro is the new #1 openly-available model for agentic cyber defense, behind only trusted-access model GPT-6 Sol (Daybreak Blue) on the Artificial Analysis Cyber Index @Kimi_Moonshot's Kimi K3.1 Pro scores 64% on the Artificial Analysis Cyber In - X",
-          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE4tZXFSTndRakljZmFPcjJYQ0NPNlBQbTJRMFUwZU50Z1ExQm1JdjhCY3NWNTRQeXVVaWZiSERxQVBYX1FyQndlOGtSMFl6cTRURmZOQlJQLUNjMGpxOWJTVnJYWlZndGs?oc=5",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social"
-          ],
-          "score": 3.229,
-          "raw_score": 1.899,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/assets/news/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X 3d ago.",
-          "meta": "X · 3d ago · signal 3.23",
-          "rank": 999,
-          "rank_delta": null
-        },
-        {
-          "headline": "Large gains in agentic performance: Kimi K3.1 Pro scores 3rd on GDPval-AA with 1,846 Elo, up 31…",
-          "title": "Large gains in agentic performance: Kimi K3.1 Pro scores 3rd on GDPval-AA with 1,846 Elo, up 312 Elo from Kimi K3, behind only Claude Opus 5.5 (1,866 Elo) and Muse Wonder Full (1,857 Elo). Kimi K3.1 Pro also achieves the highest score of any model on - X",
-          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBDUnRIam1DS09lb0ZjQWZkbHB0U1l1SXB2NC1WbDZUMkpkWlRWSXRpMDVSMHY1M0hkbEZNU3lVNVlwZ05vdlJTcW45QzJPSzVFS3BkbEVDVmhIckhsN1ZXQ3ZlZ2p1a1k?oc=5",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social"
-          ],
-          "score": 3.229,
-          "raw_score": 1.899,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/assets/news/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X 3d ago.",
-          "meta": "X · 3d ago · signal 3.23",
-          "rank": 999,
-          "rank_delta": null
-        },
-        {
-          "headline": "I am so proud that we are taking the most impactful standard for Agents in the last years and d…",
-          "title": "I am so proud that we are taking the most impactful standard for Agents in the last years and donate it to the Agentic AI Foundation. I am looking forward to Anthropic steering the Agent Skills standard together with Earendil (PI), OpenCode, Microsoft, Google an - X",
-          "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTFBFelZDLUpHZ3lCUDlrOVpJUGd4YmN4RTlRSFM4NURIS2pISGkxVk5KYzZSY2ZDTnpBdmRCaTVzbTNVc21FWm9zbXdFbWwtQ2lsWkltTXZESWo?oc=5",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social"
-          ],
-          "score": 3.216,
-          "raw_score": 1.95,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/assets/news/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X 3d ago.",
-          "meta": "X · 3d ago · signal 3.22",
-          "rank": 999,
-          "rank_delta": null
-        },
-        {
-          "headline": "A simpler way for agents to pay Mastercard is helping bring the next wave of agentic finance Po…",
-          "title": "A simpler way for agents to pay Mastercard is helping bring the next wave of agentic finance Powered by x402 and USDC, settled on Base - X",
-          "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE96UmJrU1liNUtjOFcydF94aFh4cDZZWFB4ZGpvZDV4WDh6NTdMU1ZBMGh4Y0dwN0lwT2g1aExFVV9KbkJnQkNGZXl0dmpMbEdWcHJfQXZqcVI?oc=5",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social"
-          ],
-          "score": 3.169,
-          "raw_score": 1.899,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/assets/news/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X 3d ago.",
-          "meta": "X · 3d ago · signal 3.17",
-          "rank": 999,
-          "rank_delta": null
-        },
-        {
-          "headline": "Kimi K3.1 Pro is here — a 3T-class open-weight model with a 1M-token context window and major u…",
-          "title": "Kimi K3.1 Pro is here — a 3T-class open-weight model with a 1M-token context window and major upgrades to coding, 3D creation, and financial research and other agentic capabilities. - X",
-          "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFBRV1ZSeUR5Mng1UjgtWEVwSFo0SXdXRTNtMV9FdENSOTJfYnNQZlh2aWFTZENQMGhBMFYzRmd5YXlKUllSY3pkNFdoQV9SNDRwUmU1OThKTzVWN3FHLWc?oc=5",
-          "source": "x.com",
-          "tags": [
-            "AI",
-            "social"
-          ],
-          "score": 3.129,
-          "raw_score": 1.899,
-          "published_hours_ago": 72,
-          "stars": 0,
-          "image_url": "/assets/news/thumb-ai.svg",
-          "badge": "Social",
-          "deck": "Community signal picked up on X 3d ago.",
-          "meta": "X · 3d ago · signal 3.13",
-          "rank": 999,
-          "rank_delta": null
-        },
-        {
           "headline": "Nice work! Pieter 👏 Really impressed by the creativity and initiative behind this.",
           "title": "Nice work! Pieter 👏 Really impressed by the creativity and initiative behind this. I like is how you've brought Splunk Agent Launchpad to life, showing how customers can bring their own AI agents and models, leverage Splunk's AI capabilities, and connect enter",
           "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPQ0V6NUktUzY2SnE4a09MTVFRc2xZaDZRbkw5Z0xYMXg1bzlvSlViaW5GSW5TajNDR0N0dV9hQ3pIdGlLYnpLaWFualBSZS1QVmJxbzBpMWFnYWo1QlNmbU9kNURPcnJ5elFQUFZRYXI3S1pvSUFpTTl5MmpybklzM1AzMnozRFlYUVNKeDY0TGs0Zzg3LVprOUJybnRLNmlJdjBGTnlfaG94OXNnZm51NQ?oc=5",
@@ -906,6 +844,66 @@
           "meta": "X · 3d ago · signal 3.17",
           "rank": 999,
           "rank_delta": null
+        },
+        {
+          "headline": "OpenAI models are coming to Google Cloud. We're bringing our frontier models and Codex agentic…",
+          "title": "OpenAI models are coming to Google Cloud. We're bringing our frontier models and Codex agentic workflows to Google Cloud's Model Garden, so enterprises can use our technology where they already build. https://t.co/gjuLVALjDm - X",
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE52dUZBVUVhRzk1NVppYWVFSjdWQTJHMS1kdlJPSGM3eXNNLWJGenRJYS1YclFXTzlKTjVtM2owc2xRa3MzcjRvcE9tVzVmZU1PMTRJbXdhNnd1SEE?oc=5",
+          "source": "x.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 3.776,
+          "raw_score": 2.103,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/assets/news/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X 3d ago.",
+          "meta": "X · 3d ago · signal 3.78",
+          "rank": 999,
+          "rank_delta": null
+        },
+        {
+          "headline": "RAG is so back! This work shows that plain RAG over raw chat history beats complex agentic memo…",
+          "title": "RAG is so back! This work shows that plain RAG over raw chat history beats complex agentic memory systems on most long-term memory benchmarks. (bookmark it) They tested Raw-RAG, which is just dense retrieval plus reranking over the raw conversation, - X",
+          "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE95N2RVYkhraGhsdXlWQnUzMFh5M0RaVEtFVGZUZGhiR05XYXBOaWZ6QVh4cThyVXdqR3JicDNEYWRtT2hQRkZCaEVyaEh6aVVINEdjNVZuOWRrdklISGc?oc=5",
+          "source": "x.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 3.734,
+          "raw_score": 2.157,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/assets/news/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X 3d ago.",
+          "meta": "X · 3d ago · signal 3.73",
+          "rank": 999,
+          "rank_delta": null
+        },
+        {
+          "headline": "Kimi K3.1 Pro launches at 4th on the Artificial Analysis Intelligence Index scoring 55, making…",
+          "title": "Kimi K3.1 Pro launches at 4th on the Artificial Analysis Intelligence Index scoring 55, making large gains in agentic performance; it will be the leading open-weights model once its weights are published @Kimi_Moonshot's new reasoning model gains 11 points - X",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE14aWRTbDdJY2FCaU1MUjJEV3MtaW13dVV3RWdGam9XWV9SZEVYZWRRRlRZcmJzbnAzRmVhRGFubVZYWVRGX3gtTWxxVnFzTEVNdmVBVFd2NmR1OEU5eURMY3NhRFZ1Smc?oc=5",
+          "source": "x.com",
+          "tags": [
+            "AI",
+            "social"
+          ],
+          "score": 3.461,
+          "raw_score": 2.055,
+          "published_hours_ago": 72,
+          "stars": 0,
+          "image_url": "/assets/news/thumb-ai.svg",
+          "badge": "Social",
+          "deck": "Community signal picked up on X 3d ago.",
+          "meta": "X · 3d ago · signal 3.46",
+          "rank": 999,
+          "rank_delta": null
         }
       ]
     }
@@ -916,39 +914,45 @@
       "value": 10
     },
     {
-      "label": "X",
-      "value": 8
+      "label": "HF Papers",
+      "value": 6
     },
     {
-      "label": "HF Papers",
-      "value": 7
+      "label": "X",
+      "value": 6
     },
     {
       "label": "arXiv",
+      "value": 4
+    },
+    {
+      "label": "LinkedIn",
       "value": 3
     },
     {
       "label": "GeekNews",
       "value": 1
-    },
-    {
-      "label": "LinkedIn",
-      "value": 1
     }
   ],
   "digest": {
-    "title": "AI News Brief — 2026-10-25",
-    "url": "/posts/2026-10-25-ai-news-digest/",
+    "title": "AI News Brief — 2026-10-26",
+    "url": "/posts/2026-10-26-ai-news-digest/",
     "description": "GitHub velocity is led by headroomlabs-ai/headroom; paper attention is clustering around Making MLLM Latents Matter: Factor-Aware Predictive Learning for Cinematic Video Generation; social attention is tilting toward 삼성 TV를 역공학 분석해서 공유하던 해커, OpenAI 계정 정지 경험 공개. 10 repo signals, 10 paper picks, and 10 community items made today's cut."
   },
   "structured_digest": {
-    "title": "AI News Brief — 2026-10-25",
-    "url": "/posts/2026-10-25-ai-news-digest/",
+    "title": "AI News Brief — 2026-10-26",
+    "url": "/posts/2026-10-26-ai-news-digest/",
     "description": "GitHub velocity is led by headroomlabs-ai/headroom; paper attention is clustering around Making MLLM Latents Matter: Factor-Aware Predictive Learning for Cinematic Video Generation; social attention is tilting toward 삼성 TV를 역공학 분석해서 공유하던 해커, OpenAI 계정 정지 경험 공개. 10 repo signals, 10 paper picks, and 10 community items made today's cut."
   },
   "beta_digest": null,
   "archive_url": "/posts/news-digest-archive/",
   "archives": [
+    {
+      "title": "AI News Brief — 2026-10-26",
+      "url": "/posts/2026-10-26-ai-news-digest/",
+      "date_label": "2026-10-26",
+      "description": "Today's AI brief highlights advancements in token compression for LLMs, new research in cinematic video generation using MLLMs, and community discussion surrounding an OpenAI account suspension."
+    },
     {
       "title": "AI News Brief — 2026-10-25",
       "url": "/posts/2026-10-25-ai-news-digest/",
@@ -990,12 +994,6 @@
       "url": "/posts/2026-10-19-ai-news-digest/",
       "date_label": "2026-10-19",
       "description": "Today's AI developments highlight advancements in token compression for large language models, novel approaches to reinforcement learning policy transfer, and ongoing community discourse on the role of software engineers in the AI era."
-    },
-    {
-      "title": "AI News Brief — 2026-10-18",
-      "url": "/posts/2026-10-18-ai-news-digest/",
-      "date_label": "2026-10-18",
-      "description": "Today's AI brief notes strong GitHub velocity in agent development, emerging research in RL policy transfer, and community discussions on the impact of low-quality AI content."
     }
   ]
 }

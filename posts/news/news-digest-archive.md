@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-10-25
+date: 2026-10-26
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/posts/2026-10-25-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/posts/2026-10-26-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-10-25T03:12:10.472093+09:00">Oct 25, 2026 · 3:12 AM KST</time></strong>
+        <strong><time datetime="2026-10-26T03:25:54.880355+09:00">Oct 26, 2026 · 3:25 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>215</strong>
+        <strong>216</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-10-25">Oct 25, 2026</time></strong>
+        <strong><time datetime="2026-10-26">Oct 26, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -40,8 +40,13 @@ content-classes: [news-digest-note, news-digest-archive-note]
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>October 2026</span><span class="news-digest-month-count">25 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>October 2026</span><span class="news-digest-month-count">26 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-10-26-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-10-26</span>
+            <strong>AI News Brief — 2026-10-26</strong>
+            <span>Today&#x27;s AI brief highlights advancements in token compression for LLMs, new research in cinematic video generation using MLLMs, and community discussion surrounding an OpenAI account suspension.</span>
+          </a>
           <a class="news-digest-archive-item" href="/posts/2026-10-25-ai-news-digest/">
             <span class="news-digest-archive-date">2026-10-25</span>
             <strong>AI News Brief — 2026-10-25</strong>
