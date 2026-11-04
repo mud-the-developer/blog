@@ -890,6 +890,42 @@
     ],
     "title": "Daily AI Beta Brief: September 20, 2026"
   },
+  "30e51b87aafaf7d343fcdeb1ae12b79eb299fc20a215d1fdb5a31cb02b453585": {
+    "article_body": [
+      "On the development front, GitHub activity remains heavily concentrated on agentic AI projects. NousResearch's `hermes-agent`, described as an agent that grows with its users, continues to demonstrate leading velocity. This trend suggests a sustained interest in autonomous and adaptive AI systems capable of complex interactions and learning over time. Other notable repositories like `BerriAI/litellm` and `openai/codex` also underscore the ongoing focus on robust AI infrastructure and coding assistance tools.",
+      "In research, a significant new paper, 'Axion 1.0: Open Agent Foundation Models, Simplified,' is garnering considerable attention. This work introduces an open agent foundation model trained through a three-stage pipeline, aiming for competitive agentic performance. Further contributing to the agentic research domain, 'YANAMI: A Large-Scale Multimodal Dataset and Benchmark for Multiturn Stateful Interaction' highlights efforts to improve models' ability to track and manage evolving dialogue states across complex, multimodal interactions.",
+      "Community discussion has notably shifted towards data privacy practices within commercial AI services. A prominent thread, 'Tell HN: Gemini also uses chat history of paid subscribers for training (personal account),' has sparked debate regarding user data utilization. This conversation underscores a growing public and developer scrutiny over how personal and proprietary data contributes to the training of large language models, even for paid subscribers."
+    ],
+    "closing": "Today's digest included 10 significant repository updates, 10 key paper selections, and 10 community discussions, reflecting a dynamic day in AI development and research.",
+    "dek": "Today's AI landscape highlights continued momentum in agentic development, significant new research in open agent foundation models, and emerging community discussion around user data practices in commercial AI services.",
+    "lead": "Agentic AI development continues to drive significant activity on GitHub, with NousResearch's hermes-agent leading velocity metrics. Concurrently, new research is drawing attention to open agent foundation models, exemplified by the 'Axion 1.0' paper. Meanwhile, community discussions are surfacing concerns regarding data privacy, specifically centered on reports about Gemini's use of paid subscriber chat history for training.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "Agentic AI development, led by projects like `hermes-agent`, continues its strong momentum on GitHub.",
+      "New research is advancing open agent foundation models, with 'Axion 1.0' drawing significant interest.",
+      "Community discourse is increasingly focused on AI service data privacy, exemplified by recent discussions around Gemini's training practices.",
+      "Multimodal and stateful interaction capabilities remain key research areas, as seen in datasets like YANAMI."
+    ],
+    "title": "AI Beta Brief: Agent Models, Axion 1.0, and Gemini Data Use in Focus"
+  },
+  "30e51b87aafaf7d343fcdeb1ae12b79eb299fc20a215d1fdb5a31cb02b453585::overview": {
+    "article_body": [
+      "On the development front, GitHub activity remains heavily concentrated on agentic AI projects. NousResearch's `hermes-agent`, described as an agent that grows with its users, continues to demonstrate leading velocity. This trend suggests a sustained interest in autonomous and adaptive AI systems capable of complex interactions and learning over time. Other notable repositories like `BerriAI/litellm` and `openai/codex` also underscore the ongoing focus on robust AI infrastructure and coding assistance tools.",
+      "In research, a significant new paper, 'Axion 1.0: Open Agent Foundation Models, Simplified,' is garnering considerable attention. This work introduces an open agent foundation model trained through a three-stage pipeline, aiming for competitive agentic performance. Further contributing to the agentic research domain, 'YANAMI: A Large-Scale Multimodal Dataset and Benchmark for Multiturn Stateful Interaction' highlights efforts to improve models' ability to track and manage evolving dialogue states across complex, multimodal interactions.",
+      "Community discussion has notably shifted towards data privacy practices within commercial AI services. A prominent thread, 'Tell HN: Gemini also uses chat history of paid subscribers for training (personal account),' has sparked debate regarding user data utilization. This conversation underscores a growing public and developer scrutiny over how personal and proprietary data contributes to the training of large language models, even for paid subscribers."
+    ],
+    "closing": "Today's digest included 10 significant repository updates, 10 key paper selections, and 10 community discussions, reflecting a dynamic day in AI development and research.",
+    "dek": "Today's AI landscape highlights continued momentum in agentic development, significant new research in open agent foundation models, and emerging community discussion around user data practices in commercial AI services.",
+    "lead": "Agentic AI development continues to drive significant activity on GitHub, with NousResearch's hermes-agent leading velocity metrics. Concurrently, new research is drawing attention to open agent foundation models, exemplified by the 'Axion 1.0' paper. Meanwhile, community discussions are surfacing concerns regarding data privacy, specifically centered on reports about Gemini's use of paid subscriber chat history for training.",
+    "takeaways": [
+      "Agentic AI development, led by projects like `hermes-agent`, continues its strong momentum on GitHub.",
+      "New research is advancing open agent foundation models, with 'Axion 1.0' drawing significant interest.",
+      "Community discourse is increasingly focused on AI service data privacy, exemplified by recent discussions around Gemini's training practices.",
+      "Multimodal and stateful interaction capabilities remain key research areas, as seen in datasets like YANAMI."
+    ],
+    "title": "AI Beta Brief: Agent Models, Axion 1.0, and Gemini Data Use in Focus"
+  },
   "32ea99d6e4f7cef67faa9315bfdf0bbe53fb933d722a9aee2615027084f923e7": {
     "article_body": [
       "Development velocity on GitHub continues to prioritize performance and agentic capabilities. vllm-project/vllm emerged as a leading repository, highlighting sustained efforts in high-throughput and memory-efficient inference for large language models. Other prominent projects include NousResearch/hermes-agent and obra/superpowers, both focusing on agentic frameworks and development methodologies. The BerriAI/litellm project also showed activity in managing diverse LLM APIs.",
