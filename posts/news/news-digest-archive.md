@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-11-06
+date: 2026-11-07
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,22 +13,22 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/posts/2026-11-06-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/posts/2026-11-07-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-11-06T06:28:42.436700+09:00">Nov 6, 2026 · 6:28 AM KST</time></strong>
+        <strong><time datetime="2026-11-07T05:55:49.137620+09:00">Nov 7, 2026 · 5:55 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
-        <strong>221</strong>
+        <strong>222</strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-11-06">Nov 6, 2026</time></strong>
+        <strong><time datetime="2026-11-07">Nov 7, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by BerriAI/litellm; paper attention is clustering around EmoReward: Self-Evolving Reward Calibration for Emotional Video Generation RL; social attention is tilting toward Download your favorite YouTube videos. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by vllm-project/vllm; paper attention is clustering around Random Is Almost Enough? Stable and Low-Cost Benchmark Compression via BestRand; social attention is tilting toward Gemini Omni 1.2 Flash - 최대 15초 영상 생성과 대화형 편집, 가격 30% 인하. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>November 2026</span><span class="news-digest-month-count">5 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>November 2026</span><span class="news-digest-month-count">6 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-11-07-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-11-07</span>
+            <strong>AI News Brief — 2026-11-07</strong>
+            <span>Today&#x27;s AI landscape highlights continued optimization in LLM inference, new approaches to benchmark efficiency, and a notable update to Google&#x27;s Gemini Flash model.</span>
+          </a>
           <a class="news-digest-archive-item" href="/posts/2026-11-06-ai-news-digest/">
             <span class="news-digest-archive-date">2026-11-06</span>
             <strong>AI News Brief — 2026-11-06</strong>
