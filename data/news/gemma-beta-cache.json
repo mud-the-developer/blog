@@ -4357,6 +4357,42 @@
     ],
     "title": "Daily AI Beta Brief: Ray Leads Repo Activity, New Visual Language Model Emerges"
   },
+  "b6deae83360327db1e3a147066ea7957fd037b8f35bc5f8dec248b4cd1040b29": {
+    "article_body": [
+      "The open-source agent ecosystem showed strong momentum, with NousResearch's `hermes-agent` maintaining its position as a top-performing repository. This project, described as 'the agent that grows with you,' continues to attract developer attention. Other prominent repositories include `BerriAI/litellm`, an AI Gateway for managing LLM APIs, and `headroomlabs-ai/headroom`, which focuses on compressing tool outputs and RAG chunks to reduce token usage. These projects underscore an ongoing industry focus on enhancing the efficiency and scalability of AI applications.",
+      "In research, nine new papers garnered attention, with 'PhysLoop: Harnessing LLMs' Physics Awareness for Self-Improving Video Generation Models' emerging as a key topic. This paper explores how LLMs can guide video generation, selection, and correction to achieve physically consistent self-improvement. Another related work, 'WorldDraft: If Code Builds the World, Can Video Models Just Render It?', proposes decoupling 4D world construction from visual generation, repositioning video models as generative renderers. These studies point to a growing interest in more sophisticated and controllable video synthesis methods.",
+      "Community chatter, drawing from sources like GeekNews and X, highlighted a real-time map displaying FAA national takeoff suspensions. This item, originating from a 'Show HN' post, indicates a public appetite for practical, real-time data visualizations, especially concerning critical infrastructure. Other discussions included modules for accessible machine learning and updates on quantized models, reflecting a diverse range of community interests from foundational AI concepts to practical applications and market dynamics."
+    ],
+    "closing": "This brief summarizes key movements across the AI development and research landscape for November 15, 2026, based on 10 repo signals, 10 paper picks, and 10 community items.",
+    "dek": "Today's AI landscape is marked by significant activity in agent development, particularly with NousResearch's Hermes-agent, alongside emerging research in physics-aware video generation and a notable community discussion on a real-time flight map.",
+    "lead": "Agent development continues to drive GitHub velocity, with NousResearch's `hermes-agent` leading the day's activity among 10 repository signals. Concurrently, academic attention is focusing on novel approaches to video generation, highlighted by research exploring physics awareness in large language models for self-improving models. Community discussions also surfaced a real-time flight map, indicating broader public interest in data visualization and real-world applications among 10 community items.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "Agent development, particularly `NousResearch/hermes-agent`, remains a primary driver of activity in the open-source AI community.",
+      "New research is advancing video generation by integrating physics awareness and novel architectural approaches using LLMs.",
+      "Efficiency and scaling solutions for LLMs, such as API gateways and token compression, continue to be a significant focus for developers.",
+      "Community interest extends to real-time data visualization and practical applications of technology, as seen with the FAA flight map discussion."
+    ],
+    "title": "AI Beta Brief: Agent Development and Video Generation Trends (November 15, 2026)"
+  },
+  "b6deae83360327db1e3a147066ea7957fd037b8f35bc5f8dec248b4cd1040b29::overview": {
+    "article_body": [
+      "The open-source agent ecosystem showed strong momentum, with NousResearch's `hermes-agent` maintaining its position as a top-performing repository. This project, described as 'the agent that grows with you,' continues to attract developer attention. Other prominent repositories include `BerriAI/litellm`, an AI Gateway for managing LLM APIs, and `headroomlabs-ai/headroom`, which focuses on compressing tool outputs and RAG chunks to reduce token usage. These projects underscore an ongoing industry focus on enhancing the efficiency and scalability of AI applications.",
+      "In research, nine new papers garnered attention, with 'PhysLoop: Harnessing LLMs' Physics Awareness for Self-Improving Video Generation Models' emerging as a key topic. This paper explores how LLMs can guide video generation, selection, and correction to achieve physically consistent self-improvement. Another related work, 'WorldDraft: If Code Builds the World, Can Video Models Just Render It?', proposes decoupling 4D world construction from visual generation, repositioning video models as generative renderers. These studies point to a growing interest in more sophisticated and controllable video synthesis methods.",
+      "Community chatter, drawing from sources like GeekNews and X, highlighted a real-time map displaying FAA national takeoff suspensions. This item, originating from a 'Show HN' post, indicates a public appetite for practical, real-time data visualizations, especially concerning critical infrastructure. Other discussions included modules for accessible machine learning and updates on quantized models, reflecting a diverse range of community interests from foundational AI concepts to practical applications and market dynamics."
+    ],
+    "closing": "This brief summarizes key movements across the AI development and research landscape for November 15, 2026, based on 10 repo signals, 10 paper picks, and 10 community items.",
+    "dek": "Today's AI landscape is marked by significant activity in agent development, particularly with NousResearch's Hermes-agent, alongside emerging research in physics-aware video generation and a notable community discussion on a real-time flight map.",
+    "lead": "Agent development continues to drive GitHub velocity, with NousResearch's `hermes-agent` leading the day's activity among 10 repository signals. Concurrently, academic attention is focusing on novel approaches to video generation, highlighted by research exploring physics awareness in large language models for self-improving models. Community discussions also surfaced a real-time flight map, indicating broader public interest in data visualization and real-world applications among 10 community items.",
+    "takeaways": [
+      "Agent development, particularly `NousResearch/hermes-agent`, remains a primary driver of activity in the open-source AI community.",
+      "New research is advancing video generation by integrating physics awareness and novel architectural approaches using LLMs.",
+      "Efficiency and scaling solutions for LLMs, such as API gateways and token compression, continue to be a significant focus for developers.",
+      "Community interest extends to real-time data visualization and practical applications of technology, as seen with the FAA flight map discussion."
+    ],
+    "title": "AI Beta Brief: Agent Development and Video Generation Trends (November 15, 2026)"
+  },
   "b82e44f83782ec65ed3a0b7351f4a0e2ba6c72fdf8db8431d14bf6a3ddf3d4a8": {
     "article_body": [
       "GitHub's top trending project is NousResearch/hermes-agent, an evolving autonomous agent designed to grow with its users. Other notable repositories gaining momentum include headroomlabs-ai/headroom, which focuses on token compression for large language models, and nexu-io/open-design, introducing a collaborative AI design agent workspace. These projects collectively underscore a growing interest in practical, deployable AI agent solutions and efficiency improvements.",
