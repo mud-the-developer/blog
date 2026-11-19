@@ -4958,6 +4958,44 @@
     ],
     "title": "Daily AI Beta Brief: Agentic Repos Lead, Multimodal Papers Emerge, Social Sentiment Mixed"
   },
+  "c12a16b19b01dea237cc3e67fe375a9b2e5d52f0ce823b3120be6580b8a4c84a": {
+    "article_body": [
+      "Development in agentic systems remains a primary driver of activity in the open-source community. The NousResearch/hermes-agent repository, described as 'the agent that grows with you,' continues to lead GitHub velocity, indicating sustained interest and contributions. Other prominent repositories like openai/codex and anomalyco/opencode also highlight the ongoing work in creating and refining coding agents, with several projects focusing on optimizing their performance and resource usage.",
+      "On the research front, significant attention is being paid to the practical deployment of large language models. A key paper, 'QDA: Closed-Loop LLM Quantization Design with Agents,' explores methods for post-training quantization to reduce operational costs. This aligns with broader efforts to make powerful AI models more accessible and efficient. Further research, such as 'Piccolo: Co-Evolving Decision Models and Data through Recursive Self-Improvement,' also points to advancements in model capabilities through agentic data engineering.",
+      "Community discussion today largely centered on Anthropic, following reports of its Nasdaq listing and a substantial market capitalization on its debut. This event underscores the continued investor confidence and rapid growth within the AI industry. Other social signals included discussions on memory management for MoE inference and novel approaches to video generation, reflecting a diverse range of interests across the AI community.",
+      "Overall, today's digest includes 10 repository signals, 6 paper picks from sources like Hugging Face and arXiv, and 10 community items from platforms like GeekNews and X, providing a comprehensive snapshot of current trends and developments in artificial intelligence."
+    ],
+    "closing": "This brief covers key developments as of November 20, 2026, drawing from a range of technical and community sources.",
+    "dek": "Today's AI landscape is marked by sustained activity in agentic systems, new research in LLM quantization, and significant financial news from Anthropic.",
+    "lead": "The AI sector continues to show dynamic development, with a notable focus on agentic systems and their practical applications. GitHub velocity is currently led by NousResearch/hermes-agent, a project demonstrating ongoing engagement in the agent space. Concurrently, academic attention is clustering around advancements in large language model quantization, aiming to improve deployment efficiency. In financial news, Anthropic's reported Nasdaq listing has garnered considerable community interest.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "Agentic systems, particularly coding agents, are a leading area of development in open-source AI projects.",
+      "Research is actively addressing the efficiency of LLM deployment through advanced quantization techniques.",
+      "Anthropic's reported Nasdaq listing highlights significant financial milestones within the AI industry.",
+      "Innovations in multimodal decision models and controllable video generation are also emerging from recent research."
+    ],
+    "title": "Daily AI Beta Brief: November 20, 2026"
+  },
+  "c12a16b19b01dea237cc3e67fe375a9b2e5d52f0ce823b3120be6580b8a4c84a::overview": {
+    "article_body": [
+      "Development in agentic systems remains a primary driver of activity in the open-source community. The NousResearch/hermes-agent repository, described as 'the agent that grows with you,' continues to lead GitHub velocity, indicating sustained interest and contributions. Other prominent repositories like openai/codex and anomalyco/opencode also highlight the ongoing work in creating and refining coding agents, with several projects focusing on optimizing their performance and resource usage.",
+      "On the research front, significant attention is being paid to the practical deployment of large language models. A key paper, 'QDA: Closed-Loop LLM Quantization Design with Agents,' explores methods for post-training quantization to reduce operational costs. This aligns with broader efforts to make powerful AI models more accessible and efficient. Further research, such as 'Piccolo: Co-Evolving Decision Models and Data through Recursive Self-Improvement,' also points to advancements in model capabilities through agentic data engineering.",
+      "Community discussion today largely centered on Anthropic, following reports of its Nasdaq listing and a substantial market capitalization on its debut. This event underscores the continued investor confidence and rapid growth within the AI industry. Other social signals included discussions on memory management for MoE inference and novel approaches to video generation, reflecting a diverse range of interests across the AI community.",
+      "Overall, today's digest includes 10 repository signals, 6 paper picks from sources like Hugging Face and arXiv, and 10 community items from platforms like GeekNews and X, providing a comprehensive snapshot of current trends and developments in artificial intelligence."
+    ],
+    "closing": "This brief covers key developments as of November 20, 2026, drawing from a range of technical and community sources.",
+    "dek": "Today's AI landscape is marked by sustained activity in agentic systems, new research in LLM quantization, and significant financial news from Anthropic.",
+    "lead": "The AI sector continues to show dynamic development, with a notable focus on agentic systems and their practical applications. GitHub velocity is currently led by NousResearch/hermes-agent, a project demonstrating ongoing engagement in the agent space. Concurrently, academic attention is clustering around advancements in large language model quantization, aiming to improve deployment efficiency. In financial news, Anthropic's reported Nasdaq listing has garnered considerable community interest.",
+    "takeaways": [
+      "Agentic systems, particularly coding agents, are a leading area of development in open-source AI projects.",
+      "Research is actively addressing the efficiency of LLM deployment through advanced quantization techniques.",
+      "Anthropic's reported Nasdaq listing highlights significant financial milestones within the AI industry.",
+      "Innovations in multimodal decision models and controllable video generation are also emerging from recent research."
+    ],
+    "title": "Daily AI Beta Brief: November 20, 2026"
+  },
   "c2b1d80585289e31d440af46b03b5298fd47bcd1a5c5dd12ca2195b84d119667": {
     "article_body": [
       "GitHub velocity for AI projects is notably high, with BerriAI/litellm leading the charge. This AI gateway, praised for its Rust core and Python SDK, offers a streamlined approach to managing over 100 LLM APIs, incorporating features like cost tracking, guardrails, and load balancing. Other significant repository activity includes OpenAI's lightweight coding agent, `openai/codex`, and `headroomlabs-ai/headroom`, which focuses on token compression for LLM inputs, indicating a strong developer focus on efficiency and infrastructure.",
