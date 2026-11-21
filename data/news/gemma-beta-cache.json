@@ -2801,6 +2801,40 @@
     ],
     "title": "Daily AI Brief: Agentic Dev Tools and Skill-Based Models Lead"
   },
+  "707e2eaef559a4a13578464c538bdc456cb612d826056fdfef0c9eb9d22724d6": {
+    "article_body": [
+      "GitHub's AI repository ecosystem is currently led by BerriAI/litellm, an AI gateway designed for streamlined, multi-provider LLM integration. This project, featuring a Rust core and Python SDK, facilitates calls to over 100 LLM APIs with built-in cost tracking, guardrails, and load balancing. Its sustained activity underscores a developer need for robust, flexible LLM management solutions. Other high-momentum projects include headroomlabs-ai/headroom, focused on token compression for LLMs, and the continued prominence of ggml-org/llama.cpp for efficient C/C++ LLM inference.",
+      "On the research front, a paper titled \"Time Series Structure Learning with Local Causal Parent Discovery\" is garnering significant academic attention. This work addresses complex statistical challenges inherent in time series analysis, such as autocorrelation and high dimensionality. Further research highlights advancements in \"TuringSpace: Grounding Spatial Intelligence in Action with Interactive CAPTCHAs\" and \"Mind2Act World\" for robotic manipulation, signaling a broader push towards embodied AI and sophisticated interaction models.",
+      "Community discussions spanned a diverse range of topics, with Brian May's contribution of a three-dimensional effect to Hera's asteroid video capturing notable interest. Other conversations on platforms like GeekNews touched upon practical issues such as spam intruding into smart home notifications and the integration of UI tests into GIMP. An incident involving an internal OpenAI research model accessing the internet due to a DNS configuration error also sparked discussion, underscoring operational security considerations in advanced AI development."
+    ],
+    "closing": "This concludes today's AI beta brief. We will continue to monitor these developments.",
+    "dek": "Today's AI brief highlights robust GitHub activity around the LiteLLM gateway, emerging research in time series and spatial intelligence, and notable community discussion including a 3D asteroid video by Brian May.",
+    "lead": "On November 22, 2026, the AI development landscape saw significant velocity around the BerriAI/litellm gateway, a Rust-core Python SDK for diverse LLM APIs. Concurrently, academic attention was drawn to new research in Time Series Structure Learning with Local Causal Parent Discovery. In community discussions, a unique three-dimensional video of Hera's asteroid, enhanced by Brian May, captured widespread interest.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "AI gateways are crucial for managing diverse LLM API integrations and optimizing costs.",
+      "New research is advancing capabilities in time series analysis, spatial intelligence, and embodied robotic systems.",
+      "Community interest reflects a mix of scientific visualization and practical operational challenges in AI."
+    ],
+    "title": "AI Gateway Tech Leads GitHub; Time Series Research, Asteroid Video Gain Traction"
+  },
+  "707e2eaef559a4a13578464c538bdc456cb612d826056fdfef0c9eb9d22724d6::overview": {
+    "article_body": [
+      "GitHub's AI repository ecosystem is currently led by BerriAI/litellm, an AI gateway designed for streamlined, multi-provider LLM integration. This project, featuring a Rust core and Python SDK, facilitates calls to over 100 LLM APIs with built-in cost tracking, guardrails, and load balancing. Its sustained activity underscores a developer need for robust, flexible LLM management solutions. Other high-momentum projects include headroomlabs-ai/headroom, focused on token compression for LLMs, and the continued prominence of ggml-org/llama.cpp for efficient C/C++ LLM inference.",
+      "On the research front, a paper titled \"Time Series Structure Learning with Local Causal Parent Discovery\" is garnering significant academic attention. This work addresses complex statistical challenges inherent in time series analysis, such as autocorrelation and high dimensionality. Further research highlights advancements in \"TuringSpace: Grounding Spatial Intelligence in Action with Interactive CAPTCHAs\" and \"Mind2Act World\" for robotic manipulation, signaling a broader push towards embodied AI and sophisticated interaction models.",
+      "Community discussions spanned a diverse range of topics, with Brian May's contribution of a three-dimensional effect to Hera's asteroid video capturing notable interest. Other conversations on platforms like GeekNews touched upon practical issues such as spam intruding into smart home notifications and the integration of UI tests into GIMP. An incident involving an internal OpenAI research model accessing the internet due to a DNS configuration error also sparked discussion, underscoring operational security considerations in advanced AI development."
+    ],
+    "closing": "This concludes today's AI beta brief. We will continue to monitor these developments.",
+    "dek": "Today's AI brief highlights robust GitHub activity around the LiteLLM gateway, emerging research in time series and spatial intelligence, and notable community discussion including a 3D asteroid video by Brian May.",
+    "lead": "On November 22, 2026, the AI development landscape saw significant velocity around the BerriAI/litellm gateway, a Rust-core Python SDK for diverse LLM APIs. Concurrently, academic attention was drawn to new research in Time Series Structure Learning with Local Causal Parent Discovery. In community discussions, a unique three-dimensional video of Hera's asteroid, enhanced by Brian May, captured widespread interest.",
+    "takeaways": [
+      "AI gateways are crucial for managing diverse LLM API integrations and optimizing costs.",
+      "New research is advancing capabilities in time series analysis, spatial intelligence, and embodied robotic systems.",
+      "Community interest reflects a mix of scientific visualization and practical operational challenges in AI."
+    ],
+    "title": "AI Gateway Tech Leads GitHub; Time Series Research, Asteroid Video Gain Traction"
+  },
   "70abe43ada5a04533963606521039fb2da9cdf321eca3117e5df6268ba4b4a69": {
     "article_body": [
       "The open-source AI community's focus on agentic development remains pronounced, as evidenced by the sustained velocity of projects like NousResearch/hermes-agent. This repository, designed for adaptive agents, continues to attract substantial attention, accumulating over 218,000 stars. Other notable agent-related projects, including openai/codex and headroomlabs-ai/headroom for token compression in coding agents, also registered high activity, underscoring a broader industry push towards more autonomous and efficient AI systems.",
