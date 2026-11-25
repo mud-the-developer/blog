@@ -2,12 +2,13 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
   currentDateInKst,
+  deadlineDays,
+  deadlineUrgency,
   deadlineStatus,
   verificationIsRecent,
   refreshCfpDeadlineCells,
   refreshCfpDashboard,
 } from '../../src/cfp-deadlines.mjs';
-
 const now = new Date('2026-10-17T12:00:00Z');
 function cell(date, verified = true, cached = false, last = '2026-10-17T10:00:00Z') {
   const td = { dataset: {} };
@@ -98,4 +99,19 @@ test('expired rows leave the radar, later rows fill the gap, and counts exclude 
   cells[1].dataset.cfpVerified = 'false';
   refreshCfpDashboard(root, now);
   assert.equal(calendarLinks[1].hidden, true, 'Unverified call must not offer calendar addition');
+});
+
+test('deadlineUrgency classifies urgent, soon, watch, and closed windows accurately', () => {
+  assert.equal(deadlineDays('2026-10-20', '2026-10-17'), 3);
+  assert.equal(deadlineUrgency('2026-10-16', '2026-10-17'), 'closed');
+  assert.equal(deadlineUrgency('2026-10-24', '2026-10-17'), 'urgent');
+  assert.equal(deadlineUrgency('2026-11-05', '2026-10-17'), 'soon');
+  assert.equal(deadlineUrgency('2026-12-01', '2026-10-17'), 'watch');
+  const verifiedCell = cell('2026-10-22', true, false, '2026-10-17T10:00:00Z');
+  const staleCell = cell('2026-10-22', true, false, '2026-10-01T10:00:00Z');
+  refreshCfpDeadlineCells({ querySelectorAll: () => [verifiedCell, staleCell] }, now);
+  assert.equal(verifiedCell.dataset.cfpUrgency, 'urgent');
+  assert.equal(verifiedCell.closest('td').dataset.cfpUrgency, 'urgent');
+  assert.equal(staleCell.dataset.cfpUrgency, 'stale');
+  assert.equal(staleCell.closest('td').dataset.cfpUrgency, 'stale');
 });

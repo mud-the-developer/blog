@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const folders = ['cfp', 'blog', 'papers', 'about'];
+const folders = ['projects', 'cfp'];
 const rejectedCopy = [
   '읽기 좋은 노트',
   'Readable archive',
@@ -20,79 +20,59 @@ async function archivePostCount(page) {
   });
 }
 
-test('homepage is a polished public filetree without decorative background motion or a legacy hero pane', async ({ page }) => {
-  await page.goto('/');
-  const publicPostCount = await page.locator('.post-card').count();
+test('v3 personal homepage renders No-Hero Swiss Glass Dossier with Pretext bio, command palette, and dedicated routes', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/', { waitUntil: 'networkidle' });
   const archiveCount = await archivePostCount(page);
   expect(archiveCount).toBeGreaterThan(0);
-  expect(archiveCount).toBeLessThanOrEqual(publicPostCount);
 
   await expect(page.locator('html')).toHaveAttribute('data-runtime', 'tokio');
   await expect(page.locator('html')).toHaveAttribute('data-askama-template', 'index');
-  await expect(page.locator('body')).toHaveAttribute('data-layout', 'public-index');
+  await expect(page.locator('body')).toHaveAttribute('data-layout', 'v3-dossier');
+  await expect(page.locator('body')).toHaveAttribute('data-palette', 'pair-07');
   await expect(page.locator('html')).not.toHaveAttribute('hx-boost', 'true');
-  await expect(page.getByLabel("Mud's Blog home")).toContainText("Mud's Blog");
+  await expect(page.getByLabel('mud blog home')).toContainText('mud blog');
   await expect(page.locator('[data-theme-toggle]')).toBeVisible();
-  const iconCount = await page.locator('.ui-icon svg').count();
-  expect(iconCount).toBeGreaterThanOrEqual(7);
-  await expect(page.getByRole('link', { name: /^Data$/ })).toHaveCount(0);
-  await expect(page.getByRole('link', { name: /^News$/ })).toHaveAttribute('href', '/news/');
-  await expect(page.getByText('Latest research note', { exact: true })).toBeVisible();
-
-  await expect(page.locator('.reader-intro')).toHaveCount(0);
-  await expect(page.locator('.lede')).toHaveCount(0);
-  await expect(page.locator('.public-shell')).toHaveCount(1);
-  await expect(page.locator('.filetree')).toHaveCount(1);
-  await expect(page.locator('.filetree-folder')).toHaveCount(folders.length);
-  await expect(page.locator('.filetree-folder summary')).toHaveCount(folders.length);
-  await expect(page.locator('.filetree-file')).toHaveCount(publicPostCount);
-  await expect(page.locator('details.filetree-folder[data-folder="news"]')).toHaveCount(0);
-  await expect(page.getByText('news/', { exact: true })).toHaveCount(0);
-  for (const folder of folders) {
-    await expect(page.locator(`details.filetree-folder[data-folder="${folder}"]`)).toHaveAttribute('open', '');
-  }
-  await expect(page.locator('#posts-surface > .post-card')).toHaveCount(publicPostCount);
-  await expect(page.locator('[data-focused-issue-lab]')).toHaveCount(0);
-  await expect(page.locator('[data-blog-chat]')).toHaveCount(0);
-  await expect(page.locator('[data-pretext-polish]')).toHaveCount(0);
-  await expect(page.locator('script[src="/assets/pretext-polish.mjs"]')).toHaveCount(0);
-  await expect(page.locator('[data-pretext-editorial]')).toHaveCount(0);
-  await expect(page.locator('script[src="/assets/pretext-editorial.mjs"]')).toHaveCount(0);
   await expect(page.locator('script[src="/assets/site-chrome.mjs"]')).toHaveCount(1);
+  await expect(page.locator('script[src="/assets/pretext-stage.mjs"]')).toHaveCount(1);
   await expect(page.locator('script[src="/assets/blog-lab.mjs"]')).toHaveCount(0);
+  await expect(page.locator('script[src="/assets/pretext-polish.mjs"]')).toHaveCount(0);
+  await expect(page.locator('script[src="/assets/pretext-editorial.mjs"]')).toHaveCount(0);
   await expect(page.locator('script[src="/assets/pretext-field.mjs"]')).toHaveCount(0);
 
-  for (const folder of folders) {
-    await expect(page.locator(`[data-folder="${folder}"]`)).toBeVisible();
-    await expect(page.locator(`[data-folder="${folder}"]`).getByText(`${folder}/`, { exact: true })).toBeVisible();
-  }
+  // Functional @chenglou/pretext bio typography layout
+  const bioWrap = page.locator('[data-pretext-bio-wrap]');
+  await expect(bioWrap).toHaveAttribute('data-pretext-mode', 'active');
+  await expect(bioWrap).toHaveAttribute('data-pretext-engine', 'chenglou-pretext');
+  const initialLines = await page.locator('.v3-bio-line').count();
+  expect(initialLines).toBeGreaterThanOrEqual(2);
 
-  await page.locator('details.filetree-folder[data-folder="blog"] > summary').click();
-  await expect(page.locator('details.filetree-folder[data-folder="blog"]')).not.toHaveAttribute('open', '');
+  // No hero, research cluster, theme filter bar, or empty writing section
+  await expect(page.locator('[data-research-cluster]')).toHaveCount(0);
+  await expect(page.locator('[data-theme-filter-bar]')).toHaveCount(0);
+  await expect(page.locator('#section-writing')).toHaveCount(0);
 
-  await expect(page.getByRole('link', { name: /^About me$/ })).toHaveAttribute('href', '/posts/jinhyuk-kim/');
-  await expect(page.locator('[data-home-post]')).toBeVisible();
-  await expect(page.locator('[data-home-post-body]')).toContainText('Hi 🙋');
-  await expect(page.locator('[data-home-post-body]')).toContainText('Welcome to my blog');
-  await expect(page.getByRole('link', { name: /About Jinhyuk/ })).toHaveCount(0);
+  // Calm personal-site sections: 2x2 Selected Work, minimal Publications (no Copy BibTeX on home), Affiliations strip
+  await expect(page.locator('.v3-work-tile')).toHaveCount(4);
+  await expect(page.locator('.v3-pub-row')).toHaveCount(3);
+  await expect(page.locator('.v3-affil-item')).toHaveCount(3);
+  await expect(page.locator('[data-copy-bibtex]')).toHaveCount(0);
+  await expect(page.locator('a[href="/cv/jinhyuk-kim-cv.pdf"]')).toHaveCount(0);
+  await page.locator('[data-cmd-open]').click();
+  await expect(page.locator('[data-cmd-backdrop]')).toBeVisible();
+  await page.locator('[data-cmd-input]').fill('MWC');
+  await expect(page.locator('.v3-cmd-item').first()).toHaveAttribute('href', /mwc/i);
+  await page.keyboard.press('Escape');
+  await expect(page.locator('[data-cmd-backdrop]')).toBeHidden();
 
-  const visibleText = await page.evaluate(() => document.body.innerText);
-  expect(visibleText).not.toContain('Public writing');
-  expect(visibleText).not.toContain('A tight public desk for AI systems');
+  // Check no legacy/rejected copy or private phone number
+  const visibleText = await page.evaluate(() => document.body.textContent || '');
+  expect(visibleText).not.toMatch(/(?:\(\+82\)\s*)?0?10-\d{4}-\d{4}/);
   for (const copy of rejectedCopy) {
     expect(visibleText).not.toContain(copy);
   }
 
-  await expect(page.locator('[data-field-stage]')).toHaveCount(0);
-  await expect(page.locator('[data-archive-graph]')).toHaveCount(0);
-  await expect(page.locator('.archive-graph-label')).toHaveCount(0);
-  await expect(page.locator('.paper-grid')).toHaveCount(0);
-
-  const motion = await page.evaluate(() => {
-    const rainStage = document.querySelector('.pretext-rain-stage');
-    const columnData = JSON.parse(document.querySelector('[data-pretext-rain-columns]')?.textContent || '[]');
-    const columns = [...document.querySelectorAll('.pretext-rain-column')];
-    const style = getComputedStyle(columns[0] || rainStage || document.body);
+  const audit = await page.evaluate(() => {
     const css = [...document.styleSheets]
       .flatMap((sheet) => {
         try {
@@ -102,102 +82,48 @@ test('homepage is a polished public filetree without decorative background motio
         }
       })
       .join('\n');
-    const archive = JSON.parse(document.getElementById('archive-data')?.textContent || '[]');
-    const stage = document.querySelector('[data-pretext-polish]');
-    const rainText = rainStage?.textContent || '';
-    const samples = window.__pretextRainMotionSamples || [];
-    const sampleColumns = new Set(samples.map((sample) => sample.columnIndex));
     return {
-      archiveCount: Array.isArray(archive) ? archive.length : 0,
-      pretextPolishCount: document.querySelectorAll('[data-pretext-polish]').length,
-      pretextScriptCount: document.querySelectorAll('script[src="/assets/pretext-polish.mjs"]').length,
-      rainStageCount: document.querySelectorAll('.pretext-rain-stage').length,
-      rainColumnCount: columns.length,
-      loomStageCount: document.querySelectorAll('.pretext-loom-stage').length,
-      loomRowCount: document.querySelectorAll('.pretext-loom-row').length,
-      catStageCount: document.querySelectorAll('.pretext-cat-stage').length,
-      spriteCount: document.querySelectorAll('.pretext-cat-sprite').length,
-      hiddenFrameNodeCount: document.querySelectorAll('.pretext-cat-frame').length,
-      columnDataCount: columnData.length,
-      animatedCount: columns.some((column) => {
-        const columnStyle = getComputedStyle(column);
-        return columnStyle.animationName !== 'none' && columnStyle.animationDuration !== '0s';
-      })
-        ? 1
-        : 0,
-      ambientLayerCount: document.querySelectorAll('.pretext-ambient-layer').length,
-      scene: stage?.dataset.pretextScene || '',
-      references: stage?.dataset.pretextReferences || '',
-      rainMode: rainStage?.dataset.rainMode || '',
-      sourceCount: Number(rainStage?.dataset.sourceCount || 0),
-      sourceWords: rainStage?.dataset.sourceWords || '',
-      glyphPool: rainStage?.dataset.glyphPool || '',
-      statusCount: document.querySelectorAll('[data-pretext-loom-status]').length,
-      cursorCount: document.querySelectorAll('[data-pretext-loom-cursor]').length,
-      frontGlassCount: document.querySelectorAll('.pretext-front-glass').length,
-      linkCount: document.querySelectorAll('.pretext-link,.pretext-network').length,
-      anchorTokenCount: document.querySelectorAll('a.pretext-loom-row[href],a.pretext-fragment[href],a.pretext-token[href]').length,
-      rainText,
-      behaviorList: rainStage?.dataset.behaviors || '',
-      catCopyCount: (stage?.textContent || '').match(/CAT-LINK|tail-sweep|large-tail|oneko|ascii cat/g)?.length || 0,
-      interactive: stage?.dataset.pretextInteractive || '',
-      columnFontSize: columns[0] ? Number.parseFloat(style.fontSize || '0') : 0,
-      decorativeNodeCount: document.querySelectorAll('.pretext-cat-paw,.pretext-cat-shadow,.pretext-ambient-layer,.pretext-front-glass')
-        .length,
-      filetreeWidth: document.querySelector('.filetree')?.getBoundingClientRect().width || 0,
-      hasRainCss: css.includes('pretext-rain-fall') && css.includes('pretext-rain-column') && css.includes('font-variant-ligatures'),
-      hasLoomCss: css.includes('pretext-loom-breathe') || css.includes('pretext-loom-row'),
-      hasCatCss: css.includes('pretext-cat-sprite') || css.includes('pretext-cat-breathe'),
-      hasDecorativeBackgroundPattern: /radial-gradient|orbit|bubble|stripe/i.test(css),
+      hasDecorativeBackgroundPattern: /radial-gradient|repeating-linear-gradient|skewY|orbit|bubble|stripe/i.test(css),
       mentionsNeon: css.toLowerCase().includes('neon'),
-      sampleCount: samples.length,
-      sampleColumnCount: sampleColumns.size,
+      decorativeCount: document.querySelectorAll('.pretext-rain-stage,.pretext-loom-stage,.pretext-cat-sprite,[data-pretext-polish],[data-pretext-editorial]').length,
       scrollWidth: document.documentElement.scrollWidth,
       clientWidth: document.documentElement.clientWidth,
     };
   });
-  expect(motion.archiveCount).toBeGreaterThan(0);
-  expect(motion.archiveCount).toBeLessThanOrEqual(publicPostCount);
-  expect(motion.pretextPolishCount).toBe(0);
-  expect(motion.pretextScriptCount).toBe(0);
-  expect(motion.rainStageCount).toBe(0);
-  expect(motion.rainColumnCount).toBe(0);
-  expect(motion.loomStageCount).toBe(0);
-  expect(motion.loomRowCount).toBe(0);
-  expect(motion.catStageCount).toBe(0);
-  expect(motion.spriteCount).toBe(0);
-  expect(motion.hiddenFrameNodeCount).toBe(0);
-  expect(motion.columnDataCount).toBe(0);
-  expect(motion.animatedCount).toBe(0);
-  expect(motion.ambientLayerCount).toBe(0);
-  expect(motion.scene).toBe('');
-  expect(motion.references).toBe('');
-  expect(motion.rainMode).toBe('');
-  expect(motion.sourceCount).toBe(0);
-  expect(motion.sourceWords).toBe('');
-  expect(motion.glyphPool).toBe('');
-  expect(motion.statusCount).toBe(0);
-  expect(motion.cursorCount).toBe(0);
-  expect(motion.frontGlassCount).toBe(0);
-  expect(motion.linkCount).toBe(0);
-  expect(motion.anchorTokenCount).toBe(0);
-  expect(motion.rainText).not.toContain('PRETEXT // CURRENT');
-  expect(motion.rainText).not.toContain('INDEX CURRENT');
-  expect(motion.rainText).not.toContain('signal:');
-  expect(motion.behaviorList).toBe('');
-  expect(motion.catCopyCount).toBe(0);
-  expect(motion.interactive).toBe('');
-  expect(motion.columnFontSize).toBe(0);
-  expect(motion.decorativeNodeCount).toBe(0);
-  expect(motion.filetreeWidth).toBeLessThanOrEqual(900);
-  expect(motion.hasRainCss).toBe(false);
-  expect(motion.hasLoomCss).toBe(false);
-  expect(motion.hasCatCss).toBe(false);
-  expect(motion.hasDecorativeBackgroundPattern).toBe(false);
-  expect(motion.mentionsNeon).toBe(false);
-  expect(motion.sampleCount).toBe(0);
-  expect(motion.sampleColumnCount).toBe(0);
-  expect(motion.scrollWidth).toBeLessThanOrEqual(motion.clientWidth + 1);
+  expect(audit.hasDecorativeBackgroundPattern).toBe(false);
+  expect(audit.mentionsNeon).toBe(false);
+  expect(audit.decorativeCount).toBe(0);
+  expect(audit.scrollWidth).toBeLessThanOrEqual(audit.clientWidth + 1);
+
+  // Dedicated /projects/ page
+  await page.goto('/projects/');
+  await expect(page.locator('html')).toHaveAttribute('data-askama-template', 'projects');
+  await expect(page.locator('[data-theme-filter-bar]')).toHaveCount(0);
+  await expect(page.locator('.v3-project-card')).toHaveCount(4);
+
+  // Dedicated /cv/ page
+  await page.goto('/cv/');
+  await expect(page.locator('html')).toHaveAttribute('data-askama-template', 'cv');
+  await expect(page.locator('#education')).toContainText('Yonsei University');
+  await expect(page.locator('#experience')).toContainText('Singapore University of Technology and Design');
+  await expect(page.locator('#publications .v3-work-card')).toHaveCount(3);
+  const firstBibBtn = page.locator('[data-copy-bibtex]').first();
+  await firstBibBtn.click();
+  await expect(firstBibBtn).toContainText(/Copied BibTeX|BibTeX ready/);
+  await expect(page.locator('a[href="/cv/jinhyuk-kim-cv.pdf"]')).toBeVisible();
+  const cvText = await page.evaluate(() => document.body.textContent || '');
+  expect(cvText).not.toMatch(/(?:\(\+82\)\s*)?0?10-\d{4}-\d{4}/);
+  expect(cvText).not.toContain('Submitted to');
+  await page.goto('/writing/');
+  await expect(page.locator('html')).toHaveAttribute('data-askama-template', 'writing');
+  const writingCount = await page.locator('.post-card').count();
+  expect(writingCount).toBeGreaterThan(0);
+  await expect(page.locator('.filetree')).toHaveCount(1);
+  await expect(page.locator('.filetree-folder')).toHaveCount(folders.length);
+  await expect(page.locator('.filetree-file')).toHaveCount(writingCount);
+  await expect(page.locator('details.filetree-folder[data-folder="news"]')).toHaveCount(0);
+  await page.locator('details.filetree-folder[data-folder="projects"] > summary').click();
+  await expect(page.locator('details.filetree-folder[data-folder="projects"]')).not.toHaveAttribute('open', '');
 });
 
 test('local preview serves focused issue API and a dedicated news page', async ({ page, request }) => {
@@ -215,8 +141,8 @@ test('local preview serves focused issue API and a dedicated news page', async (
   await expect(page.locator('html')).toHaveAttribute('data-askama-template', 'news');
   await expect(page.locator('body')).toHaveAttribute('data-layout', 'news-index');
   await expect(page.getByRole('heading', { name: 'News', exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: /^News$/ })).toHaveAttribute('aria-current', 'page');
-  await expect(page.getByRole('link', { name: /^News Search$/ })).toHaveAttribute('href', '/news/search/');
+  await expect(page.locator('.site-header nav a[href="/news/"]')).toHaveAttribute('aria-current', 'page');
+  await expect(page.locator('a[href="/news/search/"]').first()).toBeVisible();
   await expect(page.locator('[data-focused-issue-lab]')).toHaveCount(0);
   await expect(page.locator('[data-news-featured] .news-feature-card')).toHaveCount(1);
   await expect(page.locator('[data-news-featured] .news-feature-thumb')).toHaveCount(1);
@@ -229,7 +155,7 @@ test('local preview serves focused issue API and a dedicated news page', async (
 
   await page.goto('/news/search/');
   await expect(page.locator('html')).toHaveAttribute('data-askama-template', 'news-search');
-  await expect(page.getByRole('link', { name: /^News Search$/ })).toHaveAttribute('aria-current', 'page');
+  await expect(page.locator('.site-header nav a[href="/news/"]')).toHaveAttribute('aria-current', 'page');
   await expect(page.locator('[data-focused-issue-lab]')).toBeVisible();
   await expect(page.getByText('AI-assisted expansion', { exact: true })).toBeVisible();
   await expect(page.getByText('Gemma 4', { exact: false })).toHaveCount(0);
@@ -238,7 +164,10 @@ test('local preview serves focused issue API and a dedicated news page', async (
 
 test('mobile news digest keeps every paper title visible without overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/posts/2026-06-15-ai-news-digest/');
+  await page.goto('/news/');
+  const latestHref = await page.locator('[data-news-featured] a.news-feature-card').first().getAttribute('href');
+  expect(latestHref).toMatch(/^\/posts\/\d{4}-\d{2}-\d{2}-ai-news-digest\/$/);
+  await page.goto(latestHref);
 
   const audit = await page.evaluate(() => {
     const isVisible = (node) => {
@@ -272,15 +201,9 @@ test('mobile news digest keeps every paper title visible without overflow', asyn
     };
   });
 
-  expect(audit.visiblePaperRows).toBe(6);
-  expect(audit.visibleRepoRows).toBe(3);
-  expect(audit.paperTitles).toContain(
-    'Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning',
-  );
-  expect(audit.paperTitles).toContain('SG-OPD: Sign-Gated On-Policy Distillation via Sign-Consistency Gating and Phased Teacher Sampling');
-  expect(audit.visiblePaperLeadTitles).toContain(
-    'Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with On-Policy Reinforcement Learning',
-  );
+  expect(audit.visiblePaperRows).toBeGreaterThanOrEqual(1);
+  expect(audit.visibleRepoRows).toBeGreaterThanOrEqual(1);
+  expect(audit.paperTitles.every((title) => title.length > 0)).toBe(true);
   expect(audit.paperTitles.some((title) => title.endsWith('…'))).toBe(false);
   expect(audit.visiblePaperLeadTitles.some((title) => title.endsWith('…'))).toBe(false);
   expect(audit.clampedPaperTitles).toBe(0);
@@ -288,11 +211,16 @@ test('mobile news digest keeps every paper title visible without overflow', asyn
   expect(audit.scrollWidth).toBeLessThanOrEqual(audit.clientWidth + 1);
 });
 
-test('theme follows the system default and can be toggled without local persistence', async ({ browser }) => {
-  const darkContext = await browser.newContext({ colorScheme: 'dark', viewport: { width: 1024, height: 760 } });
+test('theme follows the system default and persists toggled override across navigation, reload, and back', async ({ browser }) => {
+  const darkContext = await browser.newContext({ colorScheme: 'dark', viewport: { width: 1280, height: 820 } });
   const darkPage = await darkContext.newPage();
   await darkPage.goto('/');
   await expect(darkPage.locator('[data-theme-toggle]')).toHaveAttribute('data-active-theme', 'system-dark');
+  await expect(darkPage.locator('[data-ran-stage]')).toBeVisible();
+  await darkPage.locator('[data-ran-node="2"]').click();
+  await expect(darkPage.locator('[data-ran-stage]')).toHaveAttribute('data-ran-phase', '2');
+  await expect(darkPage.locator('[data-ran-node="2"]')).toHaveAttribute('data-active', 'true');
+
   let themeAudit = await darkPage.evaluate(() => {
     const style = getComputedStyle(document.body);
     return {
@@ -317,11 +245,30 @@ test('theme follows the system default and can be toggled without local persiste
     saved: window.localStorage.getItem('mud-blog-theme'),
     iconLabel: document.querySelector('[data-theme-toggle] .theme-toggle-label')?.textContent || '',
   }));
-  expect(themeAudit.saved).toBeNull();
+  expect(themeAudit.saved).toBe('light');
   expect(themeAudit.iconLabel).toContain('Light');
+
+  // Persists across reload and cross-page navigation
   await darkPage.reload();
-  await expect(darkPage.locator('html')).not.toHaveAttribute('data-theme', 'light');
-  await expect(darkPage.locator('[data-theme-toggle]')).toHaveAttribute('data-active-theme', 'system-dark');
+  await expect(darkPage.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expect(darkPage.locator('[data-theme-toggle]')).toHaveAttribute('data-active-theme', 'light');
+
+  await darkPage.locator('a[href="/posts/cfp-radar-system/"]').first().click();
+  await darkPage.waitForURL('**/posts/cfp-radar-system/');
+  await expect(darkPage.locator('html')).toHaveAttribute('data-theme', 'light');
+
+  // Smart in-page back link returns to referring home page while keeping theme
+  await darkPage.locator('a.back-link').click();
+  await darkPage.waitForURL(/\/$/);
+  await expect(darkPage.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expect(darkPage.locator('[data-pretext-bio-wrap]')).toHaveAttribute('data-pretext-mode', 'active');
+
+  // Browser goBack / goForward preserves persisted theme
+  await darkPage.goto('/projects/');
+  await expect(darkPage.locator('html')).toHaveAttribute('data-theme', 'light');
+  await darkPage.goBack();
+  await darkPage.waitForURL(/\/$/);
+  await expect(darkPage.locator('html')).toHaveAttribute('data-theme', 'light');
   await darkContext.close();
 });
 
@@ -378,11 +325,15 @@ test('global blog chrome is glass over space black with an inverted light mode a
   expect(dark.scrollWidth).toBeLessThanOrEqual(dark.clientWidth + 1);
 
   await page.goto('/');
-  const homeDark = await auditTheme(['.filetree', '.post-card']);
+  const homeDark = await auditTheme(['.site-header', '.v3-work-tile-live']);
   expect(homeDark.glass.every((item) => item.present && item.backdrop.includes('blur'))).toBe(true);
   expect(homeDark.hasPatterns).toBe(false);
   expect(homeDark.scrollWidth).toBeLessThanOrEqual(homeDark.clientWidth + 1);
 
+  await page.goto('/writing/');
+  const writingDark = await auditTheme(['.filetree', '.post-card']);
+  expect(writingDark.glass.every((item) => item.present && item.backdrop.includes('blur'))).toBe(true);
+  expect(writingDark.scrollWidth).toBeLessThanOrEqual(writingDark.clientWidth + 1);
   await page.goto('/news/search/');
   await page.locator('[data-theme-toggle]').click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
@@ -456,21 +407,16 @@ test('dark mode keeps news desk buttons and chips readable', async ({ page }) =>
   expect(failing).toEqual([]);
 });
 
-test('post pages keep rich media and inline html aligned with the article width', async ({ page }) => {
-  await page.goto('/posts/jinhyuk-kim/');
+test('post pages keep typography and layout aligned with the article width', async ({ page }) => {
+  await page.goto('/posts/mwc26-ai-ran-beamforming/');
   await expect(page.locator('html')).toHaveAttribute('data-askama-template', 'post');
   await expect(page.locator('body')).toHaveAttribute('data-layout', 'reader-post');
-  await expect(page.getByRole('heading', { name: 'Jinhyuk Kim' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'About Jinhyuk' })).toHaveCount(0);
-  await expect(page.locator('.profile-publication-widget')).toHaveCount(1);
-  await expect(page.locator('.profile-link-grid')).toHaveCount(1);
+  await expect(page.getByRole('heading', { name: 'LLM-Based 5G Beamforming for AI-RAN' })).toBeVisible();
   await expect(page.locator('[data-blog-chat]')).toHaveCount(0);
   await expect(page.locator('script[src="/assets/blog-lab.mjs"]')).toHaveCount(0);
 
   const audit = await page.evaluate(() => {
     const article = document.querySelector('.post-reader')?.getBoundingClientRect();
-    const iframe = document.querySelector('.profile-publication-widget')?.getBoundingClientRect();
-    const linkGrid = document.querySelector('.profile-link-grid')?.getBoundingClientRect();
     const backLink = document.querySelector('.back-link')?.getBoundingClientRect();
     const metadata = document.querySelector('.post-reader > .eyebrow')?.getBoundingClientRect();
     const images = [...document.querySelectorAll('.post-body img')].map((image) => image.getBoundingClientRect().width);
@@ -478,8 +424,6 @@ test('post pages keep rich media and inline html aligned with the article width'
     const bodyStyles = body ? getComputedStyle(body) : null;
     return {
       articleWidth: article?.width || 0,
-      iframeWidth: iframe?.width || 0,
-      linkGridWidth: linkGrid?.width || 0,
       imageMax: images.length ? Math.max(...images) : 0,
       backBottom: backLink?.bottom || 0,
       metadataTop: metadata?.top || 0,
@@ -488,9 +432,8 @@ test('post pages keep rich media and inline html aligned with the article width'
       clientWidth: document.documentElement.clientWidth,
     };
   });
-  expect(audit.articleWidth).toBeLessThanOrEqual(820);
-  expect(audit.iframeWidth).toBeLessThanOrEqual(audit.articleWidth + 1);
-  expect(audit.linkGridWidth).toBeLessThanOrEqual(audit.articleWidth + 1);
+  expect(audit.articleWidth).toBeGreaterThanOrEqual(780);
+  expect(audit.articleWidth).toBeLessThanOrEqual(1320);
   expect(audit.imageMax).toBeLessThanOrEqual(audit.articleWidth + 1);
   expect(audit.metadataTop).toBeGreaterThanOrEqual(audit.backBottom + 10);
   expect(audit.lineHeight).toBeGreaterThanOrEqual(30.8);
@@ -558,7 +501,7 @@ test('narrow news search and post chrome keep controls separated without overlap
   expect(newsLayout.queryInputFontSize).toBeGreaterThanOrEqual(16);
   expect(newsLayout.actionButtonOverlaps.every((value) => value === false)).toBe(true);
 
-  await page.goto('/posts/jinhyuk-kim/');
+  await page.goto('/posts/mwc26-ai-ran-beamforming/');
   const postLayout = await page.evaluate(() => {
     const back = document.querySelector('.back-link')?.getBoundingClientRect();
     const metadata = document.querySelector('.post-reader > .eyebrow')?.getBoundingClientRect();
@@ -577,29 +520,6 @@ test('narrow news search and post chrome keep controls separated without overlap
   expect(postLayout.metadataTop).toBeGreaterThanOrEqual(postLayout.backBottom + 10);
   expect(postLayout.bodyFontSize).toBeGreaterThanOrEqual(17);
   expect(postLayout.bodyLineHeight).toBeGreaterThanOrEqual(30.5);
-});
-
-test('post fragment remains direct readable cards for safe replacement', async ({ page, request }) => {
-  const response = await request.get('/fragments/posts');
-  expect(response.ok()).toBe(true);
-  const fragment = await response.text();
-  expect(fragment).not.toContain('class="post-grid"');
-  expect(fragment).not.toContain('data-askama-template="posts-fragment"');
-  expect(fragment.trim().startsWith('<a class="post-card"')).toBe(true);
-  expect(fragment).not.toContain('AI News Brief — Jun 09');
-  expect(fragment).toContain('Jinhyuk Kim');
-  expect(fragment).not.toContain('About Jinhyuk');
-  expect(fragment).not.toContain('Pretext Kinetic Blog');
-
-  await page.goto('/');
-  const publicPostCount = await page.locator('.post-card').count();
-  await page.evaluate(async () => {
-    const html = await fetch('/fragments/posts').then((response) => response.text());
-    const surface = document.querySelector('#posts-surface');
-    if (surface) surface.innerHTML = html;
-  });
-  await expect(page.locator('#posts-surface > .post-card')).toHaveCount(publicPostCount);
-  await expect(page.locator('#posts-surface > .post-grid')).toHaveCount(0);
 });
 
 test('news page searches candidates before drafting an issue and does not expose keys or overflow text', async ({ page }) => {

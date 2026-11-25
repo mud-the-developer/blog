@@ -1963,10 +1963,10 @@ fn render_ics(issue: &CfpIssue) -> String {
     let mut out = String::new();
     out.push_str("BEGIN:VCALENDAR\r\n");
     out.push_str("VERSION:2.0\r\n");
-    out.push_str("PRODID:-//Mud's Blog//CFP Radar//EN\r\n");
+    out.push_str("PRODID:-//Mud's Blog//Call for Papers//EN\r\n");
     out.push_str("CALSCALE:GREGORIAN\r\n");
     out.push_str("METHOD:PUBLISH\r\n");
-    out.push_str("X-WR-CALNAME:CFP Radar Deadlines\r\n");
+    out.push_str("X-WR-CALNAME:Call for Papers Deadlines\r\n");
     out.push_str("X-WR-TIMEZONE:Asia/Seoul\r\n");
 
     let now_stamp = chrono::DateTime::parse_from_rfc3339(&issue.generated_at)
@@ -1976,7 +1976,7 @@ fn render_ics(issue: &CfpIssue) -> String {
         .to_string();
 
     for item in &issue.items {
-        if !item.deadline_verified || !item.days_until_deadline.is_some_and(|days| days >= 0) {
+        if !item.deadline_verified || item.days_until_deadline.is_none_or(|days| days < 0) {
             continue;
         }
         if let Some(deadline) = &item.configured_deadline
@@ -2079,7 +2079,7 @@ fn render_type_preview(output: &mut String, title: &str, items: Vec<&CfpItem>) {
     output.push_str(&format!("### {title}\n\n"));
     let mut ranked: Vec<&CfpItem> = items
         .into_iter()
-        .filter(|item| !item.days_until_deadline.is_some_and(|days| days < 0))
+        .filter(|item| item.days_until_deadline.is_none_or(|days| days >= 0))
         .collect();
     ranked.sort_by(|a, b| {
         b.deadline_verified
@@ -2095,11 +2095,14 @@ fn render_type_preview(output: &mut String, title: &str, items: Vec<&CfpItem>) {
 fn render_markdown(issue: &CfpIssue) -> String {
     let mut output = String::new();
     output.push_str("---\n");
-    output.push_str(&format!("title: \"CFP Radar — {}\"\n", issue.issue_date));
+    output.push_str(&format!(
+        "title: \"Call for Papers — {}\"\n",
+        issue.issue_date
+    ));
     output.push_str(&format!("date: {}\n", issue.issue_date));
     output.push_str("slug: cfp-radar\n");
     output.push_str("tags:\n  - cfp\n  - conferences\n  - workshops\n  - journals\n  - special-issues\n  - wireless\n  - communications\nexcerpt: \"Daily Call For Papers Dashboard with nearest submission deadlines, 1-click Google Calendar add links, and grouped watchlists for wireless/communications venues.\"\n---\n\n");
-    output.push_str("Daily CFP radar for conferences, workshops, and journal special issues relevant to wireless communications, RAN/6G, networking, edge systems, AI systems, and security. Dates are operational leads: always verify the linked official CFP page before planning a submission.\n\n");
+    output.push_str("Daily call-for-papers tracker for conferences, workshops, and journal special issues relevant to wireless communications, RAN/6G, networking, edge systems, AI systems, and security. Dates are operational leads: always verify the linked official CFP page before planning a submission.\n\n");
     output.push_str("<div class=\"cfp-calendar-sync-banner\"><span class=\"ui-icon\" data-icon=\"calendar\"></span> <strong>1-Click Calendar Sync:</strong> <a class=\"cfp-sync-link\" href=\"webcal://mud-blog.pages.dev/cfp/radar.ics\"><span class=\"ui-icon\" data-icon=\"calendar-plus\"></span><span>Subscribe via Webcal</span></a> <span class=\"cfp-sync-sep\">|</span> <a class=\"cfp-sync-link\" href=\"/cfp/radar.ics\" download><span class=\"ui-icon\" data-icon=\"download\"></span><span>Download .ics</span></a></div>\n\n");
     let cached = issue
         .items
@@ -2190,20 +2193,21 @@ fn render_markdown(issue: &CfpIssue) -> String {
     output.push_str("## Full grouped watchlists\n\n");
     output.push_str("### Conferences\n\n");
     let conferences = sorted_item_refs(issue.items.iter().filter(|item| {
-        is_conference(item) && !item.days_until_deadline.is_some_and(|days| days < 0)
+        is_conference(item) && item.days_until_deadline.is_none_or(|days| days >= 0)
     }));
     render_watchlist_table(&mut output, &conferences);
 
     output.push_str("### Workshops\n\n");
-    let workshops = sorted_item_refs(issue.items.iter().filter(|item| {
-        is_workshop(item) && !item.days_until_deadline.is_some_and(|days| days < 0)
-    }));
+    let workshops =
+        sorted_item_refs(issue.items.iter().filter(|item| {
+            is_workshop(item) && item.days_until_deadline.is_none_or(|days| days >= 0)
+        }));
     render_watchlist_table(&mut output, &workshops);
 
     output.push_str("### Journal special issues\n\n");
     let journals =
         sorted_item_refs(issue.items.iter().filter(|item| {
-            is_journal(item) && !item.days_until_deadline.is_some_and(|days| days < 0)
+            is_journal(item) && item.days_until_deadline.is_none_or(|days| days >= 0)
         }));
     render_watchlist_table(&mut output, &journals);
 

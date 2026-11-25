@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" data-runtime="tokio" data-askama-template="writing">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMyNDI0MjQiLz48cGF0aCBkPSJNMTYgNDZWMThoOWw3IDEzIDctMTNoOXYyOGgtOFYzMWwtOCAxMi04LTEydjE1eiIgZmlsbD0iI0E0QkJGRiIvPjwvc3ZnPg==" />
+  <meta name="description" content="Paper notes, architecture essays, and engineering logs by Jinhyuk Kim." />
+  <title>Writing — Jinhyuk Kim</title>
+  <script>(()=>{try{const t=localStorage.getItem('mud-blog-theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t;}catch{}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body data-layout="v3-writing" data-palette="pair-07">
+  <header class="site-header v3-glass-bar">
+    <a class="brand" href="/" aria-label="mud blog home">
+      <span class="brand-mark ui-icon" data-icon="radio-tower" aria-hidden="true"></span>
+      <span>mud blog</span>
+    </a>
+    <div class="site-header-actions">
+      <nav aria-label="Primary">
+        <a href="/" data-nav-key="h"><span class="ui-icon nav-icon" data-icon="home" aria-hidden="true"></span><kbd>h</kbd><span>home</span></a>
+        <a href="/projects/" data-nav-key="p"><span class="ui-icon nav-icon" data-icon="layers" aria-hidden="true"></span><kbd>p</kbd><span>projects</span></a>
+        <a href="/cv/" data-nav-key="c"><span class="ui-icon nav-icon" data-icon="file-text" aria-hidden="true"></span><kbd>c</kbd><span>cv</span></a>
+        <a href="/writing/" aria-current="page" data-nav-key="w"><span class="ui-icon nav-icon" data-icon="pen-line" aria-hidden="true"></span><kbd>w</kbd><span>writing</span></a>
+        <a href="/cfp/" data-nav-key="r"><span class="ui-icon nav-icon" data-icon="calendar-days" aria-hidden="true"></span><kbd>r</kbd><span>cfp</span></a>
+        <a href="/news/" data-nav-key="n"><span class="ui-icon nav-icon" data-icon="newspaper" aria-hidden="true"></span><kbd>n</kbd><span>news</span></a>
+      </nav>
+      <button class="cmd-trigger" type="button" data-cmd-open aria-label="Open command palette (Command K)">
+        <span class="ui-icon" data-icon="search" aria-hidden="true"></span>
+        <kbd>⌘K</kbd>
+      </button>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle color theme: System" aria-pressed="false">
+        <span class="ui-icon theme-icon theme-icon-sun" data-icon="sun" aria-hidden="true"></span>
+        <span class="ui-icon theme-icon theme-icon-moon" data-icon="moon" aria-hidden="true"></span>
+        <span class="theme-toggle-label">System</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="v3-shell">
+    <section class="v3-page-head">
+      <p class="v3-kicker">Library · {{ posts.len() }} notes · {{ folder_count }} sections</p>
+      <h1 class="v3-display-title">Writing &amp; Notes</h1>
+      <p class="v3-page-lead">Paper walkthroughs, engineering notes, and architecture logs sourced from <code>posts/</code>. Daily AI news briefs live under <a href="/news/">/news/</a>.</p>
+    </section>
+
+    <section class="archive-panel v3-writing-workspace" id="posts" aria-label="Writing archive">
+      <nav class="filetree" aria-label="Post file tree">
+        <div class="filetree-root">
+          <span class="filetree-root-label"><span class="ui-icon" data-icon="folder-root" aria-hidden="true"></span><span>posts/</span></span>
+          <span class="filetree-count">{{ posts.len() }}</span>
+        </div>
+        {% for group in groups %}
+        <details class="filetree-folder" data-folder="{{ group.slug }}" aria-label="{{ group.label }} posts"{% if group.slug != "news" %} open{% endif %}>
+          <summary class="filetree-folder-label">
+            <span class="filetree-title"><span class="ui-icon" data-icon="folder" aria-hidden="true"></span><span>{{ group.slug }}/</span></span>
+            <span class="filetree-count">{{ group.posts.len() }}</span>
+          </summary>
+          <div class="filetree-files">
+            {% for post in group.posts %}
+            <a class="filetree-file" href="{{ post.url }}">
+              <span class="filetree-title"><span>{{ post.title }}</span></span>
+              <span class="filetree-date"><span>{{ post.date }}</span></span>
+            </a>
+            {% endfor %}
+          </div>
+        </details>
+        {% endfor %}
+      </nav>
+
+      <div id="posts-surface" class="post-list" aria-live="polite">
+        {% for post in posts %}
+        <a class="post-card" href="{{ post.url }}" data-folder="{{ post.folder }}">
+          <span class="post-card-meta">
+            <span class="post-card-folder">{{ post.folder }}</span>
+            <span class="post-card-date">{{ post.date }}</span>
+          </span>
+          <strong>{{ post.title }}</strong>
+          <span>{{ post.excerpt }}</span>
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+
+  <footer class="v3-footer">
+    <span>Jinhyuk Kim · Writing</span>
+    <span class="v3-footer-links">
+      <a href="/">Home</a>
+      <a href="/projects/">Projects</a>
+      <a href="/cv/">CV</a>
+      <a href="/cfp/">CFP</a>
+      <a href="/news/">News</a>
+    </span>
+  </footer>
+
+  <div class="v3-cmd-backdrop" data-cmd-backdrop hidden>
+    <div class="v3-cmd-dialog v3-glass-panel" role="dialog" aria-modal="true" aria-labelledby="cmd-dialog-title">
+      <div class="v3-cmd-input-row">
+        <span class="ui-icon" data-icon="search" aria-hidden="true"></span>
+        <label id="cmd-dialog-title" class="sr-only" for="v3-cmd-input">Jump to page, project, publication, or note</label>
+        <input id="v3-cmd-input" class="v3-cmd-input" type="search" placeholder="Jump to page, paper, project, or note..." autocomplete="off" data-cmd-input />
+        <button class="v3-cmd-close" type="button" data-cmd-close aria-label="Close command palette">Esc</button>
+      </div>
+      <div class="v3-cmd-results" data-cmd-results role="listbox" aria-label="Search results"></div>
+      <div class="v3-cmd-foot">
+        <span>Shortcuts: <kbd>h</kbd> home · <kbd>p</kbd> projects · <kbd>c</kbd> cv · <kbd>w</kbd> writing · <kbd>r</kbd> cfp · <kbd>n</kbd> news</span>
+      </div>
+    </div>
+  </div>
+
+  <script id="archive-data" type="application/json">{{ archive_json|safe }}</script>
+  <script id="command-index-data" type="application/json">{{ command_index_json|safe }}</script>
+  <script type="module" src="/assets/site-chrome.mjs"></script>
+  <script type="module" src="/assets/pretext-stage.mjs"></script>
+  <script src="/assets/web-vitals-rum.js"></script>
+</body>
+</html>

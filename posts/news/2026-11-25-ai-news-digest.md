@@ -43,9 +43,14 @@ content-classes: [news-digest-note]
     </header>
     <div class="news-digest-lead-strip" aria-label="Lead signals">
       <article class="news-digest-lead-story">
-        <p class="section-kicker">Lead read</p>
-        <h3 data-pretext-target>Daily AI Brief: Agentic Development Surges, Distillation Debates Emerge</h3>
-        <p data-pretext-target>The artificial intelligence sector continues its rapid evolution, with developer activity on GitHub notably focused on agentic systems. Research efforts are concentrating on specialized models for coding and reasoning, alongside advancements in physical agency. Concurrently, social channels are buzzing with discussions regarding model distillation practices and the market performance of key AI players.</p>
+        <p class="section-kicker">Trend radar</p>
+        <h3 data-pretext-target>Cross-source clusters today</h3>
+        <ul class="news-trend-inline-list">
+          <li class="news-trend-inline-item"><a href="https://github.com/colbymchenry/codegraph" target="_blank" rel="noreferrer"><strong>Frontier Models</strong><span>4 feeds converging · GitHub + Google AI Blog + HF Papers + arXiv</span></a></li>
+          <li class="news-trend-inline-item"><a href="https://github.com/mvanhorn/last30days-skill" target="_blank" rel="noreferrer"><strong>Agentic Systems</strong><span>3 feeds · ↑1.9x · GitHub + HF Papers + arXiv</span></a></li>
+          <li class="news-trend-inline-item"><a href="https://github.com/MemPalace/mempalace" target="_blank" rel="noreferrer"><strong>Reasoning &amp; Evals</strong><span>3 feeds converging · GitHub + HF Papers + arXiv</span></a></li>
+          <li class="news-trend-inline-item"><a href="https://github.com/mvanhorn/last30days-skill" target="_blank" rel="noreferrer"><strong>Retrieval &amp; Memory</strong><span>2 feeds converging · GitHub + HF Papers</span></a></li>
+        </ul>
       </article>
       <div class="news-digest-lead-cards">
         <a class="news-digest-lead-card news-digest-lead-card--repo" href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noreferrer">

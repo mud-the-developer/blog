@@ -45,9 +45,11 @@ ARCHIVE_URL = f"/posts/{ARCHIVE_STEM}/"
 NEWS_ASSET_DIR = ROOT / "static" / "news" / "assets"
 DEFAULT_GEMMA_REQUEST_TIMEOUT_SECONDS = 35.0
 DEFAULT_GEMMA_REQUEST_ATTEMPTS = 2
-RECENT_DIGEST_LOOKBACK_DAYS = 5
+RECENT_DIGEST_LOOKBACK_DAYS = 7
 DEFAULT_MEMPALACE_PATH = Path.home() / ".mempalace" / "palace"
 DEFAULT_MEMPALACE_LIMIT = 6
+DEFAULT_RETENTION_DAYS = 60
+DAILY_DIGEST_FILENAME_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})-ai-news-(?:beta-)?digest\.md$")
 
 SECTION_SPECS = [
     ("hot24", "Hot in 24 Hours", "The fastest-moving items across repos, papers, and community chatter."),
@@ -124,13 +126,33 @@ SIGNAL_TERMS = (
 )
 
 TOPIC_BUCKETS = {
-    "agents": ("agent", "agentic", "copilot", "codex", "assistant"),
-    "models": ("model", "llm", "gpt", "claude", "gemini", "phi"),
-    "reasoning": ("reasoning", "thinking", "trace", "benchmark", "eval"),
-    "rag": ("rag", "retrieval", "vector", "database", "search"),
-    "multimodal": ("multimodal", "vision", "video", "audio"),
-    "inference": ("inference", "quantization", "serving", "latency"),
-    "openran": ("vran", "o-ran", "open ran", "ric", "xapp", "rapp", "ran"),
+    "agents": ("agent", "agentic", "orchestrat", "multi-agent", "autonomous", "harness"),
+    "coding": ("coding", "codex", "copilot", "opencode", "codebase", "ide", "swe-bench", "developer"),
+    "models": ("model", "llm", "gpt", "claude", "gemini", "qwen", "llama", "deepseek", "moe", "frontier"),
+    "reasoning": ("reasoning", "thinking", "trace", "benchmark", "eval", "rlvr", "verifier"),
+    "distillation": ("distill", "post-train", "fine-tun", "lora", "grpo", "dpo", "alignment"),
+    "inference": ("inference", "quantiz", "serving", "latency", "vllm", "kv cache", "speculative", "gpu", "kernel"),
+    "rag": ("rag", "retrieval", "vector", "memory", "context", "knowledge graph", "search"),
+    "multimodal": ("multimodal", "vision", "video", "audio", "speech", "image", "world model"),
+    "embodied": ("robot", "embodied", "vla", "manipulation", "physical", "humanoid"),
+    "mcp": ("mcp", "tool use", "function calling", "protocol", "gateway", "browser use"),
+    "safety": ("safety", "jailbreak", "red team", "guardrail", "policy", "privacy", "security"),
+    "openran": ("vran", "o-ran", "open ran", "ric", "xapp", "rapp", "6g", "5g", "beamforming", "ran"),
+}
+
+TOPIC_LABELS = {
+    "agents": "Agentic Systems",
+    "coding": "AI Coding & Dev",
+    "models": "Frontier Models",
+    "reasoning": "Reasoning & Evals",
+    "distillation": "Post-Training & Distillation",
+    "inference": "Inference & Systems",
+    "rag": "Retrieval & Memory",
+    "multimodal": "Multimodal & World Models",
+    "embodied": "Robotics & Embodied AI",
+    "mcp": "MCP & Tooling",
+    "safety": "Safety & Governance",
+    "openran": "AI-RAN & Wireless",
 }
 
 
@@ -179,8 +201,10 @@ class RecentDigestMemory:
     canonical_keys: Counter[str] = field(default_factory=Counter)
     topics: Counter[str] = field(default_factory=Counter)
     sources: Counter[str] = field(default_factory=Counter)
-
-
+    url_last_seen_days: dict[str, int] = field(default_factory=dict)
+    key_last_seen_days: dict[str, int] = field(default_factory=dict)
+    days_loaded: int = 0
+    total_items: int = 0
 RECENT_DIGEST_MEMORY = RecentDigestMemory()
 
 
@@ -192,6 +216,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--keywords", default="", help="Comma-separated keyword focus list for manual issue generation.")
     parser.add_argument("--mempalace-limit", type=int, default=DEFAULT_MEMPALACE_LIMIT, help="Maximum MemPalace drawers to pass into the Gemma planning payload.")
     parser.add_argument("--no-mempalace", action="store_true", help="Disable local MemPalace context enrichment for this run.")
+    parser.add_argument("--retention-days", type=int, default=DEFAULT_RETENTION_DAYS, help="Number of recent calendar days of daily digest posts to keep (0 disables pruning).")
+    parser.add_argument("--prune-only", action="store_true", help="Prune daily digest posts and caches older than --retention-days and refresh archive/hub metadata without fetching new feeds.")
     return parser.parse_args()
 
 
@@ -783,33 +809,76 @@ def source_from_url(url: str) -> str:
 
 def load_recent_digest_memory(issue_dt: datetime) -> RecentDigestMemory:
     memory = RecentDigestMemory()
-    card_pattern = re.compile(
-        r'<a class="news-digest-card[^"]*" href="([^"]+)"[^>]*>.*?<h3[^>]*>(.*?)</h3>',
-        re.DOTALL,
+    anchor_pattern = re.compile(r'<a\b[^>]*\bhref="(https?://[^"]+)"[^>]*>(.*?)</a>', re.DOTALL | re.IGNORECASE)
+    target_title_pattern = re.compile(
+        r'<(?:h3|strong)\b[^>]*\bdata-pretext-target\b[^>]*>(.*?)</(?:h3|strong)>',
+        re.DOTALL | re.IGNORECASE,
     )
+    heading_pattern = re.compile(r'<(?:h3|strong)\b[^>]*>(.*?)</(?:h3|strong)>', re.DOTALL | re.IGNORECASE)
+    issue_day = issue_dt.date()
     for path in recent_digest_paths(issue_dt):
+        match = DAILY_DIGEST_FILENAME_RE.match(path.name)
+        days_ago = 1
+        if match:
+            try:
+                file_day = datetime.strptime(match.group(1), "%Y-%m-%d").date()
+                days_ago = max(1, (issue_day - file_day).days)
+            except ValueError:
+                days_ago = 1
         raw = path.read_text(encoding="utf-8")
+        memory.days_loaded += 1
         day_urls: set[str] = set()
         day_keys: set[str] = set()
-        day_topics: set[str] = set()
+        day_topics: Counter[str] = Counter()
         day_sources: set[str] = set()
-        for url, title_html in card_pattern.findall(raw):
-            if not url.startswith("http"):
+        for url, inner_html in anchor_pattern.findall(raw):
+            clean_url = html_unescape(url).strip()
+            if not clean_url.startswith("http"):
                 continue
-            title = html_unescape(re.sub(r"<[^>]+>", "", title_html)).strip()
-            if not title:
+            if urlparse(clean_url).netloc.lower().endswith("mud-blog.pages.dev"):
                 continue
-            day_urls.add(url)
-            day_keys.add(canonical_key_from_url_and_title(url, title))
-            day_topics.add(topic_from_text(title))
-            day_sources.add(source_from_url(url))
+            title_match = target_title_pattern.search(inner_html)
+            if title_match:
+                title = collapse_whitespace(html_unescape(re.sub(r"<[^>]+>", " ", title_match.group(1))))
+            else:
+                candidates = [
+                    collapse_whitespace(html_unescape(re.sub(r"<[^>]+>", " ", m.group(1))))
+                    for m in heading_pattern.finditer(inner_html)
+                ]
+                long_candidates = [c for c in candidates if len(c) >= 3]
+                if long_candidates:
+                    title = max(long_candidates, key=len)
+                else:
+                    title = collapse_whitespace(html_unescape(re.sub(r"<[^>]+>", " ", inner_html)))
+            full_text = collapse_whitespace(html_unescape(re.sub(r"<[^>]+>", " ", inner_html)))
+            key = canonical_key_from_url_and_title(clean_url, title)
+            day_urls.add(clean_url)
+            if key:
+                day_keys.add(key)
+            lower_text = full_text.lower()
+            matched_topics: list[tuple[int, str]] = []
+            for bucket, terms in TOPIC_BUCKETS.items():
+                hits = sum(1 for term in terms if term in lower_text)
+                if hits > 0:
+                    matched_topics.append((hits, bucket))
+            matched_topics.sort(key=lambda pair: (-pair[0], pair[1]))
+            for _, bucket in matched_topics[:2]:
+                day_topics[bucket] += 1
+            day_sources.add(source_from_url(clean_url))
         memory.urls.update(day_urls)
         memory.canonical_keys.update(day_keys)
         memory.topics.update(day_topics)
         memory.sources.update(day_sources)
+        memory.total_items += len(day_keys) or len(day_urls)
+        for clean_url in day_urls:
+            prev = memory.url_last_seen_days.get(clean_url)
+            if prev is None or days_ago < prev:
+                memory.url_last_seen_days[clean_url] = days_ago
+        for key in day_keys:
+            prev = memory.key_last_seen_days.get(key)
+            if prev is None or days_ago < prev:
+                memory.key_last_seen_days[key] = days_ago
     return memory
-
-
 def set_recent_digest_memory(issue_dt: datetime) -> None:
     global RECENT_DIGEST_MEMORY
     RECENT_DIGEST_MEMORY = load_recent_digest_memory(issue_dt)
@@ -977,15 +1046,32 @@ def raw_component(item: dict[str, Any], key: str) -> float:
 def repo_local_bonus(item: dict[str, Any]) -> float:
     stars = int(item.get("stars") or 0)
     stars_per_day = float(item.get("starsPerDay") or 0.0)
-    bonus = min(1.0, math.log1p(max(stars_per_day, 0.0)) * 0.32)
-    bonus += min(0.38, math.log1p(max(stars, 0)) * 0.05)
+    recent_7d = float(item.get("recentStars7d") or 0.0)
+    age_days = float(item.get("repoAgeDays") or 365.0)
+    pool = str(item.get("ghPool") or "").strip().lower()
+    rel_velocity = recent_7d / max(stars + 400.0, 400.0)
+
+    bonus = min(1.05, math.log1p(max(stars_per_day, 0.0)) * 0.30)
+    bonus += min(2.4, math.log1p(max(rel_velocity, 0.0) * 100.0) * 1.05)
+    bonus += min(0.24, math.log1p(max(stars, 0)) * 0.024)
     bonus += min(0.18, raw_component(item, "confirmation") * 0.30)
+    if age_days <= 30:
+        bonus += 2.2
+    elif age_days <= 90:
+        bonus += 1.4
+    elif age_days <= 180:
+        bonus += 0.7
+    elif age_days > 365 and stars > 30000 and rel_velocity < 0.025:
+        bonus -= 2.2
+    if pool == "emerging":
+        bonus += 1.15
+    elif pool == "breakout":
+        bonus += 0.65
     if "ai" in lower_tag_values(item):
         bonus += 0.12
     if lower_tag_values(item) == ["other"]:
         bonus -= 0.12
     return bonus
-
 
 def paper_local_bonus(item: dict[str, Any]) -> float:
     citations = int(item.get("citations") or 0)
@@ -1038,6 +1124,20 @@ def local_signal_score(item: dict[str, Any]) -> float:
     return round(score, 3)
 
 
+def recent_last_seen_days(item: dict[str, Any]) -> int | None:
+    key = canonical_key(item)
+    url = str(item.get("url") or "").strip()
+    days = [
+        value
+        for value in (
+            RECENT_DIGEST_MEMORY.key_last_seen_days.get(key),
+            RECENT_DIGEST_MEMORY.url_last_seen_days.get(url),
+        )
+        if value is not None
+    ]
+    return min(days) if days else None
+
+
 def recent_digest_penalty(item: dict[str, Any]) -> float:
     key = canonical_key(item)
     url = str(item.get("url") or "").strip()
@@ -1046,18 +1146,28 @@ def recent_digest_penalty(item: dict[str, Any]) -> float:
 
     key_hits = RECENT_DIGEST_MEMORY.canonical_keys.get(key, 0)
     url_hits = RECENT_DIGEST_MEMORY.urls.get(url, 0)
+    hits = max(key_hits, url_hits)
+    last_seen = recent_last_seen_days(item)
     topic_hits = RECENT_DIGEST_MEMORY.topics.get(topic, 0)
     source_hits = RECENT_DIGEST_MEMORY.sources.get(source, 0)
 
     penalty = 0.0
-    penalty += key_hits * 3.1
-    penalty += max(0, url_hits - key_hits) * 1.1
-    penalty += max(0, topic_hits - 1) * 0.35
-    penalty += max(0, source_hits - 2) * 0.08
+    if hits > 0:
+        if last_seen is not None and last_seen <= 1:
+            penalty += 16.0
+        elif last_seen is not None and last_seen <= 3:
+            penalty += 11.5
+        elif last_seen is not None and last_seen <= 5:
+            penalty += 7.5
+        else:
+            penalty += 4.8
+        penalty += max(0, hits - 1) * 3.5
+    else:
+        penalty -= 0.85
 
-    if key_hits == 0 and url_hits == 0:
-        penalty -= 0.22
-    return penalty
+    penalty += max(0, topic_hits - 3) * 0.12
+    penalty += max(0, source_hits - 4) * 0.05
+    return round(penalty, 3)
 
 
 def recent_repeat_count(item: dict[str, Any]) -> int:
@@ -1072,7 +1182,6 @@ def selection_signal_score(item: dict[str, Any]) -> float:
     if isinstance(cached, (float, int)):
         return float(cached)
     return round(local_signal_score(item) - recent_digest_penalty(item), 3)
-
 
 def clamp_text(value: str, limit: int) -> str:
     value = re.sub(r"\s+", " ", value).strip()
@@ -1475,7 +1584,107 @@ class DigestContext:
     source_counts: list[dict[str, Any]]
     keywords: list[str] = field(default_factory=list)
     mempalace_context: list[dict[str, str]] = field(default_factory=list)
+    trends: list[dict[str, Any]] = field(default_factory=list)
 
+
+def item_topic_matches(item: dict[str, Any]) -> list[str]:
+    text = item_text(item).lower()
+    scored: list[tuple[int, str]] = []
+    for bucket, terms in TOPIC_BUCKETS.items():
+        hits = sum(1 for term in terms if term in text)
+        if hits > 0:
+            scored.append((hits, bucket))
+    scored.sort(key=lambda pair: (-pair[0], pair[1]))
+    return [bucket for _, bucket in scored[:2]]
+
+
+def detect_trend_clusters(items: list[dict[str, Any]], *, limit: int = 4) -> list[dict[str, Any]]:
+    buckets: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    seen_per_bucket: dict[str, set[str]] = defaultdict(set)
+    for item in items:
+        key = canonical_key(item)
+        for bucket in item_topic_matches(item):
+            if key in seen_per_bucket[bucket]:
+                continue
+            seen_per_bucket[bucket].add(key)
+            buckets[bucket].append(item)
+
+    total_today = max(1, len({canonical_key(item) for item in items}))
+    has_baseline = RECENT_DIGEST_MEMORY.days_loaded > 0 and RECENT_DIGEST_MEMORY.total_items > 0
+    ranked: list[tuple[float, dict[str, Any]]] = []
+    for slug, cluster_items in buckets.items():
+        if len(cluster_items) < 2:
+            continue
+        cluster_items.sort(key=sort_key)
+        fresh_cluster = prefer_fresh_candidates(cluster_items, cooldown_days=3)
+        sources = sorted({source_label(str(x.get("source") or "")) for x in cluster_items if x.get("source")})
+        fresh_count = sum(1 for x in cluster_items if recent_repeat_count(x) == 0)
+        today_share = len(cluster_items) / total_today
+        if has_baseline:
+            baseline_share = (RECENT_DIGEST_MEMORY.topics.get(slug, 0) + 1.5) / (RECENT_DIGEST_MEMORY.total_items + 12.0)
+        else:
+            baseline_share = 0.14
+        burst_ratio = round(min(4.5, max(0.3, today_share / max(0.03, baseline_share))), 2)
+        top_signal = sum(min(6.5, max(0.0, selection_signal_score(x))) for x in fresh_cluster[:3])
+        trend_score = (
+            len(sources) * 2.8
+            + min(4.8, burst_ratio * 1.65)
+            + min(3.5, fresh_count * 0.45)
+            + top_signal * 0.38
+        )
+        if len(sources) >= 2 and burst_ratio >= 1.35:
+            burst_label = f"{len(sources)} feeds · ↑{burst_ratio:.1f}x"
+        elif len(sources) >= 2:
+            burst_label = f"{len(sources)} feeds converging"
+        elif burst_ratio >= 1.45:
+            burst_label = f"↑{burst_ratio:.1f}x vs 7d share"
+        else:
+            burst_label = f"{fresh_count} fresh signals"
+        lead = fresh_cluster[0]
+        lead_source = source_label(str(lead.get("source") or ""))
+        showcase = [lead]
+        for candidate in fresh_cluster[1:]:
+            if source_label(str(candidate.get("source") or "")) != lead_source:
+                showcase.append(candidate)
+                break
+        if len(showcase) < 2 and len(fresh_cluster) > 1:
+            showcase.append(fresh_cluster[1])
+        ranked.append(
+            (
+                trend_score,
+                {
+                    "slug": slug,
+                    "label": TOPIC_LABELS.get(slug, slug.title()),
+                    "count": len(cluster_items),
+                    "fresh_count": fresh_count,
+                    "sources": sources,
+                    "burst_ratio": burst_ratio,
+                    "burst_label": burst_label,
+                    "score": round(trend_score, 2),
+                    "lead_title": headline_for(lead),
+                    "lead_url": str(lead.get("url") or ""),
+                    "lead_source": lead_source,
+                    "items": [
+                        {
+                            "title": headline_for(x),
+                            "url": str(x.get("url") or ""),
+                            "source": source_label(str(x.get("source") or "")),
+                        }
+                        for x in showcase
+                    ],
+                },
+            )
+        )
+    ranked.sort(key=lambda pair: (-pair[0], -pair[1]["count"], pair[1]["label"]))
+    return [entry for _, entry in ranked[:limit]]
+
+def prefer_fresh_candidates(items: list[dict[str, Any]], *, cooldown_days: int = 3) -> list[dict[str, Any]]:
+    fresh = [
+        item
+        for item in items
+        if (recent_last_seen_days(item) is None or (recent_last_seen_days(item) or 99) > cooldown_days)
+    ]
+    return fresh if fresh else items
 
 def issue_summary(section_items: dict[str, list[dict[str, Any]]]) -> str:
     repos = section_items.get("repos") or []
@@ -1569,35 +1778,39 @@ def build_digest_context(
     curated_raw["repos"] = ensure_section_minimum(
         prune_section_items(
             "repos",
-            select_diverse_items(section_items["repos"], section_limit_for("repos", limit), max_per_topic=3),
+            select_diverse_items(
+                prefer_fresh_candidates(section_items["repos"]),
+                section_limit_for("repos", limit),
+                max_per_topic=3,
+            ),
         ),
-        fallback_section_items["repos"],
+        section_items["repos"] + fallback_section_items["repos"],
         SECTION_MINIMUMS["repos"],
     )
     curated_raw["papers"] = ensure_section_minimum(
         prune_section_items(
             "papers",
             select_diverse_items(
-                section_items["papers"],
+                prefer_fresh_candidates(section_items["papers"]),
                 section_limit_for("papers", limit),
                 max_per_source=6,
                 max_per_topic=4,
             ),
         ),
-        fallback_section_items["papers"],
+        section_items["papers"] + fallback_section_items["papers"],
         SECTION_MINIMUMS["papers"],
     )
     curated_raw["social"] = ensure_section_minimum(
         prune_section_items(
             "social",
             select_diverse_items(
-                section_items["social"],
+                prefer_fresh_candidates(section_items["social"]),
                 section_limit_for("social", limit),
                 max_per_source=4,
                 max_per_topic=4,
             ),
         ),
-        fallback_section_items["social"],
+        section_items["social"] + fallback_section_items["social"],
         SECTION_MINIMUMS["social"],
     )
     hot_pool = sorted(
@@ -1683,6 +1896,10 @@ def build_digest_context(
     for item in [item for slug in ("repos", "papers", "social") for item in curated_raw[slug]]:
         source_count_keys.setdefault(canonical_key(item), item)
     source_counts = source_count_rows_from_items(list(source_count_keys.values()))
+    trend_pool_map: dict[str, dict[str, Any]] = {}
+    for item in candidates + relaxed_candidates:
+        trend_pool_map.setdefault(canonical_key(item), item)
+    trends = detect_trend_clusters(list(trend_pool_map.values()), limit=4)
     return DigestContext(
         summary=summary,
         top_cards=[to_card(item) for item in featured_raw[:4]],
@@ -1691,8 +1908,8 @@ def build_digest_context(
         source_counts=source_counts,
         keywords=normalized_keywords,
         mempalace_context=list(mempalace_context or []),
+        trends=trends,
     )
-
 
 def beta_digest_cache_key(issue_dt: datetime, context: DigestContext) -> str:
     raw = json.dumps(
@@ -2480,6 +2697,63 @@ def archive_entries(current_stem: str, current_summary: str) -> list[dict[str, s
     return entries
 
 
+def prune_old_digests(
+    issue_dt: datetime,
+    retention_days: int = DEFAULT_RETENTION_DAYS,
+    posts_dir: Path | None = None,
+) -> list[Path]:
+    if retention_days <= 0:
+        return []
+    target_dir = posts_dir or POSTS_DIR
+    cutoff_date = issue_dt.date() - timedelta(days=retention_days - 1)
+    removed: list[Path] = []
+    for path in sorted(target_dir.glob("*-ai-news-*digest.md")):
+        match = DAILY_DIGEST_FILENAME_RE.match(path.name)
+        if not match:
+            continue
+        file_date = datetime.strptime(match.group(1), "%Y-%m-%d").date()
+        if file_date < cutoff_date:
+            path.unlink()
+            removed.append(path)
+    return removed
+
+
+def prune_caches_to_retained_digests(posts_dir: Path | None = None) -> tuple[int, int]:
+    target_dir = posts_dir or POSTS_DIR
+    corpus_chunks = [
+        html_unescape(path.read_text(encoding="utf-8"))
+        for path in sorted(target_dir.glob("*-ai-news-*digest.md"))
+    ]
+    corpus = "\n".join(corpus_chunks)
+    if not corpus:
+        return 0, 0
+
+    keep_beta_bases: set[str] = set()
+    for key, value in BETA_DIGEST_CACHE.items():
+        if not isinstance(value, dict):
+            continue
+        title = collapse_whitespace(str(value.get("title", "")))
+        lead = collapse_whitespace(str(value.get("lead", "")))
+        if (title and title in corpus) or (lead and lead in corpus):
+            keep_beta_bases.add(key.removesuffix("::overview"))
+    stale_beta_keys = [
+        key for key in list(BETA_DIGEST_CACHE.keys()) if key.removesuffix("::overview") not in keep_beta_bases
+    ]
+    for key in stale_beta_keys:
+        BETA_DIGEST_CACHE.pop(key, None)
+
+    stale_translation_keys = [
+        key
+        for key, translated in list(TRANSLATION_CACHE.items())
+        if (not isinstance(translated, str) or len(translated.strip()) < 4 or translated not in corpus)
+        and key not in corpus
+    ]
+    for key in stale_translation_keys:
+        TRANSLATION_CACHE.pop(key, None)
+
+    return len(stale_beta_keys), len(stale_translation_keys)
+
+
 def recent_archive_entries(current_stem: str, current_summary: str, limit: int = 8) -> list[dict[str, str]]:
     return archive_entries(current_stem, current_summary)[:limit]
 
@@ -2562,12 +2836,46 @@ def render_signal_lead_strip(context: DigestContext, brief: BetaDigest) -> list[
     lines = [
         '    <div class="news-digest-lead-strip" aria-label="Lead signals">',
         '      <article class="news-digest-lead-story">',
-        '        <p class="section-kicker">Lead read</p>',
-        f'        <h3 data-pretext-target>{safe_text(brief.title or "Today’s signal brief")}</h3>',
-        f'        <p data-pretext-target>{safe_text(brief.lead or brief.dek or context.summary)}</p>',
-        '      </article>',
-        '      <div class="news-digest-lead-cards">',
     ]
+    if context.trends:
+        lines.extend(
+            [
+                '        <p class="section-kicker">Trend radar</p>',
+                '        <h3 data-pretext-target>Cross-source clusters today</h3>',
+                '        <ul class="news-trend-inline-list">',
+            ]
+        )
+        for trend in context.trends[:4]:
+            sources_txt = " + ".join(trend.get("sources") or [])
+            lines.append(
+                '          <li class="news-trend-inline-item">'
+                f'<a href="{safe_text(str(trend.get("lead_url") or "#"))}" target="_blank" rel="noreferrer">'
+                f'<strong>{safe_text(str(trend.get("label") or ""))}</strong>'
+                f'<span>{safe_text(str(trend.get("burst_label") or ""))} · {safe_text(sources_txt)}</span>'
+                '</a></li>'
+            )
+        lines.append('        </ul>')
+    else:
+        takeaways = [t.strip() for t in (brief.takeaways or []) if t.strip()][:3]
+        lines.extend(
+            [
+                '        <p class="section-kicker">Key takeaways</p>',
+                f'        <h3 data-pretext-target>{safe_text(brief.title or "Today’s signal brief")}</h3>',
+            ]
+        )
+        if takeaways:
+            lines.append('        <ul class="news-trend-inline-list">')
+            for item in takeaways:
+                lines.append(f'          <li class="news-trend-inline-item"><span>{safe_text(item)}</span></li>')
+            lines.append('        </ul>')
+        else:
+            lines.append(f'        <p data-pretext-target>{safe_text(brief.lead or brief.dek or context.summary)}</p>')
+    lines.extend(
+        [
+            '      </article>',
+            '      <div class="news-digest-lead-cards">',
+        ]
+    )
     for card in lead_cards:
         metric_value, metric_label = compact_metric_for(card)
         lines.extend(
@@ -2691,10 +2999,9 @@ def render_markdown(
         '<div class="news-digest-shell">',
         '  <section class="news-digest-hero">',
         '    <div class="news-digest-hero-copy">',
-        '      <p class="section-kicker">News</p>',
+        '      <p class="section-kicker">Daily Signal Brief</p>',
         f'      <h1 data-pretext-target>{safe_text(title)}</h1>',
-        f'      <p class="news-digest-lead" data-pretext-target>{safe_text(brief.dek or context.summary)}</p>',
-        f'      <p class="news-digest-section-description" data-pretext-target>{safe_text(brief.lead or context.summary)}</p>',
+        f'      <p class="news-digest-lead" data-pretext-target>{safe_text(brief.dek or brief.lead or context.summary)}</p>',
         '      <div class="news-digest-actions" role="group" aria-label="News actions">',
         '        <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>',
         '        <a class="post-cta-link" href="#digest-archive">Digest archive</a>',
@@ -2707,8 +3014,8 @@ def render_markdown(
         f'        <strong><time datetime="{issue_date}">{safe_text(issue_label)}</time></strong>',
         "      </div>",
         '      <div class="news-digest-meta-card">',
-        '        <span class="news-digest-meta-label">Generated</span>',
-        f'        <strong><time datetime="{generated_dt.isoformat()}">{safe_text(generated_label)}</time></strong>',
+        '        <span class="news-digest-meta-label">Top trend</span>',
+        f'        <strong>{safe_text(str(context.trends[0]["label"]) if context.trends else generated_label)}</strong>',
         "      </div>",
         '      <div class="news-digest-meta-card">',
         '        <span class="news-digest-meta-label">Signals</span>',
@@ -2923,6 +3230,7 @@ def write_hub_json(issue_dt: datetime, generated_dt: datetime, context: DigestCo
         "issue_label": issue_date_label(issue_dt),
         "summary": context.summary,
         "keywords": context.keywords,
+        "trends": context.trends,
         "top_cards": [card.__dict__ for card in context.top_cards],
         "repo_scoreboard": [card.__dict__ for card in context.repo_scoreboard],
         "sections": sections,
@@ -2951,20 +3259,49 @@ def main() -> None:
     load_translation_cache()
     load_beta_digest_cache()
     issue_dt = issue_date_from_args(args.date)
+    generated_dt = datetime.now(tz=KST)
+    if args.prune_only:
+        removed_posts = prune_old_digests(issue_dt, args.retention_days)
+        remaining_posts = sorted(POSTS_DIR.glob("*-ai-news-digest.md"), reverse=True)
+        if remaining_posts:
+            latest_post = remaining_posts[0]
+            latest_stem = latest_post.stem
+            latest_summary = description_from_post(latest_post)
+            write_archive_post(issue_dt, generated_dt, latest_summary, latest_stem)
+            hub_path = GENERATED_DIR / "latest.json"
+            if hub_path.exists():
+                hub = read_json_object(hub_path)
+                hub["archives"] = recent_archive_entries(latest_stem, latest_summary)
+                hub_path.write_text(json.dumps(hub, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        removed_beta, removed_translations = prune_caches_to_retained_digests()
+        save_translation_cache()
+        save_beta_digest_cache()
+        print(
+            f"Pruned {len(removed_posts)} news digest post(s), "
+            f"{removed_beta} beta cache entr(y/ies), "
+            f"and {removed_translations} translation cache entr(y/ies) "
+            f"(retention={args.retention_days}d)."
+        )
+        return
     keywords = keywords_from_args(args)
     payload = load_source_feed()
     write_source_snapshot(payload)
-    generated_dt = datetime.now(tz=KST)
     set_recent_digest_memory(issue_dt)
     mempalace_context = [] if args.no_mempalace else load_mempalace_context(keywords, limit=args.mempalace_limit)
     context = build_digest_context(payload, args.limit, keywords=keywords, mempalace_context=mempalace_context)
     digest_stem = write_post(issue_dt, generated_dt, context)
+    removed_posts: list[Path] = []
     if not keywords:
+        removed_posts = prune_old_digests(issue_dt, args.retention_days)
         write_archive_post(issue_dt, generated_dt, context.summary, digest_stem)
     write_hub_json(issue_dt, generated_dt, context, digest_stem)
+    if not keywords and args.retention_days > 0:
+        prune_caches_to_retained_digests()
     save_translation_cache()
     save_beta_digest_cache()
     print(f"Generated news digest post: posts/news/{digest_stem}.md")
+    if removed_posts:
+        print(f"Pruned {len(removed_posts)} news digest post(s) older than {args.retention_days} days.")
     if not keywords:
         print(f"Generated archive post: posts/news/{ARCHIVE_STEM}.md")
     else:
@@ -2972,7 +3309,6 @@ def main() -> None:
     hub_target = "latest.json" if not keywords else f"{digest_stem}.json"
     print(f"Generated hub data: data/news/{hub_target}")
     print("Updated raw feed snapshot: static/news/data/latest.json")
-
 
 if __name__ == "__main__":
     main()

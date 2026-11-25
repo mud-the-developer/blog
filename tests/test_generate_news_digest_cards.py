@@ -270,5 +270,118 @@ class GenerateNewsDigestAutomationTests(unittest.TestCase):
         self.assertIn("O-RAN RIC", payload["mempalace_context"][0]["content"])
 
 
+    def test_prune_old_digests_keeps_recent_60_days_and_archive(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            posts_dir = Path(temp_dir)
+            old_file = posts_dir / "2026-09-26-ai-news-digest.md"
+            old_beta = posts_dir / "2026-09-20-ai-news-beta-digest.md"
+            boundary_file = posts_dir / "2026-09-27-ai-news-digest.md"
+            latest_file = posts_dir / "2026-11-25-ai-news-digest.md"
+            archive_file = posts_dir / "news-digest-archive.md"
+            for file_path in (old_file, old_beta, boundary_file, latest_file, archive_file):
+                file_path.write_text("---\ntitle: test\n---\n", encoding="utf-8")
+
+            removed = MODULE.prune_old_digests(
+                datetime(2026, 11, 25, tzinfo=MODULE.KST),
+                retention_days=60,
+                posts_dir=posts_dir,
+            )
+            self.assertEqual([path.name for path in removed], [old_beta.name, old_file.name])
+            self.assertFalse(old_file.exists())
+            self.assertFalse(old_beta.exists())
+            self.assertTrue(boundary_file.exists())
+            self.assertTrue(latest_file.exists())
+            self.assertTrue(archive_file.exists())
+
+    def test_recent_digest_memory_captures_compact_rows_and_cools_down_repeats(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            posts_dir = Path(temp_dir)
+            yesterday = posts_dir / "2026-11-24-ai-news-digest.md"
+            yesterday.write_text(
+                (
+                    '<a class="news-digest-compact-row" href="https://github.com/acme/repeat-agent">'
+                    '<span class="news-digest-row-visual"><strong>GH</strong></span>'
+                    '<strong data-pretext-target>acme/repeat-agent</strong>'
+                    '<p>Autonomous coding agent benchmark harness</p></a>'
+                ),
+                encoding="utf-8",
+            )
+            with patch.object(MODULE, "POSTS_DIR", posts_dir):
+                memory = MODULE.load_recent_digest_memory(datetime(2026, 11, 25, tzinfo=MODULE.KST))
+            self.assertEqual(memory.days_loaded, 1)
+            self.assertEqual(memory.canonical_keys["repo::acme/repeat-agent"], 1)
+            self.assertEqual(memory.key_last_seen_days["repo::acme/repeat-agent"], 1)
+            repeated = {
+                "title": "acme/repeat-agent — Autonomous coding agent",
+                "url": "https://github.com/acme/repeat-agent",
+                "source": "github_hot",
+                "type": "repo",
+            }
+            fresh = {
+                "title": "acme/fresh-kernel — Fast FP8 attention kernel",
+                "url": "https://github.com/acme/fresh-kernel",
+                "source": "github_hot",
+                "type": "repo",
+            }
+            with patch.object(MODULE, "RECENT_DIGEST_MEMORY", memory):
+                self.assertGreater(MODULE.recent_digest_penalty(repeated), 10.0)
+                self.assertLessEqual(MODULE.recent_digest_penalty(fresh), 0.0)
+                picked = MODULE.prefer_fresh_candidates([repeated, fresh], cooldown_days=3)
+                self.assertEqual([item["url"] for item in picked], [fresh["url"]])
+
+    def test_repo_velocity_prefers_emerging_breakout_over_stagnant_incumbent(self) -> None:
+        emerging = {
+            "title": "nova/fast-vllm — New speculative decoder",
+            "url": "https://github.com/nova/fast-vllm",
+            "source": "github_hot",
+            "type": "repo",
+            "stars": 1800,
+            "recentStars7d": 1200,
+            "repoAgeDays": 18,
+        }
+        incumbent = {
+            "title": "legacy/mega-wrapper — Old LLM wrapper",
+            "url": "https://github.com/legacy/mega-wrapper",
+            "source": "github_hot",
+            "type": "repo",
+            "stars": 95000,
+            "recentStars7d": 150,
+            "repoAgeDays": 980,
+        }
+        self.assertGreater(MODULE.repo_local_bonus(emerging), MODULE.repo_local_bonus(incumbent))
+
+    def test_detect_trend_clusters_scores_cross_source_bursts_with_fresh_leads(self) -> None:
+        items = [
+            {
+                "title": "acme/kv-cache-engine — Sub-millisecond vLLM inference engine",
+                "url": "https://github.com/acme/kv-cache-engine",
+                "source": "github_hot",
+                "type": "repo",
+                "score": 8.2,
+            },
+            {
+                "title": "FlashKV: Quantized KV-Cache Compression for Long-Context Serving",
+                "url": "https://arxiv.org/abs/2611.12345",
+                "source": "arxiv",
+                "type": "paper",
+                "score": 7.6,
+            },
+            {
+                "title": "FP4 Serving Throughput Analysis on Blackwell",
+                "url": "https://huggingface.co/papers/2611.12346",
+                "source": "hf_papers",
+                "type": "paper",
+                "score": 7.4,
+            },
+        ]
+        with patch.object(MODULE, "RECENT_DIGEST_MEMORY", MODULE.RecentDigestMemory()):
+            trends = MODULE.detect_trend_clusters(items, limit=4)
+        self.assertTrue(trends)
+        top = trends[0]
+        self.assertEqual(top["slug"], "inference")
+        self.assertGreaterEqual(len(top["sources"]), 2)
+        self.assertEqual(len({item["source"] for item in top["items"]}), 2)
+        self.assertLessEqual(top["burst_ratio"], 4.5)
+
 if __name__ == "__main__":
     unittest.main()

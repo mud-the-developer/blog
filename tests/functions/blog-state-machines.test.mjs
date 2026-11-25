@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { applyThemeEffect } from '../../src/site-chrome-effects.mjs';
+import { applyThemeEffect, readStoredTheme, THEME_STORAGE_KEY } from '../../src/site-chrome-effects.mjs';
 import { createThemeState, themeReducer } from '../../src/site-chrome-state.mjs';
 import { createNewsDeskState, newsDeskReducer, runNewsDeskEffect } from '../../src/blog-lab-machine.mjs';
 
@@ -52,16 +52,35 @@ test('theme render effect keeps the visible theme label inside the accessible na
     },
   };
 
+  const store = new Map();
+  const storage = {
+    getItem: (k) => (store.has(k) ? store.get(k) : null),
+    setItem: (k, v) => { store.set(k, String(v)); },
+  };
+
   applyThemeEffect(
     { type: 'render-theme', activeTheme: 'system-light', theme: 'light', override: false, accessibleLabel: 'Toggle color theme: Light' },
-    { root, button },
+    { root, button, storage },
   );
 
   assert.equal(label.textContent, 'Light');
   assert.equal(attributes['aria-label'], 'Toggle color theme: Light');
   assert.equal(attributes['aria-pressed'], 'false');
-});
+  assert.equal(readStoredTheme(storage), null);
 
+  applyThemeEffect(
+    { type: 'render-theme', activeTheme: 'dark', theme: 'dark', override: true, accessibleLabel: 'Toggle color theme: Dark' },
+    { root, button, storage },
+  );
+  assert.equal(root.dataset.theme, 'dark');
+  assert.equal(store.get(THEME_STORAGE_KEY), 'dark');
+  assert.equal(readStoredTheme(storage), 'dark');
+
+  const synced = themeReducer(createThemeState({ systemTheme: 'light' }), { type: 'theme.sync', overrideTheme: 'dark' });
+  assert.equal(synced.state.activeTheme, 'dark');
+  assert.equal(synced.state.overrideTheme, 'dark');
+  assert.equal(synced.effects[0].override, true);
+});
 test('news desk reducer controls search/draft/download states without DOM effects', () => {
   const initial = createNewsDeskState({ date: '2026-06-09' });
   const search = newsDeskReducer(initial, {

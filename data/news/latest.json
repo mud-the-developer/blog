@@ -992,5 +992,123 @@
       "date_label": "2026-11-18",
       "description": "GitHub activity highlights adaptable AI agents, while new open-source LLMs and specialized coding models draw attention in research and social discourse."
     }
+  ],
+  "trends": [
+    {
+      "slug": "models",
+      "label": "Frontier Models",
+      "count": 21,
+      "fresh_count": 19,
+      "sources": [
+        "GitHub",
+        "Google AI Blog",
+        "HF Papers",
+        "arXiv"
+      ],
+      "burst_ratio": 0.76,
+      "burst_label": "4 feeds converging",
+      "score": 23.36,
+      "lead_title": "colbymchenry/codegraph",
+      "lead_url": "https://github.com/colbymchenry/codegraph",
+      "lead_source": "GitHub",
+      "items": [
+        {
+          "title": "colbymchenry/codegraph",
+          "url": "https://github.com/colbymchenry/codegraph",
+          "source": "GitHub"
+        },
+        {
+          "title": "Seeing Right, Writing Wrong: Where Short Chain-of-Thought Breaks Spatial VQA",
+          "url": "https://huggingface.co/papers/2611.28665",
+          "source": "HF Papers"
+        }
+      ]
+    },
+    {
+      "slug": "agents",
+      "label": "Agentic Systems",
+      "count": 54,
+      "fresh_count": 48,
+      "sources": [
+        "GitHub",
+        "HF Papers",
+        "arXiv"
+      ],
+      "burst_ratio": 1.92,
+      "burst_label": "3 feeds · ↑1.9x",
+      "score": 22.48,
+      "lead_title": "mvanhorn/last30days-skill",
+      "lead_url": "https://github.com/mvanhorn/last30days-skill",
+      "lead_source": "GitHub",
+      "items": [
+        {
+          "title": "mvanhorn/last30days-skill",
+          "url": "https://github.com/mvanhorn/last30days-skill",
+          "source": "GitHub"
+        },
+        {
+          "title": "WorldLeague: Benchmarking Physical Agency",
+          "url": "https://huggingface.co/papers/2611.30989",
+          "source": "HF Papers"
+        }
+      ]
+    },
+    {
+      "slug": "reasoning",
+      "label": "Reasoning & Evals",
+      "count": 7,
+      "fresh_count": 6,
+      "sources": [
+        "GitHub",
+        "HF Papers",
+        "arXiv"
+      ],
+      "burst_ratio": 1.08,
+      "burst_label": "3 feeds converging",
+      "score": 19.49,
+      "lead_title": "MemPalace/mempalace",
+      "lead_url": "https://github.com/MemPalace/mempalace",
+      "lead_source": "GitHub",
+      "items": [
+        {
+          "title": "MemPalace/mempalace",
+          "url": "https://github.com/MemPalace/mempalace",
+          "source": "GitHub"
+        },
+        {
+          "title": "Parsing Visual Latents for Multimodal Spatial Reasoning",
+          "url": "http://arxiv.org/abs/2611.31021v1",
+          "source": "arXiv"
+        }
+      ]
+    },
+    {
+      "slug": "rag",
+      "label": "Retrieval & Memory",
+      "count": 8,
+      "fresh_count": 6,
+      "sources": [
+        "GitHub",
+        "HF Papers"
+      ],
+      "burst_ratio": 1.14,
+      "burst_label": "2 feeds converging",
+      "score": 17.59,
+      "lead_title": "mvanhorn/last30days-skill",
+      "lead_url": "https://github.com/mvanhorn/last30days-skill",
+      "lead_source": "GitHub",
+      "items": [
+        {
+          "title": "mvanhorn/last30days-skill",
+          "url": "https://github.com/mvanhorn/last30days-skill",
+          "source": "GitHub"
+        },
+        {
+          "title": "WeaveVLA: 3D Relational Grounding for Vision-Language-Action Models",
+          "url": "https://huggingface.co/papers/2611.31126",
+          "source": "HF Papers"
+        }
+      ]
+    }
   ]
 }

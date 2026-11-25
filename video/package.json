@@ -1,0 +1,23 @@
+{
+  "name": "mud-blog-remotion-videos",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render:mwc26": "remotion render src/index.ts Mwc26AiRanDemo ../static/media/mwc26-ai-ran-beamforming.mp4 --codec=h264 --crf=26 --pixel-format=yuv420p && remotion still src/index.ts Mwc26AiRanDemo ../static/media/mwc26-ai-ran-beamforming-poster.png --frame=90",
+    "render:mwc25": "remotion render src/index.ts Mwc25DrlDemo ../static/media/mwc25-drl-beamforming.mp4 --codec=h264 --crf=26 --pixel-format=yuv420p && remotion still src/index.ts Mwc25DrlDemo ../static/media/mwc25-drl-beamforming-poster.png --frame=90",
+    "render:cfp": "remotion render src/index.ts CfpPipelineDemo ../static/media/cfp-radar-system.mp4 --codec=h264 --crf=26 --pixel-format=yuv420p && remotion still src/index.ts CfpPipelineDemo ../static/media/cfp-radar-system-poster.png --frame=90",
+    "render:news": "remotion render src/index.ts AiNewsDigestDemo ../static/media/ai-news-digest-system.mp4 --codec=h264 --crf=26 --pixel-format=yuv420p && remotion still src/index.ts AiNewsDigestDemo ../static/media/ai-news-digest-system-poster.png --frame=90",
+    "render:all": "npm run render:mwc26 && npm run render:mwc25 && npm run render:cfp && npm run render:news"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.280",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "remotion": "^4.0.280"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "typescript": "^5.7.3"
+  }
+}

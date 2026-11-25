@@ -22,14 +22,18 @@
     "news:keyword": "python scripts/generate_news_digest.py",
     "cfp:update": "cargo run --quiet -- cfp update",
     "cfp:validate": "cargo run --quiet -- cfp validate",
-    "cfp:daily": "npm run cfp:update && npm run cfp:validate && npm run build"
+    "cfp:daily": "npm run cfp:update && npm run cfp:validate && npm run build",
+    "cv:pdf": "sh -c 'cd cv && tectonic resume.tex'"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.16",
+    "@biomejs/biome": "^2.6.9",
     "@eslint/js": "^10.0.1",
-    "@lhci/cli": "^0.15.1",
+    "@lhci/cli": "^0.16.1",
     "@playwright/test": "^1.60.0",
-    "eslint": "^10.4.1",
-    "globals": "^17.6.0"
+    "eslint": "^10.15.0",
+    "globals": "^17.14.0"
+  },
+  "dependencies": {
+    "@chenglou/pretext": "^1.0.0"
   }
 }

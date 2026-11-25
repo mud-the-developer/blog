@@ -45,6 +45,10 @@ class GithubWorkflowContractTests(unittest.TestCase):
         self.assertIn("paths=(data/news posts/news static/news/data static/news/assets)", update)
         self.assertNotIn("content/generated/news", update)
         self.assertNotIn("content/posts/news", update)
+        self.assertIn("NVIDIA_NIM_MODEL: ${{ vars.NVIDIA_NIM_MODEL || secrets.NVIDIA_NIM_MODEL }}", update)
+        self.assertIn('git status --porcelain -- "${paths[@]}"', update)
+        self.assertIn('git add -A -- "${paths[@]}"', update)
+        self.assertIn("git pull --rebase origin main", update)
         self.assertIn("git push origin HEAD:main", update)
 
     def test_deploy_runs_after_push_or_successful_news_generation_and_verifies_before_pages_deploy(self) -> None:
@@ -73,6 +77,18 @@ class GithubWorkflowContractTests(unittest.TestCase):
         self.assertIn("CLOUDFLARE_ACCOUNT_ID}\" =~ ^[A-Za-z0-9]{32}$", deploy)
         self.assertIn("api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${CF_PAGES_PROJECT}", deploy)
         self.assertNotIn("npx wrangler@4 whoami", deploy)
+        self.assertIn("/projects/ /cv/ /writing/ /cfp/ /news/", deploy)
+        self.assertIn("/cv/jinhyuk-kim-cv.pdf", deploy)
+
+    def test_lighthouse_targets_v3_routes_instead_of_removed_legacy_slugs(self) -> None:
+        lh_workflow = (ROOT / ".github" / "workflows" / "lighthouse-ci.yml").read_text()
+        lh_config = (ROOT / ".github" / "lighthouserc.json").read_text()
+        self.assertNotIn("/posts/home/", lh_workflow)
+        self.assertIn("http://127.0.0.1:4173/", lh_workflow)
+        self.assertNotIn("/posts/home/", lh_config)
+        self.assertNotIn("2026-07-14-ai-news-digest", lh_config)
+        for route in ("/projects/", "/cv/", "/writing/", "/cfp/", "/news/"):
+            self.assertIn(route, lh_config)
 
     def test_cfp_workflow_refreshes_daily_and_publishes_only_current_artifacts(self) -> None:
         cfp = self.read_cfp_workflow()

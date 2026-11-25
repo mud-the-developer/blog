@@ -25,6 +25,7 @@ use tower_http::{
 };
 
 pub mod cfp;
+pub mod cv;
 
 pub type BlogResult<T> = Result<T, Box<dyn std::error::Error>>;
 const PUBLIC_SITE_URL: &str = "https://mud-blog.pages.dev";
@@ -44,6 +45,18 @@ pub struct Post {
     pub html: String,
     pub url: String,
     pub folder: String,
+    pub period: String,
+    pub role: String,
+    pub category: String,
+    pub status: String,
+    pub featured: bool,
+    pub themes: Vec<String>,
+    pub themes_csv: String,
+    pub stack: Vec<String>,
+    pub repo: String,
+    pub demo_url: String,
+    pub paper_url: String,
+    pub logo: String,
 }
 
 #[derive(Debug, Clone)]
@@ -131,14 +144,43 @@ struct LocalIssue {
 #[derive(Template)]
 #[template(path = "index.html")]
 struct IndexTemplate<'a> {
+    cv: &'a cv::CvData,
+    featured_projects: Vec<&'a Post>,
+    recent_writing: Vec<&'a Post>,
+    command_index_json: String,
+    cfp_active_count: usize,
+    cfp_next_label: String,
+    news_latest_title: String,
+    news_latest_date: String,
+    writing_count: usize,
+    project_count: usize,
+    archive_json: &'a str,
+}
+
+#[derive(Template)]
+#[template(path = "projects.html")]
+struct ProjectsTemplate<'a> {
+    projects: Vec<&'a Post>,
+    command_index_json: String,
+    archive_json: &'a str,
+}
+
+#[derive(Template)]
+#[template(path = "cv.html")]
+struct CvTemplate<'a> {
+    cv: &'a cv::CvData,
+    command_index_json: String,
+    archive_json: &'a str,
+}
+
+#[derive(Template)]
+#[template(path = "writing.html")]
+struct WritingTemplate<'a> {
     posts: &'a [Post],
     groups: Vec<FolderGroup<'a>>,
-    archive_json: &'a str,
     folder_count: usize,
-    home_html: String,
-    latest_title: String,
-    latest_url: String,
-    latest_date: String,
+    command_index_json: String,
+    archive_json: &'a str,
 }
 
 #[derive(Template)]
@@ -146,6 +188,37 @@ struct IndexTemplate<'a> {
 struct PostTemplate<'a> {
     post: &'a Post,
     title_id: String,
+    command_index_json: String,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+struct NewsTrendSignal {
+    #[serde(default)]
+    title: String,
+    #[serde(default)]
+    url: String,
+    #[serde(default)]
+    source: String,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+struct NewsTrendCluster {
+    #[serde(default)]
+    label: String,
+    #[serde(default)]
+    burst_label: String,
+    #[serde(default)]
+    count: usize,
+    #[serde(default)]
+    sources: Vec<String>,
+    #[serde(default)]
+    items: Vec<NewsTrendSignal>,
+}
+
+impl NewsTrendCluster {
+    fn sources_label(&self) -> String {
+        self.sources.join(" · ")
+    }
 }
 
 #[derive(Template)]
@@ -155,27 +228,24 @@ struct NewsTemplate<'a> {
     recent_issues: Vec<&'a Post>,
     month_groups: Vec<NewsMonthGroup<'a>>,
     archive_post: Vec<&'a Post>,
+    trends: Vec<NewsTrendCluster>,
     issue_count: usize,
+    command_index_json: String,
     archive_json: &'a str,
 }
-
 #[derive(Template)]
 #[template(path = "cfp.html")]
 struct CfpTemplate<'a> {
     latest_issue: Vec<&'a Post>,
+    command_index_json: String,
     archive_json: &'a str,
 }
 
 #[derive(Template)]
 #[template(path = "news_search.html")]
 struct NewsSearchTemplate<'a> {
+    command_index_json: String,
     archive_json: &'a str,
-}
-
-#[derive(Template)]
-#[template(path = "posts_fragment.html")]
-struct PostsFragmentTemplate<'a> {
-    posts: &'a [Post],
 }
 
 pub fn slugify(value: &str) -> String {
@@ -502,10 +572,26 @@ pub fn parse_markdown_post(source: &str, fallback_slug: &str) -> Post {
     } else {
         tags.join(" / ")
     };
-    let accent = frontmatter_value(&frontmatter, "accent").unwrap_or_else(|| "#b87945".to_string());
+    let accent = frontmatter_value(&frontmatter, "accent").unwrap_or_else(|| "#A4BBFF".to_string());
     let excerpt = frontmatter_value(&frontmatter, "excerpt")
         .or_else(|| frontmatter_value(&frontmatter, "description"))
         .unwrap_or_else(|| excerpt_from_markdown(&body));
+    let period = frontmatter_value(&frontmatter, "period").unwrap_or_default();
+    let role = frontmatter_value(&frontmatter, "role").unwrap_or_default();
+    let category = frontmatter_value(&frontmatter, "category")
+        .map(|v| v.to_ascii_lowercase())
+        .filter(|v| !v.is_empty())
+        .unwrap_or_else(|| "project".to_string());
+    let status = frontmatter_value(&frontmatter, "status").unwrap_or_default();
+    let featured =
+        frontmatter_value(&frontmatter, "featured").is_some_and(|v| v.eq_ignore_ascii_case("true"));
+    let themes = frontmatter_list(&frontmatter, "themes");
+    let themes_csv = themes.join(",");
+    let stack = frontmatter_list(&frontmatter, "stack");
+    let repo = frontmatter_value(&frontmatter, "repo").unwrap_or_default();
+    let demo_url = frontmatter_value(&frontmatter, "demo_url").unwrap_or_default();
+    let paper_url = frontmatter_value(&frontmatter, "paper_url").unwrap_or_default();
+    let logo = frontmatter_value(&frontmatter, "logo").unwrap_or_default();
     let html = markdown_to_html(&body);
 
     Post {
@@ -521,6 +607,18 @@ pub fn parse_markdown_post(source: &str, fallback_slug: &str) -> Post {
         html,
         url: format!("/posts/{slug}/"),
         folder: "notes".to_string(),
+        period,
+        role,
+        category,
+        status,
+        featured,
+        themes,
+        themes_csv,
+        stack,
+        repo,
+        demo_url,
+        paper_url,
+        logo,
     }
 }
 
@@ -693,13 +791,36 @@ fn minify_css(source: &str) -> String {
     output.trim().replace(";}", "}").replace("0.", ".")
 }
 
+fn copy_js_dir_sync(source: &Path, destination: &Path) -> BlogResult<()> {
+    if !source.exists() {
+        return Ok(());
+    }
+    std_fs::create_dir_all(destination)?;
+    for entry in std_fs::read_dir(source)? {
+        let entry = entry?;
+        let source_path = entry.path();
+        let destination_path = destination.join(entry.file_name());
+        if source_path.is_dir() {
+            copy_js_dir_sync(&source_path, &destination_path)?;
+        } else if source_path
+            .extension()
+            .and_then(OsStr::to_str)
+            .is_some_and(|ext| ext == "js" || ext == "mjs")
+        {
+            std_fs::copy(&source_path, &destination_path)?;
+        }
+    }
+    Ok(())
+}
+
 fn folder_groups(posts: &[Post]) -> Vec<FolderGroup<'_>> {
     [
-        ("news", "News"),
-        ("cfp", "CFP"),
-        ("blog", "Blog"),
         ("papers", "Papers"),
+        ("projects", "Projects"),
+        ("blog", "Blog"),
+        ("cfp", "CFP"),
         ("about", "About"),
+        ("news", "News"),
     ]
     .into_iter()
     .filter_map(|(slug, label)| {
@@ -726,6 +847,76 @@ fn home_index_posts(posts: &[Post]) -> Vec<Post> {
         .filter(|post| post.folder != "news")
         .cloned()
         .collect()
+}
+
+fn load_live_cfp_summary() -> (usize, String) {
+    let raw = std_fs::read_to_string("static/cfp/data/latest.json")
+        .or_else(|_| std_fs::read_to_string("data/cfp/latest.json"))
+        .unwrap_or_default();
+    let Ok(parsed) = serde_json::from_str::<serde_json::Value>(&raw) else {
+        return (0, "Official calls & .ics feed".to_string());
+    };
+    let active_count = parsed["activeCount"].as_u64().unwrap_or(0) as usize;
+    let mut next_label = "Tracked wireless, AI-RAN & networking venues".to_string();
+    if let Some(items) = parsed["items"].as_array() {
+        let mut upcoming = items
+            .iter()
+            .filter_map(|item| {
+                let days = item["daysUntilDeadline"].as_i64()?;
+                if days < 0 {
+                    return None;
+                }
+                let acronym = item["acronym"]
+                    .as_str()
+                    .filter(|s| !s.is_empty())
+                    .or_else(|| item["title"].as_str())?;
+                Some((days, acronym.to_string()))
+            })
+            .collect::<Vec<_>>();
+        upcoming.sort_by_key(|(days, _)| *days);
+        if let Some((days, acronym)) = upcoming.first() {
+            next_label = format!("Next: {acronym} (D-{days})");
+        }
+    }
+    (active_count, next_label)
+}
+
+fn build_command_index_json(cv: &cv::CvData, posts: &[Post]) -> BlogResult<String> {
+    let mut items = vec![
+        json!({"label": "Home", "section": "Page", "url": "/", "shortcut": "h"}),
+        json!({"label": "Projects & Demonstrations", "section": "Page", "url": "/projects/", "shortcut": "p"}),
+        json!({"label": "Curriculum Vitae (CV)", "section": "Page", "url": "/cv/", "shortcut": "c"}),
+        json!({"label": "Writing & Notes Archive", "section": "Page", "url": "/writing/", "shortcut": "w"}),
+        json!({"label": "Call for Papers (CFP)", "section": "Automation", "url": "/cfp/", "shortcut": "r"}),
+        json!({"label": "AI News Digest", "section": "Automation", "url": "/news/", "shortcut": "n"}),
+        json!({"label": "Interactive News Search", "section": "Automation", "url": "/news/search/", "shortcut": ""}),
+    ];
+    if cv.profile.has_pdf {
+        items.push(json!({
+            "label": "Download CV (LaTeX PDF)",
+            "section": "CV",
+            "url": cv.profile.pdf_url,
+            "shortcut": ""
+        }));
+    }
+    for pub_item in &cv.publications {
+        items.push(json!({
+            "label": pub_item.title,
+            "section": format!("Paper · {}", pub_item.venue_short),
+            "url": if !pub_item.note_url.is_empty() { pub_item.note_url.clone() } else { "/cv/#publications".to_string() },
+            "shortcut": ""
+        }));
+    }
+    for post in posts.iter().filter(|p| p.folder != "news").take(24) {
+        items.push(json!({
+            "label": post.title,
+            "section": post.folder,
+            "url": post.url,
+            "shortcut": ""
+        }));
+    }
+    let json = serde_json::to_string(&items)?;
+    Ok(json.replace('<', "\\u003c"))
 }
 
 fn strip_leading_h1_matching_title(html: &str, title: &str) -> String {
@@ -825,46 +1016,139 @@ fn news_month_groups<'a>(posts: &[&'a Post]) -> Vec<NewsMonthGroup<'a>> {
 }
 
 pub fn render_index_page(posts: &[Post]) -> BlogResult<String> {
+    let cv = cv::load_cv_data("cv");
     let home_posts = home_index_posts(posts);
     let archive_json = archive_json(&home_posts)?;
-    let groups = folder_groups(&home_posts);
-    let latest = home_posts.first();
-    let home_post = home_posts
+    let all_projects = posts
         .iter()
-        .find(|post| post.folder == "blog" && post.slug == "home")
-        .or_else(|| home_posts.iter().find(|post| post.title == "Home"))
-        .or(latest);
+        .filter(|post| post.folder == "projects")
+        .collect::<Vec<_>>();
+    let mut featured_projects = all_projects
+        .iter()
+        .copied()
+        .filter(|post| post.featured)
+        .collect::<Vec<_>>();
+    if featured_projects.is_empty() {
+        featured_projects = all_projects.iter().copied().take(4).collect();
+    }
+    let recent_writing = posts
+        .iter()
+        .filter(|post| (post.folder == "papers" || post.folder == "blog") && post.slug != "home")
+        .take(5)
+        .collect::<Vec<_>>();
+    let writing_count = posts.iter().filter(|post| post.folder != "news").count();
+    let latest_news = posts
+        .iter()
+        .find(|post| post.folder == "news" && post.title != "Daily AI News Archive");
+    let (cfp_active_count, cfp_next_label) = load_live_cfp_summary();
+    let command_index_json = build_command_index_json(&cv, posts)?;
+
     Ok(IndexTemplate {
-        posts: &home_posts,
-        folder_count: groups.len(),
-        home_html: home_post
-            .map(|post| post.html.clone())
-            .unwrap_or_else(|| "<p>Welcome to my notes.</p>".to_string()),
-        latest_title: latest
+        cv: &cv,
+        project_count: all_projects.len(),
+        featured_projects,
+        recent_writing,
+        command_index_json,
+        cfp_active_count,
+        cfp_next_label,
+        news_latest_title: latest_news
             .map(|post| post.title.clone())
-            .unwrap_or_else(|| "No public notes yet".to_string()),
-        latest_url: latest
-            .map(|post| post.url.clone())
-            .unwrap_or_else(|| "#posts".to_string()),
-        latest_date: latest
+            .unwrap_or_else(|| "Daily AI signal brief".to_string()),
+        news_latest_date: latest_news
             .map(|post| post.date.clone())
-            .unwrap_or_else(|| "draft".to_string()),
-        groups,
+            .unwrap_or_else(|| "daily".to_string()),
+        writing_count,
         archive_json: &archive_json,
     }
     .render()?)
 }
 
-pub fn render_post_page(post: &Post, _posts: &[Post]) -> BlogResult<String> {
-    Ok(PostTemplate {
-        post,
-        title_id: slugify(&post.title),
+pub fn render_projects_page(posts: &[Post]) -> BlogResult<String> {
+    let cv = cv::load_cv_data("cv");
+    let home_posts = home_index_posts(posts);
+    let archive_json = archive_json(&home_posts)?;
+    let projects = posts
+        .iter()
+        .filter(|post| post.folder == "projects")
+        .collect::<Vec<_>>();
+    let command_index_json = build_command_index_json(&cv, posts)?;
+    Ok(ProjectsTemplate {
+        projects,
+        command_index_json,
+        archive_json: &archive_json,
     }
     .render()?)
 }
 
+pub fn render_cv_page(posts: &[Post]) -> BlogResult<String> {
+    let cv = cv::load_cv_data("cv");
+    let home_posts = home_index_posts(posts);
+    let archive_json = archive_json(&home_posts)?;
+    let command_index_json = build_command_index_json(&cv, posts)?;
+    Ok(CvTemplate {
+        cv: &cv,
+        command_index_json,
+        archive_json: &archive_json,
+    }
+    .render()?)
+}
+
+pub fn render_writing_page(posts: &[Post]) -> BlogResult<String> {
+    let cv = cv::load_cv_data("cv");
+    let home_posts = home_index_posts(posts);
+    let archive_json = archive_json(&home_posts)?;
+    let groups = folder_groups(&home_posts);
+    let command_index_json = build_command_index_json(&cv, posts)?;
+    Ok(WritingTemplate {
+        posts: &home_posts,
+        folder_count: groups.len(),
+        groups,
+        command_index_json,
+        archive_json: &archive_json,
+    }
+    .render()?)
+}
+
+pub fn render_post_page(post: &Post, posts: &[Post]) -> BlogResult<String> {
+    let cv = cv::load_cv_data("cv");
+    let command_index_json = build_command_index_json(&cv, posts)?;
+    Ok(PostTemplate {
+        post,
+        title_id: slugify(&post.title),
+        command_index_json,
+    }
+    .render()?)
+}
+
+fn load_news_trends() -> Vec<NewsTrendCluster> {
+    let Ok(raw) = std_fs::read_to_string("data/news/latest.json") else {
+        return Vec::new();
+    };
+    let Ok(value) = serde_json::from_str::<serde_json::Value>(&raw) else {
+        return Vec::new();
+    };
+    let Some(arr) = value.get("trends").and_then(|v| v.as_array()) else {
+        return Vec::new();
+    };
+    arr.iter()
+        .filter_map(|entry| serde_json::from_value::<NewsTrendCluster>(entry.clone()).ok())
+        .filter(|cluster| !cluster.label.trim().is_empty())
+        .map(|mut cluster| {
+            cluster.items.retain(|item| {
+                !item.title.trim().is_empty()
+                    && (item.url.starts_with("https://") || item.url.starts_with("http://"))
+            });
+            cluster.items.truncate(2);
+            cluster
+        })
+        .take(4)
+        .collect()
+}
+
 pub fn render_news_page(posts: &[Post]) -> BlogResult<String> {
+    let cv = cv::load_cv_data("cv");
     let archive_json = archive_json(posts)?;
+    let command_index_json = build_command_index_json(&cv, posts)?;
     let archive_post = posts
         .iter()
         .filter(|post| post.folder == "news" && post.title == "Daily AI News Archive")
@@ -882,33 +1166,42 @@ pub fn render_news_page(posts: &[Post]) -> BlogResult<String> {
         .take(7)
         .collect::<Vec<_>>();
     let month_groups = news_month_groups(&news_issues);
+    let trends = load_news_trends();
     Ok(NewsTemplate {
         latest_issue,
         recent_issues,
         month_groups,
         archive_post,
+        trends,
         issue_count: news_issues.len(),
+        command_index_json,
         archive_json: &archive_json,
     }
     .render()?)
 }
 
 pub fn render_news_search_page(posts: &[Post]) -> BlogResult<String> {
+    let cv = cv::load_cv_data("cv");
     let archive_json = archive_json(posts)?;
+    let command_index_json = build_command_index_json(&cv, posts)?;
     Ok(NewsSearchTemplate {
+        command_index_json,
         archive_json: &archive_json,
     }
     .render()?)
 }
 
 pub fn render_cfp_page(posts: &[Post]) -> BlogResult<String> {
+    let cv = cv::load_cv_data("cv");
     let archive_json = archive_json(posts)?;
+    let command_index_json = build_command_index_json(&cv, posts)?;
     let latest_issue = posts
         .iter()
         .filter(|post| post.folder == "cfp" && post.slug == "cfp-radar")
         .collect::<Vec<_>>();
     Ok(CfpTemplate {
         latest_issue,
+        command_index_json,
         archive_json: &archive_json,
     }
     .render()?)
@@ -922,7 +1215,15 @@ pub fn render_sitemap_xml(posts: &[Post]) -> String {
     let mut output = String::from(
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n",
     );
-    for path in ["/", "/news/", "/news/search/", "/cfp/"] {
+    for path in [
+        "/",
+        "/projects/",
+        "/cv/",
+        "/writing/",
+        "/news/",
+        "/news/search/",
+        "/cfp/",
+    ] {
         output.push_str("  <url>\n    <loc>");
         output.push_str(PUBLIC_SITE_URL);
         output.push_str(path);
@@ -938,11 +1239,6 @@ pub fn render_sitemap_xml(posts: &[Post]) -> String {
     output
 }
 
-pub fn render_posts_fragment(posts: &[Post]) -> BlogResult<String> {
-    let home_posts = home_index_posts(posts);
-    Ok(PostsFragmentTemplate { posts: &home_posts }.render()?)
-}
-
 pub async fn build_static_site(
     posts_dir: impl AsRef<Path>,
     out_dir: impl AsRef<Path>,
@@ -951,14 +1247,18 @@ pub async fn build_static_site(
     let posts = load_posts(&posts_dir).await?;
     let out_dir = out_dir.as_ref();
     let assets_dir = out_dir.join("assets");
-    let fragments_dir = out_dir.join("fragments");
+    let projects_dir = out_dir.join("projects");
+    let cv_dir = out_dir.join("cv");
+    let writing_dir = out_dir.join("writing");
     let news_dir = out_dir.join("news");
     let news_search_dir = news_dir.join("search");
     let cfp_dir = out_dir.join("cfp");
 
     fs::remove_dir_all(out_dir).await.ok();
     fs::create_dir_all(&assets_dir).await?;
-    fs::create_dir_all(&fragments_dir).await?;
+    fs::create_dir_all(&projects_dir).await?;
+    fs::create_dir_all(&cv_dir).await?;
+    fs::create_dir_all(&writing_dir).await?;
     fs::create_dir_all(&news_dir).await?;
     fs::create_dir_all(&news_search_dir).await?;
     fs::create_dir_all(&cfp_dir).await?;
@@ -966,9 +1266,18 @@ pub async fn build_static_site(
         &posts_dir.join("papers").join("assets"),
         &assets_dir.join("posts"),
     )?;
+    copy_dir_sync(Path::new("cv/figures"), &assets_dir.join("cv"))?;
+    copy_js_dir_sync(
+        Path::new("node_modules/@chenglou/pretext/dist"),
+        &assets_dir.join("pretext"),
+    )?;
+    copy_dir_sync(Path::new("static/media"), &assets_dir.join("media"))?;
     copy_dir_sync(Path::new("static/news/assets"), &assets_dir.join("news"))?;
     copy_dir_sync(Path::new("static/news/data"), &out_dir.join("news/data"))?;
     copy_dir_sync(Path::new("static/cfp"), &out_dir.join("cfp"))?;
+    if Path::new("cv/resume.pdf").exists() {
+        fs::copy("cv/resume.pdf", cv_dir.join("jinhyuk-kim-cv.pdf")).await?;
+    }
     let css = fs::read_to_string("src/style.css").await?;
     fs::write(assets_dir.join("style.css"), minify_css(&css)).await?;
     fs::copy("src/blog-lab.mjs", assets_dir.join("blog-lab.mjs")).await?;
@@ -995,6 +1304,16 @@ pub async fn build_static_site(
     )
     .await?;
     fs::copy(
+        "src/pretext-stage.mjs",
+        assets_dir.join("pretext-stage.mjs"),
+    )
+    .await?;
+    fs::copy(
+        "src/v3-interactive-state.mjs",
+        assets_dir.join("v3-interactive-state.mjs"),
+    )
+    .await?;
+    fs::copy(
         "src/web-vitals-rum.js",
         assets_dir.join("web-vitals-rum.js"),
     )
@@ -1005,16 +1324,18 @@ pub async fn build_static_site(
     fs::write(out_dir.join("404.html"), NOT_FOUND_HTML).await?;
     fs::write(out_dir.join("sitemap.xml"), render_sitemap_xml(&posts)).await?;
     fs::write(out_dir.join("index.html"), render_index_page(&posts)?).await?;
+    fs::write(
+        projects_dir.join("index.html"),
+        render_projects_page(&posts)?,
+    )
+    .await?;
+    fs::write(cv_dir.join("index.html"), render_cv_page(&posts)?).await?;
+    fs::write(writing_dir.join("index.html"), render_writing_page(&posts)?).await?;
     fs::write(news_dir.join("index.html"), render_news_page(&posts)?).await?;
     fs::write(cfp_dir.join("index.html"), render_cfp_page(&posts)?).await?;
     fs::write(
         news_search_dir.join("index.html"),
         render_news_search_page(&posts)?,
-    )
-    .await?;
-    fs::write(
-        fragments_dir.join("posts.html"),
-        render_posts_fragment(&posts)?,
     )
     .await?;
 
@@ -1024,11 +1345,16 @@ pub async fn build_static_site(
         "robots.txt".to_string(),
         "404.html".to_string(),
         "sitemap.xml".to_string(),
+        "projects/index.html".to_string(),
+        "cv/index.html".to_string(),
+        "writing/index.html".to_string(),
         "news/index.html".to_string(),
         "news/search/index.html".to_string(),
         "cfp/index.html".to_string(),
-        "fragments/posts.html".to_string(),
     ];
+    if cv_dir.join("jinhyuk-kim-cv.pdf").exists() {
+        files.push("cv/jinhyuk-kim-cv.pdf".to_string());
+    }
     for post in &posts {
         let post_dir = out_dir.join("posts").join(&post.slug);
         fs::create_dir_all(&post_dir).await?;
@@ -1050,6 +1376,12 @@ pub fn router(posts: Vec<Post>, assets_root: impl Into<PathBuf>) -> BlogResult<R
 
     Ok(Router::new()
         .route("/", get(index_handler))
+        .route("/projects", get(projects_handler))
+        .route("/projects/", get(projects_handler))
+        .route("/cv", get(cv_handler))
+        .route("/cv/", get(cv_handler))
+        .route("/writing", get(writing_handler))
+        .route("/writing/", get(writing_handler))
         .route("/robots.txt", get(robots_handler))
         .route("/sitemap.xml", get(sitemap_handler))
         .route("/news", get(news_handler))
@@ -1058,12 +1390,15 @@ pub fn router(posts: Vec<Post>, assets_root: impl Into<PathBuf>) -> BlogResult<R
         .route("/cfp/", get(cfp_handler))
         .route("/news/search", get(news_search_page_handler))
         .route("/news/search/", get(news_search_page_handler))
-        .route("/fragments/posts", get(posts_fragment_handler))
         .route("/archive.json", get(archive_handler))
         .route("/api/vitals", post(vitals_handler))
         .route("/api/focused-issue", post(focused_issue_handler))
         .route("/api/news-search", post(news_search_handler))
         .route("/posts/{slug}/", get(post_handler))
+        .route_service(
+            "/cv/jinhyuk-kim-cv.pdf",
+            ServeFile::new(assets_root.join("cv/jinhyuk-kim-cv.pdf")),
+        )
         .route_service(
             "/cfp/radar.ics",
             ServeFile::new(assets_root.join("cfp/radar.ics")),
@@ -1079,6 +1414,27 @@ pub fn router(posts: Vec<Post>, assets_root: impl Into<PathBuf>) -> BlogResult<R
 
 async fn index_handler(State(state): State<AppState>) -> impl IntoResponse {
     match render_index_page(&state.posts) {
+        Ok(html) => Html(html).into_response(),
+        Err(error) => (StatusCode::INTERNAL_SERVER_ERROR, error.to_string()).into_response(),
+    }
+}
+
+async fn projects_handler(State(state): State<AppState>) -> impl IntoResponse {
+    match render_projects_page(&state.posts) {
+        Ok(html) => Html(html).into_response(),
+        Err(error) => (StatusCode::INTERNAL_SERVER_ERROR, error.to_string()).into_response(),
+    }
+}
+
+async fn cv_handler(State(state): State<AppState>) -> impl IntoResponse {
+    match render_cv_page(&state.posts) {
+        Ok(html) => Html(html).into_response(),
+        Err(error) => (StatusCode::INTERNAL_SERVER_ERROR, error.to_string()).into_response(),
+    }
+}
+
+async fn writing_handler(State(state): State<AppState>) -> impl IntoResponse {
+    match render_writing_page(&state.posts) {
         Ok(html) => Html(html).into_response(),
         Err(error) => (StatusCode::INTERNAL_SERVER_ERROR, error.to_string()).into_response(),
     }
@@ -1114,13 +1470,6 @@ async fn cfp_handler(State(state): State<AppState>) -> impl IntoResponse {
 
 async fn news_search_page_handler(State(state): State<AppState>) -> impl IntoResponse {
     match render_news_search_page(&state.posts) {
-        Ok(html) => Html(html).into_response(),
-        Err(error) => (StatusCode::INTERNAL_SERVER_ERROR, error.to_string()).into_response(),
-    }
-}
-
-async fn posts_fragment_handler(State(state): State<AppState>) -> impl IntoResponse {
-    match render_posts_fragment(&state.posts) {
         Ok(html) => Html(html).into_response(),
         Err(error) => (StatusCode::INTERNAL_SERVER_ERROR, error.to_string()).into_response(),
     }

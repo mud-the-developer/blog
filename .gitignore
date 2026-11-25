@@ -19,6 +19,12 @@ playwright-report/
 .discode/
 .playwright-cli/
 .playwright/
+.lighthouseci/
+skills/
 
 # Private source checkout used by the daily news workflow/local generator.
 vendor/blog_news/
+
+# Isolated Remotion video renderer dependencies.
+video/node_modules/
+video/out/

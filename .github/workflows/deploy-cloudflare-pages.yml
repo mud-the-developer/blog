@@ -154,7 +154,7 @@ jobs:
           set -euo pipefail
           site_url="${SITE_URL:-https://${CF_PAGES_PROJECT}.pages.dev}"
           site_url="${site_url%/}"
-          paths=(/ /news/ /cfp/ /news/search/ /archive.json /news/data/latest.json /cfp/data/latest.json)
+          paths=(/ /projects/ /cv/ /writing/ /cfp/ /news/ /news/search/ /cv/jinhyuk-kim-cv.pdf /archive.json /news/data/latest.json /cfp/data/latest.json)
           for attempt in {1..12}; do
             failed=0
             for path in "${paths[@]}"; do

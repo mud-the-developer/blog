@@ -3,7 +3,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use mud_blog::{build_static_site, parse_markdown_post, render_posts_fragment};
+use mud_blog::{build_static_site, parse_markdown_post};
 
 fn count_markdown_posts(dir: &Path) -> Result<usize, Box<dyn std::error::Error>> {
     let mut count = 0;
@@ -16,6 +16,26 @@ fn count_markdown_posts(dir: &Path) -> Result<usize, Box<dyn std::error::Error>>
         }
     }
     Ok(count)
+}
+
+fn contains_korean_mobile(text: &str) -> bool {
+    if text.contains("(+82)") {
+        return true;
+    }
+    let bytes = text.as_bytes();
+    for idx in 0..bytes.len() {
+        if bytes.get(idx..idx + 3) == Some(b"10-") {
+            let tail = &bytes[idx + 3..];
+            if tail.len() >= 9
+                && tail[0..4].iter().all(u8::is_ascii_digit)
+                && tail[4] == b'-'
+                && tail[5..9].iter().all(u8::is_ascii_digit)
+            {
+                return true;
+            }
+        }
+    }
+    false
 }
 
 #[test]
@@ -62,14 +82,14 @@ fn test_output_dir(name: &str) -> PathBuf {
 }
 
 #[tokio::test]
-async fn builds_public_polished_home_with_filetree_and_no_decorative_pretext_motion()
+async fn builds_v3_personal_site_with_cv_projects_writing_and_functional_pretext()
 -> Result<(), Box<dyn std::error::Error>> {
     let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let out_dir = test_output_dir("public-polish");
     let expected_post_count = count_markdown_posts(&root.join("posts"))?;
 
     let result = build_static_site(root.join("posts"), &out_dir).await?;
-    let expected_home_post_count = result
+    let expected_writing_post_count = result
         .posts
         .iter()
         .filter(|post| post.folder != "news")
@@ -77,6 +97,10 @@ async fn builds_public_polished_home_with_filetree_and_no_decorative_pretext_mot
 
     assert_eq!(result.posts.len(), expected_post_count);
     assert!(out_dir.join("index.html").exists());
+    assert!(out_dir.join("projects/index.html").exists());
+    assert!(out_dir.join("cv/index.html").exists());
+    assert!(out_dir.join("cv/jinhyuk-kim-cv.pdf").exists());
+    assert!(out_dir.join("writing/index.html").exists());
     assert!(out_dir.join("archive.json").exists());
     assert!(out_dir.join("robots.txt").exists());
     let not_found = fs::read_to_string(out_dir.join("404.html"))?;
@@ -86,11 +110,12 @@ async fn builds_public_polished_home_with_filetree_and_no_decorative_pretext_mot
     assert!(out_dir.join("sitemap.xml").exists());
     assert!(out_dir.join("news/index.html").exists());
     assert!(out_dir.join("news/search/index.html").exists());
-    assert!(out_dir.join("fragments/posts.html").exists());
     assert!(!out_dir.join("assets/pretext-polish.mjs").exists());
     assert!(!out_dir.join("assets/pretext-polish-effects.mjs").exists());
     assert!(!out_dir.join("assets/pretext-editorial.mjs").exists());
-    assert!(!out_dir.join("assets/pretext/layout.js").exists());
+    assert!(out_dir.join("assets/pretext/layout.js").exists());
+    assert!(out_dir.join("assets/pretext-stage.mjs").exists());
+    assert!(out_dir.join("assets/v3-interactive-state.mjs").exists());
     assert!(out_dir.join("assets/blog-lab.mjs").exists());
     assert!(out_dir.join("assets/site-chrome.mjs").exists());
     assert!(out_dir.join("assets/site-chrome-effects.mjs").exists());
@@ -107,49 +132,48 @@ async fn builds_public_polished_home_with_filetree_and_no_decorative_pretext_mot
     let sitemap = fs::read_to_string(out_dir.join("sitemap.xml"))?;
     assert!(sitemap.starts_with("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"));
     assert!(sitemap.contains("<loc>https://mud-blog.pages.dev/</loc>"));
+    assert!(sitemap.contains("<loc>https://mud-blog.pages.dev/projects/</loc>"));
+    assert!(sitemap.contains("<loc>https://mud-blog.pages.dev/cv/</loc>"));
+    assert!(sitemap.contains("<loc>https://mud-blog.pages.dev/writing/</loc>"));
     assert!(sitemap.contains("<loc>https://mud-blog.pages.dev/news/</loc>"));
     assert!(sitemap.contains("<loc>https://mud-blog.pages.dev/news/search/</loc>"));
     assert!(sitemap.contains("<loc>https://mud-blog.pages.dev/cfp/</loc>"));
-    assert_eq!(sitemap.matches("<url>").count(), expected_post_count + 4);
+    assert_eq!(sitemap.matches("<url>").count(), expected_post_count + 7);
 
-    assert!(index.contains("<a href=\"/news/\"><span class=\"ui-icon\" data-icon=\"newspaper\""));
+    assert!(index.contains("href=\"/projects/\""));
+    assert!(index.contains("href=\"/cv/\""));
+    assert!(index.contains("href=\"/writing/\""));
     assert!(index.contains("href=\"/cfp/\""));
+    assert!(index.contains("href=\"/news/\""));
     assert!(index.contains("data-theme-toggle"));
     assert!(index.contains("aria-label=\"Toggle color theme: System\""));
     assert!(index.contains("/assets/site-chrome.mjs"));
-    assert!(index.contains("data-layout=\"public-index\""));
-    assert!(index.contains("class=\"public-shell\""));
-    assert!(index.contains("class=\"filetree"));
-    assert!(index.contains("aria-label=\"editorial dossier\""));
-    assert!(index.contains("data-home-post"));
-    assert!(index.contains("data-home-post-body"));
+    assert!(index.contains("/assets/pretext-stage.mjs"));
+    assert!(index.contains("data-layout=\"v3-dossier\""));
+    assert!(index.contains("data-palette=\"pair-07\""));
+    assert!(index.contains("data-pretext-stage"));
+    assert!(index.contains("v3-home-shell"));
+    assert!(index.contains("v3-intro"));
+    assert!(index.contains("v3-work-grid"));
+    assert!(index.contains("v3-pub-list"));
+    assert!(index.contains("v3-affil-strip"));
+    assert!(!index.contains("data-copy-bibtex"));
+    assert!(!index.contains("data-research-cluster"));
+    assert!(!index.contains("data-theme-filter-bar"));
+    assert!(!index.contains("section-writing"));
+    assert!(index.contains("Jinhyuk Kim"));
+    assert!(index.contains("RAMO Laboratory"));
+    assert!(index.contains("Uncertainty-Aware Hybrid Inference"));
+    assert!(index.contains("Call for Papers"));
+    assert!(index.contains("Automation"));
+    assert!(index.contains("data-icon=\"home\""));
+    assert!(!index.contains("CFP Radar"));
+    assert!(!index.contains("Live System"));
+    assert!(!index.contains("v3-shape"));
+    assert!(index.contains("AI News Digest"));
+    assert!(!index.contains("href=\"/cv/jinhyuk-kim-cv.pdf\""));
+    assert!(!contains_korean_mobile(&index));
     assert!(!index.contains("data-pretext-editorial"));
-    assert!(!index.contains("archive typography motion"));
-    assert!(!index.contains("/assets/pretext-editorial.mjs"));
-    assert!(index.contains("<h2 id=\"hi\">Hi 🙋</h2>"));
-    assert!(index.contains("Welcome to my blog"));
-    assert!(index.contains("<span>About me</span>"));
-    assert!(!index.contains("Public writing"));
-    assert!(!index.contains("id=\"posts-title\""));
-    assert!(!index.contains("A tight public desk for AI systems"));
-    assert!(index.contains("dossier-card-left"));
-    assert!(index.contains("dossier-card-right"));
-    assert!(index.contains("Source brief"));
-    assert!(index.contains("CFP Radar"));
-    assert!(!index.contains("writing index is live"));
-    assert!(!index.contains("<details class=\"filetree-folder\" data-folder=\"news\""));
-    assert!(!index.contains("<span>news/</span>"));
-    assert!(!index.contains(" · news</span>"));
-    assert!(index.contains("data-folder=\"blog\" aria-label=\"Blog posts\" open"));
-    assert!(index.contains("<summary class=\"filetree-folder-label\""));
-    assert_eq!(
-        index.matches("class=\"filetree-file\"").count(),
-        expected_home_post_count
-    );
-    assert_eq!(
-        index.matches("class=\"post-card\"").count(),
-        expected_home_post_count
-    );
     assert!(!index.contains("aria-label=\"post text rain\""));
     assert!(!index.contains("aria-label=\"ambient animated index\""));
     assert!(!index.contains("data-pretext-polish"));
@@ -159,38 +183,68 @@ async fn builds_public_polished_home_with_filetree_and_no_decorative_pretext_mot
     assert!(!index.contains("/assets/blog-lab.mjs"));
     assert!(!index.contains("GOOGLE_AI_API_KEY"));
     assert!(!index.contains("GEMINI_API_KEY"));
-    assert!(index.contains("posts/"));
-    assert!(!index.contains("<span>news/</span>"));
-    assert!(index.contains("blog/"));
-    assert!(index.contains("cfp/"));
-    assert!(index.contains("papers/"));
-    assert!(index.contains("about/"));
-    assert!(index.contains("Jinhyuk Kim"));
     assert!(!index.contains("읽기 좋은 노트"));
     assert!(!index.contains("Readable archive"));
     assert!(!index.contains("Markdown archive"));
-    assert!(!index.contains("<a href=\"/archive.json\">Data</a>"));
-    assert!(!index.contains("data-field-stage"));
-    assert!(!index.contains("data-archive-graph"));
-    assert!(!index.contains("paper-grid"));
     assert!(!index.contains("Pretext Kinetic Blog"));
     assert!(!index.contains("Research Radar"));
     assert!(!index.contains("README Post Template"));
     assert!(!index.contains("About Jinhyuk"));
     assert!(!index.contains("tokio · askama · htmx"));
-    assert!(!index.contains("runtime</dt>"));
     assert!(!index.contains("refresh fragment"));
 
+    let projects_html = fs::read_to_string(out_dir.join("projects/index.html"))?;
+    assert!(projects_html.contains("data-askama-template=\"projects\""));
+    assert!(projects_html.contains("data-layout=\"v3-projects\""));
+    assert!(projects_html.contains("LLM-Based 5G Beamforming for AI-RAN"));
+    assert!(projects_html.contains("Call for Papers"));
+    assert!(!projects_html.contains("Live Systems"));
+    assert!(!projects_html.contains("v3-shape"));
+    assert!(projects_html.contains("posts/projects/"));
+
+    let cv_html = fs::read_to_string(out_dir.join("cv/index.html"))?;
+    assert!(cv_html.contains("data-askama-template=\"cv\""));
+    assert!(cv_html.contains("data-layout=\"v3-cv\""));
+    assert!(cv_html.contains("Yonsei University"));
+    assert!(cv_html.contains("Singapore University of Technology and Design"));
+    assert!(cv_html.contains("Institute of Science Tokyo"));
+    assert!(cv_html.contains("/cv/jinhyuk-kim-cv.pdf"));
+    assert!(cv_html.contains("/assets/cv/yonsei_logo.png"));
+    assert!(!contains_korean_mobile(&cv_html));
+    assert!(!cv_html.contains("Submitted to"));
+    let writing_html = fs::read_to_string(out_dir.join("writing/index.html"))?;
+    assert!(writing_html.contains("data-askama-template=\"writing\""));
+    assert!(writing_html.contains("data-layout=\"v3-writing\""));
+    assert!(writing_html.contains("class=\"filetree\""));
+    assert!(!writing_html.contains("<details class=\"filetree-folder\" data-folder=\"news\""));
+    assert!(!writing_html.contains("<span>news/</span>"));
+    assert_eq!(
+        writing_html.matches("class=\"filetree-file\"").count(),
+        expected_writing_post_count
+    );
+    assert_eq!(
+        writing_html.matches("class=\"post-card\"").count(),
+        expected_writing_post_count
+    );
+
     let style = fs::read_to_string(out_dir.join("assets/style.css"))?;
-    assert!(style.contains("dossier-enter"));
-    assert!(style.contains(".dossier-card-left"));
-    assert!(style.contains(".dossier-card-right"));
-    assert!(style.contains(".home-post-body"));
+    assert!(style.contains(".v3-home-shell"));
+    assert!(style.contains(".v3-work-grid"));
+    assert!(style.contains(".v3-pub-list"));
+    assert!(style.contains(".v3-affil-strip"));
+    assert!(style.contains(".v3-logo-adaptive"));
+    assert!(style.contains(".v3-bio-line"));
+    assert!(!style.contains(".v3-cluster-card"));
+    assert!(!style.contains(".v3-filter-dock"));
+    assert!(style.contains(".v3-cv-entry"));
+    assert!(style.contains(".v3-cmd-dialog"));
     assert!(!style.contains(".pretext-editorial-canvas"));
     assert!(!style.contains(".pretext-polish"));
     assert!(style.contains(".filetree"));
     assert!(style.contains(".post-body :is"));
-    assert!(style.contains(".profile-publication-widget"));
+    assert!(!style.contains(".profile-publication-widget"));
+    assert!(!style.contains(".public-shell"));
+    assert!(!style.contains(".archive-command-deck"));
     assert!(!style.contains("pretext-rain-fall"));
     assert!(!style.contains("pretext-rain-column"));
     assert!(!style.contains("pretext-loom-breathe"));
@@ -220,18 +274,75 @@ async fn builds_public_polished_home_with_filetree_and_no_decorative_pretext_mot
     assert!(!style.contains(".archive-graph"));
     assert!(!style.to_ascii_lowercase().contains("neon"));
     assert!(
-        style.len() <= 52_000,
-        "public polish CSS should stay bounded even with responsive controls, post chrome spacing, icons, theme modes, dark contrast guards, editorial archive controls, mobile news compression, card-news surfaces, and CFP tables"
+        style.len() <= 72_000,
+        "v3 personal site CSS should stay bounded (actual: {} bytes)",
+        style.len()
     );
 
-    let profile = fs::read_to_string(out_dir.join("posts/jinhyuk-kim/index.html"))?;
-    assert!(profile.contains("class=\"post-reader\""));
-    assert!(profile.contains("profile-publication-widget"));
-    assert!(!out_dir.join("posts/about-jinhyuk/index.html").exists());
-
+    let project_post =
+        fs::read_to_string(out_dir.join("posts/mwc26-ai-ran-beamforming/index.html"))?;
+    assert!(project_post.contains("class=\"post-reader\""));
+    assert!(project_post.contains("data-folder=\"projects\""));
+    assert!(project_post.contains("/assets/media/mwc26-ai-ran-beamforming.mp4"));
     assert!(
         out_dir
-            .join("posts/2026-06-10-ai-news-digest/index.html")
+            .join("assets/media/mwc26-ai-ran-beamforming.mp4")
+            .exists()
+    );
+    assert!(
+        out_dir
+            .join("assets/media/mwc26-ai-ran-beamforming-poster.png")
+            .exists()
+    );
+
+    let mwc25_post = fs::read_to_string(out_dir.join("posts/mwc25-drl-beamforming/index.html"))?;
+    assert!(mwc25_post.contains("/assets/media/mwc25-drl-beamforming.mp4"));
+    assert!(
+        out_dir
+            .join("assets/media/mwc25-drl-beamforming.mp4")
+            .exists()
+    );
+    assert!(
+        out_dir
+            .join("assets/media/mwc25-drl-beamforming-poster.png")
+            .exists()
+    );
+
+    let cfp_post = fs::read_to_string(out_dir.join("posts/cfp-radar-system/index.html"))?;
+    assert!(cfp_post.contains("/assets/media/cfp-radar-system.mp4"));
+    assert!(out_dir.join("assets/media/cfp-radar-system.mp4").exists());
+    assert!(
+        out_dir
+            .join("assets/media/cfp-radar-system-poster.png")
+            .exists()
+    );
+
+    let news_post = fs::read_to_string(out_dir.join("posts/ai-news-digest-system/index.html"))?;
+    assert!(news_post.contains("/assets/media/ai-news-digest-system.mp4"));
+    assert!(
+        out_dir
+            .join("assets/media/ai-news-digest-system.mp4")
+            .exists()
+    );
+    assert!(
+        out_dir
+            .join("assets/media/ai-news-digest-system-poster.png")
+            .exists()
+    );
+
+    assert!(!out_dir.join("posts/jinhyuk-kim/index.html").exists());
+    assert!(!out_dir.join("posts/home/index.html").exists());
+    assert!(!out_dir.join("posts/uhlm-2412-12687/index.html").exists());
+    assert!(!out_dir.join("fragments/posts.html").exists());
+
+    let latest_news_post = result
+        .posts
+        .iter()
+        .find(|post| post.folder == "news" && post.slug.ends_with("-ai-news-digest"))
+        .expect("at least one daily AI news digest post should exist");
+    assert!(
+        out_dir
+            .join(format!("posts/{}/index.html", latest_news_post.slug))
             .exists()
     );
     assert!(
@@ -239,16 +350,11 @@ async fn builds_public_polished_home_with_filetree_and_no_decorative_pretext_mot
             .join("posts/news-digest-archive/index.html")
             .exists()
     );
-    let home_post = fs::read_to_string(out_dir.join("posts/home/index.html"))?;
-    assert!(home_post.contains("href=\"/posts/jinhyuk-kim/\""));
-    assert!(home_post.contains(">Jinhyuk</a>"));
-    assert!(!home_post.contains("href=\"/posts/about-me/\""));
 
     let latest_digest =
-        fs::read_to_string(out_dir.join("posts/2026-06-10-ai-news-digest/index.html"))?;
+        fs::read_to_string(out_dir.join(format!("posts/{}/index.html", latest_news_post.slug)))?;
     assert!(latest_digest.contains("href=\"/posts/news-digest-archive/\""));
     assert!(!latest_digest.contains("href=\"/notes/"));
-
     let archive = fs::read_to_string(out_dir.join("archive.json"))?;
     assert!(archive.len() <= 26_000);
 
@@ -397,23 +503,30 @@ async fn loads_folder_posts_after_removing_duplicate_and_internal_scaffold_posts
     let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let expected_post_count = count_markdown_posts(&root.join("posts"))?;
 
-    for folder in ["about", "blog", "news", "papers"] {
+    for folder in ["cfp", "news", "projects"] {
         assert!(
             root.join("posts").join(folder).is_dir(),
             "posts should include a public {folder}/ folder"
         );
     }
-    assert!(root.join("posts/about/jinhyuk-kim.md").exists());
+    for removed_folder in ["about", "blog", "papers"] {
+        assert!(
+            !root.join("posts").join(removed_folder).exists(),
+            "legacy {removed_folder}/ folder should be removed"
+        );
+    }
+    assert!(!root.join("posts/about/jinhyuk-kim.md").exists());
     assert!(!root.join("posts/about/about-jinhyuk.md").exists());
     assert!(!root.join("posts/meta/pretext-kinetic-blog.md").exists());
     assert!(!root.join("posts/meta/research-radar.md").exists());
     assert!(!root.join("posts/meta/readme-post-template.md").exists());
+    assert!(!root.join("posts/blog/second-brain.md").exists());
+    assert!(!root.join("posts/papers/uhlm-2412-12687.md").exists());
     assert!(
-        root.join("posts/news/2026-04-13-ai-news-digest.md")
+        root.join("posts/projects/mwc26-ai-ran-beamforming.md")
             .exists()
     );
-    assert!(root.join("posts/blog/second-brain.md").exists());
-    assert!(root.join("posts/papers/uhlm-2412-12687.md").exists());
+    assert!(root.join("posts/projects/cfp-radar-system.md").exists());
 
     let result = build_static_site(root.join("posts"), test_output_dir("migration")).await?;
     let titles = result
@@ -423,40 +536,40 @@ async fn loads_folder_posts_after_removing_duplicate_and_internal_scaffold_posts
         .collect::<Vec<_>>();
 
     assert_eq!(result.posts.len(), expected_post_count);
-    assert!(titles.contains(&"Jinhyuk Kim"));
-    assert!(titles.contains(&"Second Brain Architecture"));
-    assert!(titles.contains(&"GitHub to Cloudflare Pipeline"));
+    assert!(titles.contains(&"LLM-Based 5G Beamforming for AI-RAN"));
+    assert!(titles.contains(&"Call for Papers — Automated Deadline Pipeline"));
     assert!(
         titles
             .iter()
             .any(|title| title.starts_with("AI News Brief —"))
     );
     assert!(titles.contains(&"Daily AI News Archive"));
-    assert!(titles.contains(
-        &"Uncertainty-Aware Hybrid Inference with On-Device Small and Remote Large Language Models"
-    ));
+    assert!(!titles.contains(&"Jinhyuk Kim"));
+    assert!(!titles.contains(&"Second Brain Architecture"));
     assert!(!titles.contains(&"About Jinhyuk"));
     assert!(!titles.contains(&"Pretext Kinetic Blog"));
     assert!(!titles.contains(&"Research Radar"));
     assert!(!titles.contains(&"README Post Template"));
     assert!(!titles.contains(&"Co-SLM"));
+    assert!(!titles.contains(
+        &"Uncertainty-Aware Hybrid Inference with On-Device Small and Remote Large Language Models"
+    ));
     assert!(
         !titles
             .iter()
             .any(|title| title.contains("Overflow Regression Case"))
     );
 
-    let second_brain = result
+    let cfp_project = result
         .posts
         .iter()
-        .find(|post| post.title == "Second Brain Architecture");
-    assert!(second_brain.is_some());
-    let Some(second_brain) = second_brain else {
+        .find(|post| post.slug == "cfp-radar-system");
+    assert!(cfp_project.is_some());
+    let Some(cfp_project) = cfp_project else {
         return Ok(());
     };
-    assert!(second_brain.tags.contains(&"rust".to_string()));
-    assert!(second_brain.tags.contains(&"architecture".to_string()));
-    assert!(second_brain.html.contains("/posts/seo-performance-guide/"));
+    assert!(cfp_project.tags.contains(&"rust".to_string()));
+    assert!(cfp_project.html.contains("/cfp/"));
 
     Ok(())
 }
@@ -490,6 +603,12 @@ async fn restores_news_digest_pipeline_for_the_new_posts_folder()
     assert!(workflow.contains("source_counts.get(\"github.com\", 0) < 8"));
     assert!(workflow.contains("paper_count < 8"));
     assert!(workflow.contains("paths=(data/news posts/news static/news/data static/news/assets)"));
+    assert!(script.contains("DEFAULT_RETENTION_DAYS = 60"));
+    assert!(
+        workflow
+            .contains("NVIDIA_NIM_MODEL: ${{ vars.NVIDIA_NIM_MODEL || secrets.NVIDIA_NIM_MODEL }}")
+    );
+    assert!(workflow.contains("git pull --rebase origin main"));
     assert!(!workflow.contains("content/generated/news"));
     assert!(!workflow.contains("content/posts/news"));
     assert!(!workflow.contains("deploy-cloudflare-pages.yml/dispatches"));
@@ -520,27 +639,6 @@ async fn restores_news_digest_pipeline_for_the_new_posts_folder()
     assert!(!preview_source.contains("format!(\"Gemma request failed locally: {error}"));
     assert!(root.join("static/news/data/latest.json").exists());
     assert!(root.join("static/news/assets/thumb-ai.svg").exists());
-
-    Ok(())
-}
-
-#[tokio::test]
-async fn renders_plain_post_cards_fragment_that_can_swap_into_existing_tree()
--> Result<(), Box<dyn std::error::Error>> {
-    let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    let result = build_static_site(root.join("posts"), test_output_dir("fragment")).await?;
-
-    let fragment = render_posts_fragment(&result.posts)?;
-
-    assert!(fragment.trim_start().starts_with("<a class=\"post-card\""));
-    assert!(!fragment.contains("AI News Brief — Apr 13"));
-    assert!(!fragment.contains(" · news</span>"));
-    assert!(fragment.contains("Jinhyuk Kim"));
-    assert!(!fragment.contains("Pretext Kinetic Blog"));
-    assert!(!fragment.contains("class=\"post-grid\""));
-    assert!(!fragment.contains("data-askama-template=\"posts-fragment\""));
-    assert!(!fragment.contains("hx-target=\"#posts-surface\""));
-    assert!(!fragment.contains("<html"));
 
     Ok(())
 }

@@ -3,22 +3,34 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMzMTVlYTgiLz48cGF0aCBkPSJNMTYgNDZWMThoOWw3IDEzIDctMTNoOXYyOGgtOFYzMWwtOCAxMi04LTEydjE1eiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=" />
-  <meta name="description" content="Archived and generated AI news digests from Mud's Blog." />
-  <title>News — Mud's Blog</title>
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMyNDI0MjQiLz48cGF0aCBkPSJNMTYgNDZWMThoOWw3IDEzIDctMTNoOXYyOGgtOFYzMWwtOCAxMi04LTEydjE1eiIgZmlsbD0iI0E0QkJGRiIvPjwvc3ZnPg==" />
+  <meta name="description" content="Archived and generated AI news digests by Jinhyuk Kim." />
+  <title>News — Jinhyuk Kim</title>
+  <script>(()=>{try{const t=localStorage.getItem('mud-blog-theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t;}catch{}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
-<body data-layout="news-index">
-  <header class="site-header">
-    <a class="brand" href="/" aria-label="Mud's Blog home"><span class="ui-icon" data-icon="home" aria-hidden="true"></span><span>Mud's Blog</span></a>
+<body data-layout="news-index" data-palette="pair-07">
+  <header class="site-header v3-glass-bar">
+    <a class="brand" href="/" aria-label="mud blog home">
+      <span class="brand-mark ui-icon" data-icon="radio-tower" aria-hidden="true"></span>
+      <span>mud blog</span>
+    </a>
     <div class="site-header-actions">
-      <nav aria-label="primary">
-        <a href="/#posts"><span class="ui-icon" data-icon="list-tree" aria-hidden="true"></span><span>Posts</span></a>
-        <a href="/news/" aria-current="page"><span class="ui-icon" data-icon="newspaper" aria-hidden="true"></span><span>News</span></a>
-        <a href="/cfp/"><span class="ui-icon" data-icon="calendar" aria-hidden="true"></span><span>CFP</span></a>
-        <a href="/news/search/"><span class="ui-icon" data-icon="search" aria-hidden="true"></span><span>News Search</span></a>
-        <a href="/posts/jinhyuk-kim/"><span class="ui-icon" data-icon="user" aria-hidden="true"></span><span>About me</span></a>
+      <nav aria-label="Primary">
+        <a href="/" data-nav-key="h"><span class="ui-icon nav-icon" data-icon="home" aria-hidden="true"></span><kbd>h</kbd><span>home</span></a>
+        <a href="/projects/" data-nav-key="p"><span class="ui-icon nav-icon" data-icon="layers" aria-hidden="true"></span><kbd>p</kbd><span>projects</span></a>
+        <a href="/cv/" data-nav-key="c"><span class="ui-icon nav-icon" data-icon="file-text" aria-hidden="true"></span><kbd>c</kbd><span>cv</span></a>
+        <a href="/writing/" data-nav-key="w"><span class="ui-icon nav-icon" data-icon="pen-line" aria-hidden="true"></span><kbd>w</kbd><span>writing</span></a>
+        <a href="/cfp/" data-nav-key="r"><span class="ui-icon nav-icon" data-icon="calendar-days" aria-hidden="true"></span><kbd>r</kbd><span>cfp</span></a>
+        <a href="/news/" aria-current="page" data-nav-key="n"><span class="ui-icon nav-icon" data-icon="newspaper" aria-hidden="true"></span><kbd>n</kbd><span>news</span></a>
       </nav>
+      <button class="cmd-trigger" type="button" data-cmd-open aria-label="Open command palette (Command K)">
+        <span class="ui-icon" data-icon="search" aria-hidden="true"></span>
+        <kbd>⌘K</kbd>
+      </button>
       <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle color theme: System" aria-pressed="false">
         <span class="ui-icon theme-icon theme-icon-sun" data-icon="sun" aria-hidden="true"></span>
         <span class="ui-icon theme-icon theme-icon-moon" data-icon="moon" aria-hidden="true"></span>
@@ -28,21 +40,64 @@
   </header>
 
   <main class="news-shell">
-    <section class="news-hero" aria-labelledby="news-title">
-      <p class="eyebrow">Daily + focused digests</p>
-      <h1 id="news-title">News</h1>
-      <p>Daily AI issues are framed as an editorial signal desk first, with the raw pipeline links kept as utility evidence below.</p>
+    <section class="news-hero v3-desk-hero" aria-labelledby="news-title">
+      <div class="v3-desk-hero-copy">
+        <p class="eyebrow">Daily + focused digests · {{ issue_count }} issues</p>
+        <h1 id="news-title">News</h1>
+        <p>Cross-source AI trend radar and daily digests, filtered with a 7-day anti-repetition cooldown and relative velocity ranking.</p>
+      </div>
+      <div class="cfp-actions">
+        <a class="cfp-sync-link cfp-sync-link-primary" href="/news/search/">
+          <span class="ui-icon" data-icon="search" aria-hidden="true"></span>
+          <span>Open News Search</span>
+        </a>
+        <a class="cfp-sync-link" href="/news/data/latest.json">
+          <span class="ui-icon" data-icon="rss" aria-hidden="true"></span>
+          <span>latest.json</span>
+        </a>
+      </div>
     </section>
 
-    <section class="news-featured" data-news-featured aria-labelledby="news-featured-title">
+    {% if !trends.is_empty() %}
+    <section class="news-trends" data-news-trends aria-labelledby="news-trends-title">
       <div class="news-section-heading">
-        <p class="eyebrow">Latest issue</p>
-        <h2 id="news-featured-title">Latest issue</h2>
-        <p>{{ issue_count }} generated news issues are indexed here.</p>
+        <p class="eyebrow">Cross-source radar</p>
+        <h2 id="news-trends-title">Today’s Trend Radar</h2>
+        <p>Topics converging across GitHub, papers, and community feeds relative to the 7-day baseline.</p>
+      </div>
+      <div class="news-trend-grid">
+        {% for trend in trends %}
+        <article class="news-trend-card">
+          <div class="news-trend-head">
+            <span class="news-trend-badge">{{ trend.burst_label }}</span>
+            <span class="news-trend-count">{{ trend.count }} signals</span>
+          </div>
+          <h3>{{ trend.label }}</h3>
+          <p class="news-trend-sources">{{ trend.sources_label() }}</p>
+          <div class="news-trend-links">
+            {% for item in trend.items %}
+            <a href="{{ item.url }}" target="_blank" rel="noreferrer">
+              <em>{{ item.source }}</em>
+              <span>{{ item.title }}</span>
+            </a>
+            {% endfor %}
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    <section class="news-featured" data-news-featured aria-labelledby="news-featured-title">
+      <div class="news-section-heading news-section-heading-row">
+        <div>
+          <h2 id="news-featured-title">Latest issue</h2>
+          <p>{{ issue_count }} generated news issues are indexed here.</p>
+        </div>
       </div>
       {% for post in latest_issue %}
       <a class="news-feature-card" href="{{ post.url }}">
-        <span class="news-feature-thumb" aria-hidden="true"><span>AI</span><em>daily issue</em></span>
+        <span class="news-feature-thumb" aria-hidden="true"><span>AI</span><em>daily</em></span>
         <span class="news-feature-date">{{ post.date }}</span>
         <strong>{{ post.title }}</strong>
         <em>{{ post.excerpt }}</em>
@@ -50,44 +105,45 @@
       </a>
       {% endfor %}
     </section>
-
-    <section class="news-list" data-news-recent data-news-archive aria-labelledby="news-recent-title">
-      <div class="news-section-heading">
-        <p class="eyebrow">Recent</p>
-        <h2 id="news-recent-title">Recent 7 issues</h2>
-        <p>The newest run stays featured; the next seven are compact scan rows.</p>
-      </div>
-      {% for post in recent_issues %}
-      <a class="news-row" href="{{ post.url }}">
-        <span>{{ post.date }}</span>
-        <strong>{{ post.title }}</strong>
-        <em>{{ post.excerpt }}</em>
-      </a>
-      {% endfor %}
-    </section>
-
-    <section class="news-monthly-archive" data-news-monthly-archive aria-labelledby="news-monthly-title">
-      <div class="news-section-heading">
-        <p class="eyebrow">Archive</p>
-        <h2 id="news-monthly-title">Monthly archive</h2>
-        <p>Older issues are grouped by month so the page scans like an archive, not a raw dump.</p>
-      </div>
-      <div class="news-month-groups">
-        {% for group in month_groups %}
-        <details class="news-month-group"{% if loop.first %} open{% endif %}>
-          <summary><span>{{ group.label }}</span><em>{{ group.posts.len() }} issues</em></summary>
-          <div class="news-month-links">
-            {% for post in group.posts %}
-            <a class="news-month-link" href="{{ post.url }}">
-              <span>{{ post.date }}</span>
-              <strong>{{ post.title }}</strong>
-            </a>
-            {% endfor %}
-          </div>
-        </details>
+    <div class="news-split-grid">
+      <section class="news-list" data-news-recent data-news-archive aria-labelledby="news-recent-title">
+        <div class="news-section-heading">
+          <p class="eyebrow">Recent</p>
+          <h2 id="news-recent-title">Recent 7 issues</h2>
+          <p>The newest run stays featured; the next seven are compact scan rows.</p>
+        </div>
+        {% for post in recent_issues %}
+        <a class="news-row" href="{{ post.url }}">
+          <span>{{ post.date }}</span>
+          <strong>{{ post.title }}</strong>
+          <em>{{ post.excerpt }}</em>
+        </a>
         {% endfor %}
-      </div>
-    </section>
+      </section>
+
+      <section class="news-monthly-archive" data-news-monthly-archive aria-labelledby="news-monthly-title">
+        <div class="news-section-heading">
+          <p class="eyebrow">Archive</p>
+          <h2 id="news-monthly-title">Monthly archive</h2>
+          <p>Older issues are grouped by month so the page scans like an archive, not a raw dump.</p>
+        </div>
+        <div class="news-month-groups">
+          {% for group in month_groups %}
+          <details class="news-month-group"{% if loop.first %} open{% endif %}>
+            <summary><span>{{ group.label }}</span><em>{{ group.posts.len() }} issues</em></summary>
+            <div class="news-month-links">
+              {% for post in group.posts %}
+              <a class="news-month-link" href="{{ post.url }}">
+                <span>{{ post.date }}</span>
+                <strong>{{ post.title }}</strong>
+              </a>
+              {% endfor %}
+            </div>
+          </details>
+          {% endfor %}
+        </div>
+      </section>
+    </div>
 
     <section class="news-utility" data-news-utility aria-labelledby="news-utility-title">
       <p class="eyebrow">pipeline utility</p>
@@ -99,10 +155,38 @@
       {% endfor %}
     </section>
   </main>
-  </main>
-    <script id="archive-data" type="application/json">{{ archive_json|safe }}</script>
-    <script type="module" src="/assets/blog-lab.mjs?v=20260609-news-search"></script>
-    <script type="module" src="/assets/site-chrome.mjs"></script>
-    <script src="/assets/web-vitals-rum.js"></script>
-  </body>
-  </html>
+
+  <footer class="v3-footer">
+    <span>Jinhyuk Kim · AI News Digest</span>
+    <span class="v3-footer-links">
+      <a href="/">Home</a>
+      <a href="/projects/">Projects</a>
+      <a href="/cv/">CV</a>
+      <a href="/writing/">Writing</a>
+      <a href="/cfp/">CFP</a>
+    </span>
+  </footer>
+
+  <div class="v3-cmd-backdrop" data-cmd-backdrop hidden>
+    <div class="v3-cmd-dialog v3-glass-panel" role="dialog" aria-modal="true" aria-labelledby="cmd-dialog-title">
+      <div class="v3-cmd-input-row">
+        <span class="ui-icon" data-icon="search" aria-hidden="true"></span>
+        <label id="cmd-dialog-title" class="sr-only" for="v3-cmd-input">Jump to page, paper, project, or note</label>
+        <input id="v3-cmd-input" class="v3-cmd-input" type="search" data-cmd-input placeholder="Jump to page, paper, project, or note…" autocomplete="off" />
+        <button class="v3-cmd-close" type="button" data-cmd-close aria-label="Close command palette">Esc</button>
+      </div>
+      <div class="v3-cmd-results" data-cmd-results role="listbox" aria-label="Search results"></div>
+      <div class="v3-cmd-foot">
+        <span><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</span>
+      </div>
+    </div>
+  </div>
+
+  <script id="archive-data" type="application/json">{{ archive_json|safe }}</script>
+  <script id="command-index-data" type="application/json">{{ command_index_json|safe }}</script>
+  <script type="module" src="/assets/blog-lab.mjs?v=20260609-news-search"></script>
+  <script type="module" src="/assets/site-chrome.mjs"></script>
+  <script type="module" src="/assets/pretext-stage.mjs"></script>
+  <script src="/assets/web-vitals-rum.js"></script>
+</body>
+</html>

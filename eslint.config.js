@@ -13,7 +13,7 @@ const commonRules = {
 
 export default [
   {
-    ignores: ['dist/**', 'dist-test/**', 'target/**', 'node_modules/**', 'fuzz/**', 'playwright-report/**', 'test-results/**'],
+    ignores: ['dist/**', 'dist-test/**', 'target/**', 'node_modules/**', 'fuzz/**', 'playwright-report/**', 'test-results/**', 'video/**'],
   },
   js.configs.recommended,
   {

@@ -32,6 +32,13 @@ export function themeReducer(state, event) {
     return { state: next, effects: [renderThemeEffect(next)] };
   }
 
+  if (event.type === 'theme.sync') {
+    const overrideTheme = event.overrideTheme === 'dark' || event.overrideTheme === 'light' ? event.overrideTheme : null;
+    const systemTheme = event.systemTheme === 'dark' ? 'dark' : event.systemTheme === 'light' ? 'light' : state.systemTheme;
+    const next = { ...state, phase: 'ready', systemTheme, overrideTheme, activeTheme: overrideTheme || systemTheme };
+    return { state: next, effects: [renderThemeEffect(next)] };
+  }
+
   if (event.type === 'system-theme.changed') {
     const systemTheme = event.theme === 'dark' ? 'dark' : 'light';
     if (state.overrideTheme) {

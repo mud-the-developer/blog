@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en" data-runtime="tokio" data-askama-template="cv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMyNDI0MjQiLz48cGF0aCBkPSJNMTYgNDZWMThoOWw3IDEzIDctMTNoOXYyOGgtOFYzMWwtOCAxMi04LTEydjE1eiIgZmlsbD0iI0E0QkJGRiIvPjwvc3ZnPg==" />
+  <meta name="description" content="Curriculum Vitae of {{ cv.profile.full_name }} — {{ cv.profile.position }}." />
+  <title>CV — {{ cv.profile.full_name }}</title>
+  <script>(()=>{try{const t=localStorage.getItem('mud-blog-theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t;}catch{}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body data-layout="v3-cv" data-palette="pair-07">
+  <header class="site-header v3-glass-bar">
+    <a class="brand" href="/" aria-label="mud blog home">
+      <span class="brand-mark ui-icon" data-icon="radio-tower" aria-hidden="true"></span>
+      <span>mud blog</span>
+    </a>
+    <div class="site-header-actions">
+      <nav aria-label="Primary">
+        <a href="/" data-nav-key="h"><span class="ui-icon nav-icon" data-icon="home" aria-hidden="true"></span><kbd>h</kbd><span>home</span></a>
+        <a href="/projects/" data-nav-key="p"><span class="ui-icon nav-icon" data-icon="layers" aria-hidden="true"></span><kbd>p</kbd><span>projects</span></a>
+        <a href="/cv/" aria-current="page" data-nav-key="c"><span class="ui-icon nav-icon" data-icon="file-text" aria-hidden="true"></span><kbd>c</kbd><span>cv</span></a>
+        <a href="/writing/" data-nav-key="w"><span class="ui-icon nav-icon" data-icon="pen-line" aria-hidden="true"></span><kbd>w</kbd><span>writing</span></a>
+        <a href="/cfp/" data-nav-key="r"><span class="ui-icon nav-icon" data-icon="calendar-days" aria-hidden="true"></span><kbd>r</kbd><span>cfp</span></a>
+        <a href="/news/" data-nav-key="n"><span class="ui-icon nav-icon" data-icon="newspaper" aria-hidden="true"></span><kbd>n</kbd><span>news</span></a>
+      </nav>
+      <button class="cmd-trigger" type="button" data-cmd-open aria-label="Open command palette (Command K)">
+        <span class="ui-icon" data-icon="search" aria-hidden="true"></span>
+        <kbd>⌘K</kbd>
+      </button>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle color theme: System" aria-pressed="false">
+        <span class="ui-icon theme-icon theme-icon-sun" data-icon="sun" aria-hidden="true"></span>
+        <span class="ui-icon theme-icon theme-icon-moon" data-icon="moon" aria-hidden="true"></span>
+        <span class="theme-toggle-label">System</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="v3-shell v3-cv-shell">
+    <section class="v3-cv-header">
+      <div>
+        <p class="v3-kicker">Curriculum Vitae · Synced from cv/resume/*.tex</p>
+        <h1 class="v3-display-title">{{ cv.profile.full_name }}</h1>
+        <p class="v3-role-line">{{ cv.profile.position }}</p>
+        {% if !cv.profile.address.is_empty() %}
+        <p class="v3-cv-address">{{ cv.profile.address }}</p>
+        {% endif %}
+        <div class="v3-hero-links">
+          {% if !cv.profile.email.is_empty() %}
+          <a class="v3-link-pill" href="mailto:{{ cv.profile.email }}"><span class="ui-icon" data-icon="mail" aria-hidden="true"></span><span>Email</span></a>
+          {% endif %}
+          <a class="v3-link-pill" href="https://github.com/{{ cv.profile.github }}" target="_blank" rel="noopener noreferrer"><span class="ui-icon" data-icon="github" aria-hidden="true"></span><span>GitHub</span></a>
+          <a class="v3-link-pill" href="https://scholar.google.com/citations?user={{ cv.profile.scholar_id }}&hl=en" target="_blank" rel="noopener noreferrer"><span class="ui-icon" data-icon="graduation-cap" aria-hidden="true"></span><span>Google Scholar</span></a>
+          <a class="v3-link-pill" href="https://www.linkedin.com/in/jinhyuk-kim-a97b42242/" target="_blank" rel="noopener noreferrer"><span class="ui-icon" data-icon="linkedin" aria-hidden="true"></span><span>LinkedIn</span></a>
+        </div>
+      </div>
+      <div class="v3-cv-actions">
+        {% if cv.profile.has_pdf %}
+        <a class="v3-link-pill v3-link-pill-accent" href="{{ cv.profile.pdf_url }}" download>
+          <span class="ui-icon" data-icon="download" aria-hidden="true"></span>
+          <span>Download LaTeX PDF</span>
+        </a>
+        {% endif %}
+        <button class="v3-link-pill" type="button" data-cv-print>
+          <span class="ui-icon" data-icon="printer" aria-hidden="true"></span>
+          <span>Print / Save PDF</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="v3-cv-section" id="summary" aria-labelledby="cv-summary-heading">
+      <h2 id="cv-summary-heading"><span class="ui-icon v3-section-icon" data-icon="user" aria-hidden="true"></span><span>summary</span></h2>
+      <p class="v3-cv-summary">{{ cv.profile.summary }}</p>
+    </section>
+
+    <section class="v3-cv-section" id="education" aria-labelledby="cv-education-heading">
+      <h2 id="cv-education-heading"><span class="ui-icon v3-section-icon" data-icon="graduation-cap" aria-hidden="true"></span><span>education</span></h2>
+      <div class="v3-cv-entries">
+        {% for entry in cv.education %}
+        <article class="v3-cv-entry">
+          {% if !entry.logo_url.is_empty() %}
+          <div class="v3-cv-logo-box"><img class="v3-logo-adaptive" src="{{ entry.logo_url }}" alt="{{ entry.logo_alt }}" loading="lazy" /></div>
+          {% endif %}
+          <div class="v3-cv-entry-body">
+            <div class="v3-cv-entry-head">
+              <h3>{{ entry.title }}</h3>
+              <span class="v3-venue-tag">{{ entry.period }}</span>
+            </div>
+            <p class="v3-cv-entry-org">{{ entry.organization }}{% if !entry.location.is_empty() %} · {{ entry.location }}{% endif %}</p>
+            {% if !entry.bullets.is_empty() %}
+            <ul class="v3-cv-bullets">
+              {% for bullet in entry.bullets %}
+              <li>{{ bullet }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="v3-cv-section" id="experience" aria-labelledby="cv-experience-heading">
+      <h2 id="cv-experience-heading"><span class="ui-icon v3-section-icon" data-icon="briefcase" aria-hidden="true"></span><span>experience</span></h2>
+      <div class="v3-cv-entries">
+        {% for entry in cv.experience %}
+        <article class="v3-cv-entry">
+          {% if !entry.logo_url.is_empty() %}
+          <div class="v3-cv-logo-box"><img class="v3-logo-adaptive" src="{{ entry.logo_url }}" alt="{{ entry.logo_alt }}" loading="lazy" /></div>
+          {% endif %}
+          <div class="v3-cv-entry-body">
+            <div class="v3-cv-entry-head">
+              <h3>{{ entry.title }}</h3>
+              <span class="v3-venue-tag">{{ entry.period }}</span>
+            </div>
+            <p class="v3-cv-entry-org">{{ entry.organization }}{% if !entry.location.is_empty() %} · {{ entry.location }}{% endif %}</p>
+            {% if !entry.bullets.is_empty() %}
+            <ul class="v3-cv-bullets">
+              {% for bullet in entry.bullets %}
+              <li>{{ bullet }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="v3-cv-section" id="publications" aria-labelledby="cv-publications-heading">
+      <h2 id="cv-publications-heading"><span class="ui-icon v3-section-icon" data-icon="book-open" aria-hidden="true"></span><span>publications</span></h2>
+      <div class="v3-work-list">
+        {% for pub in cv.publications %}
+        <article class="v3-work-card v3-kind-paper">
+          <div class="v3-work-meta">
+            <span class="v3-kind-badge v3-badge-paper"><span class="ui-icon v3-tag-icon" data-icon="book-open" aria-hidden="true"></span>Paper</span>
+            <span class="v3-venue-tag">{{ pub.venue_short }} · {{ pub.year }}</span>
+          </div>
+          <h3 class="v3-work-title">{{ pub.title }}</h3>
+          <p class="v3-work-authors">{{ pub.authors_html|safe }}</p>
+          <p class="v3-work-venue-full">{{ pub.venue }}</p>
+          <div class="v3-work-actions">
+            {% if !pub.note_url.is_empty() %}
+            <a class="v3-mini-action" href="{{ pub.note_url }}">Paper Note →</a>
+            {% endif %}
+            {% if !pub.arxiv_url.is_empty() %}
+            <a class="v3-mini-action" href="{{ pub.arxiv_url }}" target="_blank" rel="noopener noreferrer"><span class="ui-icon" data-icon="external-link" aria-hidden="true"></span><span>PDF</span></a>
+            {% endif %}
+            <button class="v3-mini-action" type="button" data-copy-bibtex="{{ pub.bibtex }}"><span class="ui-icon" data-icon="copy" aria-hidden="true"></span><span data-copy-label>Copy BibTeX</span></button>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="v3-cv-section" id="programs" aria-labelledby="cv-programs-heading">
+      <h2 id="cv-programs-heading"><span class="ui-icon v3-section-icon" data-icon="radio-tower" aria-hidden="true"></span><span>programs &amp; demonstrations</span></h2>
+      <div class="v3-cv-entries">
+        {% for entry in cv.programs %}
+        <article class="v3-cv-entry">
+          {% if !entry.logo_url.is_empty() %}
+          <div class="v3-cv-logo-banner"><img src="{{ entry.logo_url }}" alt="{{ entry.logo_alt }}" loading="lazy" /></div>
+          {% endif %}
+          <div class="v3-cv-entry-body">
+            <div class="v3-cv-entry-head">
+              <h3>{{ entry.organization }}</h3>
+              <span class="v3-venue-tag">{{ entry.period }}</span>
+            </div>
+            <p class="v3-cv-entry-org">{{ entry.title }}{% if !entry.location.is_empty() %} · {{ entry.location }}{% endif %}</p>
+            {% if !entry.bullets.is_empty() %}
+            <ul class="v3-cv-bullets">
+              {% for bullet in entry.bullets %}
+              <li>{{ bullet }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+
+  <footer class="v3-footer">
+    <span>{{ cv.profile.full_name }} · Curriculum Vitae</span>
+    <span class="v3-footer-links">
+      <a href="/">Home</a>
+      <a href="/projects/">Projects</a>
+      <a href="/writing/">Writing</a>
+      <a href="/cfp/">CFP</a>
+      <a href="/news/">News</a>
+    </span>
+  </footer>
+
+  <div class="v3-cmd-backdrop" data-cmd-backdrop hidden>
+    <div class="v3-cmd-dialog v3-glass-panel" role="dialog" aria-modal="true" aria-labelledby="cmd-dialog-title">
+      <div class="v3-cmd-input-row">
+        <span class="ui-icon" data-icon="search" aria-hidden="true"></span>
+        <label id="cmd-dialog-title" class="sr-only" for="v3-cmd-input">Jump to page, project, publication, or note</label>
+        <input id="v3-cmd-input" class="v3-cmd-input" type="search" placeholder="Jump to page, paper, project, or note..." autocomplete="off" data-cmd-input />
+        <button class="v3-cmd-close" type="button" data-cmd-close aria-label="Close command palette">Esc</button>
+      </div>
+      <div class="v3-cmd-results" data-cmd-results role="listbox" aria-label="Search results"></div>
+      <div class="v3-cmd-foot">
+        <span>Shortcuts: <kbd>h</kbd> home · <kbd>p</kbd> projects · <kbd>c</kbd> cv · <kbd>w</kbd> writing · <kbd>r</kbd> cfp · <kbd>n</kbd> news</span>
+      </div>
+    </div>
+  </div>
+
+  <script id="archive-data" type="application/json">{{ archive_json|safe }}</script>
+  <script id="command-index-data" type="application/json">{{ command_index_json|safe }}</script>
+  <script type="module" src="/assets/site-chrome.mjs"></script>
+  <script type="module" src="/assets/pretext-stage.mjs"></script>
+  <script src="/assets/web-vitals-rum.js"></script>
+</body>
+</html>

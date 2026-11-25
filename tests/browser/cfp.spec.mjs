@@ -41,3 +41,24 @@ test('aging snapshots hide expired or stale calls and recalculate all open count
   await expect(staleRow.locator('.cfp-mobile-details a[href^="https://calendar.google.com/calendar/render"]')).toBeHidden();
   await expect(staleRow.locator('.cfp-mobile-details a', { hasText: 'Official CFP' })).toBeVisible();
 });
+
+test('CFP filter toolbar filters by venue type, urgency, and search query cleanly', async ({ page }) => {
+  await page.clock.setFixedTime(asOf);
+  await page.goto('/cfp/');
+  const radarRows = page.locator('.cfp-radar-table tbody tr:visible');
+  await expect(radarRows).toHaveCount(12);
+  await expect(page.locator('.cfp-radar-table td[data-cfp-urgency]').first()).toHaveAttribute(
+    'data-cfp-urgency',
+    /^(urgent|soon|watch)$/,
+  );
+  await page.locator('[data-cfp-kind-filter="workshop"]').click();
+  const workshopCount = await radarRows.count();
+  expect(workshopCount).toBeGreaterThan(0);
+  await expect(page.locator('[data-cfp-reset]')).toBeVisible();
+  await page.locator('[data-cfp-reset]').click();
+  await expect(radarRows).toHaveCount(12);
+  await expect(page.locator('[data-cfp-reset]')).toBeHidden();
+  await page.locator('[data-cfp-search]').fill('zzzz-no-such-venue');
+  await expect(radarRows).toHaveCount(0);
+  await expect(page.locator('.cfp-radar-table [data-cfp-empty]')).toBeVisible();
+});

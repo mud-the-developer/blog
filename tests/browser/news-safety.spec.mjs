@@ -115,10 +115,10 @@ test('unknown pages and assets return 404, and wiki heading targets exist', asyn
     const response = await page.request.get(path);
     expect(response.status(), path).toBe(404);
   }
-  await page.goto('/posts/second-brain/#second-brain-architecture');
-  await expect(page.locator('#second-brain-architecture')).toHaveText('Second Brain Architecture');
-  await page.goto('/posts/home/#hi');
-  await expect(page.locator('#hi')).toContainText('Hi');
+  await page.goto('/posts/cfp-radar-system/#overview');
+  await expect(page.locator('#overview')).toHaveText('Overview');
+  await page.goto('/posts/mwc26-ai-ran-beamforming/#technical-scope');
+  await expect(page.locator('#technical-scope')).toHaveText('Technical Scope');
   expect(
     await page.evaluate(() => {
       const ids = [...document.querySelectorAll('[id]')].map((node) => node.id);

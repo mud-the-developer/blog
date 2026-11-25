@@ -10,11 +10,14 @@ async function runtimeAudit(page) {
       encodedBodySize: entry.encodedBodySize,
     }));
     const archive = JSON.parse(document.getElementById('archive-data')?.textContent || '[]');
+    const bioWrap = document.querySelector('[data-pretext-bio-wrap]');
     return {
       archiveCount: Array.isArray(archive) ? archive.length : 0,
       nodes: document.getElementsByTagName('*').length,
-      postCards: document.querySelectorAll('.post-card').length,
-      filetreeFiles: document.querySelectorAll('.filetree-file').length,
+      workCards: document.querySelectorAll('.v3-work-card').length,
+      pretextMode: bioWrap?.dataset.pretextMode || '',
+      pretextEngine: bioWrap?.dataset.pretextEngine || '',
+      pretextLines: Number(bioWrap?.dataset.pretextLines || 0),
       pretextCatSprites: document.querySelectorAll('.pretext-cat-sprite').length,
       pretextRainStages: document.querySelectorAll('.pretext-rain-stage').length,
       pretextRainColumns: JSON.parse(document.querySelector('[data-pretext-rain-columns]')?.textContent || '[]').length,
@@ -31,7 +34,7 @@ async function runtimeAudit(page) {
   });
 }
 
-test('desktop and mobile public homepage stay readable without decorative background motion', async ({ browser }) => {
+test('desktop and mobile v3 homepage stay fast, readable, and free of decorative motion', async ({ browser }) => {
   for (const [name, contextOptions] of [
     ['desktop', { viewport: desktopViewport }],
     ['mobile', { ...devices['Pixel 5'] }],
@@ -42,12 +45,16 @@ test('desktop and mobile public homepage stay readable without decorative backgr
     page.on('pageerror', (error) => pageErrors.push(error.message));
     await page.goto('/', { waitUntil: 'networkidle' });
     const audit = await runtimeAudit(page);
-    const publicPostCount = audit.postCards;
 
     expect(audit.archiveCount, name).toBeGreaterThan(0);
-    expect(audit.archiveCount, name).toBeLessThanOrEqual(publicPostCount);
-    expect(audit.postCards, name).toBe(publicPostCount);
-    expect(audit.filetreeFiles, name).toBe(publicPostCount);
+    expect(audit.workCards, name).toBeGreaterThanOrEqual(7);
+    if (name === 'desktop') {
+      expect(audit.pretextMode, name).toBe('active');
+      expect(audit.pretextEngine, name).toBe('chenglou-pretext');
+      expect(audit.pretextLines, name).toBeGreaterThanOrEqual(2);
+    } else {
+      expect(audit.pretextMode, name).toBe('native');
+    }
     expect(audit.graphCount, name).toBe(0);
     expect(audit.fieldStages, name).toBe(0);
     expect(audit.pretextCatSprites, name).toBe(0);
@@ -62,29 +69,27 @@ test('desktop and mobile public homepage stay readable without decorative backgr
     expect(pageErrors, name).toEqual([]);
 
     const resourceBudget = audit.resources.reduce((sum, resource) => sum + resource.encodedBodySize, 0);
-    expect(resourceBudget, name).toBeLessThanOrEqual(52_000);
+    expect(resourceBudget, name).toBeLessThanOrEqual(450_000);
     await context.close();
   }
 });
 
-test('reduced-motion homepage stays free of decorative background motion', async ({ browser }) => {
+test('reduced-motion v3 homepage stays readable without decorative background motion', async ({ browser }) => {
   const context = await browser.newContext({ viewport: desktopViewport, reducedMotion: 'reduce' });
   const page = await context.newPage();
   const pageErrors = [];
   page.on('pageerror', (error) => pageErrors.push(error.message));
   await page.goto('/', { waitUntil: 'networkidle' });
   const audit = await runtimeAudit(page);
-  const publicPostCount = audit.postCards;
 
   expect(audit.archiveCount).toBeGreaterThan(0);
-  expect(audit.archiveCount).toBeLessThanOrEqual(publicPostCount);
+  expect(audit.workCards).toBeGreaterThanOrEqual(7);
+  expect(audit.pretextMode).toBe('active');
   expect(audit.graphCount).toBe(0);
   expect(audit.fieldStages).toBe(0);
   expect(audit.pretextPolishPanels).toBe(0);
   expect(audit.pretextEditorialLayers).toBe(0);
   expect(audit.pretextRainStages).toBe(0);
-  expect(audit.postCards).toBe(publicPostCount);
-  expect(audit.filetreeFiles).toBe(publicPostCount);
   expect(audit.nodes).toBeLessThanOrEqual(980);
   expect(pageErrors).toEqual([]);
   await context.close();

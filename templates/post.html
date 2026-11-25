@@ -3,22 +3,34 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMzMTVlYTgiLz48cGF0aCBkPSJNMTYgNDZWMThoOWw3IDEzIDctMTNoOXYyOGgtOFYzMWwtOCAxMi04LTEydjE1eiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=" />
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMyNDI0MjQiLz48cGF0aCBkPSJNMTYgNDZWMThoOWw3IDEzIDctMTNoOXYyOGgtOFYzMWwtOCAxMi04LTEydjE1eiIgZmlsbD0iI0E0QkJGRiIvPjwvc3ZnPg==" />
   <meta name="description" content="{{ post.excerpt }}" />
-  <title>{{ post.title }} — Mud's Blog</title>
+  <title>{{ post.title }} — Jinhyuk Kim</title>
+  <script>(()=>{try{const t=localStorage.getItem('mud-blog-theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t;}catch{}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
-<body data-layout="reader-post">
-  <header class="site-header">
-    <a class="brand" href="/" aria-label="Mud's Blog home"><span class="ui-icon" data-icon="home" aria-hidden="true"></span><span>Mud's Blog</span></a>
+<body data-layout="reader-post" data-folder="{{ post.folder }}" data-palette="pair-07">
+  <header class="site-header v3-glass-bar">
+    <a class="brand" href="/" aria-label="mud blog home">
+      <span class="brand-mark ui-icon" data-icon="radio-tower" aria-hidden="true"></span>
+      <span>mud blog</span>
+    </a>
     <div class="site-header-actions">
-      <nav aria-label="primary">
-        <a href="/#posts"><span class="ui-icon" data-icon="list-tree" aria-hidden="true"></span><span>Posts</span></a>
-        <a href="/news/"><span class="ui-icon" data-icon="newspaper" aria-hidden="true"></span><span>News</span></a>
-        <a href="/cfp/"><span class="ui-icon" data-icon="calendar" aria-hidden="true"></span><span>CFP</span></a>
-        <a href="/news/search/"><span class="ui-icon" data-icon="search" aria-hidden="true"></span><span>News Search</span></a>
-        <a href="/posts/jinhyuk-kim/"><span class="ui-icon" data-icon="user" aria-hidden="true"></span><span>About me</span></a>
+      <nav aria-label="Primary">
+        <a href="/" data-nav-key="h"><span class="ui-icon nav-icon" data-icon="home" aria-hidden="true"></span><kbd>h</kbd><span>home</span></a>
+        <a href="/projects/"{% if post.folder == "projects" %} aria-current="page"{% endif %} data-nav-key="p"><span class="ui-icon nav-icon" data-icon="layers" aria-hidden="true"></span><kbd>p</kbd><span>projects</span></a>
+        <a href="/cv/" data-nav-key="c"><span class="ui-icon nav-icon" data-icon="file-text" aria-hidden="true"></span><kbd>c</kbd><span>cv</span></a>
+        <a href="/writing/"{% if post.folder == "blog" || post.folder == "papers" %} aria-current="page"{% endif %} data-nav-key="w"><span class="ui-icon nav-icon" data-icon="pen-line" aria-hidden="true"></span><kbd>w</kbd><span>writing</span></a>
+        <a href="/cfp/"{% if post.folder == "cfp" %} aria-current="page"{% endif %} data-nav-key="r"><span class="ui-icon nav-icon" data-icon="calendar-days" aria-hidden="true"></span><kbd>r</kbd><span>cfp</span></a>
+        <a href="/news/"{% if post.folder == "news" %} aria-current="page"{% endif %} data-nav-key="n"><span class="ui-icon nav-icon" data-icon="newspaper" aria-hidden="true"></span><kbd>n</kbd><span>news</span></a>
       </nav>
+      <button class="cmd-trigger" type="button" data-cmd-open aria-label="Open command palette (Command K)">
+        <span class="ui-icon" data-icon="search" aria-hidden="true"></span>
+        <kbd>⌘K</kbd>
+      </button>
       <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle color theme: System" aria-pressed="false">
         <span class="ui-icon theme-icon theme-icon-sun" data-icon="sun" aria-hidden="true"></span>
         <span class="ui-icon theme-icon theme-icon-moon" data-icon="moon" aria-hidden="true"></span>
@@ -27,20 +39,83 @@
     </div>
   </header>
 
-  <main class="post-shell">
-    <article class="post-reader">
-      <a class="back-link" href="/">← Home</a>
-      <p class="eyebrow">{{ post.date }} · {{ post.folder }} · {{ post.tags_label }}</p>
+  <main class="post-shell" data-folder="{{ post.folder }}">
+    <article class="post-reader" data-folder="{{ post.folder }}">
+      {% if post.folder == "projects" %}
+      <a class="back-link" href="/projects/"><span class="ui-icon" data-icon="arrow-left" aria-hidden="true"></span><span>Projects</span></a>
+      {% else if post.folder == "news" %}
+      <a class="back-link" href="/news/"><span class="ui-icon" data-icon="arrow-left" aria-hidden="true"></span><span>News</span></a>
+      {% else if post.folder == "cfp" %}
+      <a class="back-link" href="/cfp/"><span class="ui-icon" data-icon="arrow-left" aria-hidden="true"></span><span>Call for Papers</span></a>
+      {% else %}
+      <a class="back-link" href="/writing/"><span class="ui-icon" data-icon="arrow-left" aria-hidden="true"></span><span>Writing</span></a>
+      {% endif %}
+      <p class="eyebrow">{% if !post.period.is_empty() %}{{ post.period }}{% else %}{{ post.date }}{% endif %} · {{ post.folder }} · {{ post.tags_label }}</p>
       {% if post.folder == "cfp" %}
       <h1>{{ post.title }}</h1>
       {% else %}
       <h1 id="{{ title_id }}">{{ post.title }}</h1>
       {% endif %}
+      {% if post.folder == "projects" %}
+      <div class="v3-post-project-meta">
+        {% if !post.role.is_empty() %}
+        <p class="v3-work-role">{{ post.role }}</p>
+        {% endif %}
+        {% if !post.stack.is_empty() %}
+        <div class="v3-stack-row">
+          {% for tech in post.stack %}
+          <span class="v3-stack-chip">{{ tech }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <div class="v3-work-actions">
+          {% if !post.demo_url.is_empty() %}
+          <a class="v3-mini-action" href="{{ post.demo_url }}"><span class="ui-icon" data-icon="external-link" aria-hidden="true"></span><span>Open Page</span></a>
+          {% endif %}
+          {% if !post.paper_url.is_empty() %}
+          <a class="v3-mini-action" href="{{ post.paper_url }}" target="_blank" rel="noopener noreferrer"><span class="ui-icon" data-icon="book-open" aria-hidden="true"></span><span>Paper</span></a>
+          {% endif %}
+          {% if !post.repo.is_empty() %}
+          <a class="v3-mini-action" href="{{ post.repo }}" target="_blank" rel="noopener noreferrer"><span class="ui-icon" data-icon="github" aria-hidden="true"></span><span>GitHub</span></a>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
       <div class="post-body">{{ post.html|safe }}</div>
     </article>
   </main>
+
+  <footer class="v3-footer">
+    <span>Jinhyuk Kim · {{ post.folder }}</span>
+    <span class="v3-footer-links">
+      <a href="/">Home</a>
+      <a href="/projects/">Projects</a>
+      <a href="/cv/">CV</a>
+      <a href="/writing/">Writing</a>
+      <a href="/cfp/">CFP</a>
+      <a href="/news/">News</a>
+    </span>
+  </footer>
+
+  <div class="v3-cmd-backdrop" data-cmd-backdrop hidden>
+    <div class="v3-cmd-dialog v3-glass-panel" role="dialog" aria-modal="true" aria-labelledby="cmd-dialog-title">
+      <div class="v3-cmd-input-row">
+        <span class="ui-icon" data-icon="search" aria-hidden="true"></span>
+        <label id="cmd-dialog-title" class="sr-only" for="v3-cmd-input">Jump to page, paper, project, or note</label>
+        <input id="v3-cmd-input" class="v3-cmd-input" type="search" data-cmd-input placeholder="Jump to page, paper, project, or note…" autocomplete="off" />
+        <button class="v3-cmd-close" type="button" data-cmd-close aria-label="Close command palette">Esc</button>
+      </div>
+      <div class="v3-cmd-results" data-cmd-results role="listbox" aria-label="Search results"></div>
+      <div class="v3-cmd-foot">
+        <span><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</span>
+      </div>
+    </div>
+  </div>
+
+  <script id="command-index-data" type="application/json">{{ command_index_json|safe }}</script>
   <script type="module" src="/assets/cfp-deadlines.mjs"></script>
   <script type="module" src="/assets/site-chrome.mjs"></script>
+  <script type="module" src="/assets/pretext-stage.mjs"></script>
   <script src="/assets/web-vitals-rum.js"></script>
 </body>
 </html>

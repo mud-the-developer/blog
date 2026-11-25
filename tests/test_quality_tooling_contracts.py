@@ -54,7 +54,7 @@ class QualityToolingContractTests(unittest.TestCase):
             self.assertIn(dependency, dev_dependencies)
 
         biome = json.loads(BIOME_CONFIG.read_text())
-        self.assertEqual(biome["$schema"], "https://biomejs.dev/schemas/2.4.16/schema.json")
+        self.assertEqual(biome["$schema"], "https://biomejs.dev/schemas/2.6.9/schema.json")
         self.assertTrue(biome["linter"]["enabled"])
         self.assertTrue(biome["formatter"]["enabled"])
         self.assertIn("src/**/*.mjs", biome["files"]["includes"])
