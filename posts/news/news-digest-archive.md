@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-11-25
+date: 2026-11-26
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,14 +13,14 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/posts/2026-11-25-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/posts/2026-11-26-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-11-25T21:48:59.271711+09:00">Nov 25, 2026 · 9:48 PM KST</time></strong>
+        <strong><time datetime="2026-11-26T08:39:53.466953+09:00">Nov 26, 2026 · 8:39 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
@@ -28,7 +28,7 @@ content-classes: [news-digest-note, news-digest-archive-note]
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-11-25">Nov 25, 2026</time></strong>
+        <strong><time datetime="2026-11-26">Nov 26, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">Today&#x27;s AI landscape is marked by high-velocity GitHub activity in agentic projects, new research on specialized models for coding and physical agency, and social discourse around model distillation and market performance.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by vllm-project/vllm; paper attention is clustering around ThinkMorph-SSL: Scaling Interleaved Multimodal Reasoning with Pretext Tasks; social attention is tilting toward Macroeconomic history in six facts. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>November 2026</span><span class="news-digest-month-count">24 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>November 2026</span><span class="news-digest-month-count">25 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-11-26-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-11-26</span>
+            <strong>AI News Brief — 2026-11-26</strong>
+            <span>Today&#x27;s AI landscape saw significant activity across LLM inference engines, multimodal reasoning research, and broader community discussions, with 30 key items identified.</span>
+          </a>
           <a class="news-digest-archive-item" href="/posts/2026-11-25-ai-news-digest/">
             <span class="news-digest-archive-date">2026-11-25</span>
             <strong>AI News Brief — 2026-11-25</strong>
@@ -300,7 +305,7 @@ content-classes: [news-digest-note, news-digest-archive-note]
         </div>
       </details>
       <details class="news-digest-month-group">
-        <summary class="news-digest-month-summary"><span>September 2026</span><span class="news-digest-month-count">4 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>September 2026</span><span class="news-digest-month-count">3 digests</span></summary>
         <div class="news-digest-month-list">
           <a class="news-digest-archive-item" href="/posts/2026-09-30-ai-news-digest/">
             <span class="news-digest-archive-date">2026-09-30</span>
@@ -316,11 +321,6 @@ content-classes: [news-digest-note, news-digest-archive-note]
             <span class="news-digest-archive-date">2026-09-28</span>
             <strong>AI News Brief — 2026-09-28</strong>
             <span>GitHub velocity is led by NousResearch/hermes-agent; paper attention is clustering around MemoryAthena: Adaptive Routing over Latent and Generated Memories; social attention is tilting toward OpenAI researcher, “It would be a problem if Hacker News found out about the use of pirated boo… 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</span>
-          </a>
-          <a class="news-digest-archive-item" href="/posts/2026-09-27-ai-news-digest/">
-            <span class="news-digest-archive-date">2026-09-27</span>
-            <strong>AI News Brief — 2026-09-27</strong>
-            <span>Today&#x27;s AI landscape highlights significant activity in agent development on GitHub, novel memory system research, and community discussion around Meta&#x27;s Muse model.</span>
           </a>
         </div>
       </details>
