@@ -99,7 +99,21 @@ test('v3 personal homepage renders No-Hero Swiss Glass Dossier with Pretext bio,
   await page.goto('/projects/');
   await expect(page.locator('html')).toHaveAttribute('data-askama-template', 'projects');
   await expect(page.locator('[data-theme-filter-bar]')).toHaveCount(0);
-  await expect(page.locator('.v3-project-card')).toHaveCount(4);
+  await expect(page.locator('.v3-project-card')).toHaveCount(7);
+  await expect(page.locator('a[href="/posts/mudplot/"]').first()).toBeVisible();
+  await expect(page.locator('a[href="/posts/rusty-note/"]').first()).toBeVisible();
+  await expect(page.locator('a[href="/posts/licheerv-nano-fido2/"]').first()).toBeVisible();
+
+  // Reader UX on OSS project post (TOC, MathML, syntax highlighting, copy button, prev/next pager)
+  await page.goto('/posts/mudplot/');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await expect(page.locator('.post-toc')).toBeVisible();
+  expect(await page.locator('math').count()).toBeGreaterThanOrEqual(2);
+  await expect(page.locator('.code-block')).toHaveCount(1);
+  const copyCodeBtn = page.locator('[data-copy-code]').first();
+  await copyCodeBtn.click();
+  await expect(copyCodeBtn).toHaveText(/Copied|Ready/);
+  await expect(page.locator('.post-pager')).toBeVisible();
 
   // Dedicated /cv/ page
   await page.goto('/cv/');
@@ -107,6 +121,7 @@ test('v3 personal homepage renders No-Hero Swiss Glass Dossier with Pretext bio,
   await expect(page.locator('#education')).toContainText('Yonsei University');
   await expect(page.locator('#experience')).toContainText('Singapore University of Technology and Design');
   await expect(page.locator('#publications .v3-work-card')).toHaveCount(3);
+  await expect(page.locator('[data-scholar-summary]')).toContainText('citations');
   const firstBibBtn = page.locator('[data-copy-bibtex]').first();
   await firstBibBtn.click();
   await expect(firstBibBtn).toContainText(/Copied BibTeX|BibTeX ready/);

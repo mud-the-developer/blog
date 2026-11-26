@@ -1,16 +1,30 @@
 <!doctype html>
-<html lang="ko" data-runtime="tokio" data-askama-template="post">
+<html lang="{{ post.lang }}" data-runtime="tokio" data-askama-template="post">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMyNDI0MjQiLz48cGF0aCBkPSJNMTYgNDZWMThoOWw3IDEzIDctMTNoOXYyOGgtOFYzMWwtOCAxMi04LTEydjE1eiIgZmlsbD0iI0E0QkJGRiIvPjwvc3ZnPg==" />
   <meta name="description" content="{{ post.excerpt }}" />
+  <link rel="canonical" href="{{ canonical_url }}" />
+  <link rel="alternate" type="application/rss+xml" title="Jinhyuk Kim — Research &amp; Systems RSS" href="/rss.xml" />
+  <meta property="og:site_name" content="mud blog" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="{{ post.title }} — Jinhyuk Kim" />
+  <meta property="og:description" content="{{ post.excerpt }}" />
+  <meta property="og:url" content="{{ canonical_url }}" />
+  <meta property="og:image" content="https://mud-blog.pages.dev/assets/media/og-card.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ post.title }} — Jinhyuk Kim" />
+  <meta name="twitter:description" content="{{ post.excerpt }}" />
+  <meta name="twitter:image" content="https://mud-blog.pages.dev/assets/media/og-card.png" />
   <title>{{ post.title }} — Jinhyuk Kim</title>
+  <script type="application/ld+json">{{ article_json_ld|safe }}</script>
   <script>(()=>{try{const t=localStorage.getItem('mud-blog-theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t;}catch{}})();</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
   <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="stylesheet" href="/assets/post-reader.css" />
 </head>
 <body data-layout="reader-post" data-folder="{{ post.folder }}" data-palette="pair-07">
   <header class="site-header v3-glass-bar">
@@ -50,7 +64,7 @@
       {% else %}
       <a class="back-link" href="/writing/"><span class="ui-icon" data-icon="arrow-left" aria-hidden="true"></span><span>Writing</span></a>
       {% endif %}
-      <p class="eyebrow">{% if !post.period.is_empty() %}{{ post.period }}{% else %}{{ post.date }}{% endif %} · {{ post.folder }} · {{ post.tags_label }}</p>
+      <p class="eyebrow">{% if !post.period.is_empty() %}{{ post.period }}{% else %}{{ post.date }}{% endif %} · {{ post.folder }} · {{ post.tags_label }}{% if post.folder != "cfp" %} · {{ post.reading_time_minutes }} min read{% endif %}</p>
       {% if post.folder == "cfp" %}
       <h1>{{ post.title }}</h1>
       {% else %}
@@ -81,7 +95,37 @@
         </div>
       </div>
       {% endif %}
+      {% if post.folder != "cfp" && post.toc.len() >= 2 %}
+      <details class="post-toc" open>
+        <summary><span>Contents</span><span>{{ post.toc.len() }} sections</span></summary>
+        <ol class="post-toc-list">
+          {% for item in post.toc %}
+          <li class="post-toc-item" data-level="{{ item.level }}"><a href="#{{ item.id }}">{{ item.title }}</a></li>
+          {% endfor %}
+        </ol>
+      </details>
+      {% endif %}
       <div class="post-body">{{ post.html|safe }}</div>
+      {% if prev_post.is_some() || next_post.is_some() %}
+      <nav class="post-pager" aria-label="Post navigation">
+        {% match prev_post %}
+        {% when Some with (prev) %}
+        <a class="post-pager-link" href="{{ prev.url }}">
+          <span class="post-pager-dir">← Earlier{% if !prev.date.is_empty() %} · {{ prev.date }}{% endif %}</span>
+          <span class="post-pager-title">{{ prev.title }}</span>
+        </a>
+        {% when None %}
+        {% endmatch %}
+        {% match next_post %}
+        {% when Some with (next) %}
+        <a class="post-pager-link post-pager-next" href="{{ next.url }}">
+          <span class="post-pager-dir">Newer{% if !next.date.is_empty() %} · {{ next.date }}{% endif %} →</span>
+          <span class="post-pager-title">{{ next.title }}</span>
+        </a>
+        {% when None %}
+        {% endmatch %}
+      </nav>
+      {% endif %}
     </article>
   </main>
 
@@ -94,6 +138,7 @@
       <a href="/writing/">Writing</a>
       <a href="/cfp/">CFP</a>
       <a href="/news/">News</a>
+      <a href="/rss.xml">RSS</a>
     </span>
   </footer>
 
@@ -113,7 +158,9 @@
   </div>
 
   <script id="command-index-data" type="application/json">{{ command_index_json|safe }}</script>
+  {% if post.folder == "cfp" %}
   <script type="module" src="/assets/cfp-deadlines.mjs"></script>
+  {% endif %}
   <script type="module" src="/assets/site-chrome.mjs"></script>
   <script type="module" src="/assets/pretext-stage.mjs"></script>
   <script src="/assets/web-vitals-rum.js"></script>

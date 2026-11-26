@@ -5,7 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMyNDI0MjQiLz48cGF0aCBkPSJNMTYgNDZWMThoOWw3IDEzIDctMTNoOXYyOGgtOFYzMWwtOCAxMi04LTEydjE1eiIgZmlsbD0iI0E0QkJGRiIvPjwvc3ZnPg==" />
   <meta name="description" content="{{ cv.profile.full_name }} — {{ cv.profile.position }}. Research in AI-native RAN, O-RAN, hybrid LLM inference, semantic communications, and quantum AI." />
+  <link rel="canonical" href="https://mud-blog.pages.dev/" />
+  <link rel="alternate" type="application/rss+xml" title="{{ cv.profile.full_name }} — Research &amp; Systems RSS" href="/rss.xml" />
+  <meta property="og:site_name" content="mud blog" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="{{ cv.profile.full_name }} — Research &amp; Systems" />
+  <meta property="og:description" content="{{ cv.profile.full_name }} — {{ cv.profile.position }}. Research in AI-native RAN, O-RAN, hybrid LLM inference, semantic communications, and quantum AI." />
+  <meta property="og:url" content="https://mud-blog.pages.dev/" />
+  <meta property="og:image" content="https://mud-blog.pages.dev/assets/media/og-card.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ cv.profile.full_name }} — Research &amp; Systems" />
+  <meta name="twitter:description" content="{{ cv.profile.full_name }} — {{ cv.profile.position }}." />
+  <meta name="twitter:image" content="https://mud-blog.pages.dev/assets/media/og-card.png" />
   <title>{{ cv.profile.full_name }} — Research &amp; Systems</title>
+  <script type="application/ld+json">{{ person_json_ld|safe }}</script>
   <script>(()=>{try{const t=localStorage.getItem('mud-blog-theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t;}catch{}})();</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -247,13 +260,20 @@
         {% if project.category != "system" %}
         <article class="v3-work-tile v3-work-card" data-work-item>
           <div class="v3-tile-meta">
+            {% if project.category == "demo" %}
             <span class="v3-tile-tag"><span class="ui-icon v3-tag-icon" data-icon="radio-tower" aria-hidden="true"></span>MWC Demo</span>
+            {% else %}
+            <span class="v3-tile-tag"><span class="ui-icon v3-tag-icon" data-icon="layers" aria-hidden="true"></span>Open Source</span>
+            {% endif %}
             <span class="v3-tile-stat">{% if !project.period.is_empty() %}{{ project.period }}{% else %}{{ project.date }}{% endif %}</span>
           </div>
           <h3 class="v3-tile-title"><a href="{{ project.url }}">{{ project.title }}</a></h3>
           <p class="v3-tile-desc">{{ project.excerpt }}</p>
           <div class="v3-tile-foot">
             <a class="v3-tile-link-primary" href="{{ project.url }}">Case Study →</a>
+            {% if !project.repo.is_empty() %}
+            <a class="v3-tile-link-muted" href="{{ project.repo }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+            {% endif %}
           </div>
         </article>
         {% endif %}
@@ -264,7 +284,7 @@
     <section class="v3-section" aria-labelledby="section-publications">
       <div class="v3-section-head">
         <h2 id="section-publications">Publications</h2>
-        <a class="v3-section-more" href="/cv/#publications">Full list in CV →</a>
+        <a class="v3-section-more" href="/cv/#publications">{% if cv.scholar_metrics.total_citations > 0 %}{{ cv.scholar_metrics.total_citations }} cites · {% endif %}Full CV →</a>
       </div>
       <ol class="v3-pub-list">
         {% for pub in cv.publications %}
@@ -273,6 +293,8 @@
             <h3 class="v3-pub-title">
               {% if !pub.arxiv_url.is_empty() %}
               <a href="{{ pub.arxiv_url }}" target="_blank" rel="noopener noreferrer">{{ pub.title }}</a>
+              {% else if !pub.scholar_url.is_empty() %}
+              <a href="{{ pub.scholar_url }}" target="_blank" rel="noopener noreferrer">{{ pub.title }}</a>
               {% else %}
               {{ pub.title }}
               {% endif %}
@@ -282,6 +304,9 @@
           </div>
           <div class="v3-pub-aside">
             <span class="v3-pub-year">{{ pub.year }}</span>
+            {% if pub.citations > 0 %}
+            <span class="v3-pub-year" title="Google Scholar citations">{{ pub.citations }} cites</span>
+            {% endif %}
             {% if !pub.arxiv_url.is_empty() %}
             <a class="v3-pub-pdf" href="{{ pub.arxiv_url }}" target="_blank" rel="noopener noreferrer">PDF ↗</a>
             {% endif %}

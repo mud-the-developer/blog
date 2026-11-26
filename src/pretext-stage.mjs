@@ -369,10 +369,27 @@ function setupInteractiveV3() {
     });
   });
 
+  document.querySelectorAll('[data-copy-code]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const block = btn.closest('.code-block');
+      const code = block?.querySelector('pre code')?.textContent || '';
+      if (!code) return;
+      const original = btn.textContent;
+      try {
+        await navigator.clipboard.writeText(code);
+        btn.textContent = 'Copied';
+      } catch {
+        btn.textContent = 'Ready';
+      }
+      setTimeout(() => {
+        btn.textContent = original;
+      }, 1500);
+    });
+  });
+
   document.querySelector('[data-cv-print]')?.addEventListener('click', () => {
     window.print();
   });
-
   window.addEventListener('pageshow', (evt) => {
     if (state.commandOpen) dispatch({ type: 'cmd.close' });
     if (evt.persisted) {

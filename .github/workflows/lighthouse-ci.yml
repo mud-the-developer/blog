@@ -1,6 +1,16 @@
 name: Lighthouse CI
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'templates/**'
+      - 'tests/browser/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/lighthouse-ci.yml'
+      - '.github/lighthouserc.json'
   pull_request:
     branches: [main]
     paths:
@@ -10,6 +20,7 @@ on:
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/lighthouse-ci.yml'
+      - '.github/lighthouserc.json'
   workflow_dispatch:
 
 jobs:

@@ -23,6 +23,7 @@
     "cfp:update": "cargo run --quiet -- cfp update",
     "cfp:validate": "cargo run --quiet -- cfp validate",
     "cfp:daily": "npm run cfp:update && npm run cfp:validate && npm run build",
+    "scholar:sync": "python3 scripts/sync_scholar_metrics.py",
     "cv:pdf": "sh -c 'cd cv && tectonic resume.tex'"
   },
   "devDependencies": {

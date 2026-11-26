@@ -494,6 +494,50 @@ async fn builds_v3_personal_site_with_cv_projects_writing_and_functional_pretext
     assert!(!news_search.contains("data-overview-figure"));
     assert!(!news_search.contains("data-blog-chat"));
     assert!(!news_search.contains("Gemma guide"));
+    assert!(!news.contains("blog-lab.mjs"));
+
+    // Security headers, RSS feeds, sitemap lastmod, SEO, reader UX, OSS projects & Scholar metrics
+    let headers = fs::read_to_string(out_dir.join("_headers"))?;
+    assert!(headers.contains("Content-Security-Policy:"));
+    assert!(headers.contains("X-Frame-Options: DENY"));
+
+    let rss = fs::read_to_string(out_dir.join("rss.xml"))?;
+    assert!(rss.contains("<rss version=\"2.0\""));
+    assert!(rss.contains("https://mud-blog.pages.dev/posts/mudplot/"));
+    let news_rss = fs::read_to_string(out_dir.join("news/rss.xml"))?;
+    assert!(news_rss.contains("<rss version=\"2.0\""));
+
+    let sitemap = fs::read_to_string(out_dir.join("sitemap.xml"))?;
+    assert!(sitemap.contains("<lastmod>"));
+
+    let index_html = fs::read_to_string(out_dir.join("index.html"))?;
+    assert!(index_html.contains("rel=\"canonical\""));
+    assert!(index_html.contains("property=\"og:image\""));
+    assert!(index_html.contains("application/ld+json"));
+    assert!(index_html.contains("cites"));
+    let cv_html = fs::read_to_string(out_dir.join("cv/index.html"))?;
+    assert!(cv_html.contains("data-scholar-summary"));
+    assert!(cv_html.contains("data-paper-citations"));
+
+    let mudplot_post = fs::read_to_string(out_dir.join("posts/mudplot/index.html"))?;
+    assert!(mudplot_post.contains("lang=\"en\""));
+    assert!(mudplot_post.contains("class=\"post-toc\""));
+    assert!(mudplot_post.contains("class=\"code-block\""));
+    assert!(mudplot_post.contains("data-copy-code"));
+    assert!(mudplot_post.contains("<math xmlns=\"http://www.w3.org/1998/Math/MathML\""));
+    assert!(mudplot_post.contains("class=\"post-pager\""));
+    assert!(!mudplot_post.contains("/assets/cfp-deadlines.mjs"));
+    assert!(out_dir.join("posts/rusty-note/index.html").exists());
+    assert!(
+        out_dir
+            .join("posts/licheerv-nano-fido2/index.html")
+            .exists()
+    );
+    assert!(out_dir.join("assets/post-reader.css").exists());
+    assert!(out_dir.join("assets/media/og-card.png").exists());
+
+    let rum_js = fs::read_to_string(out_dir.join("assets/web-vitals-rum.js"))?;
+    assert!(!rum_js.contains("unpkg.com"));
 
     Ok(())
 }

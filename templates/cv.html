@@ -5,7 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMyNDI0MjQiLz48cGF0aCBkPSJNMTYgNDZWMThoOWw3IDEzIDctMTNoOXYyOGgtOFYzMWwtOCAxMi04LTEydjE1eiIgZmlsbD0iI0E0QkJGRiIvPjwvc3ZnPg==" />
   <meta name="description" content="Curriculum Vitae of {{ cv.profile.full_name }} — {{ cv.profile.position }}." />
+  <link rel="canonical" href="https://mud-blog.pages.dev/cv/" />
+  <link rel="alternate" type="application/rss+xml" title="{{ cv.profile.full_name }} — Research &amp; Systems RSS" href="/rss.xml" />
+  <meta property="og:site_name" content="mud blog" />
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="CV — {{ cv.profile.full_name }}" />
+  <meta property="og:description" content="Curriculum Vitae of {{ cv.profile.full_name }} — {{ cv.profile.position }}." />
+  <meta property="og:url" content="https://mud-blog.pages.dev/cv/" />
+  <meta property="og:image" content="https://mud-blog.pages.dev/assets/media/og-card.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CV — {{ cv.profile.full_name }}" />
+  <meta name="twitter:description" content="Curriculum Vitae of {{ cv.profile.full_name }} — {{ cv.profile.position }}." />
+  <meta name="twitter:image" content="https://mud-blog.pages.dev/assets/media/og-card.png" />
   <title>CV — {{ cv.profile.full_name }}</title>
+  <script type="application/ld+json">{{ person_json_ld|safe }}</script>
   <script>(()=>{try{const t=localStorage.getItem('mud-blog-theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t;}catch{}})();</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -131,13 +144,21 @@
     </section>
 
     <section class="v3-cv-section" id="publications" aria-labelledby="cv-publications-heading">
-      <h2 id="cv-publications-heading"><span class="ui-icon v3-section-icon" data-icon="book-open" aria-hidden="true"></span><span>publications</span></h2>
+      <div class="v3-section-head">
+        <h2 id="cv-publications-heading"><span class="ui-icon v3-section-icon" data-icon="book-open" aria-hidden="true"></span><span>publications</span></h2>
+        {% if cv.scholar_metrics.total_citations > 0 %}
+        <span class="v3-venue-tag" data-scholar-summary>{{ cv.scholar_metrics.total_citations }} citations · h-index {{ cv.scholar_metrics.h_index }} · i10 {{ cv.scholar_metrics.i10_index }}{% if !cv.scholar_metrics.updated_at.is_empty() %} · {{ cv.scholar_metrics.updated_at }}{% endif %}</span>
+        {% endif %}
+      </div>
       <div class="v3-work-list">
         {% for pub in cv.publications %}
         <article class="v3-work-card v3-kind-paper">
           <div class="v3-work-meta">
             <span class="v3-kind-badge v3-badge-paper"><span class="ui-icon v3-tag-icon" data-icon="book-open" aria-hidden="true"></span>Paper</span>
             <span class="v3-venue-tag">{{ pub.venue_short }} · {{ pub.year }}</span>
+            {% if pub.citations > 0 %}
+            <span class="v3-status-chip" data-paper-citations>{{ pub.citations }} cites</span>
+            {% endif %}
           </div>
           <h3 class="v3-work-title">{{ pub.title }}</h3>
           <p class="v3-work-authors">{{ pub.authors_html|safe }}</p>
@@ -148,6 +169,9 @@
             {% endif %}
             {% if !pub.arxiv_url.is_empty() %}
             <a class="v3-mini-action" href="{{ pub.arxiv_url }}" target="_blank" rel="noopener noreferrer"><span class="ui-icon" data-icon="external-link" aria-hidden="true"></span><span>PDF</span></a>
+            {% endif %}
+            {% if !pub.scholar_url.is_empty() %}
+            <a class="v3-mini-action" href="{{ pub.scholar_url }}" target="_blank" rel="noopener noreferrer"><span class="ui-icon" data-icon="graduation-cap" aria-hidden="true"></span><span>Publisher / Scholar</span></a>
             {% endif %}
             <button class="v3-mini-action" type="button" data-copy-bibtex="{{ pub.bibtex }}"><span class="ui-icon" data-icon="copy" aria-hidden="true"></span><span data-copy-label>Copy BibTeX</span></button>
           </div>

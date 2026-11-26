@@ -15,7 +15,7 @@ use axum::{
     response::{Html, IntoResponse},
     routing::{get, post},
 };
-use pulldown_cmark::{Event, Options, Parser, Tag, TagEnd, html};
+use pulldown_cmark::{CodeBlockKind, Event, HeadingLevel, Options, Parser, Tag, TagEnd, html};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use tokio::{fs, net::TcpListener};
@@ -26,10 +26,26 @@ use tower_http::{
 
 pub mod cfp;
 pub mod cv;
+pub mod highlight;
+pub mod math;
 
 pub type BlogResult<T> = Result<T, Box<dyn std::error::Error>>;
 const PUBLIC_SITE_URL: &str = "https://mud-blog.pages.dev";
 const NOT_FOUND_HTML: &str = include_str!("../templates/not_found.html");
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+pub struct TocEntry {
+    pub level: u8,
+    pub id: String,
+    pub title: String,
+}
+
+#[derive(Debug, Clone)]
+struct PostNavLink<'a> {
+    title: &'a str,
+    url: &'a str,
+    date: &'a str,
+}
 
 #[derive(Debug, Clone, Serialize, PartialEq, Eq)]
 pub struct Post {
@@ -57,8 +73,10 @@ pub struct Post {
     pub demo_url: String,
     pub paper_url: String,
     pub logo: String,
+    pub lang: String,
+    pub reading_time_minutes: usize,
+    pub toc: Vec<TocEntry>,
 }
-
 #[derive(Debug, Clone)]
 pub struct BuildResult {
     pub posts: Vec<Post>,
@@ -155,6 +173,7 @@ struct IndexTemplate<'a> {
     writing_count: usize,
     project_count: usize,
     archive_json: &'a str,
+    person_json_ld: String,
 }
 
 #[derive(Template)]
@@ -171,6 +190,7 @@ struct CvTemplate<'a> {
     cv: &'a cv::CvData,
     command_index_json: String,
     archive_json: &'a str,
+    person_json_ld: String,
 }
 
 #[derive(Template)]
@@ -189,8 +209,11 @@ struct PostTemplate<'a> {
     post: &'a Post,
     title_id: String,
     command_index_json: String,
+    canonical_url: String,
+    article_json_ld: String,
+    prev_post: Option<PostNavLink<'a>>,
+    next_post: Option<PostNavLink<'a>>,
 }
-
 #[derive(Debug, Clone, Deserialize)]
 struct NewsTrendSignal {
     #[serde(default)]
@@ -530,23 +553,31 @@ fn rewrite_legacy_note_hrefs(html: &str, link_index: &HashMap<String, String>) -
 }
 
 fn markdown_to_html(markdown: &str) -> String {
-    markdown_to_html_with_links(markdown, &HashMap::new(), None)
+    markdown_to_html_with_links(markdown, &HashMap::new(), None).0
 }
 
 fn markdown_to_html_with_links(
     markdown: &str,
     link_index: &HashMap<String, String>,
     title_id: Option<&str>,
-) -> String {
+) -> (String, Vec<TocEntry>) {
     let markdown = rewrite_wikilinks(markdown, link_index);
     let mut output = String::new();
     let parser = Parser::new_ext(
         &markdown,
-        Options::ENABLE_TABLES | Options::ENABLE_STRIKETHROUGH | Options::ENABLE_HEADING_ATTRIBUTES,
+        Options::ENABLE_TABLES
+            | Options::ENABLE_STRIKETHROUGH
+            | Options::ENABLE_HEADING_ATTRIBUTES
+            | Options::ENABLE_MATH,
     );
-    let mut events: Vec<_> = parser.collect();
+    let raw_events: Vec<_> = parser.collect();
+    let enhance = title_id.is_some();
+    let mut toc = Vec::new();
+
+    // Pass 1: unique heading IDs and TOC entries (non-CFP posts only).
+    let mut heading_events = raw_events;
     if let Some(title_id) = title_id {
-        let mut used: std::collections::HashSet<String> = events
+        let mut used: std::collections::HashSet<String> = heading_events
             .iter()
             .filter_map(|event| match event {
                 Event::Start(Tag::Heading { id: Some(id), .. }) => Some(id.to_string()),
@@ -554,35 +585,169 @@ fn markdown_to_html_with_links(
             })
             .collect();
         used.insert(title_id.to_string());
-        for index in 0..events.len() {
-            if !matches!(&events[index], Event::Start(Tag::Heading { id: None, .. })) {
-                continue;
-            }
-            let title = events[index + 1..]
+        for index in 0..heading_events.len() {
+            let (level, existing_id) = match &heading_events[index] {
+                Event::Start(Tag::Heading { level, id, .. }) => {
+                    (*level, id.as_ref().map(|s| s.to_string()))
+                }
+                _ => continue,
+            };
+            let title = heading_events[index + 1..]
                 .iter()
                 .take_while(|event| !matches!(event, Event::End(TagEnd::Heading(_))))
                 .filter_map(|event| match event {
-                    Event::Text(text) | Event::Code(text) => Some(text.as_ref()),
+                    Event::Text(text) | Event::Code(text) | Event::InlineMath(text) => {
+                        Some(text.as_ref())
+                    }
                     Event::SoftBreak | Event::HardBreak => Some(" "),
                     _ => None,
                 })
-                .collect::<String>();
-            let base = slugify(&title);
-            let mut id = base.clone();
-            let mut suffix = 2;
-            while !used.insert(id.clone()) {
-                id = format!("{base}-{suffix}");
-                suffix += 1;
-            }
-            if let Event::Start(Tag::Heading { id: slot, .. }) = &mut events[index] {
-                *slot = Some(id.into());
+                .collect::<String>()
+                .trim()
+                .to_string();
+            let assigned_id = if let Some(explicit) = existing_id {
+                explicit
+            } else {
+                let base = slugify(&title);
+                let mut id = base.clone();
+                let mut suffix = 2;
+                while !used.insert(id.clone()) {
+                    id = format!("{base}-{suffix}");
+                    suffix += 1;
+                }
+                if let Event::Start(Tag::Heading { id: slot, .. }) = &mut heading_events[index] {
+                    *slot = Some(id.clone().into());
+                }
+                id
+            };
+            if matches!(level, HeadingLevel::H2 | HeadingLevel::H3) && !title.is_empty() {
+                let lvl = if level == HeadingLevel::H2 { 2 } else { 3 };
+                toc.push(TocEntry {
+                    level: lvl,
+                    id: assigned_id,
+                    title,
+                });
             }
         }
     }
-    html::push_html(&mut output, events.into_iter());
-    rewrite_legacy_note_hrefs(&output, link_index)
+
+    // Pass 2: transform math, fenced code blocks, and heading anchors.
+    let mut transformed = Vec::with_capacity(heading_events.len() + 16);
+    let mut idx = 0;
+    let mut active_heading: Option<(HeadingLevel, String)> = None;
+    while idx < heading_events.len() {
+        match &heading_events[idx] {
+            Event::Start(Tag::Heading {
+                level,
+                id: Some(id),
+                ..
+            }) if enhance && matches!(level, HeadingLevel::H2 | HeadingLevel::H3) => {
+                active_heading = Some((*level, id.to_string()));
+                transformed.push(heading_events[idx].clone());
+                idx += 1;
+            }
+            Event::End(TagEnd::Heading(level)) if enhance => {
+                if let Some((lvl, id)) = active_heading.take()
+                    && lvl == *level
+                {
+                    transformed.push(Event::Html(
+                        format!(
+                            "<a class=\"heading-anchor\" href=\"#{id}\" aria-label=\"Link to section\"></a>"
+                        )
+                        .into(),
+                    ));
+                }
+                transformed.push(heading_events[idx].clone());
+                idx += 1;
+            }
+            Event::InlineMath(tex) => {
+                transformed.push(Event::Html(math::render_math_html(tex, false).into()));
+                idx += 1;
+            }
+            Event::DisplayMath(tex) => {
+                transformed.push(Event::Html(math::render_math_html(tex, true).into()));
+                idx += 1;
+            }
+            Event::Start(Tag::CodeBlock(kind)) if enhance => {
+                let lang = match kind {
+                    CodeBlockKind::Fenced(info) => info.to_string(),
+                    CodeBlockKind::Indented => String::new(),
+                };
+                idx += 1;
+                let mut code_buf = String::new();
+                while idx < heading_events.len() {
+                    match &heading_events[idx] {
+                        Event::End(TagEnd::CodeBlock) => {
+                            idx += 1;
+                            break;
+                        }
+                        Event::Text(text) => {
+                            code_buf.push_str(text);
+                            idx += 1;
+                        }
+                        _ => {
+                            idx += 1;
+                        }
+                    }
+                }
+                transformed.push(Event::Html(
+                    highlight::render_code_block(&code_buf, &lang).into(),
+                ));
+            }
+            _ => {
+                transformed.push(heading_events[idx].clone());
+                idx += 1;
+            }
+        }
+    }
+
+    html::push_html(&mut output, transformed.into_iter());
+    (rewrite_legacy_note_hrefs(&output, link_index), toc)
 }
 
+fn detect_post_lang(explicit: Option<String>, title: &str, body: &str) -> String {
+    if let Some(lang) = explicit {
+        let trimmed = lang.trim().to_ascii_lowercase();
+        if !trimmed.is_empty() {
+            return trimmed;
+        }
+    }
+    let mut hangul = 0usize;
+    let mut latin = 0usize;
+    for ch in title.chars().chain(body.chars().take(600)) {
+        if ('\u{AC00}'..='\u{D7A3}').contains(&ch) {
+            hangul += 1;
+        } else if ch.is_ascii_alphabetic() {
+            latin += 1;
+        }
+    }
+    if hangul >= 25 && hangul * 5 >= latin {
+        "ko".to_string()
+    } else {
+        "en".to_string()
+    }
+}
+
+fn estimate_reading_time_minutes(body: &str) -> usize {
+    let mut latin_words = 0usize;
+    let mut cjk_chars = 0usize;
+    let mut in_word = false;
+    for ch in body.chars() {
+        if ('\u{AC00}'..='\u{D7A3}').contains(&ch) || ('\u{4E00}'..='\u{9FFF}').contains(&ch) {
+            cjk_chars += 1;
+            in_word = false;
+        } else if ch.is_alphanumeric() {
+            if !in_word {
+                latin_words += 1;
+                in_word = true;
+            }
+        } else {
+            in_word = false;
+        }
+    }
+    let units = latin_words + cjk_chars / 2;
+    units.div_ceil(220).max(1)
+}
 fn excerpt_from_markdown(markdown: &str) -> String {
     let mut text = String::new();
     let mut in_code = false;
@@ -649,6 +814,8 @@ pub fn parse_markdown_post(source: &str, fallback_slug: &str) -> Post {
     let demo_url = frontmatter_value(&frontmatter, "demo_url").unwrap_or_default();
     let paper_url = frontmatter_value(&frontmatter, "paper_url").unwrap_or_default();
     let logo = frontmatter_value(&frontmatter, "logo").unwrap_or_default();
+    let lang = detect_post_lang(frontmatter_value(&frontmatter, "lang"), &title, &body);
+    let reading_time_minutes = estimate_reading_time_minutes(&body);
     let html = markdown_to_html(&body);
 
     Post {
@@ -676,6 +843,9 @@ pub fn parse_markdown_post(source: &str, fallback_slug: &str) -> Post {
         demo_url,
         paper_url,
         logo,
+        lang,
+        reading_time_minutes,
+        toc: Vec::new(),
     }
 }
 
@@ -730,11 +900,13 @@ pub async fn load_posts(posts_dir: impl AsRef<Path>) -> BlogResult<Vec<Post>> {
     let mut posts = Vec::new();
     for (source, mut post) in entries {
         let title_id = slugify(&post.title);
-        post.html = markdown_to_html_with_links(
+        let (rendered_html, toc) = markdown_to_html_with_links(
             &post.body,
             &link_index,
             (post.folder != "cfp").then_some(title_id.as_str()),
         );
+        post.html = rendered_html;
+        post.toc = toc;
         if post.folder == "news" {
             post.html = demote_first_h1(&post.html);
         } else {
@@ -743,7 +915,6 @@ pub async fn load_posts(posts_dir: impl AsRef<Path>) -> BlogResult<Vec<Post>> {
         debug_assert!(!source.is_empty());
         posts.push(post);
     }
-
     posts.sort_by(|a, b| b.date.cmp(&a.date).then_with(|| a.title.cmp(&b.title)));
     Ok(posts)
 }
@@ -1099,6 +1270,7 @@ pub fn render_index_page(posts: &[Post]) -> BlogResult<String> {
         .find(|post| post.folder == "news" && post.title != "Daily AI News Archive");
     let (cfp_active_count, cfp_next_label) = load_live_cfp_summary();
     let command_index_json = build_command_index_json(&cv, posts)?;
+    let person_json_ld = build_person_json_ld(&cv);
 
     Ok(IndexTemplate {
         cv: &cv,
@@ -1116,6 +1288,7 @@ pub fn render_index_page(posts: &[Post]) -> BlogResult<String> {
             .unwrap_or_else(|| "daily".to_string()),
         writing_count,
         archive_json: &archive_json,
+        person_json_ld,
     }
     .render()?)
 }
@@ -1142,10 +1315,12 @@ pub fn render_cv_page(posts: &[Post]) -> BlogResult<String> {
     let home_posts = home_index_posts(posts);
     let archive_json = archive_json(&home_posts)?;
     let command_index_json = build_command_index_json(&cv, posts)?;
+    let person_json_ld = build_person_json_ld(&cv);
     Ok(CvTemplate {
         cv: &cv,
         command_index_json,
         archive_json: &archive_json,
+        person_json_ld,
     }
     .render()?)
 }
@@ -1166,13 +1341,90 @@ pub fn render_writing_page(posts: &[Post]) -> BlogResult<String> {
     .render()?)
 }
 
+fn build_person_json_ld(cv: &cv::CvData) -> String {
+    let value = json!({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": cv.profile.full_name,
+        "jobTitle": cv.profile.position,
+        "url": format!("{PUBLIC_SITE_URL}/"),
+        "affiliation": {
+            "@type": "Organization",
+            "name": "RAMO Laboratory, Yonsei University"
+        },
+        "sameAs": [
+            format!("https://github.com/{}", cv.profile.github),
+            format!("https://scholar.google.com/citations?user={}&hl=en", cv.profile.scholar_id),
+            "https://www.linkedin.com/in/jinhyuk-kim-a97b42242/"
+        ]
+    });
+    serde_json::to_string(&value)
+        .unwrap_or_default()
+        .replace('<', "\\u003c")
+}
+
+fn build_article_json_ld(post: &Post, canonical_url: &str) -> String {
+    let value = json!({
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": post.title,
+        "description": post.excerpt,
+        "datePublished": post.date,
+        "inLanguage": post.lang,
+        "url": canonical_url,
+        "image": format!("{PUBLIC_SITE_URL}/assets/media/og-card.png"),
+        "keywords": post.tags,
+        "author": {
+            "@type": "Person",
+            "name": "Jinhyuk Kim",
+            "url": format!("{PUBLIC_SITE_URL}/")
+        }
+    });
+    serde_json::to_string(&value)
+        .unwrap_or_default()
+        .replace('<', "\\u003c")
+}
+
 pub fn render_post_page(post: &Post, posts: &[Post]) -> BlogResult<String> {
     let cv = cv::load_cv_data("cv");
     let command_index_json = build_command_index_json(&cv, posts)?;
+    let canonical_url = format!("{PUBLIC_SITE_URL}{}", post.url);
+    let article_json_ld = build_article_json_ld(post, &canonical_url);
+
+    let siblings: Vec<&Post> = if post.folder == "cfp" {
+        Vec::new()
+    } else if post.folder == "news" {
+        posts
+            .iter()
+            .filter(|p| p.folder == "news" && p.slug != "news-digest-archive")
+            .collect()
+    } else {
+        posts.iter().filter(|p| p.folder == post.folder).collect()
+    };
+    let pos = siblings.iter().position(|p| p.slug == post.slug);
+    // Posts are sorted newest-first: index-1 is newer (next), index+1 is older (prev).
+    let next_post = pos
+        .and_then(|i| i.checked_sub(1))
+        .and_then(|i| siblings.get(i))
+        .map(|p| PostNavLink {
+            title: &p.title,
+            url: &p.url,
+            date: &p.date,
+        });
+    let prev_post = pos.and_then(|i| siblings.get(i + 1)).map(|p| PostNavLink {
+        title: &p.title,
+        url: &p.url,
+        date: &p.date,
+    });
+
     Ok(PostTemplate {
         post,
         title_id: slugify(&post.title),
         command_index_json,
+        canonical_url,
+        article_json_ld,
+        prev_post,
+        next_post,
     }
     .render()?)
 }
@@ -1385,32 +1637,183 @@ pub fn render_robots_txt() -> String {
     format!("User-agent: *\nAllow: /\n\nSitemap: {PUBLIC_SITE_URL}/sitemap.xml\n")
 }
 
+fn xml_escape(input: &str) -> String {
+    let mut out = String::with_capacity(input.len());
+    for ch in input.chars() {
+        match ch {
+            '&' => out.push_str("&amp;"),
+            '<' => out.push_str("&lt;"),
+            '>' => out.push_str("&gt;"),
+            '"' => out.push_str("&quot;"),
+            '\'' => out.push_str("&apos;"),
+            _ => out.push(ch),
+        }
+    }
+    out
+}
+
+fn valid_iso_date(date: &str) -> Option<&str> {
+    let prefix = date.get(..10)?;
+    chrono::NaiveDate::parse_from_str(prefix, "%Y-%m-%d")
+        .ok()
+        .map(|_| prefix)
+}
+
+fn rfc2822_pub_date(date: &str) -> Option<String> {
+    let parsed = chrono::NaiveDate::parse_from_str(date.get(..10)?, "%Y-%m-%d").ok()?;
+    let dt = parsed.and_hms_opt(0, 0, 0)?.and_utc();
+    Some(dt.to_rfc2822())
+}
+
 pub fn render_sitemap_xml(posts: &[Post]) -> String {
+    let latest_any = posts.iter().filter_map(|p| valid_iso_date(&p.date)).max();
+    let latest_projects = posts
+        .iter()
+        .filter(|p| p.folder == "projects")
+        .filter_map(|p| valid_iso_date(&p.date))
+        .max()
+        .or(latest_any);
+    let latest_writing = posts
+        .iter()
+        .filter(|p| p.folder != "news")
+        .filter_map(|p| valid_iso_date(&p.date))
+        .max()
+        .or(latest_any);
+    let latest_news = posts
+        .iter()
+        .filter(|p| p.folder == "news")
+        .filter_map(|p| valid_iso_date(&p.date))
+        .max()
+        .or(latest_any);
+    let latest_cfp = posts
+        .iter()
+        .filter(|p| p.folder == "cfp")
+        .filter_map(|p| valid_iso_date(&p.date))
+        .max()
+        .or(latest_any);
+
     let mut output = String::from(
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n",
     );
-    for path in [
-        "/",
-        "/projects/",
-        "/cv/",
-        "/writing/",
-        "/news/",
-        "/news/search/",
-        "/cfp/",
+    for (path, lastmod) in [
+        ("/", latest_any),
+        ("/projects/", latest_projects),
+        ("/cv/", latest_any),
+        ("/writing/", latest_writing),
+        ("/news/", latest_news),
+        ("/news/search/", latest_news),
+        ("/cfp/", latest_cfp),
     ] {
         output.push_str("  <url>\n    <loc>");
         output.push_str(PUBLIC_SITE_URL);
         output.push_str(path);
-        output.push_str("</loc>\n  </url>\n");
+        output.push_str("</loc>\n");
+        if let Some(day) = lastmod {
+            output.push_str("    <lastmod>");
+            output.push_str(day);
+            output.push_str("</lastmod>\n");
+        }
+        output.push_str("  </url>\n");
     }
     for post in posts {
         output.push_str("  <url>\n    <loc>");
         output.push_str(PUBLIC_SITE_URL);
         output.push_str(&post.url);
-        output.push_str("</loc>\n  </url>\n");
+        output.push_str("</loc>\n");
+        if let Some(day) = valid_iso_date(&post.date) {
+            output.push_str("    <lastmod>");
+            output.push_str(day);
+            output.push_str("</lastmod>\n");
+        }
+        output.push_str("  </url>\n");
     }
     output.push_str("</urlset>\n");
     output
+}
+
+fn build_rss_feed(
+    channel_title: &str,
+    channel_link: &str,
+    self_url: &str,
+    channel_desc: &str,
+    items: &[&Post],
+) -> String {
+    let mut out = String::from(
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n  <channel>\n",
+    );
+    out.push_str(&format!(
+        "    <title>{}</title>\n",
+        xml_escape(channel_title)
+    ));
+    out.push_str(&format!("    <link>{}</link>\n", xml_escape(channel_link)));
+    out.push_str(&format!(
+        "    <description>{}</description>\n",
+        xml_escape(channel_desc)
+    ));
+    out.push_str("    <language>en</language>\n");
+    out.push_str(&format!(
+        "    <atom:link href=\"{}\" rel=\"self\" type=\"application/rss+xml\" />\n",
+        xml_escape(self_url)
+    ));
+    if let Some(latest) = items
+        .iter()
+        .filter_map(|p| rfc2822_pub_date(&p.date))
+        .next()
+    {
+        out.push_str(&format!("    <lastBuildDate>{latest}</lastBuildDate>\n"));
+    }
+    for post in items.iter().take(30) {
+        let full_url = format!("{PUBLIC_SITE_URL}{}", post.url);
+        out.push_str("    <item>\n");
+        out.push_str(&format!(
+            "      <title>{}</title>\n",
+            xml_escape(&post.title)
+        ));
+        out.push_str(&format!("      <link>{}</link>\n", xml_escape(&full_url)));
+        out.push_str(&format!(
+            "      <guid isPermaLink=\"true\">{}</guid>\n",
+            xml_escape(&full_url)
+        ));
+        if let Some(pub_date) = rfc2822_pub_date(&post.date) {
+            out.push_str(&format!("      <pubDate>{pub_date}</pubDate>\n"));
+        }
+        out.push_str(&format!(
+            "      <category>{}</category>\n",
+            xml_escape(&post.folder)
+        ));
+        out.push_str(&format!(
+            "      <description>{}</description>\n",
+            xml_escape(&post.excerpt)
+        ));
+        out.push_str("    </item>\n");
+    }
+    out.push_str("  </channel>\n</rss>\n");
+    out
+}
+
+pub fn render_rss_xml(posts: &[Post]) -> String {
+    let items: Vec<&Post> = posts.iter().filter(|p| p.folder != "news").collect();
+    build_rss_feed(
+        "Jinhyuk Kim — Research & Systems",
+        &format!("{PUBLIC_SITE_URL}/"),
+        &format!("{PUBLIC_SITE_URL}/rss.xml"),
+        "Projects, paper notes, and CFP radar updates from Jinhyuk Kim.",
+        &items,
+    )
+}
+
+pub fn render_news_rss_xml(posts: &[Post]) -> String {
+    let items: Vec<&Post> = posts
+        .iter()
+        .filter(|p| p.folder == "news" && p.slug != "news-digest-archive")
+        .collect();
+    build_rss_feed(
+        "Jinhyuk Kim — Daily AI News Digest",
+        &format!("{PUBLIC_SITE_URL}/news/"),
+        &format!("{PUBLIC_SITE_URL}/news/rss.xml"),
+        "Automated daily AI research and engineering signal briefs.",
+        &items,
+    )
 }
 
 pub async fn build_static_site(
@@ -1454,6 +1857,13 @@ pub async fn build_static_site(
     }
     let css = fs::read_to_string("src/style.css").await?;
     fs::write(assets_dir.join("style.css"), minify_css(&css)).await?;
+    if Path::new("src/post-reader.css").exists() {
+        let reader_css = fs::read_to_string("src/post-reader.css").await?;
+        fs::write(assets_dir.join("post-reader.css"), minify_css(&reader_css)).await?;
+    }
+    if Path::new("static/_headers").exists() {
+        fs::copy("static/_headers", out_dir.join("_headers")).await?;
+    }
     fs::copy("src/blog-lab.mjs", assets_dir.join("blog-lab.mjs")).await?;
     fs::copy("src/safe-url.mjs", assets_dir.join("safe-url.mjs")).await?;
     fs::copy(
@@ -1497,6 +1907,8 @@ pub async fn build_static_site(
     fs::write(out_dir.join("robots.txt"), render_robots_txt()).await?;
     fs::write(out_dir.join("404.html"), NOT_FOUND_HTML).await?;
     fs::write(out_dir.join("sitemap.xml"), render_sitemap_xml(&posts)).await?;
+    fs::write(out_dir.join("rss.xml"), render_rss_xml(&posts)).await?;
+    fs::write(news_dir.join("rss.xml"), render_news_rss_xml(&posts)).await?;
     fs::write(out_dir.join("index.html"), render_index_page(&posts)?).await?;
     fs::write(
         projects_dir.join("index.html"),
@@ -1519,6 +1931,8 @@ pub async fn build_static_site(
         "robots.txt".to_string(),
         "404.html".to_string(),
         "sitemap.xml".to_string(),
+        "rss.xml".to_string(),
+        "news/rss.xml".to_string(),
         "projects/index.html".to_string(),
         "cv/index.html".to_string(),
         "writing/index.html".to_string(),
@@ -1526,6 +1940,9 @@ pub async fn build_static_site(
         "news/search/index.html".to_string(),
         "cfp/index.html".to_string(),
     ];
+    if out_dir.join("_headers").exists() {
+        files.push("_headers".to_string());
+    }
     if cv_dir.join("jinhyuk-kim-cv.pdf").exists() {
         files.push("cv/jinhyuk-kim-cv.pdf".to_string());
     }
@@ -1558,6 +1975,8 @@ pub fn router(posts: Vec<Post>, assets_root: impl Into<PathBuf>) -> BlogResult<R
         .route("/writing/", get(writing_handler))
         .route("/robots.txt", get(robots_handler))
         .route("/sitemap.xml", get(sitemap_handler))
+        .route("/rss.xml", get(rss_handler))
+        .route("/news/rss.xml", get(news_rss_handler))
         .route("/news", get(news_handler))
         .route("/news/", get(news_handler))
         .route("/cfp", get(cfp_handler))
@@ -1628,6 +2047,19 @@ async fn sitemap_handler(State(state): State<AppState>) -> impl IntoResponse {
     )
 }
 
+async fn rss_handler(State(state): State<AppState>) -> impl IntoResponse {
+    (
+        [(CONTENT_TYPE, "application/rss+xml; charset=utf-8")],
+        render_rss_xml(&state.posts),
+    )
+}
+
+async fn news_rss_handler(State(state): State<AppState>) -> impl IntoResponse {
+    (
+        [(CONTENT_TYPE, "application/rss+xml; charset=utf-8")],
+        render_news_rss_xml(&state.posts),
+    )
+}
 async fn news_handler(State(state): State<AppState>) -> impl IntoResponse {
     match render_news_page(&state.posts) {
         Ok(html) => Html(html).into_response(),

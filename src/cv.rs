@@ -1,6 +1,6 @@
 use std::{fs, path::Path};
 
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Default)]
 pub struct CvProfile {
@@ -42,6 +42,17 @@ pub struct CvPublication {
     pub themes_csv: String,
     pub note_url: String,
     pub arxiv_url: String,
+    pub citations: u32,
+    pub scholar_url: String,
+}
+
+#[derive(Debug, Clone, Serialize, Default)]
+pub struct ScholarMetrics {
+    pub total_citations: u32,
+    pub h_index: u32,
+    pub i10_index: u32,
+    pub paper_count: usize,
+    pub updated_at: String,
 }
 
 #[derive(Debug, Clone, Serialize, Default)]
@@ -51,8 +62,108 @@ pub struct CvData {
     pub experience: Vec<CvEntry>,
     pub publications: Vec<CvPublication>,
     pub programs: Vec<CvEntry>,
+    pub scholar_metrics: ScholarMetrics,
 }
 
+#[derive(Debug, Deserialize)]
+struct CachedScholarEntry {
+    #[serde(default)]
+    title: String,
+    #[serde(default, rename = "citationCount")]
+    citation_count: u32,
+    #[serde(default, rename = "scholarUrl")]
+    scholar_url: String,
+    #[serde(default, rename = "citationUpdatedAt")]
+    citation_updated_at: String,
+}
+
+fn normalize_title_key(title: &str) -> String {
+    title
+        .chars()
+        .filter(|ch| ch.is_alphanumeric())
+        .flat_map(|ch| ch.to_lowercase())
+        .collect()
+}
+
+fn load_scholar_entries(cv_root: &Path) -> Vec<CachedScholarEntry> {
+    let candidates = [
+        cv_root
+            .parent()
+            .unwrap_or_else(|| Path::new("."))
+            .join("data/scholar/publications.json"),
+        Path::new("data/scholar/publications.json").to_path_buf(),
+    ];
+    for path in candidates {
+        let Ok(raw) = fs::read_to_string(path) else {
+            continue;
+        };
+        if let Ok(entries) = serde_json::from_str::<Vec<CachedScholarEntry>>(&raw) {
+            return entries;
+        }
+    }
+    Vec::new()
+}
+
+fn compute_scholar_metrics(entries: &[CachedScholarEntry]) -> ScholarMetrics {
+    if entries.is_empty() {
+        return ScholarMetrics::default();
+    }
+    let mut counts: Vec<u32> = entries.iter().map(|e| e.citation_count).collect();
+    counts.sort_unstable_by(|a, b| b.cmp(a));
+    let total_citations = counts.iter().copied().sum();
+    let h_index = counts
+        .iter()
+        .enumerate()
+        .take_while(|(idx, count)| **count >= (*idx as u32 + 1))
+        .count() as u32;
+    let i10_index = counts.iter().filter(|&&c| c >= 10).count() as u32;
+    let updated_at = entries
+        .iter()
+        .find_map(|e| {
+            let trimmed = e.citation_updated_at.trim();
+            (!trimmed.is_empty()).then(|| trimmed.to_string())
+        })
+        .unwrap_or_default();
+    ScholarMetrics {
+        total_citations,
+        h_index,
+        i10_index,
+        paper_count: entries.len(),
+        updated_at,
+    }
+}
+
+fn attach_scholar_citations(pubs: &mut [CvPublication], entries: &[CachedScholarEntry]) {
+    if entries.is_empty() {
+        return;
+    }
+    let indexed: Vec<(String, &CachedScholarEntry)> = entries
+        .iter()
+        .map(|entry| (normalize_title_key(&entry.title), entry))
+        .filter(|(key, _)| !key.is_empty())
+        .collect();
+
+    for pub_item in pubs.iter_mut() {
+        let key = normalize_title_key(&pub_item.title);
+        if key.is_empty() {
+            continue;
+        }
+        let matched = indexed.iter().find(|(candidate_key, _)| {
+            *candidate_key == key
+                || (key.len() >= 24 && candidate_key.starts_with(&key[..24]))
+                || (candidate_key.len() >= 24 && key.starts_with(&candidate_key[..24]))
+        });
+        if let Some((_, entry)) = matched {
+            pub_item.citations = entry.citation_count;
+            if pub_item.scholar_url.is_empty()
+                && (entry.scholar_url.starts_with("https://")
+                    || entry.scholar_url.starts_with("http://"))
+            {
+                pub_item.scholar_url = entry.scholar_url.clone();
+            }
+        }
+    }
+}
 fn strip_latex_comments(input: &str) -> String {
     let mut output = String::with_capacity(input.len());
     for line in input.lines() {
@@ -445,6 +556,8 @@ fn parse_publications(raw: &str) -> Vec<CvPublication> {
             themes_csv,
             note_url,
             arxiv_url,
+            citations: 0,
+            scholar_url: String::new(),
         });
         cursor = arg_cursor;
     }
@@ -518,6 +631,10 @@ pub fn load_cv_data(cv_dir: impl AsRef<Path>) -> CvData {
     } else {
         String::new()
     };
+    let scholar_entries = load_scholar_entries(root);
+    let scholar_metrics = compute_scholar_metrics(&scholar_entries);
+    let mut publications = parse_publications(&pub_raw);
+    attach_scholar_citations(&mut publications, &scholar_entries);
 
     CvData {
         profile: CvProfile {
@@ -535,8 +652,9 @@ pub fn load_cv_data(cv_dir: impl AsRef<Path>) -> CvData {
         },
         education: parse_cventries(&edu_raw),
         experience: parse_cventries(&exp_raw),
-        publications: parse_publications(&pub_raw),
+        publications,
         programs: parse_cventries(&prog_raw),
+        scholar_metrics,
     }
 }
 
@@ -559,6 +677,7 @@ fn default_fallback_cv() -> CvData {
         experience: Vec::new(),
         publications: Vec::new(),
         programs: Vec::new(),
+        scholar_metrics: ScholarMetrics::default(),
     }
 }
 
@@ -616,5 +735,8 @@ mod tests {
         assert!(cv.publications[0].bibtex.contains("@article{"));
         assert!(cv.publications[1].bibtex.contains("@inproceedings{"));
         assert_eq!(cv.programs[0].logo_url, "/assets/cv/mwc26_logo.jpg");
+        assert!(cv.scholar_metrics.total_citations >= 50);
+        assert!(cv.scholar_metrics.h_index >= 3);
+        assert!(cv.publications.iter().any(|p| p.citations >= 30));
     }
 }
