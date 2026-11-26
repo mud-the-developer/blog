@@ -42,9 +42,8 @@
   <main class="news-shell">
     <section class="news-hero v3-desk-hero" aria-labelledby="news-title">
       <div class="v3-desk-hero-copy">
-        <p class="eyebrow">Daily + focused digests · {{ issue_count }} issues</p>
+        <p class="eyebrow">AI signal radar · {{ issue_count }} issues{% if !visual.issue_date.is_empty() %} · {{ visual.issue_date }}{% endif %}</p>
         <h1 id="news-title">News</h1>
-        <p>Cross-source AI trend radar and daily digests, filtered with a 7-day anti-repetition cooldown and relative velocity ranking.</p>
       </div>
       <div class="cfp-actions">
         <a class="cfp-sync-link cfp-sync-link-primary" href="/news/search/">
@@ -58,12 +57,105 @@
       </div>
     </section>
 
+    {% if visual.has_charts() %}
+    <section class="news-visual-deck" data-news-visual-summary aria-label="Daily signal charts and pipeline">
+      {% if !visual.bars.is_empty() %}
+      <article class="news-visual-card">
+        <div class="news-visual-head">
+          <span>Signal radar</span>
+          <strong>{{ visual.total_signals }} signals · {{ visual.total_fresh }} fresh (24h)</strong>
+        </div>
+        <svg class="news-visual-svg" viewBox="0 0 540 220" role="img" aria-label="Topic convergence and 24-hour freshness bar chart">
+          <g font-family="var(--font-mono)" font-size="10" fill="var(--muted)">
+            <text x="154" y="22" text-anchor="middle">0</text>
+            <text x="262" y="22" text-anchor="middle">{{ visual.axis_mid }}</text>
+            <text x="370" y="22" text-anchor="middle">{{ visual.axis_max }}</text>
+          </g>
+          <g stroke="var(--line)" stroke-width="1">
+            <line x1="154" y1="30" x2="154" y2="184" />
+            <line x1="262" y1="30" x2="262" y2="184" stroke-dasharray="3 3" />
+            <line x1="370" y1="30" x2="370" y2="184" stroke-dasharray="3 3" />
+          </g>
+          {% for bar in visual.bars %}
+          <g>
+            <text x="144" y="{{ bar.row_y + 3 }}" text-anchor="end" font-family="var(--font-display)" font-size="12.5" font-weight="600" fill="var(--ink)">{{ bar.label }}</text>
+            <rect x="154" y="{{ bar.bar_y }}" width="216" height="18" rx="4" fill="var(--paper-2)" stroke="var(--line)" stroke-width="1" />
+            <rect x="154" y="{{ bar.bar_y }}" width="{{ bar.total_w }}" height="18" rx="4" fill="{{ bar.color_var }}" fill-opacity="0.2" stroke="{{ bar.color_var }}" stroke-width="1" stroke-dasharray="3 2" />
+            <rect x="154" y="{{ bar.bar_y }}" width="{{ bar.fresh_w }}" height="18" rx="4" fill="{{ bar.color_var }}" />
+            <text x="380" y="{{ bar.row_y + 3 }}" font-family="var(--font-mono)" font-size="12.5" font-weight="700" fill="var(--ink)">{{ bar.count }}</text>
+            <text x="412" y="{{ bar.row_y + 3 }}" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">{{ bar.meta }}</text>
+          </g>
+          {% endfor %}
+          <g font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">
+            <rect x="154" y="197" width="12" height="8" rx="2" fill="var(--accent)" />
+            <text x="172" y="205">Fresh 24h</text>
+            <rect x="246" y="197" width="12" height="8" rx="2" fill="var(--accent)" fill-opacity="0.2" stroke="var(--accent)" stroke-width="1" stroke-dasharray="2 1.5" />
+            <text x="264" y="205">Total (7d window)</text>
+            <text x="532" y="205" text-anchor="end">Relative velocity</text>
+          </g>
+        </svg>
+      </article>
+      {% endif %}
+
+      {% if !visual.slices.is_empty() %}
+      <article class="news-visual-card">
+        <div class="news-visual-head">
+          <span>Source mix &amp; pipeline</span>
+          <strong>{{ visual.curated_count }} curated · {{ visual.source_feed_count }} feeds</strong>
+        </div>
+        <svg class="news-visual-svg" viewBox="0 0 380 220" role="img" aria-label="Curated source mix donut chart and daily news pipeline illustration">
+          <circle cx="68" cy="74" r="44" fill="none" stroke="var(--line)" stroke-width="15" />
+          {% for slice in visual.slices %}
+          <circle cx="68" cy="74" r="44" fill="none" stroke="{{ slice.color_var }}" stroke-opacity="{{ slice.opacity }}" stroke-width="15" stroke-dasharray="{{ slice.dash }}" stroke-dashoffset="{{ slice.offset }}" transform="rotate(-90 68 74)" />
+          {% endfor %}
+          <text x="68" y="72" text-anchor="middle" font-family="var(--font-mono)" font-size="22" font-weight="700" fill="var(--ink)">{{ visual.curated_count }}</text>
+          <text x="68" y="88" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" font-weight="600" letter-spacing="0.08em" fill="var(--muted)">SIGNALS</text>
+          {% for slice in visual.slices %}
+          <g>
+            {% if slice.shape == "circle" %}
+            <circle cx="144" cy="{{ slice.legend_y - 3 }}" r="4" fill="{{ slice.color_var }}" fill-opacity="{{ slice.opacity }}" />
+            {% else if slice.shape == "square" %}
+            <rect x="140" y="{{ slice.legend_y - 7 }}" width="8" height="8" rx="1.5" fill="{{ slice.color_var }}" fill-opacity="{{ slice.opacity }}" />
+            {% else if slice.shape == "diamond" %}
+            <rect x="141" y="{{ slice.legend_y - 6 }}" width="6" height="6" transform="rotate(45 144 {{ slice.legend_y - 3 }})" fill="{{ slice.color_var }}" fill-opacity="{{ slice.opacity }}" />
+            {% else if slice.shape == "triangle" %}
+            <polygon points="144,{{ slice.legend_y - 7 }} 148,{{ slice.legend_y + 1 }} 140,{{ slice.legend_y + 1 }}" fill="{{ slice.color_var }}" fill-opacity="{{ slice.opacity }}" />
+            {% else if slice.shape == "ring" %}
+            <circle cx="144" cy="{{ slice.legend_y - 3 }}" r="3.5" fill="none" stroke="{{ slice.color_var }}" stroke-opacity="{{ slice.opacity }}" stroke-width="2" />
+            {% else %}
+            <rect x="139" y="{{ slice.legend_y - 5 }}" width="10" height="4" rx="2" fill="{{ slice.color_var }}" fill-opacity="{{ slice.opacity }}" />
+            {% endif %}
+            <text x="158" y="{{ slice.legend_y }}" font-family="var(--font-display)" font-size="11.5" font-weight="550" fill="var(--ink)">{{ slice.label }}</text>
+            <text x="370" y="{{ slice.legend_y }}" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)"><tspan fill="var(--ink)" font-weight="700">{{ slice.value }}</tspan> · {{ slice.pct }}%</text>
+          </g>
+          {% endfor %}
+          <line x1="8" y1="146" x2="372" y2="146" stroke="var(--line)" stroke-width="1" />
+          <g>
+            <rect x="8" y="160" width="104" height="46" rx="9" fill="var(--paper-2)" stroke="var(--line)" stroke-width="1" />
+            <text x="60" y="179" text-anchor="middle" font-family="var(--font-mono)" font-size="10" font-weight="700" fill="var(--ink)">{{ visual.source_feed_count }} FEEDS</text>
+            <text x="60" y="195" text-anchor="middle" font-family="var(--font-display)" font-size="9.5" fill="var(--muted)">GitHub · Papers</text>
+            <line x1="115" y1="183" x2="131" y2="183" stroke="var(--muted)" stroke-width="1.2" />
+            <polygon points="135,183 129,179.5 129,186.5" fill="var(--muted)" />
+            <rect x="138" y="160" width="104" height="46" rx="9" fill="var(--paper-2)" stroke="var(--line)" stroke-width="1" />
+            <text x="190" y="179" text-anchor="middle" font-family="var(--font-mono)" font-size="10" font-weight="700" fill="var(--ink)">7D COOLDOWN</text>
+            <text x="190" y="195" text-anchor="middle" font-family="var(--font-display)" font-size="9.5" fill="var(--muted)">Velocity rank</text>
+            <line x1="245" y1="183" x2="261" y2="183" stroke="var(--muted)" stroke-width="1.2" />
+            <polygon points="265,183 259,179.5 259,186.5" fill="var(--muted)" />
+            <rect x="268" y="160" width="104" height="46" rx="9" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.4" />
+            <text x="320" y="179" text-anchor="middle" font-family="var(--font-mono)" font-size="10" font-weight="700" fill="var(--accent)">DAILY BRIEF</text>
+            <text x="320" y="195" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">{% if !visual.issue_date.is_empty() %}{{ visual.issue_date }}{% else %}Daily{% endif %}</text>
+          </g>
+        </svg>
+      </article>
+      {% endif %}
+    </section>
+    {% endif %}
+
     {% if !trends.is_empty() %}
     <section class="news-trends" data-news-trends aria-labelledby="news-trends-title">
       <div class="news-section-heading">
         <p class="eyebrow">Cross-source radar</p>
         <h2 id="news-trends-title">Today’s Trend Radar</h2>
-        <p>Topics converging across GitHub, papers, and community feeds relative to the 7-day baseline.</p>
       </div>
       <div class="news-trend-grid">
         {% for trend in trends %}
@@ -92,7 +184,6 @@
       <div class="news-section-heading news-section-heading-row">
         <div>
           <h2 id="news-featured-title">Latest issue</h2>
-          <p>{{ issue_count }} generated news issues are indexed here.</p>
         </div>
       </div>
       {% for post in latest_issue %}
@@ -110,7 +201,6 @@
         <div class="news-section-heading">
           <p class="eyebrow">Recent</p>
           <h2 id="news-recent-title">Recent 7 issues</h2>
-          <p>The newest run stays featured; the next seven are compact scan rows.</p>
         </div>
         {% for post in recent_issues %}
         <a class="news-row" href="{{ post.url }}">
@@ -125,7 +215,6 @@
         <div class="news-section-heading">
           <p class="eyebrow">Archive</p>
           <h2 id="news-monthly-title">Monthly archive</h2>
-          <p>Older issues are grouped by month so the page scans like an archive, not a raw dump.</p>
         </div>
         <div class="news-month-groups">
           {% for group in month_groups %}
@@ -148,11 +237,13 @@
     <section class="news-utility" data-news-utility aria-labelledby="news-utility-title">
       <p class="eyebrow">pipeline utility</p>
       <h2 id="news-utility-title">Pipeline utility</h2>
-      <p><a href="/news/data/latest.json">latest.json</a> is copied from the news pipeline into the deploy output for local preview and Cloudflare Pages Functions.</p>
-      <p><a href="/news/search/">Open News Search</a> to search sources and draft a focused issue.</p>
-      {% for post in archive_post %}
-      <p><a href="{{ post.url }}">Daily AI News Archive</a> keeps the generated monthly digest index as a post page.</p>
-      {% endfor %}
+      <div class="news-utility-links">
+        <a href="/news/data/latest.json">latest.json</a>
+        <a href="/news/search/">Open News Search</a>
+        {% for post in archive_post %}
+        <a href="{{ post.url }}">Daily AI News Archive</a>
+        {% endfor %}
+      </div>
     </section>
   </main>
 

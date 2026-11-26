@@ -375,6 +375,8 @@ async fn builds_v3_personal_site_with_cv_projects_writing_and_functional_pretext
     assert!(news.contains("Monthly archive"));
     assert!(news.contains("pipeline utility"));
     assert!(news.contains("latest.json"));
+    assert!(news.contains("data-news-visual-summary"));
+    assert!(news.contains("<svg class=\"news-visual-svg\""));
     assert!(news.find("Latest issue") < news.find("pipeline utility"));
     assert!(news.matches("class=\"news-row\"").count() <= 7);
     assert!(!news.contains("data-news-digest-json"));
@@ -384,7 +386,6 @@ async fn builds_v3_personal_site_with_cv_projects_writing_and_functional_pretext
     assert!(!news.contains("Gemma guide"));
     assert!(news.contains("AI News Brief —"));
     assert!(news.contains("Daily AI News Archive"));
-
     let cfp = fs::read_to_string(out_dir.join("cfp/index.html"))?;
     assert!(cfp.contains("data-askama-template=\"cfp\""));
     assert!(cfp.contains("data-layout=\"cfp-index\""));

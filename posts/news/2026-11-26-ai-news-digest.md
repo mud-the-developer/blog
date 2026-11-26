@@ -38,8 +38,129 @@ content-classes: [news-digest-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Daily Brief</p>
       <h2 data-pretext-target>Today’s read list</h2>
-      <p class="news-digest-section-description" data-pretext-target>GitHub velocity is led by vllm-project/vllm; paper attention is clustering around ThinkMorph-SSL: Scaling Interleaved Multimodal Reasoning with Pretext Tasks; social attention is tilting toward Macroeconomic history in six facts. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
+    <div class="news-digest-visual-brief" data-news-visual-summary aria-label="Issue signal charts and pipeline">
+      <article class="news-visual-card">
+        <div class="news-visual-head">
+          <span>Signal radar</span>
+          <strong>156 signals · 133 fresh (24h)</strong>
+        </div>
+        <svg class="news-visual-svg" viewBox="0 0 540 220" role="img" aria-label="Topic convergence and freshness bar chart">
+          <g font-family="var(--font-mono)" font-size="10" fill="var(--muted)">
+            <text x="154" y="22" text-anchor="middle">0</text>
+            <text x="262" y="22" text-anchor="middle">35</text>
+            <text x="370" y="22" text-anchor="middle">70</text>
+          </g>
+          <g stroke="var(--line)" stroke-width="1">
+            <line x1="154" y1="30" x2="154" y2="184" />
+            <line x1="262" y1="30" x2="262" y2="184" stroke-dasharray="3 3" />
+            <line x1="370" y1="30" x2="370" y2="184" stroke-dasharray="3 3" />
+          </g>
+          <g>
+            <text x="144" y="53" text-anchor="end" font-family="var(--font-display)" font-size="12.5" font-weight="600" fill="var(--ink)">Frontier Models</text>
+            <rect x="154" y="40" width="216" height="18" rx="4" fill="var(--paper-2)" stroke="var(--line)" stroke-width="1" />
+            <rect x="154" y="40" width="138.9" height="18" rx="4" fill="var(--accent)" fill-opacity="0.2" stroke="var(--accent)" stroke-width="1" stroke-dasharray="3 2" />
+            <rect x="154" y="40" width="120.3" height="18" rx="4" fill="var(--accent)" />
+            <text x="380" y="53" font-family="var(--font-mono)" font-size="12.5" font-weight="700" fill="var(--ink)">45</text>
+            <text x="412" y="53" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">7 feeds · 1.0×</text>
+          </g>
+          <g>
+            <text x="144" y="91" text-anchor="end" font-family="var(--font-display)" font-size="12.5" font-weight="600" fill="var(--ink)">Agentic Systems</text>
+            <rect x="154" y="78" width="216" height="18" rx="4" fill="var(--paper-2)" stroke="var(--line)" stroke-width="1" />
+            <rect x="154" y="78" width="200.6" height="18" rx="4" fill="var(--accent-2)" fill-opacity="0.2" stroke="var(--accent-2)" stroke-width="1" stroke-dasharray="3 2" />
+            <rect x="154" y="78" width="169.7" height="18" rx="4" fill="var(--accent-2)" />
+            <text x="380" y="91" font-family="var(--font-mono)" font-size="12.5" font-weight="700" fill="var(--ink)">65</text>
+            <text x="412" y="91" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">5 feeds · 1.3×</text>
+          </g>
+          <g>
+            <text x="144" y="129" text-anchor="end" font-family="var(--font-display)" font-size="12.5" font-weight="600" fill="var(--ink)">Retrieval &amp; Memory</text>
+            <rect x="154" y="116" width="216" height="18" rx="4" fill="var(--paper-2)" stroke="var(--line)" stroke-width="1" />
+            <rect x="154" y="116" width="30.9" height="18" rx="4" fill="var(--accent)" fill-opacity="0.2" stroke="var(--accent)" stroke-width="1" stroke-dasharray="3 2" />
+            <rect x="154" y="116" width="21.6" height="18" rx="4" fill="var(--accent)" />
+            <text x="380" y="129" font-family="var(--font-mono)" font-size="12.5" font-weight="700" fill="var(--ink)">10</text>
+            <text x="412" y="129" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">5 feeds · 0.8×</text>
+          </g>
+          <g>
+            <text x="144" y="167" text-anchor="end" font-family="var(--font-display)" font-size="12.5" font-weight="600" fill="var(--ink)">AI Coding &amp; Dev</text>
+            <rect x="154" y="154" width="216" height="18" rx="4" fill="var(--paper-2)" stroke="var(--line)" stroke-width="1" />
+            <rect x="154" y="154" width="111.1" height="18" rx="4" fill="var(--accent-2)" fill-opacity="0.2" stroke="var(--accent-2)" stroke-width="1" stroke-dasharray="3 2" />
+            <rect x="154" y="154" width="98.7" height="18" rx="4" fill="var(--accent-2)" />
+            <text x="380" y="167" font-family="var(--font-mono)" font-size="12.5" font-weight="700" fill="var(--ink)">36</text>
+            <text x="412" y="167" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">4 feeds · 1.3×</text>
+          </g>
+          <g font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">
+            <rect x="154" y="197" width="12" height="8" rx="2" fill="var(--accent)" />
+            <text x="172" y="205">Fresh 24h</text>
+            <rect x="246" y="197" width="12" height="8" rx="2" fill="var(--accent)" fill-opacity="0.2" stroke="var(--accent)" stroke-width="1" stroke-dasharray="2 1.5" />
+            <text x="264" y="205">Total (7d window)</text>
+            <text x="532" y="205" text-anchor="end">Relative velocity</text>
+          </g>
+        </svg>
+      </article>
+      <article class="news-visual-card">
+        <div class="news-visual-head">
+          <span>Source mix &amp; pipeline</span>
+          <strong>30 curated · 6 feeds</strong>
+        </div>
+        <svg class="news-visual-svg" viewBox="0 0 380 220" role="img" aria-label="Curated source mix donut chart and daily news pipeline">
+          <circle cx="68" cy="74" r="44" fill="none" stroke="var(--line)" stroke-width="15" />
+          <circle cx="68" cy="74" r="44" fill="none" stroke="var(--accent)" stroke-opacity="1" stroke-width="15" stroke-dasharray="90.2 276.5" stroke-dashoffset="-0.0" transform="rotate(-90 68 74)" />
+          <circle cx="68" cy="74" r="44" fill="none" stroke="var(--accent-2)" stroke-opacity="1" stroke-width="15" stroke-dasharray="53.3 276.5" stroke-dashoffset="-92.2" transform="rotate(-90 68 74)" />
+          <circle cx="68" cy="74" r="44" fill="none" stroke="var(--accent)" stroke-opacity="0.58" stroke-width="15" stroke-dasharray="44.1 276.5" stroke-dashoffset="-147.4" transform="rotate(-90 68 74)" />
+          <circle cx="68" cy="74" r="44" fill="none" stroke="var(--accent-2)" stroke-opacity="0.58" stroke-width="15" stroke-dasharray="34.9 276.5" stroke-dashoffset="-193.5" transform="rotate(-90 68 74)" />
+          <circle cx="68" cy="74" r="44" fill="none" stroke="var(--ink)" stroke-opacity="0.48" stroke-width="15" stroke-dasharray="34.9 276.5" stroke-dashoffset="-230.4" transform="rotate(-90 68 74)" />
+          <circle cx="68" cy="74" r="44" fill="none" stroke="var(--muted)" stroke-opacity="0.62" stroke-width="15" stroke-dasharray="7.2 276.5" stroke-dashoffset="-267.2" transform="rotate(-90 68 74)" />
+          <text x="68" y="72" text-anchor="middle" font-family="var(--font-mono)" font-size="22" font-weight="700" fill="var(--ink)">30</text>
+          <text x="68" y="88" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" font-weight="600" letter-spacing="0.08em" fill="var(--muted)">SIGNALS</text>
+          <g>
+            <circle cx="144" cy="23" r="4" fill="var(--accent)" fill-opacity="1" />
+            <text x="158" y="26" font-family="var(--font-display)" font-size="11.5" font-weight="550" fill="var(--ink)">GitHub</text>
+            <text x="370" y="26" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)"><tspan fill="var(--ink)" font-weight="700">10</tspan> · 33%</text>
+          </g>
+          <g>
+            <rect x="140" y="39" width="8" height="8" rx="1.5" fill="var(--accent-2)" fill-opacity="1" />
+            <text x="158" y="46" font-family="var(--font-display)" font-size="11.5" font-weight="550" fill="var(--ink)">HF Papers</text>
+            <text x="370" y="46" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)"><tspan fill="var(--ink)" font-weight="700">6</tspan> · 20%</text>
+          </g>
+          <g>
+            <rect x="140.5" y="59.5" width="7" height="7" transform="rotate(45 144 63)" fill="var(--accent)" fill-opacity="0.58" />
+            <text x="158" y="66" font-family="var(--font-display)" font-size="11.5" font-weight="550" fill="var(--ink)">GeekNews</text>
+            <text x="370" y="66" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)"><tspan fill="var(--ink)" font-weight="700">5</tspan> · 17%</text>
+          </g>
+          <g>
+            <polygon points="144,79 148,87 140,87" fill="var(--accent-2)" fill-opacity="0.58" />
+            <text x="158" y="86" font-family="var(--font-display)" font-size="11.5" font-weight="550" fill="var(--ink)">X</text>
+            <text x="370" y="86" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)"><tspan fill="var(--ink)" font-weight="700">4</tspan> · 13%</text>
+          </g>
+          <g>
+            <circle cx="144" cy="103" r="3.5" fill="none" stroke="var(--ink)" stroke-opacity="0.48" stroke-width="2" />
+            <text x="158" y="106" font-family="var(--font-display)" font-size="11.5" font-weight="550" fill="var(--ink)">arXiv</text>
+            <text x="370" y="106" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)"><tspan fill="var(--ink)" font-weight="700">4</tspan> · 13%</text>
+          </g>
+          <g>
+            <rect x="139" y="121" width="10" height="4" rx="2" fill="var(--muted)" fill-opacity="0.62" />
+            <text x="158" y="126" font-family="var(--font-display)" font-size="11.5" font-weight="550" fill="var(--ink)">LinkedIn</text>
+            <text x="370" y="126" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)"><tspan fill="var(--ink)" font-weight="700">1</tspan> · 3%</text>
+          </g>
+          <line x1="8" y1="146" x2="372" y2="146" stroke="var(--line)" stroke-width="1" />
+          <g>
+            <rect x="8" y="160" width="104" height="46" rx="9" fill="var(--paper-2)" stroke="var(--line)" stroke-width="1" />
+            <text x="60" y="179" text-anchor="middle" font-family="var(--font-mono)" font-size="10" font-weight="700" fill="var(--ink)">6 FEEDS</text>
+            <text x="60" y="195" text-anchor="middle" font-family="var(--font-display)" font-size="9.5" fill="var(--muted)">GitHub · Papers</text>
+            <line x1="115" y1="183" x2="131" y2="183" stroke="var(--muted)" stroke-width="1.2" />
+            <polygon points="135,183 129,179.5 129,186.5" fill="var(--muted)" />
+            <rect x="138" y="160" width="104" height="46" rx="9" fill="var(--paper-2)" stroke="var(--line)" stroke-width="1" />
+            <text x="190" y="179" text-anchor="middle" font-family="var(--font-mono)" font-size="10" font-weight="700" fill="var(--ink)">7D COOLDOWN</text>
+            <text x="190" y="195" text-anchor="middle" font-family="var(--font-display)" font-size="9.5" fill="var(--muted)">Velocity rank</text>
+            <line x1="245" y1="183" x2="261" y2="183" stroke="var(--muted)" stroke-width="1.2" />
+            <polygon points="265,183 259,179.5 259,186.5" fill="var(--muted)" />
+            <rect x="268" y="160" width="104" height="46" rx="9" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.4" />
+            <text x="320" y="179" text-anchor="middle" font-family="var(--font-mono)" font-size="10" font-weight="700" fill="var(--accent)">DAILY BRIEF</text>
+            <text x="320" y="195" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">2026-11-26</text>
+          </g>
+        </svg>
+      </article>
+    </div>
     <div class="news-digest-lead-strip" aria-label="Lead signals">
       <article class="news-digest-lead-story">
         <p class="section-kicker">Trend radar</p>
@@ -373,8 +494,10 @@ content-classes: [news-digest-note]
       <h2>The day in one pass</h2>
     </header>
     <p class="news-digest-section-description" data-pretext-target>Development in AI infrastructure continues to accelerate. The `vllm-project/vllm` repository, a high-throughput and memory-efficient inference engine for LLMs, maintained its strong presence, reflecting ongoing efforts to optimize model deployment. Another notable project, `rohitg00/ai-engineering-from-scratch`, gained traction, underscoring the growing demand for practical AI engineering knowledge. Other repositories, including `paperclipai/paperclip` for agent management and `rtk-ai/rtk` for LLM token consumption reduction, also showed sustained interest.</p>
-    <p class="news-digest-section-description" data-pretext-target>Research publications this period focused on advancing multimodal capabilities and network efficiency. &#x27;ThinkMorph-SSL: Scaling Interleaved Multimodal Reasoning with Pretext Tasks&#x27; emerged as a key paper, detailing a two-stage training approach for improved multimodal reasoning. Additionally, new work on &#x27;Coverage of THz Networks in Presence of Blockages and Scattering&#x27; was published, alongside research into separating measurement and defense failures in split language-model privacy, and advancements in efficient document parsing with &#x27;VenusOCR2.0&#x27;.</p>
-    <p class="news-digest-section-description" data-pretext-target>Community discussions spanned a diverse range of topics. Several conversations on platforms like GeekNews centered on &#x27;Macroeconomic history in six facts,&#x27; indicating a broader interest in economic context alongside technological developments. Other discussions touched upon the &#x27;sheer magnitude of what&#x27;s happening&#x27; in tech and the utility of tools for &#x27;smart and truly responsible people,&#x27; reflecting a mix of existential and practical considerations within the community. A total of 10 repository signals, 10 paper picks, and 10 community items were curated for today&#x27;s brief.</p>
+    <details class="news-digest-prose-more"><summary>Read full editorial notes (+2)</summary>
+      <p class="news-digest-section-description" data-pretext-target>Research publications this period focused on advancing multimodal capabilities and network efficiency. &#x27;ThinkMorph-SSL: Scaling Interleaved Multimodal Reasoning with Pretext Tasks&#x27; emerged as a key paper, detailing a two-stage training approach for improved multimodal reasoning. Additionally, new work on &#x27;Coverage of THz Networks in Presence of Blockages and Scattering&#x27; was published, alongside research into separating measurement and defense failures in split language-model privacy, and advancements in efficient document parsing with &#x27;VenusOCR2.0&#x27;.</p>
+      <p class="news-digest-section-description" data-pretext-target>Community discussions spanned a diverse range of topics. Several conversations on platforms like GeekNews centered on &#x27;Macroeconomic history in six facts,&#x27; indicating a broader interest in economic context alongside technological developments. Other discussions touched upon the &#x27;sheer magnitude of what&#x27;s happening&#x27; in tech and the utility of tools for &#x27;smart and truly responsible people,&#x27; reflecting a mix of existential and practical considerations within the community. A total of 10 repository signals, 10 paper picks, and 10 community items were curated for today&#x27;s brief.</p>
+    </details>
   </section>
 
   <section id="digest-social" class="news-digest-section">

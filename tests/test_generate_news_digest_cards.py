@@ -127,6 +127,8 @@ class GenerateNewsDigestCardRenderingTests(unittest.TestCase):
 
         self.assertIn('class="news-digest-signal-brief"', html)
         self.assertIn('data-digest-layout="editorial-signal"', html)
+        self.assertIn('class="news-digest-visual-brief"', html)
+        self.assertIn('<svg class="news-visual-svg"', html)
         self.assertIn('class="news-digest-lead-strip"', html)
         self.assertIn('class="news-digest-signal-board"', html)
         self.assertIn('class="news-digest-compact-row', html)
@@ -137,8 +139,8 @@ class GenerateNewsDigestCardRenderingTests(unittest.TestCase):
         self.assertNotIn('class="news-digest-compact-rank"', html)
         self.assertNotIn('signal 8.60', html)
         self.assertNotIn('Generated from the ranked feed', html)
+        self.assertLess(html.index("news-digest-visual-brief"), html.index("news-digest-lead-strip"))
         self.assertLess(html.index("news-digest-lead-strip"), html.index("news-digest-source-ledger"))
-
 
 class GenerateNewsDigestAutomationTests(unittest.TestCase):
     def test_public_hub_is_utf8_and_never_contains_private_memory(self) -> None:

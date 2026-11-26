@@ -144,6 +144,9 @@ test('local preview serves focused issue API and a dedicated news page', async (
   await expect(page.locator('.site-header nav a[href="/news/"]')).toHaveAttribute('aria-current', 'page');
   await expect(page.locator('a[href="/news/search/"]').first()).toBeVisible();
   await expect(page.locator('[data-focused-issue-lab]')).toHaveCount(0);
+  await expect(page.locator('[data-news-visual-summary] svg.news-visual-svg')).toHaveCount(2);
+  const newsVisualBox = await page.locator('[data-news-visual-summary] svg.news-visual-svg').first().boundingBox();
+  expect(newsVisualBox?.width ?? 0).toBeGreaterThan(200);
   await expect(page.locator('[data-news-featured] .news-feature-card')).toHaveCount(1);
   await expect(page.locator('[data-news-featured] .news-feature-thumb')).toHaveCount(1);
   const newsIssues = await page.locator('[data-news-monthly-archive] .news-month-link').count();
@@ -152,7 +155,6 @@ test('local preview serves focused issue API and a dedicated news page', async (
   await expect(page.locator('[data-news-utility]')).toContainText('latest.json');
   await expect(page.locator('[data-news-digest-json]')).toHaveCount(0);
   await expect(page.locator('[data-news-featured] .news-feature-card strong')).toContainText('Brief');
-
   await page.goto('/news/search/');
   await expect(page.locator('html')).toHaveAttribute('data-askama-template', 'news-search');
   await expect(page.locator('.site-header nav a[href="/news/"]')).toHaveAttribute('aria-current', 'page');

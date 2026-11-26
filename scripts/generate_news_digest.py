@@ -2916,9 +2916,199 @@ def render_source_ledger(rows: list[dict[str, Any]]) -> list[str]:
     return lines
 
 
+def render_digest_visual_summary(
+    context: DigestContext,
+    issue_date: str,
+    repo_count: int,
+    paper_count: int,
+    social_count: int,
+) -> list[str]:
+    bar_rows: list[tuple[str, int, int, str]] = []
+    for trend in (context.trends or [])[:4]:
+        label = str(trend.get("label") or "").strip()
+        count = int(trend.get("count") or 0)
+        if not label or count <= 0:
+            continue
+        fresh = int(trend.get("fresh_count") or 0)
+        fresh = min(fresh, count) if fresh > 0 else count
+        feeds = max(1, len(trend.get("sources") or []))
+        burst = float(trend.get("burst_ratio") or 0.0)
+        meta = f"{feeds} feeds · {burst:.1f}×" if burst > 0 else f"{feeds} feeds"
+        bar_rows.append((label, count, fresh, meta))
+
+    is_trend_bars = bool(bar_rows)
+    if not bar_rows:
+        fallback = [
+            ("Repositories", repo_count, repo_count, "GitHub"),
+            ("Papers", paper_count, paper_count, "arXiv · HF"),
+            ("Community Wire", social_count, social_count, "HN · X · GN"),
+        ]
+        bar_rows = [row for row in fallback if row[1] > 0]
+
+    source_rows = [
+        (str(row.get("label") or "").strip(), int(row.get("value") or 0))
+        for row in (context.source_counts or [])[:6]
+        if str(row.get("label") or "").strip() and int(row.get("value") or 0) > 0
+    ]
+    if not bar_rows and not source_rows:
+        return []
+
+    lines = ['    <div class="news-digest-visual-brief" data-news-visual-summary aria-label="Issue signal charts and pipeline">']
+
+    if bar_rows:
+        max_count = max(row[1] for row in bar_rows)
+        axis_max = max(10, ((max_count + 9) // 10) * 10)
+        axis_mid = axis_max // 2
+        total_signals = sum(row[1] for row in bar_rows)
+        total_fresh = sum(row[2] for row in bar_rows)
+        head_kicker = "Signal radar" if is_trend_bars else "Section volume"
+        head_stat = (
+            f"{total_signals} signals · {total_fresh} fresh (24h)"
+            if is_trend_bars
+            else f"{total_signals} curated signals"
+        )
+        lines.extend(
+            [
+                '      <article class="news-visual-card">',
+                '        <div class="news-visual-head">',
+                f'          <span>{head_kicker}</span>',
+                f'          <strong>{safe_text(head_stat)}</strong>',
+                '        </div>',
+                '        <svg class="news-visual-svg" viewBox="0 0 540 220" role="img" aria-label="Topic convergence and freshness bar chart">',
+                '          <g font-family="var(--font-mono)" font-size="10" fill="var(--muted)">',
+                '            <text x="154" y="22" text-anchor="middle">0</text>',
+                f'            <text x="262" y="22" text-anchor="middle">{axis_mid}</text>',
+                f'            <text x="370" y="22" text-anchor="middle">{axis_max}</text>',
+                '          </g>',
+                '          <g stroke="var(--line)" stroke-width="1">',
+                '            <line x1="154" y1="30" x2="154" y2="184" />',
+                '            <line x1="262" y1="30" x2="262" y2="184" stroke-dasharray="3 3" />',
+                '            <line x1="370" y1="30" x2="370" y2="184" stroke-dasharray="3 3" />',
+                '          </g>',
+            ]
+        )
+        for idx, (label, count, fresh, meta) in enumerate(bar_rows):
+            row_y = 50 + idx * 38
+            bar_y = row_y - 10
+            total_w = max(6.0, min(216.0, (count / axis_max) * 216.0))
+            fresh_w = max(4.0, min(total_w, (fresh / axis_max) * 216.0))
+            color = "var(--accent)" if idx % 2 == 0 else "var(--accent-2)"
+            lines.extend(
+                [
+                    '          <g>',
+                    f'            <text x="144" y="{row_y + 3}" text-anchor="end" font-family="var(--font-display)" font-size="12.5" font-weight="600" fill="var(--ink)">{safe_text(label)}</text>',
+                    f'            <rect x="154" y="{bar_y}" width="216" height="18" rx="4" fill="var(--paper-2)" stroke="var(--line)" stroke-width="1" />',
+                    f'            <rect x="154" y="{bar_y}" width="{total_w:.1f}" height="18" rx="4" fill="{color}" fill-opacity="0.2" stroke="{color}" stroke-width="1" stroke-dasharray="3 2" />',
+                    f'            <rect x="154" y="{bar_y}" width="{fresh_w:.1f}" height="18" rx="4" fill="{color}" />',
+                    f'            <text x="380" y="{row_y + 3}" font-family="var(--font-mono)" font-size="12.5" font-weight="700" fill="var(--ink)">{count}</text>',
+                    f'            <text x="412" y="{row_y + 3}" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">{safe_text(meta)}</text>',
+                    '          </g>',
+                ]
+            )
+        lines.extend(
+            [
+                '          <g font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">',
+                '            <rect x="154" y="197" width="12" height="8" rx="2" fill="var(--accent)" />',
+                '            <text x="172" y="205">Fresh 24h</text>',
+                '            <rect x="246" y="197" width="12" height="8" rx="2" fill="var(--accent)" fill-opacity="0.2" stroke="var(--accent)" stroke-width="1" stroke-dasharray="2 1.5" />',
+                '            <text x="264" y="205">Total (7d window)</text>',
+                '            <text x="532" y="205" text-anchor="end">Relative velocity</text>',
+                '          </g>',
+                '        </svg>',
+                '      </article>',
+            ]
+        )
+
+    if source_rows:
+        curated_total = sum(val for _, val in source_rows)
+        circumference = 2.0 * math.pi * 44.0
+        palette = [
+            ("var(--accent)", "1", "circle"),
+            ("var(--accent-2)", "1", "square"),
+            ("var(--accent)", "0.58", "diamond"),
+            ("var(--accent-2)", "0.58", "triangle"),
+            ("var(--ink)", "0.48", "ring"),
+            ("var(--muted)", "0.62", "pill"),
+        ]
+        gap = 2.0 if len(source_rows) > 1 else 0.0
+        acc = 0.0
+        lines.extend(
+            [
+                '      <article class="news-visual-card">',
+                '        <div class="news-visual-head">',
+                '          <span>Source mix &amp; pipeline</span>',
+                f'          <strong>{curated_total} curated · {len(source_rows)} feeds</strong>',
+                '        </div>',
+                '        <svg class="news-visual-svg" viewBox="0 0 380 220" role="img" aria-label="Curated source mix donut chart and daily news pipeline">',
+                '          <circle cx="68" cy="74" r="44" fill="none" stroke="var(--line)" stroke-width="15" />',
+            ]
+        )
+        legend_lines: list[str] = []
+        for idx, (label, val) in enumerate(source_rows):
+            share = val / curated_total if curated_total > 0 else 0.0
+            seg = share * circumference
+            dash_len = max(1.5, seg - gap)
+            color, opacity, shape = palette[idx % len(palette)]
+            lines.append(
+                f'          <circle cx="68" cy="74" r="44" fill="none" stroke="{color}" stroke-opacity="{opacity}" stroke-width="15" stroke-dasharray="{dash_len:.1f} {circumference:.1f}" stroke-dashoffset="{-acc:.1f}" transform="rotate(-90 68 74)" />'
+            )
+            acc += seg
+            ly = 26 + idx * 20
+            pct = round(share * 100)
+            if shape == "circle":
+                marker = f'<circle cx="144" cy="{ly - 3}" r="4" fill="{color}" fill-opacity="{opacity}" />'
+            elif shape == "square":
+                marker = f'<rect x="140" y="{ly - 7}" width="8" height="8" rx="1.5" fill="{color}" fill-opacity="{opacity}" />'
+            elif shape == "diamond":
+                marker = f'<rect x="140.5" y="{ly - 6.5}" width="7" height="7" transform="rotate(45 144 {ly - 3})" fill="{color}" fill-opacity="{opacity}" />'
+            elif shape == "triangle":
+                marker = f'<polygon points="144,{ly - 7} 148,{ly + 1} 140,{ly + 1}" fill="{color}" fill-opacity="{opacity}" />'
+            elif shape == "ring":
+                marker = f'<circle cx="144" cy="{ly - 3}" r="3.5" fill="none" stroke="{color}" stroke-opacity="{opacity}" stroke-width="2" />'
+            else:
+                marker = f'<rect x="139" y="{ly - 5}" width="10" height="4" rx="2" fill="{color}" fill-opacity="{opacity}" />'
+            legend_lines.extend(
+                [
+                    '          <g>',
+                    f'            {marker}',
+                    f'            <text x="158" y="{ly}" font-family="var(--font-display)" font-size="11.5" font-weight="550" fill="var(--ink)">{safe_text(label)}</text>',
+                    f'            <text x="370" y="{ly}" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)"><tspan fill="var(--ink)" font-weight="700">{val}</tspan> · {pct}%</text>',
+                    '          </g>',
+                ]
+            )
+        lines.extend(
+            [
+                f'          <text x="68" y="72" text-anchor="middle" font-family="var(--font-mono)" font-size="22" font-weight="700" fill="var(--ink)">{curated_total}</text>',
+                '          <text x="68" y="88" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" font-weight="600" letter-spacing="0.08em" fill="var(--muted)">SIGNALS</text>',
+                *legend_lines,
+                '          <line x1="8" y1="146" x2="372" y2="146" stroke="var(--line)" stroke-width="1" />',
+                '          <g>',
+                '            <rect x="8" y="160" width="104" height="46" rx="9" fill="var(--paper-2)" stroke="var(--line)" stroke-width="1" />',
+                f'            <text x="60" y="179" text-anchor="middle" font-family="var(--font-mono)" font-size="10" font-weight="700" fill="var(--ink)">{len(source_rows)} FEEDS</text>',
+                '            <text x="60" y="195" text-anchor="middle" font-family="var(--font-display)" font-size="9.5" fill="var(--muted)">GitHub · Papers</text>',
+                '            <line x1="115" y1="183" x2="131" y2="183" stroke="var(--muted)" stroke-width="1.2" />',
+                '            <polygon points="135,183 129,179.5 129,186.5" fill="var(--muted)" />',
+                '            <rect x="138" y="160" width="104" height="46" rx="9" fill="var(--paper-2)" stroke="var(--line)" stroke-width="1" />',
+                '            <text x="190" y="179" text-anchor="middle" font-family="var(--font-mono)" font-size="10" font-weight="700" fill="var(--ink)">7D COOLDOWN</text>',
+                '            <text x="190" y="195" text-anchor="middle" font-family="var(--font-display)" font-size="9.5" fill="var(--muted)">Velocity rank</text>',
+                '            <line x1="245" y1="183" x2="261" y2="183" stroke="var(--muted)" stroke-width="1.2" />',
+                '            <polygon points="265,183 259,179.5 259,186.5" fill="var(--muted)" />',
+                '            <rect x="268" y="160" width="104" height="46" rx="9" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.4" />',
+                '            <text x="320" y="179" text-anchor="middle" font-family="var(--font-mono)" font-size="10" font-weight="700" fill="var(--accent)">DAILY BRIEF</text>',
+                f'            <text x="320" y="195" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">{safe_text(issue_date or "Daily")}</text>',
+                '          </g>',
+                '        </svg>',
+                '      </article>',
+            ]
+        )
+    lines.append('    </div>')
+    return lines
+
+
 def render_signal_brief_section(
     context: DigestContext,
     brief: BetaDigest,
+    issue_date: str,
     repo_title: str,
     repo_description: str,
     repo_cards: list[NewsItem],
@@ -2934,8 +3124,8 @@ def render_signal_brief_section(
         '    <header class="news-digest-section-head">',
         '      <p class="section-kicker">Daily Brief</p>',
         '      <h2 data-pretext-target>Today’s read list</h2>',
-        f'      <p class="news-digest-section-description" data-pretext-target>{safe_text(context.summary)}</p>',
         '    </header>',
+        *render_digest_visual_summary(context, issue_date, len(repo_cards), len(paper_cards), len(social_cards)),
         *render_signal_lead_strip(context, brief),
         '    <div class="news-digest-signal-board">',
         '      <section class="news-digest-signal-column">',
@@ -3031,6 +3221,7 @@ def render_markdown(
             render_signal_brief_section(
                 context,
                 brief,
+                issue_date,
                 repo_title,
                 repo_description,
                 repo_cards,
@@ -3048,12 +3239,20 @@ def render_markdown(
             '      <p class="section-kicker">Today in AI</p>',
             '      <h2>The day in one pass</h2>',
             '    </header>',
+            f'    <p class="news-digest-section-description" data-pretext-target>{safe_text(article_paragraphs[0])}</p>',
         ]
     )
-    for paragraph in article_paragraphs:
-        body.append(f'    <p class="news-digest-section-description" data-pretext-target>{safe_text(paragraph)}</p>')
+    if len(article_paragraphs) > 1:
+        extra_count = len(article_paragraphs) - 1
+        body.append(
+            f'    <details class="news-digest-prose-more"><summary>Read full editorial notes (+{extra_count})</summary>'
+        )
+        for paragraph in article_paragraphs[1:]:
+            body.append(
+                f'      <p class="news-digest-section-description" data-pretext-target>{safe_text(paragraph)}</p>'
+            )
+        body.append("    </details>")
     body.extend(["  </section>", ""])
-
     if social_cards:
         body.extend(
             [

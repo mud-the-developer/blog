@@ -210,6 +210,10 @@ struct NewsTrendCluster {
     #[serde(default)]
     count: usize,
     #[serde(default)]
+    fresh_count: usize,
+    #[serde(default)]
+    burst_ratio: f64,
+    #[serde(default)]
     sources: Vec<String>,
     #[serde(default)]
     items: Vec<NewsTrendSignal>,
@@ -221,6 +225,58 @@ impl NewsTrendCluster {
     }
 }
 
+#[derive(Debug, Clone, Deserialize)]
+struct NewsSourceCountRow {
+    #[serde(default)]
+    label: String,
+    #[serde(default)]
+    value: usize,
+}
+
+#[derive(Debug, Clone)]
+struct NewsTrendBar {
+    label: String,
+    count: usize,
+    meta: String,
+    row_y: usize,
+    bar_y: usize,
+    total_w: String,
+    fresh_w: String,
+    color_var: &'static str,
+}
+
+#[derive(Debug, Clone)]
+struct NewsSourceSlice {
+    label: String,
+    value: usize,
+    pct: usize,
+    dash: String,
+    offset: String,
+    legend_y: usize,
+    color_var: &'static str,
+    opacity: &'static str,
+    shape: &'static str,
+}
+
+#[derive(Debug, Clone, Default)]
+struct NewsVisualSummary {
+    issue_date: String,
+    total_signals: usize,
+    total_fresh: usize,
+    curated_count: usize,
+    source_feed_count: usize,
+    axis_mid: usize,
+    axis_max: usize,
+    bars: Vec<NewsTrendBar>,
+    slices: Vec<NewsSourceSlice>,
+}
+
+impl NewsVisualSummary {
+    fn has_charts(&self) -> bool {
+        !self.bars.is_empty() || !self.slices.is_empty()
+    }
+}
+
 #[derive(Template)]
 #[template(path = "news.html")]
 struct NewsTemplate<'a> {
@@ -229,6 +285,7 @@ struct NewsTemplate<'a> {
     month_groups: Vec<NewsMonthGroup<'a>>,
     archive_post: Vec<&'a Post>,
     trends: Vec<NewsTrendCluster>,
+    visual: NewsVisualSummary,
     issue_count: usize,
     command_index_json: String,
     archive_json: &'a str,
@@ -1120,29 +1177,145 @@ pub fn render_post_page(post: &Post, posts: &[Post]) -> BlogResult<String> {
     .render()?)
 }
 
-fn load_news_trends() -> Vec<NewsTrendCluster> {
+fn load_news_radar() -> (Vec<NewsTrendCluster>, NewsVisualSummary) {
     let Ok(raw) = std_fs::read_to_string("data/news/latest.json") else {
-        return Vec::new();
+        return (Vec::new(), NewsVisualSummary::default());
     };
     let Ok(value) = serde_json::from_str::<serde_json::Value>(&raw) else {
-        return Vec::new();
+        return (Vec::new(), NewsVisualSummary::default());
     };
-    let Some(arr) = value.get("trends").and_then(|v| v.as_array()) else {
-        return Vec::new();
-    };
-    arr.iter()
-        .filter_map(|entry| serde_json::from_value::<NewsTrendCluster>(entry.clone()).ok())
-        .filter(|cluster| !cluster.label.trim().is_empty())
-        .map(|mut cluster| {
-            cluster.items.retain(|item| {
-                !item.title.trim().is_empty()
-                    && (item.url.starts_with("https://") || item.url.starts_with("http://"))
-            });
-            cluster.items.truncate(2);
-            cluster
+    let trends: Vec<NewsTrendCluster> = value
+        .get("trends")
+        .and_then(|v| v.as_array())
+        .map(|arr| {
+            arr.iter()
+                .filter_map(|entry| serde_json::from_value::<NewsTrendCluster>(entry.clone()).ok())
+                .filter(|cluster| !cluster.label.trim().is_empty())
+                .map(|mut cluster| {
+                    cluster.items.retain(|item| {
+                        !item.title.trim().is_empty()
+                            && (item.url.starts_with("https://") || item.url.starts_with("http://"))
+                    });
+                    cluster.items.truncate(2);
+                    cluster
+                })
+                .take(4)
+                .collect()
         })
-        .take(4)
-        .collect()
+        .unwrap_or_default();
+
+    let source_rows: Vec<NewsSourceCountRow> = value
+        .get("source_counts")
+        .and_then(|v| v.as_array())
+        .map(|arr| {
+            arr.iter()
+                .filter_map(|entry| {
+                    serde_json::from_value::<NewsSourceCountRow>(entry.clone()).ok()
+                })
+                .filter(|row| !row.label.trim().is_empty() && row.value > 0)
+                .take(6)
+                .collect()
+        })
+        .unwrap_or_default();
+
+    let max_count = trends.iter().map(|t| t.count).max().unwrap_or(0);
+    let axis_max = if max_count == 0 {
+        10
+    } else {
+        max_count.div_ceil(10) * 10
+    };
+    let axis_mid = axis_max / 2;
+    let track_w = 216.0_f64;
+    let mut total_signals = 0_usize;
+    let mut total_fresh = 0_usize;
+    let mut bars = Vec::with_capacity(trends.len());
+    for (idx, cluster) in trends.iter().enumerate() {
+        let fresh = if cluster.fresh_count > 0 {
+            cluster.fresh_count.min(cluster.count)
+        } else {
+            cluster.count
+        };
+        total_signals += cluster.count;
+        total_fresh += fresh;
+        let total_w = ((cluster.count as f64 / axis_max as f64) * track_w).clamp(6.0, track_w);
+        let fresh_w = ((fresh as f64 / axis_max as f64) * track_w).clamp(4.0, total_w);
+        let row_y = 50 + idx * 38;
+        let feeds = cluster.sources.len().max(1);
+        let meta = if cluster.burst_ratio > 0.0 {
+            format!("{feeds} feeds · {:.1}×", cluster.burst_ratio)
+        } else {
+            format!("{feeds} feeds")
+        };
+        bars.push(NewsTrendBar {
+            label: cluster.label.clone(),
+            count: cluster.count,
+            meta,
+            row_y,
+            bar_y: row_y - 10,
+            total_w: format!("{total_w:.1}"),
+            fresh_w: format!("{fresh_w:.1}"),
+            color_var: if idx % 2 == 0 {
+                "var(--accent)"
+            } else {
+                "var(--accent-2)"
+            },
+        });
+    }
+
+    let curated_count: usize = source_rows.iter().map(|r| r.value).sum();
+    let circumference = 2.0 * std::f64::consts::PI * 44.0;
+    let palette: [(&str, &str, &str); 6] = [
+        ("var(--accent)", "1", "circle"),
+        ("var(--accent-2)", "1", "square"),
+        ("var(--accent)", "0.58", "diamond"),
+        ("var(--accent-2)", "0.58", "triangle"),
+        ("var(--ink)", "0.48", "ring"),
+        ("var(--muted)", "0.62", "pill"),
+    ];
+    let mut slices = Vec::with_capacity(source_rows.len());
+    let mut acc = 0.0_f64;
+    let gap = if source_rows.len() > 1 { 2.0 } else { 0.0 };
+    for (idx, row) in source_rows.iter().enumerate() {
+        let share = if curated_count > 0 {
+            row.value as f64 / curated_count as f64
+        } else {
+            0.0
+        };
+        let seg = share * circumference;
+        let dash_len = (seg - gap).max(1.5);
+        let (color_var, opacity, shape) = palette[idx % palette.len()];
+        slices.push(NewsSourceSlice {
+            label: row.label.clone(),
+            value: row.value,
+            pct: (share * 100.0).round() as usize,
+            dash: format!("{dash_len:.1} {circumference:.1}"),
+            offset: format!("{:.1}", -acc),
+            legend_y: 26 + idx * 20,
+            color_var,
+            opacity,
+            shape,
+        });
+        acc += seg;
+    }
+
+    let issue_date = value
+        .get("issue_date")
+        .and_then(|v| v.as_str())
+        .unwrap_or("")
+        .to_string();
+
+    let visual = NewsVisualSummary {
+        issue_date,
+        total_signals,
+        total_fresh,
+        curated_count,
+        source_feed_count: source_rows.len(),
+        axis_mid,
+        axis_max,
+        bars,
+        slices,
+    };
+    (trends, visual)
 }
 
 pub fn render_news_page(posts: &[Post]) -> BlogResult<String> {
@@ -1166,13 +1339,14 @@ pub fn render_news_page(posts: &[Post]) -> BlogResult<String> {
         .take(7)
         .collect::<Vec<_>>();
     let month_groups = news_month_groups(&news_issues);
-    let trends = load_news_trends();
+    let (trends, visual) = load_news_radar();
     Ok(NewsTemplate {
         latest_issue,
         recent_issues,
         month_groups,
         archive_post,
         trends,
+        visual,
         issue_count: news_issues.len(),
         command_index_json,
         archive_json: &archive_json,
