@@ -233,11 +233,6 @@ test('theme follows the system default and persists toggled override across navi
   const darkPage = await darkContext.newPage();
   await darkPage.goto('/');
   await expect(darkPage.locator('[data-theme-toggle]')).toHaveAttribute('data-active-theme', 'system-dark');
-  await expect(darkPage.locator('[data-ran-stage]')).toBeVisible();
-  await darkPage.locator('[data-ran-node="2"]').click();
-  await expect(darkPage.locator('[data-ran-stage]')).toHaveAttribute('data-ran-phase', '2');
-  await expect(darkPage.locator('[data-ran-node="2"]')).toHaveAttribute('data-active', 'true');
-
   let themeAudit = await darkPage.evaluate(() => {
     const style = getComputedStyle(document.body);
     return {

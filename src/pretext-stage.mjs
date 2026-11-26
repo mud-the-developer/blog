@@ -1,7 +1,6 @@
 import { layoutNextLine, measureLineStats, prepareWithSegments } from './pretext/layout.js';
 import { safeUrl } from './safe-url.mjs';
 import { createV3State, filterCommandItems, v3Reducer } from './v3-interactive-state.mjs';
-
 const REDUCED_MOTION = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
 function parseJsonScript(id, fallback) {
@@ -163,96 +162,10 @@ function createBioPretextEngine() {
 
   return { reflow };
 }
-const RAN_PHASES = [
-  { link: 0, nodes: [0], beam: 'ul', led: '0', tone: 'primary' },
-  { link: 1, nodes: [1], beam: '', led: '1', tone: 'primary' },
-  { link: 2, nodes: [1, 2], beam: '', led: '2', tone: 'secondary' },
-  { link: 3, nodes: [0, 1], beam: 'dl', led: 'ant', tone: 'secondary' },
-];
-
-function createRanNetworkEngine() {
-  const stage = document.querySelector('[data-ran-stage]');
-  if (!stage) return { reflow: () => {} };
-
-  const links = new Map(
-    [...stage.querySelectorAll('[data-ran-link]')].map((el) => [Number(el.dataset.ranLink), el]),
-  );
-  const nodes = [...stage.querySelectorAll('[data-ran-node]')];
-  const beams = [...stage.querySelectorAll('[data-ran-beam]')];
-  const leds = [...stage.querySelectorAll('[data-ran-led]')];
-  const pktGroup = stage.querySelector('[data-ran-packet]');
-  const pktHalo = stage.querySelector('.ran-pkt-halo');
-  const pktCore = stage.querySelector('.ran-pkt-core');
-
-  let activePhase = 0;
-  const playing = !REDUCED_MOTION();
-  let phaseStart = performance.now();
-  const PHASE_MS = 1900;
-
-  const placePacket = (progress) => {
-    const phase = RAN_PHASES[activePhase] || RAN_PHASES[0];
-    const path = links.get(phase.link);
-    if (!path || !pktGroup || typeof path.getTotalLength !== 'function') return;
-    const len = path.getTotalLength();
-    const t = phase.link === 2
-      ? (progress < 0.5 ? progress * 2 : (1 - progress) * 2)
-      : progress;
-    const pt = path.getPointAtLength(len * Math.max(0.05, Math.min(0.95, t)));
-    pktGroup.setAttribute('transform', `translate(${pt.x.toFixed(1)}, ${pt.y.toFixed(1)})`);
-  };
-
-  const selectPhase = (idx) => {
-    activePhase = ((idx % RAN_PHASES.length) + RAN_PHASES.length) % RAN_PHASES.length;
-    phaseStart = performance.now();
-    const phase = RAN_PHASES[activePhase];
-    stage.dataset.ranPhase = String(activePhase);
-    links.forEach((el, id) => { el.dataset.active = id === phase.link ? 'true' : 'false'; });
-    nodes.forEach((el) => {
-      const id = Number(el.dataset.ranNode);
-      el.dataset.active = phase.nodes.includes(id) ? 'true' : 'false';
-    });
-    beams.forEach((el) => { el.dataset.active = el.dataset.ranBeam === phase.beam ? 'true' : 'false'; });
-    leds.forEach((el) => { el.dataset.active = el.dataset.ranLed === phase.led ? 'true' : 'false'; });
-    const isSec = phase.tone === 'secondary';
-    if (pktHalo) pktHalo.setAttribute('fill', isSec ? 'var(--accent-secondary)' : 'var(--accent-primary)');
-    if (pktCore) pktCore.setAttribute('fill', isSec ? 'var(--accent-2)' : 'var(--accent)');
-    placePacket(playing ? 0.08 : 0.5);
-  };
-
-  const tick = (now) => {
-    if (!playing) return;
-    const elapsed = now - phaseStart;
-    if (elapsed >= PHASE_MS) {
-      selectPhase(activePhase + 1);
-    } else {
-      const t = elapsed / PHASE_MS;
-      const eased = t < 0.5 ? 2 * t * t : 1 - ((-2 * t + 2) ** 2) / 2;
-      placePacket(eased);
-    }
-    window.requestAnimationFrame(tick);
-  };
-
-  nodes.forEach((node) => {
-    const activate = () => selectPhase(Number(node.dataset.ranNode || 0));
-    node.addEventListener('click', activate);
-    node.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        activate();
-      }
-    });
-  });
-
-  selectPhase(0);
-  if (playing) window.requestAnimationFrame(tick);
-  return { reflow: () => placePacket(0.5) };
-}
-
 function setupInteractiveV3() {
   const commandItems = parseJsonScript('command-index-data', []);
   let state = createV3State({ commandItems });
   const bioEngine = createBioPretextEngine();
-  const ranEngine = createRanNetworkEngine();
   balanceHeadlines();
   const cmdBackdrop = document.querySelector('[data-cmd-backdrop]');
   const cmdInput = document.querySelector('[data-cmd-input]');
@@ -394,7 +307,6 @@ function setupInteractiveV3() {
     if (state.commandOpen) dispatch({ type: 'cmd.close' });
     if (evt.persisted) {
       bioEngine.reflow({ pulse: false });
-      ranEngine.reflow();
     }
   });
 

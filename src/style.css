@@ -882,23 +882,10 @@ body[data-layout="v3-dossier"] .v3-footer,
 }
 .v3-intro {
   display: grid;
-  grid-template-columns: minmax(0, 1.04fr) minmax(360px, 0.96fr);
-  gap: clamp(24px, 3vw, 44px);
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr);
   padding: 6px 0 4px;
 }
 .v3-intro-copy { min-width: 0; }
-.v3-ran-stage { overflow: hidden; display: grid; padding: 6px; }
-.v3-ran-svg { display: block; width: 100%; height: auto; color: var(--ink); }
-.ran-node { cursor: pointer; outline: none; }
-.ran-hi { opacity: 0.52; transition: opacity 240ms ease, filter 240ms ease; }
-.ran-node[data-active="true"] .ran-hi { opacity: 1; filter: brightness(1.06); }
-.ran-beam { opacity: 0.14; transition: opacity 280ms ease; }
-.ran-beam[data-active="true"] { opacity: 1; }
-.ran-led { opacity: 0.35; transition: opacity 200ms ease; }
-.ran-led[data-active="true"] { opacity: 1; }
-.ran-link { fill: none; stroke: var(--muted); stroke-opacity: 0.36; stroke-width: 1.4; stroke-dasharray: 4 4; transition: stroke 200ms ease, stroke-opacity 200ms ease; }
-.ran-link[data-active="true"] { stroke: var(--accent); stroke-opacity: 0.95; stroke-width: 2; stroke-dasharray: none; }
 .v3-intro-eyebrow {
   margin: 0 0 10px;
   font-family: var(--font-mono);
@@ -1654,7 +1641,6 @@ body[data-layout="v3-cv"] .v3-footer,
   .v3-writing-workspace .post-list { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 960px) {
-  .v3-intro,
   .v3-writing-workspace,
   .news-split-grid { grid-template-columns: minmax(0, 1fr); }
   .v3-writing-workspace .filetree { position: static; }
