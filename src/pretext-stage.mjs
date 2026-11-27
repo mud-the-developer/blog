@@ -1,8 +1,13 @@
 import { layoutNextLine, measureLineStats, prepareWithSegments } from './pretext/layout.js';
 import { safeUrl } from './safe-url.mjs';
-import { createV3State, filterCommandItems, v3Reducer } from './v3-interactive-state.mjs';
+import { createV3State, filterCommandItems, findShortcutItem, v3Reducer } from './v3-interactive-state.mjs';
 const REDUCED_MOTION = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
+function isEditableTarget(target) {
+  if (!(target instanceof Element)) return false;
+  if (target.closest('input, textarea, select, [contenteditable]')) return true;
+  return target.isContentEditable === true;
+}
 function parseJsonScript(id, fallback) {
   const el = document.getElementById(id);
   if (!el) return fallback;
@@ -176,8 +181,10 @@ function setupInteractiveV3() {
   const renderCommand = (focusInput) => {
     if (!cmdBackdrop || !cmdInput || !cmdResults) return;
     cmdBackdrop.hidden = !state.commandOpen;
-    if (!state.commandOpen) return;
-
+    if (!state.commandOpen) {
+      if (document.activeElement === cmdInput) cmdInput.blur();
+      return;
+    }
     if (cmdInput.value !== state.commandQuery) {
       cmdInput.value = state.commandQuery;
     }
@@ -261,9 +268,24 @@ function setupInteractiveV3() {
     if (evt.key === 'Escape' && state.commandOpen) {
       evt.preventDefault();
       dispatch({ type: 'cmd.close' });
+      return;
+    }
+    if (
+      !state.commandOpen
+      && !evt.metaKey
+      && !evt.ctrlKey
+      && !evt.altKey
+      && !evt.repeat
+      && !isEditableTarget(evt.target)
+    ) {
+      const hit = findShortcutItem(state.commandItems, evt.key);
+      const href = hit ? safeUrl(hit.url) : null;
+      if (href && href !== window.location.pathname) {
+        evt.preventDefault();
+        window.location.assign(href);
+      }
     }
   });
-
   document.querySelectorAll('[data-copy-bibtex]').forEach((btn) => {
     btn.addEventListener('click', async () => {
       const bib = btn.getAttribute('data-copy-bibtex') || '';

@@ -7,19 +7,41 @@ export function createV3State({ commandItems = [] } = {}) {
   };
 }
 
+export function findShortcutItem(items, key) {
+  const needle = String(key || '')
+    .trim()
+    .toLowerCase();
+  if (needle.length !== 1) return null;
+  return (
+    items.find(
+      (item) =>
+        String(item?.shortcut || '')
+          .trim()
+          .toLowerCase() === needle,
+    ) || null
+  );
+}
+
 export function filterCommandItems(items, query) {
   const needle = String(query || '')
     .trim()
     .toLowerCase();
   if (!needle) return items.slice(0, 10);
-  return items
-    .filter((item) => {
-      const hay = `${item.label || ''} ${item.section || ''} ${item.url || ''}`.toLowerCase();
-      return hay.includes(needle);
-    })
-    .slice(0, 10);
+  const exact = [];
+  const rest = [];
+  for (const item of items) {
+    const shortcut = String(item.shortcut || '')
+      .trim()
+      .toLowerCase();
+    if (shortcut && shortcut === needle) {
+      exact.push(item);
+      continue;
+    }
+    const hay = `${item.label || ''} ${item.section || ''} ${item.url || ''}`.toLowerCase();
+    if (hay.includes(needle)) rest.push(item);
+  }
+  return exact.concat(rest).slice(0, 10);
 }
-
 export function v3Reducer(state, event) {
   switch (event.type) {
     case 'cmd.open': {

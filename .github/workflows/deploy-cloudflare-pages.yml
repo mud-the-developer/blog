@@ -8,6 +8,7 @@ on:
     workflows:
       - Update News Digest
       - Update CFP Radar
+      - Update Scholar Cache
     types:
       - completed
   workflow_dispatch:

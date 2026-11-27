@@ -533,6 +533,26 @@ async fn builds_v3_personal_site_with_cv_projects_writing_and_functional_pretext
             .join("posts/licheerv-nano-fido2/index.html")
             .exists()
     );
+    assert!(out_dir.join("posts/hwp-editor-public/index.html").exists());
+    assert!(out_dir.join("posts/niri-desktop-suite/index.html").exists());
+    for media in [
+        "assets/media/mudplot.mp4",
+        "assets/media/mudplot-poster.png",
+        "assets/media/rusty-note.mp4",
+        "assets/media/rusty-note-poster.png",
+        "assets/media/licheerv-nano-fido2.mp4",
+        "assets/media/licheerv-nano-fido2-poster.png",
+        "assets/media/hwp-editor-public.mp4",
+        "assets/media/hwp-editor-public-poster.png",
+        "assets/media/niri-desktop-suite.mp4",
+        "assets/media/niri-desktop-suite-poster.png",
+    ] {
+        assert!(out_dir.join(media).exists(), "missing {media}");
+    }
+    assert!(cv_html.contains("href=\"/rss.xml\""));
+    let writing_html = fs::read_to_string(out_dir.join("writing/index.html"))?;
+    assert!(writing_html.contains("href=\"/rss.xml\""));
+    assert!(news.contains("href=\"/news/rss.xml\""));
     assert!(out_dir.join("assets/post-reader.css").exists());
     assert!(out_dir.join("assets/media/og-card.png").exists());
 

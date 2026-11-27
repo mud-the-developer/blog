@@ -96,18 +96,24 @@ test('v3 personal homepage renders No-Hero Swiss Glass Dossier with Pretext bio,
   expect(audit.decorativeCount).toBe(0);
   expect(audit.scrollWidth).toBeLessThanOrEqual(audit.clientWidth + 1);
 
-  // Dedicated /projects/ page
-  await page.goto('/projects/');
+  // Single-key shortcut 'p' navigates from home to /projects/
+  await Promise.all([
+    page.waitForURL('**/projects/'),
+    page.keyboard.press('p'),
+  ]);
   await expect(page.locator('html')).toHaveAttribute('data-askama-template', 'projects');
   await expect(page.locator('[data-theme-filter-bar]')).toHaveCount(0);
-  await expect(page.locator('.v3-project-card')).toHaveCount(7);
+  await expect(page.locator('.v3-project-card')).toHaveCount(9);
   await expect(page.locator('a[href="/posts/mudplot/"]').first()).toBeVisible();
   await expect(page.locator('a[href="/posts/rusty-note/"]').first()).toBeVisible();
   await expect(page.locator('a[href="/posts/licheerv-nano-fido2/"]').first()).toBeVisible();
+  await expect(page.locator('a[href="/posts/hwp-editor-public/"]').first()).toBeVisible();
+  await expect(page.locator('a[href="/posts/niri-desktop-suite/"]').first()).toBeVisible();
 
-  // Reader UX on OSS project post (TOC, MathML, syntax highlighting, copy button, prev/next pager)
+  // Reader UX on OSS project post (video, TOC, MathML, syntax highlighting, copy button, prev/next pager)
   await page.goto('/posts/mudplot/');
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await expect(page.locator('video source[src="/assets/media/mudplot.mp4"]')).toHaveCount(1);
   await expect(page.locator('.post-toc')).toBeVisible();
   expect(await page.locator('math').count()).toBeGreaterThanOrEqual(2);
   await expect(page.locator('.code-block')).toHaveCount(1);
@@ -127,14 +133,15 @@ test('v3 personal homepage renders No-Hero Swiss Glass Dossier with Pretext bio,
   await firstBibBtn.click();
   await expect(firstBibBtn).toContainText(/Copied BibTeX|BibTeX ready/);
   await expect(page.locator('a[href="/cv/jinhyuk-kim-cv.pdf"]')).toBeVisible();
+  await expect(page.locator('footer a[href="/rss.xml"]')).toBeVisible();
   const cvText = await page.evaluate(() => document.body.textContent || '');
   expect(cvText).not.toMatch(/(?:\(\+82\)\s*)?0?10-\d{4}-\d{4}/);
   expect(cvText).not.toContain('Submitted to');
   await page.goto('/writing/');
   await expect(page.locator('html')).toHaveAttribute('data-askama-template', 'writing');
+  await expect(page.locator('footer a[href="/rss.xml"]')).toBeVisible();
   const writingCount = await page.locator('.post-card').count();
   expect(writingCount).toBeGreaterThan(0);
-  await expect(page.locator('.filetree')).toHaveCount(1);
   await expect(page.locator('.filetree-folder')).toHaveCount(folders.length);
   await expect(page.locator('.filetree-file')).toHaveCount(writingCount);
   await expect(page.locator('details.filetree-folder[data-folder="news"]')).toHaveCount(0);

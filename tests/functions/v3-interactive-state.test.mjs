@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import {
   createV3State,
   filterCommandItems,
+  findShortcutItem,
   v3Reducer,
 } from '../../src/v3-interactive-state.mjs';
-
 const sampleCommands = [
   { label: 'Home', section: 'page', url: '/', shortcut: 'h' },
   { label: 'Projects', section: 'page', url: '/projects/', shortcut: 'p' },
@@ -38,4 +38,14 @@ test('command palette opens, filters, wraps navigation index, and closes cleanly
 
   const noopClose = v3Reducer(closed.state, { type: 'cmd.close' });
   assert.deepEqual(noopClose.effects, []);
+});
+
+test('shortcut lookup matches single-key routes and prioritizes shortcut matches in palette filter', () => {
+  assert.equal(findShortcutItem(sampleCommands, 'p')?.url, '/projects/');
+  assert.equal(findShortcutItem(sampleCommands, 'H')?.url, '/');
+  assert.equal(findShortcutItem(sampleCommands, 'z'), null);
+  assert.equal(findShortcutItem(sampleCommands, 'Enter'), null);
+
+  const filtered = filterCommandItems(sampleCommands, 'p');
+  assert.equal(filtered[0]?.url, '/projects/');
 });

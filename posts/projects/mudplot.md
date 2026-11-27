@@ -20,8 +20,14 @@ publish: true
 
 **mudplot** is a Python plotting library built on Matplotlib for publication figures, paired with a local Rust (`Axum + Askama`) figure editor. Its core goal is to make multi-series research figures stay distinguishable under greyscale printing and colour-vision deficiency without sacrificing explicit, serializable figure state.
 
-## LCH Perceptual Colour Engine
+<figure class="v3-demo-figure">
+  <video controls playsinline muted loop preload="metadata" poster="/assets/media/mudplot-poster.png">
+    <source src="/assets/media/mudplot.mp4" type="video/mp4" />
+  </video>
+  <figcaption>60-second Remotion summary · CIELAB LCH palette synthesis, CIEDE2000 colour-vision deficiency checks, declarative FigureSpec reducer, and Rust/Askama local editor workflow.</figcaption>
+</figure>
 
+## LCH Perceptual Colour Engine
 Instead of picking arbitrary RGB palettes, `mudplot` synthesizes palettes in cylindrical CIELAB ($L^* C^* h^\circ$) space and evaluates worst-case perceptual separation using CIEDE2000 ($\Delta E_{00}$):
 
 $$

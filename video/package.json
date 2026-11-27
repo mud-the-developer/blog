@@ -8,7 +8,12 @@
     "render:mwc25": "remotion render src/index.ts Mwc25DrlDemo ../static/media/mwc25-drl-beamforming.mp4 --codec=h264 --crf=26 --pixel-format=yuv420p && remotion still src/index.ts Mwc25DrlDemo ../static/media/mwc25-drl-beamforming-poster.png --frame=90",
     "render:cfp": "remotion render src/index.ts CfpPipelineDemo ../static/media/cfp-radar-system.mp4 --codec=h264 --crf=26 --pixel-format=yuv420p && remotion still src/index.ts CfpPipelineDemo ../static/media/cfp-radar-system-poster.png --frame=90",
     "render:news": "remotion render src/index.ts AiNewsDigestDemo ../static/media/ai-news-digest-system.mp4 --codec=h264 --crf=26 --pixel-format=yuv420p && remotion still src/index.ts AiNewsDigestDemo ../static/media/ai-news-digest-system-poster.png --frame=90",
-    "render:all": "npm run render:mwc26 && npm run render:mwc25 && npm run render:cfp && npm run render:news"
+    "render:mudplot": "remotion render src/index.ts MudplotDemo ../static/media/mudplot.mp4 --codec=h264 --crf=26 --pixel-format=yuv420p && remotion still src/index.ts MudplotDemo ../static/media/mudplot-poster.png --frame=90",
+    "render:rusty-note": "remotion render src/index.ts RustyNoteDemo ../static/media/rusty-note.mp4 --codec=h264 --crf=26 --pixel-format=yuv420p && remotion still src/index.ts RustyNoteDemo ../static/media/rusty-note-poster.png --frame=90",
+    "render:fido2": "remotion render src/index.ts LicheeRvFido2Demo ../static/media/licheerv-nano-fido2.mp4 --codec=h264 --crf=26 --pixel-format=yuv420p && remotion still src/index.ts LicheeRvFido2Demo ../static/media/licheerv-nano-fido2-poster.png --frame=90",
+    "render:hwp": "remotion render src/index.ts HwpEditorDemo ../static/media/hwp-editor-public.mp4 --codec=h264 --crf=26 --pixel-format=yuv420p && remotion still src/index.ts HwpEditorDemo ../static/media/hwp-editor-public-poster.png --frame=90",
+    "render:niri": "remotion render src/index.ts NiriDesktopSuiteDemo ../static/media/niri-desktop-suite.mp4 --codec=h264 --crf=26 --pixel-format=yuv420p && remotion still src/index.ts NiriDesktopSuiteDemo ../static/media/niri-desktop-suite-poster.png --frame=90",
+    "render:all": "npm run render:mwc26 && npm run render:mwc25 && npm run render:cfp && npm run render:news && npm run render:mudplot && npm run render:rusty-note && npm run render:fido2 && npm run render:hwp && npm run render:niri"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.280",
