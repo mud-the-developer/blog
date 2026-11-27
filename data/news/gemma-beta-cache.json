@@ -145,44 +145,6 @@
     ],
     "title": "Daily AI Brief: Agentic Models and Audit Insights"
   },
-  "1cb122998089f11f596421f46d305617c9aa6c750bf8b6dd5604be30a131091c": {
-    "article_body": [
-      "GitHub velocity was notably led by NousResearch/hermes-agent, described as \"The agent that grows with you,\" indicating sustained interest in adaptive AI systems. Other prominent repositories included openai/codex, a lightweight coding agent, and headroomlabs-ai/headroom, which focuses on token compression for LLMs. The open-source AI memory system MemPalace/mempalace also maintained its presence among top-ranked projects, underscoring ongoing development in AI memory solutions.",
-      "In research, \"Disaggregated Quantization: Specializing LLM Prefill and Decode\" garnered significant attention. This paper explores how prefill and decode phases of LLM operation benefit from different quantization strategies, aiming to improve efficiency. Further academic interest was observed in \"InternW0-Δ,\" a world action model for robot manipulation, and \"Block Sparse Attention,\" which addresses the quadratic cost of self-attention for scaling language models to longer contexts.",
-      "Community discussions reflected a diverse range of topics. A prominent thread on GeekNews explored \"The problem is not the AI ​​code, but rather ignorance of system architecture and design intent,\" suggesting a focus on foundational understanding in AI development. Another highly engaged discussion centered on the societal issue of \"Has violence against teachers become acceptable in society?\", indicating that community platforms continue to serve as forums for broader social commentary alongside technical discourse.",
-      "Overall, today's digest compiled 10 repository signals, 7 paper picks, and 6 GeekNews items, along with 4 X posts and 3 arXiv submissions, totaling 30 items for review across various sources."
-    ],
-    "closing": "This concludes the daily AI beta brief for September 29, 2026.",
-    "dek": "Today's AI landscape is marked by significant activity in agent development, new research in LLM quantization, and community discussions on broader societal topics.",
-    "lead": "The AI sector today saw continued momentum in agentic AI development, highlighted by the GitHub project NousResearch/hermes-agent. Concurrently, academic attention focused on advancements in large language model efficiency, particularly with new research into disaggregated quantization techniques. Social discourse also registered notable engagement on the broader implications of AI and technology, alongside technical discussions on system architecture.",
-    "section_bodies": {},
-    "section_titles": {},
-    "takeaways": [
-      "Agentic AI projects, exemplified by NousResearch/hermes-agent, continue to show strong development velocity on GitHub.",
-      "New research is advancing LLM efficiency through specialized quantization methods for prefill and decode.",
-      "Community platforms are hosting discussions on both core AI system architecture and wider societal concerns.",
-      "The MemPalace open-source AI memory system remains a notable project in the repository landscape."
-    ],
-    "title": "AI Beta Brief: Agent Development and LLM Efficiency Lead September 29"
-  },
-  "1cb122998089f11f596421f46d305617c9aa6c750bf8b6dd5604be30a131091c::overview": {
-    "article_body": [
-      "GitHub velocity was notably led by NousResearch/hermes-agent, described as \"The agent that grows with you,\" indicating sustained interest in adaptive AI systems. Other prominent repositories included openai/codex, a lightweight coding agent, and headroomlabs-ai/headroom, which focuses on token compression for LLMs. The open-source AI memory system MemPalace/mempalace also maintained its presence among top-ranked projects, underscoring ongoing development in AI memory solutions.",
-      "In research, \"Disaggregated Quantization: Specializing LLM Prefill and Decode\" garnered significant attention. This paper explores how prefill and decode phases of LLM operation benefit from different quantization strategies, aiming to improve efficiency. Further academic interest was observed in \"InternW0-Δ,\" a world action model for robot manipulation, and \"Block Sparse Attention,\" which addresses the quadratic cost of self-attention for scaling language models to longer contexts.",
-      "Community discussions reflected a diverse range of topics. A prominent thread on GeekNews explored \"The problem is not the AI ​​code, but rather ignorance of system architecture and design intent,\" suggesting a focus on foundational understanding in AI development. Another highly engaged discussion centered on the societal issue of \"Has violence against teachers become acceptable in society?\", indicating that community platforms continue to serve as forums for broader social commentary alongside technical discourse.",
-      "Overall, today's digest compiled 10 repository signals, 7 paper picks, and 6 GeekNews items, along with 4 X posts and 3 arXiv submissions, totaling 30 items for review across various sources."
-    ],
-    "closing": "This concludes the daily AI beta brief for September 29, 2026.",
-    "dek": "Today's AI landscape is marked by significant activity in agent development, new research in LLM quantization, and community discussions on broader societal topics.",
-    "lead": "The AI sector today saw continued momentum in agentic AI development, highlighted by the GitHub project NousResearch/hermes-agent. Concurrently, academic attention focused on advancements in large language model efficiency, particularly with new research into disaggregated quantization techniques. Social discourse also registered notable engagement on the broader implications of AI and technology, alongside technical discussions on system architecture.",
-    "takeaways": [
-      "Agentic AI projects, exemplified by NousResearch/hermes-agent, continue to show strong development velocity on GitHub.",
-      "New research is advancing LLM efficiency through specialized quantization methods for prefill and decode.",
-      "Community platforms are hosting discussions on both core AI system architecture and wider societal concerns.",
-      "The MemPalace open-source AI memory system remains a notable project in the repository landscape."
-    ],
-    "title": "AI Beta Brief: Agent Development and LLM Efficiency Lead September 29"
-  },
   "20d8f9240d13445d3fef26df6cb4bb0201f48a9a57cca71ce59b399e68af6c07": {
     "article_body": [
       "Development in AI infrastructure continues to accelerate. The `vllm-project/vllm` repository, a high-throughput and memory-efficient inference engine for LLMs, maintained its strong presence, reflecting ongoing efforts to optimize model deployment. Another notable project, `rohitg00/ai-engineering-from-scratch`, gained traction, underscoring the growing demand for practical AI engineering knowledge. Other repositories, including `paperclipai/paperclip` for agent management and `rtk-ai/rtk` for LLM token consumption reduction, also showed sustained interest.",
@@ -714,6 +676,40 @@
       "Ethical and security considerations, such as data protection and code piracy, are recurring themes in public discourse."
     ],
     "title": "AI Beta Brief: Agent Momentum and Emerging Research"
+  },
+  "656103e6ea52ef5e29905083b99146ad4e09bf0260493676caa17377eac4abd1": {
+    "article_body": [
+      "GitHub's top-performing repository, coreyhaines31/marketingskills, continues to draw significant attention for its comprehensive collection of marketing skills tailored for Claude Code and other AI agents. This trend underscores a growing demand for practical, domain-specific capabilities that empower AI to handle tasks like CRO, copywriting, and SEO. Other notable GitHub projects include DietrichGebert/ponytail, which aims to make AI agents think like 'the laziest senior dev,' and agentes-chat/agentes-chat, an open-source platform for team and AI agent collaboration, further indicating a robust development ecosystem around AI agent functionality.",
+      "In the realm of research, the paper 'DexEngine: Scaling Human Demonstrations into Physically Executable Whole-Robot Data' is a focal point. Published on Hugging Face Papers, this work addresses a critical challenge in robotics: translating human hand-object demonstrations into retargeted motions that are kinematically viable for whole-robot policies. This advancement is crucial for training more sophisticated and adaptable robotic systems. Another paper, 'A Differential Computing Accelerator for LLM Inference Leveraging Bit-Slice Transition Sparsity,' also surfaced on arXiv, pointing to ongoing efforts in optimizing LLM inference hardware.",
+      "Community engagement is currently drawn to the release of Michael Nielsen's neural networks book, as reported on GeekNews. This event suggests a sustained or renewed interest within the broader tech community for accessible, in-depth resources on the fundamentals of artificial intelligence. Such foundational works often serve as benchmarks or entry points for new developers and researchers, influencing future directions in the field."
+    ],
+    "closing": "This brief summarizes key movements in AI development and research as of November 28, 2026. Further details on these and other emerging trends will be covered in subsequent reports.",
+    "dek": "Today's AI digest highlights significant activity in AI agent skill development, advancements in scaling human demonstrations for robotics, and community attention for a new neural networks book.",
+    "lead": "The AI landscape on November 28, 2026, shows a concentrated focus on practical applications for AI agents, particularly in marketing and development. GitHub activity is notably high around repositories offering 'marketing skills' for AI agents and tools for 'lazy senior dev' thinking. Concurrently, new research is pushing the boundaries of robotics, with a key paper detailing methods for scaling human demonstrations into physically executable whole-robot data. Community discussion also points to renewed interest in foundational AI knowledge, marked by the release of a neural networks book.",
+    "section_bodies": {},
+    "section_titles": {},
+    "takeaways": [
+      "AI agent skill development, particularly for marketing and efficient coding, is a dominant trend in open-source projects.",
+      "Robotics research is making strides in scaling human demonstrations for more effective whole-robot data and policy training.",
+      "There is significant community interest in foundational AI educational resources, exemplified by the attention given to new neural networks literature."
+    ],
+    "title": "AI Beta Brief: Agent Skills and Robot Data Lead Today's Digest"
+  },
+  "656103e6ea52ef5e29905083b99146ad4e09bf0260493676caa17377eac4abd1::overview": {
+    "article_body": [
+      "GitHub's top-performing repository, coreyhaines31/marketingskills, continues to draw significant attention for its comprehensive collection of marketing skills tailored for Claude Code and other AI agents. This trend underscores a growing demand for practical, domain-specific capabilities that empower AI to handle tasks like CRO, copywriting, and SEO. Other notable GitHub projects include DietrichGebert/ponytail, which aims to make AI agents think like 'the laziest senior dev,' and agentes-chat/agentes-chat, an open-source platform for team and AI agent collaboration, further indicating a robust development ecosystem around AI agent functionality.",
+      "In the realm of research, the paper 'DexEngine: Scaling Human Demonstrations into Physically Executable Whole-Robot Data' is a focal point. Published on Hugging Face Papers, this work addresses a critical challenge in robotics: translating human hand-object demonstrations into retargeted motions that are kinematically viable for whole-robot policies. This advancement is crucial for training more sophisticated and adaptable robotic systems. Another paper, 'A Differential Computing Accelerator for LLM Inference Leveraging Bit-Slice Transition Sparsity,' also surfaced on arXiv, pointing to ongoing efforts in optimizing LLM inference hardware.",
+      "Community engagement is currently drawn to the release of Michael Nielsen's neural networks book, as reported on GeekNews. This event suggests a sustained or renewed interest within the broader tech community for accessible, in-depth resources on the fundamentals of artificial intelligence. Such foundational works often serve as benchmarks or entry points for new developers and researchers, influencing future directions in the field."
+    ],
+    "closing": "This brief summarizes key movements in AI development and research as of November 28, 2026. Further details on these and other emerging trends will be covered in subsequent reports.",
+    "dek": "Today's AI digest highlights significant activity in AI agent skill development, advancements in scaling human demonstrations for robotics, and community attention for a new neural networks book.",
+    "lead": "The AI landscape on November 28, 2026, shows a concentrated focus on practical applications for AI agents, particularly in marketing and development. GitHub activity is notably high around repositories offering 'marketing skills' for AI agents and tools for 'lazy senior dev' thinking. Concurrently, new research is pushing the boundaries of robotics, with a key paper detailing methods for scaling human demonstrations into physically executable whole-robot data. Community discussion also points to renewed interest in foundational AI knowledge, marked by the release of a neural networks book.",
+    "takeaways": [
+      "AI agent skill development, particularly for marketing and efficient coding, is a dominant trend in open-source projects.",
+      "Robotics research is making strides in scaling human demonstrations for more effective whole-robot data and policy training.",
+      "There is significant community interest in foundational AI educational resources, exemplified by the attention given to new neural networks literature."
+    ],
+    "title": "AI Beta Brief: Agent Skills and Robot Data Lead Today's Digest"
   },
   "66c38c3acc1de86aca3550f4c7d497502cfe17222dda753ed75de52d9fb982e5": {
     "article_body": [
