@@ -33,9 +33,10 @@ test('v3 personal homepage renders No-Hero Swiss Glass Dossier with Pretext bio,
   await expect(page.locator('html')).not.toHaveAttribute('hx-boost', 'true');
   await expect(page.getByLabel('mud blog home')).toContainText('mud blog');
   await expect(page.locator('[data-theme-toggle]')).toBeVisible();
-  await expect(page.locator('script[src="/assets/site-chrome.mjs"]')).toHaveCount(1);
-  await expect(page.locator('script[src="/assets/pretext-stage.mjs"]')).toHaveCount(1);
-  await expect(page.locator('script[src="/assets/blog-lab.mjs"]')).toHaveCount(0);
+  await expect(page.locator('link[rel="stylesheet"][href^="/assets/style.css?v="]')).toHaveCount(1);
+  await expect(page.locator('script[src^="/assets/site-chrome.mjs?v="]')).toHaveCount(1);
+  await expect(page.locator('script[src^="/assets/pretext-stage.mjs?v="]')).toHaveCount(1);
+  await expect(page.locator('script[src^="/assets/blog-lab.mjs"]')).toHaveCount(0);
   await expect(page.locator('script[src="/assets/pretext-polish.mjs"]')).toHaveCount(0);
   await expect(page.locator('script[src="/assets/pretext-editorial.mjs"]')).toHaveCount(0);
   await expect(page.locator('script[src="/assets/pretext-field.mjs"]')).toHaveCount(0);

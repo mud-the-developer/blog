@@ -329,13 +329,17 @@ function buildPrintIssueHtml(draft) {
     )
     .join('\n');
   const generatedAt = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', dateStyle: 'medium', timeStyle: 'short' });
+  const styleHref =
+    (typeof document !== 'undefined'
+      && document.querySelector('link[rel="stylesheet"][href^="/assets/style.css"]')?.getAttribute('href'))
+    || '/assets/style.css';
   return `<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${escapeHtml(draft.title)} — Mud's Blog PDF</title>
-  <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="stylesheet" href="${escapeHtml(styleHref)}" />
   <style>
     @page { size: A4; margin: 15mm; }
     body { background: #f7fbff; color: #0b1020; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }

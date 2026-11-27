@@ -31,8 +31,45 @@ pub mod math;
 
 pub type BlogResult<T> = Result<T, Box<dyn std::error::Error>>;
 const PUBLIC_SITE_URL: &str = "https://mud-blog.pages.dev";
-const NOT_FOUND_HTML: &str = include_str!("../templates/not_found.html");
+const ASSET_HASH_INPUTS: &[&str] = &[
+    "src/style.css",
+    "src/post-reader.css",
+    "src/site-chrome.mjs",
+    "src/site-chrome-state.mjs",
+    "src/site-chrome-effects.mjs",
+    "src/pretext-stage.mjs",
+    "src/v3-interactive-state.mjs",
+    "src/safe-url.mjs",
+    "src/cfp-deadlines.mjs",
+    "src/blog-lab.mjs",
+    "src/blog-lab-machine.mjs",
+    "src/web-vitals-rum.js",
+];
 
+fn fnv1a_64_update(mut hash: u64, bytes: &[u8]) -> u64 {
+    for &byte in bytes {
+        hash ^= u64::from(byte);
+        hash = hash.wrapping_mul(0x0000_0100_0000_01b3);
+    }
+    hash
+}
+
+pub fn asset_version_for_paths(paths: &[&str]) -> String {
+    let mut hash: u64 = 0xcbf2_9ce4_8422_2325;
+    for path in paths {
+        hash = fnv1a_64_update(hash, path.as_bytes());
+        hash = fnv1a_64_update(hash, &[0]);
+        if let Ok(bytes) = std_fs::read(path) {
+            hash = fnv1a_64_update(hash, &bytes);
+        }
+        hash = fnv1a_64_update(hash, &[0xff]);
+    }
+    format!("{:010x}", hash & 0x00ff_ffff_ffff)
+}
+
+pub fn asset_version() -> String {
+    asset_version_for_paths(ASSET_HASH_INPUTS)
+}
 #[derive(Debug, Clone, Serialize, PartialEq, Eq)]
 pub struct TocEntry {
     pub level: u8,
@@ -174,16 +211,16 @@ struct IndexTemplate<'a> {
     project_count: usize,
     archive_json: &'a str,
     person_json_ld: String,
+    asset_v: String,
 }
-
 #[derive(Template)]
 #[template(path = "projects.html")]
 struct ProjectsTemplate<'a> {
     projects: Vec<&'a Post>,
     command_index_json: String,
     archive_json: &'a str,
+    asset_v: String,
 }
-
 #[derive(Template)]
 #[template(path = "cv.html")]
 struct CvTemplate<'a> {
@@ -191,8 +228,8 @@ struct CvTemplate<'a> {
     command_index_json: String,
     archive_json: &'a str,
     person_json_ld: String,
+    asset_v: String,
 }
-
 #[derive(Template)]
 #[template(path = "writing.html")]
 struct WritingTemplate<'a> {
@@ -201,8 +238,8 @@ struct WritingTemplate<'a> {
     folder_count: usize,
     command_index_json: String,
     archive_json: &'a str,
+    asset_v: String,
 }
-
 #[derive(Template)]
 #[template(path = "post.html")]
 struct PostTemplate<'a> {
@@ -213,7 +250,9 @@ struct PostTemplate<'a> {
     article_json_ld: String,
     prev_post: Option<PostNavLink<'a>>,
     next_post: Option<PostNavLink<'a>>,
+    asset_v: String,
 }
+
 #[derive(Debug, Clone, Deserialize)]
 struct NewsTrendSignal {
     #[serde(default)]
@@ -312,6 +351,7 @@ struct NewsTemplate<'a> {
     issue_count: usize,
     command_index_json: String,
     archive_json: &'a str,
+    asset_v: String,
 }
 #[derive(Template)]
 #[template(path = "cfp.html")]
@@ -319,6 +359,7 @@ struct CfpTemplate<'a> {
     latest_issue: Vec<&'a Post>,
     command_index_json: String,
     archive_json: &'a str,
+    asset_v: String,
 }
 
 #[derive(Template)]
@@ -326,8 +367,14 @@ struct CfpTemplate<'a> {
 struct NewsSearchTemplate<'a> {
     command_index_json: String,
     archive_json: &'a str,
+    asset_v: String,
 }
 
+#[derive(Template)]
+#[template(path = "not_found.html")]
+struct NotFoundTemplate {
+    asset_v: String,
+}
 pub fn slugify(value: &str) -> String {
     let mut slug = String::new();
     let mut last_dash = false;
@@ -1289,6 +1336,7 @@ pub fn render_index_page(posts: &[Post]) -> BlogResult<String> {
         writing_count,
         archive_json: &archive_json,
         person_json_ld,
+        asset_v: asset_version(),
     }
     .render()?)
 }
@@ -1306,6 +1354,7 @@ pub fn render_projects_page(posts: &[Post]) -> BlogResult<String> {
         projects,
         command_index_json,
         archive_json: &archive_json,
+        asset_v: asset_version(),
     }
     .render()?)
 }
@@ -1321,6 +1370,7 @@ pub fn render_cv_page(posts: &[Post]) -> BlogResult<String> {
         command_index_json,
         archive_json: &archive_json,
         person_json_ld,
+        asset_v: asset_version(),
     }
     .render()?)
 }
@@ -1337,6 +1387,7 @@ pub fn render_writing_page(posts: &[Post]) -> BlogResult<String> {
         groups,
         command_index_json,
         archive_json: &archive_json,
+        asset_v: asset_version(),
     }
     .render()?)
 }
@@ -1425,6 +1476,7 @@ pub fn render_post_page(post: &Post, posts: &[Post]) -> BlogResult<String> {
         article_json_ld,
         prev_post,
         next_post,
+        asset_v: asset_version(),
     }
     .render()?)
 }
@@ -1602,6 +1654,7 @@ pub fn render_news_page(posts: &[Post]) -> BlogResult<String> {
         issue_count: news_issues.len(),
         command_index_json,
         archive_json: &archive_json,
+        asset_v: asset_version(),
     }
     .render()?)
 }
@@ -1613,6 +1666,7 @@ pub fn render_news_search_page(posts: &[Post]) -> BlogResult<String> {
     Ok(NewsSearchTemplate {
         command_index_json,
         archive_json: &archive_json,
+        asset_v: asset_version(),
     }
     .render()?)
 }
@@ -1629,10 +1683,18 @@ pub fn render_cfp_page(posts: &[Post]) -> BlogResult<String> {
         latest_issue,
         command_index_json,
         archive_json: &archive_json,
+        asset_v: asset_version(),
     }
     .render()?)
 }
 
+pub fn render_not_found_page() -> String {
+    NotFoundTemplate {
+        asset_v: asset_version(),
+    }
+    .render()
+    .unwrap_or_else(|_| "<!doctype html><title>404</title><h1>Page not found</h1>".to_string())
+}
 pub fn render_robots_txt() -> String {
     format!("User-agent: *\nAllow: /\n\nSitemap: {PUBLIC_SITE_URL}/sitemap.xml\n")
 }
@@ -1905,7 +1967,7 @@ pub async fn build_static_site(
     let archive = archive_json(&posts)?;
     fs::write(out_dir.join("archive.json"), archive).await?;
     fs::write(out_dir.join("robots.txt"), render_robots_txt()).await?;
-    fs::write(out_dir.join("404.html"), NOT_FOUND_HTML).await?;
+    fs::write(out_dir.join("404.html"), render_not_found_page()).await?;
     fs::write(out_dir.join("sitemap.xml"), render_sitemap_xml(&posts)).await?;
     fs::write(out_dir.join("rss.xml"), render_rss_xml(&posts)).await?;
     fs::write(news_dir.join("rss.xml"), render_news_rss_xml(&posts)).await?;
@@ -1999,7 +2061,7 @@ pub fn router(posts: Vec<Post>, assets_root: impl Into<PathBuf>) -> BlogResult<R
         .nest_service("/cfp/data", ServeDir::new(assets_root.join("cfp/data")))
         .nest_service("/news/data", ServeDir::new(assets_root.join("news/data")))
         .nest_service("/assets", ServeDir::new(assets_root.join("assets")))
-        .fallback(|| async { (StatusCode::NOT_FOUND, Html(NOT_FOUND_HTML)) })
+        .fallback(|| async { (StatusCode::NOT_FOUND, Html(render_not_found_page())) })
         .layer(DefaultBodyLimit::max(32 * 1024))
         .layer(CompressionLayer::new())
         .with_state(state))
@@ -3639,9 +3701,8 @@ async fn post_handler(
     AxumPath(slug): AxumPath<String>,
 ) -> impl IntoResponse {
     let Some(post) = state.posts.iter().find(|post| post.slug == slug) else {
-        return (StatusCode::NOT_FOUND, Html(NOT_FOUND_HTML)).into_response();
+        return (StatusCode::NOT_FOUND, Html(render_not_found_page())).into_response();
     };
-
     match render_post_page(post, &state.posts) {
         Ok(html) => Html(html).into_response(),
         Err(error) => (StatusCode::INTERNAL_SERVER_ERROR, error.to_string()).into_response(),

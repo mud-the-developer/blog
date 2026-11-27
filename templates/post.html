@@ -23,8 +23,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
-  <link rel="stylesheet" href="/assets/style.css" />
-  <link rel="stylesheet" href="/assets/post-reader.css" />
+  <link rel="stylesheet" href="/assets/style.css?v={{ asset_v }}" />
+  <link rel="stylesheet" href="/assets/post-reader.css?v={{ asset_v }}" />
 </head>
 <body data-layout="reader-post" data-folder="{{ post.folder }}" data-palette="pair-07">
   <header class="site-header v3-glass-bar">
@@ -159,10 +159,10 @@
 
   <script id="command-index-data" type="application/json">{{ command_index_json|safe }}</script>
   {% if post.folder == "cfp" %}
-  <script type="module" src="/assets/cfp-deadlines.mjs"></script>
+  <script type="module" src="/assets/cfp-deadlines.mjs?v={{ asset_v }}"></script>
   {% endif %}
-  <script type="module" src="/assets/site-chrome.mjs"></script>
-  <script type="module" src="/assets/pretext-stage.mjs"></script>
-  <script src="/assets/web-vitals-rum.js"></script>
+  <script type="module" src="/assets/site-chrome.mjs?v={{ asset_v }}"></script>
+  <script type="module" src="/assets/pretext-stage.mjs?v={{ asset_v }}"></script>
+  <script src="/assets/web-vitals-rum.js?v={{ asset_v }}"></script>
 </body>
 </html>

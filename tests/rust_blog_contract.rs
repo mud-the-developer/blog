@@ -536,6 +536,14 @@ async fn builds_v3_personal_site_with_cv_projects_writing_and_functional_pretext
     assert!(out_dir.join("assets/post-reader.css").exists());
     assert!(out_dir.join("assets/media/og-card.png").exists());
 
+    let asset_v = mud_blog::asset_version();
+    assert_eq!(asset_v.len(), 10);
+    assert!(index_html.contains(&format!("/assets/style.css?v={asset_v}")));
+    assert!(index_html.contains(&format!("/assets/site-chrome.mjs?v={asset_v}")));
+    assert!(mudplot_post.contains(&format!("/assets/post-reader.css?v={asset_v}")));
+    let not_found_html = fs::read_to_string(out_dir.join("404.html"))?;
+    assert!(not_found_html.contains(&format!("/assets/style.css?v={asset_v}")));
+
     let rum_js = fs::read_to_string(out_dir.join("assets/web-vitals-rum.js"))?;
     assert!(!rum_js.contains("unpkg.com"));
 
