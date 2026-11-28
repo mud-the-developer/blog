@@ -1,7 +1,7 @@
 ---
 title: "Daily AI News Archive"
 description: "Monthly archive of every daily AI news issue."
-date: 2026-11-27
+date: 2026-11-28
 tags: [news, news-digest, ai, archive]
 publish: true
 content-classes: [news-digest-note, news-digest-archive-note]
@@ -13,14 +13,14 @@ content-classes: [news-digest-note, news-digest-archive-note]
       <h1>Daily AI News Archive</h1>
       <p class="news-digest-lead">Every daily AI news issue, grouped by month so older runs stay skimmable.</p>
       <div class="news-digest-actions" role="group" aria-label="Archive actions">
-        <a class="post-cta-link" href="/posts/2026-11-27-ai-news-digest/">Latest issue</a>
+        <a class="post-cta-link" href="/posts/2026-11-28-ai-news-digest/">Latest issue</a>
         <a class="post-cta-link" href="/news/data/latest.json" target="_blank" rel="noreferrer">Source data</a>
       </div>
     </div>
     <div class="news-digest-meta-grid">
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Updated</span>
-        <strong><time datetime="2026-11-27T08:53:09.143781+09:00">Nov 27, 2026 · 8:53 AM KST</time></strong>
+        <strong><time datetime="2026-11-28T08:29:54.256906+09:00">Nov 28, 2026 · 8:29 AM KST</time></strong>
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Issues</span>
@@ -28,7 +28,7 @@ content-classes: [news-digest-note, news-digest-archive-note]
       </div>
       <div class="news-digest-meta-card">
         <span class="news-digest-meta-label">Latest issue</span>
-        <strong><time datetime="2026-11-27">Nov 27, 2026</time></strong>
+        <strong><time datetime="2026-11-28">Nov 28, 2026</time></strong>
       </div>
     </div>
   </section>
@@ -36,12 +36,17 @@ content-classes: [news-digest-note, news-digest-archive-note]
     <header class="news-digest-section-head">
       <p class="section-kicker">Monthly View</p>
       <h2>Digest archive</h2>
-      <p class="news-digest-section-description">GitHub velocity is led by browser-use/browser-use; paper attention is clustering around What Is Redundant at High Resolution? Efficient Attention and Feed-Forward Design for All-in-On…; social attention is tilting toward OpenAI may have entered cost control mode. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
+      <p class="news-digest-section-description">GitHub velocity is led by coreyhaines31/marketingskills; paper attention is clustering around DexEngine: Scaling Human Demonstrations into Physically Executable Whole-Robot Data; social attention is tilting toward Michael Nielsen releases his neural networks book. 10 repo signals, 10 paper picks, and 10 community items made today&#x27;s cut.</p>
     </header>
     <div class="news-digest-month-groups">
       <details class="news-digest-month-group" open>
-        <summary class="news-digest-month-summary"><span>November 2026</span><span class="news-digest-month-count">26 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>November 2026</span><span class="news-digest-month-count">27 digests</span></summary>
         <div class="news-digest-month-list">
+          <a class="news-digest-archive-item" href="/posts/2026-11-28-ai-news-digest/">
+            <span class="news-digest-archive-date">2026-11-28</span>
+            <strong>AI News Brief — 2026-11-28</strong>
+            <span>Today&#x27;s AI digest highlights significant activity in AI agent skill development, advancements in scaling human demonstrations for robotics, and community attention for a new neural networks book.</span>
+          </a>
           <a class="news-digest-archive-item" href="/posts/2026-11-27-ai-news-digest/">
             <span class="news-digest-archive-date">2026-11-27</span>
             <strong>AI News Brief — 2026-11-27</strong>
@@ -310,17 +315,12 @@ content-classes: [news-digest-note, news-digest-archive-note]
         </div>
       </details>
       <details class="news-digest-month-group">
-        <summary class="news-digest-month-summary"><span>September 2026</span><span class="news-digest-month-count">2 digests</span></summary>
+        <summary class="news-digest-month-summary"><span>September 2026</span><span class="news-digest-month-count">1 digests</span></summary>
         <div class="news-digest-month-list">
           <a class="news-digest-archive-item" href="/posts/2026-09-30-ai-news-digest/">
             <span class="news-digest-archive-date">2026-09-30</span>
             <strong>AI News Brief — 2026-09-30</strong>
             <span>Agent development continues to drive GitHub activity, while research into LLM distillation for sample efficiency gains traction, and OpenAI&#x27;s GPT-6.1 Sol draws community attention.</span>
-          </a>
-          <a class="news-digest-archive-item" href="/posts/2026-09-29-ai-news-digest/">
-            <span class="news-digest-archive-date">2026-09-29</span>
-            <strong>AI News Brief — 2026-09-29</strong>
-            <span>Today&#x27;s AI landscape is marked by significant activity in agent development, new research in LLM quantization, and community discussions on broader societal topics.</span>
           </a>
         </div>
       </details>
