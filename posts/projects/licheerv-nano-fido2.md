@@ -21,9 +21,14 @@ publish: true
 
 <figure class="v3-demo-figure">
   <noscript data-project-demo="licheerv-nano-fido2">
-    <video controls playsinline muted loop preload="metadata" src="/assets/media/licheerv-nano-fido2.mp4" poster="/assets/media/licheerv-nano-fido2-poster.png"></video>
+    <video controls playsinline muted loop preload="metadata">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" src="/assets/media/licheerv-nano-fido2-compact-dark.mp4?cut=3">
+      <source media="(max-width: 600px)" src="/assets/media/licheerv-nano-fido2-compact.mp4?cut=3">
+      <source media="(prefers-color-scheme: dark)" src="/assets/media/licheerv-nano-fido2-dark.mp4?cut=3">
+      <source src="/assets/media/licheerv-nano-fido2.mp4?cut=3">
+    </video>
   </noscript>
-  <figcaption>60-second Remotion summary · RISC-V SG2002 USB HID gadget bridge, physical CTAP2/USER-button verification matrix, encrypted SD vault provisioning, and explicit threat boundaries.</figcaption>
+  <figcaption>The experimental USB key waits for a press of its USER button before returning a signed response.</figcaption>
 </figure>
 
 > This is a research and engineering experiment, not a FIDO-certified hardware key. The Linux host OS is explicitly documented as outside commercial tamper-resistance boundaries.

@@ -295,9 +295,11 @@ async fn builds_v3_personal_site_with_cv_projects_writing_and_functional_pretext
         "rusty-note",
     ] {
         assert!(out_dir.join(format!("posts/{slug}/index.html")).is_file());
-        for suffix in [".mp4", "-poster.png", "-dark.mp4", "-dark-poster.png"] {
-            let media = format!("assets/media/{slug}{suffix}");
-            assert!(out_dir.join(&media).is_file(), "missing {media}");
+        for framing in ["", "-compact"] {
+            for suffix in [".mp4", "-poster.png", "-dark.mp4", "-dark-poster.png"] {
+                let media = format!("assets/media/{slug}{framing}{suffix}");
+                assert!(out_dir.join(&media).is_file(), "missing {media}");
+            }
         }
     }
 

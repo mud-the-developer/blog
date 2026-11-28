@@ -63,6 +63,8 @@ function getSafeStorage() {
 
 function mountProjectDemo(fallback) {
   const base = `/assets/media/${encodeURIComponent(fallback.dataset.projectDemo)}`;
+  // Fetch the poster and movie from the same published cut.
+  const revision = '?cut=3';
   const video = document.createElement('video');
   video.controls = video.playsInline = video.loop = true;
   video.defaultMuted = video.muted = true;
@@ -84,14 +86,14 @@ function mountProjectDemo(fallback) {
     }
   });
 
-  return async (theme) => {
-    const variant = theme === 'dark' ? `${base}-dark` : base;
-    const src = `${variant}.mp4`;
+  return async (theme, compact) => {
+    const variant = `${base}${compact ? '-compact' : ''}${theme === 'dark' ? '-dark' : ''}`;
+    const src = `${variant}.mp4${revision}`;
     if (selected === src) return;
     selected = src;
     loading?.abort();
     download.hidden = true;
-    video.poster = `${variant}-poster.png`;
+    video.poster = `${variant}-poster.png${revision}`;
     if (installed === src) return;
 
     // Pages can send 200 for Range requests. A complete local Blob is seekable
@@ -135,24 +137,28 @@ function setupThemeToggle() {
   const media = window.matchMedia('(prefers-color-scheme: dark)');
   const systemTheme = () => (media.matches ? 'dark' : 'light');
   const demos = Array.from(document.querySelectorAll('noscript[data-project-demo]'), mountProjectDemo);
+  const compact = window.matchMedia('(max-width: 600px)');
   let state = createThemeState({
     systemTheme: systemTheme(),
     overrideTheme: readStoredTheme(storage),
   });
+
+  const renderDemos = () => {
+    for (const render of demos) render(state.activeTheme, compact.matches);
+  };
 
   const dispatch = (event) => {
     const step = themeReducer(state, event);
     state = step.state;
     for (const effect of step.effects) {
       applyThemeEffect(effect, { root, button, storage });
-      if (effect.type === 'render-theme') {
-        for (const renderDemo of demos) renderDemo(effect.theme);
-      }
+      if (effect.type === 'render-theme') renderDemos();
     }
   };
 
   button.addEventListener('click', () => dispatch({ type: 'theme.toggle' }));
   media.addEventListener?.('change', () => dispatch({ type: 'system-theme.changed', theme: systemTheme() }));
+  if (demos.length) compact.addEventListener('change', renderDemos);
   window.addEventListener('pageshow', () => {
     dispatch({ type: 'theme.sync', systemTheme: systemTheme(), overrideTheme: readStoredTheme(storage) });
   });

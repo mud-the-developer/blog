@@ -1,406 +1,154 @@
 import React from 'react';
-import { interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
-import {
-  Chapter,
-  enterSpring,
-  FONT_MONO,
-  FrameChrome,
-  GLASS_CARD_STYLE,
-  PALETTE,
-  sceneStyle,
-} from './theme';
+import { useCurrentFrame } from 'remotion';
+import { DemoStage, FONT_MONO, PALETTE, Pointer, phase, useCompactDemo } from './theme';
 
-export const NIRI_SUITE_DURATION = 1800; // 60s @ 30fps
+export const NIRI_SUITE_DURATION = 240;
 
-const CHAPTERS: Chapter[] = [
-  { label: 'Overview', start: 0, end: 320 },
-  { label: 'Notch Daemon', start: 320, end: 680 },
-  { label: 'Control Center', start: 680, end: 1060 },
-  { label: 'Choreography', start: 1060, end: 1440 },
-  { label: 'Safety & CI', start: 1440, end: 1800 },
-];
+const WindowBar: React.FC<{ title: string }> = ({ title }) => (
+  <g>
+    <rect x="87" y="171" width="1106" height="468" rx="10" fill={PALETTE.card} stroke={PALETTE.border} strokeWidth="2" />
+    <text x="117" y="216" fontSize="33" fontWeight="550">{title}</text>
+    <path d="M87 238H1193 M1142 194l13 13m0-13-13 13" stroke={PALETTE.muted} strokeWidth="2" />
+  </g>
+);
 
-const SceneOverview: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
-  const motion = sceneStyle(frame, 0, 320);
-  const s1 = enterSpring(frame, 4, fps);
-  const s2 = enterSpring(frame, 18, fps);
-  const s3 = enterSpring(frame, 34, fps);
+const artworkDefs = (
+  <defs>
+    <linearGradient id="niri-wallpaper" x1="0" y1="0" x2="1" y2="1">
+      <stop stopColor="light-dark(#d6e6df, #153337)" />
+      <stop offset="1" stopColor="light-dark(#afc6c4, #2b424a)" />
+    </linearGradient>
+      <g id="niri-fish" strokeLinejoin="round" strokeLinecap="round">
+        <path d="M2 50C34 14 85 4 152 15c32 5 66 21 94 29l35-24-8 30 11 26-38-19c-42 9-71 26-125 24C59 80 19 69 2 50Z" fill="#cedfd2" stroke="#ecf2d8" strokeWidth="2" />
+        <g fill="#8faeae" stroke="#ecf2d8" strokeWidth="1.2">
+          <path d="m79 15 17-17 6 14 20-17 11 17" /><path d="m152 19 17-11 7 16" />
+          <path d="m116 77 19 16 10-16" /><path d="m169 72 16 9 8-16" />
+        </g>
+        <g fill="none" stroke="#32576a" strokeWidth="1.8">
+          <path d="M2 49c23 5 27 4 38 1 M52 27c19 10 15 31-1 43 M61 26c15 12 14 31 0 42 M64 53l34 2-25 13" />
+          <path d="M69 44c45-8 92-5 133 5l44 4 M84 21q14 2 19 12m-7-14q15 2 20 13m-8-13q17 4 22 13m-6-12q16 5 20 14m-4-12q14 5 19 14m-5-11q13 5 17 13" />
+          <path d="m248 50 22-18m-19 20 22-10m-23 12 24 11 M13 57q18 3 29 8" />
+        </g>
+        <circle cx="35" cy="42" r="6.5" fill="#244456" stroke="#faf0cd" strokeWidth="2" />
+      </g>
+  </defs>
+);
 
-  const modules = [
-    { name: 'niri-notch-rs', tag: 'RUST + GTK3', color: PALETTE.purple, soft: PALETTE.purpleSoft },
-    { name: 'mako & playerctl Bridge', tag: 'LAYER-SHELL', color: PALETTE.navy, soft: PALETTE.blueSoft },
-    { name: 'niri-hermes-control-center', tag: 'WOFI + BASH', color: PALETTE.teal, soft: PALETTE.greenSoft },
-    { name: 'Hermes & Codex Actions', tag: 'AI WORKFLOW', color: PALETTE.orange, soft: PALETTE.amberSoft },
-  ];
-
-  return (
-    <div style={{ position: 'absolute', inset: '24px 40px 20px', ...motion, display: 'grid', gridTemplateColumns: '1.16fr 0.84fr', gap: 28, alignItems: 'center' }}>
-      <div style={{ transform: `translateY(${(1 - s1) * 18}px)` }}>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '5px 12px', borderRadius: 999, ...GLASS_CARD_STYLE, fontFamily: FONT_MONO, fontSize: 12.5, fontWeight: 600, color: PALETTE.purple, marginBottom: 16 }}>
-          <span>WAYLAND · NIRI COMPOSITOR</span>
-          <span style={{ color: PALETTE.border }}>·</span>
-          <span>COMPANION SUITE</span>
-        </div>
-
-        <h1 style={{ margin: 0, fontSize: 45, lineHeight: 1.08, fontWeight: 800, letterSpacing: '-0.036em', color: PALETTE.ink }}>
-          Niri Notch &amp; Hermes Control Center
-        </h1>
-        <p style={{ margin: '14px 0 0', fontSize: 19.5, lineHeight: 1.46, fontWeight: 500, color: PALETTE.muted }}>
-          Two paired Wayland companions: an animated Rust Dynamic Island notch daemon integrated directly with a Wofi + Hermes Agent keyboard palette.
-        </p>
-
-        <div style={{ marginTop: 26, display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 12, opacity: s2, transform: `translateY(${(1 - s2) * 14}px)` }}>
-          {[
-            { value: '2', label: 'Paired Repos', sub: 'Notch + Control Center' },
-            { value: 'Spring', label: 'Layer-Shell UI', sub: 'GTK3 companion daemon' },
-            { value: 'ALT+SPC', label: 'Wofi Palette', sub: 'Niri · AI · System · App' },
-          ].map((stat) => (
-            <div key={stat.label} style={{ ...GLASS_CARD_STYLE, borderRadius: 16, padding: '16px 18px' }}>
-              <div style={{ fontFamily: FONT_MONO, fontSize: 27, fontWeight: 800, color: PALETTE.purple, letterSpacing: '-0.03em' }}>{stat.value}</div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: PALETTE.ink, marginTop: 4 }}>{stat.label}</div>
-              <div style={{ fontFamily: FONT_MONO, fontSize: 11.5, color: PALETTE.muted, marginTop: 3 }}>{stat.sub}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div style={{ ...GLASS_CARD_STYLE, borderRadius: 20, padding: '22px 24px', opacity: s3, transform: `translateY(${(1 - s3) * 18}px)`, display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 700, color: PALETTE.purple, letterSpacing: '0.06em' }}>STACK OVERVIEW</span>
-          <span style={{ fontFamily: FONT_MONO, fontSize: 11.5, color: PALETTE.muted }}>CachyOS · Niri</span>
-        </div>
-
-        {modules.map((item, idx) => {
-          const itemIn = enterSpring(frame, 40 + idx * 11, fps);
-          return (
-            <div key={item.name} style={{ padding: '13px 16px', borderRadius: 13, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: itemIn, transform: `translateX(${(1 - itemIn) * 14}px)` }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 800, color: item.color }}>0{idx + 1}</span>
-                <span style={{ fontSize: 15, fontWeight: 700, color: PALETTE.ink }}>{item.name}</span>
-              </div>
-              <span style={{ fontFamily: FONT_MONO, fontSize: 11, fontWeight: 700, padding: '4px 9px', borderRadius: 999, backgroundColor: item.soft, color: item.color }}>{item.tag}</span>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
-
-const SceneNotchDaemon: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
-  const local = Math.max(0, frame - 320);
-  const motion = sceneStyle(frame, 320, 680);
-  const head = enterSpring(local, 4, fps);
-  const mode = local < 90 ? 'ws' : local < 235 ? 'mako' : 'media';
-  const expandT =
-    mode === 'mako'
-      ? enterSpring(local, 90, fps)
-      : mode === 'media'
-        ? enterSpring(local, 235, fps)
-        : 0;
-  const islandW = mode === 'ws' ? 270 : interpolate(expandT, [0, 1], [270, mode === 'mako' ? 500 : 410]);
-  const islandH = mode === 'ws' ? 40 : interpolate(expandT, [0, 1], [40, mode === 'mako' ? 92 : 76]);
-
-  return (
-    <div style={{ position: 'absolute', inset: '24px 40px 20px', ...motion, display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <div style={{ transform: `translateY(${(1 - head) * 14}px)` }}>
-        <div style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 700, color: PALETTE.purple, letterSpacing: '0.07em' }}>
-          02 · NIRI-NOTCH-RS COMPANION DAEMON
-        </div>
-        <h2 style={{ margin: '4px 0 0', fontSize: 31, fontWeight: 800, letterSpacing: '-0.03em', color: PALETTE.ink }}>
-          Out-of-Process Dynamic Island Over Waybar Companion Rails
-        </h2>
-      </div>
-
-      <div style={{ ...GLASS_CARD_STYLE, borderRadius: 18, padding: '18px 22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 16, flex: 1 }}>
-        {/* Simulated Niri Wayland Top Viewport */}
-        <div style={{ position: 'relative', height: 220, borderRadius: 16, backgroundColor: '#101521', border: '1px solid rgba(148,163,184,0.22)', padding: '14px 20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', overflow: 'hidden' }}>
-          {/* Top Waybar + Dynamic Island */}
-          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-            <div style={{ padding: '7px 14px', borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.08)', color: '#CBD5E1', fontFamily: FONT_MONO, fontSize: 12 }}>
-              Waybar Left · WS 1 <strong style={{ color: '#A78BFA' }}>[2]</strong> 3 · niri
-            </div>
-
-            <div
-              style={{
-                width: islandW,
-                height: islandH,
-                borderRadius: 22,
-                backgroundColor: '#070A12',
-                border: `1.5px solid ${mode === 'media' ? 'rgba(45,212,191,0.65)' : 'rgba(139,92,246,0.72)'}`,
-                boxShadow: '0 12px 28px rgba(0,0,0,0.5)',
-                padding: '10px 18px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                color: '#F8FAFC',
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontFamily: FONT_MONO, fontSize: 12 }}>
-                <span style={{ color: mode === 'media' ? '#2DD4BF' : '#A78BFA', fontWeight: 700 }}>
-                  {mode === 'mako' ? '● mako intercepted' : mode === 'media' ? '♫ playerctl fallback' : '● WS 2 · Rio Terminal'}
-                </span>
-                <span style={{ color: '#94A3B8' }}>
-                  {mode === 'mako' ? 'auto-dismiss dup' : mode === 'media' ? '2:14 / 3:48' : 'compact'}
-                </span>
-              </div>
-              {mode === 'mako' && (
-                <div style={{ marginTop: 8, fontSize: 13.5, color: '#E2E8F0' }}>
-                  Hermes Task Done — cargo clippy &amp; tests green on niri-notch-rs
-                </div>
-              )}
-              {mode === 'media' && (
-                <div style={{ marginTop: 8, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span style={{ fontSize: 13, color: '#E2E8F0' }}>Lofi Focus · Left-click toggles playback</span>
-                  <div style={{ display: 'flex', gap: 3, alignItems: 'flex-end', height: 16 }}>
-                    {[0, 1, 2, 3, 4].map((b) => (
-                      <span
-                        key={b}
-                        style={{
-                          width: 3,
-                          height: 5 + Math.abs(Math.sin((local + b * 7) / 6)) * 11,
-                          borderRadius: 2,
-                          backgroundColor: '#2DD4BF',
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div style={{ padding: '7px 14px', borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.08)', color: '#CBD5E1', fontFamily: FONT_MONO, fontSize: 12 }}>
-              Waybar Right · CPU 8% · 23:55
-            </div>
-          </div>
-
-          {/* Tiled Niri windows below */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: 12 }}>
-            <div style={{ height: 74, borderRadius: 12, backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(148,163,184,0.16)', padding: '10px 14px', fontFamily: FONT_MONO, fontSize: 11.5, color: '#94A3B8' }}>
-              <div style={{ color: '#E2E8F0', fontWeight: 700 }}>Rio Terminal · ~/repo/niri-notch-rs</div>
-              <div style={{ marginTop: 4 }}>Event / snapshot / pointer → AppEvent → reduce() → Effect[]</div>
-            </div>
-            <div style={{ height: 74, borderRadius: 12, backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(148,163,184,0.16)', padding: '10px 14px', fontFamily: FONT_MONO, fontSize: 11.5, color: '#94A3B8' }}>
-              <div style={{ color: '#A78BFA', fontWeight: 700 }}>Scrollable Tiling Column #2</div>
-              <div style={{ marginTop: 4 }}>Right-click notch → Control Center · Wheel → WS switch</div>
-            </div>
-          </div>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 14 }}>
-          {[
-            { file: 'src/core.rs', title: 'Pure Reducer (Zero I/O)', desc: 'reduce(AppState, AppEvent) -> (AppState, Vec<Effect>)' },
-            { file: 'src/install.rs', title: 'Managed KDL Blocks', desc: 'Idempotent ~/.config/niri/config.kdl updates with backup' },
-            { file: 'src/main.rs', title: 'GTK3 Layer-Shell Shell', desc: 'Renders damped spring island + mako/playerctl effects' },
-          ].map((col) => (
-            <div key={col.file} style={{ padding: '13px 15px', borderRadius: 14, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}` }}>
-              <div style={{ fontFamily: FONT_MONO, fontSize: 11.5, fontWeight: 800, color: PALETTE.purple }}>{col.file}</div>
-              <div style={{ fontSize: 15, fontWeight: 700, color: PALETTE.ink, marginTop: 4 }}>{col.title}</div>
-              <div style={{ fontSize: 12.5, color: PALETTE.muted, marginTop: 3 }}>{col.desc}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const SceneControlCenter: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
-  const local = Math.max(0, frame - 680);
-  const motion = sceneStyle(frame, 680, 1060);
-  const head = enterSpring(local, 4, fps);
-  const activeIdx = Math.floor((local / 60) % 5);
-
-  const actions = [
-    { ns: 'Niri ·', label: 'Focus floating / tiling & workspace HUD', tag: 'MOD+I', cmd: 'niri msg -j focused-window | show-hud' },
-    { ns: 'Wayland ·', label: 'Wallpaper fade transition via awww', tag: 'MOD+CTRL+W', cmd: 'awww img ~/wallpapers/next.png --transition-type fade' },
-    { ns: 'AI ·', label: 'Hermes TUI (PTY) · one-shot -q · codex exec', tag: 'HERMES', cmd: 'hermes chat -q "Summarize focused Niri window"' },
-    { ns: 'System ·', label: 'Confirmation-gated logout / suspend / reboot', tag: 'MOD+ALT+P', cmd: 'confirm-dialog "Suspend workstation?" && systemctl suspend' },
-    { ns: 'App ·', label: 'Spotlight fallback → wofi --show drun --search', tag: 'AUTO/KO/EN', cmd: 'wofi --show drun --search "$QUERY"' },
-  ];
-
-  return (
-    <div style={{ position: 'absolute', inset: '24px 40px 20px', ...motion, display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <div style={{ transform: `translateY(${(1 - head) * 14}px)` }}>
-        <div style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 700, color: PALETTE.teal, letterSpacing: '0.07em' }}>
-          03 · NIRI-HERMES-CONTROL-CENTER (ALT+SPACE)
-        </div>
-        <h2 style={{ margin: '4px 0 0', fontSize: 31, fontWeight: 800, letterSpacing: '-0.03em', color: PALETTE.ink }}>
-          Hackable Wofi + Bash Command Palette with Hermes Agent Integration
-        </h2>
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: '1.16fr 0.84fr', gap: 18, flex: 1 }}>
-        <div style={{ borderRadius: 18, backgroundColor: '#0D1622', border: '1.5px solid rgba(45,212,191,0.45)', boxShadow: '0 16px 34px rgba(15,23,42,0.16)', padding: '16px 18px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 10 }}>
-          <div style={{ padding: '10px 14px', borderRadius: 10, backgroundColor: 'rgba(255,255,255,0.07)', color: '#99F6E4', fontFamily: FONT_MONO, fontSize: 12.5, display: 'flex', justifyContent: 'space-between' }}>
-            <span>⌘ ALT+SPACE · Search Niri, Hermes AI, or any app…</span>
-            <span style={{ color: '#94A3B8' }}>auto / ko / en</span>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            {actions.map((act, idx) => {
-              const focused = idx === activeIdx;
-              return (
-                <div
-                  key={act.ns}
-                  style={{
-                    padding: '10px 13px',
-                    borderRadius: 11,
-                    backgroundColor: focused ? 'rgba(20,184,166,0.22)' : 'rgba(255,255,255,0.03)',
-                    border: `1px solid ${focused ? '#2DD4BF' : 'rgba(255,255,255,0.08)'}`,
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    gap: 10,
-                  }}
-                >
-                  <div style={{ fontSize: 13.8, color: '#F1F5F9' }}>
-                    <span style={{ fontFamily: FONT_MONO, color: '#2DD4BF', fontWeight: 700 }}>{act.ns}</span> {act.label}
-                  </div>
-                  <span style={{ fontFamily: FONT_MONO, fontSize: 10.5, color: '#CBD5E1', flexShrink: 0 }}>{act.tag}</span>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Live command execution preview strip */}
-          <div style={{ padding: '10px 14px', borderRadius: 10, backgroundColor: '#152233', border: '1px solid rgba(45,212,191,0.28)', fontFamily: FONT_MONO, fontSize: 11.5, color: '#CBD5E1' }}>
-            <span style={{ color: '#2DD4BF', fontWeight: 700 }}>EXEC → </span>
-            <span>{actions[activeIdx].cmd}</span>
-          </div>
-        </div>
-
-        <div style={{ ...GLASS_CARD_STYLE, borderRadius: 18, padding: '18px 20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-          <div style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 800, color: PALETTE.teal }}>PTY vs. ONE-SHOT AGENT SPLIT</div>
-          {[
-            { t: 'Interactive TUI', d: 'Opens hermes --tui chat inside Rio / Alacritty real PTY.' },
-            { t: 'Wofi One-Shot Prompt', d: 'Runs hermes chat -q directly without spawning a TUI.' },
-            { t: 'Window Context Forward', d: 'Sends focused Niri window state straight into Hermes.' },
-            { t: 'Completion Alerts', d: 'Emits Niri/mako notifications when Codex or Hermes finishes.' },
-          ].map((item) => (
-            <div key={item.t} style={{ padding: '10px 12px', borderRadius: 11, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}` }}>
-              <div style={{ fontSize: 14.5, fontWeight: 700, color: PALETTE.ink }}>{item.t}</div>
-              <div style={{ fontSize: 12.8, color: PALETTE.muted, marginTop: 2 }}>{item.d}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const SceneChoreography: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
-  const local = Math.max(0, frame - 1060);
-  const motion = sceneStyle(frame, 1060, 1440);
-  const head = enterSpring(local, 4, fps);
-
-  return (
-    <div style={{ position: 'absolute', inset: '24px 40px 20px', ...motion, display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <div style={{ transform: `translateY(${(1 - head) * 14}px)` }}>
-        <div style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 700, color: PALETTE.navy, letterSpacing: '0.07em' }}>
-          04 · POINTER &amp; KEYBOARD CHOREOGRAPHY
-        </div>
-        <h2 style={{ margin: '4px 0 0', fontSize: 31, fontWeight: 800, letterSpacing: '-0.03em', color: PALETTE.ink }}>
-          Notch Right-Click Bridges Directly Into the Control Center
-        </h2>
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, flex: 1 }}>
-        <div style={{ ...GLASS_CARD_STYLE, borderRadius: 18, padding: '18px 20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-          <div style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 800, color: PALETTE.purple }}>NOTCH POINTER ACTIONS</div>
-          {[
-            ['Hover', 'Spring-expand live status & notification card'],
-            ['Left Click', 'Clear active notification or toggle playerctl'],
-            ['Right Click', 'Launch Niri Hermes Control Center immediately'],
-            ['Mouse Wheel', 'Scroll up / down to switch Niri workspaces'],
-          ].map(([k, v]) => (
-            <div key={k} style={{ padding: '12px 14px', borderRadius: 12, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}`, display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-              <span style={{ fontFamily: FONT_MONO, fontSize: 13, fontWeight: 800, color: PALETTE.purple }}>{k}</span>
-              <span style={{ fontSize: 13.5, color: PALETTE.ink, textAlign: 'right' }}>{v}</span>
-            </div>
-          ))}
-        </div>
-
-        <div style={{ ...GLASS_CARD_STYLE, borderRadius: 18, padding: '18px 20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-          <div style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 800, color: PALETTE.teal }}>KEYBOARD BINDINGS</div>
-          {[
-            ['ALT + SPACE', 'Open Wofi Control Center + Spotlight search'],
-            ['MOD + SHIFT + ENTER', 'Toggle dedicated floating scratch terminal'],
-            ['MOD + I', 'Display Focused-Window HUD overlay'],
-            ['MOD + GRAVE / T', 'Switch or move windows between float & tile'],
-          ].map(([k, v]) => (
-            <div key={k} style={{ padding: '12px 14px', borderRadius: 12, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}`, display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-              <span style={{ fontFamily: FONT_MONO, fontSize: 12.5, fontWeight: 800, color: PALETTE.teal }}>{k}</span>
-              <span style={{ fontSize: 13.5, color: PALETTE.ink, textAlign: 'right' }}>{v}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const SceneSafety: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
-  const local = Math.max(0, frame - 1440);
-  const motion = sceneStyle(frame, 1440, 1800, true);
-  const head = enterSpring(local, 4, fps);
-
-  return (
-    <div style={{ position: 'absolute', inset: '24px 40px 20px', ...motion, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-      <div style={{ transform: `translateY(${(1 - head) * 14}px)` }}>
-        <div style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 700, color: PALETTE.green, letterSpacing: '0.07em' }}>
-          05 · SAFE INSTALLERS &amp; CI QUALITY GATES
-        </div>
-        <h2 style={{ margin: '4px 0 0', fontSize: 33, fontWeight: 800, letterSpacing: '-0.03em', color: PALETTE.ink }}>
-          Auditable Configs, Dry-Run Installs, and Zero Stored Secrets
-        </h2>
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
-        <div style={{ ...GLASS_CARD_STYLE, borderRadius: 18, padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 800, color: PALETTE.purple }}>NIRI-NOTCH-RS CLI &amp; CI</div>
-          <div style={{ fontFamily: FONT_MONO, fontSize: 13, color: PALETTE.ink }}>• niri-notch-rs doctor --json</div>
-          <div style={{ fontFamily: FONT_MONO, fontSize: 13, color: PALETTE.ink }}>• niri-notch-rs install --user --dry-run</div>
-          <div style={{ fontFamily: FONT_MONO, fontSize: 13, color: PALETTE.ink }}>• cargo test --locked &amp; clippy -D warnings</div>
-          <div style={{ fontFamily: FONT_MONO, fontSize: 13, color: PALETTE.ink }}>• RUSTDOCFLAGS=&quot;-D warnings&quot; cargo doc</div>
-        </div>
-
-        <div style={{ ...GLASS_CARD_STYLE, borderRadius: 18, padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 800, color: PALETTE.teal }}>CONTROL CENTER SAFETY</div>
-          <div style={{ fontSize: 14.5, color: PALETTE.ink }}>• Plain Bash scripts copied to ~/.local/bin</div>
-          <div style={{ fontSize: 14.5, color: PALETTE.ink }}>• Never auto-mutates ~/.config/niri/config.kdl</div>
-          <div style={{ fontSize: 14.5, color: PALETTE.ink }}>• Confirmation dialog on logout / reboot / shutdown</div>
-          <div style={{ fontSize: 14.5, color: PALETTE.ink }}>• Zero API keys or secrets stored in scripts</div>
-        </div>
-      </div>
-
-      <div style={{ ...GLASS_CARD_STYLE, borderRadius: 14, padding: '12px 18px', display: 'flex', justifyContent: 'space-between', fontFamily: FONT_MONO, fontSize: 12.5 }}>
-        <span style={{ color: PALETTE.purple, fontWeight: 700 }}>mud-the-developer/niri-notch-rs</span>
-        <span style={{ color: PALETTE.teal, fontWeight: 700 }}>mud-the-developer/niri-hermes-control-center</span>
-      </div>
-    </div>
-  );
-};
+const desktopWindows = (
+  <>
+    <WindowBar title="Terminal" />
+    <g transform="translate(132 313)" fontSize="38" fontFamily={FONT_MONO}>
+      <text fill={PALETTE.teal}>~/prints</text>
+      <text y="72"><tspan fill={PALETTE.muted}>$ </tspan>ls</text>
+      <text y="135">inlet.svg   shoal.svg</text>
+      <text y="222" fill={PALETTE.muted}>$</text>
+      <rect x="46" y="191" width="18" height="37" fill={PALETTE.ink} />
+    </g>
+    <g transform="translate(0 515)">
+      <WindowBar title="shoal.svg" />
+      <rect x="111" y="256" width="1058" height="361" fill="#244456" />
+      <path d="M127 272h1026v329H127z" fill="none" stroke="#92b2b3" opacity=".6" strokeWidth="1.4" />
+      <use href="#niri-fish" transform="translate(175 335) rotate(-5) scale(1.62)" />
+      <use href="#niri-fish" transform="translate(690 370) rotate(8) scale(1.38)" />
+      <use href="#niri-fish" transform="translate(440 495) rotate(-6) scale(1.07)" />
+    </g>
+  </>
+);
 
 export const NiriDesktopSuiteDemo: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const compact = useCompactDemo();
+  const approach = phase(frame, 0, 44);
+  const leave = phase(frame, 145, 201);
+  const hover = phase(frame, 35, 62) * (1 - phase(frame, 159, 181));
+  const scroll = phase(frame, 78, 123);
+  const second = frame >= 95;
+  const wheel = phase(frame, 59, 71) * (1 - phase(frame, 120, 137));
+  if (compact) {
+    const notchHalf = 157 + 25 * hover;
+    const l = 320 - notchHalf;
+    const r = 320 + notchHalf;
+    const depth = 80 + 8 * hover;
+    return (
+      <DemoStage>
+        {artworkDefs}
+        <defs><clipPath id="niri-compact-desks"><rect x="30" y="163" width="580" height="399" /></clipPath></defs>
+        <rect x="16" y="26" width="608" height="565" rx="18" fill="url(#niri-wallpaper)" stroke={PALETTE.border} strokeWidth="3" />
+        <g clipPath="url(#niri-compact-desks)">
+          <g transform={`translate(0 ${-408 * scroll})`}>
+            <rect x="37" y="175" width="566" height="376" rx="11" fill={PALETTE.card} stroke={PALETTE.border} strokeWidth="3" />
+            <text x="65" y="233" fontSize="46" fontWeight="600">Terminal</text>
+            <path d="M38 254H602" stroke={PALETTE.border} strokeWidth="2" />
+            <g transform="translate(66 314)" fontSize="40" fontFamily={FONT_MONO}>
+              <text fill={PALETTE.teal}>~/prints</text>
+              <text y="57"><tspan fill={PALETTE.muted}>$ </tspan>ls</text>
+              <text y="114">inlet.svg  shoal.svg</text>
+              <text y="178" fill={PALETTE.muted}>$</text>
+              <rect x="39" y="145" width="19" height="36" fill={PALETTE.ink} />
+            </g>
+            <g transform="translate(0 408)">
+              <rect x="37" y="175" width="566" height="376" rx="11" fill={PALETTE.card} stroke={PALETTE.border} strokeWidth="3" />
+              <text x="65" y="233" fontSize="46" fontWeight="600">shoal.svg</text>
+              <rect x="52" y="254" width="536" height="281" fill="#244456" />
+              <path d="M64 267h512v255H64z" fill="none" stroke="#92b2b3" strokeWidth="2" opacity=".6" />
+              <use href="#niri-fish" transform="translate(80 313) rotate(-5) scale(1.02)" />
+              <use href="#niri-fish" transform="translate(322 363) rotate(8) scale(.86)" />
+              <use href="#niri-fish" transform="translate(132 435) rotate(-6) scale(.72)" />
+            </g>
+          </g>
+        </g>
+        <g transform="translate(0 26)">
+          <path d={`M${l - 19} 0H${r + 19}Q${r} 0 ${r} 20V${depth - 28}Q${r} ${depth} ${r - 29} ${depth}H${l + 29}Q${l} ${depth} ${l} ${depth - 28}V20Q${l} 0 ${l - 19} 0Z`} fill="#171c20" />
+          <text x="320" y={55 + 3 * hover} textAnchor="middle" fill="#f0f5ed" fontSize="42" fontWeight="600">Workspace {second ? 2 : 1}</text>
+        </g>
+        <g opacity={wheel} transform="translate(388 118)">
+          <rect width="212" height="59" rx="13" fill={PALETTE.ink} />
+          <rect x="17" y="9" width="27" height="40" rx="13" fill="none" stroke={PALETTE.card} strokeWidth="3" />
+          <rect x="27" y={14 + 9 * phase(frame, 71, 83)} width="7" height="13" rx="3" fill={PALETTE.card} />
+          <text x="57" y="42" fill={PALETTE.card} fontSize="36" fontWeight="600">Wheel ↓</text>
+        </g>
+        <Pointer x={498 - 46 * approach + 87 * leave} y={282 - 201 * approach + 151 * leave} />
+      </DemoStage>
+    );
+  }
+  const notchWidth = 297 + 62 * hover;
+  const notchDepth = 67 + 9 * hover;
+  const l = 640 - notchWidth / 2;
+  const r = 640 + notchWidth / 2;
 
   return (
-    <FrameChrome
-      badge="NIRI SUITE"
-      title="Niri Wayland Companion Notch & Hermes Control Center"
-      chapters={CHAPTERS}
-      frame={frame}
-      durationInFrames={NIRI_SUITE_DURATION}
-      accentColor={PALETTE.purple}
-      footerLabel="niri-notch-rs + niri-hermes-control-center · Wayland / Niri"
-    >
-      {frame < 334 && <SceneOverview frame={frame} fps={fps} />}
-      {frame >= 306 && frame < 694 && <SceneNotchDaemon frame={frame} fps={fps} />}
-      {frame >= 666 && frame < 1074 && <SceneControlCenter frame={frame} fps={fps} />}
-      {frame >= 1046 && frame < 1454 && <SceneChoreography frame={frame} fps={fps} />}
-      {frame >= 1426 && <SceneSafety frame={frame} fps={fps} />}
-    </FrameChrome>
+    <DemoStage>
+      {artworkDefs}
+      <defs>
+        <clipPath id="niri-desks"><rect x="39" y="143" width="1202" height="503" /></clipPath>
+      </defs>
+      <rect x="34" y="37" width="1212" height="643" rx="19" fill="url(#niri-wallpaper)" stroke={PALETTE.border} strokeWidth="2" />
+      <g clipPath="url(#niri-desks)">
+        <g transform={`translate(0 ${-515 * scroll})`}>{desktopWindows}</g>
+      </g>
+
+      <g transform="translate(68 60)">
+        <rect width="186" height="60" rx="30" fill={PALETTE.card} />
+        <rect x={second ? 92 : 9} y="7" width="83" height="46" rx="23" fill={PALETTE.ink} />
+        <text x="52" y="42" textAnchor="middle" fontWeight="650" fontSize="33" fill={second ? PALETTE.muted : PALETTE.card}>1</text>
+        <text x="134" y="42" textAnchor="middle" fontWeight="650" fontSize="33" fill={second ? PALETTE.card : PALETTE.muted}>2</text>
+      </g>
+      <g transform="translate(1114 60)" fill={PALETTE.muted}>
+        <rect width="98" height="60" rx="30" fill={PALETTE.card} />
+        <path d="M18 25q14-13 28 0m-23 5q9-8 18 0m-13 6q4-4 8 0 M59 24h18v13H59z M80 28v5" fill="none" stroke={PALETTE.muted} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+      <g transform="translate(0 37)">
+        <path d={`M${l - 18} 0H${r + 18}Q${r} 0 ${r} 20V${notchDepth - 25}Q${r} ${notchDepth} ${r - 27} ${notchDepth}H${l + 27}Q${l} ${notchDepth} ${l} ${notchDepth - 25}V20Q${l} 0 ${l - 18} 0Z`} fill="#171c20" />
+        <text x="640" y={45 + 3 * hover} textAnchor="middle" fill="#f0f5ed" fontSize="32" fontWeight="600">{second ? '2 · shoal.svg' : '1 · Terminal'}</text>
+      </g>
+
+      <g opacity={wheel} transform="translate(722 124)">
+        <rect width="205" height="62" rx="15" fill={PALETTE.ink} />
+        <rect x="19" y="10" width="27" height="42" rx="13" fill="none" stroke={PALETTE.card} strokeWidth="2.5" />
+        <rect x="29" y={17 + 7 * phase(frame, 71, 83)} width="7" height="12" rx="3" fill={PALETTE.card} />
+        <text x="62" y="41" fill={PALETTE.card} fontSize="30" fontWeight="600">Wheel ↓</text>
+      </g>
+      <Pointer x={883 - 180 * approach + 302 * leave} y={270 - 177 * approach + 158 * leave} />
+    </DemoStage>
   );
 };

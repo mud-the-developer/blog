@@ -40,16 +40,18 @@ Then run `npm run build` (or push to `main` when ready) — the project automati
 
 ### Project demo videos
 
-Render both appearances from the same Remotion composition. From the repository root:
+Show one action in a single shot. Start with the object in use and hold the result long enough to read. Use a wide shot for desktop and a square close-up for screens up to 600px. Both framings share the same timeline. Put context in the figure caption rather than an opening slide.
 
 ```bash
-npm --prefix video run render:mudplot          # one project, both themes
-npm --prefix video run render:all -- dark      # all projects, dark only
+npm --prefix video run render:mudplot              # both sizes and themes
+npm --prefix video run render:all -- dark compact  # just the square dark versions
 ```
 
-Each command writes a 1080p MP4 and a frame-90 PNG poster to `static/media/` for each selected theme. Light uses `<slug>.mp4` and `<slug>-poster.png`; dark uses `<slug>-dark.mp4` and `<slug>-dark-poster.png`. After changing a demo's timing or content, render both themes so switching during playback stays on the same frame.
+The wide MP4 is 1920×1080; the square MP4 is 960×960. Each has a PNG poster taken at the frame chosen in `video/render.mjs`. In `static/media/`, append `-compact` for square and then `-dark` for dark; posters end in `-poster.png`. At a 320px viewport, check the actual square video. Reframe the action instead of shrinking the wide shot: give key labels at least 36 units on its 640-unit canvas and keep results above the native controls.
 
-For a new demo, follow [`posts/projects/mudplot.md`](../posts/projects/mudplot.md): put the light player inside `<noscript data-project-demo="<slug>">` in the figure and keep its caption outside. With JavaScript enabled the site loads just the active theme’s video and poster. Without it, the light player works with native controls.
+Rendering loads pinned Inter and JetBrains Mono webfonts before capturing any frame; the finished videos do not need a font download.
+
+Use [`posts/projects/mudplot.md`](../posts/projects/mudplot.md) as the figure template. With JavaScript enabled, the player loads only the matching movie and poster, and keeps the playhead when the screen or theme changes. Without JavaScript, the native `<source media>` list selects the layout and system appearance; the first video frame serves as the poster. When replacing published files, update the `cut` query in the player and all native sources together.
 
 The player downloads the selected MP4 into a browser Blob before playback. This keeps seeking and theme switches working when a static host returns the whole file instead of a byte range. Keep `blob:` in the site's `media-src` policy; no server function is needed for the videos.
 

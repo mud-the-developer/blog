@@ -22,9 +22,14 @@ publish: true
 
 <figure class="v3-demo-figure">
   <noscript data-project-demo="rusty-note">
-    <video controls playsinline muted loop preload="metadata" src="/assets/media/rusty-note.mp4" poster="/assets/media/rusty-note-poster.png"></video>
+    <video controls playsinline muted loop preload="metadata">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" src="/assets/media/rusty-note-compact-dark.mp4?cut=3">
+      <source media="(max-width: 600px)" src="/assets/media/rusty-note-compact.mp4?cut=3">
+      <source media="(prefers-color-scheme: dark)" src="/assets/media/rusty-note-dark.mp4?cut=3">
+      <source src="/assets/media/rusty-note.mp4?cut=3">
+    </video>
   </noscript>
-  <figcaption>60-second Remotion summary · In-place Markdown block editing, cached Pretext layout reflow, explicit save/undo discipline, and native Win32 sticky note controls.</figcaption>
+  <figcaption>Edit one line in place. Ctrl+S saves it without changing the surrounding checklist.</figcaption>
 </figure>
 
 ## Core Design

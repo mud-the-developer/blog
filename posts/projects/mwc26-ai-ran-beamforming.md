@@ -21,9 +21,14 @@ Developed as part of the joint **Yonsei University (RAMO Lab) – VIAVI Solution
 
 <figure class="v3-demo-figure">
   <noscript data-project-demo="mwc26-ai-ran-beamforming">
-    <video controls playsinline muted loop preload="metadata" src="/assets/media/mwc26-ai-ran-beamforming.mp4" poster="/assets/media/mwc26-ai-ran-beamforming-poster.png"></video>
+    <video controls playsinline muted loop preload="metadata">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" src="/assets/media/mwc26-ai-ran-beamforming-compact-dark.mp4?cut=3">
+      <source media="(max-width: 600px)" src="/assets/media/mwc26-ai-ran-beamforming-compact.mp4?cut=3">
+      <source media="(prefers-color-scheme: dark)" src="/assets/media/mwc26-ai-ran-beamforming-dark.mp4?cut=3">
+      <source src="/assets/media/mwc26-ai-ran-beamforming.mp4?cut=3">
+    </video>
   </noscript>
-  <figcaption>45-second Remotion summary · MWC'26 LLM-based AI-RIC architecture, anomaly handling, predictive beamforming, and VIAVI TeraVM AI RSG benchmark results.</figcaption>
+  <figcaption>When position reports stop, the beam steers toward the predicted position. The path is schematic; the throughput figures are VIAVI measurements.</figcaption>
 </figure>
 
 ## Technical Scope

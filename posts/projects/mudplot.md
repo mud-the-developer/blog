@@ -22,9 +22,14 @@ publish: true
 
 <figure class="v3-demo-figure">
   <noscript data-project-demo="mudplot">
-    <video controls playsinline muted loop preload="metadata" src="/assets/media/mudplot.mp4" poster="/assets/media/mudplot-poster.png"></video>
+    <video controls playsinline muted loop preload="metadata">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" src="/assets/media/mudplot-compact-dark.mp4?cut=3">
+      <source media="(max-width: 600px)" src="/assets/media/mudplot-compact.mp4?cut=3">
+      <source media="(prefers-color-scheme: dark)" src="/assets/media/mudplot-dark.mp4?cut=3">
+      <source src="/assets/media/mudplot.mp4?cut=3">
+    </video>
   </noscript>
-  <figcaption>60-second Remotion summary · CIELAB LCH palette synthesis, CIEDE2000 colour-vision deficiency checks, declarative FigureSpec reducer, and Rust/Askama local editor workflow.</figcaption>
+  <figcaption>Stripes and dots keep the two methods distinct in grayscale. The values come from the <a href="/posts/mwc26-ai-ran-beamforming/">MWC’26 beamforming benchmark</a>.</figcaption>
 </figure>
 
 ## LCH Perceptual Colour Engine
