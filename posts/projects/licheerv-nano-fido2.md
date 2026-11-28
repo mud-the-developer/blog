@@ -20,9 +20,9 @@ publish: true
 **LicheeRV Nano FIDO2** turns an SG2002 RISC-V (`C906`) LicheeRV Nano running Buildroot Linux 5.10 into an experimental USB FIDO2/CTAP2 authenticator bridged to Linux's USB HID gadget subsystem.
 
 <figure class="v3-demo-figure">
-  <video controls playsinline muted loop preload="metadata" poster="/assets/media/licheerv-nano-fido2-poster.png">
-    <source src="/assets/media/licheerv-nano-fido2.mp4" type="video/mp4" />
-  </video>
+  <noscript data-project-demo="licheerv-nano-fido2">
+    <video controls playsinline muted loop preload="metadata" src="/assets/media/licheerv-nano-fido2.mp4" poster="/assets/media/licheerv-nano-fido2-poster.png"></video>
+  </noscript>
   <figcaption>60-second Remotion summary · RISC-V SG2002 USB HID gadget bridge, physical CTAP2/USER-button verification matrix, encrypted SD vault provisioning, and explicit threat boundaries.</figcaption>
 </figure>
 

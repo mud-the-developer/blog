@@ -73,7 +73,7 @@ const SceneOverview: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
         {features.map((item, idx) => {
           const itemIn = enterSpring(frame, 40 + idx * 11, fps);
           return (
-            <div key={item.name} style={{ padding: '13px 16px', borderRadius: 13, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: itemIn, transform: `translateX(${(1 - itemIn) * 14}px)` }}>
+            <div key={item.name} style={{ padding: '13px 16px', borderRadius: 13, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: itemIn, transform: `translateX(${(1 - itemIn) * 14}px)` }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 800, color: item.color }}>0{idx + 1}</span>
                 <span style={{ fontSize: 15.5, fontWeight: 700, color: PALETTE.ink }}>{item.name}</span>
@@ -107,7 +107,7 @@ const SceneInPlaceEdit: React.FC<{ frame: number; fps: number }> = ({ frame, fps
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1.16fr 0.84fr', gap: 20, flex: 1 }}>
-        <div style={{ borderRadius: 18, backgroundColor: '#FFFDF7', border: `1.5px solid ${PALETTE.border}`, boxShadow: '0 16px 34px rgba(15,23,42,0.09)', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ colorScheme: 'light', color: PALETTE.ink, borderRadius: 18, backgroundColor: '#FFFDF7', border: `1.5px solid ${PALETTE.border}`, boxShadow: '0 16px 34px rgba(15,23,42,0.09)', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
           {/* Win32 sticky note titlebar */}
           <div style={{ height: 40, padding: '0 16px', backgroundColor: '#F6F1E3', borderBottom: '1px solid #E5DEC9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -174,7 +174,7 @@ const SceneInPlaceEdit: React.FC<{ frame: number; fps: number }> = ({ frame, fps
             { t: 'Direct Task Toggles', d: 'Click checkboxes right inside rendered mode without raw-source flicker.' },
             { t: 'Owned Image Viewer', d: 'Click local Markdown images for native zoom/pan (Home, Space, Esc).' },
           ].map((item) => (
-            <div key={item.t} style={{ padding: '12px 14px', borderRadius: 12, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}` }}>
+            <div key={item.t} style={{ padding: '12px 14px', borderRadius: 12, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}` }}>
               <div style={{ fontSize: 15, fontWeight: 700, color: PALETTE.ink }}>{item.t}</div>
               <div style={{ fontSize: 13.5, color: PALETTE.muted, marginTop: 3, lineHeight: 1.45 }}>{item.d}</div>
             </div>
@@ -226,7 +226,7 @@ const SceneCachedLayout: React.FC<{ frame: number; fps: number }> = ({ frame, fp
               style={{
                 width: `${widthPct}%`,
                 borderRadius: 14,
-                backgroundColor: '#FFFFFF',
+                backgroundColor: PALETTE.card,
                 border: `2px solid ${PALETTE.blue}`,
                 padding: '16px 18px',
                 display: 'flex',
@@ -263,7 +263,7 @@ const SceneCachedLayout: React.FC<{ frame: number; fps: number }> = ({ frame, fp
             { step: '03', title: 'Reflow on Resize / Edit', desc: 'Pure arithmetic line wrapping in microseconds.' },
             { step: '04', title: 'Paint on Demand', desc: 'Redraws only on input, resize, or file change events.' },
           ].map((row) => (
-            <div key={row.step} style={{ padding: '10px 12px', borderRadius: 11, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}`, display: 'flex', gap: 11, alignItems: 'flex-start' }}>
+            <div key={row.step} style={{ padding: '10px 12px', borderRadius: 11, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}`, display: 'flex', gap: 11, alignItems: 'flex-start' }}>
               <span style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 800, color: PALETTE.orange, paddingTop: 2 }}>{row.step}</span>
               <div>
                 <div style={{ fontSize: 14.5, fontWeight: 700, color: PALETTE.ink }}>{row.title}</div>

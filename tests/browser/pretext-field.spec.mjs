@@ -113,7 +113,7 @@ test('v3 personal homepage renders No-Hero Swiss Glass Dossier with Pretext bio,
   // Reader UX on OSS project post (video, TOC, MathML, syntax highlighting, copy button, prev/next pager)
   await page.goto('/posts/mudplot/');
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-  await expect(page.locator('video source[src="/assets/media/mudplot.mp4"]')).toHaveCount(1);
+  await expect(page.locator('video')).toBeVisible();
   await expect(page.locator('.post-toc')).toBeVisible();
   expect(await page.locator('math').count()).toBeGreaterThanOrEqual(2);
   await expect(page.locator('.code-block')).toHaveCount(1);

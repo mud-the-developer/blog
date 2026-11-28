@@ -74,7 +74,7 @@ const SceneOverview: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
         {items.map((item, idx) => {
           const itemIn = enterSpring(frame, 40 + idx * 11, fps);
           return (
-            <div key={item.name} style={{ padding: '13px 16px', borderRadius: 13, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: itemIn, transform: `translateX(${(1 - itemIn) * 14}px)` }}>
+            <div key={item.name} style={{ padding: '13px 16px', borderRadius: 13, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: itemIn, transform: `translateX(${(1 - itemIn) * 14}px)` }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 800, color: item.color }}>0{idx + 1}</span>
                 <span style={{ fontSize: 15.5, fontWeight: 700, color: PALETTE.ink }}>{item.name}</span>
@@ -125,7 +125,7 @@ const SceneUsbStack: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
             { x: 866, w: 240, title: 'USER Button + SD Vault', sub: 'Physical UP · Encrypted DB', color: PALETTE.purple },
           ].map((node, i) => (
             <g key={node.title}>
-              <rect x={node.x} y={42} width={node.w} height={124} rx={16} fill="#FFFFFF" stroke={node.color} strokeWidth={2.2} />
+              <rect x={node.x} y={42} width={node.w} height={124} rx={16} fill={PALETTE.card} stroke={node.color} strokeWidth={2.2} />
               <text x={node.x + 18} y={84} fontSize={16.5} fontWeight={800} fill={PALETTE.ink}>{node.title}</text>
               <text x={node.x + 18} y={114} fontSize={12.5} fontFamily={FONT_MONO} fill={PALETTE.muted}>{node.sub}</text>
               {i === 3 && userPressRing > 0 && (
@@ -150,13 +150,13 @@ const SceneUsbStack: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
         </svg>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 12, fontFamily: FONT_MONO, fontSize: 12 }}>
-          <div style={{ padding: '10px 14px', borderRadius: 10, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}`, color: PALETTE.ink }}>
+          <div style={{ padding: '10px 14px', borderRadius: 10, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}`, color: PALETTE.ink }}>
             Board: <strong>LicheeRV Nano (SG2002)</strong>
           </div>
-          <div style={{ padding: '10px 14px', borderRadius: 10, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}`, color: PALETTE.ink }}>
+          <div style={{ padding: '10px 14px', borderRadius: 10, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}`, color: PALETTE.ink }}>
             Kernel: <strong>Buildroot Linux 5.10</strong>
           </div>
-          <div style={{ padding: '10px 14px', borderRadius: 10, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}`, color: PALETTE.ink }}>
+          <div style={{ padding: '10px 14px', borderRadius: 10, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}`, color: PALETTE.ink }}>
             Approval: <strong>Physical GPIO USER Key</strong>
           </div>
         </div>
@@ -194,7 +194,7 @@ const ScenePhysicalTests: React.FC<{ frame: number; fps: number }> = ({ frame, f
         {rows.map(([area, detail], idx) => {
           const itemIn = enterSpring(local, 8 + idx * 13, fps);
           return (
-            <div key={area} style={{ padding: '11px 16px', borderRadius: 12, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: itemIn, transform: `translateX(${(1 - itemIn) * 16}px)` }}>
+            <div key={area} style={{ padding: '11px 16px', borderRadius: 12, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: itemIn, transform: `translateX(${(1 - itemIn) * 16}px)` }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                 <span style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 800, color: PALETTE.teal }}>0{idx + 1}</span>
                 <span style={{ fontSize: 15.5, fontWeight: 700, color: PALETTE.ink }}>{area}</span>
@@ -254,7 +254,7 @@ const SceneVaultCli: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
             { t: 'Encrypted SD Vault', d: 'Credentials and monotonic counters survive lock and reboot cycles.', badge: 'PERSISTENT', color: PALETTE.teal, soft: PALETTE.greenSoft },
             { t: 'Plain Terminal Fallback', d: 'Works cleanly over minimal SSH or serial console without ncurses.', badge: 'NO_COLOR', color: PALETTE.navy, soft: PALETTE.blueSoft },
           ].map((item) => (
-            <div key={item.t} style={{ padding: '12px 14px', borderRadius: 12, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}` }}>
+            <div key={item.t} style={{ padding: '12px 14px', borderRadius: 12, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}` }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 14.5, fontWeight: 700, color: PALETTE.ink }}>{item.t}</span>
                 <span style={{ fontFamily: FONT_MONO, fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 999, backgroundColor: item.soft, color: item.color }}>{item.badge}</span>

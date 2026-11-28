@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { continueRender, delayRender, interpolate, spring } from 'remotion';
+import { continueRender, delayRender, interpolate, spring, useVideoConfig } from 'remotion';
 
 export const PALETTE = {
-  bg: '#F4F6FA',
-  grid: '#E3E8F1',
-  card: '#FFFFFF',
-  cardSoft: '#EFF3F8',
-  border: '#D5DCE8',
-  ink: '#111622',
-  muted: '#4E586B',
-  navy: '#1E3A8A',
-  blue: '#2563EB',
-  blueSoft: '#EFF6FF',
-  teal: '#0F766E',
-  green: '#059669',
-  greenSoft: '#ECFDF5',
-  orange: '#C2410C',
-  amber: '#D97706',
-  amberSoft: '#FFF7ED',
-  red: '#BE123C',
-  redSoft: '#FFF1F2',
-  purple: '#6D28D9',
-  purpleSoft: '#F5F3FF',
+  bg: 'light-dark(#F4F6FA, #141416)',
+  grid: 'light-dark(#E3E8F1, #222226)',
+  card: 'light-dark(#FFFFFF, #1E1E22)',
+  cardSoft: 'light-dark(#EFF3F8, #27272C)',
+  border: 'light-dark(#D5DCE8, #4D4E56)',
+  ink: 'light-dark(#111622, #F4F4F6)',
+  muted: 'light-dark(#4E586B, #B2B5BE)',
+  onAccent: 'light-dark(#FFFFFF, #14171F)',
+  navy: 'light-dark(#1E3A8A, #A4BBFF)',
+  blue: 'light-dark(#2563EB, #8DB4FF)',
+  blueSoft: 'light-dark(#EFF6FF, #222C40)',
+  teal: 'light-dark(#0F766E, #49D9B9)',
+  green: 'light-dark(#059669, #70DBA5)',
+  greenSoft: 'light-dark(#ECFDF5, #1C332C)',
+  orange: 'light-dark(#C2410C, #FFAB7F)',
+  amber: 'light-dark(#D97706, #F4C573)',
+  amberSoft: 'light-dark(#FFF7ED, #393022)',
+  red: 'light-dark(#BE123C, #FF95AA)',
+  redSoft: 'light-dark(#FFF1F2, #39262D)',
+  purple: 'light-dark(#6D28D9, #C4ABFF)',
+  purpleSoft: 'light-dark(#F5F3FF, #30293D)',
 };
 
 export const FONT_SANS =
@@ -83,12 +84,21 @@ function useWebFonts(): void {
   }, [handle]);
 }
 
+const glass = {
+  light: {
+    '--demo-glass': 'linear-gradient(180deg, rgba(255,255,255,0.97) 0%, rgba(246,248,252,0.92) 52%, rgba(253,254,255,0.96) 100%) padding-box, linear-gradient(180deg, rgba(255,255,255,0.99) 0%, rgba(255,255,255,0.58) 5%, transparent 16%, transparent 84%, rgba(255,255,255,0.58) 95%, rgba(255,255,255,0.99) 100%) border-box, linear-gradient(90deg, rgba(17,22,34,0.32) 0%, rgba(17,22,34,0.12) 2%, transparent 6%, transparent 94%, rgba(17,22,34,0.12) 98%, rgba(17,22,34,0.32) 100%) border-box',
+    '--demo-shadow': 'inset 0 1.5px 0 rgba(255,255,255,0.98), inset 0 -1.5px 0 rgba(255,255,255,0.96), inset 1.5px 0 0 rgba(17,22,34,0.07), inset -1.5px 0 0 rgba(17,22,34,0.07), 0 12px 32px rgba(15,23,42,0.07), 0 2px 6px rgba(15,23,42,0.04)',
+  },
+  dark: {
+    '--demo-glass': 'linear-gradient(180deg, #343439, #27272C 52%, #303035) padding-box, linear-gradient(180deg, #606069, #3C3C43 18%, #36363C 84%, #54545C) border-box',
+    '--demo-shadow': 'inset 0 1px 0 rgb(255 255 255 / 10%), inset 0 -1px 0 rgb(255 255 255 / 6%), 0 8px 20px rgb(0 0 0 / 25%)',
+  },
+};
+
 export const GLASS_CARD_STYLE: React.CSSProperties = {
-  background:
-    'linear-gradient(180deg, rgba(255,255,255,0.97) 0%, rgba(246,248,252,0.92) 52%, rgba(253,254,255,0.96) 100%) padding-box, linear-gradient(180deg, rgba(255,255,255,0.99) 0%, rgba(255,255,255,0.58) 5%, transparent 16%, transparent 84%, rgba(255,255,255,0.58) 95%, rgba(255,255,255,0.99) 100%) border-box, linear-gradient(90deg, rgba(17,22,34,0.32) 0%, rgba(17,22,34,0.12) 2%, transparent 6%, transparent 94%, rgba(17,22,34,0.12) 98%, rgba(17,22,34,0.32) 100%) border-box',
+  background: 'var(--demo-glass)',
   border: '1px solid transparent',
-  boxShadow:
-    'inset 0 1.5px 0 rgba(255,255,255,0.98), inset 0 -1.5px 0 rgba(255,255,255,0.96), inset 1.5px 0 0 rgba(17,22,34,0.07), inset -1.5px 0 0 rgba(17,22,34,0.07), 0 12px 32px rgba(15,23,42,0.07), 0 2px 6px rgba(15,23,42,0.04)',
+  boxShadow: 'var(--demo-shadow)',
 };
 
 /**
@@ -384,6 +394,8 @@ export const FrameChrome: React.FC<{
   children,
 }) => {
   useWebFonts();
+  const { props } = useVideoConfig();
+  const theme = props.theme === 'dark' ? 'dark' : 'light';
 
   const activeIdx = chapters.findIndex((c) => frame >= c.start && frame < c.end);
   const currentIdx = activeIdx === -1 ? chapters.length - 1 : activeIdx;
@@ -394,6 +406,8 @@ export const FrameChrome: React.FC<{
   return (
     <div
       style={{
+        ...glass[theme],
+        colorScheme: theme,
         width: 1280,
         height: 720,
         position: 'relative',
@@ -417,7 +431,7 @@ export const FrameChrome: React.FC<{
           inset: 0,
           pointerEvents: 'none',
           background:
-            'linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(244,246,250,0) 18%, rgba(244,246,250,0) 82%, rgba(226,232,240,0.35) 100%)',
+            'linear-gradient(180deg, light-dark(rgba(255,255,255,0.45), rgba(255,255,255,0.025)), transparent 18%, transparent 82%, light-dark(rgba(226,232,240,0.35), rgba(0,0,0,0.16)))',
           zIndex: 1,
         }}
       />
@@ -431,8 +445,8 @@ export const FrameChrome: React.FC<{
           alignItems: 'center',
           justifyContent: 'space-between',
           borderBottom: `1px solid ${PALETTE.border}`,
-          backgroundColor: 'rgba(255, 255, 255, 0.94)',
-          boxShadow: '0 1px 0 rgba(255,255,255,0.9), 0 4px 16px rgba(15,23,42,0.03)',
+          backgroundColor: 'light-dark(rgba(255,255,255,0.94), rgba(30,30,34,0.96))',
+          boxShadow: '0 1px 0 light-dark(rgba(255,255,255,0.9), rgba(255,255,255,0.04)), 0 4px 16px rgba(15,23,42,0.03)',
           zIndex: 10,
         }}
       >
@@ -446,7 +460,7 @@ export const FrameChrome: React.FC<{
               padding: '4px 10px',
               borderRadius: 7,
               backgroundColor: accentColor,
-              color: '#FFFFFF',
+              color: PALETTE.onAccent,
             }}
           >
             {badge}
@@ -525,7 +539,7 @@ export const FrameChrome: React.FC<{
           alignItems: 'center',
           justifyContent: 'space-between',
           borderTop: `1px solid ${PALETTE.border}`,
-          backgroundColor: 'rgba(255, 255, 255, 0.95)',
+          backgroundColor: 'light-dark(rgba(255,255,255,0.95), rgba(30,30,34,0.96))',
           zIndex: 10,
         }}
       >
@@ -545,7 +559,7 @@ export const FrameChrome: React.FC<{
                   display: 'flex',
                   alignItems: 'center',
                   gap: 7,
-                  opacity: active ? 1 : past ? 0.72 : 0.42,
+                  opacity: active || theme === 'dark' ? 1 : past ? 0.72 : 0.42,
                 }}
               >
                 <div
@@ -641,7 +655,7 @@ export const UeDeviceIcon: React.FC<{
   color?: string;
 }> = ({ x, y, label, color = PALETTE.ink }) => (
   <g transform={`translate(${x}, ${y})`}>
-    <rect x={-9} y={-15} width={18} height={30} rx={4} fill="#FFFFFF" stroke={color} strokeWidth={2.2} />
+    <rect x={-9} y={-15} width={18} height={30} rx={4} fill={PALETTE.card} stroke={color} strokeWidth={2.2} />
     <line x1={-4} y1={10} x2={4} y2={10} stroke={color} strokeWidth={1.8} strokeLinecap="round" />
     {label && (
       <text

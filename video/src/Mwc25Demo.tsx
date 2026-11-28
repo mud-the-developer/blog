@@ -131,7 +131,7 @@ const SceneOverview: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
           border: `1px solid ${PALETTE.border}`,
           borderRadius: 20,
           padding: 26,
-          boxShadow: '0 14px 36px rgba(20, 25, 35, 0.06)',
+          boxShadow: '0 14px 36px light-dark(rgba(20, 25, 35, 0.06), rgba(0, 0, 0, 0.22))',
           opacity: s3,
           transform: `translateY(${(1 - s3) * 16}px)`,
         }}
@@ -551,7 +551,7 @@ const SceneComparison: React.FC<{ frame: number; fps: number }> = ({ frame, fps 
         <div
           style={{
             backgroundColor: PALETTE.card,
-            border: `2px solid #F59E0B`,
+            border: `2px solid light-dark(#F59E0B, #FBC574)`,
             borderRadius: 18,
             padding: 18,
             display: 'flex',
@@ -566,8 +566,8 @@ const SceneComparison: React.FC<{ frame: number; fps: number }> = ({ frame, fps 
                 fontWeight: 800,
                 padding: '4px 12px',
                 borderRadius: 6,
-                backgroundColor: '#F59E0B',
-                color: '#FFFFFF',
+                backgroundColor: 'light-dark(#F59E0B, #FBC574)',
+                color: PALETTE.onAccent,
               }}
             >
               AI OFF · BASELINE
@@ -616,7 +616,7 @@ const SceneComparison: React.FC<{ frame: number; fps: number }> = ({ frame, fps 
                 padding: '4px 12px',
                 borderRadius: 6,
                 backgroundColor: PALETTE.teal,
-                color: '#FFFFFF',
+                color: PALETTE.onAccent,
               }}
             >
               AI ON · MOBILITY-AWARE AI-RIC
@@ -637,7 +637,7 @@ const SceneComparison: React.FC<{ frame: number; fps: number }> = ({ frame, fps 
 
             {/* Pruned beam marker */}
             <line x1={68} y1={110} x2={160} y2={82} stroke={PALETTE.muted} strokeWidth={1.6} strokeDasharray="4 4" />
-            <rect x={78} y={54} width={108} height={20} rx={5} fill="rgba(255,255,255,0.92)" />
+            <rect x={78} y={54} width={108} height={20} rx={5} fill={PALETTE.card} fillOpacity={0.92} />
             <text x={132} y={68} textAnchor="middle" fontFamily={FONT_MONO} fontSize={11} fontWeight={800} fill={PALETTE.teal}>
               × beam pruned
             </text>
@@ -751,14 +751,14 @@ const SceneResults: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) 
               <div style={{ display: 'grid', gap: 8, margin: '10px 0' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '64px 1fr 104px', alignItems: 'center', gap: 10 }}>
                   <span style={{ fontFamily: FONT_MONO, fontSize: 11.5, color: PALETTE.muted }}>AI off</span>
-                  <div style={{ height: 11, borderRadius: 6, backgroundColor: '#E2E8F0' }}>
-                    <div style={{ width: `${k.beforePct * barScale}%`, height: '100%', borderRadius: 6, backgroundColor: '#94A3B8' }} />
+                  <div style={{ height: 11, borderRadius: 6, backgroundColor: 'light-dark(#E2E8F0, #3B414B)' }}>
+                    <div style={{ width: `${k.beforePct * barScale}%`, height: '100%', borderRadius: 6, backgroundColor: 'light-dark(#94A3B8, #9DA9BB)' }} />
                   </div>
                   <span style={{ fontFamily: FONT_MONO, fontSize: 12, color: PALETTE.muted, textAlign: 'right' }}>{k.before}</span>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '64px 1fr 104px', alignItems: 'center', gap: 10 }}>
                   <span style={{ fontFamily: FONT_MONO, fontSize: 11.5, fontWeight: 700, color: PALETTE.ink }}>AI on</span>
-                  <div style={{ height: 11, borderRadius: 6, backgroundColor: '#E2E8F0' }}>
+                  <div style={{ height: 11, borderRadius: 6, backgroundColor: 'light-dark(#E2E8F0, #3B414B)' }}>
                     <div style={{ width: `${k.afterPct * barScale}%`, height: '100%', borderRadius: 6, backgroundColor: k.color }} />
                   </div>
                   <span style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 750, color: PALETTE.ink, textAlign: 'right' }}>{k.after}</span>

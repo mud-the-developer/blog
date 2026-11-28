@@ -73,7 +73,7 @@ const SceneOverview: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
         {modules.map((item, idx) => {
           const itemIn = enterSpring(frame, 40 + idx * 11, fps);
           return (
-            <div key={item.name} style={{ padding: '13px 16px', borderRadius: 13, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: itemIn, transform: `translateX(${(1 - itemIn) * 14}px)` }}>
+            <div key={item.name} style={{ padding: '13px 16px', borderRadius: 13, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: itemIn, transform: `translateX(${(1 - itemIn) * 14}px)` }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 800, color: item.color }}>0{idx + 1}</span>
                 <span style={{ fontSize: 15, fontWeight: 700, color: PALETTE.ink }}>{item.name}</span>
@@ -193,7 +193,7 @@ const SceneNotchDaemon: React.FC<{ frame: number; fps: number }> = ({ frame, fps
             { file: 'src/install.rs', title: 'Managed KDL Blocks', desc: 'Idempotent ~/.config/niri/config.kdl updates with backup' },
             { file: 'src/main.rs', title: 'GTK3 Layer-Shell Shell', desc: 'Renders damped spring island + mako/playerctl effects' },
           ].map((col) => (
-            <div key={col.file} style={{ padding: '13px 15px', borderRadius: 14, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}` }}>
+            <div key={col.file} style={{ padding: '13px 15px', borderRadius: 14, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}` }}>
               <div style={{ fontFamily: FONT_MONO, fontSize: 11.5, fontWeight: 800, color: PALETTE.purple }}>{col.file}</div>
               <div style={{ fontSize: 15, fontWeight: 700, color: PALETTE.ink, marginTop: 4 }}>{col.title}</div>
               <div style={{ fontSize: 12.5, color: PALETTE.muted, marginTop: 3 }}>{col.desc}</div>
@@ -278,7 +278,7 @@ const SceneControlCenter: React.FC<{ frame: number; fps: number }> = ({ frame, f
             { t: 'Window Context Forward', d: 'Sends focused Niri window state straight into Hermes.' },
             { t: 'Completion Alerts', d: 'Emits Niri/mako notifications when Codex or Hermes finishes.' },
           ].map((item) => (
-            <div key={item.t} style={{ padding: '10px 12px', borderRadius: 11, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}` }}>
+            <div key={item.t} style={{ padding: '10px 12px', borderRadius: 11, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}` }}>
               <div style={{ fontSize: 14.5, fontWeight: 700, color: PALETTE.ink }}>{item.t}</div>
               <div style={{ fontSize: 12.8, color: PALETTE.muted, marginTop: 2 }}>{item.d}</div>
             </div>
@@ -314,7 +314,7 @@ const SceneChoreography: React.FC<{ frame: number; fps: number }> = ({ frame, fp
             ['Right Click', 'Launch Niri Hermes Control Center immediately'],
             ['Mouse Wheel', 'Scroll up / down to switch Niri workspaces'],
           ].map(([k, v]) => (
-            <div key={k} style={{ padding: '12px 14px', borderRadius: 12, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}`, display: 'flex', justifyContent: 'space-between', gap: 12 }}>
+            <div key={k} style={{ padding: '12px 14px', borderRadius: 12, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}`, display: 'flex', justifyContent: 'space-between', gap: 12 }}>
               <span style={{ fontFamily: FONT_MONO, fontSize: 13, fontWeight: 800, color: PALETTE.purple }}>{k}</span>
               <span style={{ fontSize: 13.5, color: PALETTE.ink, textAlign: 'right' }}>{v}</span>
             </div>
@@ -329,7 +329,7 @@ const SceneChoreography: React.FC<{ frame: number; fps: number }> = ({ frame, fp
             ['MOD + I', 'Display Focused-Window HUD overlay'],
             ['MOD + GRAVE / T', 'Switch or move windows between float & tile'],
           ].map(([k, v]) => (
-            <div key={k} style={{ padding: '12px 14px', borderRadius: 12, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}`, display: 'flex', justifyContent: 'space-between', gap: 12 }}>
+            <div key={k} style={{ padding: '12px 14px', borderRadius: 12, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}`, display: 'flex', justifyContent: 'space-between', gap: 12 }}>
               <span style={{ fontFamily: FONT_MONO, fontSize: 12.5, fontWeight: 800, color: PALETTE.teal }}>{k}</span>
               <span style={{ fontSize: 13.5, color: PALETTE.ink, textAlign: 'right' }}>{v}</span>
             </div>

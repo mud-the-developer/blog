@@ -173,7 +173,7 @@ const SceneOverview: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
               style={{
                 padding: '14px 16px',
                 borderRadius: 14,
-                backgroundColor: '#FFFFFF',
+                backgroundColor: PALETTE.card,
                 border: `1px solid ${PALETTE.border}`,
                 display: 'flex',
                 alignItems: 'center',
@@ -302,7 +302,7 @@ const SceneProblem: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) 
                 style={{
                   padding: '15px 16px',
                   borderRadius: 14,
-                  backgroundColor: '#FFFFFF',
+                  backgroundColor: PALETTE.card,
                   border: `1px solid ${PALETTE.border}`,
                   borderLeft: `4px solid ${PALETTE.red}`,
                   opacity: p,
@@ -342,7 +342,7 @@ const SceneProblem: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) 
                 style={{
                   padding: '15px 16px',
                   borderRadius: 14,
-                  backgroundColor: '#FFFFFF',
+                  backgroundColor: PALETTE.card,
                   border: `1px solid ${PALETTE.border}`,
                   borderLeft: `4px solid ${PALETTE.green}`,
                   opacity: g,
@@ -421,7 +421,7 @@ const ScenePipeline: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
                     padding: '4px 9px',
                     borderRadius: 8,
                     backgroundColor: st.color,
-                    color: '#FFFFFF',
+                    color: PALETTE.onAccent,
                   }}
                 >
                   STAGE {st.num}
@@ -576,7 +576,7 @@ const SceneCalendar: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
               style={{
                 padding: '13px 16px',
                 borderRadius: 12,
-                backgroundColor: '#FFFFFF',
+                backgroundColor: PALETTE.card,
                 border: `1px solid ${PALETTE.border}`,
                 display: 'flex',
                 justifyContent: 'space-between',

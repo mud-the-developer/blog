@@ -61,6 +61,40 @@ function getSafeStorage() {
   }
 }
 
+function mountProjectDemo(fallback) {
+  const base = `/assets/media/${encodeURIComponent(fallback.dataset.projectDemo)}`;
+  const video = document.createElement('video');
+  video.controls = video.playsInline = video.loop = true;
+  video.defaultMuted = video.muted = true;
+  video.preload = 'metadata';
+  fallback.replaceWith(video);
+
+  // A second switch before metadata arrives must not replace the saved time with zero.
+  let pendingTime = 0;
+  video.addEventListener('loadedmetadata', () => {
+    if (pendingTime) {
+      video.currentTime = pendingTime;
+      pendingTime = 0;
+    }
+  });
+
+  return (theme) => {
+    const variant = theme === 'dark' ? `${base}-dark` : base;
+    const src = `${variant}.mp4`;
+    if (video.getAttribute('src') === src) return;
+
+    pendingTime ||= video.currentTime;
+    const { paused, playbackRate } = video;
+    video.poster = `${variant}-poster.png`;
+    video.src = src;
+    video.playbackRate = playbackRate;
+    if (!paused) {
+      // A later swap can abort play(); if the browser blocks it, native play remains available.
+      video.play().catch(() => {});
+    }
+  };
+}
+
 function setupThemeToggle() {
   const button = document.querySelector('[data-theme-toggle]');
   if (!button) return;
@@ -68,6 +102,7 @@ function setupThemeToggle() {
   const storage = getSafeStorage();
   const media = window.matchMedia('(prefers-color-scheme: dark)');
   const systemTheme = () => (media.matches ? 'dark' : 'light');
+  const demos = Array.from(document.querySelectorAll('noscript[data-project-demo]'), mountProjectDemo);
   let state = createThemeState({
     systemTheme: systemTheme(),
     overrideTheme: readStoredTheme(storage),
@@ -78,6 +113,9 @@ function setupThemeToggle() {
     state = step.state;
     for (const effect of step.effects) {
       applyThemeEffect(effect, { root, button, storage });
+      if (effect.type === 'render-theme') {
+        for (const renderDemo of demos) renderDemo(effect.theme);
+      }
     }
   };
 

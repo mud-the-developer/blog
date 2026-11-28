@@ -130,7 +130,7 @@ const SceneOverview: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
               style={{
                 padding: '13px 16px',
                 borderRadius: 13,
-                backgroundColor: '#FFFFFF',
+                backgroundColor: PALETTE.card,
                 border: `1px solid ${PALETTE.border}`,
                 display: 'flex',
                 alignItems: 'center',
@@ -201,7 +201,7 @@ const SceneLchMath: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) 
                   style={{
                     padding: '12px 14px',
                     borderRadius: 13,
-                    backgroundColor: focused ? PALETTE.blueSoft : '#FFFFFF',
+                    backgroundColor: focused ? PALETTE.blueSoft : PALETTE.card,
                     border: `1.5px solid ${focused ? PALETTE.blue : PALETTE.border}`,
                     display: 'flex',
                     alignItems: 'center',
@@ -222,7 +222,7 @@ const SceneLchMath: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) 
                           height: 28,
                           borderRadius: 8,
                           backgroundColor: hex,
-                          border: '1px solid rgba(15,23,42,0.16)',
+                          border: '1px solid light-dark(rgba(15,23,42,0.16), rgba(255,255,255,0.30))',
                           backgroundImage:
                             idx === 3
                               ? `repeating-linear-gradient(${45 + sIdx * 30}deg, rgba(255,255,255,0.4) 0 2px, transparent 2px 6px)`
@@ -248,7 +248,7 @@ const SceneLchMath: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) 
                   marginTop: 8,
                   padding: '12px 14px',
                   borderRadius: 12,
-                  backgroundColor: '#FFFFFF',
+                  backgroundColor: PALETTE.card,
                   border: `1px solid ${PALETTE.border}`,
                   fontFamily: FONT_MONO,
                   fontSize: 12.5,
@@ -392,7 +392,7 @@ const SceneSpecReducer: React.FC<{ frame: number; fps: number }> = ({ frame, fps
             { t: 'Column-Width Re-Render', d: 'Reflow single-column to double-column cleanly' },
             { t: 'Zero Hidden rcParams', d: 'Every font, tick, and hatch is explicit state' },
           ].map((b) => (
-            <div key={b.t} style={{ padding: '10px 12px', borderRadius: 11, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}` }}>
+            <div key={b.t} style={{ padding: '10px 12px', borderRadius: 11, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}` }}>
               <div style={{ fontSize: 14, fontWeight: 700, color: PALETTE.ink }}>{b.t}</div>
               <div style={{ fontSize: 12.5, color: PALETTE.muted, marginTop: 2 }}>{b.d}</div>
             </div>
@@ -443,10 +443,10 @@ const SceneLintAndEditor: React.FC<{ frame: number; fps: number }> = ({ frame, f
             </span>
           </div>
 
-          <svg viewBox="0 0 460 275" style={{ width: '100%', height: 275, borderRadius: 12, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}` }}>
+          <svg viewBox="0 0 460 275" style={{ width: '100%', height: 275, borderRadius: 12, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}` }}>
             {/* Gridlines */}
             {[60, 110, 160, 210].map((y) => (
-              <line key={y} x1="54" y1={y} x2="432" y2={y} stroke="#EEF2F7" strokeWidth="1" />
+              <line key={y} x1="54" y1={y} x2="432" y2={y} stroke="light-dark(#EEF2F7, #393E48)" strokeWidth="1" />
             ))}
             <line x1="54" y1="235" x2="432" y2="235" stroke={PALETTE.border} strokeWidth="2" />
             <line x1="54" y1="24" x2="54" y2="235" stroke={PALETTE.border} strokeWidth="2" />
@@ -472,7 +472,7 @@ const SceneLintAndEditor: React.FC<{ frame: number; fps: number }> = ({ frame, f
             </text>
 
             <g transform={`translate(${interpolate(shift, [0, 1], [272, 70])}, ${interpolate(shift, [0, 1], [68, 34])})`}>
-              <rect x="0" y="0" width="142" height="52" rx="9" fill="#FFFFFF" stroke={fixed ? PALETTE.green : PALETTE.red} strokeWidth="2" />
+              <rect x="0" y="0" width="142" height="52" rx="9" fill={PALETTE.card} stroke={fixed ? PALETTE.green : PALETTE.red} strokeWidth="2" />
               <line x1="12" y1="18" x2="34" y2="18" stroke={PALETTE.navy} strokeWidth="3" />
               <text x="42" y="22" fontSize="12" fontWeight="700" fill={PALETTE.ink}>Proposed</text>
               <line x1="12" y1="36" x2="34" y2="36" stroke={PALETTE.teal} strokeWidth="3" strokeDasharray="5 3" />
@@ -494,7 +494,7 @@ const SceneLintAndEditor: React.FC<{ frame: number; fps: number }> = ({ frame, f
           </div>
 
           {/* Interactive inspector control panel mockup */}
-          <div style={{ padding: '14px 16px', borderRadius: 14, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}`, display: 'grid', gap: 10 }}>
+          <div style={{ padding: '14px 16px', borderRadius: 14, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}`, display: 'grid', gap: 10 }}>
             {[
               { k: 'Palette', v: 'ieee-okabe (CVD ✓)', accent: PALETTE.navy },
               { k: 'Dimensions', v: '3.50 × 2.40 in · 300 DPI', accent: PALETTE.teal },
@@ -513,7 +513,7 @@ const SceneLintAndEditor: React.FC<{ frame: number; fps: number }> = ({ frame, f
               { k: 'Canonical Matplotlib Output', v: 'Zero divergent browser-only chart renderer' },
               { k: 'Instant Undo & Export', v: 'Exports PDF, SVG, and .mplot.json together' },
             ].map((row) => (
-              <div key={row.k} style={{ padding: '10px 13px', borderRadius: 11, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}` }}>
+              <div key={row.k} style={{ padding: '10px 13px', borderRadius: 11, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}` }}>
                 <div style={{ fontSize: 14, fontWeight: 700, color: PALETTE.ink }}>{row.k}</div>
                 <div style={{ fontFamily: FONT_MONO, fontSize: 11.5, color: PALETTE.muted, marginTop: 2 }}>{row.v}</div>
               </div>

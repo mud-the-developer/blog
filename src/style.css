@@ -577,7 +577,8 @@ html:not([data-theme]) .theme-toggle[data-active-theme="system-dark"] .theme-ico
 .post-body img{height:auto;border:1px solid var(--line)}
 .post-body video{height:auto;border-radius:12px;border:1px solid var(--line);background:#0e1116}
 .v3-demo-figure{margin:1.4em 0 1.8em;padding:10px;border:1px solid var(--line);border-radius:16px;background:var(--paper)}
-.v3-demo-figure video{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:10px}
+.v3-demo-figure video,.v3-demo-figure:not(:has(video))::before{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:10px;background:var(--paper-2)}
+.v3-demo-figure:not(:has(video))::before{content:""}
 .v3-demo-figure figcaption{margin-top:10px;padding:0 4px;font:400 .78rem/1.5 var(--font-mono);color:var(--muted)}
 .post-body iframe{max-width:100%;min-height:420px;border:1px solid var(--line)}
 .post-body pre{overflow-x:auto;border:1px solid var(--line);border-radius:14px;padding:18px 20px;background:var(--paper);line-height:1.62}

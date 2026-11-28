@@ -38,6 +38,19 @@ Then run `npm run build` (or push to `main` when ready) — the project automati
 - `/posts/<slug>/` full case-study page with TOC, syntax highlighting, code copy buttons, MathML equations, and prev/next navigation
 - Command palette (`Cmd/Ctrl+K`), `/rss.xml`, and `/sitemap.xml` (with `<lastmod>`)
 
+### Project demo videos
+
+Render both appearances from the same Remotion composition. From the repository root:
+
+```bash
+npm --prefix video run render:mudplot          # one project, both themes
+npm --prefix video run render:all -- dark      # all projects, dark only
+```
+
+Each command writes a 1080p MP4 and a frame-90 PNG poster to `static/media/` for each selected theme. Light uses `<slug>.mp4` and `<slug>-poster.png`; dark uses `<slug>-dark.mp4` and `<slug>-dark-poster.png`. After changing a demo's timing or content, render both themes so switching during playback stays on the same frame.
+
+For a new demo, follow [`posts/projects/mudplot.md`](../posts/projects/mudplot.md): put the light player inside `<noscript data-project-demo="<slug>">` in the figure and keep its caption outside. With JavaScript enabled the site loads just the active theme’s video and poster. Without it, the light player works with native controls.
+
 ## 2. Writing Notes, Code & Math
 
 - **Writing archive (`/writing/`)**: Place long-form essays in `posts/blog/*.md` and paper notes in `posts/papers/*.md`.

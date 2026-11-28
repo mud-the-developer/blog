@@ -164,7 +164,7 @@ const SceneOverview: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
               style={{
                 padding: '13px 16px',
                 borderRadius: 13,
-                backgroundColor: '#FFFFFF',
+                backgroundColor: PALETTE.card,
                 border: `1px solid ${PALETTE.border}`,
                 display: 'flex',
                 alignItems: 'center',
@@ -263,7 +263,7 @@ const SceneDailyPipeline: React.FC<{ frame: number; fps: number }> = ({ frame, f
                     padding: '4px 9px',
                     borderRadius: 8,
                     backgroundColor: st.color,
-                    color: '#FFFFFF',
+                    color: PALETTE.onAccent,
                   }}
                 >
                   STEP {st.num}
@@ -319,7 +319,7 @@ const SceneDailyPipeline: React.FC<{ frame: number; fps: number }> = ({ frame, f
                 style={{
                   padding: '8px 14px',
                   borderRadius: 10,
-                  backgroundColor: '#FFFFFF',
+                  backgroundColor: PALETTE.card,
                   border: `1px solid ${PALETTE.border}`,
                   fontFamily: FONT_MONO,
                   fontSize: 13,
@@ -402,7 +402,7 @@ const SceneHybridArch: React.FC<{ frame: number; fps: number }> = ({ frame, fps 
                 style={{
                   padding: '11px 14px',
                   borderRadius: 11,
-                  backgroundColor: '#FFFFFF',
+                  backgroundColor: PALETTE.card,
                   border: `1px solid ${PALETTE.border}`,
                   fontSize: 13.5,
                   color: PALETTE.ink,
@@ -438,7 +438,7 @@ const SceneHybridArch: React.FC<{ frame: number; fps: number }> = ({ frame, fps 
             style={{
               padding: '15px 18px',
               borderRadius: 14,
-              backgroundColor: '#FFFFFF',
+              backgroundColor: PALETTE.card,
               border: `1px solid ${PALETTE.border}`,
               borderLeft: `4px solid ${PALETTE.teal}`,
             }}
@@ -455,7 +455,7 @@ const SceneHybridArch: React.FC<{ frame: number; fps: number }> = ({ frame, fps 
             style={{
               padding: '15px 18px',
               borderRadius: 14,
-              backgroundColor: '#FFFFFF',
+              backgroundColor: PALETTE.card,
               border: `1px solid ${PALETTE.border}`,
               borderLeft: `4px solid ${PALETTE.navy}`,
             }}
@@ -523,7 +523,7 @@ const SceneSearchExport: React.FC<{ frame: number; fps: number }> = ({ frame, fp
           style={{
             padding: '11px 14px',
             borderRadius: 11,
-            backgroundColor: '#FFFFFF',
+            backgroundColor: PALETTE.card,
             border: `1.5px solid ${PALETTE.teal}`,
             fontFamily: FONT_MONO,
             fontSize: 14,
@@ -543,7 +543,7 @@ const SceneSearchExport: React.FC<{ frame: number; fps: number }> = ({ frame, fp
               style={{
                 padding: '13px 15px',
                 borderRadius: 12,
-                backgroundColor: '#FFFFFF',
+                backgroundColor: PALETTE.card,
                 border: `1px solid ${c.checked ? PALETTE.teal : PALETTE.border}`,
                 display: 'flex',
                 alignItems: 'center',
@@ -557,7 +557,7 @@ const SceneSearchExport: React.FC<{ frame: number; fps: number }> = ({ frame, fp
                   borderRadius: 6,
                   backgroundColor: c.checked ? PALETTE.teal : PALETTE.cardSoft,
                   border: `1px solid ${c.checked ? PALETTE.teal : PALETTE.border}`,
-                  color: '#FFFFFF',
+                  color: PALETTE.onAccent,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',

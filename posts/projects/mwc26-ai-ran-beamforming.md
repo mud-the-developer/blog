@@ -20,9 +20,9 @@ publish: true
 Developed as part of the joint **Yonsei University (RAMO Lab) – VIAVI Solutions – SUTD** AI-RAN demonstration exhibited at **MWC'26 Barcelona** inside the AI-RAN Alliance booth. Building on our MWC'25 DRL beamforming demo, this system uses an **LLM-based AI-RIC** with **in-context learning** and **one-step-ahead predictive beamforming** to sustain throughput and energy efficiency under real-world network anomalies without retraining.
 
 <figure class="v3-demo-figure">
-  <video controls playsinline muted loop preload="metadata" poster="/assets/media/mwc26-ai-ran-beamforming-poster.png">
-    <source src="/assets/media/mwc26-ai-ran-beamforming.mp4" type="video/mp4" />
-  </video>
+  <noscript data-project-demo="mwc26-ai-ran-beamforming">
+    <video controls playsinline muted loop preload="metadata" src="/assets/media/mwc26-ai-ran-beamforming.mp4" poster="/assets/media/mwc26-ai-ran-beamforming-poster.png"></video>
+  </noscript>
   <figcaption>45-second Remotion summary · MWC'26 LLM-based AI-RIC architecture, anomaly handling, predictive beamforming, and VIAVI TeraVM AI RSG benchmark results.</figcaption>
 </figure>
 

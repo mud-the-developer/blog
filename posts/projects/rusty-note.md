@@ -21,9 +21,9 @@ publish: true
 **Rusty Note** (`v1.0.1`) is a lightweight, native **editable Markdown sticky note** for Windows 10/11 x64 written in Rust. It ships as a portable single executable with zero browser engine, WebView, Electron, or JavaScript runtime.
 
 <figure class="v3-demo-figure">
-  <video controls playsinline muted loop preload="metadata" poster="/assets/media/rusty-note-poster.png">
-    <source src="/assets/media/rusty-note.mp4" type="video/mp4" />
-  </video>
+  <noscript data-project-demo="rusty-note">
+    <video controls playsinline muted loop preload="metadata" src="/assets/media/rusty-note.mp4" poster="/assets/media/rusty-note-poster.png"></video>
+  </noscript>
   <figcaption>60-second Remotion summary · In-place Markdown block editing, cached Pretext layout reflow, explicit save/undo discipline, and native Win32 sticky note controls.</figcaption>
 </figure>
 

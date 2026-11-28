@@ -21,9 +21,9 @@ publish: true
 **HWP Editor** (`1.0.0-rc.4`, AGPL-3.0-only) is a local-first Windows desktop application for authoring and reviewing Korean `.hwpx` documents and forms without giving up file ownership or layout fidelity. The workspace splits cleanly into a **live HWPX preview** on the left (rendered locally via `@rhwp/core 0.8.7`) and an embedded **oh-my-pi (OMP) terminal** on the right.
 
 <figure class="v3-demo-figure">
-  <video controls playsinline muted loop preload="metadata" poster="/assets/media/hwp-editor-public-poster.png">
-    <source src="/assets/media/hwp-editor-public.mp4" type="video/mp4" />
-  </video>
+  <noscript data-project-demo="hwp-editor-public">
+    <video controls playsinline muted loop preload="metadata" src="/assets/media/hwp-editor-public.mp4" poster="/assets/media/hwp-editor-public-poster.png"></video>
+  </noscript>
   <figcaption>60-second Remotion summary · Split HWPX live preview + OMP terminal workflow, original preservation and checkpoint history, isolated runtime packaging, and explicit review boundaries.</figcaption>
 </figure>
 

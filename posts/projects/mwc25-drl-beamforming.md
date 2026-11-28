@@ -20,9 +20,9 @@ publish: true
 Joint **Yonsei University (RAMO Lab) – SUTD – VIAVI Solutions** AI-for-RAN demonstration sponsored by the **AI-RAN Alliance** and exhibited at **MWC'25 Barcelona**. Evaluates a two-step hierarchical **mobility-aware AI-RIC** on the **VIAVI TeraVM AI RAN Scenario Generator (FR1 3.6 GHz, 64×64 massive MIMO, 37 dBm Tx power)** to eliminate overlapping beams and prune unnecessary base-station transmissions under UE mobility.
 
 <figure class="v3-demo-figure">
-  <video controls playsinline muted loop preload="metadata" poster="/assets/media/mwc25-drl-beamforming-poster.png">
-    <source src="/assets/media/mwc25-drl-beamforming.mp4" type="video/mp4" />
-  </video>
+  <noscript data-project-demo="mwc25-drl-beamforming">
+    <video controls playsinline muted loop preload="metadata" src="/assets/media/mwc25-drl-beamforming.mp4" poster="/assets/media/mwc25-drl-beamforming-poster.png"></video>
+  </noscript>
   <figcaption>42-second Remotion summary · MWC'25 mobility-aware two-step AI-RIC architecture, AI off vs. AI on beam comparison, and VIAVI AVE Console KPIs.</figcaption>
 </figure>
 

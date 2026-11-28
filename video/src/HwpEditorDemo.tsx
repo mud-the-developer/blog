@@ -74,7 +74,7 @@ const SceneOverview: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
         {pillars.map((item, idx) => {
           const itemIn = enterSpring(frame, 40 + idx * 11, fps);
           return (
-            <div key={item.name} style={{ padding: '13px 16px', borderRadius: 13, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: itemIn, transform: `translateX(${(1 - itemIn) * 14}px)` }}>
+            <div key={item.name} style={{ padding: '13px 16px', borderRadius: 13, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: itemIn, transform: `translateX(${(1 - itemIn) * 14}px)` }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ fontFamily: FONT_MONO, fontSize: 12, fontWeight: 800, color: item.color }}>0{idx + 1}</span>
                 <span style={{ fontSize: 15.5, fontWeight: 700, color: PALETTE.ink }}>{item.name}</span>
@@ -107,13 +107,13 @@ const SceneSplitWorkspace: React.FC<{ frame: number; fps: number }> = ({ frame, 
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, flex: 1 }}>
         <div style={{ ...GLASS_CARD_STYLE, borderRadius: 18, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ height: 38, padding: '0 16px', backgroundColor: '#F3F6FB', borderBottom: `1px solid ${PALETTE.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontFamily: FONT_MONO, fontSize: 11.5 }}>
+          <div style={{ height: 38, padding: '0 16px', backgroundColor: 'light-dark(#F3F6FB, #2D3139)', borderBottom: `1px solid ${PALETTE.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontFamily: FONT_MONO, fontSize: 11.5 }}>
             <span style={{ color: PALETTE.blue, fontWeight: 800 }}>LEFT · HWPX LIVE PREVIEW</span>
             <span style={{ color: PALETTE.muted }}>Ctrl+O · Ctrl+N · Hancom</span>
           </div>
 
           <div style={{ padding: '16px 18px', flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <div style={{ flex: 1, backgroundColor: '#FFFFFF', borderRadius: 12, border: `1px solid ${PALETTE.border}`, padding: '16px 18px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div style={{ flex: 1, backgroundColor: PALETTE.card, borderRadius: 12, border: `1px solid ${PALETTE.border}`, padding: '16px 18px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: `1px solid ${PALETTE.cardSoft}`, paddingBottom: 8 }}>
                 <span style={{ fontSize: 15.5, fontWeight: 800, color: PALETTE.ink }}>proposal_draft.hwpx</span>
                 <span style={{ fontFamily: FONT_MONO, fontSize: 10.5, color: PALETTE.teal, fontWeight: 700 }}>@rhwp/core 0.8.7</span>
@@ -125,7 +125,7 @@ const SceneSplitWorkspace: React.FC<{ frame: number; fps: number }> = ({ frame, 
                   style={{
                     padding: '11px 13px',
                     borderRadius: 10,
-                    backgroundColor: picked ? PALETTE.blueSoft : '#F8FAFC',
+                    backgroundColor: picked ? PALETTE.blueSoft : 'light-dark(#F8FAFC, #282C33)',
                     border: `1.5px solid ${picked ? PALETTE.blue : PALETTE.border}`,
                     fontSize: 13.5,
                     color: PALETTE.ink,
@@ -219,7 +219,7 @@ const SceneCheckpoints: React.FC<{ frame: number; fps: number }> = ({ frame, fps
             ))}
           </div>
         </div>
-        <div style={{ padding: '16px 18px', borderRadius: 14, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}`, fontFamily: FONT_MONO, fontSize: 12.5, lineHeight: 1.75, color: PALETTE.ink }}>
+        <div style={{ padding: '16px 18px', borderRadius: 14, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}`, fontFamily: FONT_MONO, fontSize: 12.5, lineHeight: 1.75, color: PALETTE.ink }}>
           <div>work-folder/</div>
           <div>├─ report.hwpx <span style={{ color: PALETTE.blue, fontWeight: 700 }}>(active)</span></div>
           <div>├─ report_export.hwpx <span style={{ color: PALETTE.green, fontWeight: 700 }}>(export copy)</span></div>
@@ -274,7 +274,7 @@ const SceneRuntime: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) 
             { t: 'Per-User Explicit Consent', d: 'Registers only after agreement; skips damaged entries.' },
             { t: 'Standalone HWPX Mode', d: 'Works cleanly even when Hancom Office is absent.' },
           ].map((row) => (
-            <div key={row.t} style={{ padding: '10px 12px', borderRadius: 11, backgroundColor: '#FFFFFF', border: `1px solid ${PALETTE.border}` }}>
+            <div key={row.t} style={{ padding: '10px 12px', borderRadius: 11, backgroundColor: PALETTE.card, border: `1px solid ${PALETTE.border}` }}>
               <div style={{ fontSize: 14, fontWeight: 700, color: PALETTE.ink }}>{row.t}</div>
               <div style={{ fontSize: 12.5, color: PALETTE.muted, marginTop: 2 }}>{row.d}</div>
             </div>

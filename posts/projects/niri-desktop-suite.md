@@ -20,9 +20,9 @@ publish: true
 A two-part desktop companion stack built for the [Niri](https://github.com/YaLTeR/niri) scrollable-tiling Wayland compositor: **`niri-notch-rs`**, a native Rust top-center companion notch running on GTK3 + `gtk-layer-shell`, paired with **`niri-hermes-control-center`**, a hackable Wofi + Bash command palette integrating local window management with Hermes Agent and Codex workflows.
 
 <figure class="v3-demo-figure">
-  <video controls playsinline muted loop preload="metadata" poster="/assets/media/niri-desktop-suite-poster.png">
-    <source src="/assets/media/niri-desktop-suite.mp4" type="video/mp4" />
-  </video>
+  <noscript data-project-demo="niri-desktop-suite">
+    <video controls playsinline muted loop preload="metadata" src="/assets/media/niri-desktop-suite.mp4" poster="/assets/media/niri-desktop-suite-poster.png"></video>
+  </noscript>
   <figcaption>60-second Remotion summary · niri-notch-rs pure-reducer GTK layer-shell daemon, niri-hermes-control-center Wofi/Hermes workflow, pointer & keyboard choreography, and installation gates.</figcaption>
 </figure>
 

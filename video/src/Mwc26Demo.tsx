@@ -143,7 +143,7 @@ const SceneOverview: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
           border: `1px solid ${PALETTE.border}`,
           borderRadius: 20,
           padding: 26,
-          boxShadow: '0 14px 36px rgba(20, 25, 35, 0.06)',
+          boxShadow: '0 14px 36px light-dark(rgba(20, 25, 35, 0.06), rgba(0, 0, 0, 0.22))',
           opacity: s3,
           transform: `translateY(${(1 - s3) * 16}px)`,
         }}
@@ -471,7 +471,7 @@ const SceneAnomalies: React.FC<{ frame: number; fps: number }> = ({ frame, fps }
                 <span>Conventional AI-BF</span>
                 <span style={{ color: PALETTE.blue }}>34 ms</span>
               </div>
-              <div style={{ marginTop: 6, height: 12, borderRadius: 6, backgroundColor: '#E2E8F0' }}>
+              <div style={{ marginTop: 6, height: 12, borderRadius: 6, backgroundColor: 'light-dark(#E2E8F0, #3B414B)' }}>
                 <div style={{ width: '8%', height: '100%', borderRadius: 6, backgroundColor: PALETTE.blue }} />
               </div>
             </div>
@@ -480,7 +480,7 @@ const SceneAnomalies: React.FC<{ frame: number; fps: number }> = ({ frame, fps }
                 <span>LLM-Based AI-BF</span>
                 <span style={{ color: PALETTE.orange }}>1,475 ms</span>
               </div>
-              <div style={{ marginTop: 6, height: 12, borderRadius: 6, backgroundColor: '#E2E8F0' }}>
+              <div style={{ marginTop: 6, height: 12, borderRadius: 6, backgroundColor: 'light-dark(#E2E8F0, #3B414B)' }}>
                 <div
                   style={{
                     width: `${interpolate(local, [55, 110], [10, 100], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })}%`,
@@ -564,7 +564,7 @@ const SceneArchitecture: React.FC<{ frame: number; fps: number }> = ({ frame, fp
               padding: '12px 14px',
               borderRadius: 12,
               backgroundColor: PALETTE.amberSoft,
-              border: `1px solid #FDBA74`,
+              border: `1px solid light-dark(#FDBA74, #BF8957)`,
               fontSize: 13,
               fontWeight: 650,
               color: PALETTE.orange,
@@ -678,7 +678,7 @@ const SceneArchitecture: React.FC<{ frame: number; fps: number }> = ({ frame, fp
 
             {/* On-time badge */}
             <rect x={10} y={160} width={280} height={34} rx={8} fill={PALETTE.navy} />
-            <text x={150} y={181} textAnchor="middle" fontFamily={FONT_MONO} fontSize={11.5} fontWeight={700} fill="#FFFFFF">
+            <text x={150} y={181} textAnchor="middle" fontFamily={FONT_MONO} fontSize={11.5} fontWeight={700} fill={PALETTE.onAccent}>
               1-Step Predict → Action ON TIME
             </text>
           </svg>
@@ -908,12 +908,12 @@ const SceneLiveComparison: React.FC<{ frame: number; fps: number }> = ({ frame, 
             {progress > 0.55 && (
               <g>
                 <line x1={44 + 0.28 * 500} y1={184 - (16.45 / 22) * 145} x2={44 + 0.78 * 500} y2={184 - (16.45 / 22) * 145} stroke={PALETTE.orange} strokeWidth={1.4} strokeDasharray="4 3" />
-                <rect x={44 + 0.53 * 500 - 106} y={184 - (16.45 / 22) * 145 - 24} width={212} height={19} rx={5} fill="rgba(255,255,255,0.92)" />
+                <rect x={44 + 0.53 * 500 - 106} y={184 - (16.45 / 22) * 145 - 24} width={212} height={19} rx={5} fill={PALETTE.card} fillOpacity={0.92} />
                 <text x={44 + 0.53 * 500} y={184 - (16.45 / 22) * 145 - 10} textAnchor="middle" fontFamily={FONT_MONO} fontSize={11.5} fontWeight={800} fill={PALETTE.orange}>
                   LLM-Based AI-BF: 16.45 Mbps
                 </text>
                 <line x1={44 + 0.28 * 500} y1={184 - (7.03 / 22) * 145} x2={44 + 0.78 * 500} y2={184 - (7.03 / 22) * 145} stroke={PALETTE.blue} strokeWidth={1.4} strokeDasharray="4 3" />
-                <rect x={44 + 0.53 * 500 - 108} y={184 - (7.03 / 22) * 145 + 14} width={216} height={19} rx={5} fill="rgba(255,255,255,0.92)" />
+                <rect x={44 + 0.53 * 500 - 108} y={184 - (7.03 / 22) * 145 + 14} width={216} height={19} rx={5} fill={PALETTE.card} fillOpacity={0.92} />
                 <text x={44 + 0.53 * 500} y={184 - (7.03 / 22) * 145 + 27} textAnchor="middle" fontFamily={FONT_MONO} fontSize={11.5} fontWeight={700} fill={PALETTE.blue}>
                   Conventional AI-BF: 7.03 Mbps
                 </text>
@@ -979,15 +979,15 @@ const SceneResults: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) 
         <div style={{ marginTop: 8, display: 'grid', gap: 5 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '108px 1fr 82px', alignItems: 'center', gap: 10 }}>
             <span style={{ fontFamily: FONT_MONO, fontSize: 11, color: PALETTE.muted }}>AI-BF + LLM</span>
-            <div style={{ height: 9, borderRadius: 5, backgroundColor: '#E2E8F0' }}>
+            <div style={{ height: 9, borderRadius: 5, backgroundColor: 'light-dark(#E2E8F0, #3B414B)' }}>
               <div style={{ width: `${llmPct * barScale}%`, height: '100%', borderRadius: 5, backgroundColor: accent }} />
             </div>
             <span style={{ fontFamily: FONT_MONO, fontSize: 11.5, fontWeight: 700, textAlign: 'right' }}>{llmVal}</span>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '108px 1fr 82px', alignItems: 'center', gap: 10 }}>
             <span style={{ fontFamily: FONT_MONO, fontSize: 11, color: PALETTE.muted }}>Conventional</span>
-            <div style={{ height: 9, borderRadius: 5, backgroundColor: '#E2E8F0' }}>
-              <div style={{ width: `${basePct * barScale}%`, height: '100%', borderRadius: 5, backgroundColor: '#94A3B8' }} />
+            <div style={{ height: 9, borderRadius: 5, backgroundColor: 'light-dark(#E2E8F0, #3B414B)' }}>
+              <div style={{ width: `${basePct * barScale}%`, height: '100%', borderRadius: 5, backgroundColor: 'light-dark(#94A3B8, #9DA9BB)' }} />
             </div>
             <span style={{ fontFamily: FONT_MONO, fontSize: 11.5, color: PALETTE.muted, textAlign: 'right' }}>{baseVal}</span>
           </div>

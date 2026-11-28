@@ -283,52 +283,23 @@ async fn builds_v3_personal_site_with_cv_projects_writing_and_functional_pretext
         fs::read_to_string(out_dir.join("posts/mwc26-ai-ran-beamforming/index.html"))?;
     assert!(project_post.contains("class=\"post-reader\""));
     assert!(project_post.contains("data-folder=\"projects\""));
-    assert!(project_post.contains("/assets/media/mwc26-ai-ran-beamforming.mp4"));
-    assert!(
-        out_dir
-            .join("assets/media/mwc26-ai-ran-beamforming.mp4")
-            .exists()
-    );
-    assert!(
-        out_dir
-            .join("assets/media/mwc26-ai-ran-beamforming-poster.png")
-            .exists()
-    );
-
-    let mwc25_post = fs::read_to_string(out_dir.join("posts/mwc25-drl-beamforming/index.html"))?;
-    assert!(mwc25_post.contains("/assets/media/mwc25-drl-beamforming.mp4"));
-    assert!(
-        out_dir
-            .join("assets/media/mwc25-drl-beamforming.mp4")
-            .exists()
-    );
-    assert!(
-        out_dir
-            .join("assets/media/mwc25-drl-beamforming-poster.png")
-            .exists()
-    );
-
-    let cfp_post = fs::read_to_string(out_dir.join("posts/cfp-radar-system/index.html"))?;
-    assert!(cfp_post.contains("/assets/media/cfp-radar-system.mp4"));
-    assert!(out_dir.join("assets/media/cfp-radar-system.mp4").exists());
-    assert!(
-        out_dir
-            .join("assets/media/cfp-radar-system-poster.png")
-            .exists()
-    );
-
-    let news_post = fs::read_to_string(out_dir.join("posts/ai-news-digest-system/index.html"))?;
-    assert!(news_post.contains("/assets/media/ai-news-digest-system.mp4"));
-    assert!(
-        out_dir
-            .join("assets/media/ai-news-digest-system.mp4")
-            .exists()
-    );
-    assert!(
-        out_dir
-            .join("assets/media/ai-news-digest-system-poster.png")
-            .exists()
-    );
+    for slug in [
+        "ai-news-digest-system",
+        "cfp-radar-system",
+        "hwp-editor-public",
+        "licheerv-nano-fido2",
+        "mudplot",
+        "mwc25-drl-beamforming",
+        "mwc26-ai-ran-beamforming",
+        "niri-desktop-suite",
+        "rusty-note",
+    ] {
+        assert!(out_dir.join(format!("posts/{slug}/index.html")).is_file());
+        for suffix in [".mp4", "-poster.png", "-dark.mp4", "-dark-poster.png"] {
+            let media = format!("assets/media/{slug}{suffix}");
+            assert!(out_dir.join(&media).is_file(), "missing {media}");
+        }
+    }
 
     assert!(!out_dir.join("posts/jinhyuk-kim/index.html").exists());
     assert!(!out_dir.join("posts/home/index.html").exists());
@@ -527,28 +498,6 @@ async fn builds_v3_personal_site_with_cv_projects_writing_and_functional_pretext
     assert!(mudplot_post.contains("<math xmlns=\"http://www.w3.org/1998/Math/MathML\""));
     assert!(mudplot_post.contains("class=\"post-pager\""));
     assert!(!mudplot_post.contains("/assets/cfp-deadlines.mjs"));
-    assert!(out_dir.join("posts/rusty-note/index.html").exists());
-    assert!(
-        out_dir
-            .join("posts/licheerv-nano-fido2/index.html")
-            .exists()
-    );
-    assert!(out_dir.join("posts/hwp-editor-public/index.html").exists());
-    assert!(out_dir.join("posts/niri-desktop-suite/index.html").exists());
-    for media in [
-        "assets/media/mudplot.mp4",
-        "assets/media/mudplot-poster.png",
-        "assets/media/rusty-note.mp4",
-        "assets/media/rusty-note-poster.png",
-        "assets/media/licheerv-nano-fido2.mp4",
-        "assets/media/licheerv-nano-fido2-poster.png",
-        "assets/media/hwp-editor-public.mp4",
-        "assets/media/hwp-editor-public-poster.png",
-        "assets/media/niri-desktop-suite.mp4",
-        "assets/media/niri-desktop-suite-poster.png",
-    ] {
-        assert!(out_dir.join(media).exists(), "missing {media}");
-    }
     assert!(cv_html.contains("href=\"/rss.xml\""));
     let writing_html = fs::read_to_string(out_dir.join("writing/index.html"))?;
     assert!(writing_html.contains("href=\"/rss.xml\""));

@@ -21,9 +21,9 @@ publish: true
 **Call for Papers (CFP)** is an automated static-plus-data pipeline built in Rust that monitors official conference, workshop, and journal special issue calls across wireless communications, AI-RAN, networking, and ML systems.
 
 <figure class="v3-demo-figure">
-  <video controls playsinline muted loop preload="metadata" poster="/assets/media/cfp-radar-system-poster.png">
-    <source src="/assets/media/cfp-radar-system.mp4" type="video/mp4" />
-  </video>
+  <noscript data-project-demo="cfp-radar-system">
+    <video controls playsinline muted loop preload="metadata" src="/assets/media/cfp-radar-system.mp4" poster="/assets/media/cfp-radar-system-poster.png"></video>
+  </noscript>
   <figcaption>45-second Remotion summary · Daily Rust CFP pipeline, official domain evidence gate, separate milestone parsing with stable iCalendar UIDs, and live endpoints.</figcaption>
 </figure>
 

@@ -21,9 +21,9 @@ publish: true
 An automated research signal desk that aggregates arXiv papers, GitHub repositories, and technical sources into daily structured digests while providing an interactive search-and-draft tool for custom topics.
 
 <figure class="v3-demo-figure">
-  <video controls playsinline muted loop preload="metadata" poster="/assets/media/ai-news-digest-system-poster.png">
-    <source src="/assets/media/ai-news-digest-system.mp4" type="video/mp4" />
-  </video>
+  <noscript data-project-demo="ai-news-digest-system">
+    <video controls playsinline muted loop preload="metadata" src="/assets/media/ai-news-digest-system.mp4" poster="/assets/media/ai-news-digest-system-poster.png"></video>
+  </noscript>
   <figcaption>45-second Remotion summary · Daily 7-source digest generator, static + Cloudflare Pages Functions edge hybrid, interactive candidate search, and source-locked Markdown/PDF export.</figcaption>
 </figure>
 
