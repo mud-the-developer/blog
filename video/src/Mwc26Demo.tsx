@@ -7,10 +7,10 @@ import {
   fadeWindow,
   FONT_MONO,
   FrameChrome,
+  GLASS_CARD_STYLE,
   PALETTE,
   UeDeviceIcon,
 } from './theme';
-
 export const MWC26_DURATION = 1350; // 45s @ 30fps
 
 const CHAPTERS: Chapter[] = [
@@ -47,8 +47,7 @@ const SceneOverview: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
             gap: 8,
             padding: '5px 12px',
             borderRadius: 999,
-            border: `1px solid ${PALETTE.border}`,
-            backgroundColor: PALETTE.card,
+            ...GLASS_CARD_STYLE,
             fontFamily: FONT_MONO,
             fontSize: 13,
             fontWeight: 600,
@@ -103,10 +102,9 @@ const SceneOverview: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
             <div
               key={item.k}
               style={{
-                backgroundColor: PALETTE.card,
-                border: `1px solid ${PALETTE.border}`,
-                borderRadius: 14,
-                padding: '14px 16px',
+                ...GLASS_CARD_STYLE,
+                borderRadius: 15,
+                padding: '15px 16px',
               }}
             >
               <div
@@ -358,8 +356,7 @@ const SceneAnomalies: React.FC<{ frame: number; fps: number }> = ({ frame, fps }
         {/* Card 2: External Interferers / Regional Anomaly */}
         <div
           style={{
-            backgroundColor: PALETTE.card,
-            border: `1px solid ${PALETTE.border}`,
+            ...GLASS_CARD_STYLE,
             borderRadius: 18,
             padding: 20,
             display: 'flex',
@@ -414,7 +411,7 @@ const SceneAnomalies: React.FC<{ frame: number; fps: number }> = ({ frame, fps }
             <polygon points="62,64 185,68 175,98" fill={PALETTE.red} opacity={0.22} />
             <polygon points="260,64 138,70 148,100" fill={PALETTE.red} opacity={0.22} />
             <UeDeviceIcon x={162} y={86} color={PALETTE.red} />
-            <text x={160} y={144} textAnchor="middle" fontFamily={FONT_MONO} fontSize={11.5} fontWeight={700} fill={PALETTE.purple}>
+            <text x={160} y={145} textAnchor="middle" fontFamily={FONT_MONO} fontSize={9.6} fontWeight={700} fill={PALETTE.purple}>
               RSRP -5 dB · RSSINR -10 dB · Overlapping Beams
             </text>
           </svg>
@@ -1023,8 +1020,7 @@ const SceneResults: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) 
         {/* Left: Irregular UE Report Timing */}
         <div
           style={{
-            backgroundColor: PALETTE.card,
-            border: `1px solid ${PALETTE.border}`,
+            ...GLASS_CARD_STYLE,
             borderRadius: 18,
             padding: 20,
             display: 'flex',
@@ -1046,8 +1042,7 @@ const SceneResults: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) 
         {/* Right: Regional Anomaly */}
         <div
           style={{
-            backgroundColor: PALETTE.card,
-            border: `1px solid ${PALETTE.border}`,
+            ...GLASS_CARD_STYLE,
             borderRadius: 18,
             padding: 20,
             display: 'flex',
@@ -1071,8 +1066,7 @@ const SceneResults: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) 
         style={{
           padding: '12px 18px',
           borderRadius: 12,
-          backgroundColor: PALETTE.card,
-          border: `1px solid ${PALETTE.border}`,
+          ...GLASS_CARD_STYLE,
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -1104,11 +1098,11 @@ export const Mwc26AiRanDemo: React.FC = () => {
       durationInFrames={MWC26_DURATION}
       accentColor={PALETTE.navy}
     >
-      {frame < 215 && <SceneOverview frame={frame} fps={fps} />}
-      {frame >= 200 && frame < 485 && <SceneAnomalies frame={frame} fps={fps} />}
-      {frame >= 470 && frame < 785 && <SceneArchitecture frame={frame} fps={fps} />}
-      {frame >= 770 && frame < 1085 && <SceneLiveComparison frame={frame} fps={fps} />}
-      {frame >= 1070 && <SceneResults frame={frame} fps={fps} />}
+      {frame < 224 && <SceneOverview frame={frame} fps={fps} />}
+      {frame >= 196 && frame < 494 && <SceneAnomalies frame={frame} fps={fps} />}
+      {frame >= 466 && frame < 794 && <SceneArchitecture frame={frame} fps={fps} />}
+      {frame >= 766 && frame < 1094 && <SceneLiveComparison frame={frame} fps={fps} />}
+      {frame >= 1066 && <SceneResults frame={frame} fps={fps} />}
     </FrameChrome>
   );
 };

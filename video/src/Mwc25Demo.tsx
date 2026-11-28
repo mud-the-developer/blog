@@ -7,6 +7,7 @@ import {
   fadeWindow,
   FONT_MONO,
   FrameChrome,
+  GLASS_CARD_STYLE,
   PALETTE,
   UeDeviceIcon,
 } from './theme';
@@ -774,8 +775,7 @@ const SceneResults: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) 
         style={{
           padding: '12px 18px',
           borderRadius: 12,
-          backgroundColor: PALETTE.card,
-          border: `1px solid ${PALETTE.border}`,
+          ...GLASS_CARD_STYLE,
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -807,11 +807,11 @@ export const Mwc25DrlDemo: React.FC = () => {
       durationInFrames={MWC25_DURATION}
       accentColor={PALETTE.teal}
     >
-      {frame < 200 && <SceneOverview frame={frame} fps={fps} />}
-      {frame >= 185 && frame < 440 && <SceneMobility frame={frame} fps={fps} />}
-      {frame >= 425 && frame < 725 && <SceneArchitecture frame={frame} fps={fps} />}
-      {frame >= 710 && frame < 995 && <SceneComparison frame={frame} fps={fps} />}
-      {frame >= 980 && <SceneResults frame={frame} fps={fps} />}
+      {frame < 209 && <SceneOverview frame={frame} fps={fps} />}
+      {frame >= 181 && frame < 449 && <SceneMobility frame={frame} fps={fps} />}
+      {frame >= 421 && frame < 734 && <SceneArchitecture frame={frame} fps={fps} />}
+      {frame >= 706 && frame < 1004 && <SceneComparison frame={frame} fps={fps} />}
+      {frame >= 976 && <SceneResults frame={frame} fps={fps} />}
     </FrameChrome>
   );
 };
