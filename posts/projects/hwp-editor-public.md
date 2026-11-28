@@ -22,9 +22,9 @@ publish: true
 
 <figure class="v3-demo-figure">
   <noscript data-project-demo="hwp-editor-public">
-    <video controls playsinline muted loop preload="metadata" src="/assets/media/hwp-editor-public.mp4" poster="/assets/media/hwp-editor-public-poster.png"></video>
+    <video controls playsinline muted loop preload="metadata" src="/assets/media/hwp-editor-public.mp4?cut=2" poster="/assets/media/hwp-editor-public-poster.png?cut=2"></video>
   </noscript>
-  <figcaption>60-second Remotion summary · Split HWPX live preview + OMP terminal workflow, original preservation and checkpoint history, isolated runtime packaging, and explicit review boundaries.</figcaption>
+  <figcaption>Double-click a paragraph to copy its text and locator into the local OMP draft. Nothing is sent.</figcaption>
 </figure>
 
 ## Core Workflow & Guardrails

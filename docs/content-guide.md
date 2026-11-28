@@ -40,14 +40,16 @@ Then run `npm run build` (or push to `main` when ready) — the project automati
 
 ### Project demo videos
 
-Render both appearances from the same Remotion composition. From the repository root:
+Show one action in a single shot: start with the object in use, then hold the result long enough to read. Put context in the figure caption, not in an opening slide. Render both appearances from the same Remotion composition:
 
 ```bash
 npm --prefix video run render:mudplot          # one project, both themes
 npm --prefix video run render:all -- dark      # all projects, dark only
 ```
 
-Each command writes a 1080p MP4 and a frame-90 PNG poster to `static/media/` for each selected theme. Light uses `<slug>.mp4` and `<slug>-poster.png`; dark uses `<slug>-dark.mp4` and `<slug>-dark-poster.png`. After changing a demo's timing or content, render both themes so switching during playback stays on the same frame.
+Each command writes a 1080p MP4 and a PNG poster to `static/media/`. Choose the poster frame in `video/render.mjs` to show the gesture or its result. Light uses `<slug>.mp4` and `<slug>-poster.png`; dark uses `<slug>-dark.mp4` and `<slug>-dark-poster.png`. Render both whenever timing or content changes. When replacing a published cut, change the `cut` query in the player and the fallback URLs together so cached editions cannot get mixed.
+
+Rendering loads pinned Inter and JetBrains Mono webfonts before capturing any frame; the finished videos do not need a font download.
 
 For a new demo, follow [`posts/projects/mudplot.md`](../posts/projects/mudplot.md): put the light player inside `<noscript data-project-demo="<slug>">` in the figure and keep its caption outside. With JavaScript enabled the site loads just the active theme’s video and poster. Without it, the light player works with native controls.
 

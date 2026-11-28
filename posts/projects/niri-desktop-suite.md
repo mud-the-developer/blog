@@ -21,9 +21,9 @@ A two-part desktop companion stack built for the [Niri](https://github.com/YaLTe
 
 <figure class="v3-demo-figure">
   <noscript data-project-demo="niri-desktop-suite">
-    <video controls playsinline muted loop preload="metadata" src="/assets/media/niri-desktop-suite.mp4" poster="/assets/media/niri-desktop-suite-poster.png"></video>
+    <video controls playsinline muted loop preload="metadata" src="/assets/media/niri-desktop-suite.mp4?cut=2" poster="/assets/media/niri-desktop-suite-poster.png?cut=2"></video>
   </noscript>
-  <figcaption>60-second Remotion summary · niri-notch-rs pure-reducer GTK layer-shell daemon, niri-hermes-control-center Wofi/Hermes workflow, pointer & keyboard choreography, and installation gates.</figcaption>
+  <figcaption>Scroll over the notch to switch from the terminal to an image viewer on workspace 2.</figcaption>
 </figure>
 
 ## 1. `niri-notch-rs` — Layer-Shell Companion Daemon

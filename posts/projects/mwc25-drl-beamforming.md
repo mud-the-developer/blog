@@ -21,9 +21,9 @@ Joint **Yonsei University (RAMO Lab) – SUTD – VIAVI Solutions** AI-for-RAN d
 
 <figure class="v3-demo-figure">
   <noscript data-project-demo="mwc25-drl-beamforming">
-    <video controls playsinline muted loop preload="metadata" src="/assets/media/mwc25-drl-beamforming.mp4" poster="/assets/media/mwc25-drl-beamforming-poster.png"></video>
+    <video controls playsinline muted loop preload="metadata" src="/assets/media/mwc25-drl-beamforming.mp4?cut=2" poster="/assets/media/mwc25-drl-beamforming-poster.png?cut=2"></video>
   </noscript>
-  <figcaption>42-second Remotion summary · MWC'25 mobility-aware two-step AI-RIC architecture, AI off vs. AI on beam comparison, and VIAVI AVE Console KPIs.</figcaption>
+  <figcaption>A moving device changes cells and the redundant beam switches off. The power readings are averages from the VIAVI testbed.</figcaption>
 </figure>
 
 ## Technical Scope

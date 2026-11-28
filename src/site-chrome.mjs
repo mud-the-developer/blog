@@ -63,6 +63,8 @@ function getSafeStorage() {
 
 function mountProjectDemo(fallback) {
   const base = `/assets/media/${encodeURIComponent(fallback.dataset.projectDemo)}`;
+  // Keep both encodes and their posters on the same cut despite the media cache.
+  const revision = '?cut=2';
   const video = document.createElement('video');
   video.controls = video.playsInline = video.loop = true;
   video.defaultMuted = video.muted = true;
@@ -86,12 +88,12 @@ function mountProjectDemo(fallback) {
 
   return async (theme) => {
     const variant = theme === 'dark' ? `${base}-dark` : base;
-    const src = `${variant}.mp4`;
+    const src = `${variant}.mp4${revision}`;
     if (selected === src) return;
     selected = src;
     loading?.abort();
     download.hidden = true;
-    video.poster = `${variant}-poster.png`;
+    video.poster = `${variant}-poster.png${revision}`;
     if (installed === src) return;
 
     // Pages can send 200 for Range requests. A complete local Blob is seekable

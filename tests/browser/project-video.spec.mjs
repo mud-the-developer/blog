@@ -19,13 +19,13 @@ async function expectVariant(page, slug, theme, startupRequests) {
   const base = `/assets/media/${slug}${theme === 'dark' ? '-dark' : ''}`;
   const src = `${base}.mp4`;
   const poster = `${base}-poster.png`;
-  await expect(video).toHaveJSProperty('poster', new URL(poster, page.url()).href);
+  await expect.poll(() => video.evaluate((v) => v.poster && new URL(v.poster).pathname)).toBe(poster);
   await expect.poll(() => video.evaluate((v) => v.duration)).toBeGreaterThan(0);
   // A never-played video can report HAVE_ENOUGH_DATA while showing only its poster.
   await video.evaluate((v) => { if (v.paused && v.currentTime === 0) v.currentTime = 0.25; });
   await expect.poll(() => video.evaluate((v) => {
     if (v.seeking || v.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return null;
-    // Sample the neutral header in the decoded frame, not the poster or URL.
+    // Sample the edge of the decoded canvas, not the poster or URL.
     const ctx = document.createElement('canvas').getContext('2d');
     ctx.drawImage(v, 5, 15, 1, 1, 0, 0, 1, 1);
     const [red, green, blue, alpha] = ctx.getImageData(0, 0, 1, 1).data;
@@ -79,7 +79,7 @@ test('stored theme wins on startup; storage and OS changes reload only a differe
 
 test('native playback retains a paused seek and resumes at speed after rapid toggles', async ({ page }) => {
   // Serve the real file as a complete 200 even if a native media URL requests bytes.
-  await page.route('**/assets/media/*.mp4', async (route) => {
+  await page.route(/\/assets\/media\/[^/]+\.mp4(?:\?|$)/, async (route) => {
     const headers = { ...route.request().headers() };
     if (!headers.range) return route.continue();
     delete headers.range;
@@ -89,22 +89,23 @@ test('native playback retains a paused seek and resumes at speed after rapid tog
   await page.emulateMedia({ colorScheme: 'light' });
   await page.goto('/posts/mudplot/');
   const video = await expectVariant(page, 'mudplot', 'light');
-  await video.evaluate((v) => new Promise((resolve) => {
+  const seekTime = await video.evaluate((v) => Math.floor(v.duration / 2));
+  await video.evaluate((v, t) => new Promise((resolve) => {
     v.addEventListener('seeked', () => resolve(), { once: true });
     v.playbackRate = 1.5;
-    v.currentTime = 12;
-  }));
-  await expect(video).toHaveJSProperty('currentTime', 12);
+    v.currentTime = t;
+  }), seekTime);
+  await expect(video).toHaveJSProperty('currentTime', seekTime);
 
   const toggle = page.locator('[data-theme-toggle]');
   await toggle.click();
   await expectVariant(page, 'mudplot', 'dark');
   await expect(video).toHaveJSProperty('paused', true);
   await expect(video).toHaveJSProperty('playbackRate', 1.5);
-  await expect.poll(() => video.evaluate((v) => v.currentTime)).toBeCloseTo(12, 2);
+  await expect.poll(() => video.evaluate((v) => v.currentTime)).toBeCloseTo(seekTime, 2);
 
   await video.evaluate((v) => v.play());
-  await expect.poll(() => video.evaluate((v) => v.currentTime)).toBeGreaterThan(12);
+  await expect.poll(() => video.evaluate((v) => v.currentTime)).toBeGreaterThan(seekTime);
   const from = await video.evaluate((v) => v.currentTime);
   // The same task cannot receive new metadata between switches.
   await toggle.evaluate((button) => { button.click(); button.click(); button.click(); });
@@ -121,8 +122,8 @@ test.describe('without JavaScript', () => {
   test('the project demo remains playable using native controls', async ({ page }) => {
     await page.goto('/posts/mudplot/');
     const video = page.locator('video');
-    await expect(video).toHaveJSProperty('poster', new URL('/assets/media/mudplot-poster.png', page.url()).href);
-    await expect(video).toHaveJSProperty('currentSrc', new URL('/assets/media/mudplot.mp4', page.url()).href);
+    await expect.poll(() => video.evaluate((v) => v.poster && new URL(v.poster).pathname)).toBe('/assets/media/mudplot-poster.png');
+    await expect.poll(() => video.evaluate((v) => v.currentSrc && new URL(v.currentSrc).pathname)).toBe('/assets/media/mudplot.mp4');
     await expect(video).toBeVisible();
     await expect(video).toHaveJSProperty('controls', true);
     await video.evaluate((v) => v.play());

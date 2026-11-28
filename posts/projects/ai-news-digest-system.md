@@ -22,9 +22,9 @@ An automated research signal desk that aggregates arXiv papers, GitHub repositor
 
 <figure class="v3-demo-figure">
   <noscript data-project-demo="ai-news-digest-system">
-    <video controls playsinline muted loop preload="metadata" src="/assets/media/ai-news-digest-system.mp4" poster="/assets/media/ai-news-digest-system-poster.png"></video>
+    <video controls playsinline muted loop preload="metadata" src="/assets/media/ai-news-digest-system.mp4?cut=2" poster="/assets/media/ai-news-digest-system-poster.png?cut=2"></video>
   </noscript>
-  <figcaption>45-second Remotion summary · Daily 7-source digest generator, static + Cloudflare Pages Functions edge hybrid, interactive candidate search, and source-locked Markdown/PDF export.</figcaption>
+  <figcaption>Uncheck one paper. Only the two selected sources appear in the draft.</figcaption>
 </figure>
 
 ## Architecture
