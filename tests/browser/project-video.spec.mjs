@@ -14,13 +14,13 @@ function trackDemoRequests(page, slug) {
   return files;
 }
 
-async function expectVariant(page, slug, theme, startupRequests) {
+async function expectVariant(page, slug, theme, { compact = false, startupRequests } = {}) {
   const video = page.locator('video');
-  const base = `/assets/media/${slug}${theme === 'dark' ? '-dark' : ''}`;
+  const base = `/assets/media/${slug}${compact ? '-compact' : ''}${theme === 'dark' ? '-dark' : ''}`;
   const src = `${base}.mp4`;
   const poster = `${base}-poster.png`;
   await expect.poll(() => video.evaluate((v) => v.poster && new URL(v.poster).pathname)).toBe(poster);
-  await expect.poll(() => video.evaluate((v) => v.duration)).toBeGreaterThan(0);
+  await expect.poll(() => video.evaluate((v) => v.videoWidth / v.videoHeight)).toBeCloseTo(compact ? 1 : 16 / 9, 3);
   // A never-played video can report HAVE_ENOUGH_DATA while showing only its poster.
   await video.evaluate((v) => { if (v.paused && v.currentTime === 0) v.currentTime = 0.25; });
   await expect.poll(() => video.evaluate((v) => {
@@ -43,7 +43,7 @@ for (const slug of projects) {
     await page.emulateMedia({ colorScheme: 'dark' });
     const requests = trackDemoRequests(page, slug);
     await page.goto(`/posts/${slug}/`);
-    const video = await expectVariant(page, slug, 'dark', requests);
+    const video = await expectVariant(page, slug, 'dark', { startupRequests: requests });
     for (const property of ['controls', 'loop', 'muted', 'playsInline', 'paused']) {
       await expect(video).toHaveJSProperty(property, true);
     }
@@ -59,7 +59,7 @@ test('stored theme wins on startup; storage and OS changes reload only a differe
   await page.emulateMedia({ colorScheme: 'dark' });
   const requests = trackDemoRequests(page, 'mudplot');
   await page.goto('/posts/mudplot/');
-  const video = await expectVariant(page, 'mudplot', 'light', requests);
+  const video = await expectVariant(page, 'mudplot', 'light', { startupRequests: requests });
 
   // Removing the override while the OS is light changes the setting, not the media resource.
   await video.evaluate((v) => {
@@ -117,16 +117,44 @@ test('native playback retains a paused seek and resumes at speed after rapid tog
   await expect.poll(() => video.evaluate((v) => v.currentTime)).toBeGreaterThan(resumed + 0.25);
 });
 
+test('the phone downloads only its square cut and keeps its paused frame on rotation', async ({ page }) => {
+  const slug = 'cfp-radar-system';
+  await page.setViewportSize({ width: 320, height: 700 });
+  await page.emulateMedia({ colorScheme: 'dark' });
+  const requests = trackDemoRequests(page, slug);
+  await page.goto(`/posts/${slug}/`);
+  const video = await expectVariant(page, slug, 'dark', { compact: true, startupRequests: requests });
+  const box = await video.boundingBox();
+  expect(box.width).toBeCloseTo(box.height, 0);
+  expect(box.width).toBeGreaterThan(280);
+
+  await video.evaluate((v) => { v.playbackRate = 1.5; v.currentTime = 3.25; });
+  await expect.poll(() => video.evaluate((v) => v.seeking)).toBe(false);
+  await page.locator('[data-theme-toggle]').click();
+  await expectVariant(page, slug, 'light', { compact: true });
+  await page.setViewportSize({ width: 780, height: 360 });
+  await expectVariant(page, slug, 'light');
+  await expect.poll(() => video.evaluate((v) => v.currentTime)).toBeCloseTo(3.25, 2);
+  await expect(video).toHaveJSProperty('paused', true);
+  await expect(video).toHaveJSProperty('playbackRate', 1.5);
+});
+
 test.describe('without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
-  test('the project demo remains playable using native controls', async ({ page }) => {
-    await page.goto('/posts/mudplot/');
-    const video = page.locator('video');
-    await expect.poll(() => video.evaluate((v) => v.poster && new URL(v.poster).pathname)).toBe('/assets/media/mudplot-poster.png');
-    await expect.poll(() => video.evaluate((v) => v.currentSrc && new URL(v.currentSrc).pathname)).toBe('/assets/media/mudplot.mp4');
-    await expect(video).toBeVisible();
-    await expect(video).toHaveJSProperty('controls', true);
-    await video.evaluate((v) => v.play());
-    await expect.poll(() => video.evaluate((v) => v.currentTime)).toBeGreaterThan(0);
-  });
+  for (const { name, width, theme, suffix } of [
+    { name: 'wide light', width: 1080, theme: 'light', suffix: '' },
+    { name: 'narrow dark', width: 320, theme: 'dark', suffix: '-compact-dark' },
+  ]) {
+    test(`native controls play the ${name} version`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 700 });
+      await page.emulateMedia({ colorScheme: theme });
+      await page.goto('/posts/mudplot/');
+      const video = page.locator('video');
+      await expect.poll(() => video.evaluate((v) => v.currentSrc && new URL(v.currentSrc).pathname)).toBe(`/assets/media/mudplot${suffix}.mp4`);
+      await expect(video).toHaveJSProperty('controls', true);
+      await video.focus();
+      await video.press('Space');
+      await expect.poll(() => video.evaluate((v) => v.currentTime)).toBeGreaterThan(0.1);
+    });
+  }
 });

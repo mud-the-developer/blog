@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCurrentFrame } from 'remotion';
-import { DemoStage, FONT_MONO, PALETTE, Pointer, phase } from './theme';
+import { DemoStage, FONT_MONO, PALETTE, Pointer, phase, useCompactDemo } from './theme';
 
 export const HWP_EDITOR_DURATION = 240;
 
@@ -10,11 +10,52 @@ const INK = 'light-dark(#25292b, #f3f1e8)';
 
 export const HwpEditorDemo: React.FC = () => {
   const frame = useCurrentFrame();
+  const compact = useCompactDemo();
   const approach = phase(frame, 0, 48);
   const copied = frame >= 61;
   const leave = phase(frame, 97, 161);
   const focus = phase(frame, 85, 160);
   const clickTimes = [50, 59];
+  const pressed = clickTimes.some(start => frame >= start && frame < start + 4);
+  if (compact) {
+    return (
+      <DemoStage>
+        <g transform={`translate(0 ${-8 * focus})`}>
+          <rect x="22" y="32" width="596" height="262" rx="9" fill={PAPER} stroke={PALETTE.border} strokeWidth="3" />
+          <g fill={INK}>
+            <text x="48" y="86" fontSize="38" fontWeight="550">survey.hwpx</text>
+            <path d="M23 107H617" stroke={PALETTE.border} strokeWidth="2" />
+            <text x="48" y="171" fontFamily="Georgia, serif" fontSize="56" fontWeight="700">Field survey</text>
+            <g transform="translate(418 124)" fill="none">
+              <rect width="170" height="55" rx="3" fill={PALETTE.blueSoft} />
+              <path d="M0 13c48 0 45 37 91 25s40-11 79-5" stroke={PALETTE.blue} strokeWidth="6" opacity=".65" />
+              <path d="m15 43 51-15 27 6 59-23" stroke={INK} strokeWidth="3" strokeDasharray="5 6" />
+              <circle cx="15" cy="43" r="5" fill={PAPER} stroke={INK} strokeWidth="2" /><circle cx="152" cy="11" r="5" fill={INK} />
+            </g>
+            {copied && <rect x="38" y="201" width="564" height="69" rx="4" fill={PALETTE.blueSoft} stroke={PALETTE.blue} strokeWidth="3" />}
+            <text x="48" y="251" fontFamily="Georgia, serif" fontSize="49">{EXCERPT}</text>
+          </g>
+
+          <rect x="22" y="316" width="596" height="248" rx="10" fill={PALETTE.card} stroke={copied ? PALETTE.teal : PALETTE.border} strokeWidth="3" />
+          <text x="48" y="371" fontSize="42" fontWeight="650">OMP draft</text>
+          {copied && <text x="590" y="369" textAnchor="end" fontSize="37" fill={PALETTE.muted}>Not sent</text>}
+          <path d="M23 391H617" stroke={PALETTE.border} strokeWidth="2" />
+          {copied ? (
+            <>
+              <text x="48" y="448" fontSize="40" fontFamily={FONT_MONO} fill={PALETTE.teal}>section0.xml :: p#14</text>
+              <text x="48" y="511" fontSize="45">{EXCERPT}</text>
+              <path d="M50 523v23" stroke={PALETTE.ink} strokeWidth="3" opacity={Math.floor(frame / 18) % 2 ? 1 : .15} />
+            </>
+          ) : <text x="48" y="457" fontSize="45" fill={PALETTE.muted}>Message…</text>}
+          {clickTimes.map(start => {
+            const t = phase(frame, start, start + 13);
+            return <circle key={start} cx="313" cy="236" r={10 + 42 * t} fill="none" stroke={PALETTE.blue} strokeWidth="4" opacity={frame >= start ? 1 - t : 0} />;
+          })}
+          <Pointer x={501 - 188 * approach + 242 * leave} y={302 - 66 * approach + 292 * leave} pressed={pressed} />
+        </g>
+      </DemoStage>
+    );
+  }
   const x = 519 - 172 * approach + 564 * leave;
   const y = 522 - 96 * approach + 157 * leave;
 
@@ -65,7 +106,7 @@ export const HwpEditorDemo: React.FC = () => {
           const t = phase(frame, start, start + 13);
           return <circle key={start} cx="347" cy="426" r={8 + 34 * t} fill="none" stroke={PALETTE.blue} strokeWidth="3" opacity={frame >= start ? 1 - t : 0} />;
         })}
-        <Pointer x={x} y={y} pressed={clickTimes.some(start => frame >= start && frame < start + 4)} />
+        <Pointer x={x} y={y} pressed={pressed} />
       </g>
     </DemoStage>
   );

@@ -62,13 +62,18 @@ export function phase(frame: number, from: number, to: number): number {
   return t * t * (3 - 2 * t);
 }
 
+export function useCompactDemo() {
+  const { width, height } = useVideoConfig();
+  return width === height;
+}
+
 export function DemoStage({ children }: { children: React.ReactNode }) {
   useWebFonts();
-  const { props } = useVideoConfig();
+  const { props, width, height } = useVideoConfig();
   return (
-    <svg width="1280" height="720" viewBox="0 0 1280 720" fontFamily={FONT_SANS} fill={PALETTE.ink}
+    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} fontFamily={FONT_SANS} fill={PALETTE.ink}
       style={{ display: 'block', colorScheme: props.theme === 'dark' ? 'dark' : 'light', color: PALETTE.ink, fontVariantNumeric: 'tabular-nums' }}>
-      <rect width="1280" height="720" fill={PALETTE.bg} />
+      <rect width={width} height={height} fill={PALETTE.bg} />
       {children}
     </svg>
   );

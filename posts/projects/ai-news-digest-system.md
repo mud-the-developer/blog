@@ -22,7 +22,12 @@ An automated research signal desk that aggregates arXiv papers, GitHub repositor
 
 <figure class="v3-demo-figure">
   <noscript data-project-demo="ai-news-digest-system">
-    <video controls playsinline muted loop preload="metadata" src="/assets/media/ai-news-digest-system.mp4?cut=2" poster="/assets/media/ai-news-digest-system-poster.png?cut=2"></video>
+    <video controls playsinline muted loop preload="metadata">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" src="/assets/media/ai-news-digest-system-compact-dark.mp4?cut=3">
+      <source media="(max-width: 600px)" src="/assets/media/ai-news-digest-system-compact.mp4?cut=3">
+      <source media="(prefers-color-scheme: dark)" src="/assets/media/ai-news-digest-system-dark.mp4?cut=3">
+      <source src="/assets/media/ai-news-digest-system.mp4?cut=3">
+    </video>
   </noscript>
   <figcaption>Uncheck one paper. Only the two selected sources appear in the draft.</figcaption>
 </figure>

@@ -10,81 +10,29 @@ import { MWC26_DURATION, Mwc26AiRanDemo } from './Mwc26Demo';
 import { NIRI_SUITE_DURATION, NiriDesktopSuiteDemo } from './NiriDesktopSuiteDemo';
 import { RUSTY_NOTE_DURATION, RustyNoteDemo } from './RustyNoteDemo';
 
-export const RemotionRoot: React.FC = () => {
-  return (
-    <>
-      <Composition
-        id="Mwc26AiRanDemo"
-        component={Mwc26AiRanDemo}
-        durationInFrames={MWC26_DURATION}
-        fps={30}
-        width={1280}
-        height={720}
-      />
-      <Composition
-        id="Mwc25DrlDemo"
-        component={Mwc25DrlDemo}
-        durationInFrames={MWC25_DURATION}
-        fps={30}
-        width={1280}
-        height={720}
-      />
-      <Composition
-        id="CfpPipelineDemo"
-        component={CfpPipelineDemo}
-        durationInFrames={CFP_DURATION}
-        fps={30}
-        width={1280}
-        height={720}
-      />
-      <Composition
-        id="AiNewsDigestDemo"
-        component={AiNewsDigestDemo}
-        durationInFrames={NEWS_DURATION}
-        fps={30}
-        width={1280}
-        height={720}
-      />
-      <Composition
-        id="MudplotDemo"
-        component={MudplotDemo}
-        durationInFrames={MUDPLOT_DURATION}
-        fps={30}
-        width={1280}
-        height={720}
-      />
-      <Composition
-        id="RustyNoteDemo"
-        component={RustyNoteDemo}
-        durationInFrames={RUSTY_NOTE_DURATION}
-        fps={30}
-        width={1280}
-        height={720}
-      />
-      <Composition
-        id="LicheeRvFido2Demo"
-        component={LicheeRvFido2Demo}
-        durationInFrames={LICHEERV_FIDO2_DURATION}
-        fps={30}
-        width={1280}
-        height={720}
-      />
-      <Composition
-        id="HwpEditorDemo"
-        component={HwpEditorDemo}
-        durationInFrames={HWP_EDITOR_DURATION}
-        fps={30}
-        width={1280}
-        height={720}
-      />
-      <Composition
-        id="NiriDesktopSuiteDemo"
-        component={NiriDesktopSuiteDemo}
-        durationInFrames={NIRI_SUITE_DURATION}
-        fps={30}
-        width={1280}
-        height={720}
-      />
-    </>
-  );
-};
+const demos = [
+  ['Mwc26AiRanDemo', Mwc26AiRanDemo, MWC26_DURATION],
+  ['Mwc25DrlDemo', Mwc25DrlDemo, MWC25_DURATION],
+  ['CfpPipelineDemo', CfpPipelineDemo, CFP_DURATION],
+  ['AiNewsDigestDemo', AiNewsDigestDemo, NEWS_DURATION],
+  ['MudplotDemo', MudplotDemo, MUDPLOT_DURATION],
+  ['RustyNoteDemo', RustyNoteDemo, RUSTY_NOTE_DURATION],
+  ['LicheeRvFido2Demo', LicheeRvFido2Demo, LICHEERV_FIDO2_DURATION],
+  ['HwpEditorDemo', HwpEditorDemo, HWP_EDITOR_DURATION],
+  ['NiriDesktopSuiteDemo', NiriDesktopSuiteDemo, NIRI_SUITE_DURATION],
+] as const;
+
+const framings = [
+  { suffix: '', width: 1280, height: 720 },
+  { suffix: '-Compact', width: 640, height: 640 },
+] as const;
+
+export const RemotionRoot: React.FC = () => (
+  <>
+    {demos.map(([name, component, durationInFrames]) =>
+      framings.map(({ suffix, width, height }) => (
+        <Composition key={name + suffix} id={name + suffix} component={component}
+          durationInFrames={durationInFrames} fps={30} width={width} height={height} />
+      )))}
+  </>
+);

@@ -21,7 +21,12 @@ A two-part desktop companion stack built for the [Niri](https://github.com/YaLTe
 
 <figure class="v3-demo-figure">
   <noscript data-project-demo="niri-desktop-suite">
-    <video controls playsinline muted loop preload="metadata" src="/assets/media/niri-desktop-suite.mp4?cut=2" poster="/assets/media/niri-desktop-suite-poster.png?cut=2"></video>
+    <video controls playsinline muted loop preload="metadata">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" src="/assets/media/niri-desktop-suite-compact-dark.mp4?cut=3">
+      <source media="(max-width: 600px)" src="/assets/media/niri-desktop-suite-compact.mp4?cut=3">
+      <source media="(prefers-color-scheme: dark)" src="/assets/media/niri-desktop-suite-dark.mp4?cut=3">
+      <source src="/assets/media/niri-desktop-suite.mp4?cut=3">
+    </video>
   </noscript>
   <figcaption>Scroll over the notch to switch from the terminal to an image viewer on workspace 2.</figcaption>
 </figure>

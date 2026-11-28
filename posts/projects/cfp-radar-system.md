@@ -22,7 +22,12 @@ publish: true
 
 <figure class="v3-demo-figure">
   <noscript data-project-demo="cfp-radar-system">
-    <video controls playsinline muted loop preload="metadata" src="/assets/media/cfp-radar-system.mp4?cut=2" poster="/assets/media/cfp-radar-system-poster.png?cut=2"></video>
+    <video controls playsinline muted loop preload="metadata">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" src="/assets/media/cfp-radar-system-compact-dark.mp4?cut=3">
+      <source media="(max-width: 600px)" src="/assets/media/cfp-radar-system-compact.mp4?cut=3">
+      <source media="(prefers-color-scheme: dark)" src="/assets/media/cfp-radar-system-dark.mp4?cut=3">
+      <source src="/assets/media/cfp-radar-system.mp4?cut=3">
+    </video>
   </noscript>
   <figcaption>ICC 2027 extended its paper deadline from October 16 to October 30, 2026. The subscribed calendar moves the original event.</figcaption>
 </figure>

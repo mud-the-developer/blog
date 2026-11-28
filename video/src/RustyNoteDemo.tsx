@@ -1,11 +1,12 @@
 import React from 'react';
 import { useCurrentFrame } from 'remotion';
-import { DemoStage, PALETTE, Pointer, phase } from './theme';
+import { DemoStage, PALETTE, Pointer, phase, useCompactDemo } from './theme';
 
 export const RUSTY_NOTE_DURATION = 246;
 
 export const RustyNoteDemo: React.FC = () => {
   const frame = useCurrentFrame();
+  const compact = useCompactDemo();
   const click = phase(frame, 0, 20);
   const saved = frame >= 171;
   const editing = frame >= 22 && !saved;
@@ -18,6 +19,45 @@ export const RustyNoteDemo: React.FC = () => {
   const rule = 'light-dark(#e4d9a7, #58554d)';
   const print = 'light-dark(#373021, #fff5d8)';
   const quiet = 'light-dark(#645a3e, #c6bda5)';
+  const caret = editing && (frame < 106 || Math.floor(frame / 15) % 2 === 0)
+    ? <tspan dx="1" fill={PALETTE.orange} fontWeight="300">|</tspan> : null;
+
+  if (compact) {
+    return (
+      <DemoStage>
+        <g fill={print}>
+          <rect x="22" y="34" width="596" height="548" rx="12" fill={PALETTE.ink} opacity=".08" />
+          <rect x="22" y="26" width="596" height="548" rx="12" fill={paper} stroke={rim} strokeWidth="3" />
+          <text x="50" y="81" fontSize="39" fontWeight="550">weekend.md</text>
+          <text x="590" y="81" textAnchor="end" fontSize="38" fill={quiet}>
+            {dirty ? '• Unsaved' : saved ? '✓ Saved' : ''}
+          </text>
+          <path d="M23 106H617" stroke={rule} strokeWidth="3" />
+          <text x="50" y="173" fontSize="61" fontWeight="720" letterSpacing="-2">Saturday walk</text>
+          {editing && <rect x="38" y="194" width="564" height="147" rx="6" fill={PALETTE.card} stroke={PALETTE.orange} strokeWidth="3" />}
+          <text x="52" y="253" fontSize="52">
+            Meet at the gate{typed === 0 && caret}
+            {typed > 0 && <tspan x="52" dy="62">{suffix.slice(1, typed)}{caret}</tspan>}
+          </text>
+          <path d="M49 360H590" stroke={rule} strokeWidth="3" />
+          <g fill="none" stroke={quiet} strokeWidth="3.5">
+            <rect x="54" y="393" width="36" height="36" rx="5" />
+            <rect x="54" y="465" width="36" height="36" rx="5" />
+            <path d="m61 411 8 9 15-20" strokeLinecap="round" strokeLinejoin="round" />
+          </g>
+          <text x="111" y="426" fontSize="43">Charge the camera</text>
+          <text x="111" y="498" fontSize="43">Pack the map</text>
+        </g>
+        <g opacity={1 - phase(frame, 33, 46)}>
+          <Pointer x={480 - 120 * click} y={350 - 113 * click} pressed={frame >= 20 && frame <= 26} />
+        </g>
+        <g transform={`translate(383 ${270 + 4 * (phase(frame, 166, 171) - phase(frame, 178, 184))})`} opacity={keys}>
+          <rect width="202" height="58" rx="11" fill={PALETTE.ink} />
+          <text x="101" y="42" textAnchor="middle" fill={PALETTE.card} fontSize="38" fontWeight="650">Ctrl + S</text>
+        </g>
+      </DemoStage>
+    );
+  }
 
   return (
     <DemoStage>
@@ -37,7 +77,7 @@ export const RustyNoteDemo: React.FC = () => {
         {editing && <rect x="207" y="269" width="826" height="77" rx="5" fill={PALETTE.card} stroke={PALETTE.orange} strokeWidth="2.5" />}
         <text x="223" y="320" fontSize="42">
           Meet at the gate{suffix.slice(0, typed)}
-          {editing && (frame < 106 || Math.floor(frame / 15) % 2 === 0) && <tspan dx="1" fill={PALETTE.orange} fontWeight="300">|</tspan>}
+          {caret}
         </text>
 
         <path d="M222 378H1056" stroke={rule} strokeWidth="2" />

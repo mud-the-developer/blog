@@ -21,7 +21,12 @@ Joint **Yonsei University (RAMO Lab) – SUTD – VIAVI Solutions** AI-for-RAN d
 
 <figure class="v3-demo-figure">
   <noscript data-project-demo="mwc25-drl-beamforming">
-    <video controls playsinline muted loop preload="metadata" src="/assets/media/mwc25-drl-beamforming.mp4?cut=2" poster="/assets/media/mwc25-drl-beamforming-poster.png?cut=2"></video>
+    <video controls playsinline muted loop preload="metadata">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" src="/assets/media/mwc25-drl-beamforming-compact-dark.mp4?cut=3">
+      <source media="(max-width: 600px)" src="/assets/media/mwc25-drl-beamforming-compact.mp4?cut=3">
+      <source media="(prefers-color-scheme: dark)" src="/assets/media/mwc25-drl-beamforming-dark.mp4?cut=3">
+      <source src="/assets/media/mwc25-drl-beamforming.mp4?cut=3">
+    </video>
   </noscript>
   <figcaption>A moving device changes cells and the redundant beam switches off. The power readings are averages from the VIAVI testbed.</figcaption>
 </figure>

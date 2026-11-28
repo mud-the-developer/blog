@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCurrentFrame } from 'remotion';
-import { DemoStage, FONT_MONO, PALETTE, phase } from './theme';
+import { DemoStage, FONT_MONO, PALETTE, phase, useCompactDemo } from './theme';
 
 export const CFP_DURATION = 210;
 
@@ -15,9 +15,31 @@ const from = dates[15], to = dates[29];
 
 export const CfpPipelineDemo: React.FC = () => {
   const frame = useCurrentFrame();
+  const compact = useCompactDemo();
   const notice = phase(frame, 11, 42);
   const move = phase(frame, 58, 108);
   const landed = phase(frame, 109, 133);
+  if (compact) {
+    const eventY = 195 + 192 * move;
+    return (
+      <DemoStage>
+        <rect x="20" y="36" width="600" height="538" rx="22" fill={PALETTE.card} stroke={PALETTE.border} strokeWidth="3" />
+        <text x="50" y="103" fontSize="54" fontWeight="700">October 2026</text>
+        <text x="52" y="157" fontSize="37" fill={PALETTE.muted}>Paper deadline</text>
+        <path d="M48 178h544M48 352h544" stroke={PALETTE.border} strokeWidth="3" />
+        <g fontSize="110" fontWeight="680">
+          <text x="51" y="296" fill={move > .5 ? PALETTE.muted : PALETTE.ink}>16</text>
+          <text x="51" y="488" fill={move > .5 ? PALETTE.teal : PALETTE.ink}>30</text>
+        </g>
+        <path d={`M48 261h${135 * notice}`} stroke={PALETTE.ink} strokeWidth="6" />
+        <g transform={`translate(${235 + 18 * Math.sin(move * Math.PI)} ${eventY})`}>
+          <rect width="302" height="100" rx="14" fill={PALETTE.teal} />
+          <text x="151" y="67" textAnchor="middle" fontSize="47" fontWeight="680" fill={PALETTE.onAccent}>ICC 2027</text>
+        </g>
+      </DemoStage>
+    );
+  }
+
   const tagX = from.x + 3 + 31 * Math.sin(Math.PI * move);
   const tagY = from.y + 37 + (to.y - from.y) * move;
 

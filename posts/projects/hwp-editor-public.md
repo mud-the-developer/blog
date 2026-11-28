@@ -22,7 +22,12 @@ publish: true
 
 <figure class="v3-demo-figure">
   <noscript data-project-demo="hwp-editor-public">
-    <video controls playsinline muted loop preload="metadata" src="/assets/media/hwp-editor-public.mp4?cut=2" poster="/assets/media/hwp-editor-public-poster.png?cut=2"></video>
+    <video controls playsinline muted loop preload="metadata">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" src="/assets/media/hwp-editor-public-compact-dark.mp4?cut=3">
+      <source media="(max-width: 600px)" src="/assets/media/hwp-editor-public-compact.mp4?cut=3">
+      <source media="(prefers-color-scheme: dark)" src="/assets/media/hwp-editor-public-dark.mp4?cut=3">
+      <source src="/assets/media/hwp-editor-public.mp4?cut=3">
+    </video>
   </noscript>
   <figcaption>Double-click a paragraph to copy its text and locator into the local OMP draft. Nothing is sent.</figcaption>
 </figure>

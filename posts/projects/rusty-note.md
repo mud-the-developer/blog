@@ -22,7 +22,12 @@ publish: true
 
 <figure class="v3-demo-figure">
   <noscript data-project-demo="rusty-note">
-    <video controls playsinline muted loop preload="metadata" src="/assets/media/rusty-note.mp4?cut=2" poster="/assets/media/rusty-note-poster.png?cut=2"></video>
+    <video controls playsinline muted loop preload="metadata">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" src="/assets/media/rusty-note-compact-dark.mp4?cut=3">
+      <source media="(max-width: 600px)" src="/assets/media/rusty-note-compact.mp4?cut=3">
+      <source media="(prefers-color-scheme: dark)" src="/assets/media/rusty-note-dark.mp4?cut=3">
+      <source src="/assets/media/rusty-note.mp4?cut=3">
+    </video>
   </noscript>
   <figcaption>Edit one line in place. Ctrl+S saves it without changing the surrounding checklist.</figcaption>
 </figure>

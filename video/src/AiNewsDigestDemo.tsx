@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCurrentFrame } from 'remotion';
-import { DemoStage, FONT_MONO, PALETTE, Pointer, phase } from './theme';
+import { DemoStage, FONT_MONO, PALETTE, Pointer, phase, useCompactDemo } from './theme';
 
 export const NEWS_DURATION = 210;
 
@@ -14,11 +14,52 @@ const papers = [
 
 export const AiNewsDigestDemo: React.FC = () => {
   const frame = useCurrentFrame();
+  const compact = useCompactDemo();
   const excluded = frame >= 32;
   const draft = phase(frame, 94, 135);
   const fadeRow = phase(frame, 92, 109);
   const reach = phase(frame, 0, 29);
   const submit = phase(frame, 46, 83);
+  if (compact) {
+    return (
+      <DemoStage>
+        <rect x="20" y="34" width="600" height={539 - 70 * draft} rx="22" fill={PALETTE.card} stroke={PALETTE.border} strokeWidth="3" />
+        <text x="47" y="114" fontSize="54" fontWeight="680">{frame < 107 ? 'Select papers' : 'Draft sources'}</text>
+        <path d="M48 145h544" stroke={PALETTE.border} strokeWidth="3" />
+        {papers.map(({ title, id }, i) => {
+          const rejected = excluded && i === 1;
+          const y = 172 + i * 84 - (i === 2 ? 84 * draft : 0);
+          return (
+            <g key={id} transform={`translate(51 ${y})`} opacity={i === 1 ? 1 - fadeRow : 1}>
+              <g opacity={1 - phase(frame, 94, 107)}>
+                <rect width="48" height="48" rx="8" fill={rejected ? PALETTE.card : PALETTE.teal}
+                  stroke={rejected ? PALETTE.muted : PALETTE.teal} strokeWidth="4" />
+                {!rejected && <path d="m10 24 9 9 20-22" fill="none" stroke={PALETTE.onAccent} strokeWidth="5" strokeLinecap="round" />}
+              </g>
+              {i !== 1 && <text y="39" fontSize="38" fontFamily={FONT_MONO} fill={PALETTE.teal} opacity={phase(frame, 111, 130)}>{i === 0 ? '01' : '02'}</text>}
+              <text x="82" y="41" fontSize="48" fontWeight="650" fill={rejected ? PALETTE.muted : PALETTE.ink}>{title}</text>
+            </g>
+          );
+        })}
+        <g transform={`translate(0 ${-75 * draft})`}>
+          <path d="M48 411h544" stroke={PALETTE.border} strokeWidth="3" />
+          {frame < 115 ? (
+            <g>
+              <rect x="49" y="429" width="542" height="83" rx="13" fill={PALETTE.ink} />
+              <text x="320" y="485" textAnchor="middle" fontSize="43" fontWeight="630" fill={PALETTE.bg}>Create draft</text>
+            </g>
+          ) : (
+            <text x="51" y="480" fontSize="40" fontWeight="560" fill={PALETTE.teal}>2 cited sources</text>
+          )}
+        </g>
+        <g opacity={1 - phase(frame, 93, 104)}>
+          <Pointer x={193 - 117 * reach + 258 * submit} y={342 - 65 * reach + 185 * submit}
+            pressed={(frame >= 30 && frame < 36) || (frame >= 87 && frame < 94)} />
+        </g>
+      </DemoStage>
+    );
+  }
+
   const cursorX = 324 - 178 * reach + 752 * submit;
   const cursorY = 411 - 57 * reach + 229 * submit;
 

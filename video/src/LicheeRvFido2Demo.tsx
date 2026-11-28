@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCurrentFrame } from 'remotion';
-import { DemoStage, FONT_MONO, PALETTE, phase } from './theme';
+import { DemoStage, FONT_MONO, PALETTE, phase, useCompactDemo } from './theme';
 
 export const LICHEERV_FIDO2_DURATION = 252;
 
@@ -14,7 +14,7 @@ const traces = [
   'M844 437v27l24 24h104', 'M852 437v23l20 20h100',
 ];
 
-const Board: React.FC<{ press: number }> = ({ press }) => (
+const Board: React.FC<{ press: number; compact: boolean }> = ({ press, compact }) => (
   <g>
     <defs>
       <linearGradient id="nano-pcb" x2=".7" y2="1">
@@ -35,7 +35,7 @@ const Board: React.FC<{ press: number }> = ({ press }) => (
     <g fill="none" stroke="#77877d" strokeWidth="2.4" opacity=".72">
       {traces.map(d => <path key={d} d={d} />)}
     </g>
-    <text x="545" y="254" fill="#eff1de" fontSize="36" fontWeight="650" letterSpacing="-1">LicheeRV Nano</text>
+    <text x="545" y="254" fill="#eff1de" fontSize={compact ? 53 : 36} fontWeight="650" letterSpacing="-1">LicheeRV Nano</text>
     <rect x="523" y="299" width="47" height="109" rx="3" fill="#11191b" />
     <rect x="481" y="306" width="71" height="106" rx="7" fill="url(#nano-shell)" stroke="#e2e4d9" strokeWidth="2" />
     <path d="M496 315v87 M539 315v15m0 58v15" stroke="#637073" strokeWidth="4" />
@@ -43,7 +43,7 @@ const Board: React.FC<{ press: number }> = ({ press }) => (
     <rect x="781" y="286" width="163" height="163" rx="9" fill="#101819" stroke="#8a938e" strokeWidth="2" />
     <rect x="791" y="296" width="143" height="143" rx="4" fill="#343c3d" />
     <circle cx="806" cy="311" r="4" fill="#9faaa4" />
-    <text x="862" y="378" textAnchor="middle" fontFamily={FONT_MONO} fontSize="30" fontWeight="550" fill="#e4e9df">SG2002</text>
+    {!compact && <text x="862" y="378" textAnchor="middle" fontFamily={FONT_MONO} fontSize="30" fontWeight="550" fill="#e4e9df">SG2002</text>}
     <g fill="#b5b8a9" stroke="#313534" strokeWidth="3">
       <path d="M652 336h32v13h-32z M652 357h32v13h-32z M652 378h32v13h-32z" />
       <path d="M986 350h22v11h-22z M1019 350h22v11h-22z" />
@@ -54,12 +54,13 @@ const Board: React.FC<{ press: number }> = ({ press }) => (
       <circle cx="1124" cy="426" r="25" fill="#202526" stroke="#757c76" />
       <circle cx="1124" cy={419 + 6 * press} r={24 - 2 * press} fill="#444b4a" stroke="#b3bab2" />
     </g>
-    <text x="1123" y="369" textAnchor="middle" fill="#f0f0df" fontFamily={FONT_MONO} fontSize="32" fontWeight="650">USER</text>
+    <text x="1123" y="369" textAnchor="middle" fill="#f0f0df" fontFamily={FONT_MONO} fontSize={compact ? 54 : 32} fontWeight="650">USER</text>
   </g>
 );
 
 export const LicheeRvFido2Demo: React.FC = () => {
   const frame = useCurrentFrame();
+  const compact = useCompactDemo();
   const inbound = phase(frame, -4, 50);
   const touch = phase(frame, 103, 112) * (1 - phase(frame, 131, 143));
   const hand = phase(frame, 57, 105) * (1 - phase(frame, 137, 180));
@@ -67,9 +68,54 @@ export const LicheeRvFido2Demo: React.FC = () => {
   const received = frame >= 201;
   const waiting = frame >= 50 && frame < 139;
   const travel = frame < 50 || (frame >= 139 && !received);
-  const packetX = frame < 50 ? 245 + 240 * inbound : 485 - 240 * outbound;
+  const packetProgress = frame < 50 ? inbound : 1 - outbound;
   const packetColor = frame < 50 ? PALETTE.blue : PALETTE.teal;
 
+  const key = (
+    <g transform={compact ? 'translate(108 247) scale(.70) translate(-492 -162)' : undefined}>
+      <Board press={touch} compact={compact} />
+      {frame >= 50 && frame < 112 && (
+        <circle cx="1124" cy="421" r={38 + 5 * Math.sin((frame - 50) / 8)} fill="none" stroke="#e7cd80" strokeWidth="3" />
+      )}
+      <g transform={`translate(${1124 + 253 * (1 - hand)} ${417 + 377 * (1 - hand) + 7 * touch}) rotate(-27)`}>
+        <path d="M-32 371v-123c0-43 4-89 4-136L-28 38C-28 13-18-1 0-1s30 14 31 37l6 87 15 65c10 23 29 44 42 71l48 112z" fill="#d6aa8d" stroke="#684d42" strokeWidth="3.5" strokeLinejoin="round" />
+        <path d="M-18 43c-2-18 1-28 15-30 13-2 21 7 22 26l1 24c-12 6-26 6-37 1z" fill="#edd0b7" stroke="#95705e" strokeWidth="2.5" />
+        <path d="M-18 112q15-5 31 0m-27 6q13-4 22-1" fill="none" stroke="#a7806b" strokeWidth="2" strokeLinecap="round" />
+      </g>
+    </g>
+  );
+
+  if (compact) {
+    const status = received ? 'Signed response' : waiting ? (frame < 112 ? 'Press USER button' : 'Button pressed')
+      : frame < 50 ? 'WebAuthn request' : 'Returning reply…';
+    // Packet position and heading follow the same quadratic as the physical USB cable.
+    const t = packetProgress;
+    const packetAngle = Math.atan2(195 * (1 - t), 62 * t) * 180 / Math.PI + (frame < 50 ? 0 : 180);
+    return (
+      <DemoStage>
+        <path d="M42 190Q42 385 104 385" fill="none" stroke="#323b40" strokeWidth="23" />
+        <path d="M39 190Q39 382 104 382" fill="none" stroke="#788386" strokeWidth="3" />
+        <rect x="78" y="362" width="32" height="46" rx="5" fill="#404a4e" stroke="#243034" strokeWidth="3" />
+        <path d="M84 367v36m7-36v36" stroke="#778083" strokeWidth="2" />
+        {travel && (
+          <g transform={`translate(${42 + 62 * t * t} ${385 - 195 * (1 - t) ** 2}) rotate(${packetAngle})`}>
+            <circle r="19" fill={PALETTE.card} stroke={packetColor} strokeWidth="4" />
+            <path d="M-8 0H8 M1-7l7 7-7 7" fill="none" stroke={packetColor} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+          </g>
+        )}
+        <rect x="20" y="29" width="600" height="166" rx="13" fill={PALETTE.card} stroke={PALETTE.border} strokeWidth="3" />
+        <g transform="translate(47 46)">
+          <path d="M5 16V9a9 9 0 0 1 18 0v7 M1 16h26v21H1z" fill="none" stroke={PALETTE.muted} strokeWidth="3" strokeLinejoin="round" />
+          <text x="46" y="34" fontSize="38" fill={PALETTE.muted}>Browser</text>
+        </g>
+        <path d="M21 99H619" stroke={PALETTE.border} strokeWidth="2" />
+        <text x="45" y="163" fontSize="50" fontWeight="650" fill={received ? PALETTE.teal : PALETTE.ink}>{status}</text>
+        {received && <path d="m544 145 13 14 26-31" fill="none" stroke={PALETTE.teal} strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />}
+        {key}
+      </DemoStage>
+    );
+  }
+  const packetX = frame < 50 ? 245 + 240 * inbound : 485 - 240 * outbound;
   return (
     <DemoStage>
       <path d="M235 359H504" fill="none" stroke="#323b40" strokeWidth="29" />
@@ -98,15 +144,7 @@ export const LicheeRvFido2Demo: React.FC = () => {
         ) : <text y="158" fontSize="30" fill={PALETTE.muted}>{waiting ? 'Touch key…' : 'Pending…'}</text>}
       </g>
 
-      <Board press={touch} />
-      {frame >= 50 && frame < 112 && (
-        <circle cx="1124" cy="421" r={38 + 5 * Math.sin((frame - 50) / 8)} fill="none" stroke="#e7cd80" strokeWidth="3" />
-      )}
-      <g transform={`translate(${1124 + 253 * (1 - hand)} ${417 + 377 * (1 - hand) + 7 * touch}) rotate(-27)`}>
-        <path d="M-32 371v-123c0-43 4-89 4-136L-28 38C-28 13-18-1 0-1s30 14 31 37l6 87 15 65c10 23 29 44 42 71l48 112z" fill="#d6aa8d" stroke="#684d42" strokeWidth="3.5" strokeLinejoin="round" />
-        <path d="M-18 43c-2-18 1-28 15-30 13-2 21 7 22 26l1 24c-12 6-26 6-37 1z" fill="#edd0b7" stroke="#95705e" strokeWidth="2.5" />
-        <path d="M-18 112q15-5 31 0m-27 6q13-4 22-1" fill="none" stroke="#a7806b" strokeWidth="2" strokeLinecap="round" />
-      </g>
+      {key}
     </DemoStage>
   );
 };
