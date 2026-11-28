@@ -67,7 +67,13 @@ function mountProjectDemo(fallback) {
   video.controls = video.playsInline = video.loop = true;
   video.defaultMuted = video.muted = true;
   video.preload = 'metadata';
-  fallback.replaceWith(video);
+  const download = document.createElement('a');
+  download.hidden = true;
+  fallback.replaceWith(video, download);
+
+  let selected = '';
+  let installed = '';
+  let loading;
 
   // A second switch before metadata arrives must not replace the saved time with zero.
   let pendingTime = 0;
@@ -78,15 +84,41 @@ function mountProjectDemo(fallback) {
     }
   });
 
-  return (theme) => {
+  return async (theme) => {
     const variant = theme === 'dark' ? `${base}-dark` : base;
     const src = `${variant}.mp4`;
-    if (video.getAttribute('src') === src) return;
+    if (selected === src) return;
+    selected = src;
+    loading?.abort();
+    download.hidden = true;
+    video.poster = `${variant}-poster.png`;
+    if (installed === src) return;
+
+    // Pages can send 200 for Range requests. A complete local Blob is seekable
+    // even then; keep the current player usable while the new edition downloads.
+    const controller = new AbortController();
+    loading = controller;
+    let file;
+    try {
+      const response = await fetch(src, { signal: controller.signal });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      file = await response.blob();
+    } catch {
+      if (!controller.signal.aborted) {
+        download.href = src;
+        download.textContent = `Could not load the ${theme} video. Open the MP4 directly.`;
+        download.hidden = false;
+      }
+      return;
+    }
+    if (controller.signal.aborted) return;
 
     pendingTime ||= video.currentTime;
     const { paused, playbackRate } = video;
-    video.poster = `${variant}-poster.png`;
-    video.src = src;
+    const previous = video.getAttribute('src');
+    video.src = URL.createObjectURL(file);
+    installed = src;
+    if (previous) URL.revokeObjectURL(previous);
     video.playbackRate = playbackRate;
     if (!paused) {
       // A later swap can abort play(); if the browser blocks it, native play remains available.

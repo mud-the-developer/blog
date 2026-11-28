@@ -51,6 +51,8 @@ Each command writes a 1080p MP4 and a frame-90 PNG poster to `static/media/` for
 
 For a new demo, follow [`posts/projects/mudplot.md`](../posts/projects/mudplot.md): put the light player inside `<noscript data-project-demo="<slug>">` in the figure and keep its caption outside. With JavaScript enabled the site loads just the active theme’s video and poster. Without it, the light player works with native controls.
 
+The player downloads the selected MP4 into a browser Blob before playback. This keeps seeking and theme switches working when a static host returns the whole file instead of a byte range. Keep `blob:` in the site's `media-src` policy; no server function is needed for the videos.
+
 ## 2. Writing Notes, Code & Math
 
 - **Writing archive (`/writing/`)**: Place long-form essays in `posts/blog/*.md` and paper notes in `posts/papers/*.md`.
